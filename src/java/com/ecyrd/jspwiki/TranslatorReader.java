@@ -2455,7 +2455,7 @@ public class TranslatorReader
 
             String encodedlink = m_engine.encodeName( link );
 
-            if( encodedlink.length() == 0 )
+            if(StringUtils.isEmpty(encodedlink))
             {
                 type = EMPTY;
             }

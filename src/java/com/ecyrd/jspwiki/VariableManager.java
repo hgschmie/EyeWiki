@@ -165,8 +165,10 @@ public class VariableManager
         if( varName == null )
             throw new IllegalArgumentException( "Null variable name." );
 
-        if( varName.length() == 0 )
+        if(StringUtils.isEmpty(varName))
+        {
             throw new IllegalArgumentException( "Zero length variable name." );
+        }
 
         // Faster than doing equalsIgnoreCase()
         String name = varName.toLowerCase();

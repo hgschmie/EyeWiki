@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.forms;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
@@ -73,7 +74,7 @@ public class FormOutput
         }
 
         String handler = (String)params.get( PARAM_HANDLER );
-        if( handler == null || handler.length() == 0 )
+        if(StringUtils.isEmpty(handler))
         {
             // Need to print out an error here as this form is misconfigured
             return( "<p class=\"error\">Argument '" +

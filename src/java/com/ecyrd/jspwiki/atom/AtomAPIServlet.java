@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import org.intabulas.sandler.Sandler;
@@ -236,7 +237,10 @@ public class AtomAPIServlet extends HttpServlet
             title = pageText.substring( 0, firstLine );
         }
             
-        if( title.trim().length() == 0 ) title = page.getName();
+        if(StringUtils.isBlank(title))
+        {
+            title = page.getName();
+        }
 
         // Remove wiki formatting
         while( title.startsWith("!") ) title = title.substring(1);

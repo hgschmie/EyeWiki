@@ -50,6 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -1916,7 +1917,7 @@ public class WikiEngine
         //  allows us to localize them, too.
         //
 
-        if( pagereq == null || pagereq.length() == 0 )
+        if(StringUtils.isEmpty(pagereq))
         {
             String servlet = request.getServletPath();
             log.debug("Servlet path is: "+servlet);
@@ -1983,7 +1984,7 @@ public class WikiEngine
             //        existence, or else it is possible to create pages that
             //        cannot be shown.
 
-            if( template == null || template.length() == 0 )
+            if(StringUtils.isEmpty(template))
             {
                 template = getTemplateDir();
             }

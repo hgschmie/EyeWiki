@@ -24,6 +24,8 @@ import java.io.IOException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
@@ -88,7 +90,7 @@ public class InsertDiffTag
                                           verold.intValue(),
                                           true);
 
-            if( diff.length() == 0 )
+            if(StringUtils.isEmpty(diff))
             {
                 return EVAL_BODY_INCLUDE;
             }

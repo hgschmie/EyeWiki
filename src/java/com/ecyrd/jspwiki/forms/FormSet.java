@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.forms;
 
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ecs.html.Form;
 import org.apache.log4j.Logger;
 
@@ -73,9 +74,11 @@ public class FormSet
         throws PluginException
     {
         String formName = (String)params.remove( FormElement.PARAM_FORM );
-        if( formName == null || formName.trim().length() == 0 )
-            return( "" );
-            
+        if(StringUtils.isBlank(formName))
+        {
+            return "";
+        }
+
         FormInfo info = (FormInfo)ctx.getVariable( FormElement.FORM_VALUES_CARRIER );
         if( info == null || formName.equals( info.getName() ) == false )
         {

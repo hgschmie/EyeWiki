@@ -25,6 +25,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.GenericElement;
 import org.apache.ecs.xhtml.form;
@@ -201,10 +202,9 @@ public class EditorTag
         // If there is no body tag content, then we'll assume old
         // behaviour and append the stuff ourselves.
         //
-        if( bc == null || bc.getString().length() == 0 )
+        if(bc == null || StringUtils.isEmpty(bc.getString()))
         {
             editor.addElement( getEditorArea() );
-
             editor.addElement( getButtons() );            
         }
         else

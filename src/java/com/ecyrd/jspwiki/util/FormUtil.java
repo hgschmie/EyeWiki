@@ -27,6 +27,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * A collection of (static) utilities used by the WikiForms code.
  * FormUtil is mainly concerned with mapping HTTP parameters to
@@ -85,10 +87,11 @@ public class FormUtil
     {
         ArrayList rval = new ArrayList();
         if( params == null || 
-            params.size() == 0 || 
-            keyPrefix == null || 
-            keyPrefix.length() == 0 )
-            return( rval );
+                params.size() == 0 || 
+                StringUtils.isEmpty(keyPrefix))
+        {
+            return rval;
+        }
 
         String fullPrefix = null;
         if( keyPrefix.charAt( keyPrefix.length() - 1 ) == '.' )

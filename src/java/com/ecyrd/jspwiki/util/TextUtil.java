@@ -400,7 +400,10 @@ public class TextUtil
     {
         StringBuffer result = new StringBuffer();
 
-        if( s == null || s.length() == 0 ) return "";
+        if(StringUtils.isEmpty(s))
+        {
+            return "";
+        }
 
         int cur     = s.charAt(0);
         int curKind = getCharKind(cur);

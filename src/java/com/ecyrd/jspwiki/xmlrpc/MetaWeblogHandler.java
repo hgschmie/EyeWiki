@@ -26,6 +26,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 import org.apache.xmlrpc.XmlRpcException;
 
@@ -168,7 +169,10 @@ public class MetaWeblogHandler
             title = pageText.substring( 0, firstLine );
         }
             
-        if( title.trim().length() == 0 ) title = page.getName();
+        if(StringUtils.isBlank(title))
+        {
+            title = page.getName();
+        }
 
         // Remove wiki formatting
         while( title.startsWith("!") ) title = title.substring(1);

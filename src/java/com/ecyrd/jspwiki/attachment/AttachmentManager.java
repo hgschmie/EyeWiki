@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -242,7 +243,7 @@ public class AttachmentManager
         //  If the page cannot be determined, we cannot possibly find the 
         //  attachments.
         //
-        if( currentPage == null || currentPage.getName().length() == 0 )
+        if(currenPage == null || StringUtils.isEmpty(currentPage.getName()))
         {
             return null;
         }

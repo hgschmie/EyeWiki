@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
@@ -368,7 +369,7 @@ public class AttachmentServlet
 
                     String filename = multi.getBaseFilename( part );
 
-                    if( filename == null || filename.trim().length() == 0 )
+                    if( StringUtils.isEmpty(filename))
                     {
                         log.error("Empty file name given.");
 

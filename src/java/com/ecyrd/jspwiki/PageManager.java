@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.providers.CachingProvider;
@@ -161,7 +162,7 @@ public class PageManager
     public String getPageText( String pageName, int version )
         throws ProviderException
     {
-        if( pageName == null || pageName.length() == 0 )
+        if(StringUtils.isEmpty(pageName))
         {
             throw new ProviderException("Illegal page name");
         }
@@ -196,7 +197,7 @@ public class PageManager
     public void putPageText( WikiPage page, String content )
         throws ProviderException
     {
-        if( page == null || page.getName() == null || page.getName().length() == 0 )
+        if( page == null || StringUtils.isEmpty(page.getName()))
         {
             throw new ProviderException("Illegal page name");
         }
@@ -309,7 +310,7 @@ public class PageManager
     public WikiPage getPageInfo( String pageName, int version )
         throws ProviderException
     {
-        if( pageName == null || pageName.length() == 0 )
+        if(StringUtils.isEmpty(pageName))
         {
             throw new ProviderException("Illegal page name");
         }
@@ -376,7 +377,7 @@ public class PageManager
     public boolean pageExists( String pageName )
         throws ProviderException
     {
-        if( pageName == null || pageName.length() == 0 )
+        if(StringUtils.isEmpty(pageName))
         {
             throw new ProviderException("Illegal page name");
         }
