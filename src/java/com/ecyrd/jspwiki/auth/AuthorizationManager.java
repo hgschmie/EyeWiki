@@ -23,13 +23,12 @@ import java.security.Principal;
 import java.security.acl.NotOwnerException;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
@@ -70,25 +69,23 @@ public class AuthorizationManager
      * 'jspwiki.authorizer' with a valid WikiAuthorizer implementation name
      * to take care of authorization.
      */
-    public AuthorizationManager( WikiEngine engine, Properties properties )
+    public AuthorizationManager( WikiEngine engine, Configuration conf)
         throws WikiException
     {
         m_engine = engine;
 
-        m_useOldAuth = TextUtil.getBooleanProperty(
-                properties,
+        m_useOldAuth = conf.getBoolean(
                 PROP_AUTH_USEOLDAUTH,
                 PROP_AUTH_USEOLDAUTH_DEFAULT);
         
-        m_strictLogins = TextUtil.getBooleanProperty(
-                properties,
+        m_strictLogins = conf.getBoolean(
                 PROP_AUTH_STRICTLOGINS,
                 PROP_AUTH_STRICTLOGINS_DEFAULT);
 
         if( !m_useOldAuth ) return;
         
-        m_authorizer = getAuthorizerImplementation( properties );
-        m_authorizer.initialize( engine, properties );
+        m_authorizer = getAuthorizerImplementation( conf );
+        m_authorizer.initialize( engine, conf );
 
         AclEntryImpl ae = new AclEntryImpl();
 
@@ -172,12 +169,12 @@ public class AuthorizationManager
      * @return a WikiAuthorizer used to get page authorization information
      * @throws WikiException
      */
-    private WikiAuthorizer getAuthorizerImplementation( Properties props )
+    private WikiAuthorizer getAuthorizerImplementation(Configuration conf)
         throws WikiException
     {
         WikiAuthorizer impl = null;
                                                                                 
-        String authClassName = props.getProperty(
+        String authClassName = conf.getString(
                 PROP_CLASS_AUTHORIZER,
                 PROP_CLASS_AUTHORIZER_DEFAULT);
 

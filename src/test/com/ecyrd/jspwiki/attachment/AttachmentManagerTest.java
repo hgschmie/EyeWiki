@@ -8,11 +8,12 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Collection;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.TestEngine;
@@ -24,7 +25,7 @@ public class AttachmentManagerTest extends TestCase
     public static final String NAME1 = "TestPage";
     public static final String NAMEU = "TestPage\u00e6";
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine m_engine;
     AttachmentManager m_manager;
@@ -39,9 +40,9 @@ public class AttachmentManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        m_engine  = new TestEngine(props);
+        m_engine  = new TestEngine(conf);
         m_manager = m_engine.getAttachmentManager();
 
         m_engine.saveText( NAME1, "Foobar" );
@@ -64,6 +65,7 @@ public class AttachmentManagerTest extends TestCase
     }
 
     public void tearDown()
+    	throws Exception
     {
         TestEngine.deleteTestPage( NAME1 );
         TestEngine.deleteTestPage( NAMEU );

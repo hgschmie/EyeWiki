@@ -3,8 +3,9 @@ package com.ecyrd.jspwiki.providers;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -32,7 +33,7 @@ public class VerySimpleProvider implements WikiPageProvider
      */
     public static final String AUTHOR   = "default-author";
 
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
     {
     }
 

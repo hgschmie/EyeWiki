@@ -1,14 +1,12 @@
 
 package com.ecyrd.jspwiki;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 public class AllTests extends TestCase
@@ -19,18 +17,13 @@ public class AllTests extends TestCase
     //
     static
     {
-        Properties props = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         try
         {
-            InputStream pin = TestEngine.findTestProperties();
-            if( pin == null )
-            {
-                fail( "No property file found!" );
-            }
-            props.load( pin );
-            PropertyConfigurator.configure(props);
+            conf.load(TestEngine.findTestProperties());
+            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         }
-        catch( IOException e ) 
+        catch( Exception e) 
         {
         }
     }

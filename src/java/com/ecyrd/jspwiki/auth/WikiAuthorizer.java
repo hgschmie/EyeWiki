@@ -1,6 +1,6 @@
 package com.ecyrd.jspwiki.auth;
 
-import java.util.Properties;
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -21,7 +21,7 @@ public interface WikiAuthorizer
      *  @param engine The WikiEngine that owns this authorizer.
      *  @param properties A bunch of properties.
      */
-    public void initialize( WikiEngine engine, Properties properties );
+    public void initialize( WikiEngine engine, Configuration conf);
    
     /**
      *  Returns the permissions for this page.

@@ -26,8 +26,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -77,7 +77,7 @@ public class CachingAttachmentProvider
     // FIXME: Make settable.
     private int  m_refreshPeriod = 60*10; // 10 minutes at the moment
 
-    public void initialize( WikiEngine engine, Properties properties )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException,
                IOException
     {
@@ -91,8 +91,7 @@ public class CachingAttachmentProvider
         //
         //  Find and initialize real provider.
         //
-        String classname = WikiEngine.getRequiredProperty( properties, 
-                WikiProperties.PROP_CLASS_ATTACHMENTPROVIDER);
+        String classname = conf.getString(WikiProperties.PROP_CLASS_ATTACHMENTPROVIDER);
         
         try
         {            
@@ -102,7 +101,7 @@ public class CachingAttachmentProvider
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();
 
             log.debug("Initializing real provider class "+m_provider);
-            m_provider.initialize( engine, properties );
+            m_provider.initialize( engine, conf );
         }
         catch( ClassNotFoundException e )
         {

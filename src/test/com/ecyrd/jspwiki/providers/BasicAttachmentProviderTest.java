@@ -7,11 +7,12 @@ import java.io.FileWriter;
 import java.io.StringReader;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.TestEngine;
@@ -23,7 +24,7 @@ public class BasicAttachmentProviderTest extends TestCase
     public static final String NAME1 = "TestPage";
     public static final String NAME2 = "TestPageToo";
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine m_engine;
 
@@ -42,12 +43,12 @@ public class BasicAttachmentProviderTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        m_engine  = new TestEngine(props);
+        m_engine  = new TestEngine(conf);
 
         m_provider = new BasicAttachmentProvider();
-        m_provider.initialize( m_engine, props );
+        m_provider.initialize( m_engine, conf );
 
         m_engine.saveText( NAME1, "Foobar" );
         m_engine.saveText( NAME2, "Foobar2" );
@@ -83,11 +84,12 @@ public class BasicAttachmentProviderTest extends TestCase
 
 
     public void tearDown()
+    	throws Exception
     {
         TestEngine.deleteTestPage( NAME1 );
         TestEngine.deleteTestPage( NAME2 );
 
-        String tmpfiles = props.getProperty( WikiProperties.PROP_STORAGEDIR );
+        String tmpfiles = conf.getString( WikiProperties.PROP_STORAGEDIR );
 
         File f = new File( tmpfiles, NAME1+BasicAttachmentProvider.DIR_EXTENSION );
 
@@ -197,7 +199,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiConfiguration().getString( WikiProperties.PROP_STORAGEDIR ));
         File extrafile = makeExtraFile( sDir, "foobar.blob" );
 
         try
@@ -237,7 +239,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR ));
         File attDir = new File( sDir, NAME1+"-att" );
 
 
@@ -280,7 +282,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR ));
         File attDir = new File( sDir, NAME1+"-att" );
 
         Attachment att = new Attachment( NAME1, "test1.txt" );

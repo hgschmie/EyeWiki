@@ -5,24 +5,26 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 public class FileUtilTest extends TestCase
 {
     public FileUtilTest( String s )
+    	throws Exception
     {
         super( s );
-        Properties props = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         try
         {
-            props.load( TestEngine.findTestProperties() );
-            PropertyConfigurator.configure(props);
+            conf.load( TestEngine.findTestProperties() );
+            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         }
         catch( IOException e ) {}
     }

@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import org.xml.sax.AttributeList;
@@ -103,10 +104,10 @@ public class FilterManager
 
     public static final String DEFAULT_XMLFILE = "/filters.xml";
 
-    public FilterManager( WikiEngine engine, Properties props )
+    public FilterManager( WikiEngine engine, Configuration conf)
         throws WikiException
     {
-        initialize( engine, props );
+        initialize( engine, conf);
     }
 
     /**
@@ -132,7 +133,7 @@ public class FilterManager
         m_pageFilters.add( f, priority );
     }
 
-    private void initPageFilter( String className, Properties props )
+    private void initPageFilter( String className, Properties props)
     {
         try
         {
@@ -143,7 +144,7 @@ public class FilterManager
 
             PageFilter filter = (PageFilter)cl.newInstance();
 
-            filter.initialize( props );
+            filter.initialize(props);
 
             addPageFilter( filter, priority );
             log.info("Added page filter "+cl.getName()+" with priority "+priority);
@@ -175,11 +176,13 @@ public class FilterManager
      *  Initializes the filters from an XML file.
      */
 
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws WikiException
     {
         InputStream xmlStream = null;
-        String      xmlFile   = props.getProperty( PROP_FILTERXML, PROP_FILTERXML_DEFAULT );
+        String      xmlFile   = conf.getString(
+                PROP_FILTERXML,
+                PROP_FILTERXML_DEFAULT );
 
         try
         {

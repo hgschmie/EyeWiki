@@ -24,7 +24,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TextUtil;
@@ -56,23 +58,23 @@ public class RSSGenerator
     /**
      *  Initialize the RSS generator.
      */
-    public RSSGenerator( WikiEngine engine, Properties properties )
+    public RSSGenerator( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException
     {
         m_engine = engine;        
 
         // FIXME: This assumes a bit too much.
-        if( engine.getBaseURL() == null || engine.getBaseURL().length() == 0 )
+        if( StringUtils.isEmpty(engine.getBaseURL()))
         {
             throw new NoRequiredPropertyException( "RSS requires jspwiki.baseURL to be set!",
                                                    PROP_BASEURL );
         }
 
-        m_channelDescription = properties.getProperty(
+        m_channelDescription = conf.getString(
                 PROP_RSS_CHANNEL_DESCRIPTION, 
                 PROP_RSS_CHANNEL_DESCRIPTION_DEFAULT);
         
-        m_channelLanguage    = properties.getProperty(
+        m_channelLanguage    = conf.getString(
                 PROP_RSS_CHANNEL_LANGUAGE,
                 PROP_RSS_CHANNEL_LANGUAGE_DEFAULT);
     }

@@ -33,9 +33,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.TreeSet;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -84,7 +84,7 @@ public abstract class AbstractFileProvider
      *  @throws FileNotFoundException If the specified page directory does not exist.
      *  @throws IOException In case the specified page directory is a file, not a directory.
      */
-    public void initialize( WikiEngine engine, Properties properties )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException,
                IOException
     {
@@ -97,7 +97,7 @@ public abstract class AbstractFileProvider
                     + "page directory but none was found. Aborting!", WikiProperties.PROP_PAGEDIR);
         }
 
-        m_encoding = properties.getProperty(
+        m_encoding = conf.getString(
                 WikiProperties.PROP_ENCODING, 
                 WikiProperties.PROP_ENCODING_DEFAULT);
                 

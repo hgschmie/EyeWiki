@@ -9,13 +9,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
 
 public class FilterManagerTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine engine;
 
@@ -25,12 +27,12 @@ public class FilterManagerTest extends TestCase
     }
 
     public void setUp()
-        throws Exception
-    {
-        props.load( TestEngine.findTestProperties() );
-        PropertyConfigurator.configure(props);
-        engine = new TestEngine(props);
-    }
+    throws Exception
+{
+    conf.load( TestEngine.findTestProperties() );
+    PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
+    engine = new TestEngine(conf);
+}
 
     public void tearDown()
     {
@@ -39,7 +41,7 @@ public class FilterManagerTest extends TestCase
     public void testInitFilters()
         throws Exception
     {
-        FilterManager m = new FilterManager( engine, props );
+        FilterManager m = new FilterManager( engine, conf);
 
         List l = m.getFilterList();
 
@@ -58,7 +60,7 @@ public class FilterManagerTest extends TestCase
     public void testInitParams()
         throws Exception
     {
-        FilterManager m = new FilterManager( engine, props );
+        FilterManager m = new FilterManager( engine, conf);
 
         List l = m.getFilterList();
 

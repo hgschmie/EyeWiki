@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
@@ -93,19 +93,19 @@ public class RCSFileProvider
     private SimpleDateFormat m_rcsdatefmt     = new SimpleDateFormat( RCSFMT_DATE );
     private SimpleDateFormat m_rcsdatefmt_utc = new SimpleDateFormat( RCSFMT_DATE_UTC );
 
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException,
                IOException
     {
         log.debug("Initing RCS");
-        super.initialize( engine, props );
+        super.initialize( engine, conf);
 
-        m_checkinCommand = props.getProperty( PROP_RCS_CHECKIN, PROP_RCS_CHECKIN_DEFAULT);
-        m_checkoutCommand = props.getProperty( PROP_RCS_CHECKOUT, PROP_RCS_CHECKOUT_DEFAULT);
-        m_logCommand     = props.getProperty( PROP_RCS_LOG, PROP_RCS_LOG_DEFAULT);
-        m_fullLogCommand = props.getProperty( PROP_RCS_FULLLOG, PROP_RCS_FULLLOG_DEFAULT);
-        m_checkoutVersionCommand = props.getProperty( PROP_RCS_CHECKOUTVERSION, PROP_RCS_CHECKOUTVERSION_DEFAULT);
-        m_deleteVersionCommand = props.getProperty( PROP_RCS_DELETEVERSION, PROP_RCS_DELETEVERSION_DEFAULT);
+        m_checkinCommand = conf.getString(PROP_RCS_CHECKIN, PROP_RCS_CHECKIN_DEFAULT);
+        m_checkoutCommand = conf.getString(PROP_RCS_CHECKOUT, PROP_RCS_CHECKOUT_DEFAULT);
+        m_logCommand     = conf.getString(PROP_RCS_LOG, PROP_RCS_LOG_DEFAULT);
+        m_fullLogCommand = conf.getString(PROP_RCS_FULLLOG, PROP_RCS_FULLLOG_DEFAULT);
+        m_checkoutVersionCommand = conf.getString(PROP_RCS_CHECKOUTVERSION, PROP_RCS_CHECKOUTVERSION_DEFAULT);
+        m_deleteVersionCommand = conf.getString(PROP_RCS_DELETEVERSION, PROP_RCS_DELETEVERSION_DEFAULT);
         
         File rcsdir = new File( getPageDirectory(), "RCS" );
 

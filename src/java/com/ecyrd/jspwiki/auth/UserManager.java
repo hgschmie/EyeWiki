@@ -25,16 +25,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
@@ -81,17 +80,16 @@ public class UserManager
      *  the specified set of properties.  All initialization for the
      *  modules is done here.
      */
-    public UserManager( WikiEngine engine, Properties props )
+    public UserManager( WikiEngine engine, Configuration conf)
         throws WikiException
     {
         m_engine = engine;
 
-        m_storeIPAddress = TextUtil.getBooleanProperty(
-                props,
+        m_storeIPAddress = conf.getBoolean(
                 PROP_AUTH_STOREIPADDRESS, 
                 PROP_AUTH_STOREIPADDRESS_DEFAULT );
 
-        m_administrator  = props.getProperty(
+        m_administrator  = conf.getString(
                 PROP_AUTH_ADMINISTRATOR,
                 PROP_AUTH_ADMINISTRATOR_DEFAULT);
 
@@ -107,7 +105,7 @@ public class UserManager
         m_groups.put( GROUP_NAMEDGUEST,  new NamedGroup() );
         m_groups.put( GROUP_KNOWNPERSON, new KnownGroup() );
 
-        String authClassName = props.getProperty( PROP_CLASS_AUTHENTICATOR );
+        String authClassName = conf.getString( PROP_CLASS_AUTHENTICATOR, null);
 
         if( authClassName != null )
         {
@@ -117,7 +115,7 @@ public class UserManager
                                                                 authClassName );
 
                 m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
-                m_authenticator.initialize(engine, props );
+                m_authenticator.initialize(engine, conf);
 
                 log.info("Initialized "+authClassName+" for authentication.");
             }
@@ -138,7 +136,7 @@ public class UserManager
             }
         }
 
-        String dbClassName = props.getProperty(
+        String dbClassName = conf.getString(
                 PROP_CLASS_USERDATABASE,
                 PROP_CLASS_USERDATABASE_DEFAULT);
 
@@ -147,7 +145,7 @@ public class UserManager
             Class dbClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
                                                  dbClassName );
             m_database = (UserDatabase)dbClass.newInstance();
-            m_database.initialize( m_engine, props );
+            m_database.initialize( m_engine, conf);
         }
         catch( ClassNotFoundException e )
         {

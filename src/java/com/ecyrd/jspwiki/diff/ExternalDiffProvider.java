@@ -24,8 +24,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -75,16 +75,10 @@ public class ExternalDiffProvider implements DiffProvider
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
      */
-    public void initialize(WikiEngine engine, Properties properties)
+    public void initialize(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
-        m_diffCommand = properties.getProperty(WikiProperties.PROP_DIFFCOMMAND);
-        
-        if ((null == m_diffCommand) || (m_diffCommand.trim().equals("")))
-        {
-            throw new NoRequiredPropertyException("ExternalDiffProvider missing required property", WikiProperties.PROP_DIFFCOMMAND);
-        }
-        
+        m_diffCommand = conf.getString(WikiProperties.PROP_DIFFCOMMAND);
         m_encoding = engine.getContentEncoding();
     }
     

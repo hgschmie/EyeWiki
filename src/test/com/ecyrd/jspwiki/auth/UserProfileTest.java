@@ -2,12 +2,13 @@
 package com.ecyrd.jspwiki.auth;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
@@ -20,13 +21,14 @@ import com.ecyrd.jspwiki.TextUtil;
 public class UserProfileTest extends TestCase
 {
     public UserProfileTest( String s )
+    	throws Exception
     {
         super( s );
-        Properties props = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         try
         {
-            props.load( TestEngine.findTestProperties() );
-            PropertyConfigurator.configure(props);
+            conf.load( TestEngine.findTestProperties() );
+            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         }
         catch( IOException e ) {}
     }

@@ -25,6 +25,8 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.TextUtil;
@@ -167,16 +169,14 @@ public class VotePlugin
 
     private int getYesVotes( WikiContext context )
     {
-        Properties props = getVotes( context );
-
-        return TextUtil.getIntegerProperty( props, "yes", 0 );
+        Configuration props = ConfigurationConverter.getConfiguration(getVotes(context));
+        return props.getInt( "yes", 0 );
     }
 
     private int getNoVotes( WikiContext context )
     {
-        Properties props = getVotes( context );
-
-        return TextUtil.getIntegerProperty( props, "no", 0 );
+        Configuration props = ConfigurationConverter.getConfiguration(getVotes(context));
+        return props.getInt("no", 0 );
     }
 
     public String execute( WikiContext context, Map params )

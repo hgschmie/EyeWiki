@@ -20,7 +20,8 @@
 package com.ecyrd.jspwiki;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -328,69 +329,6 @@ public class TextUtil
     }
 
     /**
-     *  Gets an integer-valued property from a standard Properties
-     *  list.  If the value does not exist, or is a non-integer, returns defVal.
-     *
-     *  @since 2.1.48.
-     */
-    public static int getIntegerProperty( Properties props, 
-                                          String key,
-                                          int defVal )
-    {
-        String val = props.getProperty( key );
-
-        return parseIntParameter( val, defVal );
-    }
-
-    /**
-     *  Gets a boolean property from a standard Properties list.
-     *  Returns the default value, in case the key has not been set.
-     *  <P>
-     *  The possible values for the property are "true"/"false", "yes"/"no", or
-     *  "on"/"off".  Any value not recognized is always defined as "false".
-     *
-     *  @param props   A list of properties to search.
-     *  @param key     The property key.
-     *  @param defval  The default value to return.
-     *
-     *  @return True, if the property "key" was set to "true", "on", or "yes".
-     *
-     *  @since 2.0.11
-     */
-    public static boolean getBooleanProperty( Properties props, 
-                                              String key, 
-                                              boolean defval )
-    {
-        String val = props.getProperty( key );
-
-        if( val == null ) return defval;
-
-        return isPositive( val );
-    }
-
-    /**
-     *  Fetches a String property from the set of Properties.  This differs from
-     *  Properties.getProperty() in a couple of key respects: First, property value
-     *  is trim()med (so no extra whitespace back and front), and well, that's it.
-     *  
-     *  @param props The Properties to search through
-     *  @param key   The property key
-     *  @param defval A default value to return, if the property does not exist.
-     *  @return The property value.
-     *  @since 2.1.151
-     */
-    public static String getStringProperty( Properties props,
-                                            String key,
-                                            String defval )
-    {
-        String val = props.getProperty( key );
-        
-        if( val == null ) return defval;
-        
-        return val.trim();
-    }
-    
-    /**
      *  Returns true, if the string "val" denotes a positive string.  Allowed
      *  values are "yes", "on", and "true".  Comparison is case-insignificant.
      *  Null values are safe.
@@ -545,42 +483,38 @@ public class TextUtil
         return result.toString();
     }
 
+
     /**
-     *  Creates a Property object based on an array which contains alternatively
-     *  a key and a value.  It is useful for generating default mappings.
-     *  For example:
+     *  Adds string mappings like
      *  <pre>
      *     String[] properties = { "jspwiki.property1", "value1",
      *                             "jspwiki.property2", "value2 };
-     *
-     *     Properties props = TextUtil.createPropertes( values );
-     *
-     *     System.out.println( props.getProperty("jspwiki.property1") );
      *  </pre>
-     *  would output "value1".
+     *  to a configuration object.
      *
-     *  @param values Alternating key and value pairs.
-     *  @return Property object
-     *  @see java.util.Property
+     * @param conf A configuration object
+     * @parm values The values to use.
      *  @throws IllegalArgumentException, if the property array is missing
      *          a value for a key.
      *  @since 2.2.
      */
 
-    public static Properties createProperties( String[] values )
+    public static Map createMap(String [] values)
         throws IllegalArgumentException
     {
         if( values.length % 2 != 0 )
+        {
             throw new IllegalArgumentException( "One value is missing.");
+        }
 
-        Properties props = new Properties();
+        Map map = new HashMap();
 
         for( int i = 0; i < values.length; i += 2 )
         {
-            props.setProperty( values[i], values[i+1] );
+            map.put(values[i], values[i+1]);
         }
 
-        return props;
+        return map;
     }
 
     /**

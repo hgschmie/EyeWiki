@@ -6,11 +6,12 @@ import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.List;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.PageManager;
@@ -32,7 +33,7 @@ public class RCSFileProviderTest extends TestCase
 {
     public static final String NAME1 = "Test1";
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine engine;
 
@@ -44,9 +45,9 @@ public class RCSFileProviderTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties("/jspwiki_rcs.properties") );
+        conf.load( TestEngine.findTestProperties("/jspwiki_rcs.properties") );
 
-        engine = new TestEngine(props);
+        engine = new TestEngine(conf);
     }
 
     /**
@@ -55,7 +56,7 @@ public class RCSFileProviderTest extends TestCase
     public void tearDown()
     	throws Exception
     {
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -115,7 +116,7 @@ public class RCSFileProviderTest extends TestCase
     public void testMigration()
         throws Exception
     {
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
         
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -170,7 +171,7 @@ public class RCSFileProviderTest extends TestCase
 
         provider.deletePage( NAME1 );
 
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 

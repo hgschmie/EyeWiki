@@ -3,9 +3,9 @@ package com.ecyrd.jspwiki.providers;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.QueryItem;
@@ -34,7 +34,7 @@ public class CounterProvider
     String defaultText = "[Foo], [Bar], [Blat], [Blah]";
 
 
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
     {
         m_initCalls++;
         

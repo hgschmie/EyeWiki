@@ -20,7 +20,8 @@
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
-import java.util.Properties;
+
+import org.apache.commons.configuration.Configuration;
 
 /**
  *  A generic Wiki provider for all sorts of things that the Wiki can
@@ -39,7 +40,7 @@ public interface WikiProvider
     /**
      *  Initializes the page provider.
      */
-    public void initialize( WikiEngine engine, Properties properties ) 
+    public void initialize( WikiEngine engine, Configuration conf) 
         throws NoRequiredPropertyException,
                IOException;
 

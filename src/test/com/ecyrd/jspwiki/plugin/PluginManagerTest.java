@@ -1,11 +1,11 @@
 
 package com.ecyrd.jspwiki.plugin;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
@@ -16,7 +16,7 @@ public class PluginManagerTest extends TestCase
 {
     public static final String NAME1 = "Test1";
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     WikiEngine engine;
 
@@ -32,11 +32,11 @@ public class PluginManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        engine = new TestEngine(props);
+        engine = new TestEngine(conf);
         context = new WikiContext( engine, new WikiPage("testpage") );
-        manager = new PluginManager( props );
+        manager = new PluginManager( conf );
     }
 
     public void tearDown()
@@ -67,8 +67,8 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage2()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
-        PluginManager m = new PluginManager( props );
+        conf.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
+        PluginManager m = new PluginManager( conf );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin2 WHERE text=foobar}");
 
@@ -79,8 +79,8 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage3()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
-        PluginManager m = new PluginManager( props );
+        conf.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
+        PluginManager m = new PluginManager( conf );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin3 WHERE text=foobar}");
 
@@ -92,8 +92,8 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage4()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo,blat.blaa" );
-        PluginManager m = new PluginManager( props );
+        conf.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo,blat.blaa" );
+        PluginManager m = new PluginManager( conf );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin WHERE text=foobar}");
 

@@ -1,11 +1,12 @@
 package com.ecyrd.jspwiki.stress;
 
 import java.io.File;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -16,7 +17,7 @@ public class VersioningProviderTest extends TestCase
 {
     public static final String NAME1 = "Test1";
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine engine;
 
@@ -28,15 +29,15 @@ public class VersioningProviderTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties("/jspwiki_vers.properties") );
+        conf.load( TestEngine.findTestProperties("/jspwiki_vers.properties") );
 
-        engine = new TestEngine(props);
+        engine = new TestEngine(conf);
     }
 
     public void tearDown()
     	throws Exception
     {
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         // Remove file
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );

@@ -1,11 +1,13 @@
 
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConversionException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class TextUtilTest extends TestCase
 {
@@ -206,33 +208,41 @@ public class TextUtilTest extends TestCase
 
     public void testGetBooleanProperty()
     {
-        Properties props = new Properties();
+        Configuration conf = new PropertiesConfiguration();
 
-        props.setProperty("foobar.0", "YES");
-        props.setProperty("foobar.1", "true");
-        props.setProperty("foobar.2", "false");
-        props.setProperty("foobar.3", "no");
-        props.setProperty("foobar.4", "on");
-        props.setProperty("foobar.5", "OFF");
-        props.setProperty("foobar.6", "gewkjoigew");
+        conf.setProperty("foobar.0", "YES");
+        conf.setProperty("foobar.1", "true");
+        conf.setProperty("foobar.2", "false");
+        conf.setProperty("foobar.3", "no");
+        conf.setProperty("foobar.4", "on");
+        conf.setProperty("foobar.5", "OFF");
+        conf.setProperty("foobar.6", "gewkjoigew");
 
         assertTrue( "foobar.0", 
-                    TextUtil.getBooleanProperty( props, "foobar.0", false ) );
+                conf.getBoolean("foobar.0", false ) );
         assertTrue( "foobar.1", 
-                    TextUtil.getBooleanProperty( props, "foobar.1", false ) );
+                conf.getBoolean("foobar.1", false ) );
 
         assertFalse( "foobar.2", 
-                     TextUtil.getBooleanProperty( props, "foobar.2", true ) );
+                conf.getBoolean("foobar.2", true ) );
         assertFalse( "foobar.3", 
-                    TextUtil.getBooleanProperty( props, "foobar.3", true ) );
+                conf.getBoolean("foobar.3", true ) );
         assertTrue( "foobar.4", 
-                    TextUtil.getBooleanProperty( props, "foobar.4", false ) );
+                conf.getBoolean("foobar.4", false ) );
 
         assertFalse( "foobar.5", 
-                     TextUtil.getBooleanProperty( props, "foobar.5", true ) );
+                conf.getBoolean("foobar.5", true ) );
 
-        assertFalse( "foobar.6", 
-                     TextUtil.getBooleanProperty( props, "foobar.6", true ) );
+        try
+        {
+            assertFalse( "foobar.6", 
+                    conf.getBoolean("foobar.6", true ) );
+            fail("No exception has been thrown!");
+        }
+        catch (Exception e)
+        {
+            assertEquals("Wrong exception thrown", ConversionException.class, e.getClass());
+        }
 
 
     }

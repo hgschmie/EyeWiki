@@ -2,12 +2,13 @@
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 public class VariableManagerTest extends TestCase
@@ -25,14 +26,14 @@ public class VariableManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        Properties props = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         try
         {
-            props.load( TestEngine.findTestProperties() );
-            PropertyConfigurator.configure(props);
+            conf.load( TestEngine.findTestProperties() );
+            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
 
-            m_variableManager = new VariableManager( props );
-            TestEngine testEngine = new TestEngine( props );
+            m_variableManager = new VariableManager( conf );
+            TestEngine testEngine = new TestEngine( conf );
             m_context = new WikiContext( testEngine,
                                          new WikiPage(PAGE_NAME) );
 

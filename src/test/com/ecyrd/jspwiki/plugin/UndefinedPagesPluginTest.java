@@ -1,11 +1,11 @@
 
 package com.ecyrd.jspwiki.plugin;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 public class UndefinedPagesPluginTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
     TestEngine engine;
     WikiContext context;
     PluginManager manager;
@@ -26,18 +26,19 @@ public class UndefinedPagesPluginTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        engine = new TestEngine(props);
+        engine = new TestEngine(conf);
 
         engine.saveText( "TestPage", "Reference to [Foobar]." );
         engine.saveText( "Foobar", "Reference to [Foobar2], [Foobars]" );
 
         context = new WikiContext( engine, new WikiPage("TestPage") );
-        manager = new PluginManager( props );
+        manager = new PluginManager( conf );
     }
 
     public void tearDown()
+    	throws Exception
     {
         TestEngine.deleteTestPage( "TestPage" );
         TestEngine.deleteTestPage( "Foobar" );

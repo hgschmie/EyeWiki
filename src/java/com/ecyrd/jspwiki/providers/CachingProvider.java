@@ -28,12 +28,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.Vector;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -142,7 +142,7 @@ public class CachingProvider
     private static final String LUCENE_ID              = "id";
     private static final String LUCENE_PAGE_CONTENTS   = "contents";
 
-    public void initialize( WikiEngine engine, Properties properties )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException,
                IOException
     {
@@ -151,7 +151,7 @@ public class CachingProvider
         //
         //  Cache consistency checks
         //
-        m_expiryPeriod = TextUtil.getIntegerProperty( properties,
+        m_expiryPeriod = conf.getInt(
                                                       PROP_CACHECHECKINTERVAL,
                                                       PROP_CACHECHECKINTERVAL_DEFAULT);
 
@@ -160,7 +160,7 @@ public class CachingProvider
         //
         //  Text cache capacity
         //
-        int capacity = TextUtil.getIntegerProperty( properties,
+        int capacity = conf.getInt(
                                                     PROP_CACHECAPACITY,
                                                     PROP_CACHECAPACITY_DEFAULT );
 
@@ -182,8 +182,7 @@ public class CachingProvider
         //
         //  Find and initialize real provider.
         //
-        String classname = WikiEngine.getRequiredProperty( properties, 
-                                                           PageManager.PROP_CLASS_PAGEPROVIDER );
+        String classname = conf.getString(PageManager.PROP_CLASS_PAGEPROVIDER);
         
         try
         {            
@@ -193,7 +192,7 @@ public class CachingProvider
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
             log.debug("Initializing real provider class "+m_provider);
-            m_provider.initialize( engine, properties );
+            m_provider.initialize( engine, conf );
         }
         catch( ClassNotFoundException e )
         {
@@ -215,7 +214,7 @@ public class CachingProvider
         // See if we're using Lucene, and if so, ensure that its 
         // index directory is up to date.
         // 
-        m_useLucene = TextUtil.getBooleanProperty(properties, PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT );
+        m_useLucene = conf.getBoolean(PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT );
 
         if( m_useLucene )
         {

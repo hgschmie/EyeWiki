@@ -3,12 +3,13 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -24,7 +25,7 @@ public class FileSystemProviderTest extends TestCase
     FileSystemProvider m_provider;
     FileSystemProvider m_providerUTF8;
     String             m_pagedir;
-    Properties props  = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine         m_engine;
 
@@ -38,23 +39,23 @@ public class FileSystemProviderTest extends TestCase
     {
         m_pagedir = System.getProperties().getProperty("java.io.tmpdir");
 
-        Properties props2 = new Properties();
-        props2.load( TestEngine.findTestProperties() );
-        PropertyConfigurator.configure(props2);
+        PropertiesConfiguration conf2 = new PropertiesConfiguration();
+        conf2.load( TestEngine.findTestProperties() );
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf2));
         
-        props.setProperty( PageManager.PROP_CLASS_PAGEPROVIDER, "FileSystemProvider" );
-        props.setProperty( WikiProperties.PROP_PAGEDIR, 
+        conf.setProperty( PageManager.PROP_CLASS_PAGEPROVIDER, "FileSystemProvider" );
+        conf.setProperty( WikiProperties.PROP_PAGEDIR, 
                            m_pagedir );
 
-        m_engine = new TestEngine(props);
+        m_engine = new TestEngine(conf);
 
         m_provider = new FileSystemProvider();
 
-        m_provider.initialize( m_engine, props );
+        m_provider.initialize( m_engine, conf );
         
-        props.setProperty( WikiEngine.PROP_ENCODING, "UTF-8" );
+        conf.setProperty( WikiEngine.PROP_ENCODING, "UTF-8" );
         m_providerUTF8 = new FileSystemProvider();
-        m_providerUTF8.initialize( m_engine, props );
+        m_providerUTF8.initialize( m_engine, conf );
     }
 
     public void tearDown()
@@ -177,16 +178,16 @@ public class FileSystemProviderTest extends TestCase
         File newDir = new File (tmpdir, dirname);
         newDir.delete();
 
-        Properties props = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
 
-        props.setProperty( WikiProperties.PROP_PAGEDIR, 
+        conf.setProperty( WikiProperties.PROP_PAGEDIR, 
                            newDir.getAbsolutePath() );
 
         FileSystemProvider test = new FileSystemProvider();
 
-        TestEngine m_engine2 = new TestEngine(props);
+        TestEngine m_engine2 = new TestEngine(conf);
 
-        test.initialize( m_engine2, props );
+        test.initialize( m_engine2, conf );
 
         assertTrue( "didn't create it", newDir.exists() );
         assertTrue( "isn't a dir", newDir.isDirectory() );
@@ -203,17 +204,17 @@ public class FileSystemProviderTest extends TestCase
         {
             tmpFile = FileUtil.newTmpFile("foobar"); // Content does not matter.
 
-            Properties props = new Properties();
+            PropertiesConfiguration conf = new PropertiesConfiguration();
 
-            props.setProperty( WikiProperties.PROP_PAGEDIR, 
+            conf.setProperty( WikiProperties.PROP_PAGEDIR, 
                                tmpFile.getAbsolutePath() );
 
             FileSystemProvider test = new FileSystemProvider();
 
             try
             {
-                TestEngine m_engine2 = new TestEngine(props);
-                test.initialize( m_engine2, props );
+                TestEngine m_engine2 = new TestEngine(conf);
+                test.initialize( m_engine2, conf );
 
                 fail( "Wiki did not warn about wrong property." );
             }
@@ -242,7 +243,7 @@ public class FileSystemProviderTest extends TestCase
 
         m_provider.deletePage( "Test" );
 
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, "Test"+FileSystemProvider.FILE_EXT );
 

@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -29,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 /**
@@ -46,7 +46,7 @@ public class WikiServlet
         super.init( config );
 
         m_engine         = WikiEngine.getInstance( config );
-        Properties props = m_engine.getWikiProperties();
+        Configuration conf = m_engine.getWikiConfiguration();
 
         log.info("WikiServlet initialized.");
     }

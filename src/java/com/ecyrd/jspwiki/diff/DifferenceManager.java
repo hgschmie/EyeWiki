@@ -21,8 +21,8 @@
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -46,23 +46,23 @@ public class DifferenceManager
 
     private DiffProvider m_rssProvider;
 
-    public DifferenceManager(WikiEngine engine, Properties props)
+    public DifferenceManager(WikiEngine engine, Configuration conf)
     {
-        loadProvider(props); 
+        loadProvider(conf); 
 
-        initializeProvider(engine, props);
+        initializeProvider(engine, conf);
         
         log.info("Using difference provider: " + m_provider.getProviderInfo());   
     }
 
-    private void loadProvider(Properties props)
+    private void loadProvider(Configuration conf)
     {
-        String providerClassName = props.getProperty( PROP_CLASS_DIFF_PROVIDER, 
+        String providerClassName = conf.getString( PROP_CLASS_DIFF_PROVIDER, 
                                                       PROP_CLASS_DIFF_PROVIDER_DEFAULT);
 
         m_provider = getProvider(providerClassName, new DiffProvider.NullDiffProvider());
 
-        providerClassName = props.getProperty( PROP_CLASS_DIFF_RSS_PROVIDER, 
+        providerClassName = conf.getString( PROP_CLASS_DIFF_RSS_PROVIDER, 
                                                       PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT);
 
         m_rssProvider = getProvider(providerClassName, m_provider);
@@ -96,11 +96,11 @@ public class DifferenceManager
     }
 
     
-    private void initializeProvider(WikiEngine engine, Properties props)
+    private void initializeProvider(WikiEngine engine, Configuration conf)
     {
         try
         {
-            m_provider.initialize( engine, props);
+            m_provider.initialize( engine, conf);
         }
         catch (NoRequiredPropertyException e1)
         {
@@ -115,7 +115,7 @@ public class DifferenceManager
 
         try
         {
-            m_rssProvider.initialize( engine, props);
+            m_rssProvider.initialize( engine, conf);
         }
         catch (NoRequiredPropertyException e1)
         {

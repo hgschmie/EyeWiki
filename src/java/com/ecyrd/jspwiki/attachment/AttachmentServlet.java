@@ -30,7 +30,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.Properties;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -38,9 +37,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
@@ -100,11 +99,11 @@ public class AttachmentServlet
         super.init( config );
 
         m_engine         = WikiEngine.getInstance( config );
-        Properties props = m_engine.getWikiProperties();
+        Configuration conf = m_engine.getWikiConfiguration();
 
         m_tmpDir         = m_engine.getWorkDir()+File.separator+"attach-tmp";
  
-        m_maxSize        = TextUtil.getIntegerProperty( props, 
+        m_maxSize        = conf.getInt( 
                                                         WikiProperties.PROP_MAXSIZE,
                                                         WikiProperties.PROP_MAXSIZE_DEFAULT);
 

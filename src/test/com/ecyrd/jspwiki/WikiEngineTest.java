@@ -6,11 +6,12 @@ import java.io.FileWriter;
 import java.io.StringReader;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
@@ -24,7 +25,7 @@ public class WikiEngineTest extends TestCase
     public static final String NAME1 = "Test1";
     public static final long PAGEPROVIDER_RESCAN_PERIOD = 2;
 
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine m_engine;
 
@@ -47,23 +48,23 @@ public class WikiEngineTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( WikiEngine.PROP_MATCHPLURALS, "true" );
+        conf.setProperty( WikiEngine.PROP_MATCHPLURALS, "true" );
         // We'll need a shorter-than-default consistency check for
         // the page-changed checks. This will cause additional load
         // to the file system, though.
-        props.setProperty( WikiProperties.PROP_CACHECHECKINTERVAL, 
+        conf.setProperty( WikiProperties.PROP_CACHECHECKINTERVAL, 
                            Long.toString(PAGEPROVIDER_RESCAN_PERIOD) );
 
         TestEngine.emptyWorkDir();
-        m_engine = new TestEngine(props);        
+        m_engine = new TestEngine(conf);        
     }
 
     public void tearDown()
     	throws Exception
     {
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         if( files != null )
         {
@@ -83,10 +84,10 @@ public class WikiEngineTest extends TestCase
 
         String newdir = tmpdir + File.separator + dirname;
 
-        props.setProperty( WikiProperties.PROP_PAGEDIR, 
+        conf.setProperty( WikiProperties.PROP_PAGEDIR, 
                            newdir );
 
-        WikiEngine test = new TestEngine( props );
+        WikiEngine test = new TestEngine( conf );
 
         File f = new File( newdir );
 
@@ -99,13 +100,13 @@ public class WikiEngineTest extends TestCase
     public void testNonExistantDirProperty()
         throws Exception
     {
-        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
-        props.remove( WikiProperties.PROP_PAGEDIR );
+        conf.clearProperty(WikiProperties.PROP_PAGEDIR);
 
         try
         {
-            WikiEngine test = new TestEngine( props );
+            WikiEngine test = new TestEngine( conf );
 
             fail( "Wiki did not warn about missing property." );
         }
@@ -114,7 +115,7 @@ public class WikiEngineTest extends TestCase
             // This is okay.
         }
 
-        props.setProperty(WikiProperties.PROP_PAGEDIR,
+        conf.setProperty(WikiProperties.PROP_PAGEDIR,
                 files);
     }
 
@@ -260,9 +261,9 @@ public class WikiEngineTest extends TestCase
     {
         String name = "\u0041\u2262\u0391\u002E";
 
-        props.setProperty( WikiEngine.PROP_ENCODING, "UTF-8" );
+        conf.setProperty( WikiEngine.PROP_ENCODING, "UTF-8" );
 
-        WikiEngine engine = new TestEngine( props );
+        WikiEngine engine = new TestEngine( conf );
 
         assertEquals( "A%E2%89%A2%CE%91.",
                       engine.encodeName(name) );
@@ -345,11 +346,11 @@ public class WikiEngineTest extends TestCase
     public void testLatestGet()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", 
+        conf.setProperty( "jspwiki.pageProvider", 
                            "com.ecyrd.jspwiki.providers.VerySimpleProvider" );
-        props.setProperty( "jspwiki.usePageCache", "false" );
+        conf.setProperty( "jspwiki.usePageCache", "false" );
 
-        WikiEngine engine = new TestEngine( props );
+        WikiEngine engine = new TestEngine( conf );
 
         WikiPage p = engine.getPage( "test", -1 );
 
@@ -362,11 +363,11 @@ public class WikiEngineTest extends TestCase
     public void testLatestGet2()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", 
+        conf.setProperty( "jspwiki.pageProvider", 
                            "com.ecyrd.jspwiki.providers.VerySimpleProvider" );
-        props.setProperty( "jspwiki.usePageCache", "false" );
+        conf.setProperty( "jspwiki.usePageCache", "false" );
 
-        WikiEngine engine = new TestEngine( props );
+        WikiEngine engine = new TestEngine( conf );
 
         String p = engine.getText( "test", -1 );
 
@@ -379,11 +380,11 @@ public class WikiEngineTest extends TestCase
     public void testLatestGet3()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", 
+        conf.setProperty( "jspwiki.pageProvider", 
                            "com.ecyrd.jspwiki.providers.VerySimpleProvider" );
-        props.setProperty( "jspwiki.usePageCache", "false" );
+        conf.setProperty( "jspwiki.usePageCache", "false" );
 
-        WikiEngine engine = new TestEngine( props );
+        WikiEngine engine = new TestEngine( conf );
 
         String p = engine.getHTML( "test", -1 );
 
@@ -396,11 +397,11 @@ public class WikiEngineTest extends TestCase
     public void testLatestGet4()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", 
+        conf.setProperty( "jspwiki.pageProvider", 
                            "com.ecyrd.jspwiki.providers.VerySimpleProvider" );
-        props.setProperty( "jspwiki.usePageCache", "true" );
+        conf.setProperty( "jspwiki.usePageCache", "true" );
 
-        WikiEngine engine = new TestEngine( props );
+        WikiEngine engine = new TestEngine( conf );
 
         String p = engine.getHTML( VerySimpleProvider.PAGENAME, -1 );
 
@@ -445,7 +446,7 @@ public class WikiEngineTest extends TestCase
         finally
         { 
             // do cleanup
-            String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+            String files = conf.getString(WikiProperties.PROP_PAGEDIR );
             TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
@@ -518,7 +519,7 @@ public class WikiEngineTest extends TestCase
         finally
         { 
             // do cleanup
-            String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+            String files = conf.getString(WikiProperties.PROP_PAGEDIR );
             TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
@@ -555,7 +556,7 @@ public class WikiEngineTest extends TestCase
         finally
         { 
             // do cleanup
-            String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+            String files = conf.getString(WikiProperties.PROP_PAGEDIR );
             TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
@@ -592,7 +593,7 @@ public class WikiEngineTest extends TestCase
         finally
         { 
             // do cleanup
-            String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+            String files = conf.getString(WikiProperties.PROP_PAGEDIR );
             TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
             new File( files, "TestPage2"+FileSystemProvider.FILE_EXT ).delete();
         }
@@ -606,7 +607,7 @@ public class WikiEngineTest extends TestCase
     {
         m_engine.saveText( NAME1, "Test" );
 
-        String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
         File saved = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
         assertTrue( "Didn't create it!", saved.exists() );
@@ -621,9 +622,9 @@ public class WikiEngineTest extends TestCase
     public void testDeleteVersion()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", "VersioningFileProvider" );
+        conf.setProperty( "jspwiki.pageProvider", "VersioningFileProvider" );
         
-        TestEngine engine = new TestEngine( props );
+        TestEngine engine = new TestEngine( conf );
         engine.saveText( NAME1, "Test1" );
         engine.saveText( NAME1, "Test2" );
         engine.saveText( NAME1, "Test3" );
@@ -642,9 +643,9 @@ public class WikiEngineTest extends TestCase
     public void testDeleteVersion2()
         throws Exception
     {
-        props.setProperty( "jspwiki.pageProvider", "VersioningFileProvider" );
+        conf.setProperty( "jspwiki.pageProvider", "VersioningFileProvider" );
     
-        TestEngine engine = new TestEngine( props );
+        TestEngine engine = new TestEngine( conf );
         engine.saveText( NAME1, "Test1" );
         engine.saveText( NAME1, "Test2" );
         engine.saveText( NAME1, "Test3" );
@@ -679,7 +680,7 @@ public class WikiEngineTest extends TestCase
 
         Thread.sleep( 2000L ); // Wait two seconds for filesystem granularity
 
-        String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File saved = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -720,7 +721,7 @@ public class WikiEngineTest extends TestCase
 
         Thread.sleep( 2000L ); // Wait two seconds for filesystem granularity
 
-        String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File saved = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -756,7 +757,7 @@ public class WikiEngineTest extends TestCase
 
         Thread.sleep( 2000L ); // Wait two seconds for filesystem granularity
 
-        String files = TestEngine.getRequiredProperty(props,  WikiProperties.PROP_PAGEDIR );
+        String files = conf.getString(WikiProperties.PROP_PAGEDIR );
 
         File saved = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 

@@ -1,9 +1,10 @@
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.configuration.Configuration;
 
 /**
  *  An utility class for creating URLs for different purposes.
@@ -16,7 +17,7 @@ public interface URLConstructor
      *  init, if you have to.
      */
     public void initialize( WikiEngine engine, 
-                            Properties properties );
+                            Configuration conf);
 
     /**
      *  Constructs the URL with a bunch of parameters.

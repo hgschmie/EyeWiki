@@ -1,10 +1,10 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
@@ -24,10 +24,10 @@ public class PageAuthorizerTest
     public void setUp()
         throws Exception
     {
-        Properties props = new Properties();
-        props.load( TestEngine.findTestProperties() );
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load( TestEngine.findTestProperties() );
         
-        m_engine = new TestEngine(props);
+        m_engine = new TestEngine(conf);
 
         String text1 = "Foobar.\n\n[{SET defaultpermissions='ALLOW EDIT Charlie;DENY VIEW Bob'}]\n\nBlood.";
         String text2 = "Foo";

@@ -4,19 +4,20 @@ package com.ecyrd.jspwiki;
 import java.io.File;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Properties;
 import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
+
 /**
  *  @author Torsten Hildebrandt.
  */
 public class ReferenceManagerTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
     TestEngine engine;
     ReferenceManager mgr;
     
@@ -28,13 +29,13 @@ public class ReferenceManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
-        props.setProperty( WikiProperties.PROP_MATCHPLURALS, "true");
+        conf.load( TestEngine.findTestProperties() );
+        conf.setProperty( WikiProperties.PROP_MATCHPLURALS, "true");
 
         //
         //  We must make sure that the reference manager cache is cleaned before.
         //
-        String workDir = TestEngine.getRequiredProperty(props, WikiProperties.PROP_WORKDIR );
+        String workDir = conf.getString(WikiProperties.PROP_WORKDIR );
 
         if( workDir != null )
         {
@@ -42,7 +43,7 @@ public class ReferenceManagerTest extends TestCase
             if( refmgrfile.exists() ) refmgrfile.delete();
         }
 
-        engine = new TestEngine(props);
+        engine = new TestEngine(conf);
 
         engine.saveText( "TestPage", "Reference to [Foobar]." );
         engine.saveText( "Foobar", "Reference to [Foobar2], [Foobars], [Foobar]" );

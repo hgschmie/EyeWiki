@@ -27,12 +27,11 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.GlobCompiler;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -269,39 +268,25 @@ public class TranslatorReader
         //
         //  Set the properties.
         //
-        Properties props      = m_engine.getWikiProperties();
+        Configuration conf = m_engine.getWikiConfiguration();
 
-        String cclinks = (String)m_context.getPage().getAttribute( PROP_CAMELCASELINKS );
+        m_camelCaseLinks  = conf.getBoolean(
+                PROP_CAMELCASELINKS, 
+                PROP_CAMELCASELINKS_DEFAULT);
 
-        if( cclinks != null )
-        {
-            m_camelCaseLinks = TextUtil.isPositive( cclinks );
-        }
-        else
-        {
-            m_camelCaseLinks  = TextUtil.getBooleanProperty(
-                    props,
-                    PROP_CAMELCASELINKS, 
-                    PROP_CAMELCASELINKS_DEFAULT);
-        }
-
-        m_plainUris           = TextUtil.getBooleanProperty(
-                props,
+        m_plainUris = conf.getBoolean(
                 PROP_PLAINURIS,
                 PROP_PLAINURIS_DEFAULT);
 
-        m_useOutlinkImage     = TextUtil.getBooleanProperty(
-                props,
+        m_useOutlinkImage = conf.getBoolean(
                 PROP_USEOUTLINKIMAGE, 
                 PROP_USEOUTLINKIMAGE_DEFAULT);
 
-        m_allowHTML           = TextUtil.getBooleanProperty(
-                props,
+        m_allowHTML = conf.getBoolean(
                 PROP_ALLOWHTML, 
                 PROP_ALLOWHTML_DEFAULT);
 
-        m_useRelNofollow      = TextUtil.getBooleanProperty(
-                props,
+        m_useRelNofollow = conf.getBoolean(
                 PROP_USERRELNOFOLLOW,
                 PROP_USERRELNOFOLLOW_DEFAULT);
     
@@ -415,19 +400,16 @@ public class TranslatorReader
 
     protected static Collection getImagePatterns( WikiEngine engine )
     {
-        Properties props    = engine.getWikiProperties();
-        ArrayList  ptrnlist = new ArrayList();
-
-        for( Enumeration e = props.propertyNames(); e.hasMoreElements(); )
+        Configuration conf = engine.getWikiConfiguration();
+        
+        Configuration patternConf = conf.subset(PROP_INLINEIMAGEPTRN);
+        
+        List  ptrnlist = new ArrayList();
+        
+        for (Iterator it = patternConf.getKeys(); it.hasNext(); )
         {
-            String name = (String) e.nextElement();
-
-            if( name.startsWith( PROP_INLINEIMAGEPTRN ) )
-            {
-                String ptrn = props.getProperty( name );
-
-                ptrnlist.add( ptrn );
-            }
+            String key = (String) it.next();
+            ptrnlist.add(patternConf.getString(key));
         }
 
         if( ptrnlist.size() == 0 )

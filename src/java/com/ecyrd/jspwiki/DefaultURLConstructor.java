@@ -1,9 +1,10 @@
 package com.ecyrd.jspwiki;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.configuration.Configuration;
 
 public class DefaultURLConstructor
     implements URLConstructor
@@ -15,11 +16,11 @@ public class DefaultURLConstructor
     protected boolean          m_useRelativeURLStyle = true;
 
     public void initialize( WikiEngine engine, 
-                            Properties properties )
+                            Configuration conf)
     {
         m_engine = engine;
 
-        m_useRelativeURLStyle = "relative".equals( properties.getProperty(
+        m_useRelativeURLStyle = "relative".equals( conf.getString(
                                                            WikiProperties.PROP_REFSTYLE,
                                                            WikiProperties.PROP_REFSTYLE_DEFAULT));
     }

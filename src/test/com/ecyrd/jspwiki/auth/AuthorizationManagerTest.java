@@ -4,11 +4,12 @@ package com.ecyrd.jspwiki.auth;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
 import java.util.Enumeration;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -37,10 +38,10 @@ public class AuthorizationManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        Properties props = new Properties();
-        props.load( TestEngine.findTestProperties() );
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load( TestEngine.findTestProperties() );
         
-        m_engine = new TestEngine(props);
+        m_engine = new TestEngine(conf);
         m_manager = m_engine.getAuthorizationManager();
     }
 

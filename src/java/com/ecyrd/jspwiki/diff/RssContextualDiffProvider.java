@@ -21,7 +21,8 @@
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
-import java.util.Properties;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -68,9 +69,9 @@ public class RssContextualDiffProvider
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
      */
-    public void initialize(WikiEngine engine, Properties properties)
+    public void initialize(WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, IOException
     {
-        super.initialize(engine, properties);
+        super.initialize(engine, conf);
     }
 }

@@ -26,6 +26,7 @@ import java.util.Properties;
 import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.opensymphony.oscache.base.Cache;
@@ -53,7 +54,7 @@ public class TemplateManager
 
     protected static Logger log = Logger.getLogger( TemplateManager.class );
 
-    public TemplateManager( WikiEngine engine, Properties properties )
+    public TemplateManager( WikiEngine engine, Configuration conf)
     {
         m_engine = engine;
 

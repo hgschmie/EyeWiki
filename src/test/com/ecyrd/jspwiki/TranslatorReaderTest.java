@@ -10,7 +10,6 @@ import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.Vector;
 
 import javax.servlet.ServletException;
@@ -19,12 +18,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
+
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 
 public class TranslatorReaderTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
     Vector     created = new Vector();
 
     static final String PAGE_NAME = "testpage";
@@ -40,10 +41,10 @@ public class TranslatorReaderTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( "jspwiki.translatorReader.matchEnglishPlurals", "true" );
-        testEngine = new TestEngine( props );
+        conf.setProperty( "jspwiki.translatorReader.matchEnglishPlurals", "true" );
+        testEngine = new TestEngine( conf );
     }
 
     public void tearDown()
@@ -113,15 +114,12 @@ public class TranslatorReaderTest extends TestCase
     }
 
     private String translate_nofollow( String src )
-        throws IOException,
-               NoRequiredPropertyException,
-               ServletException,
-               WikiException
+        throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( "jspwiki.translatorReader.useRelNofollow", "true" );
-        TestEngine testEngine2 = new TestEngine( props );
+        conf.setProperty( "jspwiki.translatorReader.useRelNofollow", "true" );
+        TestEngine testEngine2 = new TestEngine( conf );
 
         WikiContext context = new WikiContext( testEngine2,
                                                new WikiPage(PAGE_NAME) );
@@ -768,6 +766,7 @@ public class TranslatorReaderTest extends TestCase
         String src = "[WikiEtiquette]\r\n\r\n[Find page]";
 
         newPage( "WikiEtiquette" );        
+        newPage( "FindPage" );        
 
         assertEquals( "<a class=\"wikipage\" href=\"Wiki.jsp?page=WikiEtiquette\">WikiEtiquette</a>\n"+
                       "<p><a class=\"wikipage\" href=\"Wiki.jsp?page=FindPage\">Find page</a></p>\n", translate(src) );
@@ -929,8 +928,8 @@ public class TranslatorReaderTest extends TestCase
     {
         String src = "<p>";
 
-        props.setProperty( "jspwiki.translatorReader.allowHTML", "true" );
-        testEngine = new TestEngine( props );
+        conf.setProperty( "jspwiki.translatorReader.allowHTML", "true" );
+        testEngine = new TestEngine( conf );
 
         WikiContext context = new WikiContext( testEngine,
                                                new WikiPage(PAGE_NAME) );
@@ -1792,7 +1791,7 @@ public class TranslatorReaderTest extends TestCase
         }
         finally
         {
-            String files = testEngine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR );
+            String files = testEngine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR );
             File storagedir = new File( files, PAGE_NAME+BasicAttachmentProvider.DIR_EXTENSION );
 
             if( storagedir.exists() && storagedir.isDirectory() )

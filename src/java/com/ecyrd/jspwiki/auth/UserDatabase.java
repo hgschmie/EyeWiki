@@ -21,7 +21,8 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Properties;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -37,7 +38,7 @@ public interface UserDatabase
      * Initializes the WikiPrincipalist based on values from a Properties
      * object.
      */
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException;
 
     /**

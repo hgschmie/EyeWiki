@@ -26,8 +26,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.providers.CachingProvider;
@@ -67,20 +67,18 @@ public class PageManager
      *  Creates a new PageManager.
      *  @throws WikiException If anything goes wrong, you get this.
      */
-    public PageManager( WikiEngine engine, Properties props )
+    public PageManager( WikiEngine engine, Configuration conf)
         throws WikiException
     {
         String classname;
 
         m_engine = engine;
 
-        boolean useCache = TextUtil.getBooleanProperty(
-                props,
+        boolean useCache = conf.getBoolean(
                 PROP_USECACHE,
                 PROP_USECACHE_DEFAULT);
 
-        m_expiryTime = TextUtil.getIntegerProperty(
-                props,
+        m_expiryTime = conf.getInt(
                 PROP_LOCKEXPIRY,
                 PROP_LOCKEXPIRY_DEFAULT);
 
@@ -93,7 +91,7 @@ public class PageManager
         }
         else
         {
-            classname = props.getProperty(
+            classname = conf.getString(
                     PROP_CLASS_PAGEPROVIDER,
                     PROP_CLASS_PAGEPROVIDER_DEFAULT);
         }
@@ -106,7 +104,7 @@ public class PageManager
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
             log.debug("Initializing page provider class "+m_provider);
-            m_provider.initialize( m_engine, props );
+            m_provider.initialize( m_engine, conf );
         }
         catch( ClassNotFoundException e )
         {

@@ -1,11 +1,11 @@
 
 package com.ecyrd.jspwiki.plugin;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 public class ReferringPagesPluginTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
     TestEngine engine;
     WikiContext context;
     PluginManager manager;
@@ -26,10 +26,10 @@ public class ReferringPagesPluginTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( "jspwiki.breakTitleWithSpaces", "false" );
-        engine = new TestEngine(props);
+        conf.setProperty( "jspwiki.breakTitleWithSpaces", "false" );
+        engine = new TestEngine(conf);
 
         engine.saveText( "TestPage", "Reference to [Foobar]." );
         engine.saveText( "Foobar", "Reference to [TestPage]." );
@@ -41,7 +41,7 @@ public class ReferringPagesPluginTest extends TestCase
         engine.saveText( "Foobar7", "Reference to [TestPage]." );
 
         context = new WikiContext( engine, new WikiPage("TestPage") );
-        manager = new PluginManager( props );
+        manager = new PluginManager( conf );
     }
 
     public void tearDown()

@@ -2,7 +2,8 @@
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
-import java.util.Properties;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -27,7 +28,7 @@ public interface DiffProvider extends WikiProvider
             return "You are using the NullDiffProvider, check your properties file.";
         }
 
-        public void initialize(WikiEngine engine, Properties properties) 
+        public void initialize(WikiEngine engine, Configuration conf) 
             throws NoRequiredPropertyException, IOException
         {
         }

@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -90,7 +91,7 @@ public class BasicAttachmentProvider
     
     static final Category log = Category.getInstance( BasicAttachmentProvider.class );
 
-    public void initialize( WikiEngine engine, Properties properties ) 
+    public void initialize( WikiEngine engine, Configuration conf) 
         throws NoRequiredPropertyException,
                IOException
     {

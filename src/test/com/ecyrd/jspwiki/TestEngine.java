@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
@@ -19,21 +23,22 @@ public class TestEngine extends WikiEngine
 {
     static Logger log = Logger.getLogger( TestEngine.class );
 
-    public TestEngine( Properties props )
+    public TestEngine(Configuration conf)
         throws WikiException
     {
-        super( props );
+        super(conf);
     }
 
     public static void emptyWorkDir()
+    	throws Exception
     {
-        Properties properties = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         
         try
         {
-            properties.load( findTestProperties() );
+            conf.load( findTestProperties() );
         
-            String workdir = properties.getProperty( WikiEngine.PROP_WORKDIR );
+            String workdir = conf.getString( WikiEngine.PROP_WORKDIR );
             if( workdir != null )
             {
                 File f = new File( workdir );
@@ -47,14 +52,17 @@ public class TestEngine extends WikiEngine
         catch( IOException e ) {} // Fine   
     }
     
-    public static final InputStream findTestProperties()
+    public static final Reader findTestProperties()
+	throws Exception
     {
         return findTestProperties( "/jspwiki.properties" );
     }
 
-    public static final InputStream findTestProperties( String properties )
+    public static final Reader findTestProperties( String properties )
+    	throws Exception
     {
-        return TestEngine.class.getResourceAsStream( properties );
+    	InputStream is = TestEngine.class.getResourceAsStream( properties );
+    	return new InputStreamReader(is, "UTF-8");
     }
 
     /**
@@ -107,12 +115,12 @@ public class TestEngine extends WikiEngine
      */
     public static void deleteTestPage( String name )
     {
-        Properties properties = new Properties();
+        PropertiesConfiguration conf = new PropertiesConfiguration();
         
         try
         {
-            properties.load( findTestProperties() );
-            String files = properties.getProperty( WikiProperties.PROP_PAGEDIR );
+            conf.load( findTestProperties() );
+            String files = conf.getString( WikiProperties.PROP_PAGEDIR );
 
             File f = new File( files, mangleName(name)+FileSystemProvider.FILE_EXT );
 
@@ -131,7 +139,7 @@ public class TestEngine extends WikiEngine
     {
         try
         {
-            String files = getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR );
+            String files = getWikiConfiguration().getString( WikiProperties.PROP_STORAGEDIR );
 
             File f = new File( files, TextUtil.urlEncodeUTF8( page ) + BasicAttachmentProvider.DIR_EXTENSION );
 

@@ -21,8 +21,8 @@
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.jrcs.diff.AddDelta;
 import org.apache.commons.jrcs.diff.ChangeDelta;
 import org.apache.commons.jrcs.diff.Chunk;
@@ -74,7 +74,7 @@ public class TraditionalDiffProvider
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
      */
-    public void initialize(WikiEngine engine, Properties properties)
+    public void initialize(WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, IOException
     {
     }

@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -78,11 +79,11 @@ public class VersioningFileProvider
     public static final String      PAGEDIR      = "OLD";
     public static final String      PROPERTYFILE = "page.properties";
 
-    public void initialize( WikiEngine engine, Properties properties )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException,
                IOException
     {
-        super.initialize( engine, properties );
+        super.initialize( engine, conf);
     }
 
     /**

@@ -78,7 +78,7 @@ public interface WikiProperties
      * The default is to have absolute pathes for backwards compatibility
      * @value false
      */
-    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = true;
+    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
 
     /**
      * This property is used internally to provide the root of the web application to the logging configuration when the
@@ -171,7 +171,7 @@ public interface WikiProperties
      *  This property defines the inline image pattern.  It's current value
      *  is jspwiki.translatorReader.inlinePattern
      */
-    String PROP_INLINEIMAGEPTRN = "jspwiki.translatorReader.inlinePattern.";
+    String PROP_INLINEIMAGEPTRN = "jspwiki.translatorReader.inlinePattern";
 
     /**
      *  The default inlining pattern.  Currently "*.png"
@@ -410,7 +410,8 @@ public interface WikiProperties
     /**
      *  These are the default packages
      */
-    String PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = "com.ecyrd.jspwiki.plugin,com.ecyrd.jspwiki.forms";
+    String [] PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = 
+        new String [] { "com.ecyrd.jspwiki.plugin","com.ecyrd.jspwiki.forms" };
 
     /** Property name for setting the url generator instance */
     String PROP_CLASS_URLCONSTRUCTOR = "jspwiki.urlConstructor";

@@ -4,9 +4,9 @@ import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.NotOwnerException;
 import java.util.NoSuchElementException;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.InternalWikiException;
@@ -43,7 +43,7 @@ public class PageAuthorizer
     private AccessControlList m_defaultPermissions = null;
 
     public void initialize( WikiEngine engine,
-                            Properties properties )
+                            Configuration conf)
     {
         m_engine = engine;
     }

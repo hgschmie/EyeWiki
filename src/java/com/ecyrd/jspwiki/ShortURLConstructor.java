@@ -3,10 +3,10 @@ package com.ecyrd.jspwiki;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 
@@ -25,11 +25,11 @@ public class ShortURLConstructor
     private String m_urlPrefix = "";
     
     public void initialize( WikiEngine engine, 
-                            Properties properties )
+                            Configuration conf)
     {
-        super.initialize( engine, properties );
+        super.initialize( engine, conf);
         
-        m_urlPrefix = TextUtil.getStringProperty( properties, WikiProperties.PROP_SHORTURL_PREFIX, null );
+        m_urlPrefix = conf.getString(WikiProperties.PROP_SHORTURL_PREFIX, null);
         
         if( m_urlPrefix == null )
         {

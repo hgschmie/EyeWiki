@@ -28,10 +28,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Properties;
-import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.ecs.xhtml.b;
 import org.apache.ecs.xhtml.div;
 import org.apache.ecs.xhtml.li;
@@ -137,9 +136,9 @@ public class PluginManager
      *
      *  @param props Contents of a "jspwiki.properties" file.
      */
-    public PluginManager( Properties props )
+    public PluginManager(Configuration conf)
     {
-        String packageNames = props.getProperty( PROP_CLASS_PLUGIN_SEARCHPATH );
+        String [] packageNames = conf.getStringArray(PROP_CLASS_PLUGIN_SEARCHPATH);
 
         addPackages(packageNames);
         addPackages(PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT);
@@ -158,16 +157,11 @@ public class PluginManager
 
     }
 
-    private void addPackages(String packageNames)
+    private void addPackages(String [] packageNames)
     {
-        if( packageNames != null )
+        for (int i = 0; i < packageNames.length; i++)
         {
-            StringTokenizer tok = new StringTokenizer( packageNames, "," );
-            
-            while( tok.hasMoreTokens() )
-            {
-                m_searchPath.add( tok.nextToken() );
-            }
+            m_searchPath.add(packageNames[i]);
         }
     }
 

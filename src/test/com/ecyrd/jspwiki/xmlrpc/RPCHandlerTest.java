@@ -4,25 +4,23 @@ package com.ecyrd.jspwiki.xmlrpc;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Properties;
 import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.xmlrpc.RPCHandler;
 
 public class RPCHandlerTest extends TestCase
 {
     TestEngine m_engine;
     RPCHandler m_handler;
-    Properties m_props;
 
     static final String NAME1 = "Test";
 
@@ -34,16 +32,17 @@ public class RPCHandlerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        m_props = new Properties();
-        m_props.load( TestEngine.findTestProperties() );
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load( TestEngine.findTestProperties() );
 
-        m_engine = new TestEngine( m_props );
+        m_engine = new TestEngine( conf );
 
         m_handler = new RPCHandler();
         m_handler.initialize( m_engine );
     }
 
     public void tearDown()
+    	throws Exception
     {
         TestEngine.deleteTestPage( NAME1 );
         m_engine.deleteAttachments( NAME1 );

@@ -25,14 +25,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -40,13 +41,15 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.Vector;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
@@ -90,26 +93,26 @@ public class WikiEngine
     // to run defines where the log goes.  Not what we want.
     private static boolean   c_configured = false;
 
-    /** Stores properties. */
-    private Properties       m_properties;
+    /** Stores Configuration per WikiEngine. */
+    private Configuration conf = null;
 
     /** 
      * The web.xml parameter that defines where the config file is to be found. 
      * If it is not defined, uses the default as defined by PARAM_PROPERTYFILE_DEFAULT.
      * @value jspwiki.propertyfile
      */
-    public static final String PARAM_PROPERTYFILE = "jspwiki.propertyfile";
+    public static final String PARAM_CONFIGFILE = "jspwiki.propertyfile";
 
     /** Path to the default property file. 
      *  @value /WEB_INF/jspwiki.properties
      */
-    public static final String PARAM_PROPERTYFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
+    public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
     /**
      * Prefix for the elements in the PARAM_PAGES field.
      * @value jspwiki.specialPage
      */
-    private static final String PARAM_PAGES_PREFIX = "jspwiki.specialPage.";
+    private static final String PARAM_PAGES_PREFIX = "jspwiki.specialPage";
 
     /**
      *  Contains the default properties for JSPWiki.
@@ -262,10 +265,11 @@ public class WikiEngine
      *               jspwiki.properties (this is the usual case).
      */
 
-    public static synchronized WikiEngine getInstance( ServletContext context, 
-                                                       Properties props )
+    public static synchronized WikiEngine getInstance(final ServletContext context, 
+                                                      final Configuration conf )
         throws InternalWikiException
     {
+        Configuration wikiConf = conf;
         String appid = Integer.toString(context.hashCode()); //FIXME: Kludge, use real type.
 
         context.log( "Application " + appid +" requests WikiEngine.");
@@ -277,11 +281,11 @@ public class WikiEngine
             context.log(" Assigning new log to "+appid);
             try
             {
-                if( props == null )
+                if( wikiConf == null )
                 {
-                    props = loadWebAppProps( context );
+                    wikiConf = loadWebAppProps( context );
                 }
-                engine = new WikiEngine( context, appid, props );
+                engine = new WikiEngine( context, appid, conf );
             }
             catch( Exception e )
             {
@@ -301,13 +305,11 @@ public class WikiEngine
      *  Instantiate the WikiEngine using a given set of properties.
      *  Use this constructor for testing purposes only.
      */
-    public WikiEngine( Properties properties )
+    public WikiEngine(final Configuration conf)
         throws WikiException
     {
-        wikiRelativePathes = false; // No root dir driven path references
         setRootPath(null);           // No root dir defined
-
-        initialize( properties );
+        initialize( conf );
     }
 
     /**
@@ -317,53 +319,62 @@ public class WikiEngine
      * be overridden by setting PARAM_PROPERTYFILE in the server or webapp
      * configuration.)
      */
-    private static Properties loadWebAppProps( ServletContext context )
+    private static Configuration loadWebAppProps( ServletContext context )
     {
-        String      propertyFile   = context.getInitParameter(PARAM_PROPERTYFILE);
-        InputStream propertyStream = null;
-
+        String      configFile   = context.getInitParameter(PARAM_CONFIGFILE);
+        InputStream configStream = null;
         try
         {
             //
-            //  Figure out where our properties lie.
+            //  Figure out where our configuration lies.
             //
-            if( propertyFile == null )
+            if( configFile == null )
             {
-                context.log("No " + PARAM_PROPERTYFILE + " defined for this context, "
-                        + "using default from " + PARAM_PROPERTYFILE_DEFAULT);
+                context.log("No " + PARAM_CONFIGFILE + " defined for this context, "
+                        + "using default from " + PARAM_CONFIGFILE_DEFAULT);
 
-                //  Use the default property file.
-                propertyStream = context.getResourceAsStream(PARAM_PROPERTYFILE_DEFAULT);
+                //  Use the default config file.
+                configStream = context.getResourceAsStream(PARAM_CONFIGFILE_DEFAULT);
             }
             else
             {
-                context.log("Reading properties from " + propertyFile + " instead of default.");
-                propertyStream = new FileInputStream( new File(propertyFile) );
+                context.log("Reading Configuration from " + configFile);
+                configStream = new FileInputStream( new File(configFile) );
             }
 
-            if( propertyStream == null )
+            if( configStream == null )
             {
-                throw new WikiException("Property file cannot be found!"+propertyFile);
+                throw new WikiException("Config file cannot be found!" + configFile);
             }
 
-            Properties props = new Properties( TextUtil.createProperties( PARAM_PAGES ) );
-            props.load( propertyStream );
+            InputStreamReader isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+            PropertiesConfiguration conf = new PropertiesConfiguration();
+            conf.setThrowExceptionOnMissing(true);
+            conf.load(isr);
 
-            return props;
+            Map pageMap = TextUtil.createMap(PARAM_PAGES);
+            
+            for (Iterator it = pageMap.keySet().iterator(); it.hasNext(); )
+            {
+                String key = (String) it.next();
+                conf.addProperty(key, pageMap.get(key));
+            }
+
+            return conf;
         }
         catch( Exception e )
         {
-            context.log( Release.APPNAME + ": Unable to load and setup properties from jspwiki.properties", e);
+            context.log( Release.APPNAME + ": Unable to load and setup configuration from jspwiki.properties", e);
         }
         finally
         {
             try
             {
-                propertyStream.close();
+                configStream.close();
             }
             catch( IOException e )
             {
-                context.log("Unable to close property stream - something must be seriously wrong.", e);
+                context.log("Unable to close config stream - something must be seriously wrong.", e);
             }
         }
 
@@ -373,15 +384,15 @@ public class WikiEngine
     
     /**
      *  Instantiate using this method when you're running as a servlet and
-     *  WikiEngine will figure out where to look for the property
+     *  WikiEngine will figure out where to look for the configuration
      *  file.
      *  Do not use this method - use WikiEngine.getInstance() instead.
      */
-    protected WikiEngine( ServletContext context, String appid, Properties props )
+    protected WikiEngine( ServletContext context, String appid, Configuration conf )
         throws WikiException
     {
-        InputStream propertyStream = null;
-        String      propertyFile   = context.getInitParameter(PARAM_PROPERTYFILE);
+        InputStream confStream = null;
+        String      confFile   = context.getInitParameter(PARAM_CONFIGFILE);
 
         m_servletContext = context;
         m_appid          = appid;
@@ -392,45 +403,45 @@ public class WikiEngine
             //  Note: May be null, if JSPWiki has been deployed in a WAR file.
             //
             setRootPath(context.getRealPath("/"));
-            initialize( props );
+            initialize( conf );
             log.info("Root path for this Wiki is: '" + getRootPath() + "'");
         }
         catch( Exception e )
         {
-            context.log(Release.APPNAME + ": Unable to load and setup properties from jspwiki.properties. ", e);
+            context.log(Release.APPNAME + ": Unable to load and setup configuration.", e);
         }
     }
 
     /**
      *  Does all the real initialization.
      */
-    private void initialize( Properties props )
+    private void initialize(Configuration conf)
         throws WikiException
     {
         m_startTime  = new Date();
 
-        wikiRelativePathes = TextUtil.getBooleanProperty(
-                props,
+        wikiRelativePathes = conf.getBoolean(
                 PROP_WIKIRELATIVE_PATHES,
                 PROP_WIKIRELATIVE_PATHES_DEFAULT);
 
-        props.setProperty(PROP_ROOTDIR, 
+        conf.setProperty(PROP_ROOTDIR, 
                 wikiRelativePathes ? getRootPath() : "");
 
-        m_properties = props;
+        this.conf = conf;
 
         //
         //  Initialized log4j.  However, make sure that
         //  we don't initialize it multiple times.  Also, if
         //  all of the log4j statements have been removed from
         //  the property file, we do not do any property setting
-        //  either.q
+        //  either.
         //
         if( !c_configured )
         {
-            if( props.getProperty("log4j.rootCategory") != null )
+            if( conf.getProperty("log4j.rootCategory") != null )
             {
-                PropertyConfigurator.configure( props );
+                Properties p = ConfigurationConverter.getProperties(conf);
+                PropertyConfigurator.configure(p);
             }
             c_configured = true;
         }
@@ -443,7 +454,7 @@ public class WikiEngine
         //
         //  Create and find the default working directory.
         //
-        m_workDir        = props.getProperty( PROP_WORKDIR );
+        m_workDir        = conf.getString(PROP_WORKDIR,null);
 
         if( m_workDir == null )
         {
@@ -461,16 +472,12 @@ public class WikiEngine
         //
         //  Create and find the pages directory (might be null e.g. for JDBC)
         //
-        m_pageDir = props.getProperty(PROP_PAGEDIR);
+        m_pageDir = conf.getString(PROP_PAGEDIR, null);
+
         if( m_pageDir != null )
         {
             m_pageDir = getValidPath(m_pageDir);
-        }
-       
-        createDirectory(m_pageDir);
-
-        if (m_pageDir != null)
-        {
+            createDirectory(m_pageDir);
             log.info("JSPWiki pages directory is '" + m_pageDir + "'");
         }
         else
@@ -482,51 +489,44 @@ public class WikiEngine
         //
         //  Create and find the storages directory (might be null e.g. for JDBC)
         //
-        m_storageDir = props.getProperty(PROP_STORAGEDIR);
+        m_storageDir = conf.getString(PROP_STORAGEDIR, null);
         if( m_storageDir != null )
         {
             m_storageDir = getValidPath(m_storageDir);
-        }
-       
-        createDirectory(m_storageDir);
-
-        if (m_storageDir != null)
-        {
-            log.info("JSPWiki storages directory is '" + m_storageDir + "'");
+            createDirectory(m_storageDir);
+            log.info("JSPWiki storage directory is '" + m_storageDir + "'");
         }
         else
         {
             log.info("No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
-
-        m_saveUserInfo   = TextUtil.getBooleanProperty(
-                props,
+        m_saveUserInfo   = conf.getBoolean(
                 PROP_STOREUSERNAME, 
                 PROP_STOREUSERNAME_DEFAULT);
         
-        m_useUTF8        = "UTF-8".equals( props.getProperty( 
+        m_useUTF8        = "UTF-8".equals( conf.getString( 
                                                    PROP_ENCODING,
                                                    PROP_ENCODING_DEFAULT));
         
-        m_baseURL        = props.getProperty(
+        m_baseURL        = conf.getString(
                 PROP_BASEURL,
                 PROP_BASEURL_DEFAULT);
 
 
-        m_beautifyTitle  = TextUtil.getBooleanProperty( props,
+        m_beautifyTitle  = conf.getBoolean(
                 PROP_BEAUTIFYTITLE, 
                 PROP_BEAUTIFYTITLE_DEFAULT);
 
-        m_matchEnglishPlurals = TextUtil.getBooleanProperty( props,
+        m_matchEnglishPlurals = conf.getBoolean(
                 PROP_MATCHPLURALS, 
                 PROP_MATCHPLURALS_DEFAULT );
 
-        m_templateDir    = props.getProperty( 
+        m_templateDir    = conf.getString( 
                 PROP_TEMPLATEDIR,
                 PROP_TEMPLATEDIR_DEFAULT );
 
-        m_frontPage      = props.getProperty(
+        m_frontPage      = conf.getString(
                 PROP_FRONTPAGE,   
                 PROP_FRONTPAGE_DEFAULT );
 
@@ -537,19 +537,19 @@ public class WikiEngine
         try
         {
             Class urlclass = ClassUtil.findClass( DEFAULT_CLASS_PREFIX,
-                                                  props.getProperty(
+                                                  conf.getString(
                                                           PROP_CLASS_URLCONSTRUCTOR,
                                                           PROP_CLASS_URLCONSTRUCTOR_DEFAULT ) );
 
             m_urlConstructor = (URLConstructor) urlclass.newInstance();               
-            m_urlConstructor.initialize( this, props );
+            m_urlConstructor.initialize( this, conf );
 
-            m_pageManager       = new PageManager( this, props );
-            m_pluginManager     = new PluginManager( props );
-            m_differenceManager = new DifferenceManager( this, props );
-            m_attachmentManager = new AttachmentManager( this, props );
-            m_variableManager   = new VariableManager( props );
-            m_filterManager     = new FilterManager( this, props );
+            m_pageManager       = new PageManager( this, conf );
+            m_pluginManager     = new PluginManager( conf );
+            m_differenceManager = new DifferenceManager( this, conf );
+            m_attachmentManager = new AttachmentManager( this, conf );
+            m_variableManager   = new VariableManager( conf );
+            m_filterManager     = new FilterManager( this, conf );
 
             //
             //  ReferenceManager has the side effect of loading all
@@ -558,9 +558,9 @@ public class WikiEngine
             //
             initReferenceManager();
 
-            m_templateManager   = new TemplateManager( this, props );
-            m_authorizationManager = new AuthorizationManager( this, props );
-            m_userManager       = new UserManager( this, props );
+            m_templateManager   = new TemplateManager( this, conf );
+            m_authorizationManager = new AuthorizationManager( this, conf );
+            m_userManager       = new UserManager( this, conf );
 
         }
         catch( Exception e )
@@ -575,12 +575,11 @@ public class WikiEngine
         //
         try
         {
-            if( TextUtil.getBooleanProperty(
-                        props, 
+            if( conf.getBoolean( 
                         PROP_RSS_GENERATE, 
                         PROP_RSS_GENERATE_DEFAULT))
             {
-                m_rssGenerator = new RSSGenerator( this, props );
+                m_rssGenerator = new RSSGenerator( this, conf );
             }
         }
         catch( Exception e )
@@ -689,9 +688,9 @@ public class WikiEngine
      *  TranslatorReader for example.
      */
 
-    public Properties getWikiProperties()
+    public Configuration getWikiConfiguration()
     {
-        return m_properties;
+        return conf;
     }
 
     /**
@@ -728,7 +727,7 @@ public class WikiEngine
     public String getPluginSearchPath()
     {
         // FIXME: This method should not be here, probably.
-        return m_properties.getProperty( PROP_CLASS_PLUGIN_SEARCHPATH );
+        return conf.getString( PROP_CLASS_PLUGIN_SEARCHPATH, null);
     }
 
     /**
@@ -930,7 +929,7 @@ public class WikiEngine
      */
     public String getInterWikiURL( String wikiName )
     {
-        return m_properties.getProperty(PROP_INTERWIKIREF + wikiName);
+        return conf.getString(PROP_INTERWIKIREF + wikiName, "");
     }
 
     /**
@@ -938,19 +937,16 @@ public class WikiEngine
      */
     public Collection getAllInterWikiLinks()
     {
-        Vector v = new Vector();
-
-        for( Enumeration i = m_properties.propertyNames(); i.hasMoreElements(); )
+        List l = new ArrayList();
+        
+        Configuration iwConf = conf.subset(PROP_INTERWIKIREF);
+        	
+        for (Iterator it = iwConf.getKeys(); it.hasNext();)
         {
-            String prop = (String) i.nextElement();
-
-            if( prop.startsWith( PROP_INTERWIKIREF ) )
-            {
-                v.add( prop.substring( prop.lastIndexOf(".")+1 ) );
-            }
+            String key = (String) it.next();
+            l.add(iwConf.getString(key));
         }
-
-        return v;
+        return l;
     }
 
     /**
@@ -974,10 +970,12 @@ public class WikiEngine
     public String getSpecialPageReference( String original )
     {
         String propname = PARAM_PAGES_PREFIX + original;
-        String specialpage = m_properties.getProperty( propname );
+        String specialpage = conf.getString( propname, null);
 
         if( specialpage != null )
+        {
             specialpage = getURL( WikiContext.NONE, specialpage, null, true );
+        }
         
         return specialpage;
     }
@@ -989,7 +987,7 @@ public class WikiEngine
     // FIXME: Should use servlet context as a default instead of a constant.
     public String getApplicationName()
     {
-        String appName = m_properties.getProperty(
+        String appName = conf.getString(
                 PROP_APPNAME,
                 PROP_APPNAME_DEFAULT);
         return appName;
@@ -1831,20 +1829,16 @@ public class WikiEngine
             path = path.substring(1);
         }
 
-        for( Iterator i = m_properties.entrySet().iterator(); i.hasNext(); )
+        Configuration pagesConf = conf.subset(PARAM_PAGES_PREFIX);
+        
+        for( Iterator it = conf.getKeys(); it.hasNext(); )
         {
-            Map.Entry entry = (Map.Entry) i.next();
-           
-            String key = (String)entry.getKey();
-
-            if( key.startsWith( PARAM_PAGES_PREFIX ) )
+            String key = (String) it.next();
+            String value = pagesConf.getString(key);
+            
+            if(value.equals(path))
             {
-                String value = (String)entry.getValue();
-
-                if( value.equals( path ) )
-                {                    
-                    return key.substring( PARAM_PAGES_PREFIX.length() );
-                }
+                return key;
             }
         }
 
@@ -2107,11 +2101,11 @@ public class WikiEngine
 
             try
             {
-                String fileName = m_properties.getProperty(
+                String fileName = conf.getString(
                         PROP_RSS_FILE,
                         PROP_RSS_FILE_DEFAULT);
 
-                int rssInterval = TextUtil.getIntegerProperty( m_properties, 
+                int rssInterval = conf.getInt( 
                         PROP_RSS_INTERVAL,
                         PROP_RSS_INTERVAL_DEFAULT);
 
@@ -2178,5 +2172,4 @@ public class WikiEngine
             m_rssURL = null;
         }
     }
-
 }

@@ -23,9 +23,9 @@ package com.ecyrd.jspwiki.diff;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.jrcs.diff.AddDelta;
 import org.apache.commons.jrcs.diff.ChangeDelta;
 import org.apache.commons.jrcs.diff.Chunk;
@@ -104,7 +104,7 @@ public class ContextualDiffProvider implements DiffProvider
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
      *      java.util.Properties)
      */
-    public void initialize(WikiEngine engine, Properties properties)
+    public void initialize(WikiEngine engine, Configuration conf)
 	throws NoRequiredPropertyException, IOException
     {
     }

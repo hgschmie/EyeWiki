@@ -5,12 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -30,13 +31,14 @@ public class CachingProviderTest extends TestCase
     {
         TestEngine.emptyWorkDir();
 
-        Properties props2 = new Properties();
+        PropertiesConfiguration conf2 = new PropertiesConfiguration();
 
-        props2.load( TestEngine.findTestProperties() );
-        PropertyConfigurator.configure(props2);
+        conf2.load( TestEngine.findTestProperties() );
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf2));
     }
 
     public void tearDown()
+    	throws Exception
     {
         TestEngine.emptyWorkDir();
         TestEngine.deleteTestPage("Testi");
@@ -48,14 +50,14 @@ public class CachingProviderTest extends TestCase
     public void testInitialization()
         throws Exception
     {
-        Properties props = new Properties();
-        props.load( TestEngine.findTestProperties() );
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( "jspwiki.usePageCache", "true" );
-        props.setProperty( "jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.CounterProvider" );
-        props.setProperty( "jspwiki.cachingProvider.capacity", "100" );
+        conf.setProperty( "jspwiki.usePageCache", "true" );
+        conf.setProperty( "jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.CounterProvider" );
+        conf.setProperty( "jspwiki.cachingProvider.capacity", "100" );
 
-        TestEngine engine = new TestEngine( props );
+        TestEngine engine = new TestEngine( conf );
 
         CounterProvider p = (CounterProvider)((CachingProvider)engine.getPageManager().getProvider()).getRealProvider();
 
@@ -74,14 +76,14 @@ public class CachingProviderTest extends TestCase
     public void testSneakyAdd()
         throws Exception
     {
-        Properties props = new Properties();
-        props.load( TestEngine.findTestProperties() );
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load( TestEngine.findTestProperties() );
 
-        props.setProperty( "jspwiki.cachingProvider.cacheCheckInterval", "2" );
+        conf.setProperty( "jspwiki.cachingProvider.cacheCheckInterval", "2" );
         
-        TestEngine engine = new TestEngine( props );
+        TestEngine engine = new TestEngine( conf );
         
-        String dir = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
+        String dir = conf.getString(WikiProperties.PROP_PAGEDIR );
         
         File f = new File( dir, "Testi.txt" );
         String content = "[fuufaa]";

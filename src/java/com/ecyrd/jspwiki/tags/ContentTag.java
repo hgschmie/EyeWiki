@@ -20,7 +20,8 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
@@ -39,9 +40,9 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 public class ContentTag
     extends WikiTagBase
 {
-    private static Properties c_defaultMappings;
+    private static Map c_defaultMappings;
 
-    private Properties m_mappings = new Properties( c_defaultMappings );
+    private Map m_mappings = new HashMap(c_defaultMappings);
 
     /**
      *  Lists the default pages for each JSP page.  It first contains the 
@@ -69,57 +70,57 @@ public class ContentTag
 
     static
     {
-        c_defaultMappings = TextUtil.createProperties( DEFAULT_JSP_PAGES );
+        c_defaultMappings = TextUtil.createMap( DEFAULT_JSP_PAGES );
     }
 
     public void setView( String s )
     {
-        m_mappings.setProperty( WikiContext.VIEW, s );
+        m_mappings.put( WikiContext.VIEW, s );
     }
 
     public void setDiff( String s )
     {
-        m_mappings.setProperty( WikiContext.DIFF, s );
+        m_mappings.put( WikiContext.DIFF, s );
     }
 
     public void setInfo( String s )
     {
-        m_mappings.setProperty( WikiContext.INFO, s );
+        m_mappings.put( WikiContext.INFO, s );
     }
 
     public void setPreview( String s )
     {
-        m_mappings.setProperty( WikiContext.PREVIEW, s );
+        m_mappings.put( WikiContext.PREVIEW, s );
     }
 
     public void setConflict( String s )
     {
-        m_mappings.setProperty( WikiContext.CONFLICT, s );
+        m_mappings.put( WikiContext.CONFLICT, s );
     }
 
     public void setFind( String s )
     {
-        m_mappings.setProperty( WikiContext.FIND, s );
+        m_mappings.put( WikiContext.FIND, s );
     }
 
     public void setPrefs( String s )
     {
-        m_mappings.setProperty( WikiContext.PREFS, s );
+        m_mappings.put( WikiContext.PREFS, s );
     }
 
     public void setError( String s )
     {
-        m_mappings.setProperty( WikiContext.ERROR, s );
+        m_mappings.put( WikiContext.ERROR, s );
     }
 
     public void setEdit( String s )
     {
-        m_mappings.setProperty( WikiContext.EDIT, s );
+        m_mappings.put( WikiContext.EDIT, s );
     }
 
     public void setComment( String s )
     {
-        m_mappings.setProperty( WikiContext.COMMENT, s );
+        m_mappings.put( WikiContext.COMMENT, s );
     }
 
     public final int doWikiStartTag()
@@ -134,7 +135,7 @@ public class ContentTag
     {
         try
         {
-            String jspPage = m_mappings.getProperty( m_wikiContext.getRequestContext() );
+            String jspPage = (String) m_mappings.get( m_wikiContext.getRequestContext() );
 
             if( jspPage == null )
             {

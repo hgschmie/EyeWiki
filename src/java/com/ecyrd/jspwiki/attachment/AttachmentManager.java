@@ -27,12 +27,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -75,7 +74,7 @@ public class AttachmentManager
      */
 
     // FIXME: Perhaps this should fail somehow.
-    public AttachmentManager( WikiEngine engine, Properties props )
+    public AttachmentManager( WikiEngine engine, Configuration conf)
     {
         String classname;
 
@@ -85,8 +84,7 @@ public class AttachmentManager
         //
         //  If user wants to use a cache, then we'll use the CachingProvider.
         //
-        boolean useCache = TextUtil.getBooleanProperty(
-                props,
+        boolean useCache = conf.getBoolean(
                 PROP_USECACHE,
                 PROP_USECACHE_DEFAULT);
 
@@ -96,7 +94,7 @@ public class AttachmentManager
         }
         else
         {
-            classname = props.getProperty(
+            classname = conf.getString(
                     PROP_CLASS_ATTACHMENTPROVIDER,
                     PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT);
         }
@@ -120,7 +118,7 @@ public class AttachmentManager
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();
 
-            m_provider.initialize( m_engine, props );
+            m_provider.initialize( m_engine, conf);
         }
         catch( ClassNotFoundException e )
         {

@@ -6,13 +6,14 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Properties;
 
 import javax.servlet.ServletException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TestEngine;
@@ -22,7 +23,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 public class CounterPluginTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
     TestEngine testEngine;
     WikiContext context;
     PluginManager manager;
@@ -35,9 +36,9 @@ public class CounterPluginTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
+        conf.load( TestEngine.findTestProperties() );
 
-        testEngine = new TestEngine(props);
+        testEngine = new TestEngine(conf);
     }
 
     public void tearDown()

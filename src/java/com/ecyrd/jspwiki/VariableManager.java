@@ -22,11 +22,11 @@ package com.ecyrd.jspwiki;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.auth.UserProfile;
@@ -45,7 +45,7 @@ public class VariableManager
     public static final String VAR_ERROR = "error";
     public static final String VAR_MSG   = "msg";
     
-    public VariableManager( Properties props )
+    public VariableManager(Configuration conf)
     {
     }
 
@@ -322,9 +322,9 @@ public class VariableManager
             
             if( varName.startsWith("jspwiki.") )
             {
-                Properties props = context.getEngine().getWikiProperties();
+                Configuration conf = context.getEngine().getWikiConfiguration();
 
-                res = props.getProperty( varName );
+                res = conf.getString(res, null);
                 if( res != null )
                 {
                     return res;

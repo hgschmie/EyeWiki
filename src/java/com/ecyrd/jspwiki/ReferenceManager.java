@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
@@ -130,7 +131,7 @@ public class ReferenceManager
     /** The WikiEngine that owns this object. */
     private WikiEngine     m_engine;
 
-    private boolean        m_matchEnglishPlurals = false;
+    private boolean        m_matchEnglishPlurals = WikiProperties.PROP_MATCHPLURALS_DEFAULT;
 
     private static Logger log = Logger.getLogger(ReferenceManager.class);
 
@@ -147,9 +148,9 @@ public class ReferenceManager
         m_referredBy = new HashMap();
         m_engine = engine;
 
-        m_matchEnglishPlurals = TextUtil.getBooleanProperty( engine.getWikiProperties(),
-                                                             WikiEngine.PROP_MATCHPLURALS, 
-                                                             m_matchEnglishPlurals );
+        Configuration conf = engine.getWikiConfiguration();
+        m_matchEnglishPlurals = conf.getBoolean(WikiProperties.PROP_MATCHPLURALS, 
+                WikiProperties.PROP_MATCHPLURALS_DEFAULT );
 
     }
 

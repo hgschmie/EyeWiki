@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -48,14 +49,12 @@ public class FileAuthenticator
 
     static Logger log = Logger.getLogger( FileAuthenticator.class );
 
-    public void initialize( WikiEngine engine, Properties props )
+    public void initialize( WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, WikiException
     {
         // No default, you _must_ configure this
         m_fileName = engine.getValidPath(
-                WikiEngine.getRequiredProperty(
-                        props,
-                        WikiProperties.PROP_AUTH_FILENAME));
+                	conf.getString(WikiProperties.PROP_AUTH_FILENAME));
 
         log.info("Authenticator file is at " + m_fileName);
     }

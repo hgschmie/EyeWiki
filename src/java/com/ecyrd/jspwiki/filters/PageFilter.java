@@ -27,7 +27,7 @@ public interface PageFilter
      *  Is called whenever the a new PageFilter is instantiated and
      *  reset.
      */
-    public void initialize( Properties properties )
+    public void initialize(Properties props)
         throws FilterException;
 
     /**

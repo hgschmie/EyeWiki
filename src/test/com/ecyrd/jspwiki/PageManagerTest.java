@@ -1,19 +1,19 @@
 
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.providers.CachingProvider;
 
 public class PageManagerTest extends TestCase
 {
-    Properties props = new Properties();
+    PropertiesConfiguration conf = new PropertiesConfiguration();
 
     TestEngine engine;
 
@@ -25,9 +25,9 @@ public class PageManagerTest extends TestCase
     public void setUp()
         throws Exception
     {
-        props.load( TestEngine.findTestProperties() );
-        PropertyConfigurator.configure(props);
-        engine = new TestEngine(props);
+        conf.load( TestEngine.findTestProperties() );
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
+        engine = new TestEngine(conf);
     }
 
     public void tearDown()
@@ -37,8 +37,8 @@ public class PageManagerTest extends TestCase
     public void testPageCacheExists()
         throws Exception
     {
-        props.setProperty( "jspwiki.usePageCache", "true" );
-        PageManager m = new PageManager( engine, props );
+        conf.setProperty( "jspwiki.usePageCache", Boolean.TRUE);
+        PageManager m = new PageManager( engine,conf);
 
         assertTrue( m.getProvider() instanceof CachingProvider );
     }
@@ -46,8 +46,8 @@ public class PageManagerTest extends TestCase
     public void testPageCacheNotInUse()
         throws Exception
     {
-        props.setProperty( "jspwiki.usePageCache", "false" );
-        PageManager m = new PageManager( engine, props );
+        conf.setProperty( "jspwiki.usePageCache", Boolean.FALSE);
+        PageManager m = new PageManager( engine, conf);
 
         assertTrue( !(m.getProvider() instanceof CachingProvider) );
     }
