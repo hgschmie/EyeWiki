@@ -78,7 +78,7 @@ public class RCSProviderTest extends TestCase
     {
         String text = "";
         String name = NAME1;
-        int    maxver = 2000; // Save 2000 versions.
+        int    maxver = 200; // Save 200 versions.
         Benchmark mark = new Benchmark();
 
         mark.start();
@@ -89,7 +89,7 @@ public class RCSProviderTest extends TestCase
         }
         mark.stop();
 
-        System.out.println("Benchmark: "+mark.toString(2000)+" pages/second");
+        System.out.println("Benchmark: "+mark.toString(200)+" pages/second");
         WikiPage pageinfo = engine.getPage( NAME1 );
 
         assertEquals( "wrong version", maxver, pageinfo.getVersion() );
