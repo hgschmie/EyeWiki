@@ -55,6 +55,7 @@ import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.diff.DifferenceManager;
 import com.ecyrd.jspwiki.filters.FilterException;
 import com.ecyrd.jspwiki.filters.FilterManager;
 import com.ecyrd.jspwiki.plugin.PluginManager;
@@ -178,7 +179,7 @@ public class WikiEngine
     private TemplateManager  m_templateManager = null;
 
     /** Does all our diffs for us. */
-    private DifferenceEngine m_differenceEngine;
+    private DifferenceManager m_differenceManager;
 
     /** Handlers page filters. */
     private FilterManager    m_filterManager;
@@ -552,7 +553,7 @@ public class WikiEngine
 
             m_pageManager       = new PageManager( this, props );
             m_pluginManager     = new PluginManager( props );
-            m_differenceEngine  = new DifferenceEngine( props, getContentEncoding() );
+            m_differenceManager = new DifferenceManager( this, props );
             m_attachmentManager = new AttachmentManager( this, props );
             m_variableManager   = new VariableManager( props );
             m_filterManager     = new FilterManager( this, props );
@@ -1731,21 +1732,7 @@ public class WikiEngine
             page1 = "";
         }
 
-        String diff  = m_differenceEngine.makeDiff( page1, page2 );
-
-        diff = TextUtil.replaceEntities( diff );
-        
-        try
-        {
-            if( diff.length() > 0 )
-            {
-                diff = m_differenceEngine.colorizeDiff( diff );
-            }
-        }
-        catch( IOException e )
-        {
-            log.error("Failed to colorize diff result.", e);
-        }
+        String diff  = m_differenceManager.makeDiff( page1, page2 );
 
         return diff;
     }
