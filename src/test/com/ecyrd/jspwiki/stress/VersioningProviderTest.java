@@ -1,4 +1,4 @@
-package stress;
+package com.ecyrd.jspwiki.stress;
 
 import java.io.File;
 import java.util.Properties;
@@ -12,7 +12,7 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
-public class StressTestVersioningProvider extends TestCase
+public class VersioningProviderTest extends TestCase
 {
     public static final String NAME1 = "Test1";
 
@@ -20,7 +20,7 @@ public class StressTestVersioningProvider extends TestCase
 
     TestEngine engine;
 
-    public StressTestVersioningProvider( String s )
+    public VersioningProviderTest( String s )
     {
         super( s );
     }
@@ -75,6 +75,6 @@ public class StressTestVersioningProvider extends TestCase
 
     public static Test suite()
     {
-        return new TestSuite( StressTestVersioningProvider.class );
+        return new TestSuite( VersioningProviderTest.class );
     }
 }

@@ -30,6 +30,10 @@
 
   <preGoal name="test:test-resources">
     <ant:mkdir dir="${maven.build.dir}/tests" />
+
+    <ant:copy file="src/test/etc/TextFormattingRules.txt" tofile="${maven.build.dir}/test-classes/TextFormattingRules.txt" />
+    <ant:copy file="src/test/etc/TestPlugins.txt" tofile="${maven.build.dir}/test-classes/TestPlugins.txt" />
+
     <ant:copy file="src/test/etc/jspwiki.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki.properties" />
     <ant:copy file="src/test/etc/jspwiki_rcs.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki_rcs.properties" />
     <ant:copy file="src/test/etc/jspwiki_vers.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki_vers.properties" />

@@ -1,4 +1,4 @@
-package stress;
+package com.ecyrd.jspwiki.stress;
 
 import java.io.File;
 import java.util.Properties;
@@ -13,9 +13,9 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 /**
- *  Does stress testing on the RCSProvider.
+ *  Does com.ecyrd.jspwiki.stress testing on the RCSProvider.
  */
-public class StressTestRCSProvider extends TestCase
+public class RCSProviderTest extends TestCase
 {
     public static final String NAME1 = "Test1";
 
@@ -23,7 +23,7 @@ public class StressTestRCSProvider extends TestCase
 
     TestEngine engine;
 
-    public StressTestRCSProvider( String s )
+    public RCSProviderTest( String s )
     {
         super( s );
     }
@@ -98,6 +98,6 @@ public class StressTestRCSProvider extends TestCase
 
     public static Test suite()
     {
-        return new TestSuite( StressTestRCSProvider.class );
+        return new TestSuite( RCSProviderTest.class );
     }
 }

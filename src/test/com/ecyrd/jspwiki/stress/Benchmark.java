@@ -1,4 +1,4 @@
-package stress;
+package com.ecyrd.jspwiki.stress;
 
 public class Benchmark
 {

@@ -1,4 +1,4 @@
-package stress;
+package com.ecyrd.jspwiki.stress;
 
 import java.io.File;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
-public class StressTestSpeed extends TestCase
+public class SpeedTest extends TestCase
 {
     private static int ITERATIONS = 1000;
     public static final String NAME1 = "Test1";
@@ -25,7 +25,7 @@ public class StressTestSpeed extends TestCase
 
     TestEngine engine;
 
-    public StressTestSpeed( String s )
+    public SpeedTest( String s )
     {
         super( s );
     }
@@ -110,7 +110,7 @@ public class StressTestSpeed extends TestCase
 
     public static Test suite()
     {
-        return new TestSuite( StressTestSpeed.class );
+        return new TestSuite( SpeedTest.class );
     }
 }
 
