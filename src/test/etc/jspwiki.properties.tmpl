@@ -13,8 +13,9 @@ jspwiki.usePageCache = true
 #
 #  Determines where wiki files are kept.
 #
-jspwiki.fileSystemProvider.pageDir = @tests.pagedir@
+jspwiki.pageDir = @tests.pagedir@
 jspwiki.workDir = @tests.workdir@
+jspwiki.storageDir = @tests.pagedir@
 
 jspwiki.translatorReader.camelCaseLinks = true
 
@@ -24,7 +25,6 @@ jspwiki.translatorReader.matchEnglishPlurals = true
 jspwiki.translatorReader.useOutlinkImage = false
 
 jspwiki.attachmentProvider = BasicAttachmentProvider
-jspwiki.basicAttachmentProvider.storageDir = @tests.pagedir@
 
 jspwiki.encoding = ISO-8859-1
 

@@ -3,7 +3,6 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 import junit.framework.Test;
@@ -16,6 +15,7 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 
@@ -39,14 +39,13 @@ public class FileSystemProviderTest extends TestCase
         m_pagedir = System.getProperties().getProperty("java.io.tmpdir");
 
         Properties props2 = new Properties();
-
+        props2.load( TestEngine.findTestProperties() );
+        PropertyConfigurator.configure(props2);
+        
         props.setProperty( PageManager.PROP_CLASS_PAGEPROVIDER, "FileSystemProvider" );
         props.setProperty( WikiProperties.PROP_PAGEDIR, 
                            m_pagedir );
 
-        props2.load( TestEngine.findTestProperties() );
-        PropertyConfigurator.configure(props2);
-        
         m_engine = new TestEngine(props);
 
         m_provider = new FileSystemProvider();
@@ -175,23 +174,24 @@ public class FileSystemProviderTest extends TestCase
         String tmpdir = m_pagedir;
         String dirname = "non-existant-directory";
 
-        String newdir = tmpdir + File.separator + dirname;
+        File newDir = new File (tmpdir, dirname);
+        newDir.delete();
 
         Properties props = new Properties();
 
         props.setProperty( WikiProperties.PROP_PAGEDIR, 
-                           newdir );
+                           newDir.getAbsolutePath() );
 
         FileSystemProvider test = new FileSystemProvider();
 
-        test.initialize( m_engine, props );
+        TestEngine m_engine2 = new TestEngine(props);
 
-        File f = new File( newdir );
+        test.initialize( m_engine2, props );
 
-        assertTrue( "didn't create it", f.exists() );
-        assertTrue( "isn't a dir", f.isDirectory() );
+        assertTrue( "didn't create it", newDir.exists() );
+        assertTrue( "isn't a dir", newDir.isDirectory() );
 
-        f.delete();
+        newDir.delete();
     }
 
     public void testDirectoryIsFile()
@@ -212,13 +212,18 @@ public class FileSystemProviderTest extends TestCase
 
             try
             {
-                test.initialize( m_engine, props );
+                TestEngine m_engine2 = new TestEngine(props);
+                test.initialize( m_engine2, props );
 
                 fail( "Wiki did not warn about wrong property." );
             }
-            catch( IOException e )
+            catch( WikiException e )
             {
                 // This is okay.
+            }
+            catch (Exception e)
+            {
+                fail("Did not throw WikiException: " + e.getClass().getName());
             }
         }
         finally
