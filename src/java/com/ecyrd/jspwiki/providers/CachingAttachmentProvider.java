@@ -168,8 +168,10 @@ public class CachingAttachmentProvider
             }
             catch( ProviderException ex )
             {
-                log.warn("Provider failed, returning cached content");
+                // Make sure to avoid possible deadlock with locked cache entry
+                m_cache.cancelUpdate(page.getName());
 
+                log.warn("Provider failed, returning cached content");
                 return (Collection)nre.getCacheContent();
             }
         }
@@ -270,6 +272,9 @@ public class CachingAttachmentProvider
             }
             catch( ProviderException ex )
             {
+                // Make sure to avoid possible deadlock with locked cache entry
+                m_cache.cancelUpdate(page.getName());
+
                 log.warn("Provider failed, returning cached content");
 
                 c = (Collection)nre.getCacheContent();
