@@ -20,8 +20,10 @@
 
 package com.ecyrd.jspwiki.diff;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Properties;
 
 import org.apache.log4j.Category;
@@ -30,6 +32,7 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 
 /**
  * This DiffProvider allows external command line tools to be used to generate
@@ -39,15 +42,17 @@ public class ExternalDiffProvider implements DiffProvider
 {
     private static final Category log = Category.getInstance(ExternalDiffProvider.class);
 
-    /**
-     * Determines the command to be used for 'diff'. This program must be able
-     * to output diffs in the unified format. For example 'diff -u %s1 %s2'.
-     */
-    public static final String PROP_DIFFCOMMAND = "jspwiki.diffCommand";
-
     private String m_diffCommand = null;
     private String m_encoding;
     
+    private static final char DIFF_ADDED_SYMBOL = '+';
+    private static final char DIFF_REMOVED_SYMBOL = '-';
+
+    private static final String CSS_DIFF_ADDED = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
+    private static final String CSS_DIFF_REMOVED = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
+    private static final String CSS_DIFF_UNCHANGED = "<tr><td class=\"diff\">";
+    private static final String CSS_DIFF_CLOSE = "</td></tr>";
+
     //FIXME This could/should be a property for this provider, there is not guarentee that
     //the external program generates a format suitible for the colorization code of the 
     //TraditionalDiffProvider, currently set to true for legacy compatibility.  
@@ -71,12 +76,14 @@ public class ExternalDiffProvider implements DiffProvider
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
      */
     public void initialize(WikiEngine engine, Properties properties)
-	throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
-        m_diffCommand = properties.getProperty(PROP_DIFFCOMMAND);
+        m_diffCommand = properties.getProperty(WikiProperties.PROP_DIFFCOMMAND);
         
         if ((null == m_diffCommand) || (m_diffCommand.trim().equals("")))
-            throw new NoRequiredPropertyException("ExternalDiffProvider missing required property", PROP_DIFFCOMMAND);
+        {
+            throw new NoRequiredPropertyException("ExternalDiffProvider missing required property", WikiProperties.PROP_DIFFCOMMAND);
+        }
         
         m_encoding = engine.getContentEncoding();
     }
@@ -106,7 +113,7 @@ public class ExternalDiffProvider implements DiffProvider
             String htmlWikiDiff = TextUtil.replaceEntities( rawWikiDiff );
 
             if (m_traditionalColorization) //FIXME, see comment near declaration...
-            	diff = TraditionalDiffProvider.colorizeDiff(diff);
+            	diff = colorizeDiff(diff);
             else
                 diff = htmlWikiDiff;
             
@@ -131,4 +138,54 @@ public class ExternalDiffProvider implements DiffProvider
     }
 
 
+    /**
+     * Goes through output provided by a diff command and inserts HTML tags to
+     * make the result more legible. Currently colors lines starting with a +
+     * green, those starting with - reddish (hm, got to think of color blindness
+     * here...).
+     */
+    static String colorizeDiff(String diffText) throws IOException
+    {
+        if (diffText == null)
+            return "Invalid diff - probably something wrong with server setup.";
+
+        String line = null;
+        String start = null;
+        String stop = null;
+
+        BufferedReader in = new BufferedReader(new StringReader(diffText));
+        StringBuffer out = new StringBuffer();
+
+        out.append("<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
+        while (( line = in.readLine() ) != null)
+        {
+            stop = CSS_DIFF_CLOSE;
+
+            if (line.length() > 0)
+            {
+                switch (line.charAt(0))
+                {
+                case DIFF_ADDED_SYMBOL :
+                    start = CSS_DIFF_ADDED;
+                    break;
+                case DIFF_REMOVED_SYMBOL :
+                    start = CSS_DIFF_REMOVED;
+                    break;
+                default :
+                    start = CSS_DIFF_UNCHANGED;
+                }
+            }
+            else
+            {
+                start = CSS_DIFF_UNCHANGED;
+            }
+
+            out.append(start);
+            out.append(line.trim());
+            out.append(stop + "\n");
+        }
+
+        out.append("</table>\n");
+        return ( out.toString() );
+    }
 }

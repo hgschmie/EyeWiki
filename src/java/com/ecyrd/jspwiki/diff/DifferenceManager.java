@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 
@@ -37,12 +38,10 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @author John Volkar
  */
 public class DifferenceManager
+        implements WikiProperties
 {
     private static final Logger log = Logger.getLogger(DifferenceManager.class);
 
-    public static final String PROP_DIFF_PROVIDER = "jspwiki.diffProvider";
-    
-    
     private DiffProvider m_provider;
 
     public DifferenceManager(WikiEngine engine, Properties props)
@@ -56,12 +55,12 @@ public class DifferenceManager
 
     private void loadProvider(Properties props)
     {
-        String providerClassName = props.getProperty( PROP_DIFF_PROVIDER, 
-                                                      TraditionalDiffProvider.class.getName() );
+        String providerClassName = props.getProperty( PROP_CLASS_DIFF_PROVIDER, 
+                                                      PROP_CLASS_DIFF_PROVIDER_DEFAULT);
         
         try
         {
-            Class providerClass = ClassUtil.findClass( "com.ecyrd.jspwiki.diff", providerClassName );
+            Class providerClass = ClassUtil.findClass( DEFAULT_DIFF_CLASS_PREFIX, providerClassName );
             m_provider = (DiffProvider)providerClass.newInstance();
         }
         catch( ClassNotFoundException e )

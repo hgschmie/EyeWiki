@@ -2,17 +2,39 @@
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import java.util.Vector;
+import java.util.StringTokenizer;
 
+import org.apache.commons.jrcs.diff.AddDelta;
+import org.apache.commons.jrcs.diff.ChangeDelta;
+import org.apache.commons.jrcs.diff.Chunk;
+import org.apache.commons.jrcs.diff.DeleteDelta;
+import org.apache.commons.jrcs.diff.Delta;
+import org.apache.commons.jrcs.diff.Diff;
+import org.apache.commons.jrcs.diff.DifferentiationFailedException;
+import org.apache.commons.jrcs.diff.Revision;
+import org.apache.commons.jrcs.diff.RevisionVisitor;
+import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 
 
 /**
+ * A seriously better diff provider, which highlights changes word-by-word using
+ * CSS.
+ *
+ * Suggested by John Volkar.
+ * 
+ * @author John Volkar
+ * @author Janne Jalkanen
+ * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
+
 public class ContextualDiffProvider implements DiffProvider
 {
 
@@ -22,25 +44,29 @@ public class ContextualDiffProvider implements DiffProvider
     //TODO all of these publics can become jspwiki.properties entries...
     //TODO span title= can be used to get hover info...
 
-    public int m_numberOfContexualElements = 0; //TODO 0 means all.
-
     public boolean m_emitChangeNextPreviousHyperlinks = true;
 
     //Don't use spans here the deletion and insertions are nested in this...
     public String m_changeStartHtml = ""; //This could be a image '>' for a start marker
     public String m_changeEndHtml = ""; //and an image for an end '<' marker
 
-    public String m_insertionStartHtml = "<span class='diff-insertion'>";
+    public String m_diffStart = "<div class=\"diff-wikitext\">";
+    public String m_diffEnd = "</div>";
+
+    public String m_insertionStartHtml = "<span class=\"diff-insertion\">";
     public String m_insertionEndHtml = "</span>";
 
-    public String m_deletionStartHtml = "<span class='diff-deletion'>";
+    public String m_deletionStartHtml = "<span class=\"diff-deletion\">";
     public String m_deletionEndHtml = "</span>";
 
+    private String m_anchorPreIndex = "<a name=\"change-";
+    private String m_anchorPostIndex = "\" />";
 
-    private int m_changeNumber;
-    private StringBuffer m_markupBuffer;
-    private boolean m_moreChanges;
+    private String m_backPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
+    private String m_backPostIndex = "\">&lt;&lt;</a>";
 
+    private String m_forwardPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
+    private String m_forwardPostIndex = "\">&gt;&gt;</a>";  
 
     public ContextualDiffProvider()
     {
@@ -52,7 +78,7 @@ public class ContextualDiffProvider implements DiffProvider
      */
     public String getProviderInfo()
     {
-        return "TraditionalDiffProvider";
+        return "ContextualDiffProvider";
     }
 
     /**
@@ -64,48 +90,45 @@ public class ContextualDiffProvider implements DiffProvider
     {
     }
 
-
-
     /**
-     * Brain hurts, not sure of thread safety at this point, reexamine later.
+     * Do a colored diff of the two regions. This. is. serious. fun. ;-) 
      * @see com.ecyrd.jspwiki.diff.DiffProvider#makeDiffHtml(java.lang.String, java.lang.String)
      */
     public synchronized String makeDiffHtml(String wikiOld, String wikiNew)
     {
-        //Might as well esacpe the whole thing once, handles &<>"
-        String htmlizedOld = htmlize(wikiOld);
-        String htmlizedNew = htmlize(wikiNew);
-        
         //Sequencing handles lineterminator to <br /> and every-other consequtive space to a &nbsp;
-        Object[] alpha = sequence(htmlizedOld);
-        Object[] beta = sequence(htmlizedNew);
-/*
-        Diff diff = new Diff(alpha, beta);
+        String[] alpha = sequence(TextUtil.replaceEntities(wikiOld));
+        String[] beta = sequence(TextUtil.replaceEntities(wikiNew));
 
-        Diff.change changeNode = diff.diff_2(false);
+        Revision rev = null;
+        try
+        {
+            rev = Diff.diff(alpha, beta, new MyersDiff());
+        }
+        catch (DifferentiationFailedException dfe)
+        {
+            log.error("Diff generation failed", dfe);
+            return "Error while creating version diff.";
+        }
 
-        return createMarkup(alpha, beta, changeNode);
-        */
-        return "";
+        int revSize = rev.size();
+
+        StringBuffer sb = new StringBuffer(revSize * 20); // Guessing how big it will become...
+
+        sb.append(m_diffStart);
+
+        // The MyersDiff is a bit dumb by converting a single line multi-word diff into a series
+        // of Changes. The ChangeMerger pulls them together again...
+        ChangeMerger cm = new ChangeMerger(sb, alpha, revSize);
+
+        rev.accept(cm);
+
+        cm.shutdown();
+
+        sb.append(m_diffEnd);
+
+        return sb.toString();
     }
-
-
-    /** 
-     * We aren't going to display our output in a PRE block, so work over the wiki text into something 
-     * that will look reasonable.
-     */
-    private String htmlize(String wikiText)
-    {
-        String htmlized  = wikiText;
-        
-        htmlized = htmlized.replaceAll( "&", "&amp;");
-        htmlized = htmlized.replaceAll( "<", "&lt;");
-        htmlized = htmlized.replaceAll( ">", "&gt;");
-        htmlized = htmlized.replaceAll( "\"", "&quot;");
-                
-        return htmlized; 
-    }
-
 
     /**
      * Take the string and create an array from it, split it first on newlines, making 
@@ -115,220 +138,250 @@ public class ContextualDiffProvider implements DiffProvider
      * All this preseving of newlines and spaces is so the wikitext when diffed will have fidelity 
      * to it's original form.  As a side affect we see edits of purely whilespace.
      */
-    private Object[] sequence(String wikiText)
+    private String[] sequence(String wikiText)
     {
-        Vector list = new Vector();
-        String[] linesArray = wikiText.split( "(\r\n|\r|\n)", -10 );
+        String[] linesArray = Diff.stringToArray(wikiText);
+
+        List list = new ArrayList();
+
         for (int i = 0; i < linesArray.length; i++)
         {
             String line = linesArray[i];
-            String[] wordArray = line.split(" ", -1000);
+
+            // StringTokenizer might be discouraged but it still is perfect here...
+            for (StringTokenizer st = new StringTokenizer(line); st.hasMoreTokens(); )
+            {
+                list.add(st.nextToken());
+
+                if (st.hasMoreTokens())
+                {
+                    list.add(" ");
+                }
+            }
+            list.add("<br />"); // Line Break
+        }
+
+        return (String []) list.toArray(new String [0]);
+    }
+
+    /**
+     * This helper class does the housekeeping for merging
+     * our various changes down and also makes sure that the
+     * whole change process is threadsafe by encapsulating
+     * all necessary variables.
+     */
+    private class ChangeMerger
+            implements RevisionVisitor
+    {
+        private StringBuffer sb = null;
+
+        /** Keeping score of the original lines to process */
+        private int max = -1;
+        private int index = 0;
+
+        /** Index of the next line to be copied into the output. */
+        private int firstLine = 0;
+       
+        /** Link Anchor counter */
+        private int count = 1;
+
+        /** State Machine Mode */
+        private int mode = -1; /* -1: Unset, 0: Add, 1: Del, 2: Change mode */
+
+        /** Buffer to coalesce the changes together */
+        private StringBuffer origBuf = null;
+        private StringBuffer newBuf = null;
+
+        /** Reference to the source string array */
+        private String [] origStrings = null;
+
+        private ChangeMerger(final StringBuffer sb, final String [] origStrings, final int max)
+        {
+            this.sb = sb;
+            this.origStrings = origStrings;
+            this.max = max;
+
+            this.origBuf = new StringBuffer();
+            this.newBuf = new StringBuffer();
+        }
+
+        private void updateState(Delta delta)
+        {
+            index++;
+
+            Chunk orig = delta.getOriginal();
+
+            if (orig.first() > firstLine)
+            {
+                // We "skip" some lines in the output.
+                // So flush out the last Change, if one exists.
+                flush();
+
+                for (int j = firstLine; j < orig.first(); j++)
+                {
+                    sb.append(origStrings[j]);
+                }
+            }
+            firstLine = orig.last() + 1;
+        }
+                
+
+        public void visit(Revision rev)
+        {
+            // GNDN (Goes nowhere, does nothing)
+        }
+
+        public void visit(AddDelta delta)
+        {
+            updateState(delta);
+
+            // We have run Deletes up to now. Flush them out.
+            if (mode == 1)
+            {
+                flush();
+                mode = -1;
+            }
+            // We are in "neutral mode". Start a new Change
+            if (mode == -1)
+            {
+                mode = 0;
+            }
             
-            String previousWord = "";
-            for (int j = 0; j < wordArray.length; j++)
+            // We are in "add mode".
+            if (mode == 0 || mode == 2)
             {
-                String word = wordArray[j];
-                list.add(word + (previousWord.equals("") ? "&nbsp;" : " "));
-                previousWord = word;
+                addNew(delta.getRevised());
+                mode = 1;
             }
-            list.add("<br />");
+        }
+
+        public void visit(ChangeDelta delta)
+        {
+            updateState(delta);
+
+            // We are in "neutral mode". A Change might be merged with an add or delete.
+            if (mode == -1)
+            {
+                mode = 2;
+            }
+            
+            // Add the Changes to the buffers. 
+            addOrig(delta.getOriginal());
+            addNew(delta.getRevised());
+        }
+      
+        public void visit(DeleteDelta delta)
+        {
+            updateState(delta);
+
+            // We have run Adds up to now. Flush them out.
+            if (mode == 0)
+            {
+                flush();
+                mode = -1;
+            }
+            // We are in "neutral mode". Start a new Change
+            if (mode == -1)
+            {
+                mode = 1;
+            }
+            
+            // We are in "delete mode".
+            if (mode == 1 || mode == 2)
+            {
+                addOrig(delta.getOriginal());
+                mode = 1;
+            }
+        }
+
+        public void shutdown()
+        {
+            index = max + 1; // Make sure that no hyperlink gets created
+            flush();
+
+            if (firstLine < origStrings.length)
+            {
+                for (int j = firstLine; j < origStrings.length; j++)
+                {
+                    sb.append(origStrings[j]);
+                }
+            }
         }
         
-        String[] array = new String[list.size()];
-
-        list.copyInto(array);
-
-        return array;
-    }
-
-
-    /**
-     * The real workhorse! Remember we are showing changes FROM Alpha TO Beta,
-     * the names of line0, line1 leave something to be desired, but hey BMSI
-     * diff does work nicely!
-     */
-    /*
-    private String createMarkup(Object[] alphaSequence, Object[] betaSequence, Diff.change changeNode)
-    {
-        m_changeNumber = 0;
-        m_markupBuffer = allocateMarkupBuffer(alphaSequence, betaSequence);
-
-        m_markupBuffer.append("<div class='diff-wikitext'>");
-        int currentAlphaPosition = 0;
-
-        Diff.change someChange = changeNode;
-        m_moreChanges = (null != someChange.link); 
-        
-        if (m_moreChanges)
-            m_markupBuffer.append(changeHref(1, "Jump to first change &gt;&gt;") + "<br />");
-        
-        while (someChange != null)
+        private void addOrig(Chunk chunk)
         {
-            appendSequenceElements(alphaSequence, currentAlphaPosition, someChange.line0);
-
-            currentAlphaPosition = someChange.line0;
-
-            handlePreChange();
-
-            //If Deletion occured, show what was deleted from the Alpha
-            // sequence...
-            if (someChange.deleted != 0)
+            if (chunk != null)
             {
-                int sequenceEndPosition = currentAlphaPosition + someChange.deleted;
+                chunk.toString(origBuf);
+            }
+        }
+
+        private void addNew(Chunk chunk)
+        {
+            if (chunk != null)
+            {
+                chunk.toString(newBuf);
+            }
+        }
+
+        private void flush()
+        {
+
+            if (newBuf.length() + origBuf.length() > 0)
+            {
+                // This is the span element which encapsulates anchor and the change itself
+                sb.append(m_changeStartHtml);
                 
-                handleSequenceDeletion(alphaSequence, currentAlphaPosition, sequenceEndPosition);
+                // Do we want to have a "back link"?
+                if (m_emitChangeNextPreviousHyperlinks && count > 1)
+                {
+                    sb.append(m_backPreIndex);
+                    sb.append(count - 1);
+                    sb.append(m_backPostIndex);
+                }
+
+                // An anchor for the change.
+                sb.append(m_anchorPreIndex);
+                sb.append(count++);
+                sb.append(m_anchorPostIndex);
                 
-                currentAlphaPosition += someChange.deleted;
+
+                // ... has been added
+                if (newBuf.length() > 0)
+                {
+                    sb.append(m_insertionStartHtml);
+                    sb.append(newBuf);
+                    sb.append(m_insertionEndHtml);
+                }
+                
+                sb.append(" ");
+
+                // .. has been removed
+                if (origBuf.length() > 0)
+                {
+                    sb.append(m_deletionStartHtml);
+                    sb.append(origBuf);
+                    sb.append(m_deletionEndHtml);
+                }
+
+                // Do we want a "forward" link?
+                if (m_emitChangeNextPreviousHyperlinks && (index < max))
+                {
+                    sb.append(m_forwardPreIndex);
+                    sb.append(count); // Has already been incremented.
+                    sb.append(m_forwardPostIndex);
+                }
+                
+                sb.append(m_changeEndHtml);
+                sb.append("\n");
+
+                // Nuke the buffers.
+                origBuf = new StringBuffer();
+                newBuf = new StringBuffer();
             }
 
-            //If Insertion occured, show what was inserted into the Beta
-            // sequence...
-            if (someChange.inserted != 0)
-            {
-                int sequenceEndPosition = someChange.line1 + someChange.inserted;
-                handleSequenceInsertion(betaSequence, someChange.line1, sequenceEndPosition);
-            }
-
-            handlePostChange();
-
-            //Get the next change node...
-            someChange = someChange.link;
-            m_moreChanges = (null != someChange);
-        }//while loop
-
-        //Output the remains of the sequences out to the end.
-        appendSequenceElements(alphaSequence, currentAlphaPosition, alphaSequence.length);
-
-        m_markupBuffer.append("</div>"); 
-        String markup = m_markupBuffer.toString();
-        m_markupBuffer = null;
-
-        return markup;
-    }
-*/
-    private StringBuffer allocateMarkupBuffer(Object[] alphaSequence, Object[] betaSequence)
-    {
-        //This is really rough, but what the heck...
-        int maxElements = Math.max(alphaSequence.length, betaSequence.length);
-        int approxBufferSize = 20 * maxElements;
-
-        return new StringBuffer(approxBufferSize);
-    }
-
-
-    /** Called once before each change is processed */
-    void handlePreChange()
-    {
-        m_markupBuffer.append(m_changeStartHtml);
-
-        if (m_emitChangeNextPreviousHyperlinks)
-            m_markupBuffer.append(linkToPreviousChange());
-    }
-
-
-    /** Called once after each change is processed */
-    void handlePostChange()
-    {
-        if (m_emitChangeNextPreviousHyperlinks && m_moreChanges)
-            m_markupBuffer.append(linkToNextChange());
-
-        m_markupBuffer.append(m_changeEndHtml);
-    }
-
-
-    private String linkToPreviousChange()
-    {
-        String changeAnchorName = "<a name='change-" + ( m_changeNumber + 1 ) + "'></a>";
-
-        if (0 == m_changeNumber)
-            return changeAnchorName;
-
-        //TODO may be configurable image?
-        String previousChangeHref = changeHref(m_changeNumber, "&lt;&lt;");;
-
-        return changeAnchorName + previousChangeHref;
-    }
-
-    private String linkToNextChange()
-    {
-        m_changeNumber++;
-
-        //TODO may be configurable image?
-        String nextChangeHref = changeHref(m_changeNumber, "&gt;&gt;");
-
-        return nextChangeHref;
-    }
-
-
-    private String changeHref(int changeNumber, String visualDohickey)
-    {
-        return "<a class='diff-nextprev' href='#change-" + changeNumber + "'> " + visualDohickey + "</a>";
-    }
-
-
-    /**
-     * Called when a sequence deletion occured in the change. If both a deletion
-     * and insertion occur in the same change, deletions are handled first.
-     */
-    private void handleSequenceDeletion(Object[] sequence, int fromIndex, int toIndex)
-    {
-        if (fromIndex < toIndex)
-        {
-            m_markupBuffer.append(m_deletionStartHtml);
-            appendSequenceElements(sequence, fromIndex, toIndex);
-            m_markupBuffer.append(m_deletionEndHtml);
+            // After a flush, everything is reset.
+            mode = -1;
         }
     }
-
-
-    /**
-     * Called when a sequence instertion occured in the change. If both a
-     * deletion and insertion occur in the same change, deletions are handled
-     * first.
-     */
-    private void handleSequenceInsertion(Object[] sequence, int fromIndex, int toIndex)
-    {
-        if (fromIndex < toIndex)
-        {
-            m_markupBuffer.append(m_insertionStartHtml);
-            appendSequenceElements(sequence, fromIndex, toIndex);
-            m_markupBuffer.append(m_insertionEndHtml);
-        }
-    }
-
-    private void appendSequenceElements(Object[] sequence, int fromIndex, int toIndex)
-    {
-        while (fromIndex < toIndex)
-        {
-            m_markupBuffer.append(sequence[fromIndex].toString());
-            fromIndex++;
-        }
-    }
-
-
-    /**
-     * TODO, this isn't used yet, until the props are done no real reason to get this ion there.
-     * 
-     * This implements the context word count limits, if 0 the whole sequence is output..
-     */
-    private void appendSequenceElements(Object[] sequence, int fromIndex, int toIndex, int elementSubset)
-    {
-        //Only adjust if potential range is wider and asked for...
-        if ((toIndex - fromIndex) > (Math.abs(elementSubset)))
-        {
-            if (elementSubset < 0)
-                fromIndex = toIndex + elementSubset;
-    
-            if (elementSubset > 0)
-                toIndex = fromIndex + elementSubset;
-        }
-        
-        while (fromIndex < toIndex)
-        {
-            m_markupBuffer.append(sequence[fromIndex].toString());
-            fromIndex++;
-        }
-    }
-
 }
-

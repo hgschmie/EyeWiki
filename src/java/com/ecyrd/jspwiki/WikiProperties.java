@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki;
 
 import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
+import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
@@ -194,12 +195,6 @@ public interface WikiProperties
         be able to output diffs in the unified format. It defaults to
         'diff -u %s1 %s2'.*/
     String PROP_DIFFCOMMAND = "jspwiki.diffCommand";
-
-    /**
-     * Default for the diff command.
-     * @value null
-     */
-    String PROP_DIFFCOMMAND_DEFAULT = null;
 
     /**
      *  The maximum size of attachments that can be uploaded.
@@ -385,6 +380,8 @@ public interface WikiProperties
 
     String DEFAULT_AUTH_MODULES_CLASS_PREFIX = "com.ecyrd.jspwiki.auth.modules";
 
+    String DEFAULT_DIFF_CLASS_PREFIX = "com.ecyrd.jspwiki.diff";
+
     /**
      *  The property name defining which packages will be searched for properties.
      */
@@ -415,6 +412,10 @@ public interface WikiProperties
     String PROP_CLASS_ATTACHMENTPROVIDER = "jspwiki.attachmentProvider";
 
     String PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT = BasicAttachmentProvider.class.getName();
+
+    String PROP_CLASS_DIFF_PROVIDER = "jspwiki.diffProvider";
+
+    String PROP_CLASS_DIFF_PROVIDER_DEFAULT = TraditionalDiffProvider.class.getName();
 
     String PROP_CLASS_AUTHORIZER = "jspwiki.authorizer";
 
