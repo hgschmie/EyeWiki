@@ -24,7 +24,7 @@ jspwiki.applicationName = @appname@
 #  Note that if you're upgrading from JSPWiki 1.x, then you need to remove the
 #  "com.ecyrd.jspwiki." part from the beginning of the path.
 #
-jspwiki.pageProvider = FileSystemProvider
+jspwiki.pageProvider = VersioningFileProvider
 
 #
 #  Set to true, if you want to cache page data into memory.  This is
@@ -96,7 +96,7 @@ jspwiki.basicAttachmentProvider.storageDir = @pagedir@
 #  Example:
 #  jspwiki.baseURL = http://www.jspwiki.org/
 #
-jspwiki.baseURL=
+jspwiki.baseURL = http://localhost:8080/jspwiki/
 
 #  Determines if you need to have relative urls or not.  If the baseURL
 #  is not set, then this has no effect, but if you set the baseURL (which
