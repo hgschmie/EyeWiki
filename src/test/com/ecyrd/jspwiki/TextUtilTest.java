@@ -9,6 +9,8 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import com.ecyrd.jspwiki.util.TextUtil;
+
 public class TextUtilTest extends TestCase
 {
 

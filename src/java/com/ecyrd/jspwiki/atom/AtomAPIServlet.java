@@ -43,7 +43,6 @@ import org.intabulas.sandler.elements.Person;
 import org.intabulas.sandler.elements.impl.LinkImpl;
 import org.intabulas.sandler.exceptions.MarshallException;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
@@ -52,6 +51,7 @@ import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
 import com.ecyrd.jspwiki.plugin.WeblogPlugin;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.util.BlogUtil;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Handles incoming requests for the Atom API.  This class uses the

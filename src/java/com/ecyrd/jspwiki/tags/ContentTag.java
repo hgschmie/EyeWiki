@@ -26,9 +26,9 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Is used as a "super include" tag, which can include the proper context

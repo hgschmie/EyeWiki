@@ -30,12 +30,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Returns the Recent Changes.

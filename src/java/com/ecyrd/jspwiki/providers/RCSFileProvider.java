@@ -45,11 +45,11 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  This class implements a simple RCS file provider.  NOTE: You MUST

@@ -22,6 +22,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 public class TranslatorReaderTest extends TestCase
 {

@@ -42,12 +42,12 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.PageTimeComparator;
 import com.ecyrd.jspwiki.QueryItem;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Provides basic, versioning attachments.

@@ -25,9 +25,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.ReferenceManager;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Displays the pages referring to the current page.

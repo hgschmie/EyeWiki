@@ -12,7 +12,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
-import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Tests the UserProfile class.

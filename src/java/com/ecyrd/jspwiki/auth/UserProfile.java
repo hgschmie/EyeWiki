@@ -24,7 +24,7 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Category;
 
-import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Contains user profile information.

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.util.TextUtil;
+
 
 /**
  *  Provides a way to do short URLs of the form /wiki/PageName.

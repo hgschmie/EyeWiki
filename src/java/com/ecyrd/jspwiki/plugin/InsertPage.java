@@ -23,12 +23,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Inserts page contents.  Muchos thanks to Scott Hurlbert for the initial code.

@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Simple test engine that always assumes pages are found.

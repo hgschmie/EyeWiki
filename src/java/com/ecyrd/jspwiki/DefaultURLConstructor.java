@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
 
+import com.ecyrd.jspwiki.util.TextUtil;
+
 public class DefaultURLConstructor
     implements URLConstructor
 {

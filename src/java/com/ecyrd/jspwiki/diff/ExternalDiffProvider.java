@@ -30,9 +30,9 @@ import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  * This DiffProvider allows external command line tools to be used to generate

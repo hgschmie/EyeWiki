@@ -28,11 +28,11 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.HeadingListener;
 import com.ecyrd.jspwiki.InternalWikiException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Provides a table of contents.

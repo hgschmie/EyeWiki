@@ -47,10 +47,10 @@ import org.apache.oro.text.regex.Perl5Matcher;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.InternalWikiException;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Manages plugin classes.  There exists a single instance of PluginManager
