@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.filters;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -197,6 +198,10 @@ public class FilterManager
             
             parser.parse( new InputSource(xmlStream) );
 
+        }
+        catch (FileNotFoundException fnf)
+        {
+            log.info("Could not open " + xmlFile + ". No filters are defined.");
         }
         catch( IOException e )
         {
