@@ -1,5 +1,6 @@
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="com.ecyrd.jspwiki.*" %>
+<%@ page import="com.ecyrd.jspwiki.util.TextUtil" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page errorPage="/Error.jsp" %>

@@ -2,6 +2,7 @@
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="java.util.Calendar,java.util.Date" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
+<%@ page import org.apache.commons.lang.StringUtils %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
 
@@ -31,9 +32,9 @@
 
     response.setContentType("text/html; charset="+wiki.getContentEncoding() );
 
-    usertext = TextUtil.replaceString( usertext, "<", "&lt;" );
-    usertext = TextUtil.replaceString( usertext, ">", "&gt;" );
-    usertext = TextUtil.replaceString( usertext, "\n", "<BR />" );
+    usertext = StringUtils.replace( usertext, "<", "&lt;" );
+    usertext = StringUtils.replace( usertext, ">", "&gt;" );
+    usertext = StringUtils.replace( usertext, "\n", "<BR />" );
 
     pageContext.setAttribute( "usertext",
                               usertext,
@@ -41,9 +42,9 @@
     
     String conflicttext = wiki.getText(pagereq);
 
-    conflicttext = TextUtil.replaceString( conflicttext, "<", "&lt;" );
-    conflicttext = TextUtil.replaceString( conflicttext, ">", "&gt;" );
-    conflicttext = TextUtil.replaceString( conflicttext, "\n", "<BR />" );
+    conflicttext = StringUtils.replace( conflicttext, "<", "&lt;" );
+    conflicttext = StringUtils.replace( conflicttext, ">", "&gt;" );
+    conflicttext = StringUtils.replace( conflicttext, "\n", "<BR />" );
 
     pageContext.setAttribute( "conflicttext",
                               conflicttext,

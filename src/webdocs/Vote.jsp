@@ -3,6 +3,7 @@
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page import="com.ecyrd.jspwiki.plugin.VotePlugin" %>
 <%@ page import="com.ecyrd.jspwiki.auth.*" %>
+<%@ page import org.apache.commons.lang.BooleanUtils  %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
 <%! 
@@ -28,7 +29,7 @@
 
     VotePlugin plugin = new VotePlugin();
 
-    plugin.vote( wikiContext, TextUtil.isPositive( vote ) ? 1 : -1 );
+    plugin.vote( wikiContext, BooleanUtils.toBoolean(vote) ? 1 : -1 );
 
     response.sendRedirect( wiki.getBaseURL()+"Wiki.jsp?page=VoteOk" );
 
