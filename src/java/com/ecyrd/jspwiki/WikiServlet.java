@@ -36,7 +36,8 @@ import org.apache.log4j.Logger;
 public class WikiServlet
     extends HttpServlet
 {
-    private WikiEngine m_engine;
+    private WikiEngine m_engine = null;
+
     Logger log = Logger.getLogger(this.getClass().getName());
 
     public void init( ServletConfig config )
@@ -59,17 +60,32 @@ public class WikiServlet
     public void doGet( HttpServletRequest req, HttpServletResponse res ) 
         throws IOException, ServletException 
     {
-        String pageName = DefaultURLConstructor.parsePageFromURL( req,
-                                                                  m_engine.getContentEncoding() );
+        String pageName = DefaultURLConstructor.parsePageFromURL(
+                req,
+                m_engine.getContentEncoding() );
 
         log.info("Request for page: "+pageName);
 
-        if( pageName == null ) pageName = m_engine.getFrontPage(); // FIXME: Add special pages as well
+        if( pageName == null)
+        {
+            pageName = m_engine.getFrontPage(); // FIXME: Add special pages as well
+        }
         
         String jspPage = req.getParameter( "do" );
-        if( jspPage == null ) jspPage = "Wiki";
+
+        if( jspPage == null )
+        {
+            jspPage = "Wiki";
+        }
+
+        StringBuffer sb = new StringBuffer("/")
+                .append(jspPage)
+                .append(".jsp?page=")
+                .append(m_engine.encodeName(pageName))
+                .append("&")
+                .append(req.getQueryString());
         
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/"+jspPage+".jsp?page="+m_engine.encodeName(pageName)+"&"+req.getQueryString() );
+        RequestDispatcher dispatcher = req.getRequestDispatcher(sb.toString());
 
         dispatcher.forward( req, res );
     }
