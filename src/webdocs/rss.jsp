@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<%@ page import="java.util.*,com.ecyrd.jspwiki.*" %>
+<%@ page import="java.util.*"%>
+<%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.ecyrd.jspwiki.rss.*" %>
 <%@ page import="com.ecyrd.jspwiki.util.*" %>
+<%@ page import="com.ecyrd.jspwiki.plugin.WeblogPlugin" %>
 <%@ taglib uri="/WEB-INF/oscache.tld" prefix="oscache" %>
 
 <%!
@@ -41,15 +44,25 @@
     StringBuffer result = new StringBuffer();
     SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-    Properties properties = wiki.getWikiProperties();
-    String channelDescription = wiki.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
-    String channelLanguage    = wiki.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
+    String channelDescription = null;
+    String channelLanguage    = null;
+    Configuration conf = wiki.getWikiConfiguration();
+
+    try
+    {
+        channelDescription = conf.getString(WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
+        channelLanguage    = conf.getString(WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
+    }
+    catch( NoSuchElementException e)
+    {
+        throw new JspException("Did not find a required property!");
+    }
 
     //
     //  Now, list items.
     //
 
-    com.ecyrd.jspwiki.plugin.WeblogPlugin plug = new com.ecyrd.jspwiki.plugin.WeblogPlugin();
+    WeblogPlugin plug = new WeblogPlugin();
     List changed = plug.findBlogEntries(wiki.getPageManager(), 
                                         wikipage.getName(),
                                         new Date(0L),

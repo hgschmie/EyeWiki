@@ -4,6 +4,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="org.apache.log4j.*" %>
+<%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.ecyrd.jspwiki.rss.*" %>
 <%@ page import="com.ecyrd.jspwiki.util.*" %>
@@ -52,15 +53,16 @@
     StringBuffer result = new StringBuffer();
     SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
-    Properties properties = wiki.getWikiProperties();
-    String channelDescription, channelLanguage;
-    
+    String channelDescription = null;
+    String channelLanguage    = null;
+    Configuration conf = wiki.getWikiConfiguration();
+
     try
     {
-        channelDescription = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
-        channelLanguage    = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
+        channelDescription = conf.getString(WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
+        channelLanguage    = conf.getString(WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
     }
-    catch( NoRequiredPropertyException e )
+    catch( NoSuchElementException e)
     {
         throw new JspException("Did not find a required property!");
     }
