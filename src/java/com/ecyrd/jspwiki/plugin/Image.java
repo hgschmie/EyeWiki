@@ -19,10 +19,13 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import java.util.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
+import java.util.Map;
+
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**

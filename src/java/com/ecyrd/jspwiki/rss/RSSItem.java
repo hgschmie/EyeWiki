@@ -1,6 +1,8 @@
 package com.ecyrd.jspwiki.rss;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 

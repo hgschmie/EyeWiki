@@ -1,8 +1,6 @@
 package com.ecyrd.jspwiki.filters;
 
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.TextUtil;
-import java.util.*;
+import java.util.Properties;
 
 public class TestFilter
     extends BasicPageFilter

@@ -1,12 +1,16 @@
 package com.ecyrd.jspwiki.providers;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.Vector;
 
-import org.apache.log4j.*;
+import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 /**
  *  A provider who counts the hits to different parts.

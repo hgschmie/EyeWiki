@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+  <classpathentry excluding="" kind="src" path="src/java">
+  </classpathentry>
+  <classpathentry output="target/test-classes" kind="src" path="src/test">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/junit/jars/junit-3.8.1.jar">
+  </classpathentry>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/ecs/jars/ecs-1.4.2.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/log4j/jars/log4j-1.2.8.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/lucene/jars/lucene-1.4.3.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/oro/jars/oro-2.0.8.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/xmlrpc/jars/xmlrpc-1.2.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/multipartrequest/jars/multipartrequest-1.30-rc1.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/oscache/jars/oscache-2.1.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/sandler/jars/sandler-core-1.0.jar">
+  </classpathentry>
+  <classpathentry kind="var" path="MAVEN_REPO/xpp3/jars/xpp3-1.1.3.4.M.jar">
+  </classpathentry>
+  <classpathentry kind="output" path="target/classes">
+  </classpathentry>
+</classpath>

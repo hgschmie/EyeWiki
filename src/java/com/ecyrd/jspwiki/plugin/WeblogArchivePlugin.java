@@ -19,12 +19,24 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.ProviderException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.apache.log4j.Logger;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  *  Creates a list of all weblog entries on a monthly basis.

@@ -1,7 +1,7 @@
 package com.ecyrd.jspwiki.filters;
 
-import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
 
 public class ProfanityFilter
     extends BasicPageFilter

@@ -19,17 +19,26 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.ProviderException;
-import org.apache.log4j.Logger;
-import org.apache.oro.text.*;
-import org.apache.oro.text.regex.*;
-
-import java.util.*;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.apache.oro.text.GlobCompiler;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternCompiler;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.Perl5Matcher;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Denounces a link by removing it from any search engine.  The bots are listed

@@ -19,7 +19,7 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  *  Simple class that decides which search results are more

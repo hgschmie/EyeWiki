@@ -19,12 +19,24 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.UserProfile;
-import java.util.*;
-import java.io.*;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
+import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.auth.UserProfile;
 
 /**
  *  Provides a handler for bug reports.  Still under construction.

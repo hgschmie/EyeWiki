@@ -19,8 +19,15 @@
  */
 package com.ecyrd.jspwiki.xmlrpc;
 
-import com.ecyrd.jspwiki.*;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
+
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 /**
  *  Provides definitions for RPC handler routines.

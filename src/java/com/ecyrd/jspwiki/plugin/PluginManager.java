@@ -19,26 +19,37 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.oro.text.regex.*;
-import org.apache.log4j.Logger;
-import org.apache.ecs.xhtml.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Map;
-import java.util.Vector;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.HashMap;
+import java.util.Vector;
 
-import com.ecyrd.jspwiki.WikiContext;
+import org.apache.ecs.xhtml.b;
+import org.apache.ecs.xhtml.div;
+import org.apache.ecs.xhtml.li;
+import org.apache.ecs.xhtml.pre;
+import org.apache.ecs.xhtml.ul;
+import org.apache.log4j.Logger;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.MatchResult;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternCompiler;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
+
 import com.ecyrd.jspwiki.FileUtil;
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 /**

@@ -1,7 +1,8 @@
 package com.ecyrd.jspwiki.filters;
 
-import com.ecyrd.jspwiki.WikiContext;
 import java.util.Properties;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Provides a base implementation of a PageFilter.  None of the methods

@@ -19,22 +19,36 @@
  */
 package com.ecyrd.jspwiki.providers;
 
-import java.io.File;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.InputStream;
+import java.io.File;
 import java.io.IOException;
-import java.util.Properties;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 import java.util.Iterator;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import org.apache.log4j.Logger;
-import org.apache.oro.text.regex.*;
+import java.util.List;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
+import org.apache.log4j.Logger;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.MatchResult;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternCompiler;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.PatternMatcherInput;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 
 /**
  *  This class implements a simple RCS file provider.  NOTE: You MUST

@@ -1,12 +1,17 @@
 
 package com.ecyrd.jspwiki.filters;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
-import org.apache.log4j.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import com.ecyrd.jspwiki.*;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.TestEngine;
 
 public class FilterManagerTest extends TestCase
 {

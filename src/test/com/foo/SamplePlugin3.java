@@ -1,8 +1,11 @@
 package com.foo;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.plugin.*;
-import java.util.*;
+import java.util.Map;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 /**
  *  Implements a simple plugin that just returns its text.

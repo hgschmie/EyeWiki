@@ -1,7 +1,14 @@
 package com.ecyrd.jspwiki.providers;
 
-import java.util.*;
-import com.ecyrd.jspwiki.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.Vector;
+
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 /**
  *  This is a simple provider that is used by some of the tests.  It has some

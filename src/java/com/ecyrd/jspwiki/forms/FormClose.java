@@ -20,11 +20,10 @@
 */
 package com.ecyrd.jspwiki.forms;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.plugin.PluginException;
-import java.util.*;
+import java.util.Map;
 
-import com.ecyrd.jspwiki.util.FormUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.plugin.PluginException;
 
 /**
  *  Closes a WikiForm.

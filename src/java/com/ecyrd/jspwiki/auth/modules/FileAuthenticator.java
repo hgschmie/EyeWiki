@@ -19,15 +19,18 @@
  */
 package com.ecyrd.jspwiki.auth.modules;
 
-import java.util.Properties;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.FileInputStream;
-import java.io.File;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.auth.*;
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.WikiAuthenticator;
 
 /**
  *  Provides a simple file-based authenticator.  This is really simple,

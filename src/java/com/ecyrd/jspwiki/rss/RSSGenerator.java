@@ -19,14 +19,18 @@
  */
 package com.ecyrd.jspwiki.rss;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Properties;
-import java.util.Calendar;
 import java.util.List;
-import java.text.SimpleDateFormat;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 /**

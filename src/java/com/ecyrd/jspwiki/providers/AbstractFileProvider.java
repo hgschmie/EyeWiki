@@ -19,16 +19,36 @@
  */
 package com.ecyrd.jspwiki.providers;
 
-import java.io.*;
-import java.util.Properties;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.TreeSet;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.TreeSet;
+
 import org.apache.log4j.Category;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.SearchMatcher;
+import com.ecyrd.jspwiki.SearchResult;
+import com.ecyrd.jspwiki.SearchResultComparator;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 
 /**
  *  Provides a simple directory based repository for Wiki pages.
@@ -111,7 +131,14 @@ public abstract class AbstractFileProvider
         if( "UTF-8".equalsIgnoreCase( m_encoding ) )
             return TextUtil.urlEncodeUTF8( pagename );
 
-        return java.net.URLEncoder.encode( pagename );
+        try
+        {
+            	return java.net.URLEncoder.encode( pagename, "UTF-8" );
+        }
+        catch (UnsupportedEncodingException uee)
+        {
+            throw new RuntimeException("Could not encode UTF-8!?!", uee);
+        }
     }
 
     /**
@@ -123,7 +150,14 @@ public abstract class AbstractFileProvider
         if( "UTF-8".equalsIgnoreCase( m_encoding ) )
             return TextUtil.urlDecodeUTF8( filename );
 
-        return java.net.URLDecoder.decode( filename );
+        try
+        {
+            return java.net.URLDecoder.decode( filename, "UTF-8" );
+        }
+        catch (UnsupportedEncodingException uee)
+        {
+            throw new RuntimeException("Could not decode UTF-8!?!", uee);
+        }
     }
 
     /**

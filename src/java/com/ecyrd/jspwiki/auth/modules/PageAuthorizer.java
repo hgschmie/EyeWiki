@@ -1,22 +1,24 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import java.util.Properties;
-import java.util.StringTokenizer;
-import java.util.NoSuchElementException;
+import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.NotOwnerException;
-import java.security.Principal;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.acl.AccessControlList;
-import com.ecyrd.jspwiki.acl.AclImpl;
 import com.ecyrd.jspwiki.acl.AclEntryImpl;
-import com.ecyrd.jspwiki.auth.*;
+import com.ecyrd.jspwiki.acl.AclImpl;
+import com.ecyrd.jspwiki.auth.UserManager;
+import com.ecyrd.jspwiki.auth.WikiAuthorizer;
+import com.ecyrd.jspwiki.auth.WikiSecurityException;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 
 /**

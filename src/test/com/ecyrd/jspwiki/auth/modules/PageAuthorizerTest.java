@@ -1,10 +1,15 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import junit.framework.*;
-import java.util.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.*;
-import com.ecyrd.jspwiki.auth.permissions.*;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.auth.AuthorizationManager;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 
 public class PageAuthorizerTest
     extends TestCase

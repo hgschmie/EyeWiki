@@ -19,11 +19,14 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeSet;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
-import java.io.StringWriter;
-import java.text.SimpleDateFormat;
+
+import com.ecyrd.jspwiki.ReferenceManager;
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  * Plugin for displaying pages that are not linked to in other pages.

@@ -1,15 +1,24 @@
 
 package com.ecyrd.jspwiki.auth;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import org.apache.log4j.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.permissions.*;
-import com.ecyrd.jspwiki.attachment.*;
-import com.ecyrd.jspwiki.acl.*;
-import java.security.acl.*;
+import java.security.acl.AclEntry;
+import java.security.acl.Permission;
+import java.util.Enumeration;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.acl.AccessControlList;
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.auth.permissions.CommentPermission;
+import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
+import com.ecyrd.jspwiki.auth.permissions.EditPermission;
+import com.ecyrd.jspwiki.auth.permissions.UploadPermission;
+import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 
 /**
  *  Tests the AuthorizationManager class.

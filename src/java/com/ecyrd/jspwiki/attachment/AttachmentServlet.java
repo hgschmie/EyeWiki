@@ -19,25 +19,36 @@
  */
 package com.ecyrd.jspwiki.attachment;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.util.*;
-import java.io.*;
-import java.text.SimpleDateFormat;
+import http.utils.multipartrequest.MultipartRequest;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Properties;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.util.HttpUtil;
-import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
-import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.filters.RedirectException;
-
-// multipartrequest.jar imports:
-import http.utils.multipartrequest.*;
+import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.util.HttpUtil;
 
 
 /**
@@ -355,7 +366,7 @@ public class AttachmentServlet
                     //  Is a file to be uploaded.
                     //
 
-                    String filename = multi.getFileSystemName( part );
+                    String filename = multi.getBaseFilename( part );
 
                     if( filename == null || filename.trim().length() == 0 )
                     {

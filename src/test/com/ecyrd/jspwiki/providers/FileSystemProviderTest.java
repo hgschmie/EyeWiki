@@ -1,13 +1,20 @@
 
 package com.ecyrd.jspwiki.providers;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
-import org.apache.log4j.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import com.ecyrd.jspwiki.*;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 public class FileSystemProviderTest extends TestCase
 {
@@ -51,7 +58,7 @@ public class FileSystemProviderTest extends TestCase
     {
         try
         {
-            WikiPage page = new WikiPage("ÅäTest");
+            WikiPage page = new WikiPage("ï¿½ï¿½Test");
 
             m_provider.putPageText( page, "test" );
 
@@ -81,14 +88,14 @@ public class FileSystemProviderTest extends TestCase
     {
         try
         {
-            WikiPage page = new WikiPage("ÅäTest");
-            page.setAuthor("Minä");
+            WikiPage page = new WikiPage("ï¿½ï¿½Test");
+            page.setAuthor("Minï¿½");
 
             m_provider.putPageText( page, "test" );
 
-            WikiPage page2 = m_provider.getPageInfo( "ÅäTest", 1 );
+            WikiPage page2 = m_provider.getPageInfo( "ï¿½ï¿½Test", 1 );
 
-            assertEquals( "Minä", page2.getAuthor() );
+            assertEquals( "Minï¿½", page2.getAuthor() );
         }
         finally
         {

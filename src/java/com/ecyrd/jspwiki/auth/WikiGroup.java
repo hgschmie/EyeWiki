@@ -1,11 +1,10 @@
 package com.ecyrd.jspwiki.auth;
 
-import java.security.acl.Group;
 import java.security.Principal;
-
-import java.util.Vector;
+import java.security.acl.Group;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Vector;
 
 public class WikiGroup
     extends WikiPrincipal

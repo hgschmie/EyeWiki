@@ -1,7 +1,9 @@
 package com.ecyrd.jspwiki.plugin;
 
-import com.ecyrd.jspwiki.*;
-import java.util.*;
+import java.util.Map;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  *  Implements a simple plugin that just returns its text.

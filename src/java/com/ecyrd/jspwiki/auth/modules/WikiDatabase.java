@@ -1,11 +1,25 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import com.ecyrd.jspwiki.auth.*;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.auth.NoSuchPrincipalException;
+import com.ecyrd.jspwiki.auth.UndefinedPrincipal;
+import com.ecyrd.jspwiki.auth.UserDatabase;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.WikiGroup;
+import com.ecyrd.jspwiki.auth.WikiPrincipal;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
 import com.ecyrd.jspwiki.providers.ProviderException;
 

@@ -20,16 +20,15 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
+
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 
@@ -87,7 +86,7 @@ public abstract class IteratorTag
             buildContext();
         }
 
-        return EVAL_BODY_TAG;
+        return EVAL_BODY_AGAIN;
     }
 
     /**
@@ -141,7 +140,7 @@ public abstract class IteratorTag
         if( m_iterator != null && m_iterator.hasNext() )
         {
             buildContext();
-            return EVAL_BODY_TAG;
+            return EVAL_BODY_AGAIN;
         }
         else
         {

@@ -1,6 +1,7 @@
 package com.ecyrd.jspwiki;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Utilities for tests.

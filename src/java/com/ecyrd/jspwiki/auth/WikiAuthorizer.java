@@ -1,9 +1,10 @@
 package com.ecyrd.jspwiki.auth;
 
+import java.util.Properties;
+
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.acl.AccessControlList;
-import com.ecyrd.jspwiki.WikiEngine;
-import java.util.Properties;
 
 /**
  *  Provides a mean to gather permissions for different pages.  For example,

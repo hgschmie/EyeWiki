@@ -19,15 +19,23 @@
  */
 package com.ecyrd.jspwiki.filters;
 
-import java.util.*;
-
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.TextUtil;
-
-import org.apache.oro.text.*;
-import org.apache.oro.text.regex.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternCompiler;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiPage;
 
 /**
  *  A regular expression-based spamfilter.

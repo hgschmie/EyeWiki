@@ -19,25 +19,47 @@
  */
 package com.ecyrd.jspwiki.providers;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
-import java.util.*;
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+import java.util.Vector;
 
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.index.IndexReader;
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.search.*;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Hits;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Searcher;
+import org.apache.lucene.search.TermQuery;
 
-import com.opensymphony.module.oscache.base.Cache;
-import com.opensymphony.module.oscache.base.NeedsRefreshException;
-
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.SearchMatcher;
+import com.ecyrd.jspwiki.SearchResult;
+import com.ecyrd.jspwiki.SearchResultComparator;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
+import com.opensymphony.oscache.base.Cache;
+import com.opensymphony.oscache.base.NeedsRefreshException;
 
 /**
  *  Provides a caching page provider.  This class rests on top of a
@@ -145,11 +167,11 @@ public class CachingProvider
 
         log.debug("Cache capacity "+capacity+" pages.");
 
-        m_textCache = new Cache( true, false,
+        m_textCache = new Cache( true, false, false, false,
                                  OSCACHE_ALGORITHM,
                                  capacity );
 
-        m_historyCache = new Cache( true, false,
+        m_historyCache = new Cache( true, false, false, false, 
                                     OSCACHE_ALGORITHM,
                                     capacity );
                                     

@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.util.Map;
+
 import com.ecyrd.jspwiki.WikiContext;
 
 /**

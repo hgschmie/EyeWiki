@@ -1,11 +1,11 @@
 package com.ecyrd.jspwiki.acl;
 
+import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
-import java.security.Principal;
-import java.util.Vector;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Vector;
 
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 

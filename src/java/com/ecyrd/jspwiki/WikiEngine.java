@@ -19,24 +19,48 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.io.*;
-import java.util.*;
-import org.apache.log4j.*;
-import javax.servlet.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+import java.util.TreeSet;
+import java.util.Vector;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import com.ecyrd.jspwiki.plugin.PluginManager;
-import com.ecyrd.jspwiki.rss.RSSGenerator;
-import com.ecyrd.jspwiki.providers.WikiPageProvider;
-import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
-
 import com.ecyrd.jspwiki.filters.FilterException;
 import com.ecyrd.jspwiki.filters.FilterManager;
-
+import com.ecyrd.jspwiki.plugin.PluginManager;
+import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.providers.WikiPageProvider;
+import com.ecyrd.jspwiki.rss.RSSGenerator;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 /**

@@ -1,9 +1,15 @@
 
 package com.ecyrd.jspwiki;
 
-import junit.framework.*;
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Set;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *  @author Torsten Hildebrandt.

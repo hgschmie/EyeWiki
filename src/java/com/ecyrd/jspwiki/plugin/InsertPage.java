@@ -19,11 +19,16 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.*;
-import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
-import java.util.*;
+
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.auth.AuthorizationManager;
+import com.ecyrd.jspwiki.auth.UserProfile;
 
 /**
  *  Inserts page contents.  Muchos thanks to Scott Hurlbert for the initial code.

@@ -19,28 +19,29 @@
  */
 package com.ecyrd.jspwiki.auth;
 
-import java.util.Properties;
-import java.util.List;
-import java.util.Iterator;
-import java.security.Permissions;
-import java.security.Permission;
-import java.security.acl.NotOwnerException;
 import java.security.Principal;
+import java.security.acl.NotOwnerException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Category;
 
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TextUtil;
-import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.acl.AclEntryImpl;
 import com.ecyrd.jspwiki.acl.AclImpl;
-import com.ecyrd.jspwiki.auth.permissions.*;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
+import com.ecyrd.jspwiki.auth.permissions.EditPermission;
+import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
+import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
+import com.ecyrd.jspwiki.util.ClassUtil;
 
 /**
  *  Manages all access control and authorization.

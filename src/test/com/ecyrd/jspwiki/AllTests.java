@@ -1,12 +1,15 @@
 
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
-import org.apache.log4j.PropertyConfigurator;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Properties;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.log4j.PropertyConfigurator;
 
 public class AllTests extends TestCase
 {

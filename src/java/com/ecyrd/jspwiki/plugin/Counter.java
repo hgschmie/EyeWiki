@@ -19,9 +19,11 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Provides a page-specific counter.

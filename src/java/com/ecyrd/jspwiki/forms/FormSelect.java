@@ -20,13 +20,14 @@
 */
 package com.ecyrd.jspwiki.forms;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.util.FormUtil;
-import com.ecyrd.jspwiki.plugin.PluginException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.Select;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.plugin.PluginException;
 
 /**
  *  @author ebu

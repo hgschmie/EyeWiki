@@ -20,11 +20,12 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.JspException;
 
-import com.ecyrd.jspwiki.WikiEngine;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+
 import com.ecyrd.jspwiki.NoSuchVariableException;
+import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  *  Returns the value of an Wiki variable.

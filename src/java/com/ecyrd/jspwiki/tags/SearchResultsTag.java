@@ -21,11 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 import java.util.Collection;
-import javax.servlet.jsp.PageContext;
 
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.TranslatorReader;
+import javax.servlet.jsp.PageContext;
 
 /**
  *  Includes the body content, if there are any search results.

@@ -1,11 +1,17 @@
 
 package com.ecyrd.jspwiki.auth;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import org.apache.log4j.*;
-import com.ecyrd.jspwiki.*;
+import java.io.IOException;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.TextUtil;
 
 /**
  *  Tests the UserProfile class.
@@ -81,19 +87,19 @@ public class UserProfileTest extends TestCase
     {
         UserProfile p = new UserProfile();
 
-        p.setName("Määmöö");
+        p.setName("Mï¿½ï¿½mï¿½ï¿½");
         String s = p.getStringRepresentation();
 
         UserProfile p2 = UserProfile.parseStringRepresentation( s );
-        assertEquals( "name", "Määmöö", p2.getName() );
+        assertEquals( "name", "Mï¿½ï¿½mï¿½ï¿½", p2.getName() );
     }
 
     public void testUTFURLStringRepresentation()
         throws Exception
     {
-        UserProfile p = UserProfile.parseStringRepresentation("username="+TextUtil.urlEncodeUTF8("Määmöö"));
+        UserProfile p = UserProfile.parseStringRepresentation("username="+TextUtil.urlEncodeUTF8("Mï¿½ï¿½mï¿½ï¿½"));
 
-        assertEquals( "name", "Määmöö",p.getName() );
+        assertEquals( "name", "Mï¿½ï¿½mï¿½ï¿½",p.getName() );
     }
 
 

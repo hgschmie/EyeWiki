@@ -19,9 +19,9 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;

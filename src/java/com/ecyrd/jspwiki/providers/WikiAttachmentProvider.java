@@ -19,14 +19,15 @@
  */
 package com.ecyrd.jspwiki.providers;
 
-import java.io.InputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 /**

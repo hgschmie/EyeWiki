@@ -19,10 +19,13 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Just displays the current date and time.

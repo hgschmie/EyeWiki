@@ -19,11 +19,13 @@
  */
 package com.ecyrd.jspwiki.providers;
 
-import java.util.List;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 
 /**
  *  Each Wiki page provider should implement this interface.

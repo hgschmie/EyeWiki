@@ -1,12 +1,21 @@
 
 package com.ecyrd.jspwiki.providers;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.StringReader;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.attachment.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.attachment.Attachment;
 
 public class BasicAttachmentProviderTest extends TestCase
 {
@@ -81,39 +90,39 @@ public class BasicAttachmentProviderTest extends TestCase
 
         File f = new File( tmpfiles, NAME1+BasicAttachmentProvider.DIR_EXTENSION );
 
-        m_engine.deleteAll( f );
+        TestEngine.deleteAll( f );
 
         f = new File( tmpfiles, NAME2+BasicAttachmentProvider.DIR_EXTENSION );
 
-        m_engine.deleteAll( f );
+        TestEngine.deleteAll( f );
     }
 
     public void testExtension()
     {
         String s = "test.png";
 
-        assertEquals( m_provider.getFileExtension(s), "png" );
+        assertEquals( BasicAttachmentProvider.getFileExtension(s), "png" );
     }
 
     public void testExtension2()
     {
         String s = ".foo";
 
-        assertEquals( "foo", m_provider.getFileExtension(s) );
+        assertEquals( "foo", BasicAttachmentProvider.getFileExtension(s) );
     }
 
     public void testExtension3()
     {
         String s = "test.png.3";
 
-        assertEquals( "3", m_provider.getFileExtension(s) );
+        assertEquals( "3", BasicAttachmentProvider.getFileExtension(s) );
     }
 
     public void testExtension4()
     {
         String s = "testpng";
 
-        assertEquals( "bin", m_provider.getFileExtension(s) );
+        assertEquals( "bin", BasicAttachmentProvider.getFileExtension(s) );
     }
 
 
@@ -121,14 +130,14 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         String s = "test.";
 
-        assertEquals( "bin", m_provider.getFileExtension(s) );
+        assertEquals( "bin", BasicAttachmentProvider.getFileExtension(s) );
     }
 
     public void testExtension6()
     {
         String s = "test.a";
 
-        assertEquals( "a", m_provider.getFileExtension(s) );
+        assertEquals( "a", BasicAttachmentProvider.getFileExtension(s) );
     }
 
     /**
@@ -139,7 +148,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        Attachment att = new Attachment( NAME1, "\u3072\u3048\u308båäötest.füü" );
+        Attachment att = new Attachment( NAME1, "\u3072\u3048\u308bï¿½ï¿½ï¿½test.fï¿½ï¿½" );
 
         m_provider.putAttachmentData( att, new FileInputStream(in) );
 

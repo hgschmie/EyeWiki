@@ -19,27 +19,38 @@
  */
 package com.ecyrd.jspwiki.atom;
 
-import java.io.*;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.Date;
-import java.util.Collection;
-import java.util.Iterator;
 import org.apache.log4j.Logger;
-import org.intabulas.sandler.*;
-import org.intabulas.sandler.exceptions.*;
-import org.intabulas.sandler.elements.*;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.util.*;
+import org.intabulas.sandler.Sandler;
+import org.intabulas.sandler.SyndicationFactory;
+import org.intabulas.sandler.builders.XPPBuilder;
+import org.intabulas.sandler.elements.Content;
+import org.intabulas.sandler.elements.Entry;
+import org.intabulas.sandler.elements.Feed;
+import org.intabulas.sandler.elements.Link;
+import org.intabulas.sandler.elements.Person;
+import org.intabulas.sandler.exceptions.MarshallException;
 
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
 import com.ecyrd.jspwiki.plugin.WeblogPlugin;
 import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.util.BlogUtil;
 
 /**
  *  Handles incoming requests for the Atom API.  This class uses the
@@ -112,7 +123,7 @@ public class AtomAPIServlet extends HttpServlet
             }
 
             //FIXME: Do authentication here
-            Entry entry = Sandler.unmarshallEntry( request.getInputStream() );
+            Entry entry = Sandler.unmarshallEntry( request.getInputStream(), new XPPBuilder() );
             
             //
             //  Fetch the obligatory parts of the content.
@@ -148,7 +159,7 @@ public class AtomAPIServlet extends HttpServlet
             m_engine.saveText( context, text.toString() );
 
         }
-        catch( FeedMarshallException e )
+        catch( MarshallException e )
         {
             log.error("Received faulty Atom entry",e);
             throw new ServletException("Faulty Atom entry",e);

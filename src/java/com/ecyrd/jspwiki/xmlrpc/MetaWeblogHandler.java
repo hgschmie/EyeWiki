@@ -19,20 +19,25 @@
  */
 package com.ecyrd.jspwiki.xmlrpc;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.log4j.Category;
-import com.ecyrd.jspwiki.*;
+import org.apache.xmlrpc.XmlRpcException;
+
+import com.ecyrd.jspwiki.PageTimeComparator;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
 import com.ecyrd.jspwiki.plugin.WeblogPlugin;
-import com.ecyrd.jspwiki.plugin.PluginException;
 import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.auth.AuthorizationManager;
-import com.ecyrd.jspwiki.auth.WikiAuthenticator;
-import com.ecyrd.jspwiki.auth.UserProfile;
-import java.util.*;
-import org.apache.xmlrpc.XmlRpcException;
 
 /**
  *  Provides handlers for all RPC routines of the MetaWeblog API.

@@ -19,13 +19,15 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
-import java.util.Iterator;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import org.apache.log4j.Logger;
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.auth.UserProfile;
 

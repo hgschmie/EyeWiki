@@ -20,9 +20,8 @@
 */
 package com.ecyrd.jspwiki.forms;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.WikiPlugin;
-import java.util.*;
 
 /**
  */

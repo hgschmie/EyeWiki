@@ -1,12 +1,23 @@
 
 package com.ecyrd.jspwiki;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.StringReader;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.providers.*;
-import com.ecyrd.jspwiki.attachment.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
+import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
+import com.ecyrd.jspwiki.providers.CachingProvider;
+import com.ecyrd.jspwiki.providers.FileSystemProvider;
+import com.ecyrd.jspwiki.providers.VerySimpleProvider;
 
 public class WikiEngineTest extends TestCase
 {
@@ -67,7 +78,7 @@ public class WikiEngineTest extends TestCase
         {
             File f = new File( files );
 
-            m_engine.deleteAll( f );
+            TestEngine.deleteAll( f );
         }
 
     }
@@ -438,7 +449,7 @@ public class WikiEngineTest extends TestCase
         { 
             // do cleanup
             String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
-            m_engine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
+            TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
 
@@ -511,7 +522,7 @@ public class WikiEngineTest extends TestCase
         { 
             // do cleanup
             String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
-            m_engine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
+            TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
 
@@ -548,7 +559,7 @@ public class WikiEngineTest extends TestCase
         { 
             // do cleanup
             String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
-            m_engine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
+            TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
         }
     }
     
@@ -585,7 +596,7 @@ public class WikiEngineTest extends TestCase
         { 
             // do cleanup
             String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
-            m_engine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
+            TestEngine.deleteAll( new File( files, NAME1+BasicAttachmentProvider.DIR_EXTENSION ) );
             new File( files, "TestPage2"+FileSystemProvider.FILE_EXT ).delete();
         }
     }    

@@ -1,12 +1,24 @@
 
 package com.ecyrd.jspwiki.attachment;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 
 public class AttachmentManagerTest extends TestCase
 {
@@ -61,7 +73,7 @@ public class AttachmentManagerTest extends TestCase
 
         File f = new File( tmpfiles, NAME1+BasicAttachmentProvider.DIR_EXTENSION );
 
-        m_engine.deleteAll( f );
+        TestEngine.deleteAll( f );
     }
 
     public void testEnabled()        

@@ -19,14 +19,13 @@
  */
 package com.ecyrd.jspwiki.acl;
 
-import java.security.acl.AclEntry;
-import java.security.acl.Acl;
-import java.security.acl.Permission;
-import java.security.acl.Group;
 import java.security.Principal;
-import java.util.Vector;
+import java.security.acl.AclEntry;
+import java.security.acl.Group;
+import java.security.acl.Permission;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Vector;
 
 /**
  *  JSPWiki implementation of an Access Control List.

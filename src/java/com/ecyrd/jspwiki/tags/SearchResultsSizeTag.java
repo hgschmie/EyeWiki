@@ -21,11 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 import java.util.Collection;
-import javax.servlet.jsp.PageContext;
 
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.TranslatorReader;
+import javax.servlet.jsp.PageContext;
 
 /**
  *  Outputs the size of the search results list, if it contains any items.

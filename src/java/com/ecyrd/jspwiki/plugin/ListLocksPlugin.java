@@ -19,10 +19,15 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
-import java.text.SimpleDateFormat;
+
+import com.ecyrd.jspwiki.PageLock;
+import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  This is a plugin for the administrator: It allows him to see in a single

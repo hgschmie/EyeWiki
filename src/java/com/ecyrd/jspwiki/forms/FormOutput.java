@@ -20,11 +20,11 @@
 */
 package com.ecyrd.jspwiki.forms;
 
-import com.ecyrd.jspwiki.*;
+import java.util.Map;
+
+import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 import com.ecyrd.jspwiki.plugin.PluginManager;
-import java.util.*;
-
 import com.ecyrd.jspwiki.util.FormUtil;
 
 /**

@@ -20,13 +20,13 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Collection;
+
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.SearchResult;
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Iterates through Search result results.
@@ -85,7 +85,7 @@ public class SearchResultIteratorTag
             pageContext.setAttribute( getId(),
                                       r );
 
-            return EVAL_BODY_TAG;
+            return EVAL_BODY_AGAIN;
         }
 
         return SKIP_BODY;

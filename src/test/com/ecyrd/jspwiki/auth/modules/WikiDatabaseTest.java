@@ -1,9 +1,17 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import junit.framework.*;
-import java.util.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.auth.UserManager;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.WikiGroup;
 
 public class WikiDatabaseTest
     extends TestCase

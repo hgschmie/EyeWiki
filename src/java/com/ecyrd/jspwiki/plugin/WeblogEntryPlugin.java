@@ -19,12 +19,20 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.ProviderException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.ecyrd.jspwiki.PageLock;
+import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  *  Builds a simple weblog.

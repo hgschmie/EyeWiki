@@ -1,11 +1,23 @@
 
 package com.ecyrd.jspwiki.providers;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.Writer;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 // FIXME: Should this thingy go directly to the VersioningFileProvider,
 //        or should it rely on the WikiEngine API?
@@ -152,9 +164,9 @@ public class VersioningFileProviderTest extends TestCase
     public void testGetOldVersionUTF8()
         throws Exception
     {
-        String text = "åäö\r\n";
-        String text2 = "barbaröö\r\n";
-        String text3 = "Barneyää\r\n";
+        String text = "ï¿½ï¿½ï¿½\r\n";
+        String text2 = "barbarï¿½ï¿½\r\n";
+        String text3 = "Barneyï¿½ï¿½\r\n";
 
         engine.saveText( NAME1, text );
         engine.saveText( NAME1, text2 );

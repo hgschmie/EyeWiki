@@ -1,10 +1,23 @@
 
 package com.ecyrd.jspwiki.providers;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import com.ecyrd.jspwiki.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.Writer;
+import java.util.List;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 
 public class RCSFileProviderTest extends TestCase
 {

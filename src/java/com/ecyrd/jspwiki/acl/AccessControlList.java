@@ -19,10 +19,10 @@
  */
 package com.ecyrd.jspwiki.acl;
 
+import java.security.Principal;
 import java.security.acl.Acl;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
-import java.security.Principal;
 
 /**
  *  Defines the JSPWiki-specific helper methods for accessing the

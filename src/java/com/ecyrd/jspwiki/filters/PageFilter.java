@@ -1,7 +1,8 @@
 package com.ecyrd.jspwiki.filters;
 
-import com.ecyrd.jspwiki.WikiContext;
 import java.util.Properties;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Provides a definition for a page filter.  A page filter is a class

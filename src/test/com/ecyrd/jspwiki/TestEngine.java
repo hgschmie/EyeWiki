@@ -1,11 +1,16 @@
 
 package com.ecyrd.jspwiki;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import java.io.*;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.providers.*;
+import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
+import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 /**
  *  Simple test engine that always assumes pages are found.
@@ -62,7 +67,14 @@ public class TestEngine extends WikiEngine
         if( "UTF-8".equals( getContentEncoding() ) )
             return TextUtil.urlEncodeUTF8( pagename );
 
-        return java.net.URLEncoder.encode( pagename );
+        try
+        {
+            return java.net.URLEncoder.encode( pagename, "UTF-8" );
+        }
+        catch(UnsupportedEncodingException uee)
+        {
+            throw new RuntimeException("Could not encode to UTF-8?!?", uee);
+        }
     }
 
     /**
@@ -115,7 +127,7 @@ public class TestEngine extends WikiEngine
 
         FileWriter out = new FileWriter( tmpFile );
         
-        FileUtil.copyContents( new StringReader( "asdfaäöüdfzbvasdjkfbwfkUg783gqdwog" ), out );
+        FileUtil.copyContents( new StringReader( "asdfaï¿½ï¿½ï¿½dfzbvasdjkfbwfkUg783gqdwog" ), out );
 
         out.close();
         

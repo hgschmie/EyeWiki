@@ -19,9 +19,14 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeSet;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
+
+import com.ecyrd.jspwiki.ReferenceManager;
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Parameters: none.<BR>

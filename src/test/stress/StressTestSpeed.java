@@ -1,10 +1,19 @@
 package stress;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.*;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 public class StressTestSpeed extends TestCase
 {

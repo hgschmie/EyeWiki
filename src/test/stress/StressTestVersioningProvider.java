@@ -1,11 +1,15 @@
 package stress;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Properties;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.providers.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 public class StressTestVersioningProvider extends TestCase
 {

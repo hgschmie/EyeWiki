@@ -19,14 +19,21 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import java.util.*;
-import java.io.*;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
-import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.providers.ProviderException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
+import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  *  Implements a simple voting system.  WARNING: The storage method is

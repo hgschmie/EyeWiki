@@ -21,13 +21,13 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpSession;
+
+import com.ecyrd.jspwiki.PageLock;
+import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.PageManager;
-import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.providers.ProviderException;
-
-import javax.servlet.http.HttpSession;
 
 /**
  *

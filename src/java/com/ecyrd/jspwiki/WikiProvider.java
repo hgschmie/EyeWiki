@@ -19,8 +19,8 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
 import java.io.IOException;
+import java.util.Properties;
 
 /**
  *  A generic Wiki provider for all sorts of things that the Wiki can

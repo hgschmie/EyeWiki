@@ -19,11 +19,20 @@
  */
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.*;
-import java.util.*;
-import java.io.StringReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.HeadingListener;
+import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 /**
  *  Provides a table of contents.

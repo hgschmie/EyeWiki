@@ -19,23 +19,27 @@
  */
 package com.ecyrd.jspwiki.auth;
 
-import java.util.*;
 import java.security.Principal;
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Properties;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Cookie;
-import java.security.Principal;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
+
 import com.ecyrd.jspwiki.TextUtil;
-import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.HttpUtil;
-
-import com.ecyrd.jspwiki.auth.modules.*;
 
 /**
  *  Manages user accounts, logins/logouts, passwords, etc.

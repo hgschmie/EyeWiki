@@ -24,9 +24,9 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
-import com.ecyrd.jspwiki.WikiContext;
-
 import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Converts the body text into HTML content.

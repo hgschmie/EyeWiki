@@ -19,26 +19,32 @@
  */
 package com.ecyrd.jspwiki.providers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-
-import java.util.Collection;
-import java.util.Properties;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Category;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.FileUtil;
+import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.PageTimeComparator;
+import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 /**

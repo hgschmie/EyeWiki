@@ -19,9 +19,10 @@
  */
 package com.ecyrd.jspwiki.auth;
 
-import java.util.Properties;
-import java.util.List;
 import java.security.Principal;
+import java.util.List;
+import java.util.Properties;
+
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 

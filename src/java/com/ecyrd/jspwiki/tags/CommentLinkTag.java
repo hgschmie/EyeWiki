@@ -20,11 +20,12 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
+
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiContext;
 
 /**
  *  Writes a comment link.  Body of the link becomes the link text.

@@ -19,13 +19,24 @@
  */
 package com.ecyrd.jspwiki.xmlrpc;
 
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Vector;
+
 import org.apache.log4j.Category;
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.auth.*;
-import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
-import com.ecyrd.jspwiki.attachment.Attachment;
-import java.util.*;
 import org.apache.xmlrpc.XmlRpcException;
+
+import com.ecyrd.jspwiki.LinkCollector;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.auth.AuthorizationManager;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 
 /**
  *  Provides handlers for all RPC routines.  These routines are used by

@@ -1,7 +1,8 @@
 package com.ecyrd.jspwiki.auth;
 
-import com.ecyrd.jspwiki.InternalWikiException;
 import java.security.Principal;
+
+import com.ecyrd.jspwiki.InternalWikiException;
 
 /**
  *  A special kind of WikiGroup.  Anyone who has set their name in

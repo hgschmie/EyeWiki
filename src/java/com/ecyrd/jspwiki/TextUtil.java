@@ -153,7 +153,14 @@ public class TextUtil
         }
         catch( UnsupportedEncodingException e )
         {
-            return java.net.URLEncoder.encode( text );
+            try
+            {
+                return java.net.URLEncoder.encode( text, "UTF-8" );
+            }
+            catch (UnsupportedEncodingException uee)
+            {
+                throw new RuntimeException("Could not encode UTF-8!?!", uee);
+            }
         }
 
     }
@@ -171,7 +178,14 @@ public class TextUtil
         }
         catch( UnsupportedEncodingException e )
         {
-            rs = java.net.URLDecoder.decode( utf8 );
+            try
+            {
+                rs = java.net.URLDecoder.decode( utf8, "UTF-8" );
+            }
+            catch (UnsupportedEncodingException uee)
+            {
+                throw new RuntimeException("Could not decode UTF-8!?!", uee);
+            }
         }
 
         return rs;
@@ -189,9 +203,9 @@ public class TextUtil
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though. 
         if( "UTF-8".equals( encoding ) )
-            return( TextUtil.urlEncodeUTF8( data ) );
-        else
-            return( TextUtil.urlEncode( data.getBytes() ) );
+            return( 	TextUtil.urlEncodeUTF8( data ) );
+    	else		
+    	    return( TextUtil.urlEncode( data.getBytes() ) );
     }
 
     /**

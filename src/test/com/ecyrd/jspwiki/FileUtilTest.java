@@ -1,10 +1,17 @@
 
 package com.ecyrd.jspwiki;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import org.apache.log4j.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Properties;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.log4j.PropertyConfigurator;
 
 public class FileUtilTest extends TestCase
 {

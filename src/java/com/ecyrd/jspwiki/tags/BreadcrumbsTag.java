@@ -19,15 +19,17 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiContext;
-import org.apache.log4j.Category;
-
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.JspWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.LinkedList;
+
+import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.JspWriter;
+
+import org.apache.log4j.Category;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  * Implement a "breadcrumb" (most recently visited) trail.  This tag can be added to any view jsp page.

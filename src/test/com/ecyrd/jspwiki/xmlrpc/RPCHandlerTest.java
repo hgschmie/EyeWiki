@@ -1,11 +1,21 @@
 
 package com.ecyrd.jspwiki.xmlrpc;
 
-import com.ecyrd.jspwiki.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Hashtable;
+import java.util.Properties;
+import java.util.Vector;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.xmlrpc.XmlRpcException;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import junit.framework.*;
-import java.util.*;
-import org.apache.xmlrpc.*;
 
 
 public class RPCHandlerTest extends TestCase

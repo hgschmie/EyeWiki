@@ -19,8 +19,6 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import java.io.IOException;
-
 import java.util.Map;
 
 import javax.servlet.jsp.JspException;
@@ -30,10 +28,9 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.plugin.PluginManager;
-import com.ecyrd.jspwiki.plugin.PluginException;
 
 /**
  *  Inserts any Wiki plugin.  The body of the tag becomes then

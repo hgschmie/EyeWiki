@@ -21,13 +21,14 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 import java.util.Collection;
+
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
@@ -89,7 +90,7 @@ public class HistoryIteratorTag
                 }
             }
 
-            return EVAL_BODY_TAG;
+            return EVAL_BODY_AGAIN;
         }
         catch( ProviderException e )
         {
@@ -126,7 +127,7 @@ public class HistoryIteratorTag
                                       PageContext.REQUEST_SCOPE );
             pageContext.setAttribute( getId(),
                                       context.getPage() );
-            return EVAL_BODY_TAG;
+            return EVAL_BODY_AGAIN;
         }
         else
         {

@@ -19,14 +19,15 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import java.util.*;
-
 import java.io.IOException;
-import javax.servlet.jsp.JspException;
-import javax.servlet.ServletException;
+import java.util.Properties;
 
+import javax.servlet.ServletException;
+import javax.servlet.jsp.JspException;
+
+import com.ecyrd.jspwiki.TextUtil;
+import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.*;
 
 /**
  *  Is used as a "super include" tag, which can include the proper context

@@ -19,16 +19,21 @@
  */
 package com.ecyrd.jspwiki.xmlrpc;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Category;
 import org.apache.xmlrpc.XmlRpcServer;
 
-import com.ecyrd.jspwiki.*;
+import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  *  Handles all incoming servlet requests for XML-RPC calls.

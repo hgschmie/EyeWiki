@@ -19,7 +19,8 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.*;
+import java.util.Comparator;
+
 import org.apache.log4j.Category;
 
 // FIXME: Does not implement equals().

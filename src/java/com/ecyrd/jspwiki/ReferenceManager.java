@@ -20,13 +20,28 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.*;
-import java.io.*;
-import org.apache.log4j.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
-import com.ecyrd.jspwiki.attachment.*;
-import com.ecyrd.jspwiki.providers.*;
+import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
 /*
   BUGS

@@ -19,23 +19,40 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PushbackReader;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
-import org.apache.oro.text.*;
-import org.apache.oro.text.regex.*;
+import org.apache.oro.text.GlobCompiler;
+import org.apache.oro.text.regex.MalformedPatternException;
+import org.apache.oro.text.regex.MatchResult;
+import org.apache.oro.text.regex.Pattern;
+import org.apache.oro.text.regex.PatternCompiler;
+import org.apache.oro.text.regex.PatternMatcher;
+import org.apache.oro.text.regex.PatternMatcherInput;
+import org.apache.oro.text.regex.Perl5Compiler;
+import org.apache.oro.text.regex.Perl5Matcher;
 
-import com.ecyrd.jspwiki.plugin.PluginManager;
-import com.ecyrd.jspwiki.plugin.PluginException;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
-import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.acl.AccessControlList;
-import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
-import com.ecyrd.jspwiki.auth.WikiSecurityException;
-import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.auth.UserManager;
+import com.ecyrd.jspwiki.auth.WikiSecurityException;
+import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
+import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.PluginManager;
+import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  *  Handles conversion from Wiki format into fully featured HTML.

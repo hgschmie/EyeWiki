@@ -19,15 +19,16 @@
  */
 package com.ecyrd.jspwiki.util;
 
-import java.text.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.UnsupportedEncodingException;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiPage;
 
 /**

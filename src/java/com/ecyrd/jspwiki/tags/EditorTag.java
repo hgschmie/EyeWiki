@@ -20,16 +20,20 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-import java.io.StringReader;
+
 import javax.servlet.jsp.PageContext;
+
+import org.apache.ecs.ConcreteElement;
+import org.apache.ecs.GenericElement;
+import org.apache.ecs.xhtml.div;
+import org.apache.ecs.xhtml.form;
+import org.apache.ecs.xhtml.input;
+import org.apache.ecs.xhtml.p;
+import org.apache.ecs.xhtml.textarea;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
-
-import org.apache.ecs.xhtml.*;
-import org.apache.ecs.GenericElement;
-import org.apache.ecs.ConcreteElement;
 
 /**
  *  Creates an editor component with all the necessary parts

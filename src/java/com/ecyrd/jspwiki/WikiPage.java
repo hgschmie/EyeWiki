@@ -21,8 +21,8 @@ package com.ecyrd.jspwiki;
 
 import java.util.Date;
 import java.util.HashMap;
-import com.ecyrd.jspwiki.acl.AccessControlList;
 
+import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
 /**

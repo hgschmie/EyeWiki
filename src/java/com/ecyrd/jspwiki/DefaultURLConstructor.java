@@ -1,7 +1,8 @@
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class DefaultURLConstructor

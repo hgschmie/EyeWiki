@@ -1,7 +1,7 @@
 package com.ecyrd.jspwiki.tags;
 
-import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.TagData;
+import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
 
 public class CheckLockInfo 

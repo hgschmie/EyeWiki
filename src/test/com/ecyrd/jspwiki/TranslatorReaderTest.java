@@ -1,15 +1,30 @@
 
 package com.ecyrd.jspwiki;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
+import java.util.Vector;
+
+import javax.servlet.ServletException;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.providers.*;
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import javax.servlet.*;
-import com.ecyrd.jspwiki.acl.*;
-import com.ecyrd.jspwiki.auth.permissions.*;
-import com.ecyrd.jspwiki.auth.*;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.permissions.EditPermission;
+import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
+import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 
 public class TranslatorReaderTest extends TestCase
 {
@@ -1767,7 +1782,7 @@ public class TranslatorReaderTest extends TestCase
             File storagedir = new File( files, PAGE_NAME+BasicAttachmentProvider.DIR_EXTENSION );
 
             if( storagedir.exists() && storagedir.isDirectory() )
-                testEngine.deleteAll( storagedir );
+                TestEngine.deleteAll( storagedir );
         }
     }
 

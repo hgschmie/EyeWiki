@@ -1,9 +1,8 @@
 package com.ecyrd.jspwiki.auth;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
-import org.apache.log4j.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class WikiGroupTest
     extends TestCase

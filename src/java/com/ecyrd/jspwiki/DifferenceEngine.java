@@ -19,15 +19,15 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
-import java.util.Vector;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.Properties;
+import java.util.Vector;
 
 import org.apache.log4j.Category;
 

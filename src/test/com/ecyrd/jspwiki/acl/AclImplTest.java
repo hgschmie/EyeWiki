@@ -1,12 +1,18 @@
 package com.ecyrd.jspwiki.acl;
 
-import junit.framework.*;
-import java.util.*;
+import java.security.acl.AclEntry;
 
-import java.security.acl.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import com.ecyrd.jspwiki.auth.permissions.*;
-import com.ecyrd.jspwiki.auth.*;
+import com.ecyrd.jspwiki.auth.AllGroup;
+import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.auth.WikiGroup;
+import com.ecyrd.jspwiki.auth.permissions.CommentPermission;
+import com.ecyrd.jspwiki.auth.permissions.CreatePermission;
+import com.ecyrd.jspwiki.auth.permissions.EditPermission;
+import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 
 public class AclImplTest
     extends TestCase
