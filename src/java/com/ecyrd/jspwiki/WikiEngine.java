@@ -106,18 +106,6 @@ public class WikiEngine
     public static final String PARAM_PROPERTYFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
     /**
-     * If this parameter is true, then all the page and string references are relative to the
-     * web application root. This allows a wiki to be deployed "as is" as a single war file.
-     */
-    public static final String PARAM_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
-
-    /**
-     * The default is to have absolute pathes for backwards compatibility
-     * @value false
-     */
-    public static final boolean PARAM_WIKIRELATIVE_PATHES_DEFAULT = false;
-
-    /**
      * Prefix for the elements in the PARAM_PAGES field.
      * @value jspwiki.specialPage
      */
@@ -227,7 +215,7 @@ public class WikiEngine
      * If true, all the pathes from the various file providers are relative to the
      * root of the web application
      */
-    private boolean wikiRelativePathes = PARAM_WIKIRELATIVE_PATHES_DEFAULT;
+    private boolean wikiRelativePathes = PROP_WIKIRELATIVE_PATHES_DEFAULT;
     
     /**
      *  Gets a WikiEngine related to this servlet.  Since this method
@@ -395,10 +383,6 @@ public class WikiEngine
         InputStream propertyStream = null;
         String      propertyFile   = context.getInitParameter(PARAM_PROPERTYFILE);
 
-        String relPathes = context.getInitParameter(PARAM_WIKIRELATIVE_PATHES);
-
-        wikiRelativePathes = (relPathes != null) ? Boolean.getBoolean(relPathes) : PARAM_WIKIRELATIVE_PATHES_DEFAULT;
-
         m_servletContext = context;
         m_appid          = appid;
 
@@ -424,6 +408,15 @@ public class WikiEngine
         throws WikiException
     {
         m_startTime  = new Date();
+
+        wikiRelativePathes = TextUtil.getBooleanProperty(
+                props,
+                PROP_WIKIRELATIVE_PATHES,
+                PROP_WIKIRELATIVE_PATHES_DEFAULT);
+
+        props.setProperty(PROP_ROOTDIR, 
+                wikiRelativePathes ? getRootPath() : "");
+
         m_properties = props;
 
         //

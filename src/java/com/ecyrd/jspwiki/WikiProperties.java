@@ -68,6 +68,25 @@ public interface WikiProperties
      */
     String PROP_STORAGEDIR = "jspwiki.storageDir";
 
+    /**
+     * If this parameter is true, then all the page and string references are relative to the
+     * web application root. This allows a wiki to be deployed "as is" as a single war file.
+     */
+    public static final String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
+
+    /**
+     * The default is to have absolute pathes for backwards compatibility
+     * @value false
+     */
+    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = true;
+
+    /**
+     * This property is used internally to provide the root of the web application to the logging configuration when the
+     * Wiki has been configured to use relative pathes with jspwiki.relativePathes = true
+     * You can reference it as ${jspwiki.rootDir} but you should never add it directly to the jspwiki.properties file
+     */
+    String PROP_ROOTDIR = "jspwiki.rootDir";
+
     /** Property start for any interwiki reference. */
     String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";
 

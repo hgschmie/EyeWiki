@@ -26,6 +26,16 @@
       </ant:fileset>
     </ant:copy>
 
+    <!-- copy wiki pages -->
+    <ant:copy todir="${maven.war.webapp.dir}/jspwiki/pages" >
+      <ant:fileset dir="src/wikipages">
+        <include name="**/*"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <ant:mkdir dir="${maven.war.webapp.dir}/jspwiki/work" />
+    <ant:mkdir dir="${maven.war.webapp.dir}/jspwiki/logs" />
+
   </postGoal>
 
   <preGoal name="test:test-resources">
