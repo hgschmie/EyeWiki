@@ -20,7 +20,7 @@
                replacefilterfile="build.properties"/>
 
     <!-- Copy TagLibs Files -->
-    <ant:copy todir="${maven.war.webapp.dir}/WEB-INF/tld" >
+    <ant:copy todir="${maven.war.webapp.dir}/WEB-INF" >
       <ant:fileset dir="etc">
         <include name="**/*.tld"/>
       </ant:fileset>
