@@ -20,9 +20,14 @@
 */
 package com.ecyrd.jspwiki.forms;
 
-import com.ecyrd.jspwiki.*;
-import com.ecyrd.jspwiki.plugin.*;
-import java.util.*;
+import java.util.Map;
+
+import org.apache.ecs.html.Form;
+import org.apache.log4j.Logger;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 /**
  * FormSet is a companion WikiPlugin for Form. 
@@ -60,8 +65,8 @@ import java.util.*;
 public class FormSet
     implements WikiPlugin
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormSet.class );
+    private static Logger log = 
+	Logger.getLogger( FormSet.class );
     
     
     public String execute( WikiContext ctx, Map params )

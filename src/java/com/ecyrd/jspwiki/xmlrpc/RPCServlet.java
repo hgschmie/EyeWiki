@@ -81,7 +81,7 @@ public class RPCServlet extends HttpServlet
         String handlerName = config.getInitParameter( "handler" );
         String prefix      = config.getInitParameter( "prefix" );
 
-        if( handlerName == null ) handlerName = "com.ecyrd.jspwiki.xmlrpc.RPCHandler";
+        if( handlerName == null ) handlerName = RPCHandler.class.getName();
         if( prefix == null )      prefix = XMLRPC_PREFIX;
 
         try
@@ -92,7 +92,7 @@ public class RPCServlet extends HttpServlet
             // FIXME: The metaweblog API should be possible to turn off.
             //
             initHandler( "metaWeblog", 
-                         "com.ecyrd.jspwiki.xmlrpc.MetaWeblogHandler" );
+                    MetaWeblogHandler.class.getName() );
         }
         catch( Exception e )
         {

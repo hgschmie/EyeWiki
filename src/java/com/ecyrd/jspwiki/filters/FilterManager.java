@@ -35,6 +35,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.Parser;
 import org.xml.sax.SAXException;
 
+import uk.co.wilson.xml.MinML;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
@@ -196,7 +198,7 @@ public class FilterManager
                 log.info("Cannot find property file for filters (this is okay, expected to find it as: '"+ (xmlFile == null ? DEFAULT_XMLFILE : xmlFile ) +"')");
                 return;
             }
-            Parser parser = new uk.co.wilson.xml.MinML(); // FIXME: Should be settable
+            Parser parser = new MinML(); // FIXME: Should be settable
 
             parser.setDocumentHandler( this );
             parser.setErrorHandler( this );

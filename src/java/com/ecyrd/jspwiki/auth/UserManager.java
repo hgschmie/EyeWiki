@@ -38,6 +38,7 @@ import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.HttpUtil;
 
@@ -74,7 +75,7 @@ public class UserManager
     public static final String GROUP_NAMEDGUEST  = "NamedGuest";
     public static final String GROUP_KNOWNPERSON = "KnownPerson";
 
-    private static final String DEFAULT_DATABASE = "com.ecyrd.jspwiki.auth.modules.WikiDatabase";
+    private static final String DEFAULT_DATABASE = WikiDatabase.class.getName();
 
     /**
      *  The default administrator group is called "AdminGroup"

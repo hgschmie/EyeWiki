@@ -30,6 +30,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Category;
 
+import com.ecyrd.jspwiki.providers.CachingProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.RepositoryModifiedException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
@@ -86,7 +87,7 @@ public class PageManager
         //
         if( useCache )
         {
-            classname = "com.ecyrd.jspwiki.providers.CachingProvider";
+            classname = CachingProvider.class.getName();
         }
         else
         {

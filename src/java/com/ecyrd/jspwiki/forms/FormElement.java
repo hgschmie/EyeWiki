@@ -20,6 +20,8 @@
 */
 package com.ecyrd.jspwiki.forms;
 
+import org.apache.log4j.Logger;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
@@ -28,8 +30,8 @@ import com.ecyrd.jspwiki.plugin.WikiPlugin;
 public abstract class FormElement
     implements WikiPlugin
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormElement.class );
+    private static Logger log = 
+	Logger.getLogger( FormElement.class );
 
     /**
      * In order to make the form-to-handler parameter transfer easier,

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.Select;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -35,8 +36,8 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormSelect
     extends FormElement
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormSelect.class );
+    private static Logger log = 
+	Logger.getLogger( FormSelect.class );
 
     public String execute( WikiContext ctx, Map params )
         throws PluginException

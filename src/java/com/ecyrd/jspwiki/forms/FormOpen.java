@@ -22,6 +22,8 @@ package com.ecyrd.jspwiki.forms;
 
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 
@@ -67,8 +69,8 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormOpen
     extends FormElement
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormOpen.class );
+    private static Logger log = 
+	Logger.getLogger( FormOpen.class );
 
     public static final String PARAM_METHOD = "method";
 

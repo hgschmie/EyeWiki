@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.TextArea;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -35,8 +36,8 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormTextarea
     extends FormElement
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormTextarea.class );
+    private static Logger log = 
+	Logger.getLogger( FormTextarea.class );
 
     public static final String PARAM_ROWS = "rows";
     public static final String PARAM_COLS = "cols";

@@ -60,6 +60,7 @@ import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
+import com.opensymphony.oscache.base.algorithm.LRUCache;
 import com.opensymphony.oscache.base.events.CacheEntryEvent;
 import com.opensymphony.oscache.base.events.CacheEntryEventListener;
 import com.opensymphony.oscache.base.events.CacheGroupEvent;
@@ -141,7 +142,7 @@ public class CachingProvider
 
     private static final int   DEFAULT_CACHECAPACITY   = 1000; // Good most wikis
 
-    private static final String OSCACHE_ALGORITHM      = "com.opensymphony.module.oscache.base.algorithm.LRUCache";
+    private static final String OSCACHE_ALGORITHM      = LRUCache.class.getName();
 
     // Lucene properties.
     public static final String PROP_USE_LUCENE         = "jspwiki.useLucene";

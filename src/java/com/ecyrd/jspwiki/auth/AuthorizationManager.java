@@ -37,6 +37,7 @@ import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.acl.AclEntryImpl;
 import com.ecyrd.jspwiki.acl.AclImpl;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
 import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
@@ -52,7 +53,7 @@ public class AuthorizationManager
 {
     public static final String PROP_STRICTLOGINS = "jspwiki.policy.strictLogins";
     public static final String PROP_AUTHORIZER   = "jspwiki.authorizer";
-    public static final String DEFAULT_AUTHORIZER = "com.ecyrd.jspwiki.auth.modules.PageAuthorizer";
+    public static final String DEFAULT_AUTHORIZER = PageAuthorizer.class.getName();
  
     protected static final String PROP_USEOLDAUTH = "jspwiki.auth.useOldAuth";
     

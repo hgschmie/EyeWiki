@@ -37,6 +37,7 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.providers.CachingAttachmentProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
@@ -96,7 +97,7 @@ public class AttachmentManager
 
         if( useCache )
         {
-            classname = "com.ecyrd.jspwiki.providers.CachingAttachmentProvider";
+            classname = CachingAttachmentProvider.class.getName();
         }
         else
         {

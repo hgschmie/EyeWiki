@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ecs.html.Input;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -34,8 +35,8 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormInput
     extends FormElement
 {
-    private static org.apache.log4j.Logger log = 
-	org.apache.log4j.Logger.getLogger( FormInput.class );
+    private static Logger log = 
+	Logger.getLogger( FormInput.class );
 
     public static final String PARAM_TYPE  = "type";
     public static final String PARAM_SIZE  = "size";

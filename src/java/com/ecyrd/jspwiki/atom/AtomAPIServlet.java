@@ -40,6 +40,7 @@ import org.intabulas.sandler.elements.Entry;
 import org.intabulas.sandler.elements.Feed;
 import org.intabulas.sandler.elements.Link;
 import org.intabulas.sandler.elements.Person;
+import org.intabulas.sandler.elements.impl.LinkImpl;
 import org.intabulas.sandler.exceptions.MarshallException;
 
 import com.ecyrd.jspwiki.TextUtil;
@@ -312,7 +313,7 @@ public class AtomAPIServlet extends HttpServlet
                              String href,
                              String title )
     {
-        org.intabulas.sandler.elements.impl.LinkImpl link = new org.intabulas.sandler.elements.impl.LinkImpl();
+        LinkImpl link = new LinkImpl();
 
         link.setRelationship( rel );
         link.setTitle( title );
