@@ -22,6 +22,8 @@ package com.ecyrd.jspwiki.auth;
 import java.util.Properties;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
 
 /**
  *  Defines the interface for connecting to different authentication
@@ -36,8 +38,8 @@ public interface WikiAuthenticator
      * Initializes the WikiAuthenticator based on values from a Properties
      * object.
      */
-    public void initialize( Properties props )
-        throws NoRequiredPropertyException;
+    public void initialize(WikiEngine engine, Properties props )
+        throws NoRequiredPropertyException, WikiException;
 
     /**
      * Authenticates a user, using the name and password present in the

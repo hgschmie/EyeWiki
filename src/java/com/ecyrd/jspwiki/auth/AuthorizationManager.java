@@ -60,7 +60,7 @@ public class AuthorizationManager
     private boolean           m_strictLogins = false;
 
     /** If true, allows the old auth system to be used. */
-    private boolean           m_useAuth = false;
+    private boolean           m_useOldAuth = false;
     
     private WikiEngine        m_engine;
 
@@ -75,7 +75,7 @@ public class AuthorizationManager
     {
         m_engine = engine;
 
-        m_useAuth = TextUtil.getBooleanProperty(
+        m_useOldAuth = TextUtil.getBooleanProperty(
                 properties,
                 PROP_AUTH_USEOLDAUTH,
                 PROP_AUTH_USEOLDAUTH_DEFAULT);
@@ -85,7 +85,7 @@ public class AuthorizationManager
                 PROP_AUTH_STRICTLOGINS,
                 PROP_AUTH_STRICTLOGINS_DEFAULT);
 
-        if( !m_useAuth ) return;
+        if( !m_useOldAuth ) return;
         
         m_authorizer = getAuthorizerImplementation( properties );
         m_authorizer.initialize( engine, properties );
@@ -249,7 +249,7 @@ public class AuthorizationManager
         //
         //  If auth is turned off, return immediately for speed
         //
-        if( !m_useAuth ) return true;
+        if( !m_useOldAuth ) return true;
         
         //
         //  Yup, superusers can do anything.
@@ -339,4 +339,16 @@ public class AuthorizationManager
 
         return res == AccessControlList.ALLOW;
     }
+
+
+    public boolean isOldAuth()
+    {
+        return m_useOldAuth;
+    }
+
+    public boolean isStrictLogins()
+    {
+        return m_strictLogins;
+    }
+
 }

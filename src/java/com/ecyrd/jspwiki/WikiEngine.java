@@ -559,8 +559,8 @@ public class WikiEngine
             initReferenceManager();
 
             m_templateManager   = new TemplateManager( this, props );
-            m_userManager       = new UserManager( this, props );
             m_authorizationManager = new AuthorizationManager( this, props );
+            m_userManager       = new UserManager( this, props );
 
         }
         catch( Exception e )

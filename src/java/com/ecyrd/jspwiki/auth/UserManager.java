@@ -74,7 +74,7 @@ public class UserManager
 
     private String             m_administrator;
 
-    private boolean            m_useAuth = false;
+    private boolean            m_useOldAuth = false;
     
     /**
      *  Creates an UserManager instance for the given WikiEngine and
@@ -95,12 +95,10 @@ public class UserManager
                 PROP_AUTH_ADMINISTRATOR,
                 PROP_AUTH_ADMINISTRATOR_DEFAULT);
 
-        m_useAuth = TextUtil.getBooleanProperty(
-                props,
-                PROP_AUTH_USEOLDAUTH,
-                PROP_AUTH_USEOLDAUTH_DEFAULT);
+        m_useOldAuth = engine.getAuthorizationManager().isOldAuth();
         
-        if( !m_useAuth ) return;
+        if( !m_useOldAuth )
+            return;
         
         WikiGroup all = new AllGroup();
         all.setName( "All" );
@@ -119,7 +117,7 @@ public class UserManager
                                                                 authClassName );
 
                 m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
-                m_authenticator.initialize( props );
+                m_authenticator.initialize(engine, props );
 
                 log.info("Initialized "+authClassName+" for authentication.");
             }
@@ -489,10 +487,10 @@ public class UserManager
             //
             uid = HttpUtil.retrieveCookieValue( request, WikiEngine.PREFS_COOKIE_NAME );
 
-            log.debug("Stored username="+uid);
-
             if( uid != null )
             {
+                log.debug("Retrieved User from Cookie: " + uid);
+
                 try
                 {
                     wup = UserProfile.parseStringRepresentation( uid );
@@ -564,12 +562,15 @@ public class UserManager
     {
         UserProfile profile = getUserProfile( TranslatorReader.cleanLink(name) );
 
-        Cookie prefs = new Cookie( WikiEngine.PREFS_COOKIE_NAME, 
-                                   profile.getStringRepresentation() );
+        // Set cookie only if we actually have a user database configured
+        if (profile != null)
+        {
+            Cookie prefs = new Cookie( WikiEngine.PREFS_COOKIE_NAME, 
+                    profile.getStringRepresentation() );
 
-        prefs.setMaxAge( 1001*24*60*60 ); // 1001 days is default.
+            prefs.setMaxAge( 1001*24*60*60 ); // 1001 days is default.
 
-        response.addCookie( prefs );
+            response.addCookie( prefs );
+        }
     }
-
 }
