@@ -176,7 +176,11 @@ public class PageManager
             //
             log.info("Repository has been modified externally while fetching page "+pageName );
 
-            WikiPage p = new WikiPage( pageName );
+            //
+            //  Empty the references and yay, it shall be recalculated
+            //
+            //WikiPage p = new WikiPage( pageName );
+            WikiPage p = m_provider.getPageInfo( pageName, version );
             
             m_engine.updateReferences( p );
 

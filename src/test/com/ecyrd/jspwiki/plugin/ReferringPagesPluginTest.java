@@ -46,14 +46,14 @@ public class ReferringPagesPluginTest extends TestCase
 
     public void tearDown()
     {
-        engine.deletePage( "TestPage" );
-        engine.deletePage( "Foobar" );
-        engine.deletePage( "Foobar2" );
-        engine.deletePage( "Foobar3" );
-        engine.deletePage( "Foobar4" );
-        engine.deletePage( "Foobar5" );
-        engine.deletePage( "Foobar6" );
-        engine.deletePage( "Foobar7" );
+        TestEngine.deleteTestPage( "TestPage" );
+        TestEngine.deleteTestPage( "Foobar" );
+        TestEngine.deleteTestPage( "Foobar2" );
+        TestEngine.deleteTestPage( "Foobar3" );
+        TestEngine.deleteTestPage( "Foobar4" );
+        TestEngine.deleteTestPage( "Foobar5" );
+        TestEngine.deleteTestPage( "Foobar6" );
+        TestEngine.deleteTestPage( "Foobar7" );
     }
 
     private String mkLink( String page )
@@ -74,7 +74,7 @@ public class ReferringPagesPluginTest extends TestCase
         String res = manager.execute( context2,
                                       "{INSERT com.ecyrd.jspwiki.plugin.ReferringPagesPlugin WHERE max=5}");
 
-        assertEquals( mkLink( "TestPage" )+"<br />\n",
+        assertEquals( mkLink( "TestPage" )+"<br />",
                       res );
     }
 
@@ -110,7 +110,7 @@ public class ReferringPagesPluginTest extends TestCase
         String res = manager.execute( context2,
                                       "{INSERT com.ecyrd.jspwiki.plugin.ReferringPagesPlugin WHERE maxwidth=5}");
 
-        assertEquals( mkFullLink( "TestP...", "TestPage" )+"<br />\n",
+        assertEquals( mkFullLink( "TestP...", "TestPage" )+"<br />",
                       res );        
     }
 

@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <id>jspwiki</id>
   <name>JSPWiki</name>
-  <currentVersion>2.1.143-dev</currentVersion>
+  <currentVersion>2.1.156-dev</currentVersion>
   <organization>
     <name>jspwiki.org</name>
     <url>http://www.jspwiki.org</url>

@@ -98,6 +98,9 @@ public class WikiEngine
 
     public static final String PARAM_PROPERTYFILE = "jspwiki.propertyfile";
 
+    /** Property for application name */
+    public static final String PROP_APPNAME      = "jspwiki.applicationName";
+    
     /** Property start for any interwiki reference. */
     public static final String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";
 
@@ -702,35 +705,12 @@ public class WikiEngine
         return m_urlConstructor.makeURL( WikiContext.ATTACH, attName, false, null );
     }
 
-    /*
-    public String getURL( String name, boolean absolute )
-    {
-        return m_urlConstructor.makeURL( WikiContext.NONE, name, absolute, null );
-    }
-
-    public String getURL( String context, String pageName )
-    {
-        return m_urlConstructor.makeURL( context, pageName, false, null );
-    }
-
-    public String getURL( String context, String pageName, String params )
-    {
-        return m_urlConstructor.makeURL( context, pageName, false, params );
-    }
-
-    public String getAbsoluteURL( String context, String pageName )
-    {
-        return m_urlConstructor.makeURL( context, pageName, true, null );
-    }
-
-    public String getAbsoluteURL( String context, String pageName, String params )
-    {
-        return m_urlConstructor.makeURL( context, pageName, true, params );
-    }
-    */
-
     /**
      *  Returns an URL if a WikiContext is not available.
+     *  @param context The WikiContext (VIEW, EDIT, etc...)
+     *  @param pageName Name of the page, as usual
+     *  @param params List of parameters. May be null, if no parameters.
+     *  @param absolute If true, will generate an absolute URL regardless of properties setting.
      */
     public String getURL( String context, String pageName, String params, boolean absolute )
     {
@@ -899,6 +879,9 @@ public class WikiEngine
         String propname = PROP_SPECIALPAGE+original;
         String specialpage = m_properties.getProperty( propname );
 
+        if( specialpage != null )
+            specialpage = getURL( WikiContext.NONE, specialpage, null, true );
+        
         return specialpage;
     }
 
@@ -909,7 +892,7 @@ public class WikiEngine
     // FIXME: Should use servlet context as a default instead of a constant.
     public String getApplicationName()
     {
-        String appName = m_properties.getProperty("jspwiki.applicationName");
+        String appName = m_properties.getProperty(PROP_APPNAME);
 
         if( appName == null )
             return Release.APPNAME;
@@ -1095,27 +1078,14 @@ public class WikiEngine
      */
     public String encodeName( String pagename )
     {
-        try
-        {
-            if( m_useUTF8 )
-                return TextUtil.urlEncodeUTF8( pagename );
-            else
-                return java.net.URLEncoder.encode( pagename, "ISO-8859-1" );
-        }
-        catch( UnsupportedEncodingException e )
-        {
-            throw new InternalWikiException("ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
-        }
+        return TextUtil.urlEncode( pagename, (m_useUTF8 ? "UTF-8" : "ISO-8859-1"));
     }
 
     public String decodeName( String pagerequest )
     {
         try
         {
-            if( m_useUTF8 )
-                return TextUtil.urlDecodeUTF8( pagerequest );
-            else
-                return java.net.URLDecoder.decode( pagerequest, "ISO-8859-1" );
+            return TextUtil.urlDecode( pagerequest, (m_useUTF8 ? "UTF-8" : "ISO-8859-1") );
         }
         catch( UnsupportedEncodingException e )
         {
@@ -1257,13 +1227,13 @@ public class WikiEngine
 
     public String getHTML( WikiContext context, WikiPage page )
     {
-	String pagedata = null;
+        String pagedata = null;
 
         pagedata = getPureText( page.getName(), page.getVersion() );
 
         String res = textToHTML( context, pagedata );
 
-	return res;
+        return res;
     }
     
     /**
@@ -1295,7 +1265,7 @@ public class WikiEngine
         
         String res = getHTML( context, page );
 
-	return res;
+        return res;
     }
 
     /**
@@ -1922,7 +1892,11 @@ public class WikiEngine
             wikipage = getPage( pagereq, version );
         }
 
-        if( wikipage == null ) wikipage = new WikiPage( pagereq );
+        if( wikipage == null ) 
+        {
+            pagereq = TranslatorReader.cleanLink( pagereq );
+            wikipage = new WikiPage( pagereq );
+        }
 
         //
         //  Figure out which template we should be using for this page.
@@ -1953,7 +1927,25 @@ public class WikiEngine
         return context;
     }
 
-
+    /**
+     *  Deletes a page completely.
+     * 
+     * @param pageName
+     * @throws ProviderException
+     */
+    public void deletePage( String pageName )
+        throws ProviderException
+    {
+        WikiPage p = getPage( pageName );
+        m_pageManager.deletePage( p );
+    }
+    
+    public void deleteVersion( WikiPage page )
+        throws ProviderException
+    {
+        m_pageManager.deleteVersion( page );
+    }
+    
     /**
      *  Returns the URL of the global RSS file.  May be null, if the
      *  RSS file generation is not operational.

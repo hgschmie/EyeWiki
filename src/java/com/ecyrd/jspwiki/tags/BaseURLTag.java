@@ -1,7 +1,7 @@
 /* 
     JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published by
@@ -17,16 +17,24 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.ecyrd.jspwiki.auth;
+package com.ecyrd.jspwiki.tags;
+
+import java.io.IOException;
 
 /**
- *  Thrown in some error situations where a WikiPrincipal object does not exist.
+ *  Writes the jspwiki.baseURL property.
+ *
+ *  @author Janne Jalkanen
+ *  @since 2.2
  */
-public class NoSuchPrincipalException
-    extends WikiSecurityException
+public class BaseURLTag
+    extends WikiTagBase
 {
-    public NoSuchPrincipalException( String msg )
+    public final int doWikiStartTag()
+        throws IOException
     {
-        super(msg);
+        pageContext.getOut().print( m_wikiContext.getEngine().getBaseURL() );
+
+        return SKIP_BODY;
     }
 }

@@ -1,4 +1,4 @@
-/* Diff.java,v
+/* $Log: Diff.java,v $
 /* Revision 1.2  2003/03/02 13:36:06  jalkanen
 /* Changed license text to refer to LGPL
 /*

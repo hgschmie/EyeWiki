@@ -349,6 +349,7 @@ public class RCSFileProvider
      *  the directory as well.
      */
     public void putPageText( WikiPage page, String text )
+        throws ProviderException
     {
         String pagename = page.getName();
         // Writes it in the dir.

@@ -125,41 +125,29 @@ public abstract class AbstractFileProvider
      */
     protected String mangleName( String pagename )
     {
-        // FIXME: Horrible kludge, very slow, etc.
+        pagename = TextUtil.urlEncode( pagename, m_encoding );
+        
+        pagename = TextUtil.replaceString( pagename, "/", "%2F" );
 
-        // FIXME: SHOULD THIS DO A / => %2F MAPPING!?!
-        if( "UTF-8".equalsIgnoreCase( m_encoding ) )
-            return TextUtil.urlEncodeUTF8( pagename );
-
-        try
-        {
-            	return java.net.URLEncoder.encode( pagename, "UTF-8" );
-        }
-        catch (UnsupportedEncodingException uee)
-        {
-            throw new RuntimeException("Could not encode UTF-8!?!", uee);
-        }
+        return pagename;
     }
 
     /**
-     *  This makes the reverse of mangleName
+     *  This makes the reverse of mangleName.
      */
     protected String unmangleName( String filename )
     {
-        // FIXME: Horrible kludge, very slow, etc.
-        if( "UTF-8".equalsIgnoreCase( m_encoding ) )
-            return TextUtil.urlDecodeUTF8( filename );
-
+        // The exception should never happen.
         try
         {
-            return java.net.URLDecoder.decode( filename, "UTF-8" );
+            return TextUtil.urlDecode( filename, m_encoding );
         }
-        catch (UnsupportedEncodingException uee)
+        catch( UnsupportedEncodingException e ) 
         {
-            throw new RuntimeException("Could not decode UTF-8!?!", uee);
+            throw new InternalWikiException("Faulty encoding; should never happen");
         }
     }
-
+    
     /**
      *  Finds a Wiki page from the page repository.
      */
@@ -236,6 +224,7 @@ public abstract class AbstractFileProvider
     }
 
     public void putPageText( WikiPage page, String text )        
+        throws ProviderException
     {
         File file = findPage( page.getName() );
         PrintWriter out = null;

@@ -83,8 +83,8 @@ public class BasicAttachmentProviderTest extends TestCase
 
     public void tearDown()
     {
-        m_engine.deletePage( NAME1 );
-        m_engine.deletePage( NAME2 );
+        TestEngine.deleteTestPage( NAME1 );
+        TestEngine.deleteTestPage( NAME2 );
 
         String tmpfiles = props.getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
 
@@ -95,6 +95,8 @@ public class BasicAttachmentProviderTest extends TestCase
         f = new File( tmpfiles, NAME2+BasicAttachmentProvider.DIR_EXTENSION );
 
         TestEngine.deleteAll( f );
+        
+        TestEngine.emptyWorkDir();
     }
 
     public void testExtension()

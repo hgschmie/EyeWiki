@@ -28,7 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -108,6 +110,7 @@ public class VersioningFileProvider
      */
 
     // FIXME: This is relatively slow.
+    /*
     private int findLatestVersion( String page )
     {
         File pageDir = findOldPageDir( page );
@@ -141,6 +144,48 @@ public class VersioningFileProvider
             }
         }
 
+        return version;
+    }
+*/
+    private int findLatestVersion( String page )
+        throws ProviderException
+    {
+        int version = -1;
+        
+        try
+        {
+            Properties props = getPageProperties( page );
+            
+            for( Iterator i = props.keySet().iterator(); i.hasNext(); )
+            {
+                String key = (String)i.next();
+                
+                if( key.endsWith(".author") )
+                {
+                    int cutpoint = key.indexOf('.');
+                    if( cutpoint > 0 )
+                    {
+                        String pageNum = key.substring(0,cutpoint);
+                        
+                        try
+                        {
+                            int res = Integer.parseInt( pageNum );
+                            
+                            if( res > version )
+                            {
+                                version = res;
+                            }
+                        }
+                        catch( NumberFormatException e ) {} // It's okay to skip these. 
+                    }
+                }
+            }
+        }
+        catch( IOException e )
+        {
+            log.error("Unable to figure out latest version - dying...",e);
+        }
+        
         return version;
     }
 
@@ -189,7 +234,8 @@ public class VersioningFileProvider
      *  @throws NoSuchVersionException if there is no such version.
      */
     private int realVersion( String page, int requestedVersion )
-        throws NoSuchVersionException
+        throws NoSuchVersionException,
+               ProviderException
     {
         //
         //  Quickly check for the most common case.
@@ -201,9 +247,7 @@ public class VersioningFileProvider
 
         int latest = findLatestVersion(page);
 
-        System.out.println("Latest version="+latest);
-
-        if( requestedVersion == latest+1 ||
+        if( requestedVersion == latest ||
             (requestedVersion == 1 && latest == -1 ) )
         {
             return -1;
@@ -222,7 +266,6 @@ public class VersioningFileProvider
         File dir = findOldPageDir( page );
 
         version = realVersion( page, version );
-
         if( version == -1 )
         {
             // We can let the FileSystemProvider take care
@@ -232,6 +275,9 @@ public class VersioningFileProvider
 
         File pageFile = new File( dir, ""+version+FILE_EXT );
 
+        if( !pageFile.exists() )
+            throw new NoSuchVersionException("Version "+version+"does not exist.");
+        
         return readFile( pageFile );
     }
 
@@ -297,6 +343,7 @@ public class VersioningFileProvider
            3         Main.txt (3)  1.txt, 2.txt
     */
     public synchronized void putPageText( WikiPage page, String text )
+        throws ProviderException
     {
         //
         //  This is a bit complicated.  We'll first need to
@@ -325,7 +372,7 @@ public class VersioningFileProvider
             // "most recent" = -1 ==> 1
             // "first"       = 1  ==> 2
 
-            int versionNumber = (latest >= 0) ? latest+1 : 1;
+            int versionNumber = (latest > 0) ? latest : 1;
 
             if( oldFile != null && oldFile.exists() )
             {
@@ -362,10 +409,7 @@ public class VersioningFileProvider
             // FIXME: No rollback available.
             Properties props = getPageProperties( page.getName() );
 
-            if( page.getAuthor() != null )
-            {
-                props.setProperty( versionNumber+".author", page.getAuthor() );
-            }
+            props.setProperty( versionNumber+".author", (page.getAuthor() != null) ? page.getAuthor() : "unknown" );
 
             putPageProperties( page.getName(), props );
         }
@@ -384,7 +428,7 @@ public class VersioningFileProvider
         WikiPage p = null;
 
         if( version == WikiPageProvider.LATEST_VERSION ||
-            version == latest+1 || 
+            version == latest || 
             (version == 1 && latest == -1) )
         {
             //
@@ -395,7 +439,7 @@ public class VersioningFileProvider
             // the good old C64 "Wizardry" -tune at this moment.
             // Oh, the memories...
             //
-            realVersion = latest >= 0 ? latest+1 : 1;
+            realVersion = (latest >= 0) ? latest : 1;
 
             p = super.getPageInfo( page, WikiPageProvider.LATEST_VERSION );
 
@@ -464,7 +508,7 @@ public class VersioningFileProvider
 
         int latest = findLatestVersion( page );
 
-        list.add( getPageInfo(page,WikiPageProvider.LATEST_VERSION) );
+        // list.add( getPageInfo(page,WikiPageProvider.LATEST_VERSION) );
         
         for( int i = latest; i > 0; i-- )
         {
@@ -517,16 +561,63 @@ public class VersioningFileProvider
     {
         File dir = findOldPageDir( page );
 
-        version = realVersion( page, version );
+        int latest = findLatestVersion( page );
 
-        System.out.println("deleting v="+version);
-
-        if( version == -1 )
+        if( version == WikiPageProvider.LATEST_VERSION ||
+            version == latest || 
+            (version == 1 && latest == -1) )
         {
-            // We can let the FileSystemProvider take care
-            // of these requests.
-            super.deleteVersion( page, WikiPageProvider.LATEST_VERSION );
+            //
+            //  Delete the properties
+            //
+            try
+            {
+                Properties props = getPageProperties( page );
+                props.remove( ((latest > 0) ? latest : 1)+".author" );
+                putPageProperties( page, props );
+            }
+            catch( IOException e )
+            {
+                log.error("Unable to modify page properties",e);
+                throw new ProviderException("Could not modify page properties");
+            }
 
+            // We can let the FileSystemProvider take care
+            // of the actual deletion
+            super.deleteVersion( page, WikiPageProvider.LATEST_VERSION );
+            
+            //
+            //  Copy the old file to the new location
+            //
+            latest = findLatestVersion( page );
+            
+            File pageDir = findOldPageDir( page );
+            File previousFile = new File( pageDir, Integer.toString(latest)+FILE_EXT );
+
+            try
+            {
+                if( previousFile != null && previousFile.exists() )
+                {
+                    InputStream in = new BufferedInputStream( new FileInputStream( previousFile ) );
+                    File pageFile = findPage(page);
+                    OutputStream out = new BufferedOutputStream( new FileOutputStream( pageFile ) );
+
+                    FileUtil.copyContents( in, out );
+
+                    out.close();
+                    in.close();
+
+                    //
+                    // We need also to set the date, since we rely on this.
+                    //
+                    pageFile.setLastModified( previousFile.lastModified() );
+                }
+            }
+            catch( IOException e )
+            {
+                log.fatal("Something wrong with the page directory - you may have just lost data!",e);
+            }
+                        
             return;
         }
 
@@ -534,7 +625,6 @@ public class VersioningFileProvider
 
         if( pageFile.exists() )
         {
-            System.out.println("deleting p="+pageFile.getAbsolutePath());
             if( !pageFile.delete() )
             {
                 log.error("Unable to delete page.");
@@ -546,6 +636,24 @@ public class VersioningFileProvider
         }
     }
 
+    // FIXME: This is kinda slow, we should need to do this only once.
+    public Collection getAllPages() throws ProviderException
+    {
+        Collection pages = super.getAllPages();
+        Collection returnedPages = new ArrayList();
+        
+        for( Iterator i = pages.iterator(); i.hasNext(); )
+        {
+            WikiPage page = (WikiPage) i.next();
+            
+            WikiPage info = getPageInfo( page.getName(), WikiProvider.LATEST_VERSION );
+ 
+            returnedPages.add( info );
+        }
+        
+        return returnedPages;
+    }
+    
     public String getProviderInfo()
     {
         return "";

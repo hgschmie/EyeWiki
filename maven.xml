@@ -11,7 +11,7 @@
 <project
   xmlns:ant="jelly:ant"
   xmlns:maven="jelly:maven"
-  default="java:compile">
+  default="jar:jar">
 
   <postGoal name="war:webapp">
     <!-- Copy Properties File -->

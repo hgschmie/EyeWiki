@@ -19,6 +19,15 @@ import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProvider;
 
+/**
+ *  Tests the RCSFileProvider.  If you are getting strange errors, please check that you
+ *  actually <i>have</i> RCS installed and in your path...
+ * 
+ *  @author jalkanen
+ *
+ *  @since forever
+ */
+
 public class RCSFileProviderTest extends TestCase
 {
     public static final String NAME1 = "Test1";

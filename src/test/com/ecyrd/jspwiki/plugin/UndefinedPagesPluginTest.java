@@ -39,8 +39,9 @@ public class UndefinedPagesPluginTest extends TestCase
 
     public void tearDown()
     {
-        engine.deletePage( "TestPage" );
-        engine.deletePage( "Foobar" );
+        TestEngine.deleteTestPage( "TestPage" );
+        TestEngine.deleteTestPage( "Foobar" );
+        TestEngine.emptyWorkDir();
     }
 
     private String wikitize( String s )
@@ -61,7 +62,7 @@ public class UndefinedPagesPluginTest extends TestCase
         String res = manager.execute( context2,
                                       "{INSERT com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin");
 
-        String exp = "[Foobar 2]\\\\\n";
+        String exp = "[Foobar 2]\\\\";
 
         assertEquals( wikitize(exp), res );
     }

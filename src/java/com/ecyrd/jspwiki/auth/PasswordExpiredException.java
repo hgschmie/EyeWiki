@@ -19,7 +19,6 @@
  */
 package com.ecyrd.jspwiki.auth;
 
-
 /**
  *  The authenticator may fail with this.
  *
