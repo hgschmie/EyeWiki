@@ -45,7 +45,7 @@
     //  Force the TranslatorReader to output absolute URLs
     //  regardless of the current settings.
     //
-    wikiContext.setVariable( WikiEngine.PROP_REFSTYLE, "absolute" );
+    wikiContext.setVariable( WikiProperties.PROP_REFSTYLE, WikiProperties.PROP_REFSTYLE_DEFAULT );
 
     response.setContentType("text/xml; charset=UTF-8" );
 
@@ -57,8 +57,8 @@
     
     try
     {
-        channelDescription = WikiEngine.getRequiredProperty( properties, RSSGenerator.PROP_CHANNEL_DESCRIPTION );
-        channelLanguage    = WikiEngine.getRequiredProperty( properties, RSSGenerator.PROP_CHANNEL_LANGUAGE );
+        channelDescription = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
+        channelLanguage    = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
     }
     catch( NoRequiredPropertyException e )
     {

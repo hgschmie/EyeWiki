@@ -34,7 +34,7 @@
     //  Force the TranslatorReader to output absolute URLs
     //  regardless of the current settings.
     //
-    wikiContext.setVariable( WikiEngine.PROP_REFSTYLE, "absolute" );
+    wikiContext.setVariable( WikiProperties.PROP_REFSTYLE, WikiProperties.PROP_REFSTYLE_DEFAULT );
 
     response.setContentType("text/xml; charset=UTF-8" );
 
@@ -42,8 +42,8 @@
     SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     Properties properties = wiki.getWikiProperties();
-    String channelDescription = wiki.getRequiredProperty( properties, RSSGenerator.PROP_CHANNEL_DESCRIPTION );
-    String channelLanguage    = wiki.getRequiredProperty( properties, RSSGenerator.PROP_CHANNEL_LANGUAGE );
+    String channelDescription = wiki.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION );
+    String channelLanguage    = wiki.getRequiredProperty( properties, WikiProperties.PROP_RSS_CHANNEL_LANGUAGE );
 
     //
     //  Now, list items.

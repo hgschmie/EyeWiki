@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
 <%@ page import="javax.servlet.http.*" %>
 <%@ page import="javax.servlet.*" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="com.ecyrd.jspwiki.providers.*" %>
+<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
 
 <%!
     String message = null;
@@ -73,7 +73,7 @@
     {
         String path = context.getRealPath("/");
         
-        File f = new File( path, WikiEngine.DEFAULT_PROPERTYFILE );
+        File f = new File( path, WikiEngine.PARAM_PROPERTYFILE_DEFAULT );
         
         return f;
     }
@@ -144,11 +144,11 @@
         }
         else
         {
-            propertyString = setProperty( propertyString, WikiEngine.PROP_APPNAME, appname );
-            propertyString = setProperty( propertyString, WikiEngine.PROP_BASEURL, baseurl );
-            propertyString = setProperty( propertyString, FileSystemProvider.PROP_PAGEDIR, dir );
-            propertyString = setProperty( propertyString, BasicAttachmentProvider.PROP_STORAGEDIR, dir );
-            propertyString = setProperty( propertyString, WikiEngine.PROP_WORKDIR, workdir );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_APPNAME, appname );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_BASEURL, baseurl );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_PAGEDIR, dir );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_STORAGEDIR, dir );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_WORKDIR, workdir );
             propertyString = setProperty( propertyString, "log4j.appender.FileLog.File", logdir );
             
             if( password1 != null )
@@ -160,8 +160,8 @@
             //
             //  Some default settings for the easy setup
             //
-            propertyString = setProperty( propertyString, PageManager.PROP_PAGEPROVIDER, "VersioningFileProvider" );
-            propertyString = setProperty( propertyString, WikiEngine.PROP_ENCODING, "UTF-8" );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_CLASS_PAGEPROVIDER, WikiProperties.PROP_CLASS_PAGEPROVIDER_DEFAULT );
+            propertyString = setProperty( propertyString, WikiProperties.PROP_ENCODING, WikiProperties.PROP_ENCODING_DEFAULT );
             
             try
             {
@@ -181,21 +181,21 @@
 <%    
     File propertyFile = findPropertyFile( getServletContext() );
 
-	if( appname == null ) appname = props.getProperty( WikiEngine.PROP_APPNAME, "MyWiki" );
+	if( appname == null ) appname = props.getProperty( WikiProperties.PROP_APPNAME, WikiProperties.PROP_APPNAME_DEFAULT );
     
 	if( baseurl == null ) 
 	{
 		baseurl = HttpUtils.getRequestURL(request).toString();
 		baseurl = baseurl.substring( 0, baseurl.lastIndexOf('/') )+"/";
         
-        baseurl = props.getProperty( WikiEngine.PROP_BASEURL, baseurl );
+        baseurl = props.getProperty( WikiProperties.PROP_BASEURL, baseurl );
 	}
 	
-	if( dir == null ) dir = props.getProperty( FileSystemProvider.PROP_PAGEDIR, "Please configure me!" );
+	if( dir == null ) dir = props.getProperty( WikiProperties.PROP_PAGEDIR, "Please configure me!" );
 	
 	if( logdir == null ) logdir = props.getProperty( "log4j.appender.FileLog.File", "/tmp/" );
 
-	if( workdir == null ) workdir = props.getProperty( WikiEngine.PROP_WORKDIR, "/tmp/" );
+	if( workdir == null ) workdir = props.getProperty( WikiProperties.PROP_WORKDIR, "/tmp/" );
     
     if( password1 == null ) password1 = "";
     if( password2 == null ) password2 = "";
