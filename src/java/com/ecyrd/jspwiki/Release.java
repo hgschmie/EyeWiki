@@ -39,7 +39,7 @@ public class Release
      *  values are "-alpha" and "-beta" for alpha and beta versions,
      *  respectively.
      */
-    private static final String    POSTFIX       = "-cvs";
+    private static final String    POSTFIX       = "-INTERMETA";
 
     /**
      *  This should be increased every time you do a release.
@@ -54,8 +54,8 @@ public class Release
      *  This is the generic version string you should use
      *  when printing out the version.  It is of the form "x.y.z-ttt".
      */
-    public static final String     VERSTR        = 
-        VERSION+"."+REVISION+"."+MINORREVISION+POSTFIX;
+    public static final String     VERSTR = 
+        VERSION + "." + REVISION + "." + MINORREVISION + POSTFIX;
 
     /**
      *  This method is useful for templates, because hopefully it will
