@@ -31,6 +31,7 @@ import java.util.NoSuchElementException;
 import java.util.Vector;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.ecs.xhtml.b;
 import org.apache.ecs.xhtml.div;
 import org.apache.ecs.xhtml.li;
@@ -50,7 +51,6 @@ import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Manages plugin classes.  There exists a single instance of PluginManager
@@ -283,7 +283,7 @@ public class PluginManager
             Class      pluginClass;
             WikiPlugin plugin;
 
-            boolean debug = TextUtil.isPositive( (String) params.get( PARAM_DEBUG ) );
+            boolean debug = BooleanUtils.toBoolean((String) params.get( PARAM_DEBUG));
 
             pluginClass = findPluginClass( classname );
 

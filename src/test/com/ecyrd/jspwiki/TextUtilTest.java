@@ -8,6 +8,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConversionException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.util.TextUtil;
 
@@ -121,35 +122,35 @@ public class TextUtilTest extends TestCase
     {
         String text = "aabacaa";
 
-        assertEquals( "ddbacdd", TextUtil.replaceString( text, "aa", "dd" ) ); 
+        assertEquals( "ddbacdd", StringUtils.replace( text, "aa", "dd" ) ); 
     }
 
     public void testReplaceString4()
     {
         String text = "aabacaafaa";
 
-        assertEquals( "ddbacddfdd", TextUtil.replaceString( text, "aa", "dd" ) ); 
+        assertEquals( "ddbacddfdd", StringUtils.replace( text, "aa", "dd" ) ); 
     }
 
     public void testReplaceString5()
     {
         String text = "aaabacaaafaa";
 
-        assertEquals( "dbacdfaa", TextUtil.replaceString( text, "aaa", "d" ) );     
+        assertEquals( "dbacdfaa", StringUtils.replace( text, "aaa", "d" ) );     
     }
 
     public void testReplaceString2()
     {
         String text = "abcde";
 
-        assertEquals( "fbcde", TextUtil.replaceString( text, "a", "f" ) ); 
+        assertEquals( "fbcde", StringUtils.replace( text, "a", "f" ) ); 
     }
 
     public void testReplaceString3()
     {
         String text = "ababab";
 
-        assertEquals( "afafaf", TextUtil.replaceString( text, "b", "f" ) ); 
+        assertEquals( "afafaf", StringUtils.replace( text, "b", "f" ) ); 
     }
 
     // Pure UNIX.

@@ -28,11 +28,12 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 
 /**
@@ -98,7 +99,7 @@ public class CalendarTag
 
         if( p != null )
         {
-            return TextUtil.replaceString( txt, "%p", p.getName() );
+            return StringUtils.replace( txt, "%p", p.getName() );
         }
 
         return txt;
@@ -167,7 +168,7 @@ public class CalendarTag
             cal.set( Calendar.DATE, lastDay );
             String url = m_monthUrlFormat.format( cal.getTime() );
 
-            url = TextUtil.replaceString( url, "%d", Integer.toString( lastDay-firstDay+1 ) );
+            url = StringUtils.replace( url, "%d", Integer.toString( lastDay-firstDay+1 ) );
 
             result = "<a href=\""+url+"\">"+monthfmt.format(cal.getTime())+"</a>";
         }

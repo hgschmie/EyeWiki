@@ -27,6 +27,7 @@ import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
@@ -35,7 +36,6 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Implements a simple voting system.  WARNING: The storage method is
@@ -186,7 +186,7 @@ public class VotePlugin
 
         String posneg = (String) params.get( "value" );
 
-        if( TextUtil.isPositive(posneg) )
+        if(BooleanUtils.toBoolean(posneg))
         {
             return Integer.toString( getYesVotes( context ) );
         }

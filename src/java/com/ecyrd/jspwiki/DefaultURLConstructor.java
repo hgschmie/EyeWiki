@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.util.TextUtil;
 
@@ -33,9 +34,9 @@ public class DefaultURLConstructor
 
         if( absolute || !m_useRelativeURLStyle ) baseurl = m_engine.getBaseURL();
 
-        baseptrn = TextUtil.replaceString( baseptrn, "%u", baseurl );
-        baseptrn = TextUtil.replaceString( baseptrn, "%U", m_engine.getBaseURL() );
-        baseptrn = TextUtil.replaceString( baseptrn, "%n", m_engine.encodeName(name) );
+        baseptrn = StringUtils.replace( baseptrn, "%u", baseurl );
+        baseptrn = StringUtils.replace( baseptrn, "%U", m_engine.getBaseURL() );
+        baseptrn = StringUtils.replace( baseptrn, "%n", m_engine.encodeName(name) );
 
         return baseptrn;
     }

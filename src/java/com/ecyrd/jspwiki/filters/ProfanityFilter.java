@@ -1,7 +1,8 @@
 package com.ecyrd.jspwiki.filters;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 public class ProfanityFilter
     extends BasicPageFilter
@@ -17,7 +18,7 @@ public class ProfanityFilter
             String word = c_profanities[i];
             String replacement = word.charAt(0)+"*"+word.charAt(word.length()-1);
 
-            content = TextUtil.replaceString( content, word, replacement );
+            content = StringUtils.replace( content, word, replacement );
         }
 
         return content;

@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
 import org.apache.oro.text.regex.MatchResult;
@@ -139,7 +140,7 @@ public class RCSFileProvider
         {
             String   cmd = m_fullLogCommand;
 
-            cmd = TextUtil.replaceString( cmd, "%s", mangleName(page)+FILE_EXT );
+            cmd = StringUtils.replace( cmd, "%s", mangleName(page)+FILE_EXT );
 
             Process process = Runtime.getRuntime().exec( cmd, null, new File(getPageDirectory()) );
 
@@ -252,8 +253,8 @@ public class RCSFileProvider
             String          line;
             String          cmd               = m_checkoutVersionCommand;
 
-            cmd = TextUtil.replaceString( cmd, "%s", mangleName(page)+FILE_EXT );
-            cmd = TextUtil.replaceString( cmd, "%v", Integer.toString(version ) );
+            cmd = StringUtils.replace( cmd, "%s", mangleName(page)+FILE_EXT );
+            cmd = StringUtils.replace( cmd, "%v", Integer.toString(version ) );
 
             log.debug("Command = '"+cmd+"'");
 
@@ -361,8 +362,8 @@ public class RCSFileProvider
             String author = page.getAuthor();
             if( author == null ) author = "unknown";
 
-            cmd = TextUtil.replaceString( cmd, "%s", mangleName(pagename)+FILE_EXT );
-            cmd = TextUtil.replaceString( cmd, "%u", TextUtil.urlEncodeUTF8(author) );
+            cmd = StringUtils.replace( cmd, "%s", mangleName(pagename)+FILE_EXT );
+            cmd = StringUtils.replace( cmd, "%u", TextUtil.urlEncodeUTF8(author) );
 
             log.debug("Command = '"+cmd+"'");
 
@@ -403,7 +404,7 @@ public class RCSFileProvider
             // quotation marks, but on Windows, it does not.
             Pattern userpattern = compiler.compile( PATTERN_AUTHOR );
 
-            String cmd = TextUtil.replaceString( m_fullLogCommand,
+            String cmd = StringUtils.replace( m_fullLogCommand,
                                                  "%s",
                                                  mangleName(page)+FILE_EXT );
             
@@ -525,8 +526,8 @@ public class RCSFileProvider
 
         log.debug("Deleting version "+version+" of page "+page);
 
-        cmd = TextUtil.replaceString( cmd, "%s", mangleName(page)+FILE_EXT );
-        cmd = TextUtil.replaceString( cmd, "%v", Integer.toString( version ) );
+        cmd = StringUtils.replace( cmd, "%s", mangleName(page)+FILE_EXT );
+        cmd = StringUtils.replace( cmd, "%v", Integer.toString( version ) );
 
         log.debug("Running command "+cmd);
         try

@@ -23,6 +23,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
  *  Contains a number of static utility methods.
@@ -255,40 +257,12 @@ public class TextUtil
      */
     public static String replaceEntities( String src )
     {
-        src = replaceString( src, "&", "&amp;" );
-        src = replaceString( src, "<", "&lt;" );
-        src = replaceString( src, ">", "&gt;" );
-        src = replaceString( src, "\"", "&quot;" );
+        src = StringUtils.replace( src, "&", "&amp;" );
+        src = StringUtils.replace( src, "<", "&lt;" );
+        src = StringUtils.replace( src, ">", "&gt;" );
+        src = StringUtils.replace( src, "\"", "&quot;" );
 
         return src;
-    }
-
-    /**
-     *  Replaces a string with an other string.
-     *
-     *  @param orig Original string.  Null is safe.
-     *  @param src  The string to find.
-     *  @param dest The string to replace <I>src</I> with.
-     */
-
-    public static String replaceString( String orig, String src, String dest )
-    {
-        if( orig == null ) return null;
-
-        StringBuffer res = new StringBuffer();
-        int start, end = 0, last = 0;
-
-        while( (start = orig.indexOf(src,end)) != -1 )
-        {
-            res.append( orig.substring( last, start ) );
-            res.append( dest );
-            end  = start+src.length();
-            last = start+src.length();
-        }
-
-        res.append( orig.substring( end ) );
-
-        return res.toString();
     }
 
     /**
@@ -326,24 +300,6 @@ public class TextUtil
         catch( Exception e ) {}
             
         return val;
-    }
-
-    /**
-     *  Returns true, if the string "val" denotes a positive string.  Allowed
-     *  values are "yes", "on", and "true".  Comparison is case-insignificant.
-     *  Null values are safe.
-     *
-     *  @param val Value to check.
-     *  @return True, if val is "true", "on", or "yes"; otherwise false.
-     *
-     *  @since 2.0.26
-     */
-    public static boolean isPositive( String val )
-    {
-        if( val == null ) return false;
-
-        return ( val.equalsIgnoreCase("true") || val.equalsIgnoreCase("on") ||
-                 val.equalsIgnoreCase("yes") );
     }
 
     /**
@@ -578,26 +534,5 @@ public class TextUtil
         }
 
         throw new IllegalArgumentException("There is no section no. "+section+" on the page.");
-    }
-
-    /**
-     *  A simple routine which just repeates the arguments.  This is useful
-     *  for creating something like a line or something.
-     *
-     *  @param what String to repeat
-     *  @param times How many times to repeat the string.
-     *  @return Guess what?
-     *  @since 2.1.98.
-     */
-    public static String repeatString( String what, int times )
-    {
-        StringBuffer sb = new StringBuffer();
-
-        for( int i = 0; i < times; i++ )
-        {
-            sb.append( what );
-        }
-
-        return sb.toString();
     }
 }

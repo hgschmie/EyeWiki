@@ -34,7 +34,6 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Generates an RSS feed from the recent changes.
@@ -84,9 +83,9 @@ public class RSSGenerator
      */
     public static String format( String s )
     {
-        s = TextUtil.replaceString( s, "&", "&amp;" );
-        s = TextUtil.replaceString( s, "<", "&lt;" );
-        s = TextUtil.replaceString( s, "]]>", "]]&gt;" );
+        s = StringUtils.replace( s, "&", "&amp;" );
+        s = StringUtils.replace( s, "<", "&lt;" );
+        s = StringUtils.replace( s, "]]>", "]]&gt;" );
 
         return s.trim();
     }

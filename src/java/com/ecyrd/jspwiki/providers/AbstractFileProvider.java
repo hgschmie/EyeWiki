@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -119,7 +120,7 @@ public abstract class AbstractFileProvider
     {
         pagename = TextUtil.urlEncode( pagename, m_encoding );
         
-        pagename = TextUtil.replaceString( pagename, "/", "%2F" );
+        pagename = StringUtils.replace( pagename, "/", "%2F" );
 
         return pagename;
     }

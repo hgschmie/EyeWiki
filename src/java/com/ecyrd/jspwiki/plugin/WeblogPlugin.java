@@ -31,6 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.PageManager;
@@ -89,17 +91,17 @@ public class WeblogPlugin
                                         String date,
                                         String entryNum )
     {
-        return TextUtil.replaceString(DEFAULT_PAGEFORMAT,"%p",pageName)+date+"_"+entryNum;
+        return StringUtils.replace(DEFAULT_PAGEFORMAT,"%p",pageName)+date+"_"+entryNum;
     }
 
     public static String makeEntryPage( String pageName )
     {
-        return TextUtil.replaceString(DEFAULT_PAGEFORMAT,"%p",pageName);
+        return StringUtils.replace(DEFAULT_PAGEFORMAT,"%p",pageName);
     }
 
     public static String makeEntryPage( String pageName, String date )
     {
-        return TextUtil.replaceString(DEFAULT_PAGEFORMAT,"%p",pageName)+date;
+        return StringUtils.replace(DEFAULT_PAGEFORMAT,"%p",pageName)+date;
     }
 
     /**
@@ -152,10 +154,7 @@ public class WeblogPlugin
             startDay = context.getHttpParameter( "weblog."+PARAM_STARTDATE );
         }
 
-        if( TextUtil.isPositive( (String)params.get(PARAM_ALLOWCOMMENTS) ) )
-        {
-            hasComments = true;
-        }
+        hasComments = BooleanUtils.toBoolean((String)params.get(PARAM_ALLOWCOMMENTS));
 
         maxEntries = TextUtil.parseIntParameter( (String)params.get(PARAM_MAXENTRIES),
                                                  Integer.MAX_VALUE );
@@ -266,7 +265,7 @@ public class WeblogPlugin
 
                 sb.append("By "+author+"&nbsp;&nbsp;");
                 sb.append( "<a href=\""+entryCtx.getURL(WikiContext.VIEW, p.getName())+"\">Permalink</a>" );
-                String commentPageName = TextUtil.replaceString( p.getName(),
+                String commentPageName = StringUtils.replace( p.getName(),
                                                                  "blogentry",
                                                                  "comments" );
 

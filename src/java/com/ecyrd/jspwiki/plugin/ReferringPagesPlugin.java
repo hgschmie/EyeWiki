@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.plugin;
 import java.util.Collection;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.ReferenceManager;
@@ -79,7 +80,7 @@ public class ReferringPagesPlugin
 
                 if( items < links.size() && items > 0 )
                 {
-                    extras = TextUtil.replaceString( extras, "%d", 
+                    extras = StringUtils.replace( extras, "%d", 
                                                      ""+(links.size()-items) );
                     wikitext += extras;
                 }

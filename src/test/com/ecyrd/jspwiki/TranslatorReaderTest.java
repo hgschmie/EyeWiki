@@ -19,10 +19,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 public class TranslatorReaderTest extends TestCase
 {
@@ -1053,7 +1053,7 @@ public class TranslatorReaderTest extends TestCase
         String result = translate(src);
 
         // Remove newlines for easier parsing.
-        result = TextUtil.replaceString( result, "\n", "" );
+        result = StringUtils.replace( result, "\n", "" );
 
         assertEquals( "<ul><li>Item A"+
                       "<ol><li>Numbered 1</li>"+
@@ -1075,7 +1075,7 @@ public class TranslatorReaderTest extends TestCase
         String result = translate(src);
 
         // Remove newlines for easier parsing.
-        result = TextUtil.replaceString( result, "\n", "" );
+        result = StringUtils.replace( result, "\n", "" );
 
         assertEquals( "<ol><li>Item A"+
                       "<ul><li>Numbered 1</li>"+
@@ -1094,7 +1094,7 @@ public class TranslatorReaderTest extends TestCase
         String result = translate(src);
 
         // Remove newlines for easier parsing.
-        result = TextUtil.replaceString( result, "\n", "" );
+        result = StringUtils.replace( result, "\n", "" );
 
         assertEquals( "<ul><li>Item A"+
                       "<ul><li>Numbered 1</li>"+
@@ -1113,7 +1113,7 @@ public class TranslatorReaderTest extends TestCase
         String result = translate(src);
 
         // Remove newlines for easier parsing.
-        result = TextUtil.replaceString( result, "\n", "" );
+        result = StringUtils.replace( result, "\n", "" );
 
         assertEquals( "<ul><li>Item A"+
                       "<ul><li>Numbered 1</li>"+

@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
@@ -106,7 +107,7 @@ public class TestEngine extends WikiEngine
                 WikiEngine.PROP_ENCODING_DEFAULT );
         
         pagename = TextUtil.urlEncode( pagename, m_encoding );
-        pagename = TextUtil.replaceString( pagename, "/", "%2F" );
+        pagename = StringUtils.replace( pagename, "/", "%2F" );
         return pagename;
     }
 

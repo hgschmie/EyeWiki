@@ -30,13 +30,13 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  *  Creates a list of all weblog entries on a monthly basis.
@@ -171,7 +171,7 @@ public class WeblogArchivePlugin implements WikiPlugin
             cal.set( Calendar.DATE, lastDay );
             String url = m_monthUrlFormat.format( cal.getTime() );
 
-            url = TextUtil.replaceString( url, "%d", Integer.toString( lastDay-firstDay+1 ) );
+            url = StringUtils.replace( url, "%d", Integer.toString( lastDay-firstDay+1 ) );
 
             result = "<a href=\""+url+"\">"+monthfmt.format(cal.getTime())+"</a>";
         }

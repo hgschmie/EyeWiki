@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -96,8 +97,8 @@ public class ExternalDiffProvider implements DiffProvider
             f1 = FileUtil.newTmpFile(p1, m_encoding);
             f2 = FileUtil.newTmpFile(p2, m_encoding);
 
-            String cmd = TextUtil.replaceString(m_diffCommand, "%s1", f1.getPath());
-            cmd = TextUtil.replaceString(cmd, "%s2", f2.getPath());
+            String cmd = StringUtils.replace(m_diffCommand, "%s1", f1.getPath());
+            cmd = StringUtils.replace(cmd, "%s2", f2.getPath());
 
             String output = FileUtil.runSimpleCommand(cmd, f1.getParent());
 

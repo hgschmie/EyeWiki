@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.GlobCompiler;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -295,7 +297,7 @@ public class TranslatorReader
                 m_context,
                 PROP_RUNPLUGINS );
 
-        if( runplugins != null ) enablePlugins( TextUtil.isPositive(runplugins));
+        if( runplugins != null ) enablePlugins(BooleanUtils.toBoolean(runplugins));
         
         if( m_engine.getUserManager() == null || m_engine.getUserManager().getAuthenticator() == null )
         {
@@ -953,7 +955,7 @@ public class TranslatorReader
 
             if( urlReference != null )
             {
-                urlReference = TextUtil.replaceString( urlReference, "%s", wikiPage );
+                urlReference = StringUtils.replace( urlReference, "%s", wikiPage );
                 callMutatorChain( m_externalLinkMutatorChain, urlReference );
 
                 sb.append( makeLink( INTERWIKI, urlReference, link ) );
@@ -2904,12 +2906,12 @@ public class TranslatorReader
 
               case Heading.HEADING_MEDIUM:
                 res = title;                
-                m_closeTag = "\n"+TextUtil.repeatString("-",title.length())+"\n\n";
+                m_closeTag = "\n"+StringUtils.repeat("-",title.length())+"\n\n";
                 break;
 
               case Heading.HEADING_LARGE:
                 res = title.toUpperCase();
-                m_closeTag= "\n"+TextUtil.repeatString("=",title.length())+"\n\n";
+                m_closeTag= "\n"+StringUtils.repeat("=",title.length())+"\n\n";
                 break;
             }
 
