@@ -1720,7 +1720,7 @@ public class WikiEngine
      *  @return A HTML-ized difference between two pages.  If there is no difference,
      *          returns an empty string.
      */
-    public String getDiff( String page, int version1, int version2 )
+    public String getDiff( String page, int version1, int version2, boolean wantHtml )
     {
         String page1 = getPureText( page, version1 );
         String page2 = getPureText( page, version2 );
@@ -1732,9 +1732,7 @@ public class WikiEngine
             page1 = "";
         }
 
-        String diff  = m_differenceManager.makeDiff( page1, page2 );
-
-        return diff;
+        return m_differenceManager.makeDiff( page1, page2, wantHtml );
     }
 
     /**

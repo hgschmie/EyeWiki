@@ -85,7 +85,8 @@ public class InsertDiffTag
 
             String diff = engine.getDiff( page.getName(), 
                                           vernew.intValue(), 
-                                          verold.intValue() );
+                                          verold.intValue(),
+                                          true);
 
             if( diff.length() == 0 )
             {

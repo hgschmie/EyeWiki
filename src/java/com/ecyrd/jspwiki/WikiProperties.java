@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki;
 
 import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
+import com.ecyrd.jspwiki.diff.RssTraditionalDiffProvider;
 import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
@@ -101,7 +102,7 @@ public interface WikiProperties
 
     String PROP_REFSTYLE = "jspwiki.referenceStyle";
 
-    String PROP_REFSTYLE_DEFAULT = "relative";
+    String PROP_REFSTYLE_DEFAULT = "absolute";
 
     /** Property name for the "spaces in titles" -hack. */
     String PROP_BEAUTIFYTITLE = "jspwiki.breakTitleWithSpaces";
@@ -416,6 +417,10 @@ public interface WikiProperties
     String PROP_CLASS_DIFF_PROVIDER = "jspwiki.diffProvider";
 
     String PROP_CLASS_DIFF_PROVIDER_DEFAULT = TraditionalDiffProvider.class.getName();
+
+    String PROP_CLASS_DIFF_RSS_PROVIDER = "jspwiki.diffRssProvider";
+
+    String PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT = RssTraditionalDiffProvider.class.getName();
 
     String PROP_CLASS_AUTHORIZER = "jspwiki.authorizer";
 

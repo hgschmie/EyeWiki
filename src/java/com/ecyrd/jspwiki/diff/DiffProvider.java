@@ -17,12 +17,12 @@ public interface DiffProvider extends WikiProvider
      * The return string is to be XHTML compliant ready to display html.  No further
      * processing of this text will be done by the wiki engine.
      */
-    String makeDiffHtml(String oldWikiText, String newWikiText);
+    String makeDiff(String oldWikiText, String newWikiText);
     
     
     public static class NullDiffProvider implements DiffProvider
     {
-        public String makeDiffHtml(String oldWikiText, String newWikiText)
+        public String makeDiff(String oldWikiText, String newWikiText)
         {
             return "You are using the NullDiffProvider, check your properties file.";
         }

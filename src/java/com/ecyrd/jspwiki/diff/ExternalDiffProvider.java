@@ -92,7 +92,7 @@ public class ExternalDiffProvider implements DiffProvider
     /**
      * Makes the diff by calling "diff" program.
      */
-    public String makeDiffHtml(String p1, String p2)
+    public String makeDiff(String p1, String p2)
     {
         File f1 = null, f2 = null;
         String diff = null;

@@ -95,14 +95,17 @@ jspwiki.attachmentProvider = BasicAttachmentProvider
 #  To show differences between page versions, you can define a 
 # difference provider. 
 #  The following choices are available:
+#
 #    * TraditionalDiffProvider - Uses internal (java) diff
 #        to create a list of changes and shows it line by
-#        line colored. This is the default
+#        line. This is the default for the diffProvider
+#
 #    * ContextualDiffProvider - Uses internal (java) diff
 #        to create changes inline and shows it on a word by
 #        word basis using CSS. This is much superior to the
 #        traditional diff provider, however, it is still quite
 #        new and not much tested. YMMV.
+#
 #    * ExternalDiffProvider - uses a system diff program (which
 #        can be configured using "jspwiki.diffCommand") to 
 #        create an unified (!) diff.
@@ -111,6 +114,23 @@ jspwiki.attachmentProvider = BasicAttachmentProvider
 #        jspwiki.diffCommand = /usr/bin/diff -u %s1 %s2
 #
 jspwiki.diffProvider = TraditionalDiffProvider
+
+#  
+# For the RSS feeds, a different provider can be used because inside
+# the xml files you might need a diffent kind of formatting.
+#
+#    * RssTraditionalDiffProvider - Uses internal (java) diff
+#        to create a list of changes and shows it line by
+#        line colored. This is the default for the diffRssProvider
+#
+#    * RssContextualDiffProvider - Uses internal (java) diff
+#        to create changes inline and shows it on a word by
+#        word basis using font tags. This is much superior to the
+#        traditional diff provider, however, it is still quite
+#        new and not much tested. YMMV.
+#
+
+jspwiki.diffRssProvider = RssTraditionalDiffProvider
 
 #
 #  BaseURL can be used to rewrite all of JSPWiki's internal references.

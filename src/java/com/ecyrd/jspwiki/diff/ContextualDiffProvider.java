@@ -1,3 +1,22 @@
+/* 
+   JSPWiki - a JSP-based WikiWiki clone.
+
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 package com.ecyrd.jspwiki.diff;
 
@@ -44,29 +63,29 @@ public class ContextualDiffProvider implements DiffProvider
     //TODO all of these publics can become jspwiki.properties entries...
     //TODO span title= can be used to get hover info...
 
-    public boolean m_emitChangeNextPreviousHyperlinks = true;
+    protected boolean m_emitChangeNextPreviousHyperlinks = true;
 
     //Don't use spans here the deletion and insertions are nested in this...
-    public String m_changeStartHtml = ""; //This could be a image '>' for a start marker
-    public String m_changeEndHtml = ""; //and an image for an end '<' marker
+    protected String m_changeStartHtml = ""; //This could be a image '>' for a start marker
+    protected String m_changeEndHtml = ""; //and an image for an end '<' marker
 
-    public String m_diffStart = "<div class=\"diff-wikitext\">";
-    public String m_diffEnd = "</div>";
+    protected String m_diffStart = "<div class=\"diff-wikitext\">";
+    protected String m_diffEnd = "</div>";
 
-    public String m_insertionStartHtml = "<span class=\"diff-insertion\">";
-    public String m_insertionEndHtml = "</span>";
+    protected String m_insertionStartHtml = "<span class=\"diff-insertion\">";
+    protected String m_insertionEndHtml = "</span>";
 
-    public String m_deletionStartHtml = "<span class=\"diff-deletion\">";
-    public String m_deletionEndHtml = "</span>";
+    protected String m_deletionStartHtml = "<span class=\"diff-deletion\">";
+    protected String m_deletionEndHtml = "</span>";
 
-    private String m_anchorPreIndex = "<a name=\"change-";
-    private String m_anchorPostIndex = "\" />";
+    protected String m_anchorPreIndex = "<a name=\"change-";
+    protected String m_anchorPostIndex = "\" />";
 
-    private String m_backPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
-    private String m_backPostIndex = "\">&lt;&lt;</a>";
+    protected String m_backPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
+    protected String m_backPostIndex = "\">&lt;&lt;</a>";
 
-    private String m_forwardPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
-    private String m_forwardPostIndex = "\">&gt;&gt;</a>";  
+    protected String m_forwardPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
+    protected String m_forwardPostIndex = "\">&gt;&gt;</a>";  
 
     public ContextualDiffProvider()
     {
@@ -92,9 +111,9 @@ public class ContextualDiffProvider implements DiffProvider
 
     /**
      * Do a colored diff of the two regions. This. is. serious. fun. ;-) 
-     * @see com.ecyrd.jspwiki.diff.DiffProvider#makeDiffHtml(java.lang.String, java.lang.String)
+     * @see com.ecyrd.jspwiki.diff.DiffProvider#makeDiff(java.lang.String, java.lang.String)
      */
-    public synchronized String makeDiffHtml(String wikiOld, String wikiNew)
+    public synchronized String makeDiff(String wikiOld, String wikiNew)
     {
         //Sequencing handles lineterminator to <br /> and every-other consequtive space to a &nbsp;
         String[] alpha = sequence(TextUtil.replaceEntities(wikiOld));

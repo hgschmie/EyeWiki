@@ -130,9 +130,11 @@ public class RSSGenerator
 
         if( page.getVersion() > 1 )
         {
-            String diff = m_engine.getDiff( page.getName(),
-                                            page.getVersion()-1,
-                                            page.getVersion() );
+            String diff = m_engine.getDiff(
+                    page.getName(),
+                    page.getVersion()-1,
+                    page.getVersion(),
+                    false );
 
             buf.append(author+" changed this page on "+page.getLastModified()+":<br /><hr /><br />" );
             buf.append(diff);
@@ -200,7 +202,8 @@ public class RSSGenerator
         result.append("  <description>");
         result.append( format(m_channelDescription) );
         result.append("</description>\n");
-        
+
+        // According to feedvalidator.org, this element is not defined for RSS 1.0!
         result.append("  <language>");
         result.append( m_channelLanguage );
         result.append("</language>\n");
@@ -379,6 +382,7 @@ public class RSSGenerator
         result.append( format(m_channelDescription) );
         result.append("</description>\n");
         
+        // According to feedvalidator.org, this element is not defined for RSS 1.0!
         result.append("  <language>");
         result.append( m_channelLanguage );
         result.append("</language>\n");

@@ -44,6 +44,8 @@ public class DifferenceManager
 
     private DiffProvider m_provider;
 
+    private DiffProvider m_rssProvider;
+
     public DifferenceManager(WikiEngine engine, Properties props)
     {
         loadProvider(props); 
@@ -57,29 +59,40 @@ public class DifferenceManager
     {
         String providerClassName = props.getProperty( PROP_CLASS_DIFF_PROVIDER, 
                                                       PROP_CLASS_DIFF_PROVIDER_DEFAULT);
-        
+
+        m_provider = getProvider(providerClassName, new DiffProvider.NullDiffProvider());
+
+        providerClassName = props.getProperty( PROP_CLASS_DIFF_RSS_PROVIDER, 
+                                                      PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT);
+
+        m_rssProvider = getProvider(providerClassName, m_provider);
+    }
+
+
+    private DiffProvider getProvider(String className, DiffProvider defaultProvider)
+    {
         try
         {
-            Class providerClass = ClassUtil.findClass( DEFAULT_DIFF_CLASS_PREFIX, providerClassName );
-            m_provider = (DiffProvider)providerClass.newInstance();
+            Class providerClass = ClassUtil.findClass( DEFAULT_DIFF_CLASS_PREFIX, className );
+            return (DiffProvider) providerClass.newInstance();
         }
         catch( ClassNotFoundException e )
         {
-            log.warn("Failed loading DiffProvider, will use NullDiffProvider.", e);
+            log.warn("Failed loading " + className + ", will use Default: "
+                    + defaultProvider.getClass().getName(), e);
         }
         catch( InstantiationException e )
         {
-            log.warn("Failed loading DiffProvider, will use NullDiffProvider.", e);
+            log.warn("Failed loading " + className + ", will use Default: "
+                    + defaultProvider.getClass().getName(), e);
         }
         catch( IllegalAccessException e )
         {
-            log.warn("Failed loading DiffProvider, will use NullDiffProvider.", e);
+            log.warn("Failed loading " + className + ", will use Default: "
+                    + defaultProvider.getClass().getName(), e);
         }
-		
-        if( null == m_provider )
-        {
-            m_provider = new DiffProvider.NullDiffProvider();
-        }
+
+        return defaultProvider;
     }
 
     
@@ -99,6 +112,22 @@ public class DifferenceManager
             log.warn("Failed initializing DiffProvider, will use NullDiffProvider.", e1);
             m_provider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
         }
+
+        try
+        {
+            m_rssProvider.initialize( engine, props);
+        }
+        catch (NoRequiredPropertyException e1)
+        {
+            log.warn("Failed initializing RssDiffProvider, will use NullDiffProvider.", e1);
+            m_rssProvider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
+        }
+        catch (IOException e1)
+        {
+            log.warn("Failed initializing RssDiffProvider, will use NullDiffProvider.", e1);
+            m_rssProvider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
+        }
+
     }
 
     /**
@@ -106,14 +135,13 @@ public class DifferenceManager
      * 
      *   @return XHTML, or empty string, if no difference detected.
      */
-    public String makeDiff(String firstWikiText, String secondWikiText)
+    public String makeDiff(String firstWikiText, String secondWikiText, boolean isRss)
     {
-        String diff = m_provider.makeDiffHtml( firstWikiText, secondWikiText);
+        String diff = isRss
+                ? m_provider.makeDiff( firstWikiText, secondWikiText)
+                : m_rssProvider.makeDiff( firstWikiText, secondWikiText);
         
-        if( diff == null )
-            diff = "";
-        
-        return diff;
-    }    
+        return (diff != null) ? diff : "";
+    }
 }
 

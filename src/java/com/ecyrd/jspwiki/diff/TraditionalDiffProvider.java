@@ -46,20 +46,22 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 
-public class TraditionalDiffProvider implements DiffProvider
+public class TraditionalDiffProvider 
+        implements DiffProvider
 {
-    private static final Logger log = Logger.getLogger(TraditionalDiffProvider.class);
+    protected final Logger log = Logger.getLogger(this.getClass());
 
-    private static final String CSS_DIFF_ADDED = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
-    private static final String CSS_DIFF_REMOVED = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
-    private static final String CSS_DIFF_UNCHANGED = "<tr><td class=\"diff\">";
-    private static final String CSS_DIFF_CLOSE = "</td></tr>" + Diff.NL;
-
+    protected String diffAdd = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";                              
+    protected String diffRem = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";                              
+    protected String diffUnchanged = "<tr><td class=\"diff\">";                                               
+    protected String diffClose = "</td></tr>\n";                                                              
+                                                                                                              
+    protected String diffPrefix = "<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n";
+    protected String diffPostfix = "</table>\n";                                                              
 
     public TraditionalDiffProvider()
     {
     }
-
 
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
@@ -81,7 +83,7 @@ public class TraditionalDiffProvider implements DiffProvider
      * Makes a diff using the BMSI utility package. We use our own diff printer,
      * which makes things easier.
      */
-    public String makeDiffHtml(String p1, String p2)
+    public String makeDiff(String p1, String p2)
     {
         String diffResult = "";
 
@@ -100,9 +102,9 @@ public class TraditionalDiffProvider implements DiffProvider
             
             StringBuffer ret = new StringBuffer(rev.size() * 20); // Guessing how big it will become...
 
-            ret.append("<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
+            ret.append(diffPrefix);
             rev.accept( new RevisionPrint(ret) );
-            ret.append("</table>\n");
+            ret.append(diffPostfix);
 
             return ret.toString();
         }
@@ -135,34 +137,34 @@ public class TraditionalDiffProvider implements DiffProvider
         {
             Chunk changed = delta.getRevised();
             print(changed, " added ");
-            changed.toString(m_result, CSS_DIFF_ADDED, CSS_DIFF_CLOSE);
+            changed.toString(m_result, diffAdd, diffClose);
         }
 
         public void visit(ChangeDelta delta)
         {
             Chunk changed = delta.getOriginal();
             print(changed, " changed ");
-            changed.toString(m_result, CSS_DIFF_REMOVED, CSS_DIFF_CLOSE);
-            delta.getRevised().toString(m_result, CSS_DIFF_ADDED, CSS_DIFF_CLOSE);
+            changed.toString(m_result, diffRem, diffClose);
+            delta.getRevised().toString(m_result, diffAdd, diffClose);
         }
       
         public void visit(DeleteDelta delta)
         {
             Chunk changed = delta.getOriginal();
             print(changed, " removed ");
-            changed.toString(m_result, CSS_DIFF_REMOVED, CSS_DIFF_CLOSE);
+            changed.toString(m_result, diffRem, diffClose);
         }
         
         private void print(Chunk changed, String type)
         {
-            m_result.append(CSS_DIFF_UNCHANGED);
+            m_result.append(diffUnchanged);
             m_result.append("At line ");
             m_result.append(changed.first() + 1);
             m_result.append(type);
             m_result.append(changed.size());
             m_result.append(" line");
             m_result.append((changed.size() == 1) ? "." : "s.");
-            m_result.append(CSS_DIFF_CLOSE);
+            m_result.append(diffClose);
         }
     }
 }
