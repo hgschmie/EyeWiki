@@ -19,8 +19,9 @@ public class DefaultURLConstructor
     {
         m_engine = engine;
 
-        m_useRelativeURLStyle = "relative".equals( properties.getProperty( WikiEngine.PROP_REFSTYLE,
-                                                                           "relative" ) );
+        m_useRelativeURLStyle = "relative".equals( properties.getProperty(
+                                                           WikiProperties.PROP_REFSTYLE,
+                                                           WikiProperties.PROP_REFSTYLE_DEFAULT));
     }
 
     protected final String doReplacement( String baseptrn, String name, boolean absolute )

@@ -48,11 +48,8 @@ import com.ecyrd.jspwiki.util.ClassUtil;
 //        complicating things.  We need to move more provider-specific functionality
 //        from WikiEngine (which is too big now) into this class.
 public class PageManager
+        implements WikiProperties
 {
-    public static final String PROP_PAGEPROVIDER = "jspwiki.pageProvider";
-    public static final String PROP_USECACHE     = "jspwiki.usePageCache";
-    public static final String PROP_LOCKEXPIRY   = "jspwiki.lockExpiryTime";
-
     static Category log = Category.getInstance( PageManager.class );
 
     private WikiPageProvider m_provider;
@@ -77,10 +74,15 @@ public class PageManager
 
         m_engine = engine;
 
-        boolean useCache = "true".equals(props.getProperty( PROP_USECACHE ));
+        boolean useCache = TextUtil.getBooleanProperty(
+                props,
+                PROP_USECACHE,
+                PROP_USECACHE_DEFAULT);
 
-        m_expiryTime = TextUtil.parseIntParameter( props.getProperty( PROP_LOCKEXPIRY ),
-                                                   m_expiryTime );
+        m_expiryTime = TextUtil.getIntegerProperty(
+                props,
+                PROP_LOCKEXPIRY,
+                PROP_LOCKEXPIRY_DEFAULT);
 
         //
         //  If user wants to use a cache, then we'll use the CachingProvider.
@@ -91,12 +93,14 @@ public class PageManager
         }
         else
         {
-            classname = props.getProperty( PROP_PAGEPROVIDER );
+            classname = props.getProperty(
+                    PROP_CLASS_PAGEPROVIDER,
+                    PROP_CLASS_PAGEPROVIDER_DEFAULT);
         }
 
         try
         {
-            Class providerclass = ClassUtil.findClass( "com.ecyrd.jspwiki.providers",
+            Class providerclass = ClassUtil.findClass( DEFAULT_PROVIDER_CLASS_PREFIX,
                                                        classname );
 
             m_provider = (WikiPageProvider)providerclass.newInstance();

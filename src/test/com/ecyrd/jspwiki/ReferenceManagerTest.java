@@ -29,12 +29,12 @@ public class ReferenceManagerTest extends TestCase
         throws Exception
     {
         props.load( TestEngine.findTestProperties() );
-        props.setProperty( "jspwiki.translatorReader.matchEnglishPlurals", "true");
+        props.setProperty( WikiProperties.PROP_MATCHPLURALS, "true");
 
         //
         //  We must make sure that the reference manager cache is cleaned before.
         //
-        String workDir = props.getProperty( "jspwiki.workDir" );
+        String workDir = TestEngine.getRequiredProperty(props, WikiProperties.PROP_WORKDIR );
 
         if( workDir != null )
         {

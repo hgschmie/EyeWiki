@@ -32,10 +32,11 @@ import java.util.Properties;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.PageManager;
+import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.providers.CachingAttachmentProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
@@ -54,17 +55,8 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  *  @since 1.9.28
  */
 public class AttachmentManager
+	implements WikiProperties
 {
-    /**
-     *  The property name for defining the attachment provider class name.
-     */
-    public static final String  PROP_PROVIDER = "jspwiki.attachmentProvider";
-
-    /**
-     *  The maximum size of attachments that can be uploaded.
-     */
-    public static final String  PROP_MAXSIZE  = "jspwiki.attachment.maxsize";
-
     static Category log = Category.getInstance( AttachmentManager.class );
     private WikiAttachmentProvider m_provider;
     private WikiEngine             m_engine;
@@ -93,7 +85,10 @@ public class AttachmentManager
         //
         //  If user wants to use a cache, then we'll use the CachingProvider.
         //
-        boolean useCache = "true".equals(props.getProperty( PageManager.PROP_USECACHE ));
+        boolean useCache = TextUtil.getBooleanProperty(
+                props,
+                PROP_USECACHE,
+                PROP_USECACHE_DEFAULT);
 
         if( useCache )
         {
@@ -101,7 +96,9 @@ public class AttachmentManager
         }
         else
         {
-            classname = props.getProperty( PROP_PROVIDER );
+            classname = props.getProperty(
+                    PROP_CLASS_ATTACHMENTPROVIDER,
+                    PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT);
         }
 
         //
@@ -118,7 +115,7 @@ public class AttachmentManager
         //
         try
         {
-            Class providerclass = ClassUtil.findClass( "com.ecyrd.jspwiki.providers",
+            Class providerclass = ClassUtil.findClass( DEFAULT_PROVIDER_CLASS_PREFIX,
                                                        classname );
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();

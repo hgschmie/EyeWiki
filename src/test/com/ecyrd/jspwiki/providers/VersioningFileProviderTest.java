@@ -3,7 +3,6 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.Collection;
@@ -18,6 +17,7 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 
 // FIXME: Should this thingy go directly to the VersioningFileProvider,
 //        or should it rely on the WikiEngine API?
@@ -44,8 +44,9 @@ public class VersioningFileProviderTest extends TestCase
     }
 
     public void tearDown()
+    	throws Exception
     {
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         // Remove file
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
@@ -61,9 +62,9 @@ public class VersioningFileProviderTest extends TestCase
      *  works by creating a dummy file without corresponding content in OLD/
      */
     public void testMigration()
-        throws IOException
+        throws Exception
     {
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
         
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -214,7 +215,7 @@ public class VersioningFileProviderTest extends TestCase
 
         provider.deletePage( NAME1 );
 
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 

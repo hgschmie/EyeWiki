@@ -50,11 +50,6 @@ public class DifferenceEngine
 {
     private static final Category   log = Category.getInstance(DifferenceEngine.class);
 
-    /** Determines the command to be used for 'diff'.  This program must
-        be able to output diffs in the unified format. It defaults to
-        'diff -u %s1 %s2'.*/
-    public  static final String PROP_DIFFCOMMAND     = "jspwiki.diffCommand";
-
     private static final char   DIFF_ADDED_SYMBOL      = '+';
     private static final char   DIFF_REMOVED_SYMBOL    = '-';
     private static final String CSS_DIFF_ADDED       = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
@@ -77,7 +72,9 @@ public class DifferenceEngine
      */
     public DifferenceEngine( Properties props, String encoding )
     {
-        m_diffCommand = props.getProperty( PROP_DIFFCOMMAND );
+        m_diffCommand = props.getProperty(
+                WikiProperties.PROP_DIFFCOMMAND,
+                WikiProperties.PROP_DIFFCOMMAND_DEFAULT);
         
         m_useInternalDiff = (m_diffCommand == null);
 

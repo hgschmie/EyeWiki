@@ -48,6 +48,7 @@ import com.ecyrd.jspwiki.SearchResultComparator;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 
 /**
@@ -64,7 +65,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  *  @author Janne Jalkanen
  */
 public abstract class AbstractFileProvider
-    implements WikiPageProvider
+    implements WikiPageProvider, WikiProperties
 {
     private static final Category   log = Category.getInstance(AbstractFileProvider.class);
     private String m_pageDirectory = "/tmp/";
@@ -72,18 +73,11 @@ public abstract class AbstractFileProvider
     protected String m_encoding;
 
     /**
-     *  Name of the property that defines where page directories are.
-     */
-    public static final String      PROP_PAGEDIR = "jspwiki.fileSystemProvider.pageDir";
-
-    /**
      *  All files should have this extension to be recognized as JSPWiki files.
      *  We default to .txt, because that is probably easiest for Windows users,
      *  and guarantees correct handling.
      */
     public static final String FILE_EXT = ".txt";
-
-    public static final String DEFAULT_ENCODING = "ISO-8859-1";
 
     /**
      *  @throws FileNotFoundException If the specified page directory does not exist.
@@ -107,8 +101,10 @@ public abstract class AbstractFileProvider
             throw new IOException("Page directory is not a directory: "+m_pageDirectory);
         }
 
-        m_encoding = properties.getProperty( WikiEngine.PROP_ENCODING, 
-                                             DEFAULT_ENCODING );
+        m_encoding = properties.getProperty(
+                WikiProperties.PROP_ENCODING, 
+                WikiProperties.PROP_ENCODING_DEFAULT);
+                
 
         log.info( "Wikipages are read from '" + m_pageDirectory + "'" );
     }

@@ -33,11 +33,11 @@ import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.acl.AclEntryImpl;
 import com.ecyrd.jspwiki.acl.AclImpl;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
 import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
@@ -50,13 +50,8 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  *  @see UserManager
  */
 public class AuthorizationManager
+        implements WikiProperties
 {
-    public static final String PROP_STRICTLOGINS = "jspwiki.policy.strictLogins";
-    public static final String PROP_AUTHORIZER   = "jspwiki.authorizer";
-    public static final String DEFAULT_AUTHORIZER = PageAuthorizer.class.getName();
- 
-    protected static final String PROP_USEOLDAUTH = "jspwiki.auth.useOldAuth";
-    
     static Category log = Category.getInstance( AuthorizationManager.class );
 
     private WikiAuthorizer    m_authorizer;
@@ -80,13 +75,15 @@ public class AuthorizationManager
     {
         m_engine = engine;
 
-        m_useAuth = TextUtil.getBooleanProperty( properties,
-                                                 PROP_USEOLDAUTH,
-                                                 false );
+        m_useAuth = TextUtil.getBooleanProperty(
+                properties,
+                PROP_AUTH_USEOLDAUTH,
+                PROP_AUTH_USEOLDAUTH_DEFAULT);
         
-        m_strictLogins = TextUtil.getBooleanProperty( properties,
-                                                      PROP_STRICTLOGINS,
-                                                      false );
+        m_strictLogins = TextUtil.getBooleanProperty(
+                properties,
+                PROP_AUTH_STRICTLOGINS,
+                PROP_AUTH_STRICTLOGINS_DEFAULT);
 
         if( !m_useAuth ) return;
         
@@ -178,15 +175,18 @@ public class AuthorizationManager
     private WikiAuthorizer getAuthorizerImplementation( Properties props )
         throws WikiException
     {
-        String authClassName = props.getProperty( PROP_AUTHORIZER, DEFAULT_AUTHORIZER );
         WikiAuthorizer impl = null;
                                                                                 
+        String authClassName = props.getProperty(
+                PROP_CLASS_AUTHORIZER,
+                PROP_CLASS_AUTHORIZER_DEFAULT);
+
         if( authClassName != null )
         {
             try
             {
                 // TODO: this should probably look in package ...modules
-                Class authClass = ClassUtil.findClass( "com.ecyrd.jspwiki.auth.modules", authClassName );
+                Class authClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName );
                 impl = (WikiAuthorizer)authClass.newInstance();
                 return( impl );
             }
@@ -208,8 +208,8 @@ public class AuthorizationManager
         }
         else
         {
-            throw new NoRequiredPropertyException( "Unable to find a " + PROP_AUTHORIZER + 
-                                                   " entry in the properties.", PROP_AUTHORIZER );
+            throw new NoRequiredPropertyException( "Unable to find a " + PROP_CLASS_AUTHORIZER + 
+                                                   " entry in the properties.", PROP_CLASS_AUTHORIZER );
         }
     }
 

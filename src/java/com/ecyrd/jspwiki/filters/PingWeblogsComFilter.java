@@ -28,7 +28,7 @@ public class PingWeblogsComFilter
 
     public String m_pingURL;
 
-    public static String PROP_PINGURL = "pingurl";
+    public static final String PROP_PINGURL = "pingurl";
 
     public void initialize( Properties props )
     {

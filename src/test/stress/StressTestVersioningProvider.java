@@ -9,6 +9,7 @@ import junit.framework.TestSuite;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 public class StressTestVersioningProvider extends TestCase
@@ -33,8 +34,9 @@ public class StressTestVersioningProvider extends TestCase
     }
 
     public void tearDown()
+    	throws Exception
     {
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         // Remove file
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );

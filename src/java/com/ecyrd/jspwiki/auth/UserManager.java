@@ -38,7 +38,7 @@ import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
-import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.HttpUtil;
 
@@ -49,38 +49,23 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  *  @author Erik Bunn
  */
 public class UserManager
+	implements WikiProperties
 {
     static Logger log = Logger.getLogger( UserManager.class );
 
     /** The name the UserProfile is stored in a Session by. */
     public static final String WIKIUSER          = "currentUser";
 
-    /** If true, logs the IP address of the editor on saving. */
-    public static final String PROP_STOREIPADDRESS= "jspwiki.storeIPAddress";
-
-    public static final String PROP_AUTHENTICATOR = "jspwiki.authenticator";
-    public static final String PROP_USERDATABASE  = "jspwiki.userdatabase";
-
-    public static final String PROP_ADMINISTRATOR = "jspwiki.auth.administrator";
-
-    /** If true, logs the IP address of the editor */
-    private boolean            m_storeIPAddress = true;
-
-    private HashMap            m_groups = new HashMap();
-
     // FIXME: These should probably be localized.
     // FIXME: All is used as a catch-all.
-
     public static final String GROUP_GUEST       = "Guest";
     public static final String GROUP_NAMEDGUEST  = "NamedGuest";
     public static final String GROUP_KNOWNPERSON = "KnownPerson";
 
-    private static final String DEFAULT_DATABASE = WikiDatabase.class.getName();
+    /** If true, logs the IP address of the editor */
+    private boolean            m_storeIPAddress = PROP_AUTH_STOREIPADDRESS_DEFAULT;
 
-    /**
-     *  The default administrator group is called "AdminGroup"
-     */
-    private static final String DEFAULT_ADMINISTRATOR = "AdminGroup";
+    private HashMap            m_groups = new HashMap();
 
     private WikiAuthenticator  m_authenticator;
     private UserDatabase       m_database;
@@ -101,16 +86,19 @@ public class UserManager
     {
         m_engine = engine;
 
-        m_storeIPAddress = TextUtil.getBooleanProperty( props,
-                                                        PROP_STOREIPADDRESS, 
-                                                        m_storeIPAddress );
+        m_storeIPAddress = TextUtil.getBooleanProperty(
+                props,
+                PROP_AUTH_STOREIPADDRESS, 
+                PROP_AUTH_STOREIPADDRESS_DEFAULT );
 
-        m_administrator  = props.getProperty( PROP_ADMINISTRATOR,
-                                              DEFAULT_ADMINISTRATOR );
+        m_administrator  = props.getProperty(
+                PROP_AUTH_ADMINISTRATOR,
+                PROP_AUTH_ADMINISTRATOR_DEFAULT);
 
-        m_useAuth = TextUtil.getBooleanProperty( props,
-                                                 AuthorizationManager.PROP_USEOLDAUTH,
-                                                 false );
+        m_useAuth = TextUtil.getBooleanProperty(
+                props,
+                PROP_AUTH_USEOLDAUTH,
+                PROP_AUTH_USEOLDAUTH_DEFAULT);
         
         if( !m_useAuth ) return;
         
@@ -121,13 +109,13 @@ public class UserManager
         m_groups.put( GROUP_NAMEDGUEST,  new NamedGroup() );
         m_groups.put( GROUP_KNOWNPERSON, new KnownGroup() );
 
-        String authClassName = props.getProperty( PROP_AUTHENTICATOR );
+        String authClassName = props.getProperty( PROP_CLASS_AUTHENTICATOR );
 
         if( authClassName != null )
         {
             try
             {
-                Class authenticatorClass = ClassUtil.findClass( "com.ecyrd.jspwiki.auth.modules",
+                Class authenticatorClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
                                                                 authClassName );
 
                 m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
@@ -152,12 +140,13 @@ public class UserManager
             }
         }
 
-        String dbClassName = props.getProperty( PROP_USERDATABASE,
-                                                DEFAULT_DATABASE );
+        String dbClassName = props.getProperty(
+                PROP_CLASS_USERDATABASE,
+                PROP_CLASS_USERDATABASE_DEFAULT);
 
         try
         {
-            Class dbClass = ClassUtil.findClass( "com.ecyrd.jspwiki.auth.modules",
+            Class dbClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
                                                  dbClassName );
             m_database = (UserDatabase)dbClass.newInstance();
             m_database.initialize( m_engine, props );

@@ -16,6 +16,7 @@ import org.apache.log4j.PropertyConfigurator;
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 
 public class CachingProviderTest extends TestCase
 {
@@ -80,7 +81,7 @@ public class CachingProviderTest extends TestCase
         
         TestEngine engine = new TestEngine( props );
         
-        String dir = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String dir = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
         
         File f = new File( dir, "Testi.txt" );
         String content = "[fuufaa]";

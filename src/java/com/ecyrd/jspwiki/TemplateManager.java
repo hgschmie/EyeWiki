@@ -205,6 +205,9 @@ public class TemplateManager
         }
         catch( NeedsRefreshException ex )
         {
+            // Avoid deadlock
+            m_propertyCache.cancelUpdate(template);
+
             // FIXME
             return null;
         }

@@ -48,6 +48,7 @@ import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 
 /**
@@ -69,22 +70,17 @@ import com.ecyrd.jspwiki.WikiProvider;
  */
 // FIXME: Not all commands read their format from the property file yet.
 public class RCSFileProvider
-    extends AbstractFileProvider
+        extends AbstractFileProvider
+        implements WikiProperties
 {
-    private String m_checkinCommand  = "ci -q -m\"author=%u\" -l -t-none %s";
-    private String m_checkoutCommand = "co -l %s";
-    private String m_logCommand      = "rlog -zLT -r %s";
-    private String m_fullLogCommand  = "rlog -zLT %s";
-    private String m_checkoutVersionCommand = "co -p -r1.%v %s";
-    private String m_deleteVersionCommand = "rcs -o1.%v %s";
+    private String m_checkinCommand  =        PROP_RCS_CHECKIN_DEFAULT;
+    private String m_checkoutCommand =        PROP_RCS_CHECKOUT_DEFAULT;   
+    private String m_logCommand      =        PROP_RCS_LOG_DEFAULT;
+    private String m_fullLogCommand  =        PROP_RCS_FULLLOG_DEFAULT;
+    private String m_checkoutVersionCommand = PROP_RCS_CHECKOUTVERSION_DEFAULT;
+    private String m_deleteVersionCommand =   PROP_RCS_DELETEVERSION_DEFAULT;
     
     private static final Logger   log = Logger.getLogger(RCSFileProvider.class);
-
-    public static final String    PROP_CHECKIN  = "jspwiki.rcsFileProvider.checkinCommand";
-    public static final String    PROP_CHECKOUT = "jspwiki.rcsFileProvider.checkoutCommand";
-    public static final String    PROP_LOG      = "jspwiki.rcsFileProvider.logCommand";
-    public static final String    PROP_FULLLOG  = "jspwiki.rcsFileProvider.fullLogCommand";
-    public static final String    PROP_CHECKOUTVERSION = "jspwiki.rcsFileProvider.checkoutVersionCommand";
 
     private static final String   PATTERN_DATE      = "^date:\\s*(.*\\d);";
     private static final String   PATTERN_AUTHOR    = "^\"?author=([\\w\\.\\s\\+\\.\\%]*)\"?";
@@ -104,11 +100,12 @@ public class RCSFileProvider
         log.debug("Initing RCS");
         super.initialize( engine, props );
 
-        m_checkinCommand = props.getProperty( PROP_CHECKIN, m_checkinCommand );
-        m_checkoutCommand = props.getProperty( PROP_CHECKOUT, m_checkoutCommand );
-        m_logCommand     = props.getProperty( PROP_LOG, m_logCommand );
-        m_fullLogCommand = props.getProperty( PROP_FULLLOG, m_fullLogCommand );
-        m_checkoutVersionCommand = props.getProperty( PROP_CHECKOUTVERSION, m_checkoutVersionCommand );
+        m_checkinCommand = props.getProperty( PROP_RCS_CHECKIN, PROP_RCS_CHECKIN_DEFAULT);
+        m_checkoutCommand = props.getProperty( PROP_RCS_CHECKOUT, PROP_RCS_CHECKOUT_DEFAULT);
+        m_logCommand     = props.getProperty( PROP_RCS_LOG, PROP_RCS_LOG_DEFAULT);
+        m_fullLogCommand = props.getProperty( PROP_RCS_FULLLOG, PROP_RCS_FULLLOG_DEFAULT);
+        m_checkoutVersionCommand = props.getProperty( PROP_RCS_CHECKOUTVERSION, PROP_RCS_CHECKOUTVERSION_DEFAULT);
+        m_deleteVersionCommand = props.getProperty( PROP_RCS_DELETEVERSION, PROP_RCS_DELETEVERSION_DEFAULT);
         
         File rcsdir = new File( getPageDirectory(), "RCS" );
 

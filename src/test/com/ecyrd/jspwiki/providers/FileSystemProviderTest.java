@@ -17,6 +17,7 @@ import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 
 public class FileSystemProviderTest extends TestCase
 {
@@ -39,8 +40,8 @@ public class FileSystemProviderTest extends TestCase
 
         Properties props2 = new Properties();
 
-        props.setProperty( PageManager.PROP_PAGEPROVIDER, "FileSystemProvider" );
-        props.setProperty( FileSystemProvider.PROP_PAGEDIR, 
+        props.setProperty( PageManager.PROP_CLASS_PAGEPROVIDER, "FileSystemProvider" );
+        props.setProperty( WikiProperties.PROP_PAGEDIR, 
                            m_pagedir );
 
         props2.load( TestEngine.findTestProperties() );
@@ -178,7 +179,7 @@ public class FileSystemProviderTest extends TestCase
 
         Properties props = new Properties();
 
-        props.setProperty( FileSystemProvider.PROP_PAGEDIR, 
+        props.setProperty( WikiProperties.PROP_PAGEDIR, 
                            newdir );
 
         FileSystemProvider test = new FileSystemProvider();
@@ -204,7 +205,7 @@ public class FileSystemProviderTest extends TestCase
 
             Properties props = new Properties();
 
-            props.setProperty( FileSystemProvider.PROP_PAGEDIR, 
+            props.setProperty( WikiProperties.PROP_PAGEDIR, 
                                tmpFile.getAbsolutePath() );
 
             FileSystemProvider test = new FileSystemProvider();
@@ -236,7 +237,7 @@ public class FileSystemProviderTest extends TestCase
 
         m_provider.deletePage( "Test" );
 
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, "Test"+FileSystemProvider.FILE_EXT );
 

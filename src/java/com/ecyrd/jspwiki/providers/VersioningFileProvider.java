@@ -483,7 +483,7 @@ public class VersioningFileProvider
             try
             {
                 Properties props = getPageProperties( page );
-                String author = props.getProperty( realVersion+".author" );
+                String author = props.getProperty( realVersion + ".author" );
                 if( author != null )
                 {
                     p.setAuthor( author );

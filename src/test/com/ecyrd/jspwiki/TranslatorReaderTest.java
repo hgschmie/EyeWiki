@@ -1792,7 +1792,7 @@ public class TranslatorReaderTest extends TestCase
         }
         finally
         {
-            String files = testEngine.getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
+            String files = testEngine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR );
             File storagedir = new File( files, PAGE_NAME+BasicAttachmentProvider.DIR_EXTENSION );
 
             if( storagedir.exists() && storagedir.isDirectory() )

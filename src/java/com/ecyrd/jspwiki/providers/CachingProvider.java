@@ -56,6 +56,7 @@ import com.ecyrd.jspwiki.SearchResultComparator;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.opensymphony.oscache.base.Cache;
@@ -195,11 +196,11 @@ public class CachingProvider
         //  Find and initialize real provider.
         //
         String classname = WikiEngine.getRequiredProperty( properties, 
-                                                           PageManager.PROP_PAGEPROVIDER );
+                                                           PageManager.PROP_CLASS_PAGEPROVIDER );
         
         try
         {            
-            Class providerclass = ClassUtil.findClass( "com.ecyrd.jspwiki.providers",
+            Class providerclass = ClassUtil.findClass( WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX,
                                                        classname );
 
             m_provider = (WikiPageProvider)providerclass.newInstance();

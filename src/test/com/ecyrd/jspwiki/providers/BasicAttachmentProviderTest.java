@@ -15,6 +15,7 @@ import junit.framework.TestSuite;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 public class BasicAttachmentProviderTest extends TestCase
@@ -86,7 +87,7 @@ public class BasicAttachmentProviderTest extends TestCase
         TestEngine.deleteTestPage( NAME1 );
         TestEngine.deleteTestPage( NAME2 );
 
-        String tmpfiles = props.getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
+        String tmpfiles = props.getProperty( WikiProperties.PROP_STORAGEDIR );
 
         File f = new File( tmpfiles, NAME1+BasicAttachmentProvider.DIR_EXTENSION );
 
@@ -196,7 +197,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
         File extrafile = makeExtraFile( sDir, "foobar.blob" );
 
         try
@@ -236,7 +237,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
         File attDir = new File( sDir, NAME1+"-att" );
 
 
@@ -279,7 +280,7 @@ public class BasicAttachmentProviderTest extends TestCase
     {
         File in = makeAttachmentFile();
 
-        File sDir = new File(m_engine.getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR ));
+        File sDir = new File(m_engine.getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR ));
         File attDir = new File( sDir, NAME1+"-att" );
 
         Attachment att = new Attachment( NAME1, "test1.txt" );

@@ -65,7 +65,9 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  *  @author Janne Jalkanen
  */
 
-public class TranslatorReader extends Reader
+public class TranslatorReader
+        extends Reader
+        implements WikiProperties
 {
     public  static final int              READ          = 0;
     public  static final int              EDIT          = 1;
@@ -130,33 +132,6 @@ public class TranslatorReader extends Reader
 
     private ArrayList      m_linkMutators = new ArrayList();
 
-    /**
-     *  This property defines the inline image pattern.  It's current value
-     *  is jspwiki.translatorReader.inlinePattern
-     */
-    public static final String     PROP_INLINEIMAGEPTRN  = "jspwiki.translatorReader.inlinePattern";
-
-    /** If true, consider CamelCase hyperlinks as well. */
-    public static final String     PROP_CAMELCASELINKS   = "jspwiki.translatorReader.camelCaseLinks";
-
-    /** If true, all hyperlinks are translated as well, regardless whether they
-        are surrounded by brackets. */
-    public static final String     PROP_PLAINURIS        = "jspwiki.translatorReader.plainUris";
-
-    /** If true, all outward links (external links) have a small link image appended. */
-    public static final String     PROP_USEOUTLINKIMAGE  = "jspwiki.translatorReader.useOutlinkImage";
-
-    /** If set to "true", allows using raw HTML within Wiki text.  Be warned,
-        this is a VERY dangerous option to set - never turn this on in a publicly
-        allowable Wiki, unless you are absolutely certain of what you're doing. */
-    public static final String     PROP_ALLOWHTML        = "jspwiki.translatorReader.allowHTML";
-
-    /** If set to "true", all external links are tagged with 'rel="nofollow"' */
-    public static final String     PROP_USERELNOFOLLOW   = "jspwiki.translatorReader.useRelNofollow";
-
-    /** If set to "true", enables plugins during parsing */
-    public static final String     PROP_RUNPLUGINS       = "jspwiki.translatorReader.runPlugins";
-    
     /** If true, then considers CamelCase links as well. */
     private boolean                m_camelCaseLinks      = false;
 
@@ -180,11 +155,6 @@ public class TranslatorReader extends Reader
     private Pattern                m_camelCasePtrn;
 
     private TextRenderer           m_renderer;
-
-    /**
-     *  The default inlining pattern.  Currently "*.png"
-     */
-    public static final String     DEFAULT_INLINEPATTERN = "*.png";
 
     /**
      *  These characters constitute word separators when trying
@@ -309,26 +279,36 @@ public class TranslatorReader extends Reader
         }
         else
         {
-            m_camelCaseLinks  = TextUtil.getBooleanProperty( props,
-                                                             PROP_CAMELCASELINKS, 
-                                                             m_camelCaseLinks );
+            m_camelCaseLinks  = TextUtil.getBooleanProperty(
+                    props,
+                    PROP_CAMELCASELINKS, 
+                    PROP_CAMELCASELINKS_DEFAULT);
         }
 
-        m_plainUris           = TextUtil.getBooleanProperty( props,
-                                                             PROP_PLAINURIS,
-                                                             m_plainUris );
-        m_useOutlinkImage     = TextUtil.getBooleanProperty( props,
-                                                             PROP_USEOUTLINKIMAGE, 
-                                                             m_useOutlinkImage );
-        m_allowHTML           = TextUtil.getBooleanProperty( props,
-                                                             PROP_ALLOWHTML, 
-                                                             m_allowHTML );
+        m_plainUris           = TextUtil.getBooleanProperty(
+                props,
+                PROP_PLAINURIS,
+                PROP_PLAINURIS_DEFAULT);
 
-        m_useRelNofollow      = TextUtil.getBooleanProperty( props,
-                                                             PROP_USERELNOFOLLOW,
-                                                             m_useRelNofollow );
+        m_useOutlinkImage     = TextUtil.getBooleanProperty(
+                props,
+                PROP_USEOUTLINKIMAGE, 
+                PROP_USEOUTLINKIMAGE_DEFAULT);
+
+        m_allowHTML           = TextUtil.getBooleanProperty(
+                props,
+                PROP_ALLOWHTML, 
+                PROP_ALLOWHTML_DEFAULT);
+
+        m_useRelNofollow      = TextUtil.getBooleanProperty(
+                props,
+                PROP_USERRELNOFOLLOW,
+                PROP_USERRELNOFOLLOW_DEFAULT);
     
-        String runplugins = m_engine.getVariable( m_context, PROP_RUNPLUGINS );
+        String runplugins = m_engine.getVariable(
+                m_context,
+                PROP_RUNPLUGINS );
+
         if( runplugins != null ) enablePlugins( TextUtil.isPositive(runplugins));
         
         if( m_engine.getUserManager() == null || m_engine.getUserManager().getAuthenticator() == null )
@@ -452,7 +432,7 @@ public class TranslatorReader extends Reader
 
         if( ptrnlist.size() == 0 )
         {
-            ptrnlist.add( DEFAULT_INLINEPATTERN );
+            ptrnlist.add( PROP_INLINEIMAGEPTRN_DEFAULT );
         }
 
         return ptrnlist;

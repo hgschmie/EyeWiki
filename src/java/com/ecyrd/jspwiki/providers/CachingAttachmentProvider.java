@@ -34,9 +34,9 @@ import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
@@ -92,11 +92,11 @@ public class CachingAttachmentProvider
         //  Find and initialize real provider.
         //
         String classname = WikiEngine.getRequiredProperty( properties, 
-                                                           AttachmentManager.PROP_PROVIDER );
+                WikiProperties.PROP_CLASS_ATTACHMENTPROVIDER);
         
         try
         {            
-            Class providerclass = ClassUtil.findClass( "com.ecyrd.jspwiki.providers",
+            Class providerclass = ClassUtil.findClass( WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX,
                                                        classname );
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();

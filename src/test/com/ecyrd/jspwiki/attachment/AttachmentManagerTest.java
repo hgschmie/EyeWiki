@@ -18,7 +18,6 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 
 public class AttachmentManagerTest extends TestCase
 {

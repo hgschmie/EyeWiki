@@ -31,6 +31,7 @@ import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
 /**
@@ -45,43 +46,12 @@ import com.ecyrd.jspwiki.attachment.Attachment;
 // FIXME: Merge with rss.jsp
 // FIXME: Limit diff and page content size.
 public class RSSGenerator
+        implements WikiProperties
 {
     private WikiEngine         m_engine;
 
     private String             m_channelDescription = "";
     private String             m_channelLanguage    = "en-us";
-
-    /**
-     *  Defines the property name for the RSS channel description.  Default value for the 
-     *  channel description is an empty string.
-     *  @since 1.7.6.
-     */
-    public static final String PROP_CHANNEL_DESCRIPTION = "jspwiki.rss.channelDescription";
-
-    /**
-     *  Defines the property name for the RSS channel language.  Default value for the
-     *  language is "en-us".
-     *  @since 1.7.6.
-     */
-    public static final String PROP_CHANNEL_LANGUAGE    = "jspwiki.rss.channelLanguage";
-
-    /**
-     *  Defines the property name for the RSS generator main switch.
-     *  @since 1.7.6.
-     */
-    public static final String PROP_GENERATE_RSS        = "jspwiki.rss.generate";
-
-    /**
-     *  Defines the property name for the RSS file that the wiki should generate.
-     *  @since 1.7.6.
-     */
-    public static final String PROP_RSSFILE             = "jspwiki.rss.fileName";
-
-    /**
-     *  Defines the property name for the RSS generation interval in seconds.
-     *  @since 1.7.6.
-     */
-    public static final String PROP_INTERVAL            = "jspwiki.rss.interval";
 
     /**
      *  Initialize the RSS generator.
@@ -95,13 +65,16 @@ public class RSSGenerator
         if( engine.getBaseURL() == null || engine.getBaseURL().length() == 0 )
         {
             throw new NoRequiredPropertyException( "RSS requires jspwiki.baseURL to be set!",
-                                                   WikiEngine.PROP_BASEURL );
+                                                   PROP_BASEURL );
         }
 
-        m_channelDescription = properties.getProperty( PROP_CHANNEL_DESCRIPTION, 
-                                                       m_channelDescription );
-        m_channelLanguage    = properties.getProperty( PROP_CHANNEL_LANGUAGE,
-                                                       m_channelLanguage );
+        m_channelDescription = properties.getProperty(
+                PROP_RSS_CHANNEL_DESCRIPTION, 
+                PROP_RSS_CHANNEL_DESCRIPTION_DEFAULT);
+        
+        m_channelLanguage    = properties.getProperty(
+                PROP_RSS_CHANNEL_LANGUAGE,
+                PROP_RSS_CHANNEL_LANGUAGE_DEFAULT);
     }
 
     /**

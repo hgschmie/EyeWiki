@@ -40,6 +40,7 @@ import uk.co.wilson.xml.MinML;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.PriorityList;
 
@@ -93,12 +94,11 @@ import com.ecyrd.jspwiki.util.PriorityList;
  */
 public class FilterManager
     extends HandlerBase
+    implements WikiProperties
 {
     private PriorityList     m_pageFilters = new PriorityList();
 
     private static final Logger log = Logger.getLogger(WikiEngine.class);
-
-    public static final String PROP_FILTERXML = "jspwiki.filterConfig";
 
     public static final String DEFAULT_XMLFILE = "/filters.xml";
 
@@ -178,24 +178,16 @@ public class FilterManager
         throws WikiException
     {
         InputStream xmlStream = null;
-        String      xmlFile   = props.getProperty( PROP_FILTERXML );
+        String      xmlFile   = props.getProperty( PROP_FILTERXML, PROP_FILTERXML_DEFAULT );
 
         try
         {
-            if( xmlFile == null )
-            {
-                log.debug("Attempting to locate "+DEFAULT_XMLFILE+" from class path.");
-                xmlStream = getClass().getResourceAsStream( DEFAULT_XMLFILE );
-            }
-            else
-            {
-                log.debug("Attempting to load property file "+xmlFile);
-                xmlStream = new FileInputStream( new File(xmlFile) );
-            }
+            log.debug("Attempting to load property file " + xmlFile);
+            xmlStream = new FileInputStream( new File(xmlFile) );
 
             if( xmlStream == null )
             {
-                log.info("Cannot find property file for filters (this is okay, expected to find it as: '"+ (xmlFile == null ? DEFAULT_XMLFILE : xmlFile ) +"')");
+                log.info("Cannot find property file for filters (this is okay, expected to find it as: '"+ xmlFile  +"')");
                 return;
             }
             Parser parser = new MinML(); // FIXME: Should be settable

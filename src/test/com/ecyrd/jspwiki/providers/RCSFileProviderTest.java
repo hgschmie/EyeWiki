@@ -3,7 +3,6 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.Writer;
 import java.util.List;
@@ -17,6 +16,7 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 
 /**
@@ -53,8 +53,9 @@ public class RCSFileProviderTest extends TestCase
      *  Remove NAME1 + all RCS directories for it.
      */
     public void tearDown()
+    	throws Exception
     {
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -112,9 +113,9 @@ public class RCSFileProviderTest extends TestCase
      *  works by creating a dummy file without corresponding content in OLD/
      */
     public void testMigration()
-        throws IOException
+        throws Exception
     {
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
         
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 
@@ -169,7 +170,7 @@ public class RCSFileProviderTest extends TestCase
 
         provider.deletePage( NAME1 );
 
-        String files = props.getProperty( FileSystemProvider.PROP_PAGEDIR );
+        String files = TestEngine.getRequiredProperty(props, WikiProperties.PROP_PAGEDIR );
 
         File f = new File( files, NAME1+FileSystemProvider.FILE_EXT );
 

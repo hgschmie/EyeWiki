@@ -9,7 +9,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.providers.AbstractFileProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
@@ -95,7 +94,7 @@ public class TestEngine extends WikiEngine
     {
         Properties properties = new Properties();
         String m_encoding = properties.getProperty( WikiEngine.PROP_ENCODING, 
-                AbstractFileProvider.DEFAULT_ENCODING );
+                WikiEngine.PROP_ENCODING_DEFAULT );
         
         pagename = TextUtil.urlEncode( pagename, m_encoding );
         pagename = TextUtil.replaceString( pagename, "/", "%2F" );
@@ -113,7 +112,7 @@ public class TestEngine extends WikiEngine
         try
         {
             properties.load( findTestProperties() );
-            String files = properties.getProperty( FileSystemProvider.PROP_PAGEDIR );
+            String files = properties.getProperty( WikiProperties.PROP_PAGEDIR );
 
             File f = new File( files, mangleName(name)+FileSystemProvider.FILE_EXT );
 
@@ -132,7 +131,7 @@ public class TestEngine extends WikiEngine
     {
         try
         {
-            String files = getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
+            String files = getWikiProperties().getProperty( WikiProperties.PROP_STORAGEDIR );
 
             File f = new File( files, TextUtil.urlEncodeUTF8( page ) + BasicAttachmentProvider.DIR_EXTENSION );
 

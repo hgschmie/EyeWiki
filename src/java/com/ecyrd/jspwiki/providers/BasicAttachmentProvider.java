@@ -44,6 +44,7 @@ import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
@@ -81,7 +82,6 @@ public class BasicAttachmentProvider
     implements WikiAttachmentProvider
 {
     private String m_storageDir;
-    public static final String PROP_STORAGEDIR = "jspwiki.basicAttachmentProvider.storageDir";
 
     public static final String PROPERTY_FILE   = "attachment.properties";
 
@@ -94,7 +94,7 @@ public class BasicAttachmentProvider
         throws NoRequiredPropertyException,
                IOException
     {
-        m_storageDir = WikiEngine.getRequiredProperty( properties, PROP_STORAGEDIR );
+        m_storageDir = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_STORAGEDIR );
 
         //
         //  Check if the directory exists - if it doesn't, create it.
@@ -525,7 +525,7 @@ public class BasicAttachmentProvider
         {
             Properties props = getPageProperties(att);
 
-            att.setAuthor( props.getProperty( version+".author" ) );
+            att.setAuthor( props.getProperty( version + ".author" ) );
 
             File f = findFile( dir, att );
 

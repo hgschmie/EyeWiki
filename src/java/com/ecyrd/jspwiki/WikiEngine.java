@@ -80,6 +80,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  *  @author Janne Jalkanen
  */
 public class WikiEngine
+        implements WikiProperties
 {
     private static final Logger log = Logger.getLogger(WikiEngine.class);
 
@@ -95,54 +96,17 @@ public class WikiEngine
      *  If it is not defined, uses the default as defined by DEFAULT_PROPERTYFILE. 
      *  @value jspwiki.propertyfile
      */
-
     public static final String PARAM_PROPERTYFILE = "jspwiki.propertyfile";
-
-    /** Property for application name */
-    public static final String PROP_APPNAME      = "jspwiki.applicationName";
-    
-    /** Property start for any interwiki reference. */
-    public static final String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";
-
-    /** If true, then the user name will be stored with the page data.*/
-    public static final String PROP_STOREUSERNAME= "jspwiki.storeUserName";
-
-    /** Define the used encoding.  Currently supported are ISO-8859-1 and UTF-8 */
-    public static final String PROP_ENCODING     = "jspwiki.encoding";
-
-    /** The name for the base URL to use in all references. */
-    public static final String PROP_BASEURL      = "jspwiki.baseURL";
-
-    public static final String PROP_REFSTYLE     = "jspwiki.referenceStyle";
-
-    /** Property name for the "spaces in titles" -hack. */
-    public static final String PROP_BEAUTIFYTITLE = "jspwiki.breakTitleWithSpaces";
-
-    /** Property name for where the jspwiki work directory should be. 
-        If not specified, reverts to ${java.tmpdir}. */
-    public static final String PROP_WORKDIR      = "jspwiki.workDir";
-
-    /** The name of the cookie that gets stored to the user browser. */
-    public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
-
-    /** Property name for the "match english plurals" -hack. */
-    public static final String PROP_MATCHPLURALS     = "jspwiki.translatorReader.matchEnglishPlurals";
-    /** Property name for the template that is used. */
-    public static final String PROP_TEMPLATEDIR  = "jspwiki.templateDir";
-
-    /** Property name for the default front page. */
-    public static final String PROP_FRONTPAGE    = "jspwiki.frontPage";
-
-    /** Property name for setting the url generator instance */
-
-    public static final String PROP_URLCONSTRUCTOR = "jspwiki.urlConstructor";
-
-    private static final String PROP_SPECIALPAGE = "jspwiki.specialPage.";
 
     /** Path to the default property file. 
      *  @value /WEB_INF/jspwiki.properties
      */
     public static final String DEFAULT_PROPERTYFILE = "/WEB-INF/jspwiki.properties";
+
+    /** The name of the cookie that gets stored to the user browser. */
+    public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
+
+    private static final String PROP_SPECIALPAGE = "jspwiki.specialPage.";
 
     /**
      *  Contains the default properties for JSPWiki.
@@ -463,24 +427,35 @@ public class WikiEngine
 
         log.info("JSPWiki working directory is '"+m_workDir+"'");
 
-        m_saveUserInfo   = TextUtil.getBooleanProperty( props,
-                                                        PROP_STOREUSERNAME, 
-                                                        m_saveUserInfo );
-
-        m_useUTF8        = "UTF-8".equals( props.getProperty( PROP_ENCODING, "ISO-8859-1" ) );
-        m_baseURL        = props.getProperty( PROP_BASEURL, "" );
+        m_saveUserInfo   = TextUtil.getBooleanProperty(
+                props,
+                PROP_STOREUSERNAME, 
+                PROP_STOREUSERNAME_DEFAULT);
+        
+        m_useUTF8        = "UTF-8".equals( props.getProperty( 
+                                                   PROP_ENCODING,
+                                                   PROP_ENCODING_DEFAULT));
+        
+        m_baseURL        = props.getProperty(
+                PROP_BASEURL,
+                PROP_BASEURL_DEFAULT);
 
 
         m_beautifyTitle  = TextUtil.getBooleanProperty( props,
-                                                        PROP_BEAUTIFYTITLE, 
-                                                        m_beautifyTitle );
+                PROP_BEAUTIFYTITLE, 
+                PROP_BEAUTIFYTITLE_DEFAULT);
 
         m_matchEnglishPlurals = TextUtil.getBooleanProperty( props,
-                                                             PROP_MATCHPLURALS, 
-                                                             m_matchEnglishPlurals );
+                PROP_MATCHPLURALS, 
+                PROP_MATCHPLURALS_DEFAULT );
 
-        m_templateDir    = props.getProperty( PROP_TEMPLATEDIR, "default" );
-        m_frontPage      = props.getProperty( PROP_FRONTPAGE,   "Main" );
+        m_templateDir    = props.getProperty( 
+                PROP_TEMPLATEDIR,
+                PROP_TEMPLATEDIR_DEFAULT );
+
+        m_frontPage      = props.getProperty(
+                PROP_FRONTPAGE,   
+                PROP_FRONTPAGE_DEFAULT );
 
         //
         //  Initialize the important modules.  Any exception thrown by the
@@ -488,8 +463,11 @@ public class WikiEngine
         //
         try
         {
-            Class urlclass = ClassUtil.findClass( "com.ecyrd.jspwiki",
-                                                  props.getProperty( PROP_URLCONSTRUCTOR, "DefaultURLConstructor" ) );
+            Class urlclass = ClassUtil.findClass( DEFAULT_CLASS_PREFIX,
+                                                  props.getProperty(
+                                                          PROP_CLASS_URLCONSTRUCTOR,
+                                                          PROP_CLASS_URLCONSTRUCTOR_DEFAULT ) );
+
             m_urlConstructor = (URLConstructor) urlclass.newInstance();               
             m_urlConstructor.initialize( this, props );
 
@@ -524,9 +502,10 @@ public class WikiEngine
         //
         try
         {
-            if( TextUtil.getBooleanProperty( props, 
-                                             RSSGenerator.PROP_GENERATE_RSS, 
-                                             false ) )
+            if( TextUtil.getBooleanProperty(
+                        props, 
+                        PROP_RSS_GENERATE, 
+                        PROP_RSS_GENERATE_DEFAULT))
             {
                 m_rssGenerator = new RSSGenerator( this, props );
             }
@@ -833,7 +812,7 @@ public class WikiEngine
      */
     public String getInterWikiURL( String wikiName )
     {
-        return m_properties.getProperty(PROP_INTERWIKIREF+wikiName);
+        return m_properties.getProperty(PROP_INTERWIKIREF + wikiName);
     }
 
     /**
@@ -876,7 +855,7 @@ public class WikiEngine
      */
     public String getSpecialPageReference( String original )
     {
-        String propname = PROP_SPECIALPAGE+original;
+        String propname = PROP_SPECIALPAGE + original;
         String specialpage = m_properties.getProperty( propname );
 
         if( specialpage != null )
@@ -892,11 +871,9 @@ public class WikiEngine
     // FIXME: Should use servlet context as a default instead of a constant.
     public String getApplicationName()
     {
-        String appName = m_properties.getProperty(PROP_APPNAME);
-
-        if( appName == null )
-            return Release.APPNAME;
-
+        String appName = m_properties.getProperty(
+                PROP_APPNAME,
+                PROP_APPNAME_DEFAULT);
         return appName;
     }
 
@@ -1979,13 +1956,16 @@ public class WikiEngine
         {
             try
             {
-                String fileName = m_properties.getProperty( RSSGenerator.PROP_RSSFILE,
-                                                            "rss.rdf" );
-                int rssInterval = TextUtil.parseIntParameter( m_properties.getProperty( RSSGenerator.PROP_INTERVAL ),
-                                                              3600 );
+                String fileName = m_properties.getProperty(
+                        PROP_RSS_FILE,
+                        PROP_RSS_FILE_DEFAULT);
+
+                int rssInterval = TextUtil.getIntegerProperty( m_properties, 
+                        PROP_RSS_INTERVAL,
+                        PROP_RSS_INTERVAL_DEFAULT);
 
                 log.debug("RSS file will be at "+fileName);
-                log.debug("RSS refresh interval (seconds): "+rssInterval);
+                log.debug("RSS refresh interval (seconds): " + rssInterval);
 
                 while(true)
                 {

@@ -43,6 +43,7 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
@@ -104,8 +105,8 @@ public class AttachmentServlet
         m_tmpDir         = m_engine.getWorkDir()+File.separator+"attach-tmp";
  
         m_maxSize        = TextUtil.getIntegerProperty( props, 
-                                                        AttachmentManager.PROP_MAXSIZE,
-                                                        Integer.MAX_VALUE );
+                                                        WikiProperties.PROP_MAXSIZE,
+                                                        WikiProperties.PROP_MAXSIZE_DEFAULT);
 
         File f = new File( m_tmpDir );
         if( !f.exists() )
