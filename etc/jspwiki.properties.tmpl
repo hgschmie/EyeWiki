@@ -120,7 +120,7 @@ jspwiki.attachmentProvider = BasicAttachmentProvider
 #        Example for a diff command:
 #        jspwiki.diffCommand = /usr/bin/diff -u %s1 %s2
 #
-jspwiki.diffProvider = TraditionalDiffProvider
+jspwiki.diffProvider = ContextualDiffProvider
 
 #  
 # For the RSS feeds, a different provider can be used because inside
@@ -138,6 +138,18 @@ jspwiki.diffProvider = TraditionalDiffProvider
 #
 
 jspwiki.diffRssProvider = RssTraditionalDiffProvider
+
+#
+# For building user profiles you need an authenticator which keeps 
+# the user profiles somewhere.
+#
+jspwiki.auth.useOldAuth = true
+jspwiki.authenticator = FileAuthenticator
+
+#
+# define the users file for the FileAuthenticator
+#
+jspwiki.fileAuthenticator.fileName = @passwdfile@
 
 #
 #  BaseURL can be used to rewrite all of JSPWiki's internal references.
