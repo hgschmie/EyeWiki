@@ -204,8 +204,17 @@ public class TextUtil
         // Don't see why it would be horribly kludgy, though. 
         if( "UTF-8".equals( encoding ) )
             return( 	TextUtil.urlEncodeUTF8( data ) );
-    	else		
-    	    return( TextUtil.urlEncode( data.getBytes() ) );
+    	else
+    	{
+    	    try
+    	    {
+        	    return( TextUtil.urlEncode( data.getBytes(encoding) ) );
+    	    }
+    	    catch (UnsupportedEncodingException uee)
+    	    {
+    	        throw new RuntimeException("Could not encode String into" + encoding);
+    	    }
+    	}
     }
 
     /**
@@ -224,7 +233,16 @@ public class TextUtil
         if( "UTF-8".equals( encoding ) )
             return( TextUtil.urlDecodeUTF8( data ) );
         else
-            return( TextUtil.urlDecode( data.getBytes() ) );
+        {
+            try
+            {
+                return( TextUtil.urlDecode( data.getBytes(encoding) ) );
+            }
+    	    catch (UnsupportedEncodingException uee)
+    	    {
+    	        throw new RuntimeException("Could not decode String into" + encoding);
+    	    }
+        }
     }
 
     /**
