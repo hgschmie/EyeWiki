@@ -22,13 +22,18 @@ package com.ecyrd.jspwiki;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.util.Properties;
-import java.util.Vector;
 
+import org.apache.commons.jrcs.diff.AddDelta;
+import org.apache.commons.jrcs.diff.ChangeDelta;
+import org.apache.commons.jrcs.diff.Chunk;
+import org.apache.commons.jrcs.diff.DeleteDelta;
+import org.apache.commons.jrcs.diff.Diff;
+import org.apache.commons.jrcs.diff.DifferentiationFailedException;
+import org.apache.commons.jrcs.diff.Revision;
+import org.apache.commons.jrcs.diff.RevisionVisitor;
+import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Category;
 
 // import org.suigeneris.diff.*;
@@ -39,6 +44,7 @@ import org.apache.log4j.Category;
  *
  *  @author Janne Jalkanen
  *  @author Erik Bunn
+ *  @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class DifferenceEngine
 {
@@ -49,8 +55,8 @@ public class DifferenceEngine
         'diff -u %s1 %s2'.*/
     public  static final String PROP_DIFFCOMMAND     = "jspwiki.diffCommand";
 
-    private static final char   DIFF_ADDED_SYMBOL    = '+';
-    private static final char   DIFF_REMOVED_SYMBOL  = '-';
+    private static final char   DIFF_ADDED_SYMBOL      = '+';
+    private static final char   DIFF_REMOVED_SYMBOL    = '-';
     private static final String CSS_DIFF_ADDED       = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
     private static final String CSS_DIFF_REMOVED     = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
     private static final String CSS_DIFF_UNCHANGED   = "<tr><td class=\"diff\">";
@@ -93,180 +99,100 @@ public class DifferenceEngine
     {
         if( m_useInternalDiff )
         {
-            return makeDiffWithBMSI( p1, p2 );
+            return makeDiffWithJRCS( p1, p2 );
         }
         else
         {
             return makeDiffWithProgram( p1, p2 );
         }
     }
-    /*
-     // Makes a diff with JRCS routines, but BMSI is slightly better.
+
+    /**
+     *  Makes a diff using the Apache JRCS diff
+     *
+     *  We use our own diff printer, which makes things
+     *  easier.
+     */
     private String makeDiffWithJRCS( String p1, String p2 )        
     {
         try
         {
-            Object[] first  = Diff.stringToArray(p1);
-            Object[] second = Diff.stringToArray(p2);
+            String[] first  = Diff.stringToArray(p1);
+            String[] second = Diff.stringToArray(p2);
+            
+            Revision rev = Diff.diff(first, second, new MyersDiff());
 
-            Revision diff = Diff.diff( first, second );
-        
-            return diff.toUnifiedString();
-        }
-        catch( DifferentiationFailedException e )
-        {
-            log.error("Diff failed", e);
-        }
-
-        return null;
-    }
-    */
-
-    /**
-     *  Makes a diff using the BMSI utility package.
-     *  We use our own diff printer, which makes things
-     *  easier.
-     */
-    private String makeDiffWithBMSI( String p1, String p2 )        
-    {
-        try
-        {
-            String[] first  = stringToArray(p1);
-            String[] second = stringToArray(p2);
-
-            bmsi.util.Diff diff = new bmsi.util.Diff( first, second );
-
-            bmsi.util.Diff.change script = diff.diff_2(false);
-
-            if( script == null )
+            if( rev == null || rev.size() == 0)
             {
                 // No differences.
                 return "";
             }
-
-            StringWriter sw = new StringWriter();
-            bmsi.util.DiffPrint.Base p = new WriterPrint( first, second, sw );
-            p.print_script( script );
             
-            return sw.toString();
+            StringBuffer ret = new StringBuffer();
+            rev.accept(new RevisionPrint(ret));
+            return ret.toString();
+
         }
-        catch( IOException e )
+        catch (DifferentiationFailedException de)
         {
-            log.error("Diff failed", e);
+            log.error("Diff failed", de);
         }
 
         return null;
     }
 
-    /**
-     *  Writes a diff in a human-readable form, as opposed to your
-     *  standard average diff.
-     *
-     *  Lifted from org.mahlen.hula.utils.VersionUtil.
-     *  @author Mahlen Morris
-     *  @author Janne Jalkanen
-     */
-    // FIXME: Must somehow add contextual diffs as well.
-    private class WriterPrint extends bmsi.util.DiffPrint.NormalPrint
+    private class RevisionPrint
+            implements RevisionVisitor
     {
-        public WriterPrint( String[] a, String[] b, Writer w )
+
+        private StringBuffer sb = null;
+
+        private RevisionPrint(StringBuffer sb)
         {
-            super( a, b );
-            outfile = new PrintWriter( w );
+            this.sb = sb;
         }
 
-        protected void print_range_length( int a, int b )
+        public void visit(Revision rev)
         {
-            outfile.print( b-a+1 );
+            // GNDN
         }
 
-        /**
-         *  This method no longer emulates any known diff format.
-         */
-        protected void print_hunk(bmsi.util.Diff.change hunk) {
+        public void visit(AddDelta delta)
+        {
+            Chunk changed = delta.getRevised();
+            print(changed, " added ");
+            changed.toString(sb, "+ ", Diff.NL);
+        }
 
-            /* Determine range of line numbers involved in each file.  */
-            analyze_hunk(hunk);
-            if (deletes == 0 && inserts == 0)
-                return;
+        public void visit(ChangeDelta delta)
+        {
+            Chunk changed = delta.getOriginal();
+            print(changed, " changed ");
+            changed.toString(sb, "- ", Diff.NL);
 
-            /* Print out the line number header for this hunk */
+            delta.getRevised().toString(sb, "+ ", Diff.NL);
+        }
 
-            if( inserts != 0 && deletes == 0 )
-            {
-                outfile.print("At line ");
-                print_number_range('-', first0, last0);
-                outfile.print(" added ");
-                print_range_length(first1, last1);
-                outfile.print(" line" + ((last1-first1 == 0)? "." : "s.") );
-            }
-            else if( deletes != 0 && inserts == 0 )
-            {
-                outfile.print("Removed line"+((last0-first0 == 0)? " " : "s "));
-                print_number_range('-', first0, last0);
-                // outfile.print(" removed ");
-                // print_range_length(first1, last1);                
-                // outfile.print(" line" + ((last1-first1 == 0)? "." : "s.") );
-            }
-            else
-            {
-                if( last0-first0 == 0 )
-                {
-                    outfile.print("Line ");
-                    print_number_range('-', first0, last0);
-                    outfile.print(" was replaced by ");
-                }
-                else
-                {
-                    outfile.print("Lines ");
-                    print_number_range('-', first0, last0);
-                    outfile.print(" were replaced by ");
-                }
+        public void visit(DeleteDelta delta)
+        {
+            Chunk changed = delta.getOriginal();
+            print(changed, " removed ");
+            changed.toString(sb, "- ", Diff.NL);
+        }
 
-                outfile.print( "line"+((last1-first1 == 0) ? " " : "s "));
-
-                print_number_range('-', first1, last1);                
-            }
-
-
-            outfile.println();
-
-            /* Print the lines that the first file has.  */
-            if (deletes != 0)
-                for (int i = first0; i <= last0; i++)
-                    print_1_line("- ", file0[i]);
-
-            /*
-            if (inserts != 0 && deletes != 0)
-                outfile.println("===");
-            */
-
-            /* Print the lines that the second file has.  */
-            if (inserts != 0)
-                for (int i = first1; i <= last1; i++)
-                    print_1_line("+ ", file1[i]);
+        private void print(Chunk changed, String type)
+        {
+            sb.append("\nAt line ");
+            sb.append(changed.first() + 1);
+            sb.append(type);
+            sb.append(changed.size());
+            sb.append(" line");
+            sb.append((changed.size() == 1) ? "." : "s.");
+            sb.append("\n");
         }
 
     }
 
-    /**
-     *  Again, lifted from org.mahlen.hula.utils.VersionUtil.
-     */
-    private static String[] stringToArray(String str) 
-        throws IOException 
-    {
-        BufferedReader rdr = new BufferedReader(new StringReader(str));
-        Vector s = new Vector();
-        for(;;) 
-        {
-            String line = rdr.readLine();
-            if (line == null) break;
-            s.addElement(line);
-        }
-        String[] a = new String[s.size()];
-        s.copyInto(a);
-        return a;
-    }
     /**
      *  Makes the diff by calling "diff" program.
      */

@@ -15,5 +15,6 @@
 	<classpathentry sourcepath="USER_HOME/java/oscache-2.1/src" kind="var" path="MAVEN_REPO/oscache/jars/oscache-2.1.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/sandler/jars/sandler-core-1.0.jar"/>
 	<classpathentry kind="var" path="MAVEN_REPO/xpp3/jars/xpp3-1.1.3.4.M.jar"/>
+	<classpathentry sourcepath="USER_HOME/java/jrcs-latest/src" kind="var" path="MAVEN_REPO/jrcs/jars/jrcs-diff-20050404.105550.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
