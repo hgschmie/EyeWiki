@@ -1,15 +1,15 @@
-
 package com.ecyrd.jspwiki;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.providers.AbstractFileProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
@@ -94,21 +94,12 @@ public class TestEngine extends WikiEngine
         throws IOException
     {
         Properties properties = new Properties();
+        String m_encoding = properties.getProperty( WikiEngine.PROP_ENCODING, 
+                AbstractFileProvider.DEFAULT_ENCODING );
         
-        // FIXME: Horrible kludge, very slow, etc.
-        if( "UTF-8".equals( properties.getProperty(PROP_ENCODING) ) )
-        {
-            return TextUtil.urlEncodeUTF8( pagename );
-        }
-        
-        try
-        {
-            return java.net.URLEncoder.encode( pagename, "UTF-8" );
-        }
-        catch(UnsupportedEncodingException uee)
-        {
-            throw new RuntimeException("Could not encode to UTF-8?!?", uee);
-        }
+        pagename = TextUtil.urlEncode( pagename, m_encoding );
+        pagename = TextUtil.replaceString( pagename, "/", "%2F" );
+        return pagename;
     }
 
     /**
@@ -143,7 +134,7 @@ public class TestEngine extends WikiEngine
         {
             String files = getWikiProperties().getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
 
-            File f = new File( files, page+BasicAttachmentProvider.DIR_EXTENSION );
+            File f = new File( files, TextUtil.urlEncodeUTF8( page ) + BasicAttachmentProvider.DIR_EXTENSION );
 
             deleteAll( f );
         }
@@ -164,7 +155,7 @@ public class TestEngine extends WikiEngine
 
         FileWriter out = new FileWriter( tmpFile );
         
-        FileUtil.copyContents( new StringReader( "asdfa���dfzbvasdjkfbwfkUg783gqdwog" ), out );
+        FileUtil.copyContents( new StringReader( "asdfaäöüdfzbvasdjkfbwfkUg783gqdwog" ), out );
 
         out.close();
         

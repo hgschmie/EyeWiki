@@ -69,13 +69,9 @@ public class AttachmentManagerTest extends TestCase
         TestEngine.deleteTestPage( NAME1 );
         TestEngine.deleteTestPage( NAMEU );
 
-        String tmpfiles = props.getProperty( BasicAttachmentProvider.PROP_STORAGEDIR );
+        m_engine.deleteAttachments(NAME1);
+        m_engine.deleteAttachments(NAMEU);
 
-        File f = new File( tmpfiles, NAME1+BasicAttachmentProvider.DIR_EXTENSION );
-        File f2 = new File( tmpfiles, NAMEU+BasicAttachmentProvider.DIR_EXTENSION );
-
-        TestEngine.deleteAll( f );
-        TestEngine.deleteAll( f2 );
         TestEngine.emptyWorkDir();
     }
 

@@ -65,7 +65,7 @@ public class FileSystemProviderTest extends TestCase
     public void testScandinavianLetters()
         throws Exception
     {
-        WikiPage page = new WikiPage("��Test");
+        WikiPage page = new WikiPage("ÅäTest");
 
         m_provider.putPageText( page, "test" );
         
@@ -82,9 +82,9 @@ public class FileSystemProviderTest extends TestCase
     public void testScandinavianLettersUTF8()
         throws Exception
     {
-        WikiPage page = new WikiPage("��Test");
+        WikiPage page = new WikiPage("ÅäTest");
 
-        m_providerUTF8.putPageText( page, "test�" );
+        m_providerUTF8.putPageText( page, "testÖ" );
 
         File resultfile = new File( m_pagedir, "%C3%85%C3%A4Test.txt" );
 
@@ -93,7 +93,7 @@ public class FileSystemProviderTest extends TestCase
         String contents = FileUtil.readContents( new FileInputStream(resultfile),
                                                  "UTF-8" );
 
-        assertEquals("Wrong contents", contents, "test�");
+        assertEquals("Wrong contents", contents, "testÖ");
     }
 
     /**

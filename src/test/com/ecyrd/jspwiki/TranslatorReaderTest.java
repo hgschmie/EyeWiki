@@ -66,6 +66,7 @@ public class TranslatorReaderTest extends TestCase
             String name = (String) i.next();
 
             TestEngine.deleteTestPage(name);
+            testEngine.deleteAttachments(name);
         }
 
         created.clear();
