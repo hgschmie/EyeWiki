@@ -9,4 +9,25 @@
 <!-- ======================================================================== -->
 
 <project
-  default="java:compile"/>
+  xmlns:ant="jelly:ant"
+  xmlns:maven="jelly:maven"
+  default="java:compile">
+
+  <postGoal name="war:webapp">
+    <!-- Copy Properties File -->
+    <ant:copy file="etc/jspwiki.properties.tmpl" tofile="${maven.war.webapp.dir}/WEB-INF/jspwiki.properties" />
+    <ant:replace file="${maven.war.webapp.dir}/WEB-INF/jspwiki.properties"
+               replacefilterfile="build.properties"/>
+
+    <!-- Copy TagLibs Files -->
+    <ant:copy todir="${maven.war.webapp.dir}/WEB-INF/tld" >
+      <ant:fileset dir="etc">
+        <include name="**/*.tld"/>
+      </ant:fileset>
+    </ant:copy>
+
+  </postGoal>
+
+</project>
+
+
