@@ -1,0 +1,40 @@
+!!!Congratulations!
+
+You have successfully installed [JSPWiki|About].
+
+You have some pages set up for you:
+
+!Quick start
+
+* For testing things, try the [SandBox].
+* For a quick look on what Wiki is, check out [OneMinuteWiki].
+* For a guideline on good working habits with wiki, see [WikiEtiquette].
+
+!Installation issues
+
+* If you run Microsoft Windows, then probably you want to take a look
+  at [WindowsInstall] for more tips.
+
+!Full documentation
+
+* For all of the Wiki markup features, see [TextFormattingRules].
+* The [WikiRPCInterface] might interest you if you're into scripting.
+* [WikiAttachments] - very useful things.
+* [WikiVariables] - putting things on top of other things.
+* [JSPWikiPlugins] - The documentation on plugins.
+* [JSPWikiFAQ] - A list of some frequently asked questions.
+* [JSPWikiTags] - A list of tags for those who want to make their own [WikiTemplates].
+* [MultipleWikis] - If you want to run multiple Wikis using the least amount of effort.
+* [Page aliases] and redirecting.
+* [PageFilters] - for more complex processing.
+* [WikiForms] - for putting interactivity in your pages
+
+!Miscallaneous
+
+* [JSPWikiTips] may help you a bit.
+* To see what this particular wiki is about, click on the Wiki name
+  on the top left corner of the browser window, or [click here|SystemInfo].
+
+Good luck, and thanks for choosing JSPWiki!
+
+--[Janne Jalkanen|mailto:jalkanen+jspwiki@ecyrd.com].
