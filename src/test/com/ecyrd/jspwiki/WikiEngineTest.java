@@ -53,7 +53,7 @@ public class WikiEngineTest extends TestCase
         // We'll need a shorter-than-default consistency check for
         // the page-changed checks. This will cause additional load
         // to the file system, though.
-        props.setProperty( CachingProvider.PROP_CACHECHECKINTERVAL, 
+        props.setProperty( WikiProperties.PROP_CACHECHECKINTERVAL, 
                            Long.toString(PAGEPROVIDER_RESCAN_PERIOD) );
 
         TestEngine.emptyWorkDir();

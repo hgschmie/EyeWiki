@@ -67,7 +67,7 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage2()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_SEARCHPATH, "com.foo" );
+        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
         PluginManager m = new PluginManager( props );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin2 WHERE text=foobar}");
@@ -79,7 +79,7 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage3()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_SEARCHPATH, "com.foo" );
+        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo" );
         PluginManager m = new PluginManager( props );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin3 WHERE text=foobar}");
@@ -92,7 +92,7 @@ public class PluginManagerTest extends TestCase
     public void testSimpleInsertNoPackage4()
         throws Exception
     {
-        props.setProperty( PluginManager.PROP_SEARCHPATH, "com.foo,blat.blaa" );
+        props.setProperty( PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo,blat.blaa" );
         PluginManager m = new PluginManager( props );
         String res = m.execute( context,
                                 "{INSERT SamplePlugin WHERE text=foobar}");
