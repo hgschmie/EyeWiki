@@ -94,7 +94,7 @@ import com.opensymphony.oscache.base.events.CachewideEvent;
 //        for a lot of things.  RefactorMe.
 
 public class CachingProvider
-    implements WikiPageProvider
+    implements WikiPageProvider, WikiProperties
 {
     private static final Logger log = Logger.getLogger(CachingProvider.class);
 
@@ -112,7 +112,7 @@ public class CachingProvider
     private long             m_historyCacheMisses = 0;
     private long             m_historyCacheHits   = 0;
 
-    private int              m_expiryPeriod = 30;
+    private int              m_expiryPeriod = PROP_CACHECHECKINTERVAL_DEFAULT;
     
     /**
      *  This can be very long, as normally all modifications are noticed in an earlier
@@ -133,20 +133,7 @@ public class CachingProvider
 
     private CacheItemCollector m_allCollector = new CacheItemCollector();
     
-    /**
-     *  Defines, in seconds, the amount of time a text will live in the cache
-     *  at most before requiring a refresh.
-     */
-    
-    public static final String PROP_CACHECHECKINTERVAL = "jspwiki.cachingProvider.cacheCheckInterval";
-    public static final String PROP_CACHECAPACITY      = "jspwiki.cachingProvider.capacity";
-
-    private static final int   DEFAULT_CACHECAPACITY   = 1000; // Good most wikis
-
     private static final String OSCACHE_ALGORITHM      = LRUCache.class.getName();
-
-    // Lucene properties.
-    public static final String PROP_USE_LUCENE         = "jspwiki.useLucene";
 
     private static final String LUCENE_DIR             = "lucene";
 
@@ -166,7 +153,7 @@ public class CachingProvider
         //
         m_expiryPeriod = TextUtil.getIntegerProperty( properties,
                                                       PROP_CACHECHECKINTERVAL,
-                                                      m_expiryPeriod );
+                                                      PROP_CACHECHECKINTERVAL_DEFAULT);
 
         log.debug("Cache expiry period is "+m_expiryPeriod+" s");
 
@@ -175,7 +162,7 @@ public class CachingProvider
         //
         int capacity = TextUtil.getIntegerProperty( properties,
                                                     PROP_CACHECAPACITY,
-                                                    DEFAULT_CACHECAPACITY );
+                                                    PROP_CACHECAPACITY_DEFAULT );
 
         log.debug("Cache capacity "+capacity+" pages.");
 
@@ -228,7 +215,7 @@ public class CachingProvider
         // See if we're using Lucene, and if so, ensure that its 
         // index directory is up to date.
         // 
-        m_useLucene = TextUtil.getBooleanProperty(properties, PROP_USE_LUCENE, true );
+        m_useLucene = TextUtil.getBooleanProperty(properties, PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT );
 
         if( m_useLucene )
         {

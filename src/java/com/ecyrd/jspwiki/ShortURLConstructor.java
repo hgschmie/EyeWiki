@@ -23,14 +23,12 @@ public class ShortURLConstructor
     
     private String m_urlPrefix = "";
     
-    public static final String PROP_PREFIX = "jspwiki.shortURLConstructor.prefix";
-    
     public void initialize( WikiEngine engine, 
                             Properties properties )
     {
         super.initialize( engine, properties );
         
-        m_urlPrefix = TextUtil.getStringProperty( properties, PROP_PREFIX, null );
+        m_urlPrefix = TextUtil.getStringProperty( properties, WikiProperties.PROP_SHORTURL_PREFIX, null );
         
         if( m_urlPrefix == null )
         {
@@ -43,7 +41,7 @@ public class ShortURLConstructor
             
                 m_urlPrefix = path+"wiki/";
             
-                log.info("Short URL prefix path="+m_urlPrefix+" (You can use "+PROP_PREFIX+" to override this)");
+                log.info("Short URL prefix path="+m_urlPrefix+" (You can use "+WikiProperties.PROP_SHORTURL_PREFIX+" to override this)");
             }
             catch( MalformedURLException e )
             {

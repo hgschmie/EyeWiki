@@ -50,6 +50,7 @@ import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.TextUtil;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 /**
@@ -110,21 +111,9 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  *  @since 1.6.1
  */
 public class PluginManager
+	implements WikiProperties
 {
     private static Logger log = Logger.getLogger( PluginManager.class );
-
-    /**
-     *  This is the default package to try in case the instantiation
-     *  fails.
-     */
-    public static final String DEFAULT_PACKAGE = "com.ecyrd.jspwiki.plugin";
- 
-    public static final String DEFAULT_FORMS_PACKAGE = "com.ecyrd.jspwiki.forms";
-
-    /**
-     *  The property name defining which packages will be searched for properties.
-     */
-    public static final String PROP_SEARCHPATH = "jspwiki.plugin.searchPath";
 
     /**
      *  The name of the body content.  Current value is "_body".
@@ -150,23 +139,10 @@ public class PluginManager
      */
     public PluginManager( Properties props )
     {
-        String packageNames = props.getProperty( PROP_SEARCHPATH );
+        String packageNames = props.getProperty( PROP_CLASS_PLUGIN_SEARCHPATH );
 
-        if( packageNames != null )
-        {
-            StringTokenizer tok = new StringTokenizer( packageNames, "," );
-
-            while( tok.hasMoreTokens() )
-            {
-                m_searchPath.add( tok.nextToken() );
-            }
-        }
-
-        //
-        //  The default packages are always added.
-        //
-        m_searchPath.add( DEFAULT_PACKAGE );
-        m_searchPath.add( DEFAULT_FORMS_PACKAGE );
+        addPackages(packageNames);
+        addPackages(PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT);
 
         PatternCompiler compiler = new Perl5Compiler();
 
@@ -180,6 +156,19 @@ public class PluginManager
             throw new InternalWikiException( "PluginManager patterns are broken" );
         }
 
+    }
+
+    private void addPackages(String packageNames)
+    {
+        if( packageNames != null )
+        {
+            StringTokenizer tok = new StringTokenizer( packageNames, "," );
+            
+            while( tok.hasMoreTokens() )
+            {
+                m_searchPath.add( tok.nextToken() );
+            }
+        }
     }
 
     /**

@@ -53,7 +53,7 @@ public interface WikiProperties
     /**
      *  Name of the property that defines where page directories are. Must be defined
      */
-     String PROP_PAGEDIR = "jspwiki.fileSystemProvider.pageDir";
+    String PROP_PAGEDIR = "jspwiki.fileSystemProvider.pageDir";
 
 
     /** Property name for where the jspwiki work directory should be. 
@@ -91,6 +91,8 @@ public interface WikiProperties
      * @value &quot;&quot; (empty String)
      */
     String PROP_BASEURL_DEFAULT = "";
+
+    String PROP_SHORTURL_PREFIX = "jspwiki.shortURLConstructor.prefix";
 
     String PROP_REFSTYLE = "jspwiki.referenceStyle";
 
@@ -198,9 +200,21 @@ public interface WikiProperties
     /**
      *  The maximum size of attachments that can be uploaded.
      */
-     String PROP_MAXSIZE  = "jspwiki.attachment.maxsize";
+    String PROP_MAXSIZE = "jspwiki.attachment.maxsize";
 
-     int  PROP_MAXSIZE_DEFAULT = 100000;
+    int PROP_MAXSIZE_DEFAULT = 100000;
+
+    /**
+     *  Defines, in seconds, the amount of time a text will live in the cache
+     *  at most before requiring a refresh.
+     */
+    String PROP_CACHECHECKINTERVAL = "jspwiki.cachingProvider.cacheCheckInterval";
+
+    int PROP_CACHECHECKINTERVAL_DEFAULT = 30;
+
+    String PROP_CACHECAPACITY = "jspwiki.cachingProvider.capacity";
+
+    int PROP_CACHECAPACITY_DEFAULT = 1000; // Good most wikis
 
 
     /*
@@ -274,6 +288,13 @@ public interface WikiProperties
      */
     int PROP_RSS_INTERVAL_DEFAULT = 3600;
 
+    /**
+     * Shall we use Lucene with this Wiki?
+     */
+    String PROP_USE_LUCENE = "jspwiki.useLucene";
+
+    boolean PROP_USE_LUCENE_DEFAULT = true;
+
     /*
      * ========================================================================
      *
@@ -338,9 +359,9 @@ public interface WikiProperties
     /**
      *  The default administrator group is called "AdminGroup"
      */
-     String PROP_AUTH_ADMINISTRATOR_DEFAULT = "AdminGroup";
+    String PROP_AUTH_ADMINISTRATOR_DEFAULT = "AdminGroup";
 
-     String PROP_AUTH_FILENAME = "jspwiki.fileAuthenticator.fileName";
+    String PROP_AUTH_FILENAME = "jspwiki.fileAuthenticator.fileName";
 
     /*
      * ========================================================================
@@ -360,6 +381,16 @@ public interface WikiProperties
 
     String DEFAULT_AUTH_MODULES_CLASS_PREFIX = "com.ecyrd.jspwiki.auth.modules";
 
+    /**
+     *  The property name defining which packages will be searched for properties.
+     */
+    String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
+
+    /**
+     *  These are the default packages
+     */
+    String PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = "com.ecyrd.jspwiki.plugin,com.ecyrd.jspwiki.forms";
+
     /** Property name for setting the url generator instance */
     String PROP_CLASS_URLCONSTRUCTOR = "jspwiki.urlConstructor";
 
@@ -377,9 +408,9 @@ public interface WikiProperties
     /**
      *  The property name for defining the attachment provider class name.
      */
-     String PROP_CLASS_ATTACHMENTPROVIDER = "jspwiki.attachmentProvider";
+    String PROP_CLASS_ATTACHMENTPROVIDER = "jspwiki.attachmentProvider";
 
-     String PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT = BasicAttachmentProvider.class.getName();
+    String PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT = BasicAttachmentProvider.class.getName();
 
     String PROP_CLASS_AUTHORIZER = "jspwiki.authorizer";
 

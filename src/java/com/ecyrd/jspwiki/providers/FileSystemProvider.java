@@ -47,7 +47,7 @@ public class FileSystemProvider
     /**
      *  All metadata is stored in a file with this extension.
      */
-    public static final String PROP_EXT = ".properties";
+    public static final String EXTENSION_PROPS = ".properties";
 
     public void putPageText( WikiPage page, String text )        
         throws ProviderException
@@ -80,7 +80,7 @@ public class FileSystemProvider
             {
                 props.setProperty( "author", author );
                 File file = new File( getPageDirectory(), 
-                                      mangleName(page.getName())+PROP_EXT );
+                                      mangleName(page.getName())+EXTENSION_PROPS );
      
                 out = new FileOutputStream( file );
 
@@ -105,7 +105,7 @@ public class FileSystemProvider
         try
         {
             File file = new File( getPageDirectory(), 
-                                  mangleName(page.getName())+PROP_EXT );
+                                  mangleName(page.getName())+EXTENSION_PROPS );
 
             if( file != null && file.exists() )
             {

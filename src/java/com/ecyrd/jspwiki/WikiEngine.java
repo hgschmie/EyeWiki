@@ -101,17 +101,18 @@ public class WikiEngine
     /** Path to the default property file. 
      *  @value /WEB_INF/jspwiki.properties
      */
-    public static final String DEFAULT_PROPERTYFILE = "/WEB-INF/jspwiki.properties";
+    public static final String PARAM_PROPERTYFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
     /** The name of the cookie that gets stored to the user browser. */
     public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
 
-    private static final String PROP_SPECIALPAGE = "jspwiki.specialPage.";
+
+    private static final String PARAM_PAGES_PREFIX = "jspwiki.specialPage.";
 
     /**
      *  Contains the default properties for JSPWiki.
      */
-    private static final String[] DEFAULT_PROPERTIES = 
+    private static final String[] PARAM_PAGES = 
     { "jspwiki.specialPage.Login",           "Login.jsp",
       "jspwiki.specialPage.UserPreferences", "UserPreferences.jsp",
       "jspwiki.specialPage.Search",          "Search.jsp",
@@ -304,9 +305,9 @@ public class WikiEngine
             //
             if( propertyFile == null )
             {
-                context.log("No "+PARAM_PROPERTYFILE+" defined for this context, using default from "+DEFAULT_PROPERTYFILE);
+                context.log("No "+PARAM_PROPERTYFILE+" defined for this context, using default from "+PARAM_PROPERTYFILE_DEFAULT);
                 //  Use the default property file.
-                propertyStream = context.getResourceAsStream(DEFAULT_PROPERTYFILE);
+                propertyStream = context.getResourceAsStream(PARAM_PROPERTYFILE_DEFAULT);
             }
             else
             {
@@ -319,7 +320,7 @@ public class WikiEngine
                 throw new WikiException("Property file cannot be found!"+propertyFile);
             }
 
-            Properties props = new Properties( TextUtil.createProperties( DEFAULT_PROPERTIES ) );
+            Properties props = new Properties( TextUtil.createProperties( PARAM_PAGES ) );
             props.load( propertyStream );
             return( props );
         }
@@ -610,7 +611,7 @@ public class WikiEngine
     public String getPluginSearchPath()
     {
         // FIXME: This method should not be here, probably.
-        return m_properties.getProperty( PluginManager.PROP_SEARCHPATH );
+        return m_properties.getProperty( PROP_CLASS_PLUGIN_SEARCHPATH );
     }
 
     /**
@@ -855,7 +856,7 @@ public class WikiEngine
      */
     public String getSpecialPageReference( String original )
     {
-        String propname = PROP_SPECIALPAGE + original;
+        String propname = PARAM_PAGES_PREFIX + original;
         String specialpage = m_properties.getProperty( propname );
 
         if( specialpage != null )
@@ -1735,13 +1736,13 @@ public class WikiEngine
            
             String key = (String)entry.getKey();
 
-            if( key.startsWith( PROP_SPECIALPAGE ) )
+            if( key.startsWith( PARAM_PAGES_PREFIX ) )
             {
                 String value = (String)entry.getValue();
 
                 if( value.equals( path ) )
                 {                    
-                    return key.substring( PROP_SPECIALPAGE.length() );
+                    return key.substring( PARAM_PAGES_PREFIX.length() );
                 }
             }
         }
