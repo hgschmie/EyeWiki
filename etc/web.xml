@@ -63,11 +63,6 @@
    <servlet>
        <servlet-name>WikiServlet</servlet-name>
        <servlet-class>com.ecyrd.jspwiki.WikiServlet</servlet-class>       
-
-       <init-param>
-           <param-name>jspwiki.relativePathes</param-name>
-           <param-value>true</param-value>
-       </init-param>
    </servlet>
 
 
@@ -124,6 +119,21 @@
        <welcome-file>Wiki.jsp</welcome-file>
    </welcome-file-list>
 
+   <!-- make sure that only admins are allowed to access the
+        wiki pages inside the webapp 
+   -->
+
+   <security-constraint>
+       <web-resource-collection>
+           <web-resource-name>Protected Area</web-resource-name>
+           <url-pattern>/jspwiki/*</url-pattern>
+           <url-pattern>/Install.jsp</url-pattern>
+       </web-resource-collection>
+       <auth-constraint>
+           <role-name>admin</role-name>
+       </auth-constraint>
+   </security-constraint>
+      
    <!--
        By default we just limit access to the Delete.jsp, as it
        is actually dangerous.

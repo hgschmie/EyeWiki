@@ -6,6 +6,13 @@
 #  Wherever it is said that an option can be "true" or "false", you can
 #  also use "yes"/"no", or "on/off".  Just for some convenience.
 #
+
+#
+# Will the Wiki keep all its pages, workdir and logs inside the webapp.
+# Don't use this if you run on a container that does not unpack your war!
+#
+jspwiki.relativePathes = true
+
 #
 #  You can use this to override the default application name.  It affects
 #  the HTML titles and logging, for example.  It can be different from
@@ -472,7 +479,7 @@ log4j.appender.FileLog.MaxFileSize    = 10MB
 log4j.appender.FileLog.MaxBackupIndex = 14
 log4j.appender.FileLog.File = @logfile@
 log4j.appender.FileLog.layout = org.apache.log4j.PatternLayout
-log4j.appender.FileLog.layout.ConversionPattern=%d [%t] %p %c %x - %m%n
+log4j.appender.FileLog.layout.ConversionPattern=%d [%t] %-5p %c - %m%n
 
 #
 # If you want to use some other logging system (such as JBoss, which uses
