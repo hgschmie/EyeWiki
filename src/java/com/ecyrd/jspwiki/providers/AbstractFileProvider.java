@@ -65,10 +65,11 @@ import com.ecyrd.jspwiki.WikiProvider;
  *  @author Janne Jalkanen
  */
 public abstract class AbstractFileProvider
-    implements WikiPageProvider, WikiProperties
+    implements WikiPageProvider
 {
     private static final Category   log = Category.getInstance(AbstractFileProvider.class);
-    private String m_pageDirectory = "/tmp/";
+
+    private String m_pageDirectory = null;
     
     protected String m_encoding;
 
@@ -88,17 +89,12 @@ public abstract class AbstractFileProvider
                IOException
     {
         log.debug("Initing FileSystemProvider");
-        m_pageDirectory = WikiEngine.getRequiredProperty( properties, PROP_PAGEDIR );
+        m_pageDirectory = engine.getPageDir();
 
-        File f = new File(m_pageDirectory);
-
-        if( !f.exists() )
+        if (m_pageDirectory == null)
         {
-            f.mkdirs();
-        }
-        else if( !f.isDirectory() )
-        {
-            throw new IOException("Page directory is not a directory: "+m_pageDirectory);
+            throw new NoRequiredPropertyException("File based providers need a "
+                    + "page directory but none was found. Aborting!", WikiProperties.PROP_PAGEDIR);
         }
 
         m_encoding = properties.getProperty(
@@ -255,7 +251,6 @@ public abstract class AbstractFileProvider
 
         if( wikipages == null )
         {
-            log.error("Wikipages directory '" + m_pageDirectory + "' does not exist! Please check " + PROP_PAGEDIR + " in jspwiki.properties.");
             throw new InternalWikiException("Page directory does not exist");
         }
 

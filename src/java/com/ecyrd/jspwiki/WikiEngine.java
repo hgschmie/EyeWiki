@@ -92,9 +92,10 @@ public class WikiEngine
     /** Stores properties. */
     private Properties       m_properties;
 
-    /** The web.xml parameter that defines where the config file is to be found. 
-     *  If it is not defined, uses the default as defined by DEFAULT_PROPERTYFILE. 
-     *  @value jspwiki.propertyfile
+    /** 
+     * The web.xml parameter that defines where the config file is to be found. 
+     * If it is not defined, uses the default as defined by PARAM_PROPERTYFILE_DEFAULT.
+     * @value jspwiki.propertyfile
      */
     public static final String PARAM_PROPERTYFILE = "jspwiki.propertyfile";
 
@@ -103,10 +104,22 @@ public class WikiEngine
      */
     public static final String PARAM_PROPERTYFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
-    /** The name of the cookie that gets stored to the user browser. */
-    public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
+    /**
+     * If this parameter is true, then all the page and string references are relative to the
+     * web application root. This allows a wiki to be deployed "as is" as a single war file.
+     */
+    public static final String PARAM_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
 
+    /**
+     * The default is to have absolute pathes for backwards compatibility
+     * @value false
+     */
+    public static final boolean PARAM_WIKIRELATIVE_PATHES_DEFAULT = false;
 
+    /**
+     * Prefix for the elements in the PARAM_PAGES field.
+     * @value jspwiki.specialPage
+     */
     private static final String PARAM_PAGES_PREFIX = "jspwiki.specialPage.";
 
     /**
@@ -117,6 +130,10 @@ public class WikiEngine
       "jspwiki.specialPage.UserPreferences", "UserPreferences.jsp",
       "jspwiki.specialPage.Search",          "Search.jsp",
       "jspwiki.specialPage.FindPage",        "FindPage.jsp"};
+
+    /** The name of the cookie that gets stored to the user browser. */
+    public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
+
 
     /** Stores an internal list of engines per each ServletContext */
     private static Hashtable c_engines = new Hashtable();
@@ -194,10 +211,22 @@ public class WikiEngine
     /** The location where the work directory is. */
     private String           m_workDir;
 
+    /** The location where the pages directory is. */
+    private String           m_pageDir;
+
+    /** The location where the storage directory is. */
+    private String           m_storageDir;
+
     /** Each engine has their own application id. */
     private String           m_appid = "";
 
     private boolean          m_isConfigured = false; // Flag.
+
+    /**
+     * If true, all the pathes from the various file providers are relative to the
+     * root of the web application
+     */
+    private boolean wikiRelativePathes = PARAM_WIKIRELATIVE_PATHES_DEFAULT;
     
     /**
      *  Gets a WikiEngine related to this servlet.  Since this method
@@ -250,7 +279,7 @@ public class WikiEngine
     {
         String appid = Integer.toString(context.hashCode()); //FIXME: Kludge, use real type.
 
-        context.log( "Application "+appid+" requests WikiEngine.");
+        context.log( "Application " + appid +" requests WikiEngine.");
 
         WikiEngine engine = (WikiEngine) c_engines.get( appid );
 
@@ -260,12 +289,15 @@ public class WikiEngine
             try
             {
                 if( props == null )
+                {
                     props = loadWebAppProps( context );
+                }
                 engine = new WikiEngine( context, appid, props );
             }
             catch( Exception e )
             {
-                context.log( "ERROR: Failed to create a Wiki engine: "+e.getMessage() );
+                context.log( "ERROR: Failed to create a Wiki engine: ", e);
+
                 throw new InternalWikiException( "No wiki engine, check logs." );
             }
 
@@ -283,6 +315,9 @@ public class WikiEngine
     public WikiEngine( Properties properties )
         throws WikiException
     {
+        wikiRelativePathes = false; // No root dir driven path references
+        setRootPath(null);           // No root dir defined
+
         initialize( properties );
     }
 
@@ -305,13 +340,15 @@ public class WikiEngine
             //
             if( propertyFile == null )
             {
-                context.log("No "+PARAM_PROPERTYFILE+" defined for this context, using default from "+PARAM_PROPERTYFILE_DEFAULT);
+                context.log("No " + PARAM_PROPERTYFILE + " defined for this context, "
+                        + "using default from " + PARAM_PROPERTYFILE_DEFAULT);
+
                 //  Use the default property file.
                 propertyStream = context.getResourceAsStream(PARAM_PROPERTYFILE_DEFAULT);
             }
             else
             {
-                context.log("Reading properties from "+propertyFile+" instead of default.");
+                context.log("Reading properties from " + propertyFile + " instead of default.");
                 propertyStream = new FileInputStream( new File(propertyFile) );
             }
 
@@ -322,11 +359,12 @@ public class WikiEngine
 
             Properties props = new Properties( TextUtil.createProperties( PARAM_PAGES ) );
             props.load( propertyStream );
-            return( props );
+
+            return props;
         }
         catch( Exception e )
         {
-            context.log( Release.APPNAME+": Unable to load and setup properties from jspwiki.properties. "+e.getMessage() );
+            context.log( Release.APPNAME + ": Unable to load and setup properties from jspwiki.properties", e);
         }
         finally
         {
@@ -336,11 +374,11 @@ public class WikiEngine
             }
             catch( IOException e )
             {
-                context.log("Unable to close property stream - something must be seriously wrong.");
+                context.log("Unable to close property stream - something must be seriously wrong.", e);
             }
         }
 
-        return( null );
+        return null;
     }
 
     
@@ -356,6 +394,10 @@ public class WikiEngine
         InputStream propertyStream = null;
         String      propertyFile   = context.getInitParameter(PARAM_PROPERTYFILE);
 
+        String relPathes = context.getInitParameter(PARAM_WIKIRELATIVE_PATHES);
+
+        wikiRelativePathes = (relPathes != null) ? Boolean.getBoolean(relPathes) : PARAM_WIKIRELATIVE_PATHES_DEFAULT;
+
         m_servletContext = context;
         m_appid          = appid;
 
@@ -364,13 +406,13 @@ public class WikiEngine
             //
             //  Note: May be null, if JSPWiki has been deployed in a WAR file.
             //
-            m_rootPath = context.getRealPath("/");
+            setRootPath(context.getRealPath("/"));
             initialize( props );
-            log.info("Root path for this Wiki is: '"+m_rootPath+"'");
+            log.info("Root path for this Wiki is: '" + getRootPath() + "'");
         }
         catch( Exception e )
         {
-            context.log( Release.APPNAME+": Unable to load and setup properties from jspwiki.properties. "+e.getMessage() );
+            context.log(Release.APPNAME + ": Unable to load and setup properties from jspwiki.properties. ", e);
         }
     }
 
@@ -400,7 +442,7 @@ public class WikiEngine
         }
 
         log.info("*******************************************");
-        log.info("JSPWiki "+Release.VERSTR+" starting. Whee!");
+        log.info("JSPWiki " + Release.VERSTR + " starting. Whee!");
 
         log.debug("Configuring WikiEngine...");
 
@@ -414,19 +456,55 @@ public class WikiEngine
             m_workDir = System.getProperty("java.io.tmpdir", ".");
             m_workDir += File.separator+Release.APPNAME+"-"+m_appid;
         }
-
-        try
+        else
         {
-            File f = new File( m_workDir );
-            f.mkdirs();
+            m_workDir = getValidPath(m_workDir);
         }
-        catch( Exception e )
+       
+        createDirectory(m_workDir);
+        log.info("JSPWiki working directory is '" + m_workDir + "'");
+
+        //
+        //  Create and find the pages directory (might be null e.g. for JDBC)
+        //
+        m_pageDir = props.getProperty(PROP_PAGEDIR);
+        if( m_pageDir != null )
         {
-            log.fatal("Unable to find or create the working directory: "+m_workDir,e);
-            throw new IllegalArgumentException("Unable to find or create the working dir: "+m_workDir);
+            m_pageDir = getValidPath(m_pageDir);
+        }
+       
+        createDirectory(m_pageDir);
+
+        if (m_pageDir != null)
+        {
+            log.info("JSPWiki pages directory is '" + m_pageDir + "'");
+        }
+        else
+        {
+            log.info("No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
         }
 
-        log.info("JSPWiki working directory is '"+m_workDir+"'");
+
+        //
+        //  Create and find the storages directory (might be null e.g. for JDBC)
+        //
+        m_storageDir = props.getProperty(PROP_STORAGEDIR);
+        if( m_storageDir != null )
+        {
+            m_storageDir = getValidPath(m_storageDir);
+        }
+       
+        createDirectory(m_storageDir);
+
+        if (m_storageDir != null)
+        {
+            log.info("JSPWiki storages directory is '" + m_storageDir + "'");
+        }
+        else
+        {
+            log.info("No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
+        }
+
 
         m_saveUserInfo   = TextUtil.getBooleanProperty(
                 props,
@@ -527,6 +605,33 @@ public class WikiEngine
         m_isConfigured = true;
     }
 
+    public static void createDirectory(final String dir)
+    	throws WikiException
+    {
+        if (dir != null)
+        {
+            try
+            {
+                File d = new File(dir);
+
+                if (!d.exists())
+                {
+                    d.mkdirs();
+                }
+                else if (!d.isDirectory())
+                {
+                    throw new IOException("Requested Directory " + dir + " exists, but is no directory!");
+                }
+            }
+            catch( Exception e )
+            {
+                String err = "Unable to find or create the requested directory: " + dir;
+                log.fatal(err, e);
+                throw new WikiException(err);
+            }
+        }
+    }
+
     /**
      *  Initializes the reference manager. Scans all existing WikiPages for
      *  internal links and adds them to the ReferenceManager object.
@@ -602,6 +707,24 @@ public class WikiEngine
     public String getWorkDir()
     {
         return m_workDir;
+    }
+
+    /**
+     * Returns a page Directory for use with the JSP Wiki
+     * @since 2.2
+     */
+    public String getPageDir()
+    {
+        return m_pageDir;
+    }
+
+    /**
+     * Returns a storage Directory for use with the JSP Wiki
+     * @since 2.2
+     */
+    public String getStorageDir()
+    {
+        return m_storageDir;
     }
 
     /**
@@ -1933,10 +2056,19 @@ public class WikiEngine
     {
         if( m_rssURL != null )
         {
-            return getBaseURL()+m_rssURL;
+            return getBaseURL() + m_rssURL;
         }
 
         return null;
+    }
+
+    /**
+     * Sets the internal path of the webapp base.
+     * @since 2.2
+     */
+    protected void setRootPath(final String rootPath)
+    {
+        m_rootPath = rootPath;
     }
 
     /**
@@ -1948,6 +2080,39 @@ public class WikiEngine
     }
 
     /**
+     * Checks whether a supplied directory path is valid for the current Wiki configuration.
+     * A path is valid if
+     * - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
+     * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative
+     *   and the rootDirectory is not null.
+     *
+     * @param pathName The Directory path to check
+     * @return A valid path
+     * @throws WikiException if the supplied directory path is invalid.
+     */
+    public String getValidPath(final String pathName)
+            throws WikiException
+    {
+        File path = new File(pathName);
+        String rootPath = getRootPath();
+
+        // If we have a relative path reference and a root directory has been
+        // set, then return the path relative to it.
+        if (rootPath != null && !path.isAbsolute())
+        {
+            return new File(rootPath, pathName).getAbsolutePath();
+        }
+
+        // In the "Absolute Path" configuration (default), we return everything "as is".
+        if (!wikiRelativePathes)
+        {
+            return pathName;
+        }
+
+        throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
+    }
+
+    /**
      *  Runs the RSS generation thread.
      *  FIXME: MUST be somewhere else, this is not a good place.
      */
@@ -1955,6 +2120,13 @@ public class WikiEngine
     {
         public void run()
         {
+            String rootPath = getRootPath();
+
+            if (rootPath == null)
+            {
+                log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
+            }
+
             try
             {
                 String fileName = m_properties.getProperty(
@@ -1979,11 +2151,13 @@ public class WikiEngine
                         //  Generate RSS file, output it to
                         //  default "rss.rdf".
                         //
-                        log.debug("Regenerating RSS feed to "+fileName);
+                        if (log.isDebugEnabled()) {
+                            log.debug("Regenerating RSS feed to " + fileName);
+                        }
 
                         String feed = m_rssGenerator.generate();
 
-                        File file = new File( m_rootPath, fileName );
+                        File file = new File( rootPath, fileName );
 
                         in  = new StringReader(feed);
                         out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream(file), "UTF-8") );
@@ -2001,8 +2175,8 @@ public class WikiEngine
                     {
                         try
                         {
-                            if( in != null )  in.close();
-                            if( out != null ) out.close();
+                            if( in != null )  { in.close(); }
+                            if( out != null ) { out.close(); }
                         }
                         catch( IOException e )
                         {

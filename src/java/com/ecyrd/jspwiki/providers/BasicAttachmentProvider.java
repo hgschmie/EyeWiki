@@ -94,16 +94,12 @@ public class BasicAttachmentProvider
         throws NoRequiredPropertyException,
                IOException
     {
-        m_storageDir = WikiEngine.getRequiredProperty( properties, WikiProperties.PROP_STORAGEDIR );
+        m_storageDir = engine.getStorageDir();
 
-        //
-        //  Check if the directory exists - if it doesn't, create it.
-        //
-        File f = new File( m_storageDir );
-
-        if( !f.exists() )
+        if (m_storageDir == null)
         {
-            f.mkdirs();
+            throw new NoRequiredPropertyException("File based attachment providers need a "
+                    + "storage directory but none was found. Aborting!", WikiProperties.PROP_STORAGEDIR);
         }
     }
 

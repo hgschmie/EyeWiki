@@ -51,16 +51,20 @@ public interface WikiProperties
     String PROP_APPNAME_DEFAULT = Release.APPNAME;
 
     /**
-     *  Name of the property that defines where page directories are. Must be defined
+     * Name of the property that defines a directory where the pages are. Must be defined
+     * if you use a file based PageProvider.
      */
-    String PROP_PAGEDIR = "jspwiki.fileSystemProvider.pageDir";
-
+    String PROP_PAGEDIR = "jspwiki.pageDir";
 
     /** Property name for where the jspwiki work directory should be. 
         If not specified, reverts to ${java.tmpdir}. */
     String PROP_WORKDIR = "jspwiki.workDir";
 
-    String PROP_STORAGEDIR = "jspwiki.basicAttachmentProvider.storageDir";
+    /**
+     * Name of the property that defines a directory where the attachments are. Must be defined
+     * if you use a file based AttachmentProvider.
+     */
+    String PROP_STORAGEDIR = "jspwiki.storageDir";
 
     /** Property start for any interwiki reference. */
     String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";

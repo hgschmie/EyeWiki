@@ -15,6 +15,38 @@
 jspwiki.applicationName = @appname@
 
 #
+#  Determines where wiki files are kept for FileSystemProvider
+#  and RCSFileProvider
+#
+#  If you're using Windows, then you must duplicate the backslashes.
+#  For example, use:
+#  
+#  jspwiki.pageDir = C:\\Data\\jspwiki
+#
+jspwiki.pageDir = @pagedir@
+
+#
+#  The BasicAttachmentProvider needs to know where to store the files
+#  the user has uploaded.  It's okay to put these in the same directory
+#  as you put your text files (i.e. the pageDir setting above).
+#
+#  If you're using Windows, then you must duplicate the backslashes.
+#  For example, use:
+#  
+#  jspwiki.storageDir = C:\\Data\\jspwiki
+#
+jspwiki.storageDir = @pagedir@
+
+#
+#  The JSPWiki working directory.  If not set, a temporary path will
+#  be used.  You can see the location of the workdir in the logs.
+#
+#  The working directory is used to cache things like Lucene search
+#  results.
+#
+jspwiki.workDir = @workdir@
+
+#
 #  Which page provider class to use.  Possibilities are:
 #
 #    RCSFileProvider        - for simple RCS-based file storage
@@ -38,17 +70,6 @@ jspwiki.pageProvider = VersioningFileProvider
 jspwiki.usePageCache = true
 
 #
-#  Determines where wiki files are kept for FileSystemProvider
-#  and RCSFileProvider
-#
-#  If you're using Windows, then you must duplicate the backslashes.
-#  For example, use:
-#  
-#  jspwiki.fileSystemProvider.pageDir = C:\\Data\\jspwiki
-#
-jspwiki.fileSystemProvider.pageDir = @pagedir@
-
-#
 #  ATTACHMENTS:
 #
 #  Use the following property to define which attachment provider
@@ -59,18 +80,6 @@ jspwiki.fileSystemProvider.pageDir = @pagedir@
 #      the attachment functionality is disabled
 #
 jspwiki.attachmentProvider = BasicAttachmentProvider
-
-#
-#  The BasicAttachmentProvider needs to know where to store the files
-#  the user has uploaded.  It's okay to put these in the same directory
-#  as you put your text files (i.e. the pageDir setting above).
-#
-#  If you're using Windows, then you must duplicate the backslashes.
-#  For example, use:
-#  
-#  jspwiki.basicAttachmentProvider.storageDir = C:\\Data\\jspwiki
-#
-jspwiki.basicAttachmentProvider.storageDir = @pagedir@
 
 #
 #  You can limit the maximum size of an attachment by setting this
@@ -141,15 +150,6 @@ jspwiki.encoding = UTF-8
 #  The default for this option is "false".
 #
 jspwiki.translatorReader.allowHTML = false
-
-#
-#  The JSPWiki working directory.  If not set, a temporary path will
-#  be used.  You can see the location of the workdir in the logs.
-#
-#  The working directory is used to cache things like Lucene search
-#  results.
-#
-jspwiki.workDir = @workdir@
 
 ############################################################################
 #
