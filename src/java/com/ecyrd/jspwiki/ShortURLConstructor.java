@@ -1,11 +1,12 @@
 package com.ecyrd.jspwiki;
 
-import java.util.Properties;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
 

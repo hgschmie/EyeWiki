@@ -8,7 +8,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.ecs.xhtml.*;
+import org.apache.ecs.xhtml.b;
+import org.apache.ecs.xhtml.table;
+import org.apache.ecs.xhtml.td;
+import org.apache.ecs.xhtml.th;
+import org.apache.ecs.xhtml.tr;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.SearchResult;
