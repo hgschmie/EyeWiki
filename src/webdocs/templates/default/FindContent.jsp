@@ -1,6 +1,4 @@
 <%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
-<%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="java.util.Collection" %>
 
 <%-- FIXME: Get rid of the scriptlets. --%>
 <%

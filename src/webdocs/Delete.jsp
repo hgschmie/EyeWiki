@@ -1,9 +1,7 @@
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
-<%@ page import="com.ecyrd.jspwiki.WikiProvider" %>
 <%@ page import="com.ecyrd.jspwiki.auth.AuthorizationManager" %>
 <%@ page import="com.ecyrd.jspwiki.auth.UserProfile" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.*" %>
@@ -67,7 +65,7 @@
         log.info("Deleting page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
 
         wiki.deletePage( pagereq );
-        response.sendRedirect(wiki.getViewURL(pagereq));
+        response.sendRedirect(wikiContext.getViewURL(pagereq));
         return;
     }
     else if( delete != null )

@@ -34,6 +34,6 @@
     NDC.pop();
     NDC.remove();
 
-    response.sendRedirect( wiki.getEditURL(newEntry) );
+    response.sendRedirect( wikiContext.getURL(WikiContext.EDIT, newEntry) );
 %>
 

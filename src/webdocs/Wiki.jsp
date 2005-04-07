@@ -57,7 +57,7 @@
             }
 
             log.info("User "+currentUser.getName()+" has no access - displaying message.");
-            response.sendRedirect( wiki.getViewURL("LoginError") );
+            response.sendRedirect(wikiContext.getViewURL("LoginError") );
         }
     }
 

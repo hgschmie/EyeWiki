@@ -1,6 +1,5 @@
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="java.util.*" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page import="com.ecyrd.jspwiki.auth.*" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.WikiPermission" %>
@@ -40,7 +39,7 @@
         else
         {
             log.info("User "+currentUser.getName()+" has no access - displaying message.");
-            response.sendRedirect( wiki.getViewURL("LoginError") );
+            response.sendRedirect( wikiContext.getViewURL("LoginError") );
         }
     }
 

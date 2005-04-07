@@ -2,9 +2,7 @@
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="com.ecyrd.jspwiki.filters.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
-<%@ page import="com.ecyrd.jspwiki.WikiProvider" %>
 <%@ page import="com.ecyrd.jspwiki.auth.AuthorizationManager" %>
 <%@ page import="com.ecyrd.jspwiki.auth.UserProfile" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.WikiPermission" %>
@@ -163,7 +161,7 @@
             return;
         }
 
-        response.sendRedirect(wiki.getViewURL(pagereq));
+        response.sendRedirect(wikiContext.getViewURL(pagereq));
         return;
     }
     else if( preview != null )
@@ -181,7 +179,7 @@
             wiki.getPageManager().unlockPage( lock );
             session.removeAttribute( "lock-"+pagereq );
         }
-        response.sendRedirect( wiki.getViewURL(pagereq) );
+        response.sendRedirect( wikiContext.getViewURL(pagereq) );
         return;
     }
 

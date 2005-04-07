@@ -1,7 +1,5 @@
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="com.ecyrd.jspwiki.attachment.*" %>
-<%@ page import="java.util.*" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page import="com.ecyrd.jspwiki.auth.*" %>
 <%@ page errorPage="/Error.jsp" %>
@@ -51,7 +49,7 @@
         {
             if( mgr.login( uid, passwd, session ) )
             {
-                response.sendRedirect( wiki.getViewURL(pagereq) );
+                response.sendRedirect( wikiContext.getViewURL(pagereq) );
                 return;
             }
             else
@@ -69,7 +67,7 @@
         catch( PasswordExpiredException e )
         {
             session.setAttribute("msg", "Your password has expired!  Please enter a new one!");
-            response.sendRedirect( wiki.getViewURL("UserPreferences") );
+            response.sendRedirect( wikiContext.getViewURL("UserPreferences") );
             return;
         }
         catch( WikiSecurityException e )
@@ -80,7 +78,7 @@
     else if( "logout".equals(action) )
     {
         mgr.logout( session );
-        response.sendRedirect( wiki.getViewURL(pagereq) );
+        response.sendRedirect( wikiContext.getViewURL(pagereq) );
         return;
     }
 

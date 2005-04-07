@@ -2,7 +2,6 @@
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page import="com.ecyrd.jspwiki.plugin.VotePlugin" %>
-<%@ page import="com.ecyrd.jspwiki.auth.*" %>
 <%@ page import="org.apache.commons.lang.BooleanUtils" %>
 
 <%@ page errorPage="/Error.jsp" %>
