@@ -19,7 +19,7 @@ import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 public class SpeedTest extends TestCase
 {
-    private static int ITERATIONS = 1000;
+    private static int ITERATIONS = 100;
     public static final String NAME1 = "Test1";
 
     PropertiesConfiguration conf = new PropertiesConfiguration();
