@@ -385,13 +385,20 @@ public class WikiEngineTest extends TestCase
         conf.setProperty( "jspwiki.usePageCache", "false" );
 
         WikiEngine engine = new TestEngine( conf );
-
-        String p = engine.getHTML( "test", -1 );
-
         VerySimpleProvider vsp = (VerySimpleProvider) engine.getPageManager().getProvider();
+
+        WikiPage p = engine.getPage("test");
 
         assertEquals( "wrong page", "test", vsp.m_latestReq );
         assertEquals( "wrong version", -1, vsp.m_latestVers );
+
+        String res = engine.getHTML("test");
+        assertEquals( "wrong page", "test", vsp.m_latestReq );
+
+        // getHTML now pulls the PureText by Version
+        assertEquals( "wrong version", 5, vsp.m_latestVers );
+
+
     }
 
     public void testLatestGet4()
@@ -403,7 +410,7 @@ public class WikiEngineTest extends TestCase
 
         WikiEngine engine = new TestEngine( conf );
 
-        String p = engine.getHTML( VerySimpleProvider.PAGENAME, -1 );
+        String p = engine.getHTML(VerySimpleProvider.PAGENAME);
 
         CachingProvider cp = (CachingProvider)engine.getPageManager().getProvider();
         VerySimpleProvider vsp = (VerySimpleProvider) cp.getRealProvider();
