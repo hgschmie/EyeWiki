@@ -243,7 +243,7 @@ public class AttachmentManager
         //  If the page cannot be determined, we cannot possibly find the 
         //  attachments.
         //
-        if(currenPage == null || StringUtils.isEmpty(currentPage.getName()))
+        if(currentPage == null || StringUtils.isEmpty(currentPage.getName()))
         {
             return null;
         }
