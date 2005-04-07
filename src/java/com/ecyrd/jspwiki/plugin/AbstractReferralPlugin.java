@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -171,14 +172,7 @@ public abstract class AbstractReferralPlugin
         }
         finally
         {
-            try
-            {
-                if( in != null ) in.close();
-            }
-            catch( Exception e ) 
-            {
-                log.fatal("Closing failed",e);
-            }
+            IOUtils.closeQuietly(in);
         }
 
         return result;

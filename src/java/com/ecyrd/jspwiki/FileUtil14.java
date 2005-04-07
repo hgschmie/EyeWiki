@@ -30,8 +30,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
-import org.apache.log4j.Category;
-
 /**
  *  Generic utilities related to file and stream handling, JDK1.4 version.
  *  Do not call this directly - go through FileUtil, since it is smart enough
@@ -44,8 +42,6 @@ import org.apache.log4j.Category;
 // redirection.  For later.
 public class FileUtil14
 {
-    private static final Category   log = Category.getInstance(FileUtil.class);
-
     /**
      *  JDK 1.4 version of FileUtil.readContents.  This version circumvents all kinds
      *  of problems just by gulping in the entire inputstream to a ByteArray.

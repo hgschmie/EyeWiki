@@ -255,9 +255,9 @@ public class PageManager
 
         synchronized( m_pageLocks )
         {
-            PageLock old = (PageLock)m_pageLocks.remove( lock.getPage().getName() );
-
-            log.debug( "Unlocked page "+lock.getPage().getName() );
+            String pageName = lock.getPage().getName();
+            m_pageLocks.remove(pageName );
+            log.debug( "Unlocked page "+pageName);
         }
     }
 
@@ -444,7 +444,10 @@ public class PageManager
                         }
                     }
                 }
-                catch( Throwable t ) {}
+                catch( Throwable t )
+                {
+                    log.warn("While reaping logs: ", t);
+                }
             }
         }
     }

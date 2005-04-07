@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
@@ -192,14 +193,7 @@ public abstract class AbstractFileProvider
                 }
                 finally
                 {
-                    try
-                    {
-                        if( in  != null ) in.close();
-                    }
-                    catch( Exception e ) 
-                    {
-                        log.fatal("Closing failed",e);
-                    }
+                    IOUtils.closeQuietly(in);
                 }
             }
             else
@@ -235,7 +229,7 @@ public abstract class AbstractFileProvider
         }
         finally
         {
-            if( out != null ) out.close();
+            IOUtils.closeQuietly(out);
         }
     }
 
@@ -330,11 +324,7 @@ public abstract class AbstractFileProvider
             }
             finally
             {
-                try
-                {
-                    if( input != null ) input.close();
-                }
-                catch( IOException e ) {} // It's fine to fail silently.
+                IOUtils.closeQuietly(input);
             }
         }
 

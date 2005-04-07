@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 
@@ -333,7 +334,7 @@ public class AttachmentManager
         }
         finally
         {
-            if( in != null ) in.close();
+            IOUtils.closeQuietly(in);
         }
     }
 

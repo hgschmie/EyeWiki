@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -306,14 +307,7 @@ public class VersioningFileProvider
                 }
                 finally
                 {
-                    try
-                    {
-                        if( in  != null ) in.close();
-                    }
-                    catch( Exception e ) 
-                    {
-                        log.fatal("Closing failed",e);
-                    }
+                    IOUtils.closeQuietly(in);
                 }
             }
             else
@@ -377,14 +371,22 @@ public class VersioningFileProvider
 
             if( oldFile != null && oldFile.exists() )
             {
-                InputStream in = new BufferedInputStream( new FileInputStream( oldFile ) );
+                InputStream in = null;
+                OutputStream out = null;
                 File pageFile = new File( pageDir, Integer.toString( versionNumber )+FILE_EXT );
-                OutputStream out = new BufferedOutputStream( new FileOutputStream( pageFile ) );
 
-                FileUtil.copyContents( in, out );
+                try
+                {
+                    in = new BufferedInputStream( new FileInputStream( oldFile ) );
+                    out = new BufferedOutputStream( new FileOutputStream( pageFile ) );
 
-                out.close();
-                in.close();
+                    FileUtil.copyContents( in, out );
+                }
+                finally
+                {
+                    IOUtils.closeQuietly(in);
+                    IOUtils.closeQuietly(out);
+                }
 
                 //
                 // We need also to set the date, since we rely on this.
@@ -599,14 +601,21 @@ public class VersioningFileProvider
             {
                 if( previousFile != null && previousFile.exists() )
                 {
-                    InputStream in = new BufferedInputStream( new FileInputStream( previousFile ) );
+                    InputStream in = null;
                     File pageFile = findPage(page);
-                    OutputStream out = new BufferedOutputStream( new FileOutputStream( pageFile ) );
+                    OutputStream out = null;
+                    try
+                    {
+                        in = new BufferedInputStream( new FileInputStream( previousFile ) );
+                        out = new BufferedOutputStream( new FileOutputStream( pageFile ) );
 
-                    FileUtil.copyContents( in, out );
-
-                    out.close();
-                    in.close();
+                        FileUtil.copyContents( in, out );
+                    }
+                    finally
+                    {
+                        IOUtils.closeQuietly(in);
+                        IOUtils.closeQuietly(out);
+                    }
 
                     //
                     // We need also to set the date, since we rely on this.

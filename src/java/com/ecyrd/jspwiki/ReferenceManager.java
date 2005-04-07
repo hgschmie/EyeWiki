@@ -37,6 +37,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
@@ -203,31 +204,27 @@ public class ReferenceManager
             //  the references for them.
             //
             
-            Iterator it = pages.iterator();
-            
-            while( it.hasNext() )
+            for (Iterator it = pages.iterator();it.hasNext(); )
             {
                 WikiPage page = (WikiPage) it.next();
 
-                if( page instanceof Attachment )
+                // refresh everything but attachments.
+                if(page instanceof Attachment)
                 {
-                    // Skip attachments
+                    continue;
                 }
-                else
+
+                // Refresh with the latest copy
+                page = m_engine.getPage( page.getName() );
+                if( page.getLastModified() == null )
                 {
-                    // Refresh with the latest copy
-                    page = m_engine.getPage( page.getName() );
-                    if( page.getLastModified() == null )
-                    {
-                        log.fatal( "Provider returns null lastModified.  Please submit a bug report." );
-                    }
-                    else if( page.getLastModified().getTime() > saved )
-                    {
-                        updatePageReferences( page );
-                    }
+                    log.fatal( "Provider returns null lastModified.  Please submit a bug report." );
+                }
+                else if( page.getLastModified().getTime() > saved )
+                {
+                    updatePageReferences( page );
                 }
             }
-            
         }
         catch( Exception e )
         {
@@ -235,8 +232,7 @@ public class ReferenceManager
             buildKeyLists( pages );
 
             // Scan the existing pages from disk and update references in the manager.
-            Iterator it = pages.iterator();
-            while( it.hasNext() )
+            for (Iterator it = pages.iterator(); it.hasNext();)
             {
                 WikiPage page  = (WikiPage)it.next();
 
@@ -244,11 +240,10 @@ public class ReferenceManager
                 {
                     // We cannot build a reference list from the contents
                     // of attachments, so we skip them.
+                    continue;
                 }
-                else
-                {
-                    updatePageReferences( page );
-                }
+
+                updatePageReferences( page );
             }
 
             serializeToDisk();
@@ -290,9 +285,7 @@ public class ReferenceManager
         }
         finally
         {
-            try {
-                if( in != null ) in.close();
-            } catch( IOException ex ) {}
+            IOUtils.closeQuietly(in);
         }
 
         return saved;
@@ -326,10 +319,7 @@ public class ReferenceManager
         catch( IOException e )
         {
             log.error("Unable to serialize!");
-
-            try {
-                if( out != null ) out.close();
-            } catch( IOException ex ) {}
+            IOUtils.closeQuietly(out);
         }
     }
 

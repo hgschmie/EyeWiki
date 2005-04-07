@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.oro.text.regex.MalformedPatternException;
@@ -209,10 +210,10 @@ public class RCSFileProvider
             process.waitFor();
 
             // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            process.getInputStream().close();
-            process.getOutputStream().close();
-            process.getErrorStream().close(); 
-
+            IOUtils.closeQuietly(process.getInputStream());
+            IOUtils.closeQuietly(process.getOutputStream());
+            IOUtils.closeQuietly(process.getErrorStream());
+            
         }
         catch( Exception e )
         {
@@ -221,11 +222,7 @@ public class RCSFileProvider
         }
         finally
         {
-            try
-            {
-                if( stdout != null ) stdout.close();
-            }
-            catch( IOException e ) {}
+            IOUtils.closeQuietly(stdout);
         }
 
         return info;
@@ -280,9 +277,9 @@ public class RCSFileProvider
             int exitVal = process.exitValue();
             
             // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            process.getInputStream().close();
-            process.getOutputStream().close();
-            process.getErrorStream().close(); 
+            IOUtils.closeQuietly(process.getInputStream());
+            IOUtils.closeQuietly(process.getOutputStream());
+            IOUtils.closeQuietly(process.getErrorStream());
 
             log.debug("Done, returned = "+exitVal);
 
@@ -332,11 +329,7 @@ public class RCSFileProvider
         }
         finally
         {
-            try
-            {
-                if( stdout != null ) stdout.close();
-            }
-            catch( Exception e ) {}
+            IOUtils.closeQuietly(stdout);
         }
 
         return result;
@@ -374,9 +367,9 @@ public class RCSFileProvider
             log.debug("Done, returned = "+process.exitValue());
 
             // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            process.getInputStream().close();
-            process.getOutputStream().close();
-            process.getErrorStream().close(); 
+            IOUtils.closeQuietly(process.getInputStream());
+            IOUtils.closeQuietly(process.getOutputStream());
+            IOUtils.closeQuietly(process.getErrorStream());
         }
         catch( Exception e )
         {
@@ -451,9 +444,9 @@ public class RCSFileProvider
             process.waitFor();
 
             // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            process.getInputStream().close();
-            process.getOutputStream().close();
-            process.getErrorStream().close(); 
+            IOUtils.closeQuietly(process.getInputStream());
+            IOUtils.closeQuietly(process.getOutputStream());
+            IOUtils.closeQuietly(process.getErrorStream());
 
             //
             // FIXME: This is very slow
@@ -473,11 +466,7 @@ public class RCSFileProvider
         }
         finally
         {
-            try
-            {
-                if( stdout != null ) stdout.close();
-            }
-            catch( IOException e ) {}
+            IOUtils.closeQuietly(stdout);
         }
 
         return list;

@@ -27,6 +27,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.opensymphony.oscache.base.Cache;
@@ -76,12 +77,7 @@ public class TemplateManager
 
         if( in != null )
         {
-            try
-            {
-                in.close();
-            }
-            catch( IOException e ) {}
-
+            IOUtils.closeQuietly(in);
             return true;
         }
 
@@ -110,8 +106,7 @@ public class TemplateManager
                 name = null;
         }
 
-        if( is != null ) try { is.close(); } catch( IOException e ) {}
-
+        IOUtils.closeQuietly(is);
         return name;
     }
 
@@ -168,8 +163,7 @@ public class TemplateManager
                 fullname = null;
         }
 
-        if( is != null ) try { is.close(); } catch( IOException e ) {}
-
+        IOUtils.closeQuietly(is);
         return fullname;
     }
 

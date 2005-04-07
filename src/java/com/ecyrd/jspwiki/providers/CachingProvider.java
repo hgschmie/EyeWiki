@@ -266,11 +266,7 @@ public class CachingProvider
                     }
                     finally
                     {
-                        try
-                        {
-                            if( writer != null ) writer.close();
-                        }
-                        catch( IOException e ) {}
+                        if (writer != null) writer.close();
                     }
 
                     Date end = new Date();
@@ -711,11 +707,11 @@ public class CachingProvider
         }
         finally
         {
-            try
-            {
-                if( writer != null ) writer.close();
+            try {
+            if (writer != null) writer.close();
+            } catch (IOException ioe) {
+                log.error("Could not update Lucene Index for " + page.getName(), ioe);
             }
-            catch( IOException e ) {}
         }
 
         log.debug("Done updating Lucene index for page '" + page.getName() + "'.");
@@ -723,16 +719,24 @@ public class CachingProvider
 
     private void deleteFromLucene( WikiPage page )
     {
+        IndexReader reader = null;
         try
         {
             // Must first remove existing version of page.
-            IndexReader reader = IndexReader.open(m_luceneDirectory);
+            reader = IndexReader.open(m_luceneDirectory);
             reader.delete(new Term(LUCENE_ID, page.getName()));
-            reader.close();
         }
         catch ( IOException e )
         {
             log.error("Unable to update page '" + page.getName() + "' from Lucene index", e);
+        }
+        finally
+        {
+            try {
+                if (reader != null) reader.close(); 
+            } catch (IOException ioe) {
+                log.error("Could not delete Lucene Index for " + page.getName(), ioe);
+            }
         }
     }
 
@@ -856,9 +860,10 @@ public class CachingProvider
      */
     private Collection searchLucene( QueryItem[] queryTerms )
     {
+        Searcher searcher = null;
         try
         {
-            Searcher searcher = new IndexSearcher(m_luceneDirectory);
+            searcher = new IndexSearcher(m_luceneDirectory);
 
             BooleanQuery query = new BooleanQuery();
             for ( int curr = 0; curr < queryTerms.length; curr++ )
@@ -913,13 +918,20 @@ public class CachingProvider
                 }
             }
 
-            searcher.close();
             return list;
         }
         catch ( Exception e )
         {
             log.error("Failed during Lucene search", e);
             return Collections.EMPTY_LIST;
+        }
+        finally
+        {
+            try {
+                if (searcher != null) searcher.close();
+            } catch (IOException ioe) {
+                log.error("Could not search in Lucene Index", ioe);
+            }
         }
     }
 

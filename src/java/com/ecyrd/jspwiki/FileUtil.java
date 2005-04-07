@@ -34,6 +34,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Category;
 
 /**
@@ -92,8 +93,8 @@ public class FileUtil
         }
         finally
         {
-            if( in  != null ) in.close();
-            if( out != null ) out.close();
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
         }
 
         return f;
@@ -146,10 +147,10 @@ public class FileUtil
         process.waitFor();
         
         // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-        process.getInputStream().close();
-        process.getOutputStream().close();
-        process.getErrorStream().close(); 
-        
+        IOUtils.closeQuietly(process.getInputStream());
+        IOUtils.closeQuietly(process.getOutputStream());
+        IOUtils.closeQuietly(process.getErrorStream());
+
         return result.toString();
     }
 
@@ -263,12 +264,8 @@ public class FileUtil
         }
         finally
         {
-            try
-            {
-                if( in != null ) in.close();
-                if( out != null ) out.close();
-            }
-            catch( Exception e ) {} // FIXME: Log errors.
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(out);
         }
     }
 
@@ -293,11 +290,7 @@ public class FileUtil
         }
         finally
         {
-            try
-            {
-                if( out != null ) out.close();
-            }
-            catch( Exception e ) {} // FIXME: Log errors.
+            IOUtils.closeQuietly(out);
         }
     }
 

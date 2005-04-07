@@ -81,6 +81,16 @@
     </dependency>
 
     <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.0</version>
+      <url>http://jakarta.apache.org/commons/collections.html</url>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+
+    <dependency>
       <groupId>ecs</groupId>
       <artifactId>ecs</artifactId>
       <version>1.4.2</version>

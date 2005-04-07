@@ -50,6 +50,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -287,7 +288,7 @@ public class WikiEngine
                 {
                     wikiConf = loadWebAppProps( context );
                 }
-                engine = new WikiEngine( context, appid, conf );
+                engine = new WikiEngine( context, appid, wikiConf );
             }
             catch( Exception e )
             {
@@ -370,14 +371,7 @@ public class WikiEngine
         }
         finally
         {
-            try
-            {
-                configStream.close();
-            }
-            catch( IOException e )
-            {
-                context.log("Unable to close config stream - something must be seriously wrong.", e);
-            }
+            IOUtils.closeQuietly(configStream);
         }
 
         return null;
@@ -1428,14 +1422,7 @@ public class WikiEngine
         }
         finally
         {
-            try
-            {
-                if( in  != null ) in.close();
-            }
-            catch( Exception e ) 
-            {
-                log.fatal("Closing failed",e);
-            }
+            IOUtils.closeQuietly(in);
         }
 
         return( result );
@@ -1798,7 +1785,7 @@ public class WikiEngine
 
         Configuration pagesConf = conf.subset(PARAM_PAGES_PREFIX);
         
-        for( Iterator it = conf.getKeys(); it.hasNext(); )
+        for( Iterator it = pagesConf.getKeys(); it.hasNext(); )
         {
             String key = (String) it.next();
             String value = pagesConf.getString(key);
@@ -2112,16 +2099,8 @@ public class WikiEngine
                     }
                     finally
                     {
-                        try
-                        {
-                            if( in != null )  { in.close(); }
-                            if( out != null ) { out.close(); }
-                        }
-                        catch( IOException e )
-                        {
-                            log.fatal("Could not close I/O for RSS", e );
-                            break;
-                        }
+                        IOUtils.closeQuietly(in);
+                        IOUtils.closeQuietly(out);
                     }
 
                     Thread.sleep(rssInterval*1000L);

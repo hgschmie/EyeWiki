@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.WikiPage;
@@ -89,7 +90,7 @@ public class FileSystemProvider
         }
         finally
         {
-            if( out != null ) out.close();
+            IOUtils.closeQuietly(out);
         }
     }
 
@@ -118,7 +119,7 @@ public class FileSystemProvider
         }
         finally
         {
-            if( in != null ) in.close();
+            IOUtils.closeQuietly(in);
         }
     }
 

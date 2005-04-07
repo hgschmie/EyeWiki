@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.FileUtil;
@@ -284,7 +285,6 @@ public class BasicAttachmentProvider
         throws ProviderException,
                IOException
     {
-        OutputStream out = null;
         File attDir = findAttachmentDir( att );
 
         if(!attDir.exists())
@@ -305,11 +305,18 @@ public class BasicAttachmentProvider
 
             log.info("Uploading attachment "+att.getFileName()+" to page "+att.getParentName());
             log.info("Saving attachment contents to "+newfile.getAbsolutePath());
-            out = new FileOutputStream(newfile);
+            
+            OutputStream out = null;
 
-            FileUtil.copyContents( data, out );
-
-            out.close();
+            try
+            {
+                out = new FileOutputStream(newfile);
+                FileUtil.copyContents( data, out );
+            }
+            finally
+            {
+                IOUtils.closeQuietly(out);
+            }
 
             Properties props = getPageProperties( att );
 
@@ -327,10 +334,6 @@ public class BasicAttachmentProvider
         {
             log.error( "Could not save attachment data: ", e );
             throw (IOException) e.fillInStackTrace();
-        }
-        finally
-        {
-                if( out != null ) out.close();
         }
     }
 

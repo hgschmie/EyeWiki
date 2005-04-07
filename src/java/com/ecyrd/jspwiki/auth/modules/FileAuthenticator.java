@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -80,7 +81,7 @@ public class FileAuthenticator
         }
         finally
         {
-            if( in != null ) in.close();
+            IOUtils.closeQuietly(in);
         }
 
         return props;
