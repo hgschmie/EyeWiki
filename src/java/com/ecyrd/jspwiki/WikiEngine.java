@@ -771,39 +771,6 @@ public class WikiEngine
     }
 
     /**
-     *  Returns the basic URL to a page, without any modifications.
-     *  You may add any parameters to this.
-     *  @deprecated
-     *
-     *  @since 2.0.3
-     */
-    public String getViewURL( String pageName )
-    {
-        return m_urlConstructor.makeURL( WikiContext.VIEW, pageName, false, null );
-    }
-
-    /**
-     *  Returns the basic URL to an editor.
-     *  @deprecated
-     *
-     *  @since 2.0.3
-     */
-    public String getEditURL( String pageName )
-    {
-        return m_urlConstructor.makeURL( WikiContext.EDIT, pageName, false, null );
-    }
-
-    /**
-     *  Returns the basic attachment URL.
-     *  @since 2.0.42.
-     *  @deprecated
-     */
-    public String getAttachmentURL( String attName )
-    {
-        return m_urlConstructor.makeURL( WikiContext.ATTACH, attName, false, null );
-    }
-
-    /**
      *  Returns an URL if a WikiContext is not available.
      *  @param context The WikiContext (VIEW, EDIT, etc...)
      *  @param pageName Name of the page, as usual
@@ -1322,13 +1289,16 @@ public class WikiEngine
 
     public String getHTML( WikiContext context, WikiPage page )
     {
-        String pagedata = null;
-
-        pagedata = getPureText( page.getName(), page.getVersion() );
-
-        String res = textToHTML( context, pagedata );
-
-        return res;
+        if (page != null)
+        {
+            String pagedata = null;
+            pagedata = getPureText( page.getName(), page.getVersion() );
+            return textToHTML( context, pagedata );
+        }
+        else
+        {
+            return "";
+        }
     }
     
     /**
@@ -1336,9 +1306,11 @@ public class WikiEngine
      *
      *  @param page WikiName of the page to convert.
      */
-    public String getHTML( String page )
+    public String getHTML( String pagename )
     {
-        return getHTML( page, WikiPageProvider.LATEST_VERSION );
+        WikiPage page = getPage(pagename);
+        WikiContext context = new WikiContext( this, page );
+        return getHTML(context, page);
     }
 
     /**
@@ -1348,19 +1320,12 @@ public class WikiEngine
      *
      *  @param pagename WikiName of the page to convert.
      *  @param version Version number to fetch
-     *  @deprecated
      */
     public String getHTML( String pagename, int version )
     {
-        WikiPage page = new WikiPage( pagename );
-        page.setVersion( version );
-
-        WikiContext context = new WikiContext( this,
-                                               page );
-        
-        String res = getHTML( context, page );
-
-        return res;
+        WikiPage page = getPage(pagename, version);
+        WikiContext context = new WikiContext( this, page );
+        return getHTML(context, page);
     }
 
     /**
@@ -1869,7 +1834,7 @@ public class WikiEngine
             
             if( alias != null )
             {
-                redirURL = getViewURL( alias );
+                redirURL = getURL(WikiContext.VIEW, alias, null, false);
             }
             else
             {

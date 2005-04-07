@@ -32,11 +32,11 @@ public class RSSItem
 
         if( m_page instanceof Attachment )
         {
-            url  = engine.getAttachmentURL( m_page.getName() );
+            url  = engine.getURL(WikiContext.ATTACH, m_page.getName(), null, false);
         }
         else
         {
-            url  = engine.getViewURL( m_page.getName() );
+            url  = engine.getURL(WikiContext.VIEW, m_page.getName(), null, false);
         }
 
         return url;
