@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  * Provides a nice calendar.  Responds to the following HTTP parameters:
- * 
+ *
  * <ul>
  * <li>
  * calendar.date - If this parameter exists, then the calendar date is taken from the month and
@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * weblog.startDate - If calendar.date parameter does not exist, we then check this date.
  * </li>
  * </ul>
- * 
+ *
  * If neither calendar.date nor weblog.startDate parameters exist, then the calendar will default
  * to the current month.
  *
@@ -229,11 +229,11 @@ public class CalendarTag
             if ((queryString != null) && (queryString.length() > 0))
             {
                 //
-                // Ensure that the 'calendar.date=ddMMyy' has been removed 
+                // Ensure that the 'calendar.date=ddMMyy' has been removed
                 // from the queryString
                 //
-                // FIXME: Might be useful to have an entire library of 
-                //        routines for this.  Will fail if it's not calendar.date 
+                // FIXME: Might be useful to have an entire library of
+                //        routines for this.  Will fail if it's not calendar.date
                 //        but something else.
                 int pos1 = queryString.indexOf("calendar.date=");
 

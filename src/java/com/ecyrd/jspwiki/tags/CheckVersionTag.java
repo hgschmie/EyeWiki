@@ -28,7 +28,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  * Does a version check on the page.  Mode is as follows:
- * 
+ *
  * <UL>
  * <li>
  * latest = Include page content, if the page is the latest version.
@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * notlatest = Include page content, if the page is NOT the latest version.
  * </li>
  * </ul>
- * 
+ *
  * If the page does not exist, body content is never included.
  *
  * @author Janne Jalkanen

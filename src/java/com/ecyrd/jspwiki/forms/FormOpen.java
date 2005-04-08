@@ -30,12 +30,12 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 
 /**
  * Opens a WikiForm. Builds the HTML code for opening a FORM.
- * 
+ *
  * <p>
  * Since we're only providing an opening FORM tag, we can't use the ECS utilities. A Form plugin
  * line that produces one looks like this:
  * </p>
- * 
+ *
  * <p>
  * <pre>
  *   [{FormOpen name='formname' handler='pluginname'
@@ -44,24 +44,24 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  *   }]
  * </pre>
  * </p>
- * 
+ *
  * <p>
  * Mandatory parameters: <br>
  * The <i>element</i> field specifies that this is a form open invocation. <br>
  * The <i>name</i> field identifies this particular form to the Form plugin across pages. <br>
  * The <i>handler</i> field is a WikiPlugin name; it will be invoked with the form field values.
  * </p>
- * 
+ *
  * <p>
  * Optional parameters:
  * </p>
- * 
+ *
  * <p>
  * The submitservlet is the name of a JSP/servlet capable of handling the input from this form. It
  * is optional; the default value is the current page (which can handle the input by using this
  * Plugin.)
  * </p>
- * 
+ *
  * <p>
  * The <i>hide</i> parameter affects the visibility of this form. If left out, the form is always
  * shown. If set to 'onsuccess', the form is not shown if it was submitted successfully. (Note

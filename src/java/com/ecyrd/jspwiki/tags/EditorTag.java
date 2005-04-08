@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 /**
  * Creates an editor component with all the necessary parts to get it working.
- * 
+ *
  * <p>
  * In the future, this component should be expanded to provide a customized version of the editor
  * according to user preferences.
@@ -254,7 +254,7 @@ public class EditorTag
 
         form editor = createSimpleEditor();
 
-        // 
+        //
         // If there is no body tag content, then we'll assume old
         // behaviour and append the stuff ourselves.
         //

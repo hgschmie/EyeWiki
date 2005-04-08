@@ -31,7 +31,7 @@ import com.ecyrd.jspwiki.WikiContext;
 /**
  * Base class for JSPWiki tags.  You do not necessarily have to derive from this class, since this
  * does some initialization.
- * 
+ *
  * <P>
  * This tag is only useful if you're having an "empty" tag, with no body content.
  * </p>

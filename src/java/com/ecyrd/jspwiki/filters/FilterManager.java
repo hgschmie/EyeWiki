@@ -50,7 +50,7 @@ import uk.co.wilson.xml.MinML;
 
 /**
  * Manages the page filters.  Page filters are components that can be executed at certain places:
- * 
+ *
  * <ul>
  * <li>
  * Before the page is translated into HTML.
@@ -65,10 +65,10 @@ import uk.co.wilson.xml.MinML;
  * After the page has been saved.
  * </li>
  * </ul>
- * 
+ *
  * Using page filters allows you to modify the page data on-the-fly, and do things like adding your
  * own custom WikiMarkup.
- * 
+ *
  * <p>
  * The initial page filter configuration is kept in a file called "filters.xml".  The format is
  * really very simple:
@@ -150,7 +150,7 @@ public class FilterManager
     /**
      * Adds a page filter to the queue.  The priority defines in which order the page filters are
      * run, the highest priority filters go in the queue first.
-     * 
+     *
      * <p>
      * In case two filters have the same priority, their execution order is the insertion order.
      * </p>

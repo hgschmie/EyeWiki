@@ -32,17 +32,17 @@ import com.ecyrd.jspwiki.WikiContext;
 
 /**
  * Iterates through Search result results.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * max = how many search results should be shown.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

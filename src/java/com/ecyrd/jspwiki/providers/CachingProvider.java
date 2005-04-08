@@ -75,20 +75,20 @@ import com.opensymphony.oscache.base.events.CachewideEvent;
  * Provides a caching page provider.  This class rests on top of a real provider class and provides
  * a cache to speed things up.  Only if the cache copy of the page text has expired, we fetch it
  * from the provider.
- * 
+ *
  * <p>
  * This class also detects if someone has modified the page externally, not through JSPWiki
  * routines, and throws the proper RepositoryModifiedException.
  * </p>
- * 
+ *
  * <p>
  * Heavily based on ideas by Chris Brooking.
  * </p>
- * 
+ *
  * <p>
  * Since 2.1.52 uses the OSCache library from OpenSymphony.
  * </p>
- * 
+ *
  * <p>
  * Since 2.1.100 uses the Apache Lucene library to help in searching.
  * </p>
@@ -264,16 +264,16 @@ public class CachingProvider
         }
 
         //
-        // See if we're using Lucene, and if so, ensure that its 
+        // See if we're using Lucene, and if so, ensure that its
         // index directory is up to date.
-        // 
+        //
         m_useLucene = conf.getBoolean(PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT);
 
         if (m_useLucene)
         {
             m_luceneDirectory = engine.getWorkDir() + File.separator + LUCENE_DIR;
 
-            // FIXME: Just to be simple for now, we will do full reindex 
+            // FIXME: Just to be simple for now, we will do full reindex
             // only if no files are in lucene directory.
             File dir = new File(m_luceneDirectory);
 
@@ -423,7 +423,7 @@ public class CachingProvider
         // Raw name is the keyword we'll use to refer to this document for updates.
         doc.add(Field.Keyword(LUCENE_ID, page.getName()));
 
-        // Body text is indexed, but not stored in doc. We add in the 
+        // Body text is indexed, but not stored in doc. We add in the
         // title text as well to make sure it gets considered.
         doc.add(
             Field.Text(
@@ -636,7 +636,7 @@ public class CachingProvider
         //  not in the cache must be non-existent.
         //
         //  FIXME: There's a problem here; if someone modifies the
-        //         repository by adding a page outside JSPWiki, 
+        //         repository by adding a page outside JSPWiki,
         //         we won't notice it.
         if (m_gotall)
         {

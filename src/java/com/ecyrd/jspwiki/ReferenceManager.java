@@ -85,7 +85,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
 /**
  * Keeps track of wikipage references:
- * 
+ *
  * <UL>
  * <li>
  * What pages a given page refers to
@@ -94,28 +94,28 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  * What pages refer to a given page
  * </li>
  * </ul>
- * 
+ *
  * This is a quick'n'dirty approach without any finesse in storage and searching algorithms; we
  * trust java.util..
- * 
+ *
  * <P>
  * This class contains two HashMaps, m_refersTo and m_referredBy. The first is indexed by WikiPage
  * names and contains a Collection of all WikiPages the page refers to. (Multiple references are
  * not counted, naturally.) The second is indexed by WikiPage names and contains a Set of all
  * pages that refer to the indexing page. (Notice - the keys of both Maps should be kept in sync.)
  * </p>
- * 
+ *
  * <P>
  * When a page is added or edited, its references are parsed, a Collection is received, and we
  * crudely replace anything previous with this new Collection. We then check each referenced page
  * name and make sure they know they are referred to by the new page.
  * </p>
- * 
+ *
  * <P>
  * Based on this information, we can perform non-optimal searches for e.g. unreferenced pages, top
  * ten lists, etc.
  * </p>
- * 
+ *
  * <P>
  * The owning class must take responsibility of filling in any pre-existing information, probably
  * by loading each and every WikiPage and calling this class to update the references when
@@ -384,7 +384,7 @@ public class ReferenceManager
      * Updates the referred pages of a new or edited WikiPage. If a refersTo entry for this page
      * already exists, it is removed and a new one is built from scratch. Also calls
      * updateReferredBy() for each referenced page.
-     * 
+     *
      * <P>
      * This is the method to call when a new page has been created and we want to a) set up its
      * references and b) notify the referred pages of the references. Use this method during
@@ -405,7 +405,7 @@ public class ReferenceManager
 
         //
         //  We know the page exists, since it's making references somewhere.
-        //  If an entry for it didn't exist previously in m_referredBy, make 
+        //  If an entry for it didn't exist previously in m_referredBy, make
         //  sure one is added now.
         //
         if (!m_referredBy.containsKey(page))
@@ -420,7 +420,7 @@ public class ReferenceManager
         //
         cleanReferredBy(page, oldRefTo, references);
 
-        // 
+        //
         //  Notify all referred pages of their referinesshoodicity.
         //
         Iterator it = references.iterator();
@@ -464,8 +464,8 @@ public class ReferenceManager
     {
         // Two ways to go about this. One is to look up all pages previously
         // referred by referrer and remove referrer from their lists, and let
-        // the update put them back in (except possibly removed ones). 
-        // The other is to get the old referred to list, compare to the new, 
+        // the update put them back in (except possibly removed ones).
+        // The other is to get the old referred to list, compare to the new,
         // and tell the ones missing in the latter to remove referrer from
         // their list. Hm. We'll just try the first for now. Need to come
         // back and optimize this a bit.
@@ -502,7 +502,7 @@ public class ReferenceManager
      * When initially building a ReferenceManager from scratch, call this method BEFORE calling
      * updateReferences() with a full list of existing page names. It builds the refersTo and
      * referredBy key lists, thus enabling updateReferences() to function correctly.
-     * 
+     *
      * <P>
      * This method should NEVER be called after initialization. It clears all mappings from the
      * reference tables.
@@ -545,7 +545,7 @@ public class ReferenceManager
      * Marks the page as referred to by the referrer. If the page does not exist previously,
      * nothing is done. (This means that some page, somewhere, has a link to a page that does not
      * exist.)
-     * 
+     *
      * <P>
      * This method is NOT synchronized. It should only be referred to from within a synchronized
      * method, or it should be made synced if necessary.
@@ -566,7 +566,7 @@ public class ReferenceManager
 
         // Even if 'page' has not been created yet, it can still be referenced.
         // This requires we don't use m_referredBy keys when looking up missing
-        // pages, of course. 
+        // pages, of course.
         if (referrers == null)
         {
             referrers = new TreeSet();
@@ -609,7 +609,7 @@ public class ReferenceManager
      * Finds all references to non-existant pages. This requires a linear scan through m_refersTo
      * values; each value must have a corresponding key entry in the reference Maps, otherwise
      * such a page has never been created.
-     * 
+     *
      * <P>
      * Returns a Collection containing Strings of unreferenced page names. Each non-existant page
      * name is shown only once - we don't return information on who referred to it.

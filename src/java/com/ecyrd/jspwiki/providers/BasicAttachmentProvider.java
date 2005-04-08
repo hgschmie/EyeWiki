@@ -73,10 +73,10 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *               1.png
  *   </PRE>
  * The names of the directories will be URLencoded.
- * 
+ *
  * <p>
  * "attachment.properties" consists of the following items:
- * 
+ *
  * <UL>
  * <li>
  * 1.author = author name for version 1 (etc)
@@ -258,7 +258,7 @@ public class BasicAttachmentProvider
 
     /**
      * Returns the file extension.  For example "test.png" returns "png".
-     * 
+     *
      * <p>
      * If file has no extension, will return "bin"
      * </p>
@@ -488,7 +488,7 @@ public class BasicAttachmentProvider
             if (attachments != null)
             {
                 //
-                //  We now have a list of all potential attachments in 
+                //  We now have a list of all potential attachments in
                 //  the directory.
                 //
                 for (int i = 0; i < attachments.length; i++)

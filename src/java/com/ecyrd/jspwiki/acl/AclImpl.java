@@ -31,7 +31,7 @@ import java.util.Vector;
 
 /**
  * JSPWiki implementation of an Access Control List.
- * 
+ *
  * <p>
  * This implementation does not care about owners, and thus all actions are allowed by default.
  * </p>
@@ -289,7 +289,7 @@ public class AclImpl
         }
 
         //
-        //  In case both positive and negative permissions have been set, 
+        //  In case both positive and negative permissions have been set,
         //  we'll err for the negative by quitting immediately if we see
         //  a match.  For positive, we have to wait until here.
         //

@@ -258,7 +258,7 @@ public class Denounce
 
         //
         //  Host
-        // 
+        //
         String host = request.getRemoteHost();
 
         if ((host != null) && matchPattern(c_hostPatterns, host))

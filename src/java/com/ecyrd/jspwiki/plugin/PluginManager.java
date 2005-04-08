@@ -57,10 +57,10 @@ import com.ecyrd.jspwiki.util.ClassUtil;
 /**
  * Manages plugin classes.  There exists a single instance of PluginManager per each instance of
  * WikiEngine, that is, each JSPWiki instance.
- * 
+ *
  * <P>
  * A plugin is defined to have three parts:
- * 
+ *
  * <OL>
  * <li>
  * The plugin class
@@ -72,7 +72,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * The plugin body
  * </li>
  * </ol>
- * 
+ *
  * For example, in the following line of code:
  * <pre>
  *  [{INSERT com.ecyrd.jspwiki.plugin.FunnyPlugin  foo='bar'
@@ -85,19 +85,19 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is accessible via a special parameter
  * called "_body".
  * </p>
- * 
+ *
  * <p>
  * If the parameter "debug" is set to "true" for the plugin, JSPWiki will output debugging
  * information directly to the page if there is an exception.
  * </p>
- * 
+ *
  * <P>
  * The class name can be shortened, and marked without the package. For example, "FunnyPlugin"
  * would be expanded to "com.ecyrd.jspwiki.plugin.FunnyPlugin" automatically.  It is also possible
  * to defined other packages, by setting the "jspwiki.plugin.searchPath" property.  See the
  * included jspwiki.properties file for examples.
  * </p>
- * 
+ *
  * <P>
  * Even though the nominal way of writing the plugin is
  * <pre>
@@ -211,7 +211,7 @@ public class PluginManager
 
     /**
      * Returns true if the link is really command to insert a plugin.
-     * 
+     *
      * <P>
      * Currently we just check if the link starts with "{INSERT", or just plain "{" but not "{$".
      * </p>
@@ -276,7 +276,7 @@ public class PluginManager
 
     /**
      * Executes a plugin class in the given context.
-     * 
+     *
      * <P>
      * Used to be private, but is public since 1.9.21.
      * </p>
@@ -503,7 +503,7 @@ public class PluginManager
     /**
      * Parses a plugin.  Plugin commands are of the form: [{INSERT myplugin WHERE param1=value1,
      * param2=value2}] myplugin may either be a class name or a plugin alias.
-     * 
+     *
      * <P>
      * This is the main entry point that is used.
      * </p>

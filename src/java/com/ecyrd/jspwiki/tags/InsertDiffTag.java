@@ -33,17 +33,17 @@ import com.ecyrd.jspwiki.WikiPage;
 /**
  * Writes difference between two pages using a HTML table.  If there is no difference, includes the
  * body.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

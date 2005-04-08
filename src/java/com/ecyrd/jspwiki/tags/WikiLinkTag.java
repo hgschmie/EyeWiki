@@ -25,15 +25,15 @@ import java.io.IOException;
 /**
  * Root class for different internal wiki links.  Cannot be used directly, but provides basic stuff
  * for other classes.
- * 
+ *
  * <P>
  * Extend from this class if you need the following attributes.
  * </p>
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -43,7 +43,7 @@ import java.io.IOException;
  * "anchor", will output proper HTML (&lt;a&gt; href="...).
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

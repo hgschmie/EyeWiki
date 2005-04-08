@@ -30,11 +30,11 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  * Writes page content in HTML.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -43,7 +43,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * mode - In which format to insert the page.  Can be either "plain" or "html".
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *
@@ -117,7 +117,7 @@ public class InsertPageTag
 
         //
         //  NB: The page might not really exist if the user is currently
-        //      creating it (i.e. it is not yet in the cache or providers), 
+        //      creating it (i.e. it is not yet in the cache or providers),
         //      AND we got the page from the wikiContext.
         //
         if (m_pageName == null)

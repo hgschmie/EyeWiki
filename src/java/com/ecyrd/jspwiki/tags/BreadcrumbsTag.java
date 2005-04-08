@@ -37,12 +37,12 @@ import com.ecyrd.jspwiki.WikiEngine;
  * Implement a "breadcrumb" (most recently visited) trail.  This tag can be added to any view jsp
  * page. Separate breadcrumb trails are not tracked across multiple browser windows.<br>
  * The optional attributes are:
- * 
+ *
  * <p>
  * <b>maxpages</b>, the number of pages to store, 10 by default<br>
  * <b>separator</b>, the separator string to use between pages, " | " by default<br>
  * </p>
- * 
+ *
  * <p>
  * This class is implemented by storing a breadcrumb trail, which is a fixed size queue, into a
  * session variable "breadCrumbTrail". This queue is displayed as a series of links separated by a

@@ -47,10 +47,10 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  * Builds a simple weblog.
- * 
+ *
  * <P>
  * The pageformat can use the following params:<br> %p - Page name<br><B>Parameters</B>
- * 
+ *
  * <UL>
  * <li>
  * page - which page is used to do the blog; default is the current page.
@@ -68,11 +68,11 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * maxEntries - How many entries to show at most.
  * </li>
  * </ul>
- * 
+ *
  * The "days" and "startDate" can also be sent in HTTP parameters, and the names are "weblog.days"
  * and "weblog.startDate", respectively.
  * </p>
- * 
+ *
  * <p>
  * The weblog plugin also adds an attribute to each page it is on: "weblogplugin.isweblog" is set
  * to "true".  This can be used to quickly peruse pages which have weblogs.

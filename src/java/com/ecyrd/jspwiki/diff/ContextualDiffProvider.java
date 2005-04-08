@@ -338,7 +338,7 @@ public class ContextualDiffProvider
                 mode = 2;
             }
 
-            // Add the Changes to the buffers. 
+            // Add the Changes to the buffers.
             addOrig(delta.getOriginal());
             addNew(delta.getRevised());
         }

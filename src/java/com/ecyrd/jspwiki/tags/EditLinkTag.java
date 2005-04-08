@@ -30,11 +30,11 @@ import com.ecyrd.jspwiki.WikiPage;
 
 /**
  * Writes an edit link.  Body of the link becomes the link text.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -48,7 +48,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * version of the page.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

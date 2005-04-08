@@ -69,8 +69,8 @@ public class ExternalDiffProvider
     private String m_encoding;
 
     //FIXME This could/should be a property for this provider, there is not guarentee that
-    //the external program generates a format suitible for the colorization code of the 
-    //TraditionalDiffProvider, currently set to true for legacy compatibility.  
+    //the external program generates a format suitible for the colorization code of the
+    //TraditionalDiffProvider, currently set to true for legacy compatibility.
     //I don't think this 'feature' ever worked right, did it?...
 
     /** DOCUMENT ME! */

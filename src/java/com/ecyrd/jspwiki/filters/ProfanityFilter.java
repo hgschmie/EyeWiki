@@ -15,7 +15,7 @@ public class ProfanityFilter
         extends BasicPageFilter
 {
     /** DOCUMENT ME! */
-    private static final String [] c_profanities = 
+    private static final String [] c_profanities =
         {
             "fuck",
             "shit"

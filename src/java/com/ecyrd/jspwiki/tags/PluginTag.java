@@ -35,11 +35,11 @@ import com.ecyrd.jspwiki.plugin.PluginManager;
 
 /**
  * Inserts any Wiki plugin.  The body of the tag becomes then the body for the plugin.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * plugin - name of the plugin you want to insert.
@@ -48,7 +48,7 @@ import com.ecyrd.jspwiki.plugin.PluginManager;
  * args   - An argument string for the tag.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

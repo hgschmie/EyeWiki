@@ -39,7 +39,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  * This is a base class for all plugins using referral things.
- * 
+ *
  * <p>
  * Parameters:<br> maxwidth: maximum width of generated links<br>
  * separator: separator between generated links (wikitext)<br>
@@ -76,7 +76,7 @@ public abstract class AbstractReferralPlugin
     protected String m_before = ""; // null not blank
 
     /** DOCUMENT ME! */
-    protected String m_separator = ""; // null not blank 
+    protected String m_separator = ""; // null not blank
 
     /** DOCUMENT ME! */
     protected String m_after = "\\\\";
@@ -113,7 +113,7 @@ public abstract class AbstractReferralPlugin
             m_separator = s;
 
             // pre-2.1.145 there was a separator at the end of the list
-            // if they set the parameters, we use the new format of 
+            // if they set the parameters, we use the new format of
             // before Item1 after separator before Item2 after separator before Item3 after
             m_after = "";
         }
@@ -176,7 +176,7 @@ public abstract class AbstractReferralPlugin
             count++;
         }
 
-        // 
+        //
         //  Output final item - if there have been none, no "after" is printed
         //
         if (count > 0)

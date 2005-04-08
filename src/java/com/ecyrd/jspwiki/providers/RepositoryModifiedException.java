@@ -22,7 +22,7 @@ package com.ecyrd.jspwiki.providers;
 /**
  * If the provider detects that someone has modified the repository externally, it should throw
  * this exception.
- * 
+ *
  * <p>
  * Any provider throwing this exception should first clean up any references to the modified page
  * it has, so that when we call this the next time, the page is handled as completely, and we

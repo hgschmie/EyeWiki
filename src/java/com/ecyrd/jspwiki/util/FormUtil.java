@@ -42,7 +42,7 @@ public class FormUtil
      * Looks for a named value in the Map. Returns either the value named by key, or values named
      * by key.0, key.1, ... if the direct value is not found. The values are packed in an
      * ArrayList.
-     * 
+     *
      * <p>
      * This is a utility method, mainly used when we don't know whether there was just one value,
      * or several, in a mapping list (e.g. an HttpRequest / FORM checkbox).
@@ -76,12 +76,12 @@ public class FormUtil
     /**
      * Looks up all keys starting with a given prefix and returns the values in an ArrayList. The
      * keys must be Strings.
-     * 
+     *
      * <p>
      * For example, calling this method for a Map containing key-value pairs foo.1 = a, foo.2 = b,
      * and foo.3 = c returns an ArrayList containing [a, b, c].
      * </p>
-     * 
+     *
      * <p>
      * Handles both 0- and 1-indexed names. Parsing stops at the first gap in the numeric postfix.
      * </p>
@@ -142,24 +142,24 @@ public class FormUtil
     /**
      * Converts the parameter contents of an HTTP request into a map, modifying the keys to
      * preserve multiple values per key. This is done by adding an ordered suffix to the key:
-     * 
+     *
      * <p>
      * <pre>foo=bar,baz,xyzzy</pre>
      * </p>
-     * 
+     *
      * <p>
      * becomes
      * </p>
-     * 
+     *
      * <p>
      * <pre>foo.0=bar foo.1=baz foo.2=xyzzy</pre>
      * </p>
-     * 
+     *
      * <p>
      * If filterPrefix is specified, only keys starting with the prefix are included in the result
      * map. If the prefix is null, all keys are checked.
      * </p>
-     * 
+     *
      * <p>
      * FIX: this is not necessarily encoding-safe: see WikiContext.getHttpParameter().
      * </p>

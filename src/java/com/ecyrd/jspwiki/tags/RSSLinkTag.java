@@ -26,7 +26,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  * Writes a link to the RSS file (using the "link" attribute).
- * 
+ *
  * <p>
  * This tag is now deprecated - please use the new FeedDiscoveryTag.
  * </p>

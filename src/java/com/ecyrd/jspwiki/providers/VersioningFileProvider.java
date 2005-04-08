@@ -62,12 +62,12 @@ import com.ecyrd.jspwiki.WikiProvider;
  *          page.properties
  *  </PRE>
  * In this case, "Main" has three versions, and "Foobar" just one version.
- * 
+ *
  * <P>
  * The properties file contains the necessary metainformation (such as author) information of the
  * page.  DO NOT MESS WITH IT!
  * </p>
- * 
+ *
  * <P>
  * All files have ".txt" appended to make life easier for those who insist on using Windows or
  * other software which makes assumptions on the files contents based on its name.
@@ -205,7 +205,7 @@ public class VersioningFileProvider
                         }
                         catch (NumberFormatException e)
                         {
-                        } // It's okay to skip these. 
+                        } // It's okay to skip these.
                     }
                 }
             }

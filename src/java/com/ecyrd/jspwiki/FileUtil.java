@@ -230,7 +230,7 @@ public class FileUtil
 
     /**
      * Reads in file contents.
-     * 
+     *
      * <P>
      * This method is smart and falls back to ISO-8859-1 if the input stream does not seem to be in
      * the specified encoding.
@@ -279,7 +279,7 @@ public class FileUtil
         catch (IOException e)
         {
             //
-            //  The reading should fail with an IOException, if the UTF-8 format 
+            //  The reading should fail with an IOException, if the UTF-8 format
             //  is damaged, i.e. there is ISO-Latin1 instead of UTF-8.
             //
             // FIXME: This does NOT work with JDK1.4!
@@ -301,7 +301,7 @@ public class FileUtil
                 }
 
                 // We try again, this time with a more conventional encoding
-                // for backwards compatibility.            
+                // for backwards compatibility.
                 realinput.reset();
 
                 return readContents(realinput, "ISO-8859-1");

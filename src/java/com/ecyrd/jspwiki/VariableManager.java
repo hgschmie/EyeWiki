@@ -63,7 +63,7 @@ public class VariableManager
 
     /**
      * Returns true if the link is really command to insert a variable.
-     * 
+     *
      * <P>
      * Currently we just check if the link starts with "{$".
      * </p>
@@ -79,7 +79,7 @@ public class VariableManager
 
     /**
      * Parses the link and finds a value.
-     * 
+     *
      * <P>
      * A variable is inserted using the notation [{$variablename}].
      * </p>
@@ -114,7 +114,7 @@ public class VariableManager
     /**
      * This method does in-place expansion of any variables.  However, the expansion is not done
      * twice, that is, a variable containing text $variable will not be expanded.
-     * 
+     *
      * <P>
      * The variables should be in the same format ({$variablename} as in the web pages.
      * </p>
@@ -363,7 +363,7 @@ public class VariableManager
         }
         else
         {
-            // 
+            //
             // Check if such a context variable exists,
             // returning its string representation.
             //
@@ -402,7 +402,7 @@ public class VariableManager
             }
 
             //
-            //  Well, I guess it wasn't a final straw.  We also allow 
+            //  Well, I guess it wasn't a final straw.  We also allow
             //  variables from the session and the request (in this order).
             //
             HttpServletRequest req = context.getHttpRequest();

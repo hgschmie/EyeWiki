@@ -414,7 +414,7 @@ public class PageManager
 
     /**
      * Gets a version history of page.  Each element in the returned List is a WikiPage.
-     * 
+     *
      * <P></p>
      *
      * @param pageName DOCUMENT ME!

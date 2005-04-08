@@ -31,7 +31,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  * Strings, though.
  */
 
-// FIXME: We need to rethink how metadata is being used - probably the 
+// FIXME: We need to rethink how metadata is being used - probably the
 //        author, date, etc. should also be part of the metadata.  We also
 //        need to figure out the metadata lifecycle.
 public class WikiPage

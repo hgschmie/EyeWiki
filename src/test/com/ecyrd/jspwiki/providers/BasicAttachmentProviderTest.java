@@ -344,7 +344,7 @@ public class BasicAttachmentProviderTest
 
         m_provider.putAttachmentData(att, new FileInputStream(in));
 
-        // This is our extraneous directory. 
+        // This is our extraneous directory.
         File extrafile = new File(attDir, "ping.pong");
         extrafile.mkdir();
 

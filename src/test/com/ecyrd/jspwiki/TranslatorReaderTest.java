@@ -1061,7 +1061,7 @@ public class TranslatorReaderTest
     {
         String src = "Link [\u00C5\u00E4Test]";
 
-        newPage("\u00C5\u00E4Test"); // FIXME: Should be capital 
+        newPage("\u00C5\u00E4Test"); // FIXME: Should be capital
 
         assertEquals(
             "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=%C5%E4Test\">\u00c5\u00e4Test</a>",

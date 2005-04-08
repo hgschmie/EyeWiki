@@ -36,17 +36,17 @@ import com.ecyrd.jspwiki.WikiPage;
 
 /**
  * Iterates through tags.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * list - a collection.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

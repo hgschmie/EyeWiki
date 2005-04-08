@@ -39,7 +39,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
 
 /**
  * Generates an RSS feed from the recent changes.
- * 
+ *
  * <P>
  * We use the 1.0 spec, including the wiki-specific extensions.  Wiki extensions have been defined
  * in <A HREF="http://usemod.com/cgi-bin/mb.pl?ModWiki">UseMod:ModWiki</A>.

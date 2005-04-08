@@ -46,17 +46,17 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 /**
  * This default UserDatabase implementation provides user profiles and groups to JSPWiki.
- * 
+ *
  * <p>
  * UserProfiles are simply created upon request, and cached locally. More intricate providers might
  * look up profiles in a remote DB, provide an unauthenticatable object for unknown users, etc.
  * </p>
- * 
+ *
  * <p>
  * The authentication of a user is done elsewhere (see WikiAuthenticator); newly created profiles
  * should have login status UserProfile.NONE.
  * </p>
- * 
+ *
  * <p>
  * Groups are  based on WikiPages. The name of the page determines the group name (as a convention,
  * we suggest the name of the page ends in Group, e.g. EditorGroup). By setting attribute
@@ -65,11 +65,11 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * [{SET members fee fie foe foo}]
  * </pre>
  * </p>
- * 
+ *
  * <p>
  * The list of members can be separated by commas or spaces.
  * </p>
- * 
+ *
  * <p>
  * TODO: are 'named members' supposed to be usernames, or are group names allowed? (Suggestion:
  * both)
@@ -226,8 +226,8 @@ public class WikiDatabase
             {
                 WikiPage p = (WikiPage) i.next();
 
-                // lazy loading of pages with PageAuthorizer not possible, 
-                // because the authentication information must be 
+                // lazy loading of pages with PageAuthorizer not possible,
+                // because the authentication information must be
                 // present on wiki initialization
                 List memberList = parseMemberList((String) p.getAttribute(ATTR_MEMBERLIST));
 

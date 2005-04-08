@@ -38,10 +38,10 @@ import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  * Handles all incoming servlet requests for XML-RPC calls.
- * 
+ *
  * <P>
  * Uses two initialization parameters:
- * 
+ *
  * <UL>
  * <li>
  * <B>handler</B> : the class which is used to handle the RPC calls.

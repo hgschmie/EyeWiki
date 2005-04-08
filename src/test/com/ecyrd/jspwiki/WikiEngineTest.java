@@ -531,7 +531,7 @@ public class WikiEngineTest
 
         try
         {
-            // and check post-conditions        
+            // and check post-conditions
             Collection c = refMgr.findUncreated();
             assertTrue("attachment exists: " + c, (c == null) || (c.size() == 0));
 
@@ -602,7 +602,7 @@ public class WikiEngineTest
 
         try
         {
-            // and check post-conditions        
+            // and check post-conditions
             c = refMgr.findUncreated();
             assertTrue("attachment exists: ", (c == null) || (c.size() == 0));
 
@@ -647,7 +647,7 @@ public class WikiEngineTest
 
         try
         {
-            // and check post-conditions        
+            // and check post-conditions
             Collection c = refMgr.findUncreated();
             assertTrue("attachment exists", (c == null) || (c.size() == 0));
 
@@ -684,7 +684,7 @@ public class WikiEngineTest
 
         try
         {
-            // and check post-conditions        
+            // and check post-conditions
             Collection c = refMgr.findUncreated();
             assertTrue("attachment exists", (c == null) || (c.size() == 0));
 

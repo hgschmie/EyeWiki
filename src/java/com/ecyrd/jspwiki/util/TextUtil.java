@@ -108,7 +108,7 @@ public class TextUtil
      * URL encoder does not handle all characters correctly. See <A
      * HREF="http://developer.java.sun.com/developer/bugParade/bugs/4257115.html">Bug parade, bug
      * #4257115</A> for more information.
-     * 
+     *
      * <P>
      * Thanks to CJB for this fix.
      * </p>
@@ -240,7 +240,7 @@ public class TextUtil
     /**
      * Provides encoded version of string depending on encoding. Encoding may be UTF-8 or
      * ISO-8859-1 (default).
-     * 
+     *
      * <p>
      * This implementation is the same as in FileSystemProvider.mangleName().
      * </p>
@@ -255,7 +255,7 @@ public class TextUtil
     public static String urlEncode(String data, String encoding)
     {
         // Presumably, the same caveats apply as in FileSystemProvider.
-        // Don't see why it would be horribly kludgy, though. 
+        // Don't see why it would be horribly kludgy, though.
         if ("UTF-8".equals(encoding))
         {
             return (TextUtil.urlEncodeUTF8(data));
@@ -276,7 +276,7 @@ public class TextUtil
     /**
      * Provides decoded version of string depending on encoding. Encoding may be UTF-8 or
      * ISO-8859-1 (default).
-     * 
+     *
      * <p>
      * This implementation is the same as in FileSystemProvider.unmangleName().
      * </p>
@@ -294,7 +294,7 @@ public class TextUtil
             throws UnsupportedEncodingException, IllegalArgumentException
     {
         // Presumably, the same caveats apply as in FileSystemProvider.
-        // Don't see why it would be horribly kludgy, though. 
+        // Don't see why it would be horribly kludgy, though.
         if ("UTF-8".equals(encoding))
         {
             return (TextUtil.urlDecodeUTF8(data));
@@ -381,7 +381,7 @@ public class TextUtil
 
     /**
      * Makes sure that the POSTed data is conforms to certain rules.  These rules are:
-     * 
+     *
      * <UL>
      * <li>
      * The data always ends with a newline (some browsers, such as NS4.x series, does not send a
@@ -391,7 +391,7 @@ public class TextUtil
      * The CR/LF/CRLF mess is normalized to plain CRLF.
      * </li>
      * </ul>
-     * 
+     *
      * The reason why we're using CRLF is that most browser already return CRLF since that is the
      * closest thing to a HTTP standard.
      *

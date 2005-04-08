@@ -43,14 +43,14 @@ import com.ecyrd.jspwiki.auth.UserProfile;
 
 /**
  * Provides a handler for bug reports.  Still under construction.
- * 
+ *
  * <ul>
  * <li>
  * "title" = title of the bug.  This is required.  If it is empty (as in "") it is a signal to the
  * handler to return quietly.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  */
@@ -243,7 +243,7 @@ public class BugReportHandler
 
     /**
      * Just parses a mappings list in the form of "a=b;b=c;c=d".
-     * 
+     *
      * <p>
      * FIXME: Should probably be in TextUtil or somewhere.
      * </p>

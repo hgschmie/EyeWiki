@@ -31,11 +31,11 @@ import com.ecyrd.jspwiki.WikiProvider;
 
 /**
  * Writes a diff link.  Body of the link becomes the link text.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  * "latest".
  * </li>
  * </ul>
- * 
+ *
  * If the page does not exist, this tag will fail silently, and not evaluate its body contents.
  *
  * @author Janne Jalkanen

@@ -32,7 +32,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * JSP pages that are the main entry points, are invoked.  The JSPWiki engine creates the new
  * WikiContext, which basically holds information about the page, the handling engine, and in
  * which context (view, edit, etc) the call was done.
- * 
+ *
  * <P>
  * A WikiContext also provides request-specific variables, which can be used to communicate between
  * plugins on the same page, or between different instances of the same plugin.  A WikiContext

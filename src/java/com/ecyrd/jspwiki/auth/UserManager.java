@@ -570,7 +570,7 @@ public class UserManager
         }
         else
         {
-            // 
+            //
             //  See if a cookie exists, and create a default account.
             //
             uid = HttpUtil.retrieveCookieValue(request, WikiEngine.PREFS_COOKIE_NAME);
@@ -598,8 +598,8 @@ public class UserManager
             }
         }
 
-        // If the UserDatabase declined to give us a UserPrincipal, 
-        // we manufacture one here explicitly. 
+        // If the UserDatabase declined to give us a UserPrincipal,
+        // we manufacture one here explicitly.
         if (wup == null)
         {
             wup = new UserProfile();
@@ -608,7 +608,7 @@ public class UserManager
 
             //
             //  No username either, so fall back to the IP address.
-            // 
+            //
             if (m_storeIPAddress)
             {
                 wup.setName(request.getRemoteHost());
@@ -629,11 +629,11 @@ public class UserManager
         //  UserProfile is created, which essentially contains his IP
         //  address.  If this is stored in the session, then, when the user
         //  tries to access the Edit.jsp page and container does auth, he will
-        //  always be then known by his IP address, regardless of what the 
+        //  always be then known by his IP address, regardless of what the
         //  request.getRemoteUser() says.
         //  So, until this is solved, we create a new UserProfile on each
         //  access.  Ouch.
-        // Limited login hasn't been authenticated. Just to emphasize the point: 
+        // Limited login hasn't been authenticated. Just to emphasize the point:
         // wup.setPassword( null );
         // HttpSession session = request.getSession( true );
         // session.setAttribute( WIKIUSER, wup );

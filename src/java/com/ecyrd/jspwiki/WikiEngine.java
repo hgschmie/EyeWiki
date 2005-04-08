@@ -74,17 +74,17 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  * Provides Wiki services to the JSP page.
- * 
+ *
  * <P>
  * This is the main interface through which everything should go.
  * </p>
- * 
+ *
  * <P>
  * Using this class:  Always get yourself an instance from JSP page by using the
  * WikiEngine.getInstance() method.  Never create a new WikiEngine() from scratch, unless you're
  * writing tests.
  * </p>
- * 
+ *
  * <p>
  * There's basically only a single WikiEngine for each web application, and you should always get
  * it using the WikiEngine.getInstance() method.
@@ -882,12 +882,12 @@ public class WikiEngine
      * default version always assumes that the incoming character set is ISO-8859-1, even though
      * it was something else. This means that we need to make a new string using the correct
      * encoding.
-     * 
+     *
      * <P>
      * For more information, see: <A HREF="http://www.jguru.com/faq/view.jsp?EID=137049">JGuru
      * FAQ</A>.
      * </p>
-     * 
+     *
      * <P>
      * Incidentally, this is almost the same as encodeName(), below. I am not yet entirely sure if
      * it's safe to merge the code.
@@ -949,7 +949,7 @@ public class WikiEngine
                 // Ensure that the 'page=xyz' attribute is removed
                 // FIXME: Is it really the mandate of this routine to
                 //        do that?
-                // 
+                //
                 int pos1 = res.indexOf("page=");
 
                 if (pos1 >= 0)
@@ -1021,7 +1021,7 @@ public class WikiEngine
     /**
      * If the page is a special page, then returns a direct URL to that page.  Otherwise returns
      * null.
-     * 
+     *
      * <P>
      * Special pages are non-existant references to other pages. For example, you could define a
      * special page reference "RecentChanges" which would always be redirected to
@@ -1203,14 +1203,14 @@ public class WikiEngine
     /**
      * Returns the correct page name, or null, if no such page can be found.  Aliases are
      * considered.
-     * 
+     *
      * <P>
      * In some cases, page names can refer to other pages.  For example, when you have
      * matchEnglishPlurals set, then a page name "Foobars" will be transformed into "Foobar",
      * should a page "Foobars" not exist, but the page "Foobar" would.  This method gives you the
      * correct page name to refer to.
      * </p>
-     * 
+     *
      * <P>
      * This facility can also be used to rewrite any page name, for example, by using aliases.  It
      * can also be used to check the existence of any page.
@@ -1371,7 +1371,7 @@ public class WikiEngine
     /**
      * Returns the un-HTMLized text of the given version of a page in the given context.  USE THIS
      * METHOD if you don't know what doing.
-     * 
+     *
      * <p>
      * This method also replaces the &lt; and &amp; -characters with their respective HTML
      * entities, thus making it suitable for inclusion on an HTML page.  If you want to have the
@@ -1737,7 +1737,7 @@ public class WikiEngine
 
     /**
      * Parses an incoming search request, then does a search.
-     * 
+     *
      * <P>
      * Search language is simple: prepend a word with a + to force a word to be included (all files
      * not containing that word are automatically rejected), '-' to cause the rejection of all

@@ -33,27 +33,27 @@ import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 /**
  * FormSet is a companion WikiPlugin for Form.
- * 
+ *
  * <p>
  * The mandatory 'form' parameter specifies which form the variable applies to.  Any other
  * parameters are put directly into a FormInfo object that will be available to a Form plugin
  * called 'form' (presumably invoked later on the same WikiPage).
  * </p>
- * 
+ *
  * <p>
  * If the name of a FormSet parameter is the same as the name of a Form plugin input element later
  * on the same page, the Form will consider the given value the default for the form field.
  * (However, the handler for the Form is free to use the value as it wishes, and even override
  * it.)
  * </p>
- * 
+ *
  * <p>
  * If the name of a parameter is not present in Form input fields, the parameter is presumably
  * meant for sending initial information to the Form handler. If this is the case, you may want to
  * specify the <i>populate=''</i> in the Form <i>open</i> element, otherwise the form won't be
  * displayed on the first invocation.
  * </p>
- * 
+ *
  * <p>
  * This object looks for a FormInfo object named FORM_VALUES_CARRIER in the WikiContext. If found,
  * it checks that its name matches the 'form' parameter, and if it does, adds the plugin

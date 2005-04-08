@@ -28,7 +28,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
 /**
  * Includes the content if an user check validates.  This has been considerably enhanced for 2.2.
  * The possibilities for the "status"-argument are:
- * 
+ *
  * <ul>
  * <li>
  * "unknown"     - the body of the tag is included if the user is completely unknown (no cookie, no
@@ -51,9 +51,9 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * a cookie, but has not been authenticated.)
  * </li>
  * </ul>
- * 
+ *
  * If the old "exists" -argument is used, it corresponds as follows:
- * 
+ *
  * <p>
  * <tt>exists="true" ==> status="known"</tt><tt>exists="false" ==> status="unknown"</tt> It is NOT
  * a good idea to use BOTH of the arguments.
