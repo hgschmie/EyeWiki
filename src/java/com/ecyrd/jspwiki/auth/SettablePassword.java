@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,21 +21,24 @@ package com.ecyrd.jspwiki.auth;
 
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Defines an interface for WikiAuthenticators that are able to 
- *  set passwords.
+ * Defines an interface for WikiAuthenticators that are able to set passwords.
  *
- *  @since 2.1.123
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.123
  */
 public interface SettablePassword
 {
     /**
-     *  Sets the user password.  This is an optional operation.
+     * Sets the user password.  This is an optional operation.
      *
-     *  @throws ProviderException If the password cannot be set.
+     * @param wup DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     *
+     * @throws ProviderException If the password cannot be set.
      */
-
-    public void setPassword( UserProfile wup, String password )
+    public void setPassword(UserProfile wup, String password)
         throws ProviderException;
 }

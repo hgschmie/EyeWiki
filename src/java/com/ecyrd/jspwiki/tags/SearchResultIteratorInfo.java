@@ -6,22 +6,31 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 import com.ecyrd.jspwiki.SearchResult;
 
+
 /**
- *  Just provides the TEI data for IteratorTag.
+ * Just provides the TEI data for IteratorTag.
  *
- *  @since 2.0
+ * @since 2.0
  */
-public class SearchResultIteratorInfo extends TagExtraInfo
+public class SearchResultIteratorInfo
+    extends TagExtraInfo
 {
-    public VariableInfo[] getVariableInfo(TagData data)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param data DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public VariableInfo [] getVariableInfo(TagData data)
     {
-        VariableInfo var[] = { new VariableInfo( data.getAttributeString("id"),
-                    SearchResult.class.getName(),
-                    true,
-                    VariableInfo.NESTED )
-        };
+        VariableInfo [] var =
+            {
+                new VariableInfo(
+                    data.getAttributeString("id"), SearchResult.class.getName(), true,
+                    VariableInfo.NESTED)
+            };
 
         return var;
-        
     }
 }

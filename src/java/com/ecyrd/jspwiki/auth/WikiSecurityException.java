@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,20 +21,23 @@ package com.ecyrd.jspwiki.auth;
 
 import com.ecyrd.jspwiki.WikiException;
 
+
 /**
- *  WikiSecurityException is used to provide authentication and authorization
- *  information.
+ * WikiSecurityException is used to provide authentication and authorization information.
  *
- *  @author Erik Bunn
- *  @since 2.0
+ * @author Erik Bunn
+ *
+ * @since 2.0
  */
 public class WikiSecurityException
     extends WikiException
 {
     /**
-     *  Constructs an exception.
+     * Constructs an exception.
+     *
+     * @param msg DOCUMENT ME!
      */
-    public WikiSecurityException( String msg )
+    public WikiSecurityException(String msg)
     {
         super(msg);
     }

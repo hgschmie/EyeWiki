@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -34,60 +35,92 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Provides a table of contents.
+ * Provides a table of contents.
  *
- *  @since 2.2
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
+ *
+ * @since 2.2
  */
 public class TableOfContents
-        implements WikiPlugin, HeadingListener
+    implements WikiPlugin, HeadingListener
 {
-    private static Logger log = Logger.getLogger( TableOfContents.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(TableOfContents.class);
 
+    /** DOCUMENT ME! */
     public static final String PARAM_TITLE = "title";
 
+    /** DOCUMENT ME! */
     StringBuffer m_buf = new StringBuffer();
 
-    public void headingAdded( WikiContext context, TranslatorReader.Heading hd )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param hd DOCUMENT ME!
+     *
+     * @throws InternalWikiException DOCUMENT ME!
+     */
+    public void headingAdded(WikiContext context, TranslatorReader.Heading hd)
     {
-        if (log.isDebugEnabled()) {
-            log.debug("HD: "+hd.m_level+", "+hd.m_titleText+", "+hd.m_titleAnchor);
+        if (log.isDebugEnabled())
+        {
+            log.debug("HD: " + hd.m_level + ", " + hd.m_titleText + ", " + hd.m_titleAnchor);
         }
 
-        switch( hd.m_level )
+        switch (hd.m_level)
         {
         case TranslatorReader.Heading.HEADING_SMALL:
             m_buf.append("***");
+
             break;
+
         case TranslatorReader.Heading.HEADING_MEDIUM:
             m_buf.append("**");
+
             break;
+
         case TranslatorReader.Heading.HEADING_LARGE:
             m_buf.append("*");
+
             break;
+
         default:
             throw new InternalWikiException("Unknown depth in toc! (Please submit a bug report.)");
         }
 
-        m_buf.append(" ["+hd.m_titleText+"|"+context.getPage().getName()+"#"+hd.m_titleSection+"]\n");
+        m_buf.append(
+            " [" + hd.m_titleText + "|" + context.getPage().getName() + "#" + hd.m_titleSection
+            + "]\n");
     }
 
-    public String execute( WikiContext context, Map params )
-            throws PluginException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
+        throws PluginException
     {
         WikiEngine engine = context.getEngine();
-        WikiPage   page   = context.getPage();
+        WikiPage page = context.getPage();
 
         StringBuffer sb = new StringBuffer();
 
         sb.append("<div class=\"toc\">\n");
 
         String title = (String) params.get(PARAM_TITLE);
-        
-        if( title != null )
+
+        if (title != null)
         {
-            sb.append("<h4>"+TextUtil.replaceEntities(title)+"</h4>\n");
+            sb.append("<h4>" + TextUtil.replaceEntities(title) + "</h4>\n");
         }
         else
         {
@@ -96,20 +129,18 @@ public class TableOfContents
 
         try
         {
-            String wikiText = engine.getPureText( page );
-            
-            TranslatorReader in = new TranslatorReader( context,
-                    new StringReader(wikiText) );
-            in.enablePlugins( false );
-            in.addHeadingListener( this );
+            String wikiText = engine.getPureText(page);
 
-            FileUtil.readContents( in );
+            TranslatorReader in = new TranslatorReader(context, new StringReader(wikiText));
+            in.enablePlugins(false);
+            in.addHeadingListener(this);
 
-            in = new TranslatorReader( context,
-                    new StringReader( m_buf.toString() ) );
-            sb.append(FileUtil.readContents( in ));
+            FileUtil.readContents(in);
+
+            in = new TranslatorReader(context, new StringReader(m_buf.toString()));
+            sb.append(FileUtil.readContents(in));
         }
-        catch( IOException e )
+        catch (IOException e)
         {
             log.error("Could not construct table of contents", e);
             throw new PluginException("Unable to construct table of contents (see logs)");
@@ -119,5 +150,4 @@ public class TableOfContents
 
         return sb.toString();
     }
-
 }

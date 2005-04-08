@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -29,19 +29,32 @@ import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  This is a plugin for the administrator: It allows him to see in a single
- *  glance who is editing what.
+ * This is a plugin for the administrator: It allows him to see in a single glance who is editing
+ * what.
  *
- *  @author Janne Jalkanen
- *  @since 2.0.22.
+ * @author Janne Jalkanen
+ *
+ * @since 2.0.22.
  */
 public class ListLocksPlugin
     implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( ListLocksPlugin.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(ListLocksPlugin.class);
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         StringBuffer result = new StringBuffer();
@@ -54,21 +67,21 @@ public class ListLocksPlugin
         result.append("<th>Page</th><th>Locked by</th><th>Acquired</th><th>Expires</th>\n");
         result.append("</tr>");
 
-        if( locks.size() == 0 )
+        if (locks.size() == 0)
         {
             result.append("<tr><td colspan=4>No locks exist currently.</td></tr>\n");
         }
         else
         {
-            for( Iterator i = locks.iterator(); i.hasNext(); )
+            for (Iterator i = locks.iterator(); i.hasNext();)
             {
                 PageLock lock = (PageLock) i.next();
 
                 result.append("<tr>");
-                result.append("<td>"+lock.getPage().getName()+"</td>");
-                result.append("<td>"+lock.getLocker()+"</td>");
-                result.append("<td>"+lock.getAcquisitionTime()+"</td>");
-                result.append("<td>"+lock.getExpiryTime()+"</td>");
+                result.append("<td>" + lock.getPage().getName() + "</td>");
+                result.append("<td>" + lock.getLocker() + "</td>");
+                result.append("<td>" + lock.getAcquisitionTime() + "</td>");
+                result.append("<td>" + lock.getExpiryTime() + "</td>");
                 result.append("</tr>\n");
             }
         }
@@ -77,5 +90,4 @@ public class ListLocksPlugin
 
         return result.toString();
     }
-
 }

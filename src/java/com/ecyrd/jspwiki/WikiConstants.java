@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,12 +21,9 @@ package com.ecyrd.jspwiki;
 
 /**
  * Here we collect all the constants used all over the Wiki code
- *
  */
-
 public interface WikiConstants
 {
     /** The default Character Encoding */
     String DEFAULT_ENCODING = "UTF-8";
 }
-

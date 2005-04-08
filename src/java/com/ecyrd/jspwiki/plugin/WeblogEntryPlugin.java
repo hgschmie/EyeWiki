@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -34,96 +35,121 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
-/**
- *  Builds a simple weblog.
- *
- *  @since 1.9.21
- */
-public class WeblogEntryPlugin implements WikiPlugin
-{
-    private static Logger     log = Logger.getLogger(WeblogEntryPlugin.class);
 
+/**
+ * Builds a simple weblog.
+ *
+ * @since 1.9.21
+ */
+public class WeblogEntryPlugin
+    implements WikiPlugin
+{
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(WeblogEntryPlugin.class);
+
+    /** DOCUMENT ME! */
     public static final int MAX_BLOG_ENTRIES = 10000; // Just a precaution.
 
+    /** DOCUMENT ME! */
     public static final String PARAM_ENTRYTEXT = "entrytext";
 
-    public String getNewEntryPage( WikiEngine engine, String blogName )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     * @param blogName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public String getNewEntryPage(WikiEngine engine, String blogName)
+        throws ProviderException
     {
         SimpleDateFormat fmt = new SimpleDateFormat(WeblogPlugin.DEFAULT_DATEFORMAT);
-        String today = fmt.format( new Date() );
-            
-        int entryNum = findFreeEntry( engine.getPageManager(),
-                blogName,
-                today );
+        String today = fmt.format(new Date());
 
-                        
-        String blogPage = WeblogPlugin.makeEntryPage( blogName,
-                today,
-                ""+entryNum );
+        int entryNum = findFreeEntry(engine.getPageManager(), blogName, today);
+
+        String blogPage = WeblogPlugin.makeEntryPage(blogName, today, "" + entryNum);
 
         return blogPage;
     }
 
-    public String execute( WikiContext context, Map params )
-            throws PluginException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
+        throws PluginException
     {
         String weblogName = context.getPage().getName();
         WikiEngine engine = context.getEngine();
-        
+
         StringBuffer sb = new StringBuffer();
 
         String entryText = (String) params.get(PARAM_ENTRYTEXT);
-        if( entryText == null ) entryText = "New entry";
-        
+
+        if (entryText == null)
+        {
+            entryText = "New entry";
+        }
+
         try
         {
-            String blogPage = getNewEntryPage( engine, weblogName );
+            String blogPage = getNewEntryPage(engine, weblogName);
 
             // FIXME: Generate somehow else.
             //sb.append("<a href=\""+engine.getEditURL(blogPage)+"\">New entry</a>");
-            sb.append("<a href=\""+engine.getBaseURL()+"NewBlogEntry.jsp?page="+engine.encodeName(weblogName)+"\">"+entryText+"</a>");
+            sb.append(
+                "<a href=\"" + engine.getBaseURL() + "NewBlogEntry.jsp?page="
+                + engine.encodeName(weblogName) + "\">" + entryText + "</a>");
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            log.error( "Could not locate blog entries", e );
-            throw new PluginException( "Could not locate blog entries: "+e.getMessage() );
+            log.error("Could not locate blog entries", e);
+            throw new PluginException("Could not locate blog entries: " + e.getMessage());
         }
 
         return sb.toString();
     }
 
-    private int findFreeEntry( PageManager mgr,
-            String baseName,
-            String date )
-            throws ProviderException
+    private int findFreeEntry(PageManager mgr, String baseName, String date)
+        throws ProviderException
     {
         Collection everyone = mgr.getAllPages();
         int max = 0;
 
-        String startString = WeblogPlugin.makeEntryPage( baseName, date, "" );
-        
-        for( Iterator i = everyone.iterator(); i.hasNext(); )
-        {
-            WikiPage p = (WikiPage)i.next();
+        String startString = WeblogPlugin.makeEntryPage(baseName, date, "");
 
-            if( p.getName().startsWith(startString) )
+        for (Iterator i = everyone.iterator(); i.hasNext();)
+        {
+            WikiPage p = (WikiPage) i.next();
+
+            if (p.getName().startsWith(startString))
             {
                 try
                 {
-                    String probableId = p.getName().substring( startString.length() );
+                    String probableId = p.getName().substring(startString.length());
 
                     int id = Integer.parseInt(probableId);
 
-                    if( id > max )
+                    if (id > max)
                     {
                         max = id;
                     }
                 }
-                catch( NumberFormatException e )
+                catch (NumberFormatException e)
                 {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Was not a log entry: "+p.getName() );
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("Was not a log entry: " + p.getName());
                     }
                 }
             }
@@ -132,24 +158,22 @@ public class WeblogEntryPlugin implements WikiPlugin
         //
         //  Find the first page that has no page lock.
         //
-        int idx = max+1;
+        int idx = max + 1;
 
-        while( idx < MAX_BLOG_ENTRIES )
+        while (idx < MAX_BLOG_ENTRIES)
         {
-            WikiPage page = new WikiPage( WeblogPlugin.makeEntryPage( baseName, 
-                            date, 
-                            Integer.toString(idx) ) );
-            PageLock lock = mgr.getCurrentLock( page );
+            WikiPage page =
+                new WikiPage(WeblogPlugin.makeEntryPage(baseName, date, Integer.toString(idx)));
+            PageLock lock = mgr.getCurrentLock(page);
 
-            if( lock == null )
+            if (lock == null)
             {
                 break;
             }
 
             idx++;
         }
-        
+
         return idx;
     }
-    
 }

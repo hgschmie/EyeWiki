@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,17 +21,22 @@ package com.ecyrd.jspwiki.providers;
 
 import com.ecyrd.jspwiki.WikiException;
 
+
 /**
- *  This exception represents the superclass of all exceptions that providers
- *  may throw.  It is okay to throw it in case you cannot use any of
- *  the specific subclasses, in which case the page loading is
- *  considered to be broken, and the user is notified.
+ * This exception represents the superclass of all exceptions that providers may throw.  It is okay
+ * to throw it in case you cannot use any of the specific subclasses, in which case the page
+ * loading is considered to be broken, and the user is notified.
  */
 public class ProviderException
     extends WikiException
 {
-    public ProviderException( String msg )
+    /**
+     * Creates a new ProviderException object.
+     *
+     * @param msg DOCUMENT ME!
+     */
+    public ProviderException(String msg)
     {
-        super( msg );
+        super(msg);
     }
 }

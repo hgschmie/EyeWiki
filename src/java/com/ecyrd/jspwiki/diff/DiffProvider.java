@@ -1,4 +1,3 @@
-
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
@@ -9,34 +8,68 @@ import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProvider;
 
+
 /**
- * TODO 
+ * TODO
  */
-public interface DiffProvider extends WikiProvider
+public interface DiffProvider
+    extends WikiProvider
 {
     /**
-     * The return string is to be XHTML compliant ready to display html.  No further
-     * processing of this text will be done by the wiki engine.
+     * The return string is to be XHTML compliant ready to display html.  No further processing of
+     * this text will be done by the wiki engine.
+     *
+     * @param oldWikiText DOCUMENT ME!
+     * @param newWikiText DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     String makeDiff(String oldWikiText, String newWikiText);
-    
-    
-    public static class NullDiffProvider implements DiffProvider
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
+    public static class NullDiffProvider
+        implements DiffProvider
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param oldWikiText DOCUMENT ME!
+         * @param newWikiText DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String makeDiff(String oldWikiText, String newWikiText)
         {
             return "You are using the NullDiffProvider, check your properties file.";
         }
 
-        public void initialize(WikiEngine engine, Configuration conf) 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param engine DOCUMENT ME!
+         * @param conf DOCUMENT ME!
+         *
+         * @throws NoRequiredPropertyException DOCUMENT ME!
+         * @throws IOException DOCUMENT ME!
+         */
+        public void initialize(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
         {
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getProviderInfo()
         {
             return "NullDiffProvider";
         }
     }
-    
 }

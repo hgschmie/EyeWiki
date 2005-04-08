@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -31,66 +31,91 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+
 /**
  */
 public class WikiServlet
-        extends HttpServlet
+    extends HttpServlet
 {
+    /** DOCUMENT ME! */
     private WikiEngine m_engine = null;
 
+    /** DOCUMENT ME! */
     Logger log = Logger.getLogger(this.getClass().getName());
 
-    public void init( ServletConfig config )
-            throws ServletException 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param config DOCUMENT ME!
+     *
+     * @throws ServletException DOCUMENT ME!
+     */
+    public void init(ServletConfig config)
+        throws ServletException
     {
-        super.init( config );
+        super.init(config);
 
-        m_engine         = WikiEngine.getInstance( config );
+        m_engine = WikiEngine.getInstance(config);
+
         Configuration conf = m_engine.getWikiConfiguration();
 
         log.info("WikiServlet initialized.");
     }
 
-    public void doPost( HttpServletRequest req, HttpServletResponse res )
-            throws IOException, ServletException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param req DOCUMENT ME!
+     * @param res DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ServletException DOCUMENT ME!
+     */
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+        throws IOException, ServletException
     {
-        doGet( req, res );
+        doGet(req, res);
     }
-    
-    public void doGet( HttpServletRequest req, HttpServletResponse res ) 
-            throws IOException, ServletException 
-    {
-        String pageName = DefaultURLConstructor.parsePageFromURL(
-                req,
-                m_engine.getContentEncoding() );
 
-        if (log.isInfoEnabled()) {
-            log.info("Request for page: "+pageName);
+    /**
+     * DOCUMENT ME!
+     *
+     * @param req DOCUMENT ME!
+     * @param res DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ServletException DOCUMENT ME!
+     */
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+        throws IOException, ServletException
+    {
+        String pageName =
+            DefaultURLConstructor.parsePageFromURL(req, m_engine.getContentEncoding());
+
+        if (log.isInfoEnabled())
+        {
+            log.info("Request for page: " + pageName);
         }
 
-        if( pageName == null)
+        if (pageName == null)
         {
             pageName = m_engine.getFrontPage(); // FIXME: Add special pages as well
         }
-        
-        String jspPage = req.getParameter( "do" );
 
-        if( jspPage == null )
+        String jspPage = req.getParameter("do");
+
+        if (jspPage == null)
         {
             jspPage = "Wiki";
         }
 
-        StringBuffer sb = new StringBuffer("/")
-                .append(jspPage)
-                .append(".jsp?page=")
-                .append(m_engine.encodeName(pageName))
-                .append("&")
-                .append(req.getQueryString());
-        
+        StringBuffer sb =
+            new StringBuffer("/").append(jspPage).append(".jsp?page=")
+                                 .append(m_engine.encodeName(pageName)).append("&").append(
+                req.getQueryString());
+
         RequestDispatcher dispatcher = req.getRequestDispatcher(sb.toString());
 
-        dispatcher.forward( req, res );
+        dispatcher.forward(req, res);
     }
 }
-
-

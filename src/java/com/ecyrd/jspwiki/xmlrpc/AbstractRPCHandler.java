@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -29,77 +29,96 @@ import java.util.Vector;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
-/**
- *  Provides definitions for RPC handler routines.
- *
- *  @author Janne Jalkanen
- *  @since 1.6.13
- */
 
+/**
+ * Provides definitions for RPC handler routines.
+ *
+ * @author Janne Jalkanen
+ *
+ * @since 1.6.13
+ */
 public abstract class AbstractRPCHandler
     implements WikiRPCHandler
 {
     /** Error code: no such page. */
-    public static final int ERR_NOPAGE       = 1;
+    public static final int ERR_NOPAGE = 1;
+
+    /** DOCUMENT ME! */
     public static final int ERR_NOPERMISSION = 2;
 
-    /**
-     *  Link to a local wiki page.
-     */
-    public static final String LINK_LOCAL    = "local";
+    /** Link to a local wiki page. */
+    public static final String LINK_LOCAL = "local";
 
-    /**
-     *  Link to an external resource.
-     */
+    /** Link to an external resource. */
     public static final String LINK_EXTERNAL = "external";
 
-    /**
-     *  This is an inlined image.
-     */
-    public static final String LINK_INLINE   = "inline";
+    /** This is an inlined image. */
+    public static final String LINK_INLINE = "inline";
 
+    /** This is the currently implemented JSPWiki XML-RPC code revision. */
+    public static final int RPC_VERSION = 1;
+
+    /** DOCUMENT ME! */
     protected WikiEngine m_engine;
 
     /**
-     *  This is the currently implemented JSPWiki XML-RPC code revision.
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
      */
-    public static final int RPC_VERSION = 1;
-
-    public void initialize( WikiEngine engine )
+    public void initialize(WikiEngine engine)
     {
         m_engine = engine;
     }
 
-    protected abstract Hashtable encodeWikiPage( WikiPage p );
+    /**
+     * DOCUMENT ME!
+     *
+     * @param p DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    protected abstract Hashtable encodeWikiPage(WikiPage p);
 
-    public Vector getRecentChanges( Date since )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param since DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Vector getRecentChanges(Date since)
     {
         Collection pages = m_engine.getRecentChanges();
-        Vector result    = new Vector();
+        Vector result = new Vector();
 
         // Transform UTC into local time.
         Calendar cal = Calendar.getInstance();
-        cal.setTime( since );
-        cal.add( Calendar.MILLISECOND, 
-                 (cal.get( Calendar.ZONE_OFFSET ) + 
-                  (cal.getTimeZone().inDaylightTime( since ) ? cal.get( Calendar.DST_OFFSET ) : 0 )) );
+        cal.setTime(since);
+        cal.add(
+            Calendar.MILLISECOND,
+            (cal.get(Calendar.ZONE_OFFSET)
+            + (cal.getTimeZone().inDaylightTime(since)
+            ? cal.get(Calendar.DST_OFFSET)
+            : 0)));
 
-        for( Iterator i = pages.iterator(); i.hasNext(); )
+        for (Iterator i = pages.iterator(); i.hasNext();)
         {
-            WikiPage page = (WikiPage)i.next();
+            WikiPage page = (WikiPage) i.next();
 
-            if( page.getLastModified().after( cal.getTime() ) )
+            if (page.getLastModified().after(cal.getTime()))
             {
-                result.add( encodeWikiPage( page ) );
+                result.add(encodeWikiPage(page));
             }
         }
 
         return result;
     }
 
-
     /**
-     *  Returns the current supported JSPWiki XML-RPC API.
+     * Returns the current supported JSPWiki XML-RPC API.
+     *
+     * @return DOCUMENT ME!
      */
     public int getRPCVersionSupported()
     {

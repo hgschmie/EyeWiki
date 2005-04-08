@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,15 +19,6 @@
 */
 package com.ecyrd.jspwiki.auth.modules;
 
-import java.security.Principal;
-import java.security.acl.AclEntry;
-import java.security.acl.NotOwnerException;
-import java.util.NoSuchElementException;
-import java.util.StringTokenizer;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
@@ -41,66 +32,66 @@ import com.ecyrd.jspwiki.auth.WikiAuthorizer;
 import com.ecyrd.jspwiki.auth.WikiSecurityException;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 
+import org.apache.commons.configuration.Configuration;
+
+import org.apache.log4j.Logger;
+
+import java.security.Principal;
+import java.security.acl.AclEntry;
+import java.security.acl.NotOwnerException;
+
+import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
+
+
 /**
  *  This is a simple authorizer that just simply takes the permissions
  *  from a page.
  *
  *  @author Janne Jalkanen
  */
-public class PageAuthorizer
-        implements WikiAuthorizer
-{
-    private WikiEngine m_engine;
-
-    static Logger log = Logger.getLogger( PageAuthorizer.class );
+public class PageAuthorizer implements WikiAuthorizer {
+    static Logger log = Logger.getLogger(PageAuthorizer.class);
 
     // FIXME: Should be settable.
-
     public static final String DEFAULT_PERMISSIONPAGE = "DefaultPermissions";
-    public static final String VAR_PERMISSIONS        = "defaultpermissions";
-
+    public static final String VAR_PERMISSIONS = "defaultpermissions";
+    private WikiEngine m_engine;
     private AccessControlList m_defaultPermissions = null;
 
-    public void initialize( WikiEngine engine,
-            Configuration conf)
-    {
+    public void initialize(WikiEngine engine, Configuration conf) {
         m_engine = engine;
     }
 
-    private void buildDefaultPermissions()
-    {
+    private void buildDefaultPermissions() {
         m_defaultPermissions = new AclImpl();
-        
-        WikiPage defpage = m_engine.getPage( DEFAULT_PERMISSIONPAGE );
 
-        if( defpage == null ) return;
+        WikiPage defpage = m_engine.getPage(DEFAULT_PERMISSIONPAGE);
 
-        String defperms = (String)defpage.getAttribute( VAR_PERMISSIONS );
+        if (defpage == null) {
+            return;
+        }
 
-        if( defperms != null )
-        {
-            StringTokenizer tokety = new StringTokenizer( defperms, ";" );
+        String defperms = (String) defpage.getAttribute(VAR_PERMISSIONS);
+
+        if (defperms != null) {
+            StringTokenizer tokety = new StringTokenizer(defperms, ";");
 
             WikiPage p = new WikiPage("Dummy");
 
-            while( tokety.hasMoreTokens() )
-            {
+            while (tokety.hasMoreTokens()) {
                 String rule = tokety.nextToken();
 
-                try
-                {
-                    AccessControlList acl = parseAcl( p,
-                            m_engine.getUserManager(),
-                            rule );
-                    p.setAcl( acl );
-                }
-                catch( WikiSecurityException wse )
-                {
-                    log.error("Error on the default permissions page '"+
-                            DEFAULT_PERMISSIONPAGE+"':"+wse.getMessage());
+                try {
+                    AccessControlList acl = parseAcl(p,
+                            m_engine.getUserManager(), rule);
+                    p.setAcl(acl);
+                } catch (WikiSecurityException wse) {
+                    log.error("Error on the default permissions page '" +
+                        DEFAULT_PERMISSIONPAGE + "':" + wse.getMessage());
+
                     // FIXME: SHould do something else as well?  This msg only goes to the logs, and is thus not visible to users...
                 }
-
             }
 
             m_defaultPermissions = p.getAcl();
@@ -124,107 +115,102 @@ public class PageAuthorizer
      *
      *  @since 2.2
      */
-    public static AccessControlList parseAcl( WikiPage page, 
-            UserManager mgr, 
-            String ruleLine )
-            throws WikiSecurityException
-    {        
+    public static AccessControlList parseAcl(WikiPage page, UserManager mgr,
+        String ruleLine) throws WikiSecurityException {
         AccessControlList acl = page.getAcl();
-        if( acl == null ) acl = new AclImpl();
 
-        try
-        {
-            StringTokenizer fieldToks = new StringTokenizer( ruleLine );
-            String policy  = fieldToks.nextToken();
-            String chain   = fieldToks.nextToken();            
+        if (acl == null) {
+            acl = new AclImpl();
+        }
 
-            while( fieldToks.hasMoreTokens() )
-            {
-                String roleOrPerm = fieldToks.nextToken( "," ).trim();
+        try {
+            StringTokenizer fieldToks = new StringTokenizer(ruleLine);
+            String policy = fieldToks.nextToken();
+            String chain = fieldToks.nextToken();
+
+            while (fieldToks.hasMoreTokens()) {
+                String roleOrPerm = fieldToks.nextToken(",").trim();
                 boolean isNegative = true;
 
-                Principal principal = mgr.getPrincipal( roleOrPerm );
+                Principal principal = mgr.getPrincipal(roleOrPerm);
 
-                if( policy.equals("ALLOW") ) isNegative = false;
+                if (policy.equals("ALLOW")) {
+                    isNegative = false;
+                }
 
-                AclEntry oldEntry = acl.getEntry( principal, isNegative );
+                AclEntry oldEntry = acl.getEntry(principal, isNegative);
 
-                if( oldEntry != null )
-                {
+                if (oldEntry != null) {
                     if (log.isDebugEnabled()) {
-                        log.debug("Adding to old acl list: "+principal+", "+chain);
+                        log.debug("Adding to old acl list: " + principal +
+                            ", " + chain);
                     }
 
-                    oldEntry.addPermission( WikiPermission.newInstance( chain ) );
-                }
-                else
-                {
+                    oldEntry.addPermission(WikiPermission.newInstance(chain));
+                } else {
                     if (log.isDebugEnabled()) {
-                        log.debug("Adding new acl entry for "+chain);
+                        log.debug("Adding new acl entry for " + chain);
                     }
 
                     AclEntry entry = new AclEntryImpl();
-            
-                    entry.setPrincipal( principal );
-                    if( isNegative ) entry.setNegativePermissions();
-                    entry.addPermission( WikiPermission.newInstance( chain ) );
-                    
-                    acl.addEntry( principal, entry );
+
+                    entry.setPrincipal(principal);
+
+                    if (isNegative) {
+                        entry.setNegativePermissions();
+                    }
+
+                    entry.addPermission(WikiPermission.newInstance(chain));
+
+                    acl.addEntry(principal, entry);
                 }
             }
 
-            page.setAcl( acl );
+            page.setAcl(acl);
 
-            log.debug( acl.toString() );
-        }
-        catch( NoSuchElementException nsee )
-        {
-            log.warn( "Invalid access rule: " + ruleLine + " - defaults will be used." );
-            throw new WikiSecurityException("Invalid access rule: "+ruleLine);
-        }
-        catch( NotOwnerException noe )
-        {
-            throw new InternalWikiException("Someone has implemented access control on access control lists without telling me.");
-        }
-        catch( IllegalArgumentException iae )
-        {
-            throw new WikiSecurityException("Invalid permission type: "+ruleLine);
+            log.debug(acl.toString());
+        } catch (NoSuchElementException nsee) {
+            log.warn("Invalid access rule: " + ruleLine +
+                " - defaults will be used.");
+            throw new WikiSecurityException("Invalid access rule: " + ruleLine);
+        } catch (NotOwnerException noe) {
+            throw new InternalWikiException(
+                "Someone has implemented access control on access control lists without telling me.");
+        } catch (IllegalArgumentException iae) {
+            throw new WikiSecurityException("Invalid permission type: " +
+                ruleLine);
         }
 
         return acl;
     }
 
-    public AccessControlList getPermissions( WikiPage page )
-    {
+    public AccessControlList getPermissions(WikiPage page) {
         AccessControlList acl = page.getAcl();
 
         //
         //  If the ACL has not yet been parsed, we'll do it here.
         //
-        if( acl == null )
-        {
-            WikiContext context = new WikiContext( m_engine, page );
-            context.setVariable( TranslatorReader.PROP_RUNPLUGINS, "false" );
-            String html = m_engine.getHTML( context, page );
+        if (acl == null) {
+            WikiContext context = new WikiContext(m_engine, page);
+            context.setVariable(TranslatorReader.PROP_RUNPLUGINS, "false");
+
+            String html = m_engine.getHTML(context, page);
 
             acl = page.getAcl();
         }
 
         if (log.isDebugEnabled()) {
-            log.debug( "page="+page.getName()+"\n"+acl );
+            log.debug("page=" + page.getName() + "\n" + acl);
         }
 
         return acl;
     }
 
-    public AccessControlList getDefaultPermissions()
-    {
-        if( m_defaultPermissions == null )
-        {
+    public AccessControlList getDefaultPermissions() {
+        if (m_defaultPermissions == null) {
             buildDefaultPermissions();
         }
 
         return m_defaultPermissions;
     }
-
 }

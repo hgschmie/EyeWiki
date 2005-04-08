@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,77 +27,113 @@ import javax.servlet.jsp.JspWriter;
 import com.ecyrd.jspwiki.NoSuchVariableException;
 import com.ecyrd.jspwiki.WikiEngine;
 
+
 /**
- *  Returns the value of an Wiki variable.
+ * Returns the value of an Wiki variable.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * var - Name of the variable.  Required.
+ * </li>
+ * <li>
+ * default - Revert to this value, if the value of "var" is null. If left out, this tag will
+ * produce a concise error message if the named variable is not found. Set to empty (default="")
+ * to hide the message.
+ * </li>
+ * </ul>
+ * 
+ * <P>
+ * A default value implies <I>failmode='quiet'</I>.
+ * </p>
  *
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>var - Name of the variable.  Required.
- *    <LI>default - Revert to this value, if the value of "var" is null. 
- *                  If left out, this tag will produce a concise error message
- *                  if the named variable is not found. Set to empty (default="")
- *                  to hide the message.
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  <P>A default value implies <I>failmode='quiet'</I>.
- *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
 public class VariableTag
     extends WikiTagBase
 {
-    private String m_var      = null;
-    private String m_default  = null;
-    
+    /** DOCUMENT ME! */
+    private String m_var = null;
+
+    /** DOCUMENT ME! */
+    private String m_default = null;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getVar()
     {
         return m_var;
     }
 
-    public void setVar( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setVar(String arg)
     {
         m_var = arg;
     }
 
-    public void setDefault( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setDefault(String arg)
     {
         m_default = arg;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws JspException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-        throws JspException,
-               IOException
+        throws JspException, IOException
     {
-        WikiEngine engine   = m_wikiContext.getEngine();
+        WikiEngine engine = m_wikiContext.getEngine();
         JspWriter out = pageContext.getOut();
         String msg = null;
         String value = null;
-        
+
         try
         {
-            value = engine.getVariableManager().getValue( m_wikiContext,
-                                                          getVar() );
+            value = engine.getVariableManager().getValue(m_wikiContext, getVar());
         }
-        catch( NoSuchVariableException e )
+        catch (NoSuchVariableException e)
         {
-            msg = "No such variable: "+e.getMessage();
+            msg = "No such variable: " + e.getMessage();
         }
-        catch( IllegalArgumentException e )
+        catch (IllegalArgumentException e)
         {
-            msg = "Incorrect variable name: "+e.getMessage();
+            msg = "Incorrect variable name: " + e.getMessage();
         }
 
-        if( value == null )
+        if (value == null)
         {
             value = m_default;
         }
 
-        if( value == null )
+        if (value == null)
         {
             value = msg;
         }
-        out.write( value );
-        return( SKIP_BODY );
+
+        out.write(value);
+
+        return (SKIP_BODY);
     }
 }

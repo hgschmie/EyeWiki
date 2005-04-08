@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,7 +21,9 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -38,95 +40,131 @@ import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.auth.UserProfile;
 
+
 /**
- *  Provides a handler for bug reports.  Still under construction.
+ * Provides a handler for bug reports.  Still under construction.
+ * 
+ * <ul>
+ * <li>
+ * "title" = title of the bug.  This is required.  If it is empty (as in "") it is a signal to the
+ * handler to return quietly.
+ * </li>
+ * </ul>
+ * 
  *
- *  <ul>
- *   <li>"title" = title of the bug.  This is required.  If it is empty (as in "")
- *       it is a signal to the handler to return quietly.</li>
- *  </ul>
- *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class BugReportHandler
     implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( BugReportHandler.class );
-    
-    public static String TITLE          = "title";
-    public static String DESCRIPTION    = "description";
-    public static String VERSION        = "version";
-    public static String MAPPINGS       = "map";
-    public static String PAGE           = "page";
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(BugReportHandler.class);
 
+    /** DOCUMENT ME! */
+    public static String TITLE = "title";
+
+    /** DOCUMENT ME! */
+    public static String DESCRIPTION = "description";
+
+    /** DOCUMENT ME! */
+    public static String VERSION = "version";
+
+    /** DOCUMENT ME! */
+    public static String MAPPINGS = "map";
+
+    /** DOCUMENT ME! */
+    public static String PAGE = "page";
+
+    /** DOCUMENT ME! */
     public static final String DEFAULT_DATEFORMAT = "dd-MMM-yyyy HH:mm:ss zzz";
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         ArrayList otherparams = new ArrayList();
-        String    title;
-        String    description;
-        String    version;
-        String    submitter = null;
-        SimpleDateFormat format = new SimpleDateFormat( DEFAULT_DATEFORMAT );
+        String title;
+        String description;
+        String version;
+        String submitter = null;
+        SimpleDateFormat format = new SimpleDateFormat(DEFAULT_DATEFORMAT);
 
-
-        title       = (String) params.get( TITLE );
-        description = (String) params.get( DESCRIPTION );
-        version     = (String) params.get( VERSION );
+        title = (String) params.get(TITLE);
+        description = (String) params.get(DESCRIPTION);
+        version = (String) params.get(VERSION);
 
         UserProfile wup = context.getCurrentUser();
 
-        if( wup != null )
+        if (wup != null)
         {
             submitter = wup.getName();
         }
 
-        if( title == null ) throw new PluginException("Title is required");
-        if( title.length() == 0 ) return "";
+        if (title == null)
+        {
+            throw new PluginException("Title is required");
+        }
 
-        if( description == null ) description = "";
-        if( version == null ) version = "unknown";
+        if (title.length() == 0)
+        {
+            return "";
+        }
 
-        Properties mappings = parseMappings( (String) params.get( MAPPINGS ) );
+        if (description == null)
+        {
+            description = "";
+        }
+
+        if (version == null)
+        {
+            version = "unknown";
+        }
+
+        Properties mappings = parseMappings((String) params.get(MAPPINGS));
 
         //
         //  Start things
         //
-
         try
         {
             StringWriter str = new StringWriter();
-            PrintWriter out = new PrintWriter( str );
+            PrintWriter out = new PrintWriter(str);
 
             Date d = new Date();
 
             //
             //  Outputting of basic data
             //
-            out.println("|"+mappings.getProperty(TITLE,"Title")+"|"+title);
-            out.println("|"+mappings.getProperty("date","Date")+"|"+format.format(d));
-            out.println("|"+mappings.getProperty(VERSION,"Version")+"|"+version);
-            if( submitter != null )
+            out.println("|" + mappings.getProperty(TITLE, "Title") + "|" + title);
+            out.println("|" + mappings.getProperty("date", "Date") + "|" + format.format(d));
+            out.println("|" + mappings.getProperty(VERSION, "Version") + "|" + version);
+
+            if (submitter != null)
             {
-                out.println("|"+mappings.getProperty("submitter","Submitter")+
-                            "|"+submitter);
+                out.println("|" + mappings.getProperty("submitter", "Submitter") + "|" + submitter);
             }
 
             //
             //  Outputting the other parameters added to this.
             //
-            for( Iterator i = params.entrySet().iterator(); i.hasNext(); )
+            for (Iterator i = params.entrySet().iterator(); i.hasNext();)
             {
                 Map.Entry entry = (Map.Entry) i.next();
 
-                if( entry.getKey().equals( TITLE ) ||
-                    entry.getKey().equals( DESCRIPTION ) ||
-                    entry.getKey().equals( VERSION ) ||
-                    entry.getKey().equals( MAPPINGS ) ||
-                    entry.getKey().equals( PAGE ) ||
-                    entry.getKey().equals( PluginManager.PARAM_BODY ) )
+                if (
+                    entry.getKey().equals(TITLE) || entry.getKey().equals(DESCRIPTION)
+                        || entry.getKey().equals(VERSION) || entry.getKey().equals(MAPPINGS)
+                        || entry.getKey().equals(PAGE)
+                        || entry.getKey().equals(PluginManager.PARAM_BODY))
                 {
                     // Ignore this
                 }
@@ -136,100 +174,116 @@ public class BugReportHandler
                     //  If no mapping has been defined, just ignore
                     //  it.
                     //
-                    String head = mappings.getProperty( (String)entry.getKey(),
-                                                        (String)entry.getKey() );
-                    if( head.length() > 0 )
+                    String head =
+                        mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
+
+                    if (head.length() > 0)
                     {
-                        out.println("|"+head+
-                                    "|"+entry.getValue());
+                        out.println("|" + head + "|" + entry.getValue());
                     }
                 }
             }
 
             out.println();
-            out.println( description );
+            out.println(description);
 
             out.close();
 
             //
             //  Now create a new page for this bug report
             //
-            String pageName = findNextPage( context, title, 
-                                            (String)params.get( PAGE ) );
+            String pageName = findNextPage(context, title, (String) params.get(PAGE));
 
-            WikiPage newPage = new WikiPage( pageName );
-            WikiContext newContext = (WikiContext)context.clone();
-            newContext.setPage( newPage );
-            
-            context.getEngine().saveText( newContext,
-                                          str.toString() );
+            WikiPage newPage = new WikiPage(pageName);
+            WikiContext newContext = (WikiContext) context.clone();
+            newContext.setPage(newPage);
 
-            return "A new bug report has been created: <a href=\""+context.getViewURL(pageName)+"\">"+pageName+"</a>";
+            context.getEngine().saveText(newContext, str.toString());
+
+            return "A new bug report has been created: <a href=\"" + context.getViewURL(pageName)
+            + "\">" + pageName + "</a>";
         }
-        catch( WikiException e )
+        catch (WikiException e)
         {
-            log.error("Unable to save page!",e);
+            log.error("Unable to save page!", e);
 
             return "Unable to create bug report";
         }
     }
-    
+
     /**
-     *  Finds a free page name for adding the bug report.  Tries to construct a page,
-     *  and if it's found, adds a number to it and tries again.
+     * Finds a free page name for adding the bug report.  Tries to construct a page, and if it's
+     * found, adds a number to it and tries again.
+     *
+     * @param context DOCUMENT ME!
+     * @param title DOCUMENT ME!
+     * @param baseName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private synchronized String findNextPage( WikiContext context, 
-                                              String title,
-                                              String baseName )
+    private synchronized String findNextPage(WikiContext context, String title, String baseName)
     {
-        String basicPageName = ((baseName != null)?baseName:"Bug")+TranslatorReader.cleanLink(title);
+        String basicPageName =
+            ((baseName != null)
+            ? baseName
+            : "Bug") + TranslatorReader.cleanLink(title);
 
         WikiEngine engine = context.getEngine();
-        
-        String pageName = basicPageName;
-        long   lastbug  = 2;
 
-        while( engine.pageExists( pageName ) )
+        String pageName = basicPageName;
+        long lastbug = 2;
+
+        while (engine.pageExists(pageName))
         {
             pageName = basicPageName + lastbug++;
         }
-        
+
         return pageName;
     }
 
     /**
-     *  Just parses a mappings list in the form of "a=b;b=c;c=d".
-     *  <p>
-     *  FIXME: Should probably be in TextUtil or somewhere.
+     * Just parses a mappings list in the form of "a=b;b=c;c=d".
+     * 
+     * <p>
+     * FIXME: Should probably be in TextUtil or somewhere.
+     * </p>
+     *
+     * @param mappings DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private Properties parseMappings( String mappings )
+    private Properties parseMappings(String mappings)
     {
         Properties props = new Properties();
 
-        if( mappings == null ) return props;
+        if (mappings == null)
+        {
+            return props;
+        }
 
-        StringTokenizer tok = new StringTokenizer( mappings, ";" );
+        StringTokenizer tok = new StringTokenizer(mappings, ";");
 
-        while( tok.hasMoreTokens() )
+        while (tok.hasMoreTokens())
         {
             String t = tok.nextToken();
 
             int colon = t.indexOf("=");
 
-            String key, value;
+            String key;
+            String value;
 
-            if( colon > 0 )
+            if (colon > 0)
             {
-                key = t.substring(0,colon);
-                value = t.substring(colon+1);
+                key = t.substring(0, colon);
+                value = t.substring(colon + 1);
             }
             else
             {
                 key = t;
                 value = "";
             }
-            
-            props.setProperty( key, value );
+
+            props.setProperty(key, value);
         }
 
         return props;

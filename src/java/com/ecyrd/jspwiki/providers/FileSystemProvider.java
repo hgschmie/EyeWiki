@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
@@ -32,60 +33,75 @@ import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Provides a simple directory based repository for Wiki pages.
- *  <P>
- *  All files have ".txt" appended to make life easier for those
- *  who insist on using Windows or other software which makes assumptions
- *  on the files contents based on its name.
+ * Provides a simple directory based repository for Wiki pages.
+ * 
+ * <P>
+ * All files have ".txt" appended to make life easier for those who insist on using Windows or
+ * other software which makes assumptions on the files contents based on its name.
+ * </p>
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class FileSystemProvider
     extends AbstractFileProvider
 {
-    private static final Category   log = Category.getInstance(FileSystemProvider.class);
-    /**
-     *  All metadata is stored in a file with this extension.
-     */
+    /** DOCUMENT ME! */
+    private static final Category log = Category.getInstance(FileSystemProvider.class);
+
+    /** All metadata is stored in a file with this extension. */
     public static final String EXTENSION_PROPS = ".properties";
 
-    public void putPageText( WikiPage page, String text )        
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     * @param text DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public void putPageText(WikiPage page, String text)
         throws ProviderException
     {
         try
         {
-            super.putPageText( page, text );
-            putPageProperties( page );
+            super.putPageText(page, text);
+            putPageProperties(page);
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.error( "Saving failed" );
+            log.error("Saving failed");
         }
     }
 
     /**
-     *  Stores basic metadata to a file.
+     * Stores basic metadata to a file.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
      */
-    private void putPageProperties( WikiPage page )        
+    private void putPageProperties(WikiPage page)
         throws IOException
     {
-        Properties props = new Properties();        
+        Properties props = new Properties();
         OutputStream out = null;
 
         try
         {
             String author = page.getAuthor();
 
-            if( author != null )
+            if (author != null)
             {
-                props.setProperty( "author", author );
-                File file = new File( getPageDirectory(), 
-                                      mangleName(page.getName())+EXTENSION_PROPS );
-     
-                out = new FileOutputStream( file );
+                props.setProperty("author", author);
 
-                props.store( out, "JSPWiki page properties for page "+page.getName() );
+                File file =
+                    new File(getPageDirectory(), mangleName(page.getName()) + EXTENSION_PROPS);
+
+                out = new FileOutputStream(file);
+
+                props.store(out, "JSPWiki page properties for page " + page.getName());
             }
         }
         finally
@@ -95,27 +111,30 @@ public class FileSystemProvider
     }
 
     /**
-     *  Gets basic metadata from file.
+     * Gets basic metadata from file.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
      */
-    private void getPageProperties( WikiPage page )
+    private void getPageProperties(WikiPage page)
         throws IOException
     {
-        Properties  props = new Properties();
-        InputStream in    = null;
+        Properties props = new Properties();
+        InputStream in = null;
 
         try
         {
-            File file = new File( getPageDirectory(), 
-                                  mangleName(page.getName())+EXTENSION_PROPS );
+            File file = new File(getPageDirectory(), mangleName(page.getName()) + EXTENSION_PROPS);
 
-            if( file != null && file.exists() )
+            if ((file != null) && file.exists())
             {
-                in = new FileInputStream( file );
+                in = new FileInputStream(file);
 
                 props.load(in);
 
-                page.setAuthor( props.getProperty( "author" ) );
-            }            
+                page.setAuthor(props.getProperty("author"));
+            }
         }
         finally
         {
@@ -123,20 +142,30 @@ public class FileSystemProvider
         }
     }
 
-    public WikiPage getPageInfo( String page, int version )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     * @param version DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public WikiPage getPageInfo(String page, int version)
         throws ProviderException
     {
-        WikiPage p = super.getPageInfo( page, version );
+        WikiPage p = super.getPageInfo(page, version);
 
-        if( p != null )
+        if (p != null)
         {
             try
             {
-                getPageProperties( p );
+                getPageProperties(p);
             }
-            catch( IOException e )
+            catch (IOException e)
             {
-                log.error("Unable to read page properties", e );
+                log.error("Unable to read page properties", e);
                 throw new ProviderException("Unable to read page properties, check logs.");
             }
         }

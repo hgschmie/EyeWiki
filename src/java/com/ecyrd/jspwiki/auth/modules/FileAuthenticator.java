@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
@@ -36,52 +37,66 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.auth.WikiAuthenticator;
 
+
 /**
- *  Provides a simple file-based authenticator.  This is really simple,
- *  as it does not even provide encryption for the passwords.
+ * Provides a simple file-based authenticator.  This is really simple, as it does not even provide
+ * encryption for the passwords.
  *
- *  @author Janne Jalkanen
- *  @since  2.1.29.
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.29.
  */
 public class FileAuthenticator
-        implements WikiAuthenticator
+    implements WikiAuthenticator
 {
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(FileAuthenticator.class);
+
+    /** DOCUMENT ME! */
     private String m_fileName;
 
-    static Logger log = Logger.getLogger( FileAuthenticator.class );
-
-    public void initialize( WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, WikiException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException DOCUMENT ME!
+     * @throws WikiException DOCUMENT ME!
+     */
+    public void initialize(WikiEngine engine, Configuration conf)
+        throws NoRequiredPropertyException, WikiException
     {
         // No default, you _must_ configure this
-        m_fileName = engine.getValidPath(
-                conf.getString(WikiProperties.PROP_AUTH_FILENAME));
+        m_fileName = engine.getValidPath(conf.getString(WikiProperties.PROP_AUTH_FILENAME));
 
-        if (log.isInfoEnabled()) {
+        if (log.isInfoEnabled())
+        {
             log.info("Authenticator file is at " + m_fileName);
         }
     }
 
-    private Properties readPasswords( String filename )
-            throws IOException
+    private Properties readPasswords(String filename)
+        throws IOException
     {
-        Properties  props = new Properties();
-        InputStream in    = null;
+        Properties props = new Properties();
+        InputStream in = null;
 
         try
         {
-            File file = new File( filename );
+            File file = new File(filename);
 
-            if( file != null && file.exists() )
+            if ((file != null) && file.exists())
             {
-                in = new FileInputStream( file );
+                in = new FileInputStream(file);
 
                 props.load(in);
 
-                if (log.isDebugEnabled()) {
-                    log.debug("Loaded "+props.size()+" usernames.");
+                if (log.isDebugEnabled())
+                {
+                    log.debug("Loaded " + props.size() + " usernames.");
                 }
-            }            
+            }
         }
         finally
         {
@@ -91,39 +106,59 @@ public class FileAuthenticator
         return props;
     }
 
-    public boolean authenticate( UserProfile wup )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param wup DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean authenticate(UserProfile wup)
     {
-        if( wup == null || wup.getName() == null )
-            return( false );
+        if ((wup == null) || (wup.getName() == null))
+        {
+            return (false);
+        }
 
         try
         {
-            Properties props = readPasswords( m_fileName );
+            Properties props = readPasswords(m_fileName);
 
             String userName = wup.getName();
             String password = wup.getPassword();
 
-            String storedPassword = props.getProperty( userName );
+            String storedPassword = props.getProperty(userName);
 
-            if( storedPassword != null && storedPassword.equals( password ) )
+            if ((storedPassword != null) && storedPassword.equals(password))
             {
                 return true;
             }
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.error("Unable to read passwords, disallowing login.",e);
+            log.error("Unable to read passwords, disallowing login.", e);
         }
 
         return false;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean canChangePasswords()
     {
         return false;
     }
 
-    public void setPassword( UserProfile wup, String password )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param wup DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     */
+    public void setPassword(UserProfile wup, String password)
     {
     }
 }

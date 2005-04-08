@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -28,108 +28,177 @@ import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Provides an image plugin for better control than is possible with
- *  a simple image inclusion.
+ * Provides an image plugin for better control than is possible with a simple image inclusion.
  *
- *  @author Janne Jalkanen
- *  @since 2.1.4.
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.4.
  */
+
 // FIXME: It is not yet possible to do wiki internal links.  In order to
 //        do this cleanly, a TranslatorReader revamp is needed.
-
 public class Image
     implements WikiPlugin
 {
-    public static final String PARAM_SRC      = "src";
-    public static final String PARAM_ALIGN    = "align";
-    public static final String PARAM_HEIGHT   = "height";
-    public static final String PARAM_WIDTH    = "width";
-    public static final String PARAM_ALT      = "alt";
-    public static final String PARAM_CAPTION  = "caption";
-    public static final String PARAM_LINK     = "link";
-    public static final String PARAM_STYLE    = "style";
-    public static final String PARAM_CLASS    = "class";
+    /** DOCUMENT ME! */
+    public static final String PARAM_SRC = "src";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_ALIGN = "align";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_HEIGHT = "height";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_WIDTH = "width";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_ALT = "alt";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_CAPTION = "caption";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_LINK = "link";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_STYLE = "style";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_CLASS = "class";
+
     //    public static final String PARAM_MAP      = "map";
-    public static final String PARAM_BORDER   = "border";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_BORDER = "border";
 
     /**
-     *  This method is used to clean away things like quotation marks which
-     *  a malicious user could use to stop processing and insert javascript.
+     * This method is used to clean away things like quotation marks which a malicious user could
+     * use to stop processing and insert javascript.
+     *
+     * @param params DOCUMENT ME!
+     * @param paramId DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private static final String getCleanParameter( Map params, String paramId )
+    private static final String getCleanParameter(Map params, String paramId)
     {
-        return TextUtil.replaceEntities( (String) params.get( paramId ) );
+        return TextUtil.replaceEntities((String) params.get(paramId));
     }
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         WikiEngine engine = context.getEngine();
-        String src     = getCleanParameter( params, PARAM_SRC );
-        String align   = getCleanParameter( params, PARAM_ALIGN );
-        String ht      = getCleanParameter( params, PARAM_HEIGHT );
-        String wt      = getCleanParameter( params, PARAM_WIDTH );
-        String alt     = getCleanParameter( params, PARAM_ALT );
-        String caption = getCleanParameter( params, PARAM_CAPTION );
-        String link    = getCleanParameter( params, PARAM_LINK );
-        String style   = getCleanParameter( params, PARAM_STYLE );
-        String cssclass= getCleanParameter( params, PARAM_CLASS );
-        // String map     = getCleanParameter( params, PARAM_MAP );
-        String border  = getCleanParameter( params, PARAM_BORDER );
+        String src = getCleanParameter(params, PARAM_SRC);
+        String align = getCleanParameter(params, PARAM_ALIGN);
+        String ht = getCleanParameter(params, PARAM_HEIGHT);
+        String wt = getCleanParameter(params, PARAM_WIDTH);
+        String alt = getCleanParameter(params, PARAM_ALT);
+        String caption = getCleanParameter(params, PARAM_CAPTION);
+        String link = getCleanParameter(params, PARAM_LINK);
+        String style = getCleanParameter(params, PARAM_STYLE);
+        String cssclass = getCleanParameter(params, PARAM_CLASS);
 
-        if( src == null )
+        // String map     = getCleanParameter( params, PARAM_MAP );
+        String border = getCleanParameter(params, PARAM_BORDER);
+
+        if (src == null)
         {
             throw new PluginException("Parameter 'src' is required for Image plugin");
         }
 
-        if( cssclass == null ) cssclass = "imageplugin";
+        if (cssclass == null)
+        {
+            cssclass = "imageplugin";
+        }
 
         try
         {
             AttachmentManager mgr = engine.getAttachmentManager();
-            Attachment        att = mgr.getAttachmentInfo( context, src );
+            Attachment att = mgr.getAttachmentInfo(context, src);
 
-            if( att != null )
+            if (att != null)
             {
-                src = context.getURL( WikiContext.ATTACH, att.getName() );
+                src = context.getURL(WikiContext.ATTACH, att.getName());
             }
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            throw new PluginException( "Attachment info failed: "+e.getMessage() );
+            throw new PluginException("Attachment info failed: " + e.getMessage());
         }
 
         StringBuffer result = new StringBuffer();
 
-        result.append( "<table border=\"0\" class=\""+cssclass+"\"" );
-        if( align != null ) result.append(" align=\""+align+"\"");
-        if( style != null ) result.append(" style=\""+style+"\"");
-        result.append( ">\n" );
+        result.append("<table border=\"0\" class=\"" + cssclass + "\"");
 
-        if( caption != null ) 
+        if (align != null)
         {
-            result.append("<caption align=bottom>"+TextUtil.replaceEntities(caption)+"</caption>\n");
+            result.append(" align=\"" + align + "\"");
         }
 
-
-        result.append( "<tr><td>" );
-       
-        if( link != null ) 
+        if (style != null)
         {
-            result.append("<a href=\""+link+"\">");
+            result.append(" style=\"" + style + "\"");
         }
 
-        result.append( "<img src=\""+src+"\"" );
-       
-        if( ht != null )     result.append(" height=\""+ht+"\"");
-        if( wt != null )     result.append(" width=\""+wt+"\"");
-        if( alt != null )    result.append(" alt=\""+alt+"\"");
-        if( border != null ) result.append(" border=\""+border+"\"");
+        result.append(">\n");
+
+        if (caption != null)
+        {
+            result.append(
+                "<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
+        }
+
+        result.append("<tr><td>");
+
+        if (link != null)
+        {
+            result.append("<a href=\"" + link + "\">");
+        }
+
+        result.append("<img src=\"" + src + "\"");
+
+        if (ht != null)
+        {
+            result.append(" height=\"" + ht + "\"");
+        }
+
+        if (wt != null)
+        {
+            result.append(" width=\"" + wt + "\"");
+        }
+
+        if (alt != null)
+        {
+            result.append(" alt=\"" + alt + "\"");
+        }
+
+        if (border != null)
+        {
+            result.append(" border=\"" + border + "\"");
+        }
+
         // if( map != null )    result.append(" map=\""+map+"\"");
-
         result.append(" />");
-        if( link != null )  result.append("</a>");
+
+        if (link != null)
+        {
+            result.append("</a>");
+        }
+
         result.append("</td></tr>\n");
 
         result.append("</table>\n");

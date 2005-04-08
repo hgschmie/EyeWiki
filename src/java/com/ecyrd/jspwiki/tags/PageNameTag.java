@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,30 +25,39 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
+
 /**
- *  Returns the currently requested page name.
+ * Returns the currently requested page name.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class PageNameTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        if( page != null )
+        if (page != null)
         {
-            if( page instanceof Attachment )
+            if (page instanceof Attachment)
             {
-                pageContext.getOut().print( ((Attachment)page).getFileName() );
+                pageContext.getOut().print(((Attachment) page).getFileName());
             }
             else
             {
-                pageContext.getOut().print( engine.beautifyTitle(page.getName()) );
+                pageContext.getOut().print(engine.beautifyTitle(page.getName()));
             }
         }
 

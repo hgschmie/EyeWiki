@@ -6,17 +6,32 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 import com.ecyrd.jspwiki.PageLock;
 
-public class CheckLockInfo 
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
+public class CheckLockInfo
     extends TagExtraInfo
 {
-    public VariableInfo[] getVariableInfo(TagData data)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param data DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public VariableInfo [] getVariableInfo(TagData data)
     {
-        VariableInfo var[] = { new VariableInfo( data.getAttributeString("id"),
-                    PageLock.class.getName(),
-                    true,
-                    VariableInfo.NESTED )
-        };
+        VariableInfo [] var =
+            {
+                new VariableInfo(
+                    data.getAttributeString("id"), PageLock.class.getName(), true,
+                    VariableInfo.NESTED)
+            };
 
-        return var;        
+        return var;
     }
 }

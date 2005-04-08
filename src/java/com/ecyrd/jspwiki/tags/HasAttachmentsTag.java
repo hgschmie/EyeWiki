@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,25 +25,34 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
 
+
 /**
- *  Includes body if page has attachments.
+ * Includes body if page has attachments.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class HasAttachmentsTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
         AttachmentManager mgr = engine.getAttachmentManager();
 
-        if( page != null && mgr.attachmentsEnabled() )
+        if ((page != null) && mgr.attachmentsEnabled())
         {
-            if( mgr.hasAttachments(page) )
+            if (mgr.hasAttachments(page))
             {
                 return EVAL_BODY_INCLUDE;
             }

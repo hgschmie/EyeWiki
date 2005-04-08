@@ -21,58 +21,105 @@ package com.ecyrd.jspwiki.attachment;
 
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Describes an attachment.  Attachments are actually derivatives of
- *  a WikiPage, since they do actually have a WikiName as well.
+ * Describes an attachment.  Attachments are actually derivatives of a WikiPage, since they do
+ * actually have a WikiName as well.
  *
- *  @author Erik Bunn
- *  @author Janne Jalkanen
+ * @author Erik Bunn
+ * @author Janne Jalkanen
  */
 public class Attachment
     extends WikiPage
 {
+    /** DOCUMENT ME! */
+    public static final int CREATED = 0;
+
+    /** DOCUMENT ME! */
+    public static final int UPLOADING = 1;
+
+    /** DOCUMENT ME! */
+    public static final int COMPLETE = 2;
+
+    /** DOCUMENT ME! */
     private String m_fileName;
+
+    /** DOCUMENT ME! */
     private String m_parentName;
-    private int    m_status = CREATED;
 
-    public static final int CREATED       = 0;
-    public static final int UPLOADING     = 1;
-    public static final int COMPLETE      = 2;
+    /** DOCUMENT ME! */
+    private int m_status = CREATED;
 
-    public Attachment( String parentPage, String fileName )
+    /**
+     * Creates a new Attachment object.
+     *
+     * @param parentPage DOCUMENT ME!
+     * @param fileName DOCUMENT ME!
+     */
+    public Attachment(String parentPage, String fileName)
     {
-        super( parentPage+"/"+fileName );
+        super(parentPage + "/" + fileName);
 
         m_parentName = parentPage;
-        m_fileName   = fileName;
+        m_fileName = fileName;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String toString()
     {
-        return "Attachment ["+getName()+";mod="+getLastModified()+
-               ";status="+m_status+"]";
+        return "Attachment [" + getName() + ";mod=" + getLastModified() + ";status=" + m_status
+        + "]";
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getFileName()
     {
-        return( m_fileName );
+        return (m_fileName);
     }
 
-    public void setFileName( String name )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     */
+    public void setFileName(String name)
     {
         m_fileName = name;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getStatus()
     {
         return m_status;
     }
 
-    public void setStatus( int status )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param status DOCUMENT ME!
+     */
+    public void setStatus(int status)
     {
         m_status = status;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getParentName()
     {
         return m_parentName;

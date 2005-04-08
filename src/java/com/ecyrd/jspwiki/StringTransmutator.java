@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,14 +20,19 @@
 package com.ecyrd.jspwiki;
 
 /**
- *  Defines an interface for transforming strings within a Wiki context.
+ * Defines an interface for transforming strings within a Wiki context.
  *
- *  @since 1.6.4
+ * @since 1.6.4
  */
 public interface StringTransmutator
 {
     /**
-     *  Returns a changed String, suitable for Wiki context.
+     * Returns a changed String, suitable for Wiki context.
+     *
+     * @param context DOCUMENT ME!
+     * @param source DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public String mutate( WikiContext context, String source );
+    public String mutate(WikiContext context, String source);
 }

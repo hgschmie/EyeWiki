@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,34 +27,53 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Writes a comment link.  Body of the link becomes the link text.
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *    <LI>format - Format, either "anchor" or "url".
- *  </UL>
+ * Writes a comment link.  Body of the link becomes the link text.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * <li>
+ * format - Format, either "anchor" or "url".
+ * </li>
+ * </ul>
+ * 
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class CommentLinkTag
     extends WikiLinkTag
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
-        WikiEngine engine   = m_wikiContext.getEngine();
-        WikiPage   page     = null;
-        String     pageName = null;
-        
+        WikiEngine engine = m_wikiContext.getEngine();
+        WikiPage page = null;
+        String pageName = null;
+
         //
         //  Determine the page and the link.
         //
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             page = m_wikiContext.getPage();
-            if( page == null )
+
+            if (page == null)
             {
                 // You can't call this on the page itself anyways.
                 return SKIP_BODY;
@@ -75,23 +94,24 @@ public class CommentLinkTag
         //
         JspWriter out = pageContext.getOut();
 
-        switch( m_format )
+        switch (m_format)
         {
-          case ANCHOR:
-            out.print("<a href=\""+getCommentURL(pageName)+"\">");
+        case ANCHOR:
+            out.print("<a href=\"" + getCommentURL(pageName) + "\">");
+
             break;
 
-          case URL:
-            out.print( getCommentURL(pageName) );
+        case URL:
+            out.print(getCommentURL(pageName));
+
             break;
         }
 
         return EVAL_BODY_INCLUDE;
     }
 
-    private String getCommentURL( String pageName )
+    private String getCommentURL(String pageName)
     {
         return m_wikiContext.getURL(WikiContext.COMMENT, pageName);
     }
-
 }

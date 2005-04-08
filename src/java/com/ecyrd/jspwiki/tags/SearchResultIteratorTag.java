@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
@@ -28,62 +29,81 @@ import javax.servlet.jsp.PageContext;
 import com.ecyrd.jspwiki.SearchResult;
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  Iterates through Search result results.
+ * Iterates through Search result results.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * max = how many search results should be shown.
+ * </li>
+ * </ul>
+ * 
  *
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>max = how many search results should be shown.
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
 
 // FIXME: Shares MUCH too much in common with IteratorTag.  Must refactor.
 public class SearchResultIteratorTag
     extends IteratorTag
 {
-    private   int         m_maxItems;
-    private   int         m_count = 0;
+    /** DOCUMENT ME! */
+    private int m_maxItems;
 
-    public void setMaxItems( String arg )
+    /** DOCUMENT ME! */
+    private int m_count = 0;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setMaxItems(String arg)
     {
         m_maxItems = Integer.parseInt(arg);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public final int doStartTag()
     {
         //
         //  Do lazy eval if the search results have not been set.
         //
-        if( m_iterator == null )
+        if (m_iterator == null)
         {
-            Collection searchresults = (Collection) pageContext.getAttribute( "searchresults",
-                                                                              PageContext.REQUEST_SCOPE );
-            setList( searchresults );
+            Collection searchresults =
+                (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
+            setList(searchresults);
         }
 
-        m_count       = 0;
-        m_wikiContext = (WikiContext) pageContext.getAttribute( WikiTagBase.ATTR_CONTEXT,
-                                                                PageContext.REQUEST_SCOPE );
+        m_count = 0;
+        m_wikiContext =
+            (WikiContext) pageContext.getAttribute(
+                WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
         return nextResult();
     }
 
     private int nextResult()
     {
-        if( m_iterator != null && m_iterator.hasNext() && m_count++ < m_maxItems )
+        if ((m_iterator != null) && m_iterator.hasNext() && (m_count++ < m_maxItems))
         {
             SearchResult r = (SearchResult) m_iterator.next();
 
-            WikiContext context = (WikiContext)m_wikiContext.clone();
-            context.setPage( r.getPage() );
-            pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT,
-                                      context,
-                                      PageContext.REQUEST_SCOPE );
-            pageContext.setAttribute( getId(),
-                                      r );
+            WikiContext context = (WikiContext) m_wikiContext.clone();
+            context.setPage(r.getPage());
+            pageContext.setAttribute(WikiTagBase.ATTR_CONTEXT, context, PageContext.REQUEST_SCOPE);
+            pageContext.setAttribute(getId(), r);
 
             return EVAL_BODY_AGAIN;
         }
@@ -91,9 +111,14 @@ public class SearchResultIteratorTag
         return SKIP_BODY;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int doAfterBody()
     {
-        if( bodyContent != null )
+        if (bodyContent != null)
         {
             try
             {
@@ -101,9 +126,10 @@ public class SearchResultIteratorTag
                 out.print(bodyContent.getString());
                 bodyContent.clearBody();
             }
-            catch( IOException e )
+            catch (IOException e)
             {
                 log.error("Unable to get inner tag text", e);
+
                 // FIXME: throw something?
             }
         }
@@ -111,6 +137,11 @@ public class SearchResultIteratorTag
         return nextResult();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int doEndTag()
     {
         m_iterator = null;

@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,16 +19,25 @@
  */
 package com.ecyrd.jspwiki;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
 public interface SearchResult
 {
     /**
-     *  Return the page.
+     * Return the page.
+     *
+     * @return DOCUMENT ME!
      */
     public WikiPage getPage();
 
     /**
-     *  Returns the score.
+     * Returns the score.
+     *
+     * @return DOCUMENT ME!
      */
-
     public int getScore();
 }

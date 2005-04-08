@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,18 +20,21 @@
 package com.ecyrd.jspwiki;
 
 /**
- *  A generic Wiki exception.
+ * A generic Wiki exception.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class WikiException
     extends Exception
 {
     /**
-     *  Constructs an exception.
+     * Constructs an exception.
+     *
+     * @param msg DOCUMENT ME!
      */
-    public WikiException( String msg )
+    public WikiException(String msg)
     {
         super(msg);
     }

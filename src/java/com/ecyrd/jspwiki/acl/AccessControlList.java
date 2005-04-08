@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -24,21 +24,41 @@ import java.security.acl.Acl;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
 
+
 /**
- *  Defines the JSPWiki-specific helper methods for accessing the
- *  Acl.
+ * Defines the JSPWiki-specific helper methods for accessing the Acl.
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public interface AccessControlList
     extends Acl
 {
+    /** DOCUMENT ME! */
     public static final int ALLOW = 1;
-    public static final int DENY  = -1;
-    public static final int NONE  = 0;
 
-    public int findPermission(Principal principal,
-                              Permission permission);
+    /** DOCUMENT ME! */
+    public static final int DENY = -1;
 
-    public AclEntry getEntry( Principal principal, boolean isNegative );
+    /** DOCUMENT ME! */
+    public static final int NONE = 0;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param principal DOCUMENT ME!
+     * @param permission DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int findPermission(Principal principal, Permission permission);
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param principal DOCUMENT ME!
+     * @param isNegative DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public AclEntry getEntry(Principal principal, boolean isNegative);
 }

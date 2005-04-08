@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -17,7 +17,6 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
@@ -30,15 +29,18 @@ import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  * This is a diff provider for the RSS Feed using the Traditional Provider as its base.
+ *
  * @author Janne Jalkanen
- * @author Erik Bunn 
+ * @author Erik Bunn
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-
 public class RssTraditionalDiffProvider
-        extends TraditionalDiffProvider
-        implements DiffProvider
+    extends TraditionalDiffProvider
+    implements DiffProvider
 {
+    /**
+     * Creates a new RssTraditionalDiffProvider object.
+     */
     public RssTraditionalDiffProvider()
     {
         super();
@@ -51,7 +53,6 @@ public class RssTraditionalDiffProvider
         diffPostfix = "\n";
     }
 
-
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
      */
@@ -61,7 +62,8 @@ public class RssTraditionalDiffProvider
     }
 
     /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
+     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
+     *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, IOException

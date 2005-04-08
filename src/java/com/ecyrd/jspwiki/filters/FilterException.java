@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,16 +21,22 @@ package com.ecyrd.jspwiki.filters;
 
 import com.ecyrd.jspwiki.WikiException;
 
+
 /**
- *  A generic PageFilter exception.
+ * A generic PageFilter exception.
  *
- *  @since 2.1.112
+ * @since 2.1.112
  */
-public class FilterException 
+public class FilterException
     extends WikiException
 {
-    public FilterException( String msg )
+    /**
+     * Creates a new FilterException object.
+     *
+     * @param msg DOCUMENT ME!
+     */
+    public FilterException(String msg)
     {
-        super( msg );
+        super(msg);
     }
 }

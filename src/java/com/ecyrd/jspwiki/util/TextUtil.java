@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,64 +19,63 @@
  */
 package com.ecyrd.jspwiki.util;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.UnsupportedEncodingException;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
 
 
 /**
  *  Contains a number of static utility methods.
  */
-public class TextUtil
-{
-    static final String   HEX_DIGITS = "0123456789ABCDEF";
+public class TextUtil {
+    static final String HEX_DIGITS = "0123456789ABCDEF";
+    private static final int EOI = 0;
+    private static final int LOWER = 1;
+    private static final int UPPER = 2;
+    private static final int DIGIT = 3;
+    private static final int OTHER = 4;
 
     /**
      *  java.net.URLEncoder.encode() method in JDK < 1.4 is buggy.  This duplicates
      *  its functionality.
      */
-    protected static String urlEncode( byte[] rs )
-    {
+    protected static String urlEncode(byte[] rs) {
         StringBuffer result = new StringBuffer();
 
         // Does the URLEncoding.  We could use the java.net one, but
         // it does not eat byte[]s.
-
-        for( int i = 0; i < rs.length; i++ )
-        {
+        for (int i = 0; i < rs.length; i++) {
             char c = (char) rs[i];
 
-            switch( c )
-            {
-              case '_':
-              case '.':
-              case '*':
-              case '-':
-              case '/':
-                result.append( c );
+            switch (c) {
+            case '_':
+            case '.':
+            case '*':
+            case '-':
+            case '/':
+                result.append(c);
+
                 break;
 
-              case ' ':
-                result.append( '+' );
+            case ' ':
+                result.append('+');
+
                 break;
 
-              default:
-                if( (c >= 'a' && c <= 'z') ||
-                    (c >= 'A' && c <= 'Z') ||
-                    (c >= '0' && c <= '9') )
-                {                    
-                    result.append( c );
-                }
-                else
-                {
-                    result.append( '%' );
-                    result.append( HEX_DIGITS.charAt( (c & 0xF0) >> 4 ) );
-                    result.append( HEX_DIGITS.charAt( c & 0x0F ) );
+            default:
+
+                if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) ||
+                        ((c >= '0') && (c <= '9'))) {
+                    result.append(c);
+                } else {
+                    result.append('%');
+                    result.append(HEX_DIGITS.charAt((c & 0xF0) >> 4));
+                    result.append(HEX_DIGITS.charAt(c & 0x0F));
                 }
             }
-
         } // for
 
         return result.toString();
@@ -88,105 +87,82 @@ public class TextUtil
      *  Bug parade, bug #4257115</A> for more information.
      *  <P>
      *  Thanks to CJB for this fix.
-     */ 
-    protected static String urlDecode( byte[] bytes )
-        throws UnsupportedEncodingException,
-               IllegalArgumentException
-    {
-        if(bytes == null) 
-        {
+     */
+    protected static String urlDecode(byte[] bytes)
+        throws UnsupportedEncodingException, IllegalArgumentException {
+        if (bytes == null) {
             return null;
         }
 
-        byte[] decodeBytes   = new byte[bytes.length];
+        byte[] decodeBytes = new byte[bytes.length];
         int decodedByteCount = 0;
 
-        try 
-        {
-            for( int count = 0; count < bytes.length; count++ ) 
-            {
-                switch( bytes[count] ) 
-                {
-                  case '+':
+        try {
+            for (int count = 0; count < bytes.length; count++) {
+                switch (bytes[count]) {
+                case '+':
                     decodeBytes[decodedByteCount++] = (byte) ' ';
-                    break ;
 
-                  case '%':
-                    decodeBytes[decodedByteCount++] = (byte)((HEX_DIGITS.indexOf(bytes[++count]) << 4) +
-                                                             (HEX_DIGITS.indexOf(bytes[++count])) );
+                    break;
 
-                    break ;
+                case '%':
+                    decodeBytes[decodedByteCount++] = (byte) ((HEX_DIGITS.indexOf(bytes[++count]) << 4) +
+                        (HEX_DIGITS.indexOf(bytes[++count])));
 
-                  default:
-                    decodeBytes[decodedByteCount++] = bytes[count] ;
+                    break;
+
+                default:
+                    decodeBytes[decodedByteCount++] = bytes[count];
                 }
             }
-
-        }
-        catch (IndexOutOfBoundsException ae) 
-        {
-            throw new IllegalArgumentException( "Malformed UTF-8 string?" );
+        } catch (IndexOutOfBoundsException ae) {
+            throw new IllegalArgumentException("Malformed UTF-8 string?");
         }
 
-        String processedPageName = null ;
+        String processedPageName = null;
 
-        try 
-        {
-            processedPageName = new String(decodeBytes, 0, decodedByteCount, "UTF-8") ;
-        } 
-        catch (UnsupportedEncodingException e) 
-        {
-            throw new UnsupportedEncodingException( "UTF-8 encoding not supported on this platform" );
+        try {
+            processedPageName = new String(decodeBytes, 0, decodedByteCount,
+                    "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new UnsupportedEncodingException(
+                "UTF-8 encoding not supported on this platform");
         }
 
-        return(processedPageName.toString());
+        return (processedPageName.toString());
     }
 
     /**
      *  As java.net.URLEncoder class, but this does it in UTF8 character set.
      */
-    public static String urlEncodeUTF8( String text )
-    {
-        byte[] rs = {};
+    public static String urlEncodeUTF8(String text) {
+        byte[] rs = {  };
 
-        try
-        {
+        try {
             rs = text.getBytes("UTF-8");
-            return urlEncode( rs );
-        }
-        catch( UnsupportedEncodingException e )
-        {
-            try
-            {
-                return java.net.URLEncoder.encode( text, "UTF-8" );
-            }
-            catch (UnsupportedEncodingException uee)
-            {
+
+            return urlEncode(rs);
+        } catch (UnsupportedEncodingException e) {
+            try {
+                return java.net.URLEncoder.encode(text, "UTF-8");
+            } catch (UnsupportedEncodingException uee) {
                 throw new RuntimeException("Could not encode UTF-8!?!", uee);
             }
         }
-
     }
 
     /**
      *  As java.net.URLDecoder class, but for UTF-8 strings.
      */
-    public static String urlDecodeUTF8( String utf8 )
-    {
+    public static String urlDecodeUTF8(String utf8) {
         String rs = null;
 
-        try
-        {
-            rs = urlDecode( utf8.getBytes("ISO-8859-1") );
-        }
-        catch( UnsupportedEncodingException e )
-        {
-            try
-            {
-                rs = java.net.URLDecoder.decode( utf8, "UTF-8" );
-            }
-            catch (UnsupportedEncodingException uee)
-            {
+        try {
+            rs = urlDecode(utf8.getBytes("ISO-8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            try {
+                rs = java.net.URLDecoder.decode(utf8, "UTF-8");
+            } catch (UnsupportedEncodingException uee) {
                 throw new RuntimeException("Could not decode UTF-8!?!", uee);
             }
         }
@@ -198,53 +174,44 @@ public class TextUtil
      * Provides encoded version of string depending on encoding.
      * Encoding may be UTF-8 or ISO-8859-1 (default).
      *
-     * <p>This implementation is the same as in 
+     * <p>This implementation is the same as in
      * FileSystemProvider.mangleName().
      */
-    public static String urlEncode( String data, String encoding )
-    {
+    public static String urlEncode(String data, String encoding) {
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though. 
-        if( "UTF-8".equals( encoding ) )
-            return( 	TextUtil.urlEncodeUTF8( data ) );
-    	else
-    	{
-    	    try
-    	    {
-        	    return( TextUtil.urlEncode( data.getBytes(encoding) ) );
-    	    }
-    	    catch (UnsupportedEncodingException uee)
-    	    {
-    	        throw new RuntimeException("Could not encode String into" + encoding);
-    	    }
-    	}
+        if ("UTF-8".equals(encoding)) {
+            return (TextUtil.urlEncodeUTF8(data));
+        } else {
+            try {
+                return (TextUtil.urlEncode(data.getBytes(encoding)));
+            } catch (UnsupportedEncodingException uee) {
+                throw new RuntimeException("Could not encode String into" +
+                    encoding);
+            }
+        }
     }
 
     /**
      * Provides decoded version of string depending on encoding.
      * Encoding may be UTF-8 or ISO-8859-1 (default).
      *
-     * <p>This implementation is the same as in 
+     * <p>This implementation is the same as in
      * FileSystemProvider.unmangleName().
      */
-    public static String urlDecode( String data, String encoding )
-        throws UnsupportedEncodingException,
-               IllegalArgumentException
-    {
+    public static String urlDecode(String data, String encoding)
+        throws UnsupportedEncodingException, IllegalArgumentException {
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though. 
-        if( "UTF-8".equals( encoding ) )
-            return( TextUtil.urlDecodeUTF8( data ) );
-        else
-        {
-            try
-            {
-                return( TextUtil.urlDecode( data.getBytes(encoding) ) );
+        if ("UTF-8".equals(encoding)) {
+            return (TextUtil.urlDecodeUTF8(data));
+        } else {
+            try {
+                return (TextUtil.urlDecode(data.getBytes(encoding)));
+            } catch (UnsupportedEncodingException uee) {
+                throw new RuntimeException("Could not decode String into" +
+                    encoding);
             }
-    	    catch (UnsupportedEncodingException uee)
-    	    {
-    	        throw new RuntimeException("Could not decode String into" + encoding);
-    	    }
         }
     }
 
@@ -255,12 +222,11 @@ public class TextUtil
      *
      *  @since 1.6.1
      */
-    public static String replaceEntities( String src )
-    {
-        src = StringUtils.replace( src, "&", "&amp;" );
-        src = StringUtils.replace( src, "<", "&lt;" );
-        src = StringUtils.replace( src, ">", "&gt;" );
-        src = StringUtils.replace( src, "\"", "&quot;" );
+    public static String replaceEntities(String src) {
+        src = StringUtils.replace(src, "&", "&amp;");
+        src = StringUtils.replace(src, "<", "&lt;");
+        src = StringUtils.replace(src, ">", "&gt;");
+        src = StringUtils.replace(src, "\"", "&quot;");
 
         return src;
     }
@@ -273,13 +239,15 @@ public class TextUtil
      *  @param orig Original string.  Null is safe.
      *  @param text The new text to insert into the string.
      */
-    public static String replaceString( String orig, int start, int end, String text )
-    {
-        if( orig == null ) return null;
+    public static String replaceString(String orig, int start, int end,
+        String text) {
+        if (orig == null) {
+            return null;
+        }
 
         StringBuffer buf = new StringBuffer(orig);
 
-        buf.replace( start, end, text );
+        buf.replace(start, end, text);
 
         return buf.toString();
     }
@@ -288,17 +256,14 @@ public class TextUtil
      *  Parses an integer parameter, returning a default value
      *  if the value is null or a non-number.
      */
-
-    public static int parseIntParameter( String value, int defvalue )
-    {
+    public static int parseIntParameter(String value, int defvalue) {
         int val = defvalue;
-        
-        try
-        {
-            val = Integer.parseInt( value );
+
+        try {
+            val = Integer.parseInt(value);
+        } catch (Exception e) {
         }
-        catch( Exception e ) {}
-            
+
         return val;
     }
 
@@ -315,64 +280,57 @@ public class TextUtil
      *  The reason why we're using CRLF is that most browser already
      *  return CRLF since that is the closest thing to a HTTP standard.
      */
-    public static String normalizePostData( String postData )
-    {
+    public static String normalizePostData(String postData) {
         StringBuffer sb = new StringBuffer();
 
-        for( int i = 0; i < postData.length(); i++ )
-        {
-            switch( postData.charAt(i) )
-            {
-              case 0x0a: // LF, UNIX
-                sb.append( "\r\n" );
+        for (int i = 0; i < postData.length(); i++) {
+            switch (postData.charAt(i)) {
+            case 0x0a: // LF, UNIX
+                sb.append("\r\n");
+
                 break;
 
-              case 0x0d: // CR, either Mac or MSDOS
-                sb.append( "\r\n" );
+            case 0x0d: // CR, either Mac or MSDOS
+                sb.append("\r\n");
+
                 // If it's MSDOS, skip the LF so that we don't add it again.
-                if( i < postData.length()-1 && postData.charAt(i+1) == 0x0a )
-                {
+                if ((i < (postData.length() - 1)) &&
+                        (postData.charAt(i + 1) == 0x0a)) {
                     i++;
                 }
+
                 break;
 
-              default:
-                sb.append( postData.charAt(i) );
+            default:
+                sb.append(postData.charAt(i));
+
                 break;
             }
         }
 
-        if( sb.length() < 2 || !sb.substring( sb.length()-2 ).equals("\r\n") )
-        {
-            sb.append( "\r\n" );
+        if ((sb.length() < 2) || !sb.substring(sb.length() - 2).equals("\r\n")) {
+            sb.append("\r\n");
         }
 
         return sb.toString();
     }
 
-    private static final int EOI   = 0;
-    private static final int LOWER = 1;
-    private static final int UPPER = 2;
-    private static final int DIGIT = 3;
-    private static final int OTHER = 4;
-
-    private static int getCharKind(int c)
-    {
-        if (c==-1)
-        {
+    private static int getCharKind(int c) {
+        if (c == -1) {
             return EOI;
         }
 
         char ch = (char) c;
 
-        if (Character.isLowerCase(ch))
+        if (Character.isLowerCase(ch)) {
             return LOWER;
-        else if (Character.isUpperCase(ch))
+        } else if (Character.isUpperCase(ch)) {
             return UPPER;
-        else if (Character.isDigit(ch))
+        } else if (Character.isDigit(ch)) {
             return DIGIT;
-        else
+        } else {
             return OTHER;
+        }
     }
 
     /**
@@ -382,9 +340,8 @@ public class TextUtil
      *  @param s String to be beautified.
      *  @return A beautified string.
      */
-    public static String beautifyString( String s )
-    {
-        return beautifyString( s, " " );
+    public static String beautifyString(String s) {
+        return beautifyString(s, " ");
     }
 
     /**
@@ -396,16 +353,14 @@ public class TextUtil
      *  @return A beautified string.
      *  @since 2.1.127
      */
-    public static String beautifyString( String s, String space )
-    {
+    public static String beautifyString(String s, String space) {
         StringBuffer result = new StringBuffer();
 
-        if(StringUtils.isEmpty(s))
-        {
+        if (StringUtils.isEmpty(s)) {
             return "";
         }
 
-        int cur     = s.charAt(0);
+        int cur = s.charAt(0);
         int curKind = getCharKind(cur);
 
         int prevKind = LOWER;
@@ -414,34 +369,33 @@ public class TextUtil
         int next = -1;
         int nextPos = 1;
 
-        while( curKind != EOI )
-        {
-            next = (nextPos < s.length()) ? s.charAt(nextPos++) : -1;
-            nextKind = getCharKind( next );
+        while (curKind != EOI) {
+            next = (nextPos < s.length()) ? s.charAt(nextPos++) : (-1);
+            nextKind = getCharKind(next);
 
-            if( (prevKind == UPPER) && (curKind == UPPER) && (nextKind == LOWER) )
-            {
+            if ((prevKind == UPPER) && (curKind == UPPER) &&
+                    (nextKind == LOWER)) {
                 result.append(space);
                 result.append((char) cur);
-            }
-            else
-            {
+            } else {
                 result.append((char) cur);
-                if( ( (curKind == UPPER) && (nextKind == DIGIT) )
-                    || ( (curKind == LOWER) && ((nextKind == DIGIT) || (nextKind == UPPER)) )
-                    || ( (curKind == DIGIT) && ((nextKind == UPPER) || (nextKind == LOWER)) ))
-                {
+
+                if (((curKind == UPPER) && (nextKind == DIGIT)) ||
+                        ((curKind == LOWER) &&
+                        ((nextKind == DIGIT) || (nextKind == UPPER))) ||
+                        ((curKind == DIGIT) &&
+                        ((nextKind == UPPER) || (nextKind == LOWER)))) {
                     result.append(space);
                 }
             }
+
             prevKind = curKind;
-            cur      = next;
-            curKind  = nextKind;
+            cur = next;
+            curKind = nextKind;
         }
 
         return result.toString();
     }
-
 
     /**
      *  Adds string mappings like
@@ -457,20 +411,16 @@ public class TextUtil
      *          a value for a key.
      *  @since 2.2.
      */
-
-    public static Map createMap(String [] values)
-        throws IllegalArgumentException
-    {
-        if( values.length % 2 != 0 )
-        {
-            throw new IllegalArgumentException( "One value is missing.");
+    public static Map createMap(String[] values)
+        throws IllegalArgumentException {
+        if ((values.length % 2) != 0) {
+            throw new IllegalArgumentException("One value is missing.");
         }
 
         Map map = new HashMap();
 
-        for( int i = 0; i < values.length; i += 2 )
-        {
-            map.put(values[i], values[i+1]);
+        for (int i = 0; i < values.length; i += 2) {
+            map.put(values[i], values[i + 1]);
         }
 
         return map;
@@ -483,22 +433,19 @@ public class TextUtil
      *  @return int Number of counted sections.
      *  @since 2.1.86.
      */
-
-    public static int countSections( String pagedata )
-    {
-        int tags  = 0;
+    public static int countSections(String pagedata) {
+        int tags = 0;
         int start = 0;
 
-        while( (start = pagedata.indexOf("----",start)) != -1 )
-        {
+        while ((start = pagedata.indexOf("----", start)) != -1) {
             tags++;
-            start+=4; // Skip this "----"
+            start += 4; // Skip this "----"
         }
 
         //
         // The first section does not get the "----"
         //
-        return pagedata.length() > 0 ? tags+1 : 0;
+        return (pagedata.length() > 0) ? (tags + 1) : 0;
     }
 
     /**
@@ -512,18 +459,15 @@ public class TextUtil
      *  @throws IllegalArgumentException If the page does not contain this many sections.
      *  @since 2.1.86.
      */
-    public static String getSection( String pagedata, int section )
-        throws IllegalArgumentException
-    {
-        int tags  = 0;
+    public static String getSection(String pagedata, int section)
+        throws IllegalArgumentException {
+        int tags = 0;
         int start = 0;
         int previous = 0;
 
-        while( (start = pagedata.indexOf("----",start)) != -1 )
-        {
-            if( ++tags == section )
-            {
-                return pagedata.substring( previous, start );
+        while ((start = pagedata.indexOf("----", start)) != -1) {
+            if (++tags == section) {
+                return pagedata.substring(previous, start);
             }
 
             start += 4; // Skip this "----"
@@ -531,11 +475,11 @@ public class TextUtil
             previous = start;
         }
 
-        if( ++tags == section )
-        {
-            return pagedata.substring( previous );
+        if (++tags == section) {
+            return pagedata.substring(previous);
         }
 
-        throw new IllegalArgumentException("There is no section no. "+section+" on the page.");
+        throw new IllegalArgumentException("There is no section no. " +
+            section + " on the page.");
     }
 }

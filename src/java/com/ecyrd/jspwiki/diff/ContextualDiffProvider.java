@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -17,10 +17,10 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -44,53 +44,75 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 
 /**
- * A seriously better diff provider, which highlights changes word-by-word using
- * CSS.
+ * A seriously better diff provider, which highlights changes word-by-word using CSS. Suggested by
+ * John Volkar.
  *
- * Suggested by John Volkar.
- * 
  * @author John Volkar
  * @author Janne Jalkanen
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-
-public class ContextualDiffProvider implements DiffProvider
+public class ContextualDiffProvider
+    implements DiffProvider
 {
-
+    /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(ContextualDiffProvider.class);
-
 
     //TODO all of these publics can become jspwiki.properties entries...
     //TODO span title= can be used to get hover info...
 
+    /** DOCUMENT ME! */
     protected boolean m_emitChangeNextPreviousHyperlinks = true;
 
     //Don't use spans here the deletion and insertions are nested in this...
+
+    /** DOCUMENT ME! */
     protected String m_changeStartHtml = ""; //This could be a image '>' for a start marker
+
+    /** DOCUMENT ME! */
     protected String m_changeEndHtml = ""; //and an image for an end '<' marker
 
+    /** DOCUMENT ME! */
     protected String m_diffStart = "<div class=\"diff-wikitext\">";
+
+    /** DOCUMENT ME! */
     protected String m_diffEnd = "</div>";
 
+    /** DOCUMENT ME! */
     protected String m_insertionStartHtml = "<span class=\"diff-insertion\">";
+
+    /** DOCUMENT ME! */
     protected String m_insertionEndHtml = "</span>";
 
+    /** DOCUMENT ME! */
     protected String m_deletionStartHtml = "<span class=\"diff-deletion\">";
+
+    /** DOCUMENT ME! */
     protected String m_deletionEndHtml = "</span>";
 
+    /** DOCUMENT ME! */
     protected String m_anchorPreIndex = "<a name=\"change-";
+
+    /** DOCUMENT ME! */
     protected String m_anchorPostIndex = "\" />";
 
-    protected String m_backPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
+    /** DOCUMENT ME! */
+    protected String m_backPreIndex = "<a class=\"diff-nextprev\" href=\"#change-";
+
+    /** DOCUMENT ME! */
     protected String m_backPostIndex = "\">&lt;&lt;</a>";
 
-    protected String m_forwardPreIndex =  "<a class=\"diff-nextprev\" href=\"#change-";
-    protected String m_forwardPostIndex = "\">&gt;&gt;</a>";  
+    /** DOCUMENT ME! */
+    protected String m_forwardPreIndex = "<a class=\"diff-nextprev\" href=\"#change-";
 
+    /** DOCUMENT ME! */
+    protected String m_forwardPostIndex = "\">&gt;&gt;</a>";
+
+    /**
+     * Creates a new ContextualDiffProvider object.
+     */
     public ContextualDiffProvider()
     {
     }
-
 
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
@@ -105,21 +127,23 @@ public class ContextualDiffProvider implements DiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-	throws NoRequiredPropertyException, IOException
+        throws NoRequiredPropertyException, IOException
     {
     }
 
     /**
-     * Do a colored diff of the two regions. This. is. serious. fun. ;-) 
+     * Do a colored diff of the two regions. This. is. serious. fun. ;-)
+     *
      * @see com.ecyrd.jspwiki.diff.DiffProvider#makeDiff(java.lang.String, java.lang.String)
      */
     public synchronized String makeDiff(String wikiOld, String wikiNew)
     {
         //Sequencing handles lineterminator to <br /> and every-other consequtive space to a &nbsp;
-        String[] alpha = sequence(TextUtil.replaceEntities(wikiOld));
-        String[] beta = sequence(TextUtil.replaceEntities(wikiNew));
+        String [] alpha = sequence(TextUtil.replaceEntities(wikiOld));
+        String [] beta = sequence(TextUtil.replaceEntities(wikiNew));
 
         Revision rev = null;
+
         try
         {
             rev = Diff.diff(alpha, beta, new MyersDiff());
@@ -127,6 +151,7 @@ public class ContextualDiffProvider implements DiffProvider
         catch (DifferentiationFailedException dfe)
         {
             log.error("Diff generation failed", dfe);
+
             return "Error while creating version diff.";
         }
 
@@ -150,16 +175,18 @@ public class ContextualDiffProvider implements DiffProvider
     }
 
     /**
-     * Take the string and create an array from it, split it first on newlines, making 
-     * sure to preserve the newlines in the elements, split each resulting element on 
-     * spaces, preserving the spaces.
-     * 
-     * All this preseving of newlines and spaces is so the wikitext when diffed will have fidelity 
-     * to it's original form.  As a side affect we see edits of purely whilespace.
+     * Take the string and create an array from it, split it first on newlines, making sure to
+     * preserve the newlines in the elements, split each resulting element on spaces, preserving
+     * the spaces. All this preseving of newlines and spaces is so the wikitext when diffed will
+     * have fidelity to it's original form.  As a side affect we see edits of purely whilespace.
+     *
+     * @param wikiText DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private String[] sequence(String wikiText)
+    private String [] sequence(String wikiText)
     {
-        String[] linesArray = Diff.stringToArray(wikiText);
+        String [] linesArray = Diff.stringToArray(wikiText);
 
         List list = new ArrayList();
 
@@ -168,7 +195,7 @@ public class ContextualDiffProvider implements DiffProvider
             String line = linesArray[i];
 
             // StringTokenizer might be discouraged but it still is perfect here...
-            for (StringTokenizer st = new StringTokenizer(line); st.hasMoreTokens(); )
+            for (StringTokenizer st = new StringTokenizer(line); st.hasMoreTokens();)
             {
                 list.add(st.nextToken());
 
@@ -177,30 +204,32 @@ public class ContextualDiffProvider implements DiffProvider
                     list.add(" ");
                 }
             }
+
             list.add("<br />"); // Line Break
         }
 
-        return (String []) list.toArray(new String [0]);
+        return (String []) list.toArray(new String[0]);
     }
 
     /**
-     * This helper class does the housekeeping for merging
-     * our various changes down and also makes sure that the
-     * whole change process is threadsafe by encapsulating
-     * all necessary variables.
+     * This helper class does the housekeeping for merging our various changes down and also makes
+     * sure that the whole change process is threadsafe by encapsulating all necessary variables.
      */
     private class ChangeMerger
-            implements RevisionVisitor
+        implements RevisionVisitor
     {
+        /** DOCUMENT ME! */
         private StringBuffer sb = null;
 
         /** Keeping score of the original lines to process */
         private int max = -1;
+
+        /** DOCUMENT ME! */
         private int index = 0;
 
         /** Index of the next line to be copied into the output. */
         private int firstLine = 0;
-       
+
         /** Link Anchor counter */
         private int count = 1;
 
@@ -209,11 +238,20 @@ public class ContextualDiffProvider implements DiffProvider
 
         /** Buffer to coalesce the changes together */
         private StringBuffer origBuf = null;
+
+        /** DOCUMENT ME! */
         private StringBuffer newBuf = null;
 
         /** Reference to the source string array */
         private String [] origStrings = null;
 
+        /**
+         * Creates a new ChangeMerger object.
+         *
+         * @param sb DOCUMENT ME!
+         * @param origStrings DOCUMENT ME!
+         * @param max DOCUMENT ME!
+         */
         private ChangeMerger(final StringBuffer sb, final String [] origStrings, final int max)
         {
             this.sb = sb;
@@ -241,15 +279,25 @@ public class ContextualDiffProvider implements DiffProvider
                     sb.append(origStrings[j]);
                 }
             }
+
             firstLine = orig.last() + 1;
         }
-                
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param rev DOCUMENT ME!
+         */
         public void visit(Revision rev)
         {
             // GNDN (Goes nowhere, does nothing)
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(AddDelta delta)
         {
             updateState(delta);
@@ -260,20 +308,26 @@ public class ContextualDiffProvider implements DiffProvider
                 flush();
                 mode = -1;
             }
+
             // We are in "neutral mode". Start a new Change
             if (mode == -1)
             {
                 mode = 0;
             }
-            
+
             // We are in "add mode".
-            if (mode == 0 || mode == 2)
+            if ((mode == 0) || (mode == 2))
             {
                 addNew(delta.getRevised());
                 mode = 1;
             }
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(ChangeDelta delta)
         {
             updateState(delta);
@@ -283,12 +337,17 @@ public class ContextualDiffProvider implements DiffProvider
             {
                 mode = 2;
             }
-            
+
             // Add the Changes to the buffers. 
             addOrig(delta.getOriginal());
             addNew(delta.getRevised());
         }
-      
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(DeleteDelta delta)
         {
             updateState(delta);
@@ -299,20 +358,24 @@ public class ContextualDiffProvider implements DiffProvider
                 flush();
                 mode = -1;
             }
+
             // We are in "neutral mode". Start a new Change
             if (mode == -1)
             {
                 mode = 1;
             }
-            
+
             // We are in "delete mode".
-            if (mode == 1 || mode == 2)
+            if ((mode == 1) || (mode == 2))
             {
                 addOrig(delta.getOriginal());
                 mode = 1;
             }
         }
 
+        /**
+         * DOCUMENT ME!
+         */
         public void shutdown()
         {
             index = max + 1; // Make sure that no hyperlink gets created
@@ -326,7 +389,7 @@ public class ContextualDiffProvider implements DiffProvider
                 }
             }
         }
-        
+
         private void addOrig(Chunk chunk)
         {
             if (chunk != null)
@@ -345,14 +408,13 @@ public class ContextualDiffProvider implements DiffProvider
 
         private void flush()
         {
-
-            if (newBuf.length() + origBuf.length() > 0)
+            if ((newBuf.length() + origBuf.length()) > 0)
             {
                 // This is the span element which encapsulates anchor and the change itself
                 sb.append(m_changeStartHtml);
-                
+
                 // Do we want to have a "back link"?
-                if (m_emitChangeNextPreviousHyperlinks && count > 1)
+                if (m_emitChangeNextPreviousHyperlinks && (count > 1))
                 {
                     sb.append(m_backPreIndex);
                     sb.append(count - 1);
@@ -363,7 +425,6 @@ public class ContextualDiffProvider implements DiffProvider
                 sb.append(m_anchorPreIndex);
                 sb.append(count++);
                 sb.append(m_anchorPostIndex);
-                
 
                 // ... has been added
                 if (newBuf.length() > 0)
@@ -372,7 +433,7 @@ public class ContextualDiffProvider implements DiffProvider
                     sb.append(newBuf);
                     sb.append(m_insertionEndHtml);
                 }
-                
+
                 sb.append(" ");
 
                 // .. has been removed
@@ -390,7 +451,7 @@ public class ContextualDiffProvider implements DiffProvider
                     sb.append(count); // Has already been incremented.
                     sb.append(m_forwardPostIndex);
                 }
-                
+
                 sb.append(m_changeEndHtml);
                 sb.append("\n");
 

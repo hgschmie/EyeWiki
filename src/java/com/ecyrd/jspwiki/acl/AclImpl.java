@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,69 +23,108 @@ import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.Group;
 import java.security.acl.Permission;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
 
+
 /**
- *  JSPWiki implementation of an Access Control List.
- *  <p>
- *  This implementation does not care about owners, and thus all
- *  actions are allowed by default. 
+ * JSPWiki implementation of an Access Control List.
+ * 
+ * <p>
+ * This implementation does not care about owners, and thus all actions are allowed by default.
+ * </p>
  */
 public class AclImpl
     implements AccessControlList
 {
+    /** DOCUMENT ME! */
     private Vector m_entries = new Vector();
-    private String m_name    = null;
 
-    public boolean addOwner( Principal caller, Principal owner )
+    /** DOCUMENT ME! */
+    private String m_name = null;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param caller DOCUMENT ME!
+     * @param owner DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean addOwner(Principal caller, Principal owner)
     {
         return false;
     }
 
-    public boolean deleteOwner(Principal caller,
-                               Principal owner)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param caller DOCUMENT ME!
+     * @param owner DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean deleteOwner(Principal caller, Principal owner)
     {
         return false;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param owner DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isOwner(Principal owner)
     {
         return true;
     }
 
-    public void setName( Principal caller, String name )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param caller DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     */
+    public void setName(Principal caller, String name)
     {
         m_name = name;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getName()
     {
         return m_name;
     }
 
-    private boolean hasEntry( AclEntry entry )
+    private boolean hasEntry(AclEntry entry)
     {
-        if( entry == null )
+        if (entry == null)
         {
             return false;
         }
 
-        for( Iterator i = m_entries.iterator(); i.hasNext(); )
+        for (Iterator i = m_entries.iterator(); i.hasNext();)
         {
             AclEntry e = (AclEntry) i.next();
 
-            Principal ep     = e.getPrincipal();
+            Principal ep = e.getPrincipal();
             Principal entryp = entry.getPrincipal();
 
-            if( ep == null || entryp == null )
+            if ((ep == null) || (entryp == null))
             {
-                throw new IllegalArgumentException("Entry is null; check code, please (entry="+entry+"; e="+e+")");
+                throw new IllegalArgumentException(
+                    "Entry is null; check code, please (entry=" + entry + "; e=" + e + ")");
             }
-            
-            if( ep.getName().equals( entryp.getName() ) &&
-                e.isNegative() == entry.isNegative() )
+
+            if (ep.getName().equals(entryp.getName()) && (e.isNegative() == entry.isNegative()))
             {
                 return true;
             }
@@ -94,28 +133,44 @@ public class AclImpl
         return false;
     }
 
-    public boolean addEntry(Principal caller,
-                            AclEntry entry)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param caller DOCUMENT ME!
+     * @param entry DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IllegalArgumentException DOCUMENT ME!
+     */
+    public boolean addEntry(Principal caller, AclEntry entry)
     {
-        if( entry.getPrincipal() == null )
+        if (entry.getPrincipal() == null)
         {
             throw new IllegalArgumentException("Entry principal cannot be null");
         }
 
-        if( hasEntry( entry ) )
+        if (hasEntry(entry))
         {
             return false;
         }
-        
-        m_entries.add( entry );
+
+        m_entries.add(entry);
 
         return true;
     }
 
-    public boolean removeEntry(Principal caller,
-                               AclEntry entry)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param caller DOCUMENT ME!
+     * @param entry DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean removeEntry(Principal caller, AclEntry entry)
     {
-        return m_entries.remove( entry );
+        return m_entries.remove(entry);
     }
 
     // FIXME: Does not understand anything about groups yet.
@@ -123,19 +178,18 @@ public class AclImpl
     {
         Vector perms = new Vector();
 
-        for( Iterator i = m_entries.iterator(); i.hasNext(); )
+        for (Iterator i = m_entries.iterator(); i.hasNext();)
         {
-            AclEntry ae = (AclEntry)i.next();
+            AclEntry ae = (AclEntry) i.next();
 
-            if( ae.getPrincipal().getName().equals( user.getName() ) )
+            if (ae.getPrincipal().getName().equals(user.getName()))
             {
                 //
                 //  Principal direct match.
                 //
-
-                for( Enumeration myEnum = ae.permissions(); myEnum.hasMoreElements(); )
+                for (Enumeration myEnum = ae.permissions(); myEnum.hasMoreElements();)
                 {
-                    perms.add( myEnum.nextElement() );
+                    perms.add(myEnum.nextElement());
                 }
             }
         }
@@ -143,27 +197,48 @@ public class AclImpl
         return perms.elements();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public Enumeration entries()
     {
         return m_entries.elements();
     }
 
-    public boolean checkPermission(Principal principal,
-                                   Permission permission)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param principal DOCUMENT ME!
+     * @param permission DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean checkPermission(Principal principal, Permission permission)
     {
-        int res = findPermission( principal, permission );
+        int res = findPermission(principal, permission);
 
         return (res == ALLOW);
     }
 
-    public AclEntry getEntry( Principal principal, boolean isNegative )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param principal DOCUMENT ME!
+     * @param isNegative DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public AclEntry getEntry(Principal principal, boolean isNegative)
     {
-        for( Enumeration e = m_entries.elements(); e.hasMoreElements(); )
+        for (Enumeration e = m_entries.elements(); e.hasMoreElements();)
         {
             AclEntry entry = (AclEntry) e.nextElement();
-        
-            if( entry.getPrincipal().getName().equals(principal.getName()) &&
-                entry.isNegative() == isNegative )
+
+            if (
+                entry.getPrincipal().getName().equals(principal.getName())
+                    && (entry.isNegative() == isNegative))
             {
                 return entry;
             }
@@ -173,12 +248,14 @@ public class AclImpl
     }
 
     /**
-     *  A new kind of an interface, where the possible results are
-     *  either ALLOW, DENY, or NONE.
+     * A new kind of an interface, where the possible results are either ALLOW, DENY, or NONE.
+     *
+     * @param principal DOCUMENT ME!
+     * @param permission DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-   
-    public int findPermission(Principal principal,
-                              Permission permission)
+    public int findPermission(Principal principal, Permission permission)
     {
         boolean posEntry = false;
 
@@ -188,22 +265,23 @@ public class AclImpl
         System.out.println("Checking user="+principal);
         System.out.println("Checking permission="+permission);
         */
-        for( Enumeration e = m_entries.elements(); e.hasMoreElements(); )
+        for (Enumeration e = m_entries.elements(); e.hasMoreElements();)
         {
             AclEntry entry = (AclEntry) e.nextElement();
 
-            if( entry.getPrincipal().getName().equals(principal.getName()) )
+            if (entry.getPrincipal().getName().equals(principal.getName()))
             {
-                if( entry.checkPermission( permission ) )
+                if (entry.checkPermission(permission))
                 {
                     // System.out.println("  Found person/permission match");
-                    if( entry.isNegative() )
+                    if (entry.isNegative())
                     {
                         return DENY;
                     }
                     else
                     {
                         return ALLOW;
+
                         // posEntry = true;
                     }
                 }
@@ -215,32 +293,30 @@ public class AclImpl
         //  we'll err for the negative by quitting immediately if we see
         //  a match.  For positive, we have to wait until here.
         //
+        if (posEntry)
+        {
+            return ALLOW;
+        }
 
-        if( posEntry ) return ALLOW;
-        
         // System.out.println("-> groups");
-
         //
         //  Now, if the individual permissions did not match, we'll go through
         //  it again but this time looking at groups.
         //
-
-        for( Enumeration e = m_entries.elements(); e.hasMoreElements(); )
+        for (Enumeration e = m_entries.elements(); e.hasMoreElements();)
         {
             AclEntry entry = (AclEntry) e.nextElement();
 
             // System.out.println("  Checking entry="+entry);
-
-            if( entry.getPrincipal() instanceof Group )
+            if (entry.getPrincipal() instanceof Group)
             {
                 Group entryGroup = (Group) entry.getPrincipal();
 
                 // System.out.println("  Checking group="+entryGroup);
-
-                if( entryGroup.isMember( principal ) && entry.checkPermission( permission ) )
+                if (entryGroup.isMember(principal) && entry.checkPermission(permission))
                 {
                     // System.out.println("    ismember&haspermission");
-                    if( entry.isNegative() )
+                    if (entry.isNegative())
                     {
                         // System.out.println("    DENY");
                         return DENY;
@@ -249,48 +325,61 @@ public class AclImpl
                     {
                         // System.out.println("    ALLOW");
                         return ALLOW;
+
                         //                        posEntry = true;
                     }
                 }
             }
         }
 
-        if( posEntry ) return ALLOW;
+        if (posEntry)
+        {
+            return ALLOW;
+        }
 
         return NONE;
     }
 
     /**
-     *  Returns a string representation of the contents of this Acl.
+     * Returns a string representation of the contents of this Acl.
+     *
+     * @return DOCUMENT ME!
      */
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
 
-        for( Enumeration myEnum = entries(); myEnum.hasMoreElements(); )
+        for (Enumeration myEnum = entries(); myEnum.hasMoreElements();)
         {
             AclEntry entry = (AclEntry) myEnum.nextElement();
 
             Principal pal = entry.getPrincipal();
 
-            if( pal != null )
-                sb.append("  user = "+pal.getName()+": ");
+            if (pal != null)
+            {
+                sb.append("  user = " + pal.getName() + ": ");
+            }
             else
+            {
                 sb.append("  user = null: ");
+            }
 
-            if( entry.isNegative() ) sb.append("NEG");
+            if (entry.isNegative())
+            {
+                sb.append("NEG");
+            }
 
             sb.append("(");
-            for( Enumeration perms = entry.permissions(); perms.hasMoreElements(); )
+
+            for (Enumeration perms = entry.permissions(); perms.hasMoreElements();)
             {
                 Permission perm = (Permission) perms.nextElement();
-                sb.append( perm.toString() );
+                sb.append(perm.toString());
             }
+
             sb.append(")\n");
         }
 
         return sb.toString();
     }
-
 }
-    

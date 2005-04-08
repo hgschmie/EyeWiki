@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,14 +21,21 @@ package com.ecyrd.jspwiki.xmlrpc;
 
 import com.ecyrd.jspwiki.WikiEngine;
 
+
 /**
- *  Any wiki RPC handler should implement this so that they can be properly
- *  initialized and recognized by JSPWiki.
+ * Any wiki RPC handler should implement this so that they can be properly initialized and
+ * recognized by JSPWiki.
  *
- *  @author Janne Jalkanen
- *  @since 2.1.7
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.7
  */
 public interface WikiRPCHandler
 {
-    public void initialize( WikiEngine engine );
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     */
+    public void initialize(WikiEngine engine);
 }

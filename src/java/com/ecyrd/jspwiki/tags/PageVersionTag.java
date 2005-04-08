@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -24,31 +24,40 @@ import java.io.IOException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Writes the version of the current page.  If this is
- *  marked as the current version, then includes body as text instead of
- *  version number.
+ * Writes the version of the current page.  If this is marked as the current version, then includes
+ * body as text instead of version number.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class PageVersionTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        if( page != null )
+        if (page != null)
         {
             int version = page.getVersion();
             String verstr;
 
-            if( version > 0 )
+            if (version > 0)
             {
-                pageContext.getOut().print( Integer.toString(version) );
+                pageContext.getOut().print(Integer.toString(version));
+
                 return SKIP_BODY;
             }
         }

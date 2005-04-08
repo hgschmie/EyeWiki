@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,19 +23,30 @@ import java.io.IOException;
 
 import com.ecyrd.jspwiki.WikiEngine;
 
+
 /**
- *  Writes a link to the RSS file (using the "link" attribute).
- *  <p>
- *  This tag is now deprecated - please use the new FeedDiscoveryTag.
+ * Writes a link to the RSS file (using the "link" attribute).
+ * 
+ * <p>
+ * This tag is now deprecated - please use the new FeedDiscoveryTag.
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @deprecated
- *  @see FeedDiscoveryTag
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @see FeedDiscoveryTag
+ * @since 2.0
+ * @deprecated
  */
 public class RSSLinkTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
@@ -43,10 +54,11 @@ public class RSSLinkTag
 
         String rssURL = engine.getGlobalRSSURL();
 
-        if( rssURL != null )
+        if (rssURL != null)
         {
-            pageContext.getOut().print("<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS feed\" href=\""+rssURL+"\" />");
-
+            pageContext.getOut().print(
+                "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS feed\" href=\""
+                + rssURL + "\" />");
         }
 
         return SKIP_BODY;

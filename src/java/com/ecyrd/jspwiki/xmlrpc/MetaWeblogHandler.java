@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.xmlrpc;
 
 import java.io.ByteArrayInputStream;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
@@ -40,47 +41,61 @@ import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
 import com.ecyrd.jspwiki.plugin.WeblogPlugin;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Provides handlers for all RPC routines of the MetaWeblog API.
- *  <P>
- *  JSPWiki does not support categories, and therefore we always return
- *  an empty list for getCategories().  Note also that this API is not
- *  suitable for general Wiki editing, since JSPWiki formats the entries
- *  in a wiki-compatible manner.  And you cannot choose your page names
- *  either.  Since 2.1.94 the entire MetaWeblog API is supported.
+ * Provides handlers for all RPC routines of the MetaWeblog API.
+ * 
+ * <P>
+ * JSPWiki does not support categories, and therefore we always return an empty list for
+ * getCategories().  Note also that this API is not suitable for general Wiki editing, since
+ * JSPWiki formats the entries in a wiki-compatible manner.  And you cannot choose your page names
+ * either.  Since 2.1.94 the entire MetaWeblog API is supported.
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @since 2.1.7
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.7
  */
-
 public class MetaWeblogHandler
-        implements WikiRPCHandler
+    implements WikiRPCHandler
 {
-    Category log = Category.getInstance( MetaWeblogHandler.class ); 
+    /** DOCUMENT ME! */
+    Category log = Category.getInstance(MetaWeblogHandler.class);
 
+    /** DOCUMENT ME! */
     private WikiEngine m_engine;
 
-    public void initialize( WikiEngine engine )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     */
+    public void initialize(WikiEngine engine)
     {
         m_engine = engine;
     }
 
     /**
-     *  Does a quick check against the current user
-     *  and does he have permissions to do the stuff
-     *  that he really wants to.
-     *  <p>
-     *  If there is no authentication enabled, returns normally.
+     * Does a quick check against the current user and does he have permissions to do the stuff
+     * that he really wants to.
+     * 
+     * <p>
+     * If there is no authentication enabled, returns normally.
+     * </p>
      *
-     *  @throw XmlRpcException with the correct error message, if auth fails.
+     * @param page DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param permission DOCUMENT ME!
+     *
+     * @throws XmlRpcException with the correct error message, if auth fails.
      */
-    private void checkPermissions( WikiPage page, 
-            String username,
-            String password,
-            String permission )
-            throws XmlRpcException
+    private void checkPermissions(
+        WikiPage page, String username, String password, String permission)
+        throws XmlRpcException
     {
         return;
+
         /*
           AuthorizationManager mgr = m_engine.getAuthorizationManager();
           UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );
@@ -91,7 +106,7 @@ public class MetaWeblogHandler
           if( auth != null )
           {
           boolean isValid = auth.authenticate( currentUser );
-        
+
           if( isValid )
           {
           if( !mgr.checkPermission( page,
@@ -107,7 +122,7 @@ public class MetaWeblogHandler
           throw new XmlRpcException(0, msg );
           }
           }
-          else 
+          else
           {
           log.error( "Username '"+username+"' or password not valid." );
           throw new XmlRpcException(0, "Password or username not valid.");
@@ -117,42 +132,46 @@ public class MetaWeblogHandler
     }
 
     /**
-     *  JSPWiki does not support categories, therefore JSPWiki
-     *  always returns an empty list for categories.
+     * JSPWiki does not support categories, therefore JSPWiki always returns an empty list for
+     * categories.
+     *
+     * @param blogid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
-    public Hashtable getCategories( String blogid,
-            String username,
-            String password )
-            throws XmlRpcException
+    public Hashtable getCategories(String blogid, String username, String password)
+        throws XmlRpcException
     {
-        WikiPage page = m_engine.getPage( blogid );
+        WikiPage page = m_engine.getPage(blogid);
 
-        checkPermissions( page, username, password, "view" );
+        checkPermissions(page, username, password, "view");
 
         Hashtable ht = new Hashtable();
 
         return ht;
     }
 
-    private String getURL( String page )
+    private String getURL(String page)
     {
-        return m_engine.getURL( WikiContext.VIEW,
-                page,
-                null,
-                true ); // Force absolute urls
+        return m_engine.getURL(WikiContext.VIEW, page, null, true); // Force absolute urls
     }
 
     /**
-     *  Takes a wiki page, and creates a metaWeblog struct
-     *  out of it.
-     *  @param page The actual entry page
-     *  @return A metaWeblog entry struct.
+     * Takes a wiki page, and creates a metaWeblog struct out of it.
+     *
+     * @param page The actual entry page
+     *
+     * @return A metaWeblog entry struct.
      */
-    private Hashtable makeEntry( WikiPage page )
+    private Hashtable makeEntry(WikiPage page)
     {
         Hashtable ht = new Hashtable();
 
-        WikiPage firstVersion = m_engine.getPage( page.getName(), 1 );
+        WikiPage firstVersion = m_engine.getPage(page.getName(), 1);
 
         ht.put("dateCreated", firstVersion.getLastModified());
         ht.put("link", getURL(page.getName()));
@@ -164,18 +183,21 @@ public class MetaWeblogHandler
         String title = "";
         int firstLine = pageText.indexOf('\n');
 
-        if( firstLine > 0 )
+        if (firstLine > 0)
         {
-            title = pageText.substring( 0, firstLine );
+            title = pageText.substring(0, firstLine);
         }
-            
-        if(StringUtils.isBlank(title))
+
+        if (StringUtils.isBlank(title))
         {
             title = page.getName();
         }
 
         // Remove wiki formatting
-        while( title.startsWith("!") ) title = title.substring(1);
+        while (title.startsWith("!"))
+        {
+            title = title.substring(1);
+        }
 
         ht.put("title", title);
         ht.put("description", pageText);
@@ -184,138 +206,156 @@ public class MetaWeblogHandler
     }
 
     /**
-     *  Returns a list of the recent posts to this weblog.
+     * Returns a list of the recent posts to this weblog.
+     *
+     * @param blogid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param numberOfPosts DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
 
     // FIXME: The implementation is suboptimal, as it
     //        goes through all of the blog entries.
-
-    public Hashtable getRecentPosts( String blogid,
-            String username,
-            String password,
-            int numberOfPosts)
-            throws XmlRpcException
+    public Hashtable getRecentPosts(
+        String blogid, String username, String password, int numberOfPosts)
+        throws XmlRpcException
     {
         Hashtable result = new Hashtable();
 
-        log.info( "metaWeblog.getRecentPosts() called");
+        log.info("metaWeblog.getRecentPosts() called");
 
-        WikiPage page = m_engine.getPage( blogid );
+        WikiPage page = m_engine.getPage(blogid);
 
-        checkPermissions( page, username, password, "view" );
+        checkPermissions(page, username, password, "view");
 
         try
         {
             WeblogPlugin plugin = new WeblogPlugin();
 
-            List changed = plugin.findBlogEntries(m_engine.getPageManager(), 
-                    blogid,
-                    new Date(0L),
-                    new Date());
+            List changed =
+                plugin.findBlogEntries(m_engine.getPageManager(), blogid, new Date(0L), new Date());
 
-            Collections.sort( changed, new PageTimeComparator() );
+            Collections.sort(changed, new PageTimeComparator());
 
             int items = 0;
-            for( Iterator i = changed.iterator(); i.hasNext() && items < numberOfPosts; items++ )
+
+            for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
+                    items++)
             {
                 WikiPage p = (WikiPage) i.next();
 
-                result.put( "entry", makeEntry( p ) );
+                result.put("entry", makeEntry(p));
             }
-
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            log.error( "Failed to list recent posts", e );
+            log.error("Failed to list recent posts", e);
 
-            throw new XmlRpcException( 0, e.getMessage() );
+            throw new XmlRpcException(0, e.getMessage());
         }
 
         return result;
     }
 
     /**
-     *  Adds a new post to the blog.
-     *  @param publish This parameter is ignored for JSPWiki.
+     * Adds a new post to the blog.
+     *
+     * @param blogid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param content DOCUMENT ME!
+     * @param publish This parameter is ignored for JSPWiki.
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
-    public String newPost( String blogid,
-            String username,
-            String password,
-            Hashtable content,
-            boolean publish )
-            throws XmlRpcException
+    public String newPost(
+        String blogid, String username, String password, Hashtable content, boolean publish)
+        throws XmlRpcException
     {
         log.info("metaWeblog.newPost() called");
-        
-        WikiPage page = m_engine.getPage( blogid );
-        checkPermissions( page, username, password, "create" );
+
+        WikiPage page = m_engine.getPage(blogid);
+        checkPermissions(page, username, password, "create");
 
         try
         {
             WeblogEntryPlugin plugin = new WeblogEntryPlugin();
 
-            String pageName = plugin.getNewEntryPage( m_engine, blogid );
+            String pageName = plugin.getNewEntryPage(m_engine, blogid);
 
-            WikiPage entryPage = new WikiPage( pageName );
-            entryPage.setAuthor( username );
+            WikiPage entryPage = new WikiPage(pageName);
+            entryPage.setAuthor(username);
 
-            WikiContext context = new WikiContext( m_engine, entryPage );
+            WikiContext context = new WikiContext(m_engine, entryPage);
 
             StringBuffer text = new StringBuffer();
-            text.append( "!"+content.get("title") );
-            text.append( "\n\n" );
-            text.append( content.get("description") );
+            text.append("!" + content.get("title"));
+            text.append("\n\n");
+            text.append(content.get("description"));
 
-            if (log.isDebugEnabled()) {
-                log.debug("Writing entry: "+text);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Writing entry: " + text);
             }
 
-            m_engine.saveText( context, text.toString() );
+            m_engine.saveText(context, text.toString());
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            log.error("Failed to create weblog entry",e);
-            throw new XmlRpcException( 0, "Failed to create weblog entry: "+e.getMessage() );
+            log.error("Failed to create weblog entry", e);
+            throw new XmlRpcException(0, "Failed to create weblog entry: " + e.getMessage());
         }
 
         return ""; // FIXME:
     }
 
     /**
-     *  Creates an attachment and adds it to the blog.  The attachment
-     *  is created into the main blog page, not the actual post page,
-     *  because we do not know it at this point.
+     * Creates an attachment and adds it to the blog.  The attachment is created into the main blog
+     * page, not the actual post page, because we do not know it at this point.
+     *
+     * @param blogid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param content DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
-    public Hashtable newMediaObject( String blogid, 
-            String username,
-            String password,
-            Hashtable content )
-            throws XmlRpcException
+    public Hashtable newMediaObject(
+        String blogid, String username, String password, Hashtable content)
+        throws XmlRpcException
     {
         String url = "";
 
         log.info("metaWeblog.newMediaObject() called");
 
-        WikiPage page = m_engine.getPage( blogid );
-        checkPermissions( page, username, password, "upload" );
+        WikiPage page = m_engine.getPage(blogid);
+        checkPermissions(page, username, password, "upload");
 
-        String name = (String) content.get( "name" );
-        byte[] data = (byte[]) content.get( "bits" );
+        String name = (String) content.get("name");
+        byte [] data = (byte []) content.get("bits");
 
         AttachmentManager attmgr = m_engine.getAttachmentManager();
 
         try
         {
-            Attachment att = new Attachment( blogid, name );
-            att.setAuthor( username );
-            attmgr.storeAttachment( att, new ByteArrayInputStream( data ) );
+            Attachment att = new Attachment(blogid, name);
+            att.setAuthor(username);
+            attmgr.storeAttachment(att, new ByteArrayInputStream(data));
 
-            url = m_engine.getURL( WikiContext.ATTACH, att.getName(), null, true );
+            url = m_engine.getURL(WikiContext.ATTACH, att.getName(), null, true);
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            log.error( "Failed to upload attachment", e );
-            throw new XmlRpcException( 0, "Failed to upload media object: "+e.getMessage() );
+            log.error("Failed to upload attachment", e);
+            throw new XmlRpcException(0, "Failed to upload media object: " + e.getMessage());
         }
 
         Hashtable result = new Hashtable();
@@ -324,69 +364,81 @@ public class MetaWeblogHandler
         return result;
     }
 
-
     /**
-     *  Allows the user to edit a post.  It does not allow general
-     *   editability of wiki pages, because of the limitations of the
-     *  metaWeblog API.
+     * Allows the user to edit a post.  It does not allow general editability of wiki pages,
+     * because of the limitations of the metaWeblog API.
+     *
+     * @param postid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     * @param content DOCUMENT ME!
+     * @param publish DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
-    boolean editPost( String postid,
-            String username,
-            String password,
-            Hashtable content,
-            boolean publish )
-            throws XmlRpcException
+    boolean editPost(
+        String postid, String username, String password, Hashtable content, boolean publish)
+        throws XmlRpcException
     {
-        if (log.isInfoEnabled()) {
-            log.info("metaWeblog.editPost("+postid+") called");
+        if (log.isInfoEnabled())
+        {
+            log.info("metaWeblog.editPost(" + postid + ") called");
         }
 
         // FIXME: Is postid correct?  Should we determine it from the page name?
-        WikiPage page = m_engine.getPage( postid );
-        checkPermissions( page, username, password, "edit" );
+        WikiPage page = m_engine.getPage(postid);
+        checkPermissions(page, username, password, "edit");
 
         try
         {
-            WikiPage entryPage = (WikiPage)page.clone();
-            entryPage.setAuthor( username );
+            WikiPage entryPage = (WikiPage) page.clone();
+            entryPage.setAuthor(username);
 
-            WikiContext context = new WikiContext( m_engine, entryPage );
+            WikiContext context = new WikiContext(m_engine, entryPage);
 
             StringBuffer text = new StringBuffer();
-            text.append( "!"+content.get("title") );
-            text.append( "\n\n" );
-            text.append( content.get("description") );
+            text.append("!" + content.get("title"));
+            text.append("\n\n");
+            text.append(content.get("description"));
 
-            if (log.isDebugEnabled()) {
-                log.debug("Updating entry: "+text);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Updating entry: " + text);
             }
 
-            m_engine.saveText( context, text.toString() );
+            m_engine.saveText(context, text.toString());
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            log.error("Failed to create weblog entry",e);
-            throw new XmlRpcException( 0, "Failed to update weblog entry: "+e.getMessage() );
+            log.error("Failed to create weblog entry", e);
+            throw new XmlRpcException(0, "Failed to update weblog entry: " + e.getMessage());
         }
 
         return true;
     }
 
     /**
-     *  Gets the text of any page.  The title of the page is parsed
-     *  (if any is provided).
+     * Gets the text of any page.  The title of the page is parsed (if any is provided).
+     *
+     * @param postid DOCUMENT ME!
+     * @param username DOCUMENT ME!
+     * @param password DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws XmlRpcException DOCUMENT ME!
      */
-    Hashtable getPost( String postid,
-            String username,
-            String password )
-            throws XmlRpcException
+    Hashtable getPost(String postid, String username, String password)
+        throws XmlRpcException
     {
         String wikiname = "FIXME";
 
-        WikiPage page = m_engine.getPage( wikiname );
+        WikiPage page = m_engine.getPage(wikiname);
 
-        checkPermissions( page, username, password, "view" );
+        checkPermissions(page, username, password, "view");
 
-        return makeEntry( page );
+        return makeEntry(page);
     }
 }

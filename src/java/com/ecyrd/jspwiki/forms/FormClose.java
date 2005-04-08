@@ -1,7 +1,7 @@
 /*
     WikiForms - a WikiPage FORM handler for JSPWiki.
- 
-    Copyright (C) 2003 BaseN. 
+
+    Copyright (C) 2003 BaseN.
 
     JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
@@ -9,12 +9,12 @@
     it under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation; either version 2.1 of the License, or
     (at your option) any later version.
- 
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU Lesser General Public License for more details.
- 
+
     You should have received a copy of the GNU Lesser General Public License
     along with this program; if not, write to the Free Software
 */
@@ -27,43 +27,50 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 
+
 /**
- *  Closes a WikiForm.
+ * Closes a WikiForm.
  *
- *  @author ebu
+ * @author ebu
  */
 public class FormClose
     extends FormElement
 {
-    private static Logger log = 
-	Logger.getLogger( FormClose.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(FormClose.class);
 
     /**
-     * Builds a Form close tag. Removes any information on the form from
-     * the WikiContext.
+     * Builds a Form close tag. Removes any information on the form from the WikiContext.
+     *
+     * @param ctx DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
      */
-    public String execute( WikiContext ctx, Map params )
+    public String execute(WikiContext ctx, Map params)
         throws PluginException
     {
         StringBuffer tags = new StringBuffer();
-        tags.append( "</form>\n" );
-        tags.append( "</div>" );
+        tags.append("</form>\n");
+        tags.append("</div>");
 
         // Don't render if no error and error-only-rendering is on.
-        FormInfo info = getFormInfo( ctx );
-        if( info != null )
+        FormInfo info = getFormInfo(ctx);
+
+        if (info != null)
         {
-            if( info.hide() )
+            if (info.hide())
             {
-                return( "<p>(no need to show close now)</p>" );
+                return ("<p>(no need to show close now)</p>");
             }
         }
 
         // Get rid of remaining form data, so it doesn't mess up other forms.
         // After this, it is safe to add other Forms.
-        storeFormInfo( ctx, null );
+        storeFormInfo(ctx, null);
 
-        return( tags.toString() );
-
+        return (tags.toString());
     }
 }

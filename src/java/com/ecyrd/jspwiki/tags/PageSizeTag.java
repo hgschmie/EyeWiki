@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,40 +25,49 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Returns the currently requested page or attachment size.
+ * Returns the currently requested page or attachment size.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class PageSizeTag
-        extends WikiTagBase
+    extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-            throws IOException
+        throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
         try
         {
-            if( page != null )
+            if (page != null)
             {
                 long size = page.getSize();
 
-                if( size == -1 && engine.pageExists(page) ) // should never happen with attachments
+                if ((size == -1) && engine.pageExists(page)) // should never happen with attachments
                 {
-                    size = engine.getPureText( page.getName(), page.getVersion() ).length();
-                    page.setSize( size );
+                    size = engine.getPureText(page.getName(), page.getVersion()).length();
+                    page.setSize(size);
                 }
 
-                pageContext.getOut().write( Long.toString(size) );
+                pageContext.getOut().write(Long.toString(size));
             }
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            log.warn("Providers did not work: ",e);
-            pageContext.getOut().write("Error determining page size: "+e.getMessage());
+            log.warn("Providers did not work: ", e);
+            pageContext.getOut().write("Error determining page size: " + e.getMessage());
         }
 
         return SKIP_BODY;

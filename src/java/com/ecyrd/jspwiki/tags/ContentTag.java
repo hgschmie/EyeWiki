@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,134 +31,202 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Is used as a "super include" tag, which can include the proper context
- *  based on the wikicontext.
+ * Is used as a "super include" tag, which can include the proper context based on the wikicontext.
  *
- *  @author Janne Jalkanen
- *  @since 2.2
+ * @author Janne Jalkanen
+ *
+ * @since 2.2
  */
 public class ContentTag
-        extends WikiTagBase
+    extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     private static Map c_defaultMappings;
 
-    private Map m_mappings = new HashMap(c_defaultMappings);
-
     /**
-     *  Lists the default pages for each JSP page.  It first contains the 
-     *  name of the context and then the page which should be included:
-     *  <pre>
+     * Lists the default pages for each JSP page.  It first contains the name of the context and
+     * then the page which should be included:
+     * <pre>
      *  public static final String[] DEFAULT_JSP_PAGES = {
      *     WikiContext.VIEW,     "PageContent.jsp",
      *     WikiContext.DIFF,     "DiffContent.jsp", ...
      *  </pre>
-     *  A Property object is built using TextUtil.createProperties();
-     *  @see TextUtil.createProperties()
+     * A Property object is built using TextUtil.createProperties();
+     *
+     * @see TextUtil.createProperties()
      */
-    public static final String[] DEFAULT_JSP_PAGES = {
-        WikiContext.VIEW,     "PageContent.jsp",
-        WikiContext.DIFF,     "DiffContent.jsp",
-        WikiContext.INFO,     "InfoContent.jsp",
-        WikiContext.PREVIEW,  "PreviewContent.jsp",
-        WikiContext.CONFLICT, "ConflictContent.jsp",
-        WikiContext.FIND,     "FindContent.jsp",
-        WikiContext.PREFS,    "PreferencesContent.jsp",
-        WikiContext.ERROR,    "DisplayMessage.jsp",
-        WikiContext.EDIT,     "EditContent.jsp",
-        WikiContext.COMMENT,  "CommentContent.jsp"
-    };
+    public static final String [] DEFAULT_JSP_PAGES =
+        {
+            WikiContext.VIEW, "PageContent.jsp", WikiContext.DIFF, "DiffContent.jsp",
+            WikiContext.INFO, "InfoContent.jsp", WikiContext.PREVIEW, "PreviewContent.jsp",
+            WikiContext.CONFLICT, "ConflictContent.jsp", WikiContext.FIND, "FindContent.jsp",
+            WikiContext.PREFS, "PreferencesContent.jsp", WikiContext.ERROR, "DisplayMessage.jsp",
+            WikiContext.EDIT, "EditContent.jsp", WikiContext.COMMENT, "CommentContent.jsp"
+        };
 
     static
     {
-        c_defaultMappings = TextUtil.createMap( DEFAULT_JSP_PAGES );
+        c_defaultMappings = TextUtil.createMap(DEFAULT_JSP_PAGES);
     }
 
-    public void setView( String s )
+    /** DOCUMENT ME! */
+    private Map m_mappings = new HashMap(c_defaultMappings);
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setView(String s)
     {
-        m_mappings.put( WikiContext.VIEW, s );
+        m_mappings.put(WikiContext.VIEW, s);
     }
 
-    public void setDiff( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setDiff(String s)
     {
-        m_mappings.put( WikiContext.DIFF, s );
+        m_mappings.put(WikiContext.DIFF, s);
     }
 
-    public void setInfo( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setInfo(String s)
     {
-        m_mappings.put( WikiContext.INFO, s );
+        m_mappings.put(WikiContext.INFO, s);
     }
 
-    public void setPreview( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setPreview(String s)
     {
-        m_mappings.put( WikiContext.PREVIEW, s );
+        m_mappings.put(WikiContext.PREVIEW, s);
     }
 
-    public void setConflict( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setConflict(String s)
     {
-        m_mappings.put( WikiContext.CONFLICT, s );
+        m_mappings.put(WikiContext.CONFLICT, s);
     }
 
-    public void setFind( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setFind(String s)
     {
-        m_mappings.put( WikiContext.FIND, s );
+        m_mappings.put(WikiContext.FIND, s);
     }
 
-    public void setPrefs( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setPrefs(String s)
     {
-        m_mappings.put( WikiContext.PREFS, s );
+        m_mappings.put(WikiContext.PREFS, s);
     }
 
-    public void setError( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setError(String s)
     {
-        m_mappings.put( WikiContext.ERROR, s );
+        m_mappings.put(WikiContext.ERROR, s);
     }
 
-    public void setEdit( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setEdit(String s)
     {
-        m_mappings.put( WikiContext.EDIT, s );
+        m_mappings.put(WikiContext.EDIT, s);
     }
 
-    public void setComment( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setComment(String s)
     {
-        m_mappings.put( WikiContext.COMMENT, s );
+        m_mappings.put(WikiContext.COMMENT, s);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-            throws IOException,
-                   ProviderException
+        throws IOException, ProviderException
     {
         return SKIP_BODY;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws JspException DOCUMENT ME!
+     */
     public final int doEndTag()
-            throws JspException
+        throws JspException
     {
         try
         {
-            String jspPage = (String) m_mappings.get( m_wikiContext.getRequestContext() );
+            String jspPage = (String) m_mappings.get(m_wikiContext.getRequestContext());
 
-            if( jspPage == null )
+            if (jspPage == null)
             {
-                throw new JspException("This template uses <wiki:Content/> in an unsupported context: "+m_wikiContext.getRequestContext());
+                throw new JspException(
+                    "This template uses <wiki:Content/> in an unsupported context: "
+                    + m_wikiContext.getRequestContext());
             }
 
-            String page = m_wikiContext.getEngine().getTemplateManager().findJSP( pageContext,
-                    m_wikiContext.getTemplate(),
-                    jspPage );
-            pageContext.include( page );
+            String page =
+                m_wikiContext.getEngine().getTemplateManager().findJSP(
+                    pageContext, m_wikiContext.getTemplate(), jspPage);
+            pageContext.include(page);
         }
-        catch( ServletException e )
+        catch (ServletException e)
         {
-            log.warn( "Including failed, got a servlet exception from sub-page. "+
-                    "Rethrowing the exception to the JSP engine.", e );
-            throw new JspException( e.getMessage() );
+            log.warn(
+                "Including failed, got a servlet exception from sub-page. "
+                + "Rethrowing the exception to the JSP engine.", e);
+            throw new JspException(e.getMessage());
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.warn( "I/O exception - probably the connection was broken. "+
-                    "Rethrowing the exception to the JSP engine.", e );
-            throw new JspException( e.getMessage() );
+            log.warn(
+                "I/O exception - probably the connection was broken. "
+                + "Rethrowing the exception to the JSP engine.", e);
+            throw new JspException(e.getMessage());
         }
 
         return EVAL_PAGE;

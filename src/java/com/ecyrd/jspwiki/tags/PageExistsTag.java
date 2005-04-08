@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,11 +23,13 @@ import java.io.IOException;
 
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Includes the body in case the set page does exist.
+ * Includes the body in case the set page does exist.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 
 // FIXME: Logically, this should probably be the master one, then
@@ -35,10 +37,19 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 public class PageExistsTag
     extends NoSuchPageTag
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-        throws IOException,
-               ProviderException
+        throws IOException, ProviderException
     {
-        return (super.doWikiStartTag() == SKIP_BODY) ? EVAL_BODY_INCLUDE : SKIP_BODY;
+        return (super.doWikiStartTag() == SKIP_BODY)
+        ? EVAL_BODY_INCLUDE
+        : SKIP_BODY;
     }
 }

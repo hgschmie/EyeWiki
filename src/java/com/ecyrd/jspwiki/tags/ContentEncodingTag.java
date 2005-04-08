@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,21 +23,30 @@ import java.io.IOException;
 
 import com.ecyrd.jspwiki.WikiEngine;
 
+
 /**
- *  Returns the app name.
+ * Returns the app name.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class ContentEncodingTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
 
-        pageContext.getOut().print( engine.getContentEncoding() );
+        pageContext.getOut().print(engine.getContentEncoding());
 
         return SKIP_BODY;
     }

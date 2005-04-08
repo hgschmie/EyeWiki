@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -35,138 +36,180 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  This is a base class for all plugins using referral things.
+ * This is a base class for all plugins using referral things.
+ * 
+ * <p>
+ * Parameters:<br> maxwidth: maximum width of generated links<br>
+ * separator: separator between generated links (wikitext)<br>
+ * after: output after the link before: output before the link
+ * </p>
  *
- *  <p>Parameters:<br>
- *  maxwidth: maximum width of generated links<br>
- *  separator: separator between generated links (wikitext)<br>
- *  after: output after the link
- *  before: output before the link
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public abstract class AbstractReferralPlugin
-        implements WikiPlugin
+    implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( AbstractReferralPlugin.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(AbstractReferralPlugin.class);
 
-    public static final int    ALL_ITEMS       = -1;
-    public static final String PARAM_MAXWIDTH  = "maxwidth";
+    /** DOCUMENT ME! */
+    public static final int ALL_ITEMS = -1;
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_MAXWIDTH = "maxwidth";
+
+    /** DOCUMENT ME! */
     public static final String PARAM_SEPARATOR = "separator";
-    public static final String PARAM_AFTER     = "after";
-    public static final String PARAM_BEFORE    = "before";
- 
-    protected           int      m_maxwidth = Integer.MAX_VALUE;
-    protected           String   m_before = ""; // null not blank
-    protected           String   m_separator = ""; // null not blank 
-    protected           String   m_after = "\\\\";
-    
-    protected           WikiEngine m_engine;
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_AFTER = "after";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_BEFORE = "before";
+
+    /** DOCUMENT ME! */
+    protected int m_maxwidth = Integer.MAX_VALUE;
+
+    /** DOCUMENT ME! */
+    protected String m_before = ""; // null not blank
+
+    /** DOCUMENT ME! */
+    protected String m_separator = ""; // null not blank 
+
+    /** DOCUMENT ME! */
+    protected String m_after = "\\\\";
+
+    /** DOCUMENT ME! */
+    protected WikiEngine m_engine;
 
     /**
-     *  Used to initialize some things.  All plugins must call this first.
+     * Used to initialize some things.  All plugins must call this first.
      *
-     *  @since 1.6.4
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     *
+     * @since 1.6.4
      */
-    public void initialize( WikiContext context, Map params )
-            throws PluginException
+    public void initialize(WikiContext context, Map params)
+        throws PluginException
     {
         m_engine = context.getEngine();
-        m_maxwidth = TextUtil.parseIntParameter( (String)params.get( PARAM_MAXWIDTH ), Integer.MAX_VALUE ); 
-        if( m_maxwidth < 0 ) m_maxwidth = 0;
+        m_maxwidth =
+            TextUtil.parseIntParameter((String) params.get(PARAM_MAXWIDTH), Integer.MAX_VALUE);
 
-        String s = (String) params.get( PARAM_SEPARATOR );
+        if (m_maxwidth < 0)
+        {
+            m_maxwidth = 0;
+        }
 
-        if( s != null )
+        String s = (String) params.get(PARAM_SEPARATOR);
+
+        if (s != null)
         {
             m_separator = s;
+
             // pre-2.1.145 there was a separator at the end of the list
             // if they set the parameters, we use the new format of 
             // before Item1 after separator before Item2 after separator before Item3 after
             m_after = "";
         }
 
-        s = (String) params.get( PARAM_BEFORE );
-        
-        if( s != null )
+        s = (String) params.get(PARAM_BEFORE);
+
+        if (s != null)
         {
             m_before = s;
         }
 
-        s = (String) params.get( PARAM_AFTER );
-        
-        if( s != null )
+        s = (String) params.get(PARAM_AFTER);
+
+        if (s != null)
         {
             m_after = s;
         }
-        
+
         // log.debug( "Requested maximum width is "+m_maxwidth );
     }
 
     /**
-     *  Makes WikiText from a Collection.
+     * Makes WikiText from a Collection.
      *
-     *  @param links Collection to make into WikiText.
-     *  @param separator Separator string to use.
-     *  @param numItems How many items to show.
+     * @param links Collection to make into WikiText.
+     * @param separator Separator string to use.
+     * @param numItems How many items to show.
+     *
+     * @return DOCUMENT ME!
      */
-    protected String wikitizeCollection( Collection links, String separator, int numItems )
+    protected String wikitizeCollection(Collection links, String separator, int numItems)
     {
-        if( links == null || links.isEmpty() )
-            return( "" );
+        if ((links == null) || links.isEmpty())
+        {
+            return ("");
+        }
 
         StringBuffer output = new StringBuffer();
-        
-        Iterator it     = links.iterator();
-        int      count  = 0;
-        
+
+        Iterator it = links.iterator();
+        int count = 0;
+
         //
         //  The output will be B Item[1] A S B Item[2] A S B Item[3] A
         //
-        while( it.hasNext() && ( (count < numItems) || ( numItems == ALL_ITEMS ) ) )
+        while (it.hasNext() && ((count < numItems) || (numItems == ALL_ITEMS)))
         {
-            String value = (String)it.next();
+            String value = (String) it.next();
 
-            if( count > 0 )
+            if (count > 0)
             {
-                output.append( m_after );
-                output.append( m_separator );
+                output.append(m_after);
+                output.append(m_separator);
             }
-            
-            output.append( m_before );
-            
+
+            output.append(m_before);
+
             // Make a Wiki markup link. See TranslatorReader.
-            output.append( "[" + m_engine.beautifyTitle(value) + "]" );
+            output.append("[" + m_engine.beautifyTitle(value) + "]");
             count++;
         }
 
         // 
         //  Output final item - if there have been none, no "after" is printed
         //
-        if( count > 0 ) output.append( m_after );
-        
-        return( output.toString() );
+        if (count > 0)
+        {
+            output.append(m_after);
+        }
+
+        return (output.toString());
     }
 
     /**
-     *  Makes HTML with common parameters.
+     * Makes HTML with common parameters.
      *
-     *  @since 1.6.4
+     * @param context DOCUMENT ME!
+     * @param wikitext DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @since 1.6.4
      */
-    protected String makeHTML( WikiContext context, String wikitext )
+    protected String makeHTML(WikiContext context, String wikitext)
     {
         String result = "";
         TranslatorReader in = null;
 
         try
         {
-            in     = new TranslatorReader( context,
-                    new StringReader( wikitext ) );
-            in.addLinkTransmutator( new CutMutator(m_maxwidth) );
+            in = new TranslatorReader(context, new StringReader(wikitext));
+            in.addLinkTransmutator(new CutMutator(m_maxwidth));
 
-            result = FileUtil.readContents( in );
+            result = FileUtil.readContents(in);
         }
-        catch( IOException e )
+        catch (IOException e)
         {
             log.error("Failed to convert page data to HTML", e);
         }
@@ -177,25 +220,40 @@ public abstract class AbstractReferralPlugin
 
         return result;
     }
-    
+
     /**
-     *  A simple class that just cuts a String to a maximum
-     *  length, adding three dots after the cutpoint.
+     * A simple class that just cuts a String to a maximum length, adding three dots after the
+     * cutpoint.
      */
-    private class CutMutator implements StringTransmutator
+    private class CutMutator
+        implements StringTransmutator
     {
+        /** DOCUMENT ME! */
         private int m_length;
 
-        public CutMutator( int length )
+        /**
+         * Creates a new CutMutator object.
+         *
+         * @param length DOCUMENT ME!
+         */
+        public CutMutator(int length)
         {
             m_length = length;
         }
 
-        public String mutate( WikiContext context, String text )
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param text DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
+        public String mutate(WikiContext context, String text)
         {
-            if( text.length() > m_length )
+            if (text.length() > m_length)
             {
-                return text.substring( 0, m_length ) + "...";
+                return text.substring(0, m_length) + "...";
             }
 
             return text;

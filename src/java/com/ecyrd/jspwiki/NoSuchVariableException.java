@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,19 +20,19 @@
 package com.ecyrd.jspwiki;
 
 /**
- *  Marks that no such variable was located.
+ * Marks that no such variable was located.
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class NoSuchVariableException
     extends WikiException
 {
     /**
-     *  Constructs an exception.
+     * Constructs an exception.
      *
-     *  @param msg Message to show
+     * @param msg Message to show
      */
-    public NoSuchVariableException( String msg )
+    public NoSuchVariableException(String msg)
     {
         super(msg);
     }

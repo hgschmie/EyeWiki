@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,12 +19,13 @@
  */
 package com.ecyrd.jspwiki.tags;
 
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
 
 /**
  *  Writes a link to the upload page.  Body of the link becomes the actual text.
@@ -39,45 +40,38 @@ import com.ecyrd.jspwiki.WikiEngine;
  *  @author Janne Jalkanen
  *  @since 2.0
  */
-public class UploadLinkTag
-    extends WikiLinkTag
-{
+public class UploadLinkTag extends WikiLinkTag {
     private String m_version = null;
 
-    public final int doWikiStartTag()
-        throws IOException
-    {
-        WikiEngine engine   = m_wikiContext.getEngine();
-        String     pageName = m_pageName;
+    public final int doWikiStartTag() throws IOException {
+        WikiEngine engine = m_wikiContext.getEngine();
+        String pageName = m_pageName;
 
-        if( m_pageName == null )
-        {
-            if( m_wikiContext.getPage() != null )
-            {
+        if (m_pageName == null) {
+            if (m_wikiContext.getPage() != null) {
                 pageName = m_wikiContext.getPage().getName();
-            }
-            else
-            {
+            } else {
                 return SKIP_BODY;
             }
         }
 
         JspWriter out = pageContext.getOut();
 
-        String url = m_wikiContext.getURL( WikiContext.UPLOAD,
-                                           pageName );
+        String url = m_wikiContext.getURL(WikiContext.UPLOAD, pageName);
 
-        switch( m_format )
-        {
-          case ANCHOR:
-            out.print("<a target=\"_new\" class=\"uploadlink\" href=\""+url+"\">");
+        switch (m_format) {
+        case ANCHOR:
+            out.print("<a target=\"_new\" class=\"uploadlink\" href=\"" + url +
+                "\">");
+
             break;
-          case URL:
-            out.print( url );
+
+        case URL:
+            out.print(url);
+
             break;
         }
 
         return EVAL_BODY_INCLUDE;
     }
-
 }

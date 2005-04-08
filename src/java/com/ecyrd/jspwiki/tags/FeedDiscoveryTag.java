@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -26,37 +26,50 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.util.BlogUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Outputs links to all the site feeds and APIs this Wiki/blog supports.
+ * Outputs links to all the site feeds and APIs this Wiki/blog supports.
  *
- *  @author Janne Jalkanen
- *  @since 2.2
+ * @author Janne Jalkanen
+ *
+ * @since 2.2
  */
 public class FeedDiscoveryTag
     extends WikiTagBase
 {
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        String encodedName = engine.encodeName( page.getName() );
+        String encodedName = engine.encodeName(page.getName());
 
-        String rssURL      = engine.getGlobalRSSURL();
-        String atomFeedURL = engine.getBaseURL()+"atom.jsp?page="+encodedName;
-        String atomPostURL = engine.getBaseURL()+"atom/"+encodedName;
+        String rssURL = engine.getGlobalRSSURL();
+        String atomFeedURL = engine.getBaseURL() + "atom.jsp?page=" + encodedName;
+        String atomPostURL = engine.getBaseURL() + "atom/" + encodedName;
 
-        if( rssURL != null )
+        if (rssURL != null)
         {
-            pageContext.getOut().print("<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS feed for the entire site.\" href=\""+rssURL+"\" />\n");
-            pageContext.getOut().print("<link rel=\"service.feed\" type=\"application/atom+xml\" title=\""+
-                                       TextUtil.replaceEntities(BlogUtil.getSiteName(m_wikiContext))+"\" href=\""+atomFeedURL+"\" />\n");
+            pageContext.getOut().print(
+                "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS feed for the entire site.\" href=\""
+                + rssURL + "\" />\n");
+            pageContext.getOut().print(
+                "<link rel=\"service.feed\" type=\"application/atom+xml\" title=\""
+                + TextUtil.replaceEntities(BlogUtil.getSiteName(m_wikiContext)) + "\" href=\""
+                + atomFeedURL + "\" />\n");
 
-            pageContext.getOut().print("<link rel=\"service.post\" type=\"application/atom+xml\" title=\""+
-                                       TextUtil.replaceEntities(BlogUtil.getSiteName(m_wikiContext))+"\" href=\""+atomPostURL+"\" />\n");
-
+            pageContext.getOut().print(
+                "<link rel=\"service.post\" type=\"application/atom+xml\" title=\""
+                + TextUtil.replaceEntities(BlogUtil.getSiteName(m_wikiContext)) + "\" href=\""
+                + atomPostURL + "\" />\n");
         }
 
         return SKIP_BODY;

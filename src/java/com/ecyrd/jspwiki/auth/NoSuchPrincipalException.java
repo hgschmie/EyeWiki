@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,12 +20,17 @@
 package com.ecyrd.jspwiki.auth;
 
 /**
- *  Thrown in some error situations where a WikiPrincipal object does not exist.
+ * Thrown in some error situations where a WikiPrincipal object does not exist.
  */
 public class NoSuchPrincipalException
     extends WikiSecurityException
 {
-    public NoSuchPrincipalException( String msg )
+    /**
+     * Creates a new NoSuchPrincipalException object.
+     *
+     * @param msg DOCUMENT ME!
+     */
+    public NoSuchPrincipalException(String msg)
     {
         super(msg);
     }

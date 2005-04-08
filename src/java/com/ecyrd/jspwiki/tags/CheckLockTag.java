@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -29,27 +29,41 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
+ * DOCUMENT ME!
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class CheckLockTag
     extends WikiTagBase
 {
-    public static final int LOCKED    = 0;
-    public static final int NOTLOCKED = 1;
-    public static final int OWNED     = 2;
+    /** DOCUMENT ME! */
+    public static final int LOCKED = 0;
 
+    /** DOCUMENT ME! */
+    public static final int NOTLOCKED = 1;
+
+    /** DOCUMENT ME! */
+    public static final int OWNED = 2;
+
+    /** DOCUMENT ME! */
     private int m_mode;
 
-    public void setMode( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setMode(String arg)
     {
-        if( "locked".equals(arg) )
+        if ("locked".equals(arg))
         {
             m_mode = LOCKED;
         }
-        else if("owned".equals(arg) )
+        else if ("owned".equals(arg))
         {
             m_mode = OWNED;
         }
@@ -59,32 +73,40 @@ public class CheckLockTag
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-        throws IOException,
-               ProviderException
+        throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        if( page != null && engine.pageExists(page) )
+        if ((page != null) && engine.pageExists(page))
         {
             PageManager mgr = engine.getPageManager();
 
-            PageLock lock = mgr.getCurrentLock( page );
+            PageLock lock = mgr.getCurrentLock(page);
 
             HttpSession session = pageContext.getSession();
 
-            PageLock userLock = (PageLock) session.getAttribute("lock-"+page.getName());
+            PageLock userLock = (PageLock) session.getAttribute("lock-" + page.getName());
 
-            if( (lock != null && m_mode == LOCKED && lock != userLock ) ||
-                (lock != null && m_mode == OWNED && lock == userLock ) ||
-                (lock == null && m_mode == NOTLOCKED) )
+            if (
+                ((lock != null) && (m_mode == LOCKED) && (lock != userLock))
+                    || ((lock != null) && (m_mode == OWNED) && (lock == userLock))
+                    || ((lock == null) && (m_mode == NOTLOCKED)))
             {
                 String id = getId();
 
-                if( id != null && lock != null )
+                if ((id != null) && (lock != null))
                 {
-                    pageContext.setAttribute( id, lock );
+                    pageContext.setAttribute(id, lock);
                 }
 
                 return EVAL_BODY_INCLUDE;
@@ -93,5 +115,4 @@ public class CheckLockTag
 
         return SKIP_BODY;
     }
-
 }

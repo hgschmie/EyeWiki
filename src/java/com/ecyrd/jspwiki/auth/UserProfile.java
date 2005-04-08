@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -26,55 +26,76 @@ import org.apache.log4j.Category;
 
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Contains user profile information.
+ * Contains user profile information.
  *
- *  @author Janne Jalkanen
- *  @since  1.7.2
+ * @author Janne Jalkanen
+ *
+ * @since 1.7.2
  */
+
 // FIXME: contains magic strings.
 public class UserProfile
     extends WikiPrincipal
 {
-    private Category log = Category.getInstance( UserProfile.class );
+    /** DOCUMENT ME! */
+    public static final int NONE = 0;
 
+    /** DOCUMENT ME! */
+    public static final int COOKIE = 1;
+
+    /** DOCUMENT ME! */
+    public static final int CONTAINER = 2; // Container has done auth for us.
+
+    /** DOCUMENT ME! */
+    public static final int PASSWORD = 3;
+
+    /** DOCUMENT ME! */
+    private Category log = Category.getInstance(UserProfile.class);
+
+    /** DOCUMENT ME! */
     private int m_loginStatus = NONE;
 
-    public static final int NONE      = 0;
-    public static final int COOKIE    = 1;
-    public static final int CONTAINER = 2;  // Container has done auth for us.
-    public static final int PASSWORD  = 3;
+    /** DOCUMENT ME! */
+    private String m_password = null;
 
-
-    private String m_password  = null;
+    /** DOCUMENT ME! */
     private String m_loginName = null;
 
+    /**
+     * Creates a new UserProfile object.
+     */
     public UserProfile()
     {
     }
 
     /**
-     *  The login name may be different from your WikiName.  The WikiName
-     *  is typically of type FirstnameLastName (like JanneJalkanen), whereas
-     *  the login name is typically a shorter one, such as "jannej" or something
-     *  similar.
+     * The login name may be different from your WikiName.  The WikiName is typically of type
+     * FirstnameLastName (like JanneJalkanen), whereas the login name is typically a shorter one,
+     * such as "jannej" or something similar.
+     *
+     * @param name DOCUMENT ME!
      */
-    public void setLoginName( String name )
+    public void setLoginName(String name)
     {
         m_loginName = name;
     }
 
     /**
-     *  Returns the login name.
+     * Returns the login name.
+     *
+     * @return DOCUMENT ME!
      */
-
     public String getLoginName()
     {
         return m_loginName;
     }
 
     /**
-     *  Returns true, if the user has been authenticated properly.
+     * Returns true, if the user has been authenticated properly.
+     *
+     * @return DOCUMENT ME!
      */
     public boolean isAuthenticated()
     {
@@ -89,17 +110,26 @@ public class UserProfile
     */
     public String getStringRepresentation()
     {
-        String res = "username="+TextUtil.urlEncodeUTF8(getName());
+        String res = "username=" + TextUtil.urlEncodeUTF8(getName());
 
         return res;
     }
 
-    public static UserProfile parseStringRepresentation( String res )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param res DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws NoSuchElementException DOCUMENT ME!
+     */
+    public static UserProfile parseStringRepresentation(String res)
         throws NoSuchElementException
     {
         UserProfile prof = new UserProfile();
 
-        if( res != null && res.length() > 0 )
+        if ((res != null) && (res.length() > 0))
         {
             //
             //  Not all browsers or containers do proper cookie
@@ -107,17 +137,18 @@ public class UserProfile
             //  like "username=3DJanneJalkanen", so we have to
             //  do the conversion here.
             //
-            res = TextUtil.urlDecodeUTF8( res );
-            StringTokenizer tok = new StringTokenizer( res, " ,=" );
-            
-            while( tok.hasMoreTokens() )
+            res = TextUtil.urlDecodeUTF8(res);
+
+            StringTokenizer tok = new StringTokenizer(res, " ,=");
+
+            while (tok.hasMoreTokens())
             {
                 String param = tok.nextToken();
                 String value = tok.nextToken();
-                    
-                if( param.equals("username") )
+
+                if (param.equals("username"))
                 {
-                    prof.setName( value );
+                    prof.setName(value);
                 }
             }
         }
@@ -125,14 +156,21 @@ public class UserProfile
         return prof;
     }
 
-    public boolean equals( Object o )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param o DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean equals(Object o)
     {
         // System.out.println(this+".equals("+o+")");
-        if( (o != null) && (o instanceof UserProfile) )
+        if ((o != null) && (o instanceof UserProfile))
         {
             String name = getName();
 
-            if( name != null && name.equals( ((UserProfile)o).getName() ) )
+            if ((name != null) && name.equals(((UserProfile) o).getName()))
             {
                 return true;
             }
@@ -141,33 +179,55 @@ public class UserProfile
         return false;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getLoginStatus()
     {
         return m_loginStatus;
     }
 
-    public void setLoginStatus( int arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setLoginStatus(int arg)
     {
         m_loginStatus = arg;
     }
 
     /**
-     *  Returns the password that the user gave.  We store the password
-     *  because some authenticators may need to reissue it at periodical
-     *  intervals; or possibly use the same password to multiple services.
+     * Returns the password that the user gave.  We store the password because some authenticators
+     * may need to reissue it at periodical intervals; or possibly use the same password to
+     * multiple services.
+     *
+     * @return DOCUMENT ME!
      */
     public String getPassword()
     {
         return m_password;
     }
 
-    public void setPassword( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setPassword(String arg)
     {
         m_password = arg;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String toString()
     {
-        return "[UserProfile: '"+getName()+"']";
+        return "[UserProfile: '" + getName() + "']";
     }
 }

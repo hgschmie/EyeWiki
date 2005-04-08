@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,60 +25,78 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  Provides a page-specific counter.
- *  <P>Parameters
- *  <UL>
- *    <LI>name - Name of the counter.  Optional.
- *  </UL>
+ * Provides a page-specific counter.
+ * 
+ * <P>
+ * Parameters
+ * 
+ * <UL>
+ * <li>
+ * name - Name of the counter.  Optional.
+ * </li>
+ * </ul>
+ * 
+ * Stores a variable in the WikiContext called "counter", with the name of the optionally attached.
+ * For example:<BR> If name is "thispage", then the variable name is called "counter-thispage".
+ * </p>
  *
- *  Stores a variable in the WikiContext called "counter", with the name of the
- *  optionally attached.  For example:<BR>
- *  If name is "thispage", then the variable name is called "counter-thispage".
+ * @author Janne Jalkanen
  *
- *  @since 1.9.30
- *  @author Janne Jalkanen
+ * @since 1.9.30
  */
 public class Counter
     implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( Counter.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(Counter.class);
 
+    /** DOCUMENT ME! */
     static final String VARIABLE_NAME = "counter";
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         //
         //  First, determine which kind of name we use to store in
         //  the WikiContext.
         //
-        String  countername = (String)params.get( "name" );
+        String countername = (String) params.get("name");
 
-        if( countername == null ) 
+        if (countername == null)
         {
             countername = VARIABLE_NAME;
         }
         else
         {
-            countername = VARIABLE_NAME+"-"+countername;
+            countername = VARIABLE_NAME + "-" + countername;
         }
 
         //
         //  Fetch, increment, and store back.
         //
-        Integer val = (Integer)context.getVariable( countername );
+        Integer val = (Integer) context.getVariable(countername);
 
-        if( val == null )
+        if (val == null)
         {
-            val = new Integer( 0 );
+            val = new Integer(0);
         }
 
-        val = new Integer( val.intValue() + 1 );
+        val = new Integer(val.intValue() + 1);
 
-        context.setVariable( countername, val );
+        context.setVariable(countername, val);
 
         return val.toString();
     }
-
 }

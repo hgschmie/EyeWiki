@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -30,55 +30,84 @@ import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Inserts page contents.  Muchos thanks to Scott Hurlbert for the initial code.
+ * Inserts page contents.  Muchos thanks to Scott Hurlbert for the initial code.
  *
- *  @since 2.1.37
- *  @author Scott Hurlbert
- *  @author Janne Jalkanen
+ * @author Scott Hurlbert
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.37
  */
 public class InsertPage
     implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( InsertPage.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(InsertPage.class);
 
-    public static final String PARAM_PAGENAME  = "page";
-    public static final String PARAM_STYLE     = "style";
+    /** DOCUMENT ME! */
+    public static final String PARAM_PAGENAME = "page";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_STYLE = "style";
+
+    /** DOCUMENT ME! */
     public static final String PARAM_MAXLENGTH = "maxlength";
-    public static final String PARAM_CLASS     = "class";
-    public static final String PARAM_SECTION   = "section";
-    public static final String PARAM_DEFAULT   = "default";
 
+    /** DOCUMENT ME! */
+    public static final String PARAM_CLASS = "class";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_SECTION = "section";
+
+    /** DOCUMENT ME! */
+    public static final String PARAM_DEFAULT = "default";
+
+    /** DOCUMENT ME! */
     private static final String DEFAULT_STYLE = "";
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         WikiEngine engine = context.getEngine();
 
         StringBuffer res = new StringBuffer();
 
-        String clazz        = (String) params.get( PARAM_CLASS );
-        String includedPage = (String) params.get( PARAM_PAGENAME );
-        String style        = (String) params.get( PARAM_STYLE );
-        String defaultstr   = (String) params.get( PARAM_DEFAULT );
-        int    section      = TextUtil.parseIntParameter((String) params.get( PARAM_SECTION ), 
-                                                         -1 );
-        int    maxlen       = TextUtil.parseIntParameter((String) params.get( PARAM_MAXLENGTH ),
-                                                         -1 );
+        String clazz = (String) params.get(PARAM_CLASS);
+        String includedPage = (String) params.get(PARAM_PAGENAME);
+        String style = (String) params.get(PARAM_STYLE);
+        String defaultstr = (String) params.get(PARAM_DEFAULT);
+        int section = TextUtil.parseIntParameter((String) params.get(PARAM_SECTION), -1);
+        int maxlen = TextUtil.parseIntParameter((String) params.get(PARAM_MAXLENGTH), -1);
 
-        if( style == null ) style = DEFAULT_STYLE;
-
-        if( maxlen == -1 ) maxlen = Integer.MAX_VALUE;
-
-        if( includedPage != null )
+        if (style == null)
         {
-            WikiPage page = engine.getPage( includedPage );
+            style = DEFAULT_STYLE;
+        }
 
-            if( page != null )
+        if (maxlen == -1)
+        {
+            maxlen = Integer.MAX_VALUE;
+        }
+
+        if (includedPage != null)
+        {
+            WikiPage page = engine.getPage(includedPage);
+
+            if (page != null)
             {
                 AuthorizationManager mgr = engine.getAuthorizationManager();
-                UserProfile currentUser  = context.getCurrentUser();
+                UserProfile currentUser = context.getCurrentUser();
 
                 /*
                   // Disabled, because this seems to fail when used
@@ -91,49 +120,59 @@ public class InsertPage
                     return res.toString();
                 }
                 */
+
                 /**
-                 *  We want inclusion to occur within the context of
-                 *  its own page, because we need the links to be correct.
+                 * We want inclusion to occur within the context of its own page, because we need
+                 * the links to be correct.
                  */
                 WikiContext includedContext = (WikiContext) context.clone();
-                includedContext.setPage( page );
+                includedContext.setPage(page);
 
-                String pageData = engine.getPureText( page );
+                String pageData = engine.getPureText(page);
                 String moreLink = "";
 
-                if( section != -1 )
+                if (section != -1)
                 {
                     try
                     {
-                        pageData = TextUtil.getSection( pageData, section );
+                        pageData = TextUtil.getSection(pageData, section);
                     }
-                    catch( IllegalArgumentException e )
+                    catch (IllegalArgumentException e)
                     {
-                        throw new PluginException( e.getMessage() );
+                        throw new PluginException(e.getMessage());
                     }
                 }
 
-                if( pageData.length() > maxlen ) 
+                if (pageData.length() > maxlen)
                 {
-                    pageData = pageData.substring( 0, maxlen )+" ...";
-                    moreLink = "<p><a href=\""+context.getURL(WikiContext.VIEW,includedPage)+"\">More...</a></p>";
+                    pageData = pageData.substring(0, maxlen) + " ...";
+                    moreLink =
+                        "<p><a href=\"" + context.getURL(WikiContext.VIEW, includedPage)
+                        + "\">More...</a></p>";
                 }
 
-                res.append("<div style=\""+style+"\""+(clazz != null ? " class=\""+clazz+"\"" : "")+">");
-                res.append( engine.textToHTML( includedContext, pageData ) );
-                res.append( moreLink );
+                res.append(
+                    "<div style=\"" + style + "\""
+                    + ((clazz != null)
+                    ? (" class=\"" + clazz + "\"")
+                    : "") + ">");
+                res.append(engine.textToHTML(includedContext, pageData));
+                res.append(moreLink);
                 res.append("</div>");
             }
             else
             {
-                if( defaultstr != null ) 
+                if (defaultstr != null)
                 {
-                    res.append( defaultstr );
+                    res.append(defaultstr);
                 }
                 else
                 {
-                    res.append("There is no page called '"+includedPage+"'.  Would you like to ");
-                    res.append("<a href=\""+context.getURL( WikiContext.EDIT, includedPage )+"\">create it?</a>");
+                    res.append(
+                        "There is no page called '" + includedPage + "'.  Would you like to ");
+                    res.append(
+                        "<a href=\"" + context.getURL(WikiContext.EDIT, includedPage)
+                        + "\">create it?</a>");
                 }
             }
         }
@@ -146,5 +185,4 @@ public class InsertPage
 
         return res.toString();
     }
-
 }

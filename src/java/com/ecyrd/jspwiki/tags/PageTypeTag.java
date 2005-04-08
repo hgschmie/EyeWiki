@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,46 +25,65 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
+
 /**
- *  Includes the body, if the current page is of proper type.
+ * Includes the body, if the current page is of proper type. <B>Attributes</B>
+ * 
+ * <UL>
+ * <li>
+ * type - either "page", "attachment" or "weblogentry"
+ * </li>
+ * </ul>
+ * 
  *
- *  <B>Attributes</B>
- *  <UL>
- *   <LI>type - either "page", "attachment" or "weblogentry"
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
 public class PageTypeTag
     extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     private String m_type;
 
-    public void setType( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setType(String arg)
     {
         m_type = arg.toLowerCase();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        if( page != null )
+        if (page != null)
         {
-            if( m_type.equals("attachment") && page instanceof Attachment )
-            {
-                return EVAL_BODY_INCLUDE;
-            }
-            
-            if( m_type.equals("page") && !(page instanceof Attachment) )
+            if (m_type.equals("attachment") && page instanceof Attachment)
             {
                 return EVAL_BODY_INCLUDE;
             }
 
-            if( m_type.equals("weblogentry") && !(page instanceof Attachment) && page.getName().indexOf("_blogentry_") != -1 )
+            if (m_type.equals("page") && !(page instanceof Attachment))
+            {
+                return EVAL_BODY_INCLUDE;
+            }
+
+            if (
+                m_type.equals("weblogentry") && !(page instanceof Attachment)
+                    && (page.getName().indexOf("_blogentry_") != -1))
             {
                 return EVAL_BODY_INCLUDE;
             }

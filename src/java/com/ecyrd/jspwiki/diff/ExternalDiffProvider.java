@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -17,7 +17,6 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 package com.ecyrd.jspwiki.diff;
 
 import java.io.BufferedReader;
@@ -35,32 +34,51 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- * This DiffProvider allows external command line tools to be used to generate
- * the diff.
+ * This DiffProvider allows external command line tools to be used to generate the diff.
  */
-public class ExternalDiffProvider implements DiffProvider
+public class ExternalDiffProvider
+    implements DiffProvider
 {
+    /** DOCUMENT ME! */
     private static final Category log = Category.getInstance(ExternalDiffProvider.class);
 
-    private String m_diffCommand = null;
-    private String m_encoding;
-    
+    /** DOCUMENT ME! */
     private static final char DIFF_ADDED_SYMBOL = '+';
+
+    /** DOCUMENT ME! */
     private static final char DIFF_REMOVED_SYMBOL = '-';
 
+    /** DOCUMENT ME! */
     private static final String CSS_DIFF_ADDED = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
+
+    /** DOCUMENT ME! */
     private static final String CSS_DIFF_REMOVED = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
+
+    /** DOCUMENT ME! */
     private static final String CSS_DIFF_UNCHANGED = "<tr><td class=\"diff\">";
+
+    /** DOCUMENT ME! */
     private static final String CSS_DIFF_CLOSE = "</td></tr>";
+
+    /** DOCUMENT ME! */
+    private String m_diffCommand = null;
+
+    /** DOCUMENT ME! */
+    private String m_encoding;
 
     //FIXME This could/should be a property for this provider, there is not guarentee that
     //the external program generates a format suitible for the colorization code of the 
     //TraditionalDiffProvider, currently set to true for legacy compatibility.  
     //I don't think this 'feature' ever worked right, did it?...
-    private boolean m_traditionalColorization = true; 
 
+    /** DOCUMENT ME! */
+    private boolean m_traditionalColorization = true;
 
+    /**
+     * Creates a new ExternalDiffProvider object.
+     */
     public ExternalDiffProvider()
     {
     }
@@ -74,22 +92,28 @@ public class ExternalDiffProvider implements DiffProvider
     }
 
     /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
+     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
+     *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
+        throws NoRequiredPropertyException, IOException
     {
         m_diffCommand = conf.getString(WikiProperties.PROP_DIFFCOMMAND);
         m_encoding = engine.getContentEncoding();
     }
-    
-    
+
     /**
      * Makes the diff by calling "diff" program.
+     *
+     * @param p1 DOCUMENT ME!
+     * @param p2 DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     public String makeDiff(String p1, String p2)
     {
-        File f1 = null, f2 = null;
+        File f1 = null;
+        File f2 = null;
         String diff = null;
 
         try
@@ -104,14 +128,17 @@ public class ExternalDiffProvider implements DiffProvider
 
             // FIXME: Should this rely on the system default encoding?
             String rawWikiDiff = new String(output.getBytes("ISO-8859-1"), m_encoding);
-            
-            String htmlWikiDiff = TextUtil.replaceEntities( rawWikiDiff );
 
-            if (m_traditionalColorization) //FIXME, see comment near declaration...
-            	diff = colorizeDiff(diff);
+            String htmlWikiDiff = TextUtil.replaceEntities(rawWikiDiff);
+
+            if (m_traditionalColorization)
+            { //FIXME, see comment near declaration...
+                diff = colorizeDiff(diff);
+            }
             else
+            {
                 diff = htmlWikiDiff;
-            
+            }
         }
         catch (IOException e)
         {
@@ -124,25 +151,37 @@ public class ExternalDiffProvider implements DiffProvider
         finally
         {
             if (f1 != null)
+            {
                 f1.delete();
+            }
+
             if (f2 != null)
+            {
                 f2.delete();
+            }
         }
 
         return diff;
     }
 
-
     /**
-     * Goes through output provided by a diff command and inserts HTML tags to
-     * make the result more legible. Currently colors lines starting with a +
-     * green, those starting with - reddish (hm, got to think of color blindness
-     * here...).
+     * Goes through output provided by a diff command and inserts HTML tags to make the result more
+     * legible. Currently colors lines starting with a + green, those starting with - reddish (hm,
+     * got to think of color blindness here...).
+     *
+     * @param diffText DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
      */
-    static String colorizeDiff(String diffText) throws IOException
+    static String colorizeDiff(String diffText)
+        throws IOException
     {
         if (diffText == null)
+        {
             return "Invalid diff - probably something wrong with server setup.";
+        }
 
         String line = null;
         String start = null;
@@ -152,7 +191,8 @@ public class ExternalDiffProvider implements DiffProvider
         StringBuffer out = new StringBuffer();
 
         out.append("<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
-        while (( line = in.readLine() ) != null)
+
+        while ((line = in.readLine()) != null)
         {
             stop = CSS_DIFF_CLOSE;
 
@@ -160,13 +200,17 @@ public class ExternalDiffProvider implements DiffProvider
             {
                 switch (line.charAt(0))
                 {
-                case DIFF_ADDED_SYMBOL :
+                case DIFF_ADDED_SYMBOL:
                     start = CSS_DIFF_ADDED;
+
                     break;
-                case DIFF_REMOVED_SYMBOL :
+
+                case DIFF_REMOVED_SYMBOL:
                     start = CSS_DIFF_REMOVED;
+
                     break;
-                default :
+
+                default:
                     start = CSS_DIFF_UNCHANGED;
                 }
             }
@@ -181,6 +225,7 @@ public class ExternalDiffProvider implements DiffProvider
         }
 
         out.append("</table>\n");
-        return ( out.toString() );
+
+        return (out.toString());
     }
 }

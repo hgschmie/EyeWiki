@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,23 +23,27 @@ import java.util.Map;
 
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  If a plugin defines this interface, it is called during JSPWiki
- *  initialization, if it occurs on a page.
+ * If a plugin defines this interface, it is called during JSPWiki initialization, if it occurs on
+ * a page.
  *
- *  @since 2.2
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
+ * @since 2.2
  */
 public interface InitializablePlugin
 {
     /**
-     *  The initialization routine.  The context is to a Wiki page,
-     *  and the parameters are exactly like in the execute() -routine.
-     *  However, this routine is not expected to return anything,
-     *  as any output will be discarded. 
+     * The initialization routine.  The context is to a Wiki page, and the parameters are exactly
+     * like in the execute() -routine. However, this routine is not expected to return anything,
+     * as any output will be discarded.
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
      */
-
-    public void initialize( WikiContext context, Map params )
+    public void initialize(WikiContext context, Map params)
         throws PluginException;
 }

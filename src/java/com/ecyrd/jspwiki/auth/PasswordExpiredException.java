@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,18 +20,21 @@
 package com.ecyrd.jspwiki.auth;
 
 /**
- *  The authenticator may fail with this.
+ * The authenticator may fail with this.
  *
- *  @author Janne Jalkanen
- *  @since 2.2
+ * @author Janne Jalkanen
+ *
+ * @since 2.2
  */
 public class PasswordExpiredException
     extends WikiSecurityException
 {
     /**
-     *  Constructs an exception.
+     * Constructs an exception.
+     *
+     * @param msg DOCUMENT ME!
      */
-    public PasswordExpiredException( String msg )
+    public PasswordExpiredException(String msg)
     {
         super(msg);
     }

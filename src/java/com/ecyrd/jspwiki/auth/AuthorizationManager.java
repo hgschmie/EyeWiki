@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
 import java.security.acl.NotOwnerException;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -43,49 +44,60 @@ import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
+
 /**
- *  Manages all access control and authorization.
+ * Manages all access control and authorization.
  *
- *  @see UserManager
+ * @see UserManager
  */
 public class AuthorizationManager
-        implements WikiProperties
+    implements WikiProperties
 {
-    static Category log = Category.getInstance( AuthorizationManager.class );
+    /** DOCUMENT ME! */
+    static Category log = Category.getInstance(AuthorizationManager.class);
 
-    private WikiAuthorizer    m_authorizer;
+    /** DOCUMENT ME! */
+    private WikiAuthorizer m_authorizer;
+
+    /** DOCUMENT ME! */
     private AccessControlList m_defaultPermissions;
 
-    private boolean           m_strictLogins = false;
+    /** DOCUMENT ME! */
+    private boolean m_strictLogins = false;
 
     /** If true, allows the old auth system to be used. */
-    private boolean           m_useOldAuth = false;
-    
-    private WikiEngine        m_engine;
+    private boolean m_useOldAuth = false;
+
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
 
     /**
-     * Creates a new AuthorizationManager, owned by engine and initialized
-     * according to the settings in properties. Expects to find property
-     * 'jspwiki.authorizer' with a valid WikiAuthorizer implementation name
-     * to take care of authorization.
+     * Creates a new AuthorizationManager, owned by engine and initialized according to the
+     * settings in properties. Expects to find property 'jspwiki.authorizer' with a valid
+     * WikiAuthorizer implementation name to take care of authorization.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws WikiException DOCUMENT ME!
+     * @throws InternalWikiException DOCUMENT ME!
      */
-    public AuthorizationManager( WikiEngine engine, Configuration conf)
-            throws WikiException
+    public AuthorizationManager(WikiEngine engine, Configuration conf)
+        throws WikiException
     {
         m_engine = engine;
 
-        m_useOldAuth = conf.getBoolean(
-                PROP_AUTH_USEOLDAUTH,
-                PROP_AUTH_USEOLDAUTH_DEFAULT);
-        
-        m_strictLogins = conf.getBoolean(
-                PROP_AUTH_STRICTLOGINS,
-                PROP_AUTH_STRICTLOGINS_DEFAULT);
+        m_useOldAuth = conf.getBoolean(PROP_AUTH_USEOLDAUTH, PROP_AUTH_USEOLDAUTH_DEFAULT);
 
-        if( !m_useOldAuth ) return;
-        
-        m_authorizer = getAuthorizerImplementation( conf );
-        m_authorizer.initialize( engine, conf );
+        m_strictLogins = conf.getBoolean(PROP_AUTH_STRICTLOGINS, PROP_AUTH_STRICTLOGINS_DEFAULT);
+
+        if (!m_useOldAuth)
+        {
+            return;
+        }
+
+        m_authorizer = getAuthorizerImplementation(conf);
+        m_authorizer.initialize(engine, conf);
 
         AclEntryImpl ae = new AclEntryImpl();
 
@@ -94,33 +106,34 @@ public class AuthorizationManager
         //  ALLOW: View, Edit
         //  DENY:  Delete
         //
-
         WikiGroup allGroup = new AllGroup();
         allGroup.setName("All");
-        ae.setPrincipal( allGroup );
-        ae.addPermission( new ViewPermission() );
-        ae.addPermission( new EditPermission() );
+        ae.setPrincipal(allGroup);
+        ae.addPermission(new ViewPermission());
+        ae.addPermission(new EditPermission());
 
         AclEntryImpl aeneg = new AclEntryImpl();
-        aeneg.setPrincipal( allGroup );
+        aeneg.setPrincipal(allGroup);
         aeneg.setNegativePermissions();
-        aeneg.addPermission( new DeletePermission() );
+        aeneg.addPermission(new DeletePermission());
 
         try
         {
             m_defaultPermissions = new AclImpl();
-            m_defaultPermissions.addEntry( null, ae );
-            m_defaultPermissions.addEntry( null, aeneg );
+            m_defaultPermissions.addEntry(null, ae);
+            m_defaultPermissions.addEntry(null, aeneg);
         }
-        catch( NotOwnerException e )
+        catch (NotOwnerException e)
         {
             throw new InternalWikiException("Nobody told me that owners were in use");
         }
     }
 
     /**
-     *  Returns true, if strict logins are required.  Strict logins
-     *  mean that all pages are accessible only to users who have logged in.
+     * Returns true, if strict logins are required.  Strict logins mean that all pages are
+     * accessible only to users who have logged in.
+     *
+     * @return DOCUMENT ME!
      */
     public boolean strictLogins()
     {
@@ -128,175 +141,191 @@ public class AuthorizationManager
     }
 
     /**
-     *  Attempts to find the ACL of a page.
-     *  If the page has a parent page, then that is tried also.
+     * Attempts to find the ACL of a page. If the page has a parent page, then that is tried also.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private AccessControlList getAcl( WikiPage page )
+    private AccessControlList getAcl(WikiPage page)
     {
         //
         //  Does the page already have cached ACLs?
         //
         AccessControlList acl = page.getAcl();
 
-        if( acl == null )
+        if (acl == null)
         {
             //
             //  Nope, check if we can get them from the authorizer
             //
+            acl = m_authorizer.getPermissions(page);
 
-            acl = m_authorizer.getPermissions( page );
-            
             //
             //  If still no go, try the parent.
             //
-            if( acl == null && page instanceof Attachment )
+            if ((acl == null) && page instanceof Attachment)
             {
-                WikiPage parent = m_engine.getPage( ((Attachment)page).getParentName() );
+                WikiPage parent = m_engine.getPage(((Attachment) page).getParentName());
 
-                acl = getAcl( parent );
+                acl = getAcl(parent);
             }
         }
 
         return acl;
     }
 
-
     /**
-     * Attempts to locate and initialize a WikiAuthorizer to use with this manager.
-     * Throws a WikiException if no entry is found, or if one fails to initialize.
+     * Attempts to locate and initialize a WikiAuthorizer to use with this manager. Throws a
+     * WikiException if no entry is found, or if one fails to initialize.
      *
-     * @param props jspwiki.properties, containing a 'jpswiki.authorizer' class name
+     * @param conf jspwiki.properties, containing a 'jpswiki.authorizer' class name
+     *
      * @return a WikiAuthorizer used to get page authorization information
+     *
      * @throws WikiException
+     * @throws NoRequiredPropertyException DOCUMENT ME!
      */
     private WikiAuthorizer getAuthorizerImplementation(Configuration conf)
-            throws WikiException
+        throws WikiException
     {
         WikiAuthorizer impl = null;
-                                                                                
-        String authClassName = conf.getString(
-                PROP_CLASS_AUTHORIZER,
-                PROP_CLASS_AUTHORIZER_DEFAULT);
 
-        if( authClassName != null )
+        String authClassName = conf.getString(PROP_CLASS_AUTHORIZER, PROP_CLASS_AUTHORIZER_DEFAULT);
+
+        if (authClassName != null)
         {
             try
             {
                 // TODO: this should probably look in package ...modules
-                Class authClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName );
-                impl = (WikiAuthorizer)authClass.newInstance();
-                return( impl );
+                Class authClass =
+                    ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName);
+                impl = (WikiAuthorizer) authClass.newInstance();
+
+                return (impl);
             }
-            catch( ClassNotFoundException e )
+            catch (ClassNotFoundException e)
             {
-                log.fatal( "WikiAuthorizer "+authClassName+" cannot be found", e);
-                throw new WikiException("WikiAuthorizer "+authClassName+" cannot be found");
+                log.fatal("WikiAuthorizer " + authClassName + " cannot be found", e);
+                throw new WikiException("WikiAuthorizer " + authClassName + " cannot be found");
             }
-            catch( InstantiationException e )
+            catch (InstantiationException e)
             {
-                log.fatal( "Authorizer "+authClassName+" cannot be created", e );
-                throw new WikiException("Authorizer "+authClassName+" cannot be created");
+                log.fatal("Authorizer " + authClassName + " cannot be created", e);
+                throw new WikiException("Authorizer " + authClassName + " cannot be created");
             }
-            catch( IllegalAccessException e )
+            catch (IllegalAccessException e)
             {
-                log.fatal( "You are not allowed to access this authorizer class", e );
+                log.fatal("You are not allowed to access this authorizer class", e);
                 throw new WikiException("You are not allowed to access this authorizer class");
             }
         }
         else
         {
-            throw new NoRequiredPropertyException( "Unable to find a " + PROP_CLASS_AUTHORIZER + 
-                    " entry in the properties.", PROP_CLASS_AUTHORIZER );
+            throw new NoRequiredPropertyException(
+                "Unable to find a " + PROP_CLASS_AUTHORIZER + " entry in the properties.",
+                PROP_CLASS_AUTHORIZER);
         }
     }
 
-
     /**
-     *  Returns true or false, depending on whether this action
-     *  is allowed for this WikiPage.
+     * Returns true or false, depending on whether this action is allowed for this WikiPage.
      *
-     *  @param permission Any of the available permissions "view", "edit, "comment", etc.
+     * @param page DOCUMENT ME!
+     * @param wup DOCUMENT ME!
+     * @param permission Any of the available permissions "view", "edit, "comment", etc.
+     *
+     * @return DOCUMENT ME!
      */
-    public boolean checkPermission( WikiPage page,
-            UserProfile wup,
-            String permission )
+    public boolean checkPermission(WikiPage page, UserProfile wup, String permission)
     {
-        return checkPermission( page,
-                wup,
-                WikiPermission.newInstance( permission ) );
+        return checkPermission(page, wup, WikiPermission.newInstance(permission));
     }
 
-
     /**
-     *  Returns true or false, depending on whether this action
-     *  is allowed.  This method returns true for 2.2.
+     * Returns true or false, depending on whether this action is allowed.  This method returns
+     * true for 2.2.
+     *
+     * @param page DOCUMENT ME!
+     * @param wup DOCUMENT ME!
+     * @param permission DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws InternalWikiException DOCUMENT ME!
      */
-    public boolean checkPermission( WikiPage page, 
-            UserProfile wup, 
-            WikiPermission permission )
+    public boolean checkPermission(WikiPage page, UserProfile wup, WikiPermission permission)
     {
-        int         res         = AccessControlList.NONE;
+        int res = AccessControlList.NONE;
         UserManager userManager = m_engine.getUserManager();
 
         //
         //  A slight sanity check.
         //
-        if( wup == null ) return false;
+        if (wup == null)
+        {
+            return false;
+        }
 
         //
         //  If auth is turned off, return immediately for speed
         //
-        if( !m_useOldAuth ) return true;
-        
-        //
-        //  Yup, superusers can do anything.
-        //
-        if( wup.isAuthenticated() && userManager.isAdministrator( wup ) )
+        if (!m_useOldAuth)
         {
             return true;
         }
 
-        AccessControlList acl = getAcl( page );
+        //
+        //  Yup, superusers can do anything.
+        //
+        if (wup.isAuthenticated() && userManager.isAdministrator(wup))
+        {
+            return true;
+        }
+
+        AccessControlList acl = getAcl(page);
 
         //
         //  Does the page in question have an access control list?
         //
-        if( acl != null )
+        if (acl != null)
         {
-            if (log.isDebugEnabled()) {
-                log.debug("ACL for this page is: "+acl);
-                log.debug("Checking for wup: "+wup);
-                log.debug("Permission: "+permission);
+            if (log.isDebugEnabled())
+            {
+                log.debug("ACL for this page is: " + acl);
+                log.debug("Checking for wup: " + wup);
+                log.debug("Permission: " + permission);
             }
 
-            if( wup.isAuthenticated() )
+            if (wup.isAuthenticated())
             {
-                res = acl.findPermission( wup, permission );
+                res = acl.findPermission(wup, permission);
             }
 
             //
             //  If there as no entry for the user, then try all of his groups
             //
-
-            if( res == AccessControlList.NONE )
+            if (res == AccessControlList.NONE)
             {
                 log.debug("Checking groups...");
 
                 try
                 {
-                    List list = userManager.getGroupsForPrincipal( wup );
+                    List list = userManager.getGroupsForPrincipal(wup);
 
-                    for( Iterator i = list.iterator(); i.hasNext(); )
+                    for (Iterator i = list.iterator(); i.hasNext();)
                     {
-                        res = acl.findPermission( (Principal) i.next(), permission );
+                        res = acl.findPermission((Principal) i.next(), permission);
 
-                        if( res != AccessControlList.NONE )
+                        if (res != AccessControlList.NONE)
+                        {
                             break;
+                        }
                     }
                 }
-                catch( NoSuchPrincipalException e )
+                catch (NoSuchPrincipalException e)
                 {
-                    log.warn("Internal trouble: No principal defined for requested user.",e);
+                    log.warn("Internal trouble: No principal defined for requested user.", e);
                 }
             }
         }
@@ -305,18 +334,19 @@ public class AuthorizationManager
         //  If there was no result, then query from the default
         //  permission set of the authorizer.
         //
-
-        if( res == AccessControlList.NONE )
+        if (res == AccessControlList.NONE)
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Page defines no permissions for "+wup.getName()+", checking defaults.");
+            if (log.isDebugEnabled())
+            {
+                log.debug(
+                    "Page defines no permissions for " + wup.getName() + ", checking defaults.");
             }
 
             acl = m_authorizer.getDefaultPermissions();
 
-            if( acl != null )
+            if (acl != null)
             {
-                res = acl.findPermission( wup, permission );
+                res = acl.findPermission(wup, permission);
             }
         }
 
@@ -324,21 +354,22 @@ public class AuthorizationManager
         //  If there still is nothing, then query from the Wiki default
         //  set of permissions.
         //
-
-        if( res == AccessControlList.NONE )
+        if (res == AccessControlList.NONE)
         {
-            if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled())
+            {
                 log.debug("No defaults exist, falling back to hardcoded permissions.");
             }
 
-            res = m_defaultPermissions.findPermission( wup, permission );
+            res = m_defaultPermissions.findPermission(wup, permission);
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Permission "+permission+" for user "+wup+" is "+res );
+        if (log.isDebugEnabled())
+        {
+            log.debug("Permission " + permission + " for user " + wup + " is " + res);
         }
-        
-        if( res == AccessControlList.NONE )
+
+        if (res == AccessControlList.NONE)
         {
             throw new InternalWikiException("No default policy has been defined!");
         }
@@ -346,15 +377,23 @@ public class AuthorizationManager
         return res == AccessControlList.ALLOW;
     }
 
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isOldAuth()
     {
         return m_useOldAuth;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isStrictLogins()
     {
         return m_strictLogins;
     }
-
 }

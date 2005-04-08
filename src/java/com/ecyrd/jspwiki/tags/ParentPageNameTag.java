@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,27 +25,37 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 
+
 /**
- *  Returns the parent of the currently requested page.  Weblog entries are recognized
- *  as subpages of the weblog page.
+ * Returns the parent of the currently requested page.  Weblog entries are recognized as subpages
+ * of the weblog page.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class ParentPageNameTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
 
-        if( page != null )
+        if (page != null)
         {
-            if( page instanceof Attachment )
+            if (page instanceof Attachment)
             {
-                pageContext.getOut().print( engine.beautifyTitle( ((Attachment)page).getParentName()) );
+                pageContext.getOut().print(
+                    engine.beautifyTitle(((Attachment) page).getParentName()));
             }
             else
             {
@@ -53,19 +63,19 @@ public class ParentPageNameTag
 
                 int entrystart = name.indexOf("_blogentry_");
 
-                if( entrystart != -1 )
+                if (entrystart != -1)
                 {
-                    name = name.substring( 0, entrystart );
+                    name = name.substring(0, entrystart);
                 }
 
                 int commentstart = name.indexOf("_comments_");
 
-                if( commentstart != -1 )
+                if (commentstart != -1)
                 {
-                    name = name.substring( 0, commentstart );
+                    name = name.substring(0, commentstart);
                 }
 
-                pageContext.getOut().print( engine.beautifyTitle(name) );
+                pageContext.getOut().print(engine.beautifyTitle(name));
             }
         }
 

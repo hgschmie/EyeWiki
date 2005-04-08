@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -38,191 +39,230 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
-/**
- *  Creates a list of all weblog entries on a monthly basis.
- *
- *  @since 1.9.21
- */
-public class WeblogArchivePlugin implements WikiPlugin
-{
-    private static Logger     log = Logger.getLogger(WeblogArchivePlugin.class);
 
+/**
+ * Creates a list of all weblog entries on a monthly basis.
+ *
+ * @since 1.9.21
+ */
+public class WeblogArchivePlugin
+    implements WikiPlugin
+{
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(WeblogArchivePlugin.class);
+
+    /** DOCUMENT ME! */
     public static final String PARAM_PAGE = "page";
 
+    /** DOCUMENT ME! */
     private SimpleDateFormat m_monthUrlFormat;
 
-    public String execute( WikiContext context, Map params )
-            throws PluginException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
+        throws PluginException
     {
         WikiEngine engine = context.getEngine();
 
         //
         //  Parameters
         //
-        String weblogName = (String) params.get( PARAM_PAGE );
+        String weblogName = (String) params.get(PARAM_PAGE);
 
-        if( weblogName == null ) weblogName = context.getPage().getName();
-        
+        if (weblogName == null)
+        {
+            weblogName = context.getPage().getName();
+        }
 
-        m_monthUrlFormat = new SimpleDateFormat("'"+
-                context.getURL( WikiContext.VIEW, weblogName,
-                        "weblog.startDate='ddMMyy'&amp;weblog.days=%d")+"'");
+        m_monthUrlFormat =
+            new SimpleDateFormat(
+                "'"
+                + context.getURL(
+                    WikiContext.VIEW, weblogName, "weblog.startDate='ddMMyy'&amp;weblog.days=%d")
+                + "'");
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append( "<div class=\"weblogarchive\">\n" );
-        
+        sb.append("<div class=\"weblogarchive\">\n");
 
         //
         //  Collect months that have blog entries
         //
-
         try
         {
-            Collection months = collectMonths( engine, weblogName );
+            Collection months = collectMonths(engine, weblogName);
             int year = 0;
 
             //
             //  Output proper HTML.
             //
+            sb.append("<ul>\n");
 
-            sb.append( "<ul>\n" );
-
-            if( months.size() > 0 )
+            if (months.size() > 0)
             {
-                year = ((Calendar)months.iterator().next()).get( Calendar.YEAR );
+                year = ((Calendar) months.iterator().next()).get(Calendar.YEAR);
 
-                sb.append( "<li class=\"archiveyear\">"+year+"</li>\n" );
+                sb.append("<li class=\"archiveyear\">" + year + "</li>\n");
             }
 
-            for( Iterator i = months.iterator(); i.hasNext(); )
+            for (Iterator i = months.iterator(); i.hasNext();)
             {
                 Calendar cal = (Calendar) i.next();
 
-                if( cal.get( Calendar.YEAR ) != year )
+                if (cal.get(Calendar.YEAR) != year)
                 {
-                    year = cal.get( Calendar.YEAR );
+                    year = cal.get(Calendar.YEAR);
 
-                    sb.append( "<li class=\"archiveyear\">"+year+"</li>\n" );
+                    sb.append("<li class=\"archiveyear\">" + year + "</li>\n");
                 }
 
-                sb.append( "  <li>" );
+                sb.append("  <li>");
 
-                sb.append( getMonthLink( cal ) );
+                sb.append(getMonthLink(cal));
 
-                sb.append( "</li>\n" );
+                sb.append("</li>\n");
             }
 
-            sb.append( "</ul>\n" );
-            sb.append( "</div>\n" );
+            sb.append("</ul>\n");
+            sb.append("</div>\n");
         }
-        catch( ProviderException ex )
+        catch (ProviderException ex)
         {
-            if (log.isInfoEnabled()) {
-                log.info( "Cannot get archive", ex );
+            if (log.isInfoEnabled())
+            {
+                log.info("Cannot get archive", ex);
             }
 
-            sb.append("Cannot get archive: "+ex.getMessage());
+            sb.append("Cannot get archive: " + ex.getMessage());
         }
 
         return sb.toString();
     }
 
-    private SortedSet collectMonths( WikiEngine engine, String page )
-            throws ProviderException
+    private SortedSet collectMonths(WikiEngine engine, String page)
+        throws ProviderException
     {
         TreeSet res = new TreeSet();
 
         WeblogPlugin pl = new WeblogPlugin();
 
-        List blogEntries = pl.findBlogEntries( engine.getPageManager(),
-                page, new Date(0L), new Date() );
-        
+        List blogEntries =
+            pl.findBlogEntries(engine.getPageManager(), page, new Date(0L), new Date());
+
         Calendar urCalendar = Calendar.getInstance();
-        for( Iterator i = blogEntries.iterator(); i.hasNext(); )
+
+        for (Iterator i = blogEntries.iterator(); i.hasNext();)
         {
             WikiPage p = (WikiPage) i.next();
 
             // FIXME: Not correct, should parse page creation time.
-
             Date d = p.getLastModified();
 
-            Calendar cal = new ArchiveCalendar( urCalendar );
-            cal.setTime( d );
+            Calendar cal = new ArchiveCalendar(urCalendar);
+            cal.setTime(d);
 
-            res.add( cal );
+            res.add(cal);
         }
 
         return res;
     }
 
-    private String getMonthLink( Calendar day )
+    private String getMonthLink(Calendar day)
     {
-        SimpleDateFormat monthfmt = new SimpleDateFormat( "MMMM" );
+        SimpleDateFormat monthfmt = new SimpleDateFormat("MMMM");
         String result;
 
-        if( m_monthUrlFormat == null )
+        if (m_monthUrlFormat == null)
         {
-            result = monthfmt.format( day.getTime() );
+            result = monthfmt.format(day.getTime());
         }
         else
         {
-            Calendar cal = (Calendar)day.clone();
-            int firstDay = cal.getActualMinimum( Calendar.DATE );
-            int lastDay  = cal.getActualMaximum( Calendar.DATE );
+            Calendar cal = (Calendar) day.clone();
+            int firstDay = cal.getActualMinimum(Calendar.DATE);
+            int lastDay = cal.getActualMaximum(Calendar.DATE);
 
-            cal.set( Calendar.DATE, lastDay );
-            String url = m_monthUrlFormat.format( cal.getTime() );
+            cal.set(Calendar.DATE, lastDay);
 
-            url = StringUtils.replace( url, "%d", Integer.toString( lastDay-firstDay+1 ) );
+            String url = m_monthUrlFormat.format(cal.getTime());
 
-            result = "<a href=\""+url+"\">"+monthfmt.format(cal.getTime())+"</a>";
+            url = StringUtils.replace(url, "%d", Integer.toString(lastDay - firstDay + 1));
+
+            result = "<a href=\"" + url + "\">" + monthfmt.format(cal.getTime()) + "</a>";
         }
 
         return result;
-
     }
 
     /**
-     *  This is a simple calendar that extends the GregorianCalendar to 
-     *  provide a Comparable interface so that it can be put in a Set and sorted.  In
-     *  addition, it also evaluates two objects that are in the same month
-     *  to be equal.
+     * This is a simple calendar that extends the GregorianCalendar to provide a Comparable
+     * interface so that it can be put in a Set and sorted.  In addition, it also evaluates two
+     * objects that are in the same month to be equal.
      */
     private class ArchiveCalendar
-            extends GregorianCalendar
-            implements Comparable
+        extends GregorianCalendar
+        implements Comparable
     {
-        public ArchiveCalendar( Calendar cal )
+        /**
+         * Creates a new ArchiveCalendar object.
+         *
+         * @param cal DOCUMENT ME!
+         */
+        public ArchiveCalendar(Calendar cal)
         {
-            setTime( cal.getTime() );
+            setTime(cal.getTime());
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param o DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public int compareTo(Object o)
         {
-            if( o instanceof Calendar )
+            if (o instanceof Calendar)
             {
                 Calendar c = (Calendar) o;
 
-                if( equals( c ) ) return 0;
+                if (equals(c))
+                {
+                    return 0;
+                }
 
-                return c.getTime().before( getTime() ) ? 1 : -1;
+                return c.getTime().before(getTime())
+                ? 1
+                : (-1);
             }
 
             return 0;
         }
 
         /**
-         *  Returns true, if these objects represent the same month and year.
+         * Returns true, if these objects represent the same month and year.
+         *
+         * @param o DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
          */
-        public boolean equals( Object o )
+        public boolean equals(Object o)
         {
-            if( o != null && o instanceof Calendar )
+            if ((o != null) && o instanceof Calendar)
             {
                 Calendar c = (Calendar) o;
 
-                if( c.get( Calendar.YEAR ) == get( Calendar.YEAR ) &&
-                        c.get( Calendar.MONTH ) == get( Calendar.MONTH ) )
+                if (
+                    (c.get(Calendar.YEAR) == get(Calendar.YEAR))
+                        && (c.get(Calendar.MONTH) == get(Calendar.MONTH)))
                 {
                     return true;
                 }

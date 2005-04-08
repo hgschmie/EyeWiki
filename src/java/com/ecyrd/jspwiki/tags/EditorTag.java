@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -37,116 +37,155 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Creates an editor component with all the necessary parts
- *  to get it working.
- *  <p>
- *  In the future, this component should be expanded to provide
- *  a customized version of the editor according to user preferences.
+ * Creates an editor component with all the necessary parts to get it working.
+ * 
+ * <p>
+ * In the future, this component should be expanded to provide a customized version of the editor
+ * according to user preferences.
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @since 2.2
+ * @author Janne Jalkanen
+ *
+ * @since 2.2
  */
 public class EditorTag
     extends WikiBodyTag
 {
-    private String m_submit  = "Save";
+    /** DOCUMENT ME! */
+    private String m_submit = "Save";
+
+    /** DOCUMENT ME! */
     private String m_preview = "Preview";
-    private String m_cancel  = "Cancel";
+
+    /** DOCUMENT ME! */
+    private String m_cancel = "Cancel";
+
+    /** DOCUMENT ME! */
     private String m_formName = "editForm";
+
+    /** DOCUMENT ME! */
     private String m_action = null;
-    
-    public void setSubmit( String s )
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setSubmit(String s)
     {
         m_submit = s;
     }
 
-    public void setPreview( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setPreview(String s)
     {
         m_preview = s;
     }
 
-    public void setCancel( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setCancel(String s)
     {
         m_cancel = s;
     }
 
-    public void setName( String s )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setName(String s)
     {
         m_formName = s;
     }
-    
-    public void setAction( String s )
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param s DOCUMENT ME!
+     */
+    public void setAction(String s)
     {
         m_action = s;
     }
-    
-    private GenericElement createInput( String name, String value )
+
+    private GenericElement createInput(String name, String value)
     {
         input in = new input();
         in.setType("hidden");
-        in.setName( name );
-        in.setValue( value );
+        in.setName(name);
+        in.setValue(value);
 
         return in;
     }
 
-    private GenericElement createSubmit( String name, String value )
+    private GenericElement createSubmit(String name, String value)
     {
         input in = new input();
         in.setType("submit");
-        in.setName( name );
-        in.setValue( value );
+        in.setName(name);
+        in.setValue(value);
 
         return in;
     }
 
     private form createSimpleEditor()
     {
-        WikiPage   page   = m_wikiContext.getPage();
+        WikiPage page = m_wikiContext.getPage();
         WikiEngine engine = m_wikiContext.getEngine();
-        
+
         form f = new form();
         f.setName(m_formName);
- 
-        if( m_action != null ) 
+
+        if (m_action != null)
         {
-            f.setAction( m_action );
+            f.setAction(m_action);
         }
-        else if( m_wikiContext.getRequestContext().equals( WikiContext.COMMENT ) ||
-                 "comment".equals(m_wikiContext.getHttpParameter("action")) )
+        else if (
+            m_wikiContext.getRequestContext().equals(WikiContext.COMMENT)
+                || "comment".equals(m_wikiContext.getHttpParameter("action")))
         {
-            f.setAction( m_wikiContext.getURL( WikiContext.COMMENT, page.getName() ));
+            f.setAction(m_wikiContext.getURL(WikiContext.COMMENT, page.getName()));
         }
         else
         {
-            f.setAction( m_wikiContext.getURL( WikiContext.EDIT, page.getName() ));
+            f.setAction(m_wikiContext.getURL(WikiContext.EDIT, page.getName()));
         }
-        
-        f.setMethod( "post" );
-        f.setAcceptCharset( engine.getContentEncoding() );
+
+        f.setMethod("post");
+        f.setAcceptCharset(engine.getContentEncoding());
 
         p para1 = new p();
 
         // Kludge to get preview working from Comment.jsp
-        if( m_wikiContext.getHttpParameter("author") != null )
+        if (m_wikiContext.getHttpParameter("author") != null)
         {
-            para1.addElement( createInput("author", m_wikiContext.getHttpParameter("author")) );
+            para1.addElement(createInput("author", m_wikiContext.getHttpParameter("author")));
         }
-        
+
         f.addElement(para1);
 
-        para1.addElement( createInput("page", page.getName() ) );
-        para1.addElement( createInput("action", "save" ) );
-        para1.addElement( createInput("edittime",
-                                      (String)pageContext.getAttribute("lastchange",
-                                                                       PageContext.REQUEST_SCOPE ) ) );
-       
-        if( m_wikiContext.getRequestContext().equals("comment") )
+        para1.addElement(createInput("page", page.getName()));
+        para1.addElement(createInput("action", "save"));
+        para1.addElement(
+            createInput(
+                "edittime",
+                (String) pageContext.getAttribute("lastchange", PageContext.REQUEST_SCOPE)));
+
+        if (m_wikiContext.getRequestContext().equals("comment"))
         {
-            para1.addElement( createInput("comment","true") );
+            para1.addElement(createInput("comment", "true"));
         }
-        
+
         return f;
     }
 
@@ -157,70 +196,87 @@ public class EditorTag
         area.setClass("editor");
         area.setWrap("virtual");
         area.setName("text");
-        area.setRows( 25 );
-        area.setCols( 80 );
-        area.setStyle( "width:100%;" );
-       
-        if( m_wikiContext.getRequestContext().equals("edit") )
+        area.setRows(25);
+        area.setCols(80);
+        area.setStyle("width:100%;");
+
+        if (m_wikiContext.getRequestContext().equals("edit"))
         {
-            area.addElement( m_wikiContext.getEngine().getText( m_wikiContext, m_wikiContext.getPage() ) );
+            area.addElement(
+                m_wikiContext.getEngine().getText(m_wikiContext, m_wikiContext.getPage()));
         }
- 
+
         return area;
     }
+
     /**
-     *  Returns an edit button block.
-     * 
+     * Returns an edit button block.
+     *
      * @return
      */
     private ConcreteElement getButtons()
     {
         p para2 = new p();
 
-        para2.addElement( createSubmit( "ok",      m_submit ) );
-        para2.addElement( "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" );
-        para2.addElement( createSubmit( "preview", m_preview ) );
-        para2.addElement( "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" );
-        para2.addElement( createSubmit( "cancel",  m_cancel ) );
+        para2.addElement(createSubmit("ok", m_submit));
+        para2.addElement("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+        para2.addElement(createSubmit("preview", m_preview));
+        para2.addElement("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+        para2.addElement(createSubmit("cancel", m_cancel));
 
         return para2;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         return EVAL_BODY_AGAIN;
     }
-       
-    public int doEndTag() throws JspException
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws JspException DOCUMENT ME!
+     */
+    public int doEndTag()
+        throws JspException
     {
         BodyContent bc = getBodyContent();
-        
+
         form editor = createSimpleEditor();
-    
+
         // 
         // If there is no body tag content, then we'll assume old
         // behaviour and append the stuff ourselves.
         //
-        if(bc == null || StringUtils.isEmpty(bc.getString()))
+        if ((bc == null) || StringUtils.isEmpty(bc.getString()))
         {
-            editor.addElement( getEditorArea() );
-            editor.addElement( getButtons() );            
+            editor.addElement(getEditorArea());
+            editor.addElement(getButtons());
         }
         else
         {
-            editor.addElement( bc.getString() );
+            editor.addElement(bc.getString());
         }
-        
+
         try
         {
-            pageContext.getOut().print( editor.toString() );
+            pageContext.getOut().print(editor.toString());
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            throw new JspException("Could not print Editor tag: "+e.getMessage() );
+            throw new JspException("Could not print Editor tag: " + e.getMessage());
         }
-        
+
         return EVAL_PAGE;
     }
 }

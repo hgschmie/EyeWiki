@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,101 +25,148 @@ import java.util.HashMap;
 import com.ecyrd.jspwiki.acl.AccessControlList;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
+
 /**
- *  Simple wrapper class for the Wiki page attributes.  The Wiki page
- *  content is moved around in Strings, though.
+ * Simple wrapper class for the Wiki page attributes.  The Wiki page content is moved around in
+ * Strings, though.
  */
 
 // FIXME: We need to rethink how metadata is being used - probably the 
 //        author, date, etc. should also be part of the metadata.  We also
 //        need to figure out the metadata lifecycle.
-
 public class WikiPage
-    implements Cloneable,
-               Comparable
+    implements Cloneable, Comparable
 {
-    private String       m_name;
-    private Date         m_lastModified;
-    private long         m_fileSize = -1;
-    private int          m_version = WikiPageProvider.LATEST_VERSION;
-    private String       m_author = null;
-    private HashMap      m_attributes = new HashMap();
-
-    /**
-     *  "Summary" is a short summary of the page.  It is a String.
-     */
+    /** "Summary" is a short summary of the page.  It is a String. */
     public static final String DESCRIPTION = "summary";
 
+    /** DOCUMENT ME! */
     public static final String ALIAS = "alias";
+
+    /** DOCUMENT ME! */
     public static final String REDIRECT = "redirect";
 
+    /** DOCUMENT ME! */
     public static final String SIZE = "size";
 
+    /** DOCUMENT ME! */
+    private String m_name;
+
+    /** DOCUMENT ME! */
+    private Date m_lastModified;
+
+    /** DOCUMENT ME! */
+    private long m_fileSize = -1;
+
+    /** DOCUMENT ME! */
+    private int m_version = WikiPageProvider.LATEST_VERSION;
+
+    /** DOCUMENT ME! */
+    private String m_author = null;
+
+    /** DOCUMENT ME! */
+    private HashMap m_attributes = new HashMap();
+
+    /** DOCUMENT ME! */
     private AccessControlList m_accessList = null;
 
-    public WikiPage( String name )
+    /** DOCUMENT ME! */
+    private boolean m_hasMetadata = false;
+
+    /**
+     * Creates a new WikiPage object.
+     *
+     * @param name DOCUMENT ME!
+     */
+    public WikiPage(String name)
     {
         m_name = name;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getName()
     {
         return m_name;
     }
 
     /**
-     *  A WikiPage may have a number of attributes, which might or might not be 
-     *  available.  Typically attributes are things that do not need to be stored
-     *  with the wiki page to the page repository, but are generated
-     *  on-the-fly.  A provider is not required to save them, but they
-     *  can do that if they really want.
+     * A WikiPage may have a number of attributes, which might or might not be available. Typically
+     * attributes are things that do not need to be stored with the wiki page to the page
+     * repository, but are generated on-the-fly.  A provider is not required to save them, but
+     * they can do that if they really want.
      *
-     *  @param key The key using which the attribute is fetched
-     *  @return The attribute.  If the attribute has not been set, returns null.
+     * @param key The key using which the attribute is fetched
+     *
+     * @return The attribute.  If the attribute has not been set, returns null.
      */
-    public Object getAttribute( String key )
+    public Object getAttribute(String key)
     {
-        return m_attributes.get( key );
+        return m_attributes.get(key);
     }
 
     /**
-     *  Sets an metadata attribute.
+     * Sets an metadata attribute.
+     *
+     * @param key DOCUMENT ME!
+     * @param attribute DOCUMENT ME!
      */
-    public void setAttribute( String key, Object attribute )
+    public void setAttribute(String key, Object attribute)
     {
-        m_attributes.put( key, attribute );
+        m_attributes.put(key, attribute);
     }
 
     /**
-     *  Removes an attribute from the page, if it exists.
-     *  @return If the attribute existed, returns the object.
-     *  @since 2.1.111
+     * Removes an attribute from the page, if it exists.
+     *
+     * @param key DOCUMENT ME!
+     *
+     * @return If the attribute existed, returns the object.
+     *
+     * @since 2.1.111
      */
-    public Object removeAttribute( String key )
+    public Object removeAttribute(String key)
     {
-        return m_attributes.remove( key );
+        return m_attributes.remove(key);
     }
 
     /**
-     *  Returns the date when this page was last modified.
+     * Returns the date when this page was last modified.
+     *
+     * @return DOCUMENT ME!
      */
     public Date getLastModified()
     {
         return m_lastModified;
     }
 
-    public void setLastModified( Date date )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param date DOCUMENT ME!
+     */
+    public void setLastModified(Date date)
     {
         m_lastModified = date;
     }
 
-    public void setVersion( int version )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param version DOCUMENT ME!
+     */
+    public void setVersion(int version)
     {
         m_version = version;
     }
 
     /**
-     *  Returns the version that this WikiPage instance represents.
+     * Returns the version that this WikiPage instance represents.
+     *
+     * @return DOCUMENT ME!
      */
     public int getVersion()
     {
@@ -127,43 +174,64 @@ public class WikiPage
     }
 
     /**
-     *  @since 2.1.109
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @since 2.1.109
      */
     public long getSize()
     {
-        return( m_fileSize );
+        return (m_fileSize);
     }
 
     /**
-     *  @since 2.1.109
+     * DOCUMENT ME!
+     *
+     * @param size DOCUMENT ME!
+     *
+     * @since 2.1.109
      */
-    public void setSize( long size )
+    public void setSize(long size)
     {
         m_fileSize = size;
     }
 
     /**
-     *  Returns the AccessControlList for this page.  May return null, 
-     *  in case there is no ACL defined for this page, or it has not
-     *  yet been received.
+     * Returns the AccessControlList for this page.  May return null, in case there is no ACL
+     * defined for this page, or it has not yet been received.
+     *
+     * @return DOCUMENT ME!
      */
     public AccessControlList getAcl()
     {
         return m_accessList;
     }
 
-    public void setAcl( AccessControlList acl )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param acl DOCUMENT ME!
+     */
+    public void setAcl(AccessControlList acl)
     {
         m_accessList = acl;
     }
 
-    public void setAuthor( String author )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param author DOCUMENT ME!
+     */
+    public void setAuthor(String author)
     {
         m_author = author;
     }
 
     /**
-     *  Returns author name, or null, if no author has been defined.
+     * Returns author name, or null, if no author has been defined.
+     *
+     * @return DOCUMENT ME!
      */
     public String getAuthor()
     {
@@ -171,62 +239,82 @@ public class WikiPage
     }
 
     /**
-     *  This method will remove all metadata from the page.
+     * This method will remove all metadata from the page.
      */
     public void invalidateMetadata()
-    {        
+    {
         m_hasMetadata = false;
-        setAcl( null );
+        setAcl(null);
         m_attributes.clear();
     }
 
-    private boolean m_hasMetadata = false;
-
     /**
-     *  Returns true, if the page has valid metadata, i.e. it has been parsed.
+     * Returns true, if the page has valid metadata, i.e. it has been parsed.
+     *
+     * @return DOCUMENT ME!
      */
     public boolean hasMetadata()
     {
         return m_hasMetadata;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void setHasMetadata()
     {
         m_hasMetadata = true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String toString()
     {
-        return "WikiPage ["+m_name+",ver="+m_version+",mod="+m_lastModified+"]";
+        return "WikiPage [" + m_name + ",ver=" + m_version + ",mod=" + m_lastModified + "]";
     }
 
     /**
-     *  Creates a deep clone of a WikiPage.  Strings are not cloned, since
-     *  they're immutable.
+     * Creates a deep clone of a WikiPage.  Strings are not cloned, since they're immutable.
+     *
+     * @return DOCUMENT ME!
      */
     public Object clone()
     {
-        WikiPage p       = new WikiPage(m_name);
+        WikiPage p = new WikiPage(m_name);
 
-        p.m_author       = m_author;
-        p.m_version      = m_version;
-        p.m_lastModified = (Date)m_lastModified.clone();
+        p.m_author = m_author;
+        p.m_version = m_version;
+        p.m_lastModified = (Date) m_lastModified.clone();
 
         return p;
     }
-    
-    public int compareTo( Object o )
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param o DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int compareTo(Object o)
     {
         int res = 0;
-        if( o instanceof WikiPage )
+
+        if (o instanceof WikiPage)
         {
-            WikiPage c = (WikiPage)o;
-        
+            WikiPage c = (WikiPage) o;
+
             res = this.getName().compareTo(c.getName());
-            
-            if( res == 0 ) res = this.getVersion()-c.getVersion();
+
+            if (res == 0)
+            {
+                res = this.getVersion() - c.getVersion();
+            }
         }
-            
+
         return res;
     }
 }

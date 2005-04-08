@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -22,44 +22,46 @@ package com.ecyrd.jspwiki.util;
 import java.util.AbstractList;
 import java.util.ArrayList;
 
+
 /**
- *  Builds a simple, priority-based List implementation.  The list
- *  will be sorted according to the priority.  If two items are
- *  inserted with the same priority, their order is the insertion order - i.e. the new one
- *  is appended last in the insertion list.
- *  <p>
- *  Priority is an integer, and the list is sorted in descending order
- *  (that is, 100 is before 10 is before 0 is before -40).
+ * Builds a simple, priority-based List implementation.  The list will be sorted according to the
+ * priority.  If two items are inserted with the same priority, their order is the insertion order
+ * - i.e. the new one is appended last in the insertion list.
+ * 
+ * <p>
+ * Priority is an integer, and the list is sorted in descending order (that is, 100 is before 10 is
+ * before 0 is before -40).
+ * </p>
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class PriorityList
     extends AbstractList
 {
-    private ArrayList m_elements = new ArrayList();
-
     /**
-     *  This is the default priority, which is used if no priority
-     *  is defined.  It's current value is zero.
+     * This is the default priority, which is used if no priority is defined.  It's current value
+     * is zero.
      */
     public static final int DEFAULT_PRIORITY = 0;
 
+    /** DOCUMENT ME! */
+    private ArrayList m_elements = new ArrayList();
+
     /**
-     *  Adds an object to its correct place in the list, using the
-     *  given priority.
+     * Adds an object to its correct place in the list, using the given priority.
      *
-     *  @param o Object to add.
-     *  @param priority Priority.
+     * @param o Object to add.
+     * @param priority Priority.
      */
-    public void add( Object o, int priority )
+    public void add(Object o, int priority)
     {
         int i = 0;
 
-        for( ; i < m_elements.size(); i++ )
+        for (; i < m_elements.size(); i++)
         {
             Item item = (Item) m_elements.get(i);
 
-            if( item.m_priority < priority )
+            if (item.m_priority < priority)
             {
                 break;
             }
@@ -67,37 +69,41 @@ public class PriorityList
 
         Item newItem = new Item();
         newItem.m_priority = priority;
-        newItem.m_object   = o;
+        newItem.m_object = o;
 
-        m_elements.add( i, newItem );
+        m_elements.add(i, newItem);
     }
 
     /**
-     *  Adds an object using the default priority to the List.
+     * Adds an object using the default priority to the List.
      *
-     *  @param o Object to add.
-     *  @return true, as per the general Collections.add contract.
+     * @param o Object to add.
+     *
+     * @return true, as per the general Collections.add contract.
      */
-    public boolean add( Object o )
+    public boolean add(Object o)
     {
-        add( o, DEFAULT_PRIORITY );
+        add(o, DEFAULT_PRIORITY);
 
         return true;
     }
 
     /**
-     *  Returns the object at index "index".
+     * Returns the object at index "index".
      *
-     *  @param index The index.
-     *  @return The object at the list at the position "index".
+     * @param index The index.
+     *
+     * @return The object at the list at the position "index".
      */
-    public Object get( int index )
+    public Object get(int index)
     {
-        return ((Item)m_elements.get( index )).m_object;
+        return ((Item) m_elements.get(index)).m_object;
     }
 
     /**
-     *  Returns the current size of the list.
+     * Returns the current size of the list.
+     *
+     * @return DOCUMENT ME!
      */
     public int size()
     {
@@ -105,11 +111,14 @@ public class PriorityList
     }
 
     /**
-     *  Provides a holder for the priority-object 2-tuple.
+     * Provides a holder for the priority-object 2-tuple.
      */
     private class Item
     {
-        public int     m_priority;
-        public Object  m_object;
+        /** DOCUMENT ME! */
+        public int m_priority;
+
+        /** DOCUMENT ME! */
+        public Object m_object;
     }
 }

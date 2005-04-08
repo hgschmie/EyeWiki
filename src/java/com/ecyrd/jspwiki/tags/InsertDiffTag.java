@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -29,78 +29,105 @@ import org.apache.commons.lang.StringUtils;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Writes difference between two pages using a HTML table.  If there is
- *  no difference, includes the body.
+ * Writes difference between two pages using a HTML table.  If there is no difference, includes the
+ * body.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * </ul>
+ * 
  *
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
 public class InsertDiffTag
-        extends WikiTagBase
+    extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     public static final String ATTR_OLDVERSION = "insertdiff.old";
+
+    /** DOCUMENT ME! */
     public static final String ATTR_NEWVERSION = "insertdiff.new";
 
+    /** DOCUMENT ME! */
     protected String m_pageName;
 
-    public void setPage( String page )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     */
+    public void setPage(String page)
     {
         m_pageName = page;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getPage()
     {
         return m_pageName;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-            throws IOException
+        throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page;
+        WikiPage page;
 
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             page = m_wikiContext.getPage();
         }
         else
         {
-            page = engine.getPage( m_pageName );
+            page = engine.getPage(m_pageName);
         }
 
-        Integer vernew = (Integer) pageContext.getAttribute( ATTR_NEWVERSION,
-                PageContext.REQUEST_SCOPE );
-        Integer verold = (Integer) pageContext.getAttribute( ATTR_OLDVERSION,
-                PageContext.REQUEST_SCOPE );
+        Integer vernew =
+            (Integer) pageContext.getAttribute(ATTR_NEWVERSION, PageContext.REQUEST_SCOPE);
+        Integer verold =
+            (Integer) pageContext.getAttribute(ATTR_OLDVERSION, PageContext.REQUEST_SCOPE);
 
-        if (log.isInfoEnabled()) {
-            log.info("Request diff between version "+verold+" and "+vernew);
+        if (log.isInfoEnabled())
+        {
+            log.info("Request diff between version " + verold + " and " + vernew);
         }
 
-        if( page != null )
+        if (page != null)
         {
             JspWriter out = pageContext.getOut();
 
-            String diff = engine.getDiff( page.getName(), 
-                    vernew.intValue(), 
-                    verold.intValue(),
-                    true);
+            String diff =
+                engine.getDiff(page.getName(), vernew.intValue(), verold.intValue(), true);
 
-            if(StringUtils.isEmpty(diff))
+            if (StringUtils.isEmpty(diff))
             {
                 return EVAL_BODY_INCLUDE;
             }
 
-            out.write( diff );
+            out.write(diff);
         }
 
         return SKIP_BODY;
     }
 }
-

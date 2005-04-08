@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -27,47 +28,61 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  Just displays the current date and time.
- *  The time format is exactly like in the java.util.SimpleDateFormat class.
+ * Just displays the current date and time. The time format is exactly like in the
+ * java.util.SimpleDateFormat class.
  *
- *  @since 1.7.8
- *  @see java.util.SimpleDateFormat
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
+ *
+ * @see java.util.SimpleDateFormat
+ * @since 1.7.8
  */
 public class CurrentTimePlugin
-        implements WikiPlugin
+    implements WikiPlugin
 {
-    private static Logger log = Logger.getLogger( CurrentTimePlugin.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(CurrentTimePlugin.class);
 
+    /** DOCUMENT ME! */
     public static final String DEFAULT_FORMAT = "HH:mm:ss dd-MMM-yyyy zzzz";
 
-    public String execute( WikiContext context, Map params )
-            throws PluginException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
+        throws PluginException
     {
-        String formatString = (String)params.get("format");
+        String formatString = (String) params.get("format");
 
-        if( formatString == null )
+        if (formatString == null)
         {
             formatString = DEFAULT_FORMAT;
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Date format string is: "+formatString);
+        if (log.isDebugEnabled())
+        {
+            log.debug("Date format string is: " + formatString);
         }
 
         try
         {
-            SimpleDateFormat fmt = new SimpleDateFormat( formatString );
+            SimpleDateFormat fmt = new SimpleDateFormat(formatString);
 
-            Date d = new Date();  // Now.
+            Date d = new Date(); // Now.
 
-            return fmt.format( d );
+            return fmt.format(d);
         }
-        catch( IllegalArgumentException e )
+        catch (IllegalArgumentException e)
         {
-            throw new PluginException("You specified bad format: "+e.getMessage());
+            throw new PluginException("You specified bad format: " + e.getMessage());
         }
     }
-
 }

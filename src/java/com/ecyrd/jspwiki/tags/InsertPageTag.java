@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,39 +27,71 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Writes page content in HTML.
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *    <li>mode - In which format to insert the page.  Can be either "plain" or "html".
- *  </UL>
+ * Writes page content in HTML.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * <li>
+ * mode - In which format to insert the page.  Can be either "plain" or "html".
+ * </li>
+ * </ul>
+ * 
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class InsertPageTag
-        extends WikiTagBase
+    extends WikiTagBase
 {
-    public static final int HTML  = 0;
+    /** DOCUMENT ME! */
+    public static final int HTML = 0;
+
+    /** DOCUMENT ME! */
     public static final int PLAIN = 1;
 
+    /** DOCUMENT ME! */
     protected String m_pageName = null;
-    private   int    m_mode = HTML;
 
-    public void setPage( String page )
+    /** DOCUMENT ME! */
+    private int m_mode = HTML;
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     */
+    public void setPage(String page)
     {
         m_pageName = page;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getPage()
     {
         return m_pageName;
     }
 
-    public void setMode( String arg )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param arg DOCUMENT ME!
+     */
+    public void setMode(String arg)
     {
-        if( "plain".equals(arg) )
+        if ("plain".equals(arg))
         {
             m_mode = PLAIN;
         }
@@ -69,47 +101,60 @@ public class InsertPageTag
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
-            throws IOException,
-                   ProviderException
+        throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page;
+        WikiPage page;
 
         //
         //  NB: The page might not really exist if the user is currently
         //      creating it (i.e. it is not yet in the cache or providers), 
         //      AND we got the page from the wikiContext.
         //
-
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             page = m_wikiContext.getPage();
-            if( !engine.pageExists(page) ) return SKIP_BODY;
+
+            if (!engine.pageExists(page))
+            {
+                return SKIP_BODY;
+            }
         }
         else
         {
-            page = engine.getPage( m_pageName );
+            page = engine.getPage(m_pageName);
         }
 
-        if( page != null )
+        if (page != null)
         {
             // FIXME: Do version setting later.
             // page.setVersion( WikiProvider.LATEST_VERSION );
-
-            if (log.isDebugEnabled()) {
-                log.debug("Inserting page "+page);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Inserting page " + page);
             }
 
             JspWriter out = pageContext.getOut();
 
-            switch(m_mode)
+            switch (m_mode)
             {
             case HTML:
-                out.print( engine.getHTML(m_wikiContext, page) );
+                out.print(engine.getHTML(m_wikiContext, page));
+
                 break;
+
             case PLAIN:
-                out.print( engine.getText(m_wikiContext, page) );
+                out.print(engine.getText(m_wikiContext, page));
+
                 break;
             }
         }

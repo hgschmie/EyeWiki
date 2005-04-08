@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -37,62 +37,82 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  A regular expression-based spamfilter.
+ * A regular expression-based spamfilter.
  *
- *  @since 2.1.112
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.112
  */
 public class SpamFilter
-        extends BasicPageFilter
+    extends BasicPageFilter
 {
-    private String m_forbiddenWordsPage = "SpamFilterWordList";
-    private String m_errorPage          = "RejectedMessage";
-
+    /** DOCUMENT ME! */
     private static final String LISTVAR = "spamwords";
-    private PatternMatcher m_matcher = new Perl5Matcher();
-    private PatternCompiler m_compiler = new Perl5Compiler();
 
-    private Collection m_spamPatterns = null;
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(SpamFilter.class);
 
-    private Date m_lastRebuild = new Date( 0L );
+    /** DOCUMENT ME! */
+    public static final String PROP_WORDLIST = "wordlist";
 
-    static Logger log = Logger.getLogger( SpamFilter.class );
-
-    public static final String PROP_WORDLIST  = "wordlist";
+    /** DOCUMENT ME! */
     public static final String PROP_ERRORPAGE = "errorpage";
 
-    public void initialize( Properties properties )
+    /** DOCUMENT ME! */
+    private String m_forbiddenWordsPage = "SpamFilterWordList";
+
+    /** DOCUMENT ME! */
+    private String m_errorPage = "RejectedMessage";
+
+    /** DOCUMENT ME! */
+    private PatternMatcher m_matcher = new Perl5Matcher();
+
+    /** DOCUMENT ME! */
+    private PatternCompiler m_compiler = new Perl5Compiler();
+
+    /** DOCUMENT ME! */
+    private Collection m_spamPatterns = null;
+
+    /** DOCUMENT ME! */
+    private Date m_lastRebuild = new Date(0L);
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param properties DOCUMENT ME!
+     */
+    public void initialize(Properties properties)
     {
-        m_forbiddenWordsPage = properties.getProperty( PROP_WORDLIST, 
-                m_forbiddenWordsPage );
-        m_errorPage = properties.getProperty( PROP_ERRORPAGE, 
-                m_errorPage );
+        m_forbiddenWordsPage = properties.getProperty(PROP_WORDLIST, m_forbiddenWordsPage);
+        m_errorPage = properties.getProperty(PROP_ERRORPAGE, m_errorPage);
     }
 
-    private Collection parseWordList( WikiPage source, String list )
+    private Collection parseWordList(WikiPage source, String list)
     {
         ArrayList compiledpatterns = new ArrayList();
 
-        if( list != null )
+        if (list != null)
         {
-            StringTokenizer tok = new StringTokenizer( list, " \t\n" );
+            StringTokenizer tok = new StringTokenizer(list, " \t\n");
 
-            while( tok.hasMoreTokens() )
+            while (tok.hasMoreTokens())
             {
                 String pattern = tok.nextToken();
 
                 try
                 {
-                    compiledpatterns.add( m_compiler.compile( pattern ) );
+                    compiledpatterns.add(m_compiler.compile(pattern));
                 }
-                catch( MalformedPatternException e )
+                catch (MalformedPatternException e)
                 {
-                    if (log.isDebugEnabled()) {
-                        log.debug( "Malformed spam filter pattern "+pattern );
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("Malformed spam filter pattern " + pattern);
                     }
-                
-                    source.setAttribute("error", "Malformed spam filter pattern "+pattern);
+
+                    source.setAttribute("error", "Malformed spam filter pattern " + pattern);
                 }
             }
         }
@@ -100,23 +120,36 @@ public class SpamFilter
         return compiledpatterns;
     }
 
-
-    public String preSave( WikiContext context, String content )
-            throws RedirectException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param content DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws RedirectException DOCUMENT ME!
+     */
+    public String preSave(WikiContext context, String content)
+        throws RedirectException
     {
-        WikiPage source = context.getEngine().getPage( m_forbiddenWordsPage );
+        WikiPage source = context.getEngine().getPage(m_forbiddenWordsPage);
 
-        if( source != null )
+        if (source != null)
         {
-            if( m_spamPatterns == null || m_spamPatterns.isEmpty() || source.getLastModified().after(m_lastRebuild) )
+            if (
+                (m_spamPatterns == null) || m_spamPatterns.isEmpty()
+                    || source.getLastModified().after(m_lastRebuild))
             {
                 m_lastRebuild = source.getLastModified();
 
-                m_spamPatterns = parseWordList( source, 
-                        (String)source.getAttribute( LISTVAR ) );
+                m_spamPatterns = parseWordList(source, (String) source.getAttribute(LISTVAR));
 
-                if (log.isInfoEnabled()) {
-                    log.info("Spam filter reloaded - recognizing "+m_spamPatterns.size()+" patterns from page "+m_forbiddenWordsPage);
+                if (log.isInfoEnabled())
+                {
+                    log.info(
+                        "Spam filter reloaded - recognizing " + m_spamPatterns.size()
+                        + " patterns from page " + m_forbiddenWordsPage);
                 }
             }
         }
@@ -125,27 +158,28 @@ public class SpamFilter
         //  If we have no spam patterns defined, or we're trying to save
         //  the page containing the patterns, just return.
         //
-        if( m_spamPatterns == null || context.getPage().getName().equals( m_forbiddenWordsPage ) )
+        if ((m_spamPatterns == null) || context.getPage().getName().equals(m_forbiddenWordsPage))
         {
             return content;
         }
 
-        for( Iterator i = m_spamPatterns.iterator(); i.hasNext(); )
+        for (Iterator i = m_spamPatterns.iterator(); i.hasNext();)
         {
             Pattern p = (Pattern) i.next();
 
-            if (log.isDebugEnabled()) {
-                log.debug("Attempting to match page contents with "+p.getPattern());
+            if (log.isDebugEnabled())
+            {
+                log.debug("Attempting to match page contents with " + p.getPattern());
             }
 
-            if( m_matcher.contains( content, p ) )
+            if (m_matcher.contains(content, p))
             {
                 //
                 //  Spam filter has a match.
                 //
-
-                throw new RedirectException( "Content matches the spam filter '"+p.getPattern()+"'", 
-                        context.getURL(WikiContext.VIEW,m_errorPage) );
+                throw new RedirectException(
+                    "Content matches the spam filter '" + p.getPattern() + "'",
+                    context.getURL(WikiContext.VIEW, m_errorPage));
             }
         }
 

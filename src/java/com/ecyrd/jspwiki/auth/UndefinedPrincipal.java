@@ -1,24 +1,41 @@
 package com.ecyrd.jspwiki.auth;
 
 /**
- *  If a proper group/user cannot be located, then we use this
- *  class.
+ * If a proper group/user cannot be located, then we use this class.
  */
 public class UndefinedPrincipal
     extends WikiPrincipal
 {
-    public UndefinedPrincipal( String name )
+    /**
+     * Creates a new UndefinedPrincipal object.
+     *
+     * @param name DOCUMENT ME!
+     */
+    public UndefinedPrincipal(String name)
     {
-        super( name );
+        super(name);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String toString()
     {
-        return "[Undefined: "+getName()+"]";
+        return "[Undefined: " + getName() + "]";
     }
 
-    public boolean equals( Object o )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param o DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean equals(Object o)
     {
-        return o != null && o instanceof WikiPrincipal && ((WikiPrincipal)o).getName().equals( getName());
+        return (o != null) && o instanceof WikiPrincipal
+        && ((WikiPrincipal) o).getName().equals(getName());
     }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
@@ -31,50 +32,56 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Contains useful utilities for some common HTTP tasks.
+ * Contains useful utilities for some common HTTP tasks.
  *
- *  @author Janne Jalkanen
- *  @since 2.1.61.
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.61.
  */
 public class HttpUtil
 {
-    static Logger log = Logger.getLogger( HttpUtil.class );
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(HttpUtil.class);
 
     /**
-     *  Attempts to retrieve the given cookie value from the request.
-     *  Returns the string value (which may or may not be decoded
-     *  correctly, depending on browser!), or null if the cookie is
-     *  not found.
+     * Attempts to retrieve the given cookie value from the request. Returns the string value
+     * (which may or may not be decoded correctly, depending on browser!), or null if the cookie
+     * is not found.
      *
-     *  @param request The current request
-     *  @param cookieName The name of the cookie to fetch.
-     *  @return Value of the cookie, or null, if there is no such cookie.
+     * @param request The current request
+     * @param cookieName The name of the cookie to fetch.
+     *
+     * @return Value of the cookie, or null, if there is no such cookie.
      */
-
-    public static String retrieveCookieValue( HttpServletRequest request, String cookieName )
+    public static String retrieveCookieValue(HttpServletRequest request, String cookieName)
     {
-        Cookie[] cookies = request.getCookies();
+        Cookie [] cookies = request.getCookies();
 
-        if( cookies != null )
+        if (cookies != null)
         {
-            for( int i = 0; i < cookies.length; i++ )
+            for (int i = 0; i < cookies.length; i++)
             {
-                if( cookies[i].getName().equals( cookieName ) )
+                if (cookies[i].getName().equals(cookieName))
                 {
-                    return( cookies[i].getValue() );
+                    return (cookies[i].getValue());
                 }
             }
         }
 
-        return( null );
+        return (null);
     }
 
     /**
-     *  If returns true, then should return a 304 (HTTP_NOT_MODIFIED)
+     * If returns true, then should return a 304 (HTTP_NOT_MODIFIED)
+     *
+     * @param req DOCUMENT ME!
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public static boolean checkFor304( HttpServletRequest req,
-            WikiPage page )
+    public static boolean checkFor304(HttpServletRequest req, WikiPage page)
     {
         DateFormat rfcDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
         Date lastModified = page.getLastModified();
@@ -86,51 +93,51 @@ public class HttpUtil
         //    pragma: no-cache
         //    cache-control: no-cache
         //
-
-        if( "no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
-                || "no-cache".equalsIgnoreCase(req.getHeader("cache-control"))) 
+        if (
+            "no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
+                || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
         {
             // Wants specifically a fresh copy
-        } 
-        else 
+        }
+        else
         {
             long ifModifiedSince = req.getDateHeader("If-Modified-Since");
 
             //log.info("ifModifiedSince:"+ifModifiedSince);
-            if( ifModifiedSince != -1 )
+            if (ifModifiedSince != -1)
             {
                 long lastModifiedTime = lastModified.getTime();
 
                 //log.info("lastModifiedTime:" + lastModifiedTime);
-                if( lastModifiedTime <= ifModifiedSince )
+                if (lastModifiedTime <= ifModifiedSince)
                 {
                     return true;
                 }
-            } 
+            }
             else
             {
-                try 
+                try
                 {
                     String s = req.getHeader("If-Modified-Since");
 
-                    if( s != null ) 
+                    if (s != null)
                     {
                         Date ifModifiedSinceDate = rfcDateFormat.parse(s);
+
                         //log.info("ifModifiedSinceDate:" + ifModifiedSinceDate);
-                        if( lastModified.before(ifModifiedSinceDate) ) 
+                        if (lastModified.before(ifModifiedSinceDate))
                         {
                             return true;
                         }
                     }
-                } 
-                catch (ParseException e) 
+                }
+                catch (ParseException e)
                 {
                     log.warn(e.getLocalizedMessage(), e);
                 }
             }
         }
-         
+
         return false;
     }
-
 }

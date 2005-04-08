@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -28,33 +28,43 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.ReferenceManager;
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  Parameters: none.<BR>
- *  From AbstractReferralPlugin:<BR>
- *  separator: How to separate generated links; default is a wikitext line break,
- *             producing a vertical list.<BR>
- *  maxwidth: maximum width, in chars, of generated links.
+ * Parameters: none.<BR> From AbstractReferralPlugin:<BR> separator: How to separate generated
+ * links; default is a wikitext line break, producing a vertical list.<BR> maxwidth: maximum
+ * width, in chars, of generated links.
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class UndefinedPagesPlugin
     extends AbstractReferralPlugin
 {
-    private static Logger log = Logger.getLogger( UndefinedPagesPlugin.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(UndefinedPagesPlugin.class);
 
-    public String execute( WikiContext context, Map params )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
         throws PluginException
     {
         ReferenceManager refmgr = context.getEngine().getReferenceManager();
         Collection links = refmgr.findUncreated();
 
-        super.initialize( context, params );
+        super.initialize(context, params);
 
         TreeSet sortedSet = new TreeSet();
-        sortedSet.addAll( links );
+        sortedSet.addAll(links);
 
-        String wikitext = wikitizeCollection( sortedSet, m_separator, ALL_ITEMS );
-        
-        return makeHTML( context, wikitext );
+        String wikitext = wikitizeCollection(sortedSet, m_separator, ALL_ITEMS);
+
+        return makeHTML(context, wikitext);
     }
 }

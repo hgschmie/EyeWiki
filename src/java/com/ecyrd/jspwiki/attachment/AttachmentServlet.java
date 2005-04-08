@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,15 +19,15 @@
 */
 package com.ecyrd.jspwiki.attachment;
 
-import http.utils.multipartrequest.MultipartRequest;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -51,15 +51,18 @@ import com.ecyrd.jspwiki.filters.RedirectException;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.util.HttpUtil;
 
+import http.utils.multipartrequest.MultipartRequest;
+
 
 /**
- * This is a simple file upload servlet customized for JSPWiki. It receives 
- * a mime/multipart POST message, as sent by an Attachment page, stores it
- * temporarily, figures out what WikiName to use to store it, checks for
- * previously existing versions.
- *
- * <p>This servlet does not worry about authentication; we leave that to the 
- * container, or a previous servlet that chains to us.
+ * This is a simple file upload servlet customized for JSPWiki. It receives a mime/multipart POST
+ * message, as sent by an Attachment page, stores it temporarily, figures out what WikiName to use
+ * to store it, checks for previously existing versions.
+ * 
+ * <p>
+ * This servlet does not worry about authentication; we leave that to the container, or a previous
+ * servlet that chains to us.
+ * </p>
  *
  * @author Erik Bunn
  * @author Janne Jalkanen
@@ -67,305 +70,337 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  * @since 1.9.45.
  */
 public class AttachmentServlet
-        extends HttpServlet
+    extends HttpServlet
 {
-    private WikiEngine m_engine;
-    Logger log = Logger.getLogger(this.getClass().getName());
+    /** DOCUMENT ME! */
+    public static final String HDR_VERSION = "version";
 
-    public static final String HDR_VERSION     = "version";
-    public static final String HDR_NAME        = "page";
+    /** DOCUMENT ME! */
+    public static final String HDR_NAME = "page";
 
     /** Default expiry period is 1 day */
-    protected static final long DEFAULT_EXPIRY = 1 * 24 * 60 * 60 * 1000; 
+    protected static final long DEFAULT_EXPIRY = 1 * 24 * 60 * 60 * 1000;
 
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
+
+    /** DOCUMENT ME! */
+    Logger log = Logger.getLogger(this.getClass().getName());
+
+    /** DOCUMENT ME! */
     private String m_tmpDir;
 
-    /**
-     *  The maximum size that an attachment can be.
-     */
-    private int   m_maxSize = Integer.MAX_VALUE;
+    /** The maximum size that an attachment can be. */
+    private int m_maxSize = Integer.MAX_VALUE;
 
     //
     // Not static as DateFormat objects are not thread safe.
     // Used to handle the RFC date format = Sat, 13 Apr 2002 13:23:01 GMT
     //
+
+    /** DOCUMENT ME! */
     private final DateFormat rfcDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 
     /**
      * Initializes the servlet from WikiEngine properties.
+     *
+     * @param config DOCUMENT ME!
+     *
+     * @throws ServletException DOCUMENT ME!
      */
-    public void init( ServletConfig config )
-            throws ServletException 
+    public void init(ServletConfig config)
+        throws ServletException
     {
-        super.init( config );
+        super.init(config);
 
-        m_engine         = WikiEngine.getInstance( config );
+        m_engine = WikiEngine.getInstance(config);
+
         Configuration conf = m_engine.getWikiConfiguration();
 
-        m_tmpDir         = m_engine.getWorkDir()+File.separator+"attach-tmp";
- 
-        m_maxSize        = conf.getInt( 
-                WikiProperties.PROP_MAXSIZE,
-                WikiProperties.PROP_MAXSIZE_DEFAULT);
+        m_tmpDir = m_engine.getWorkDir() + File.separator + "attach-tmp";
 
-        File f = new File( m_tmpDir );
-        if( !f.exists() )
+        m_maxSize = conf.getInt(WikiProperties.PROP_MAXSIZE, WikiProperties.PROP_MAXSIZE_DEFAULT);
+
+        File f = new File(m_tmpDir);
+
+        if (!f.exists())
         {
             f.mkdirs();
         }
-        else if( !f.isDirectory() )
+        else if (!f.isDirectory())
         {
-            log.fatal("A file already exists where the temporary dir is supposed to be: "+m_tmpDir+".  Please remove it.");
+            log.fatal(
+                "A file already exists where the temporary dir is supposed to be: " + m_tmpDir
+                + ".  Please remove it.");
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug( "UploadServlet initialized. Using " + 
-                    m_tmpDir + " for temporary storage." );
+        if (log.isDebugEnabled())
+        {
+            log.debug("UploadServlet initialized. Using " + m_tmpDir + " for temporary storage.");
         }
     }
 
     /**
-     * Serves a GET with two parameters: 'wikiname' specifying the wikiname
-     * of the attachment, 'version' specifying the version indicator.
+     * Serves a GET with two parameters: 'wikiname' specifying the wikiname of the attachment,
+     * 'version' specifying the version indicator.
+     *
+     * @param req DOCUMENT ME!
+     * @param res DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ServletException DOCUMENT ME!
      */
 
     // FIXME: Messages would need to be localized somehow.
-    public void doGet( HttpServletRequest  req, HttpServletResponse res ) 
-            throws IOException, ServletException 
+    public void doGet(HttpServletRequest req, HttpServletResponse res)
+        throws IOException, ServletException
     {
-        String version  = m_engine.safeGetParameter( req, HDR_VERSION );
-        String nextPage = m_engine.safeGetParameter( req, "nextpage" );
+        String version = m_engine.safeGetParameter(req, HDR_VERSION);
+        String nextPage = m_engine.safeGetParameter(req, "nextpage");
 
-        String msg      = "An error occurred. Ouch.";
-        int    ver      = WikiProvider.LATEST_VERSION;
+        String msg = "An error occurred. Ouch.";
+        int ver = WikiProvider.LATEST_VERSION;
 
         AttachmentManager mgr = m_engine.getAttachmentManager();
         AuthorizationManager authmgr = m_engine.getAuthorizationManager();
 
-        UserProfile wup = m_engine.getUserManager().getUserProfile( req );
+        UserProfile wup = m_engine.getUserManager().getUserProfile(req);
 
-        WikiContext context = m_engine.createContext( req, WikiContext.ATTACH );
+        WikiContext context = m_engine.createContext(req, WikiContext.ATTACH);
         String page = context.getPage().getName();
 
-        if( page == null )
+        if (page == null)
         {
             log.info("Invalid attachment name.");
-            res.sendError( HttpServletResponse.SC_BAD_REQUEST );
+            res.sendError(HttpServletResponse.SC_BAD_REQUEST);
+
             return;
         }
         else
         {
-            try 
+            try
             {
-                if (log.isDebugEnabled()) {
-                    log.debug("Attempting to download att "+page+", version "+version);
-                }
-                if( version != null )
+                if (log.isDebugEnabled())
                 {
-                    ver = Integer.parseInt( version );
+                    log.debug("Attempting to download att " + page + ", version " + version);
                 }
 
-                Attachment att = mgr.getAttachmentInfo( page, ver );
+                if (version != null)
+                {
+                    ver = Integer.parseInt(version);
+                }
 
-                if( att != null )
+                Attachment att = mgr.getAttachmentInfo(page, ver);
+
+                if (att != null)
                 {
                     //
                     //  Check if the user has permission for this attachment
                     //
-
-                    if( !authmgr.checkPermission( att, wup, "view" ) )
+                    if (!authmgr.checkPermission(att, wup, "view"))
                     {
-                        if (log.isDebugEnabled()) {
+                        if (log.isDebugEnabled())
+                        {
                             log.debug("User does not have permission for this");
                         }
-                        res.sendError( HttpServletResponse.SC_FORBIDDEN );
+
+                        res.sendError(HttpServletResponse.SC_FORBIDDEN);
+
                         return;
                     }
-                                                 
 
                     //
                     //  Check if the client already has a version of this attachment.
                     //
-                    if( HttpUtil.checkFor304( req, att ) )
+                    if (HttpUtil.checkFor304(req, att))
                     {
                         log.debug("Client has latest version already, sending 304...");
-                        res.sendError( HttpServletResponse.SC_NOT_MODIFIED );
+                        res.sendError(HttpServletResponse.SC_NOT_MODIFIED);
+
                         return;
                     }
 
-                    String mimetype = getServletConfig().getServletContext().getMimeType( att.getFileName().toLowerCase() );
+                    String mimetype =
+                        getServletConfig().getServletContext().getMimeType(
+                            att.getFileName().toLowerCase());
 
-                    if( mimetype == null )
+                    if (mimetype == null)
                     {
                         mimetype = "application/binary";
                     }
 
-                    res.setContentType( mimetype );
+                    res.setContentType(mimetype);
 
                     //
                     //  We use 'inline' instead of 'attachment' so that user agents
                     //  can try to automatically open the file.
                     //
+                    res.addHeader(
+                        "Content-Disposition", "inline; filename=\"" + att.getFileName() + "\";");
 
-                    res.addHeader( "Content-Disposition",
-                            "inline; filename=\"" + att.getFileName() + "\";" );
                     long expires = new Date().getTime() + DEFAULT_EXPIRY;
-                    res.addDateHeader("Expires",expires);
-                    res.addDateHeader("Last-Modified",att.getLastModified().getTime());
+                    res.addDateHeader("Expires", expires);
+                    res.addDateHeader("Last-Modified", att.getLastModified().getTime());
 
                     // If a size is provided by the provider, report it.
-                    if( att.getSize() >= 0 )
+                    if (att.getSize() >= 0)
                     {
                         // log.info("size:"+att.getSize());
-                        res.setContentLength( (int)att.getSize() );
+                        res.setContentLength((int) att.getSize());
                     }
 
                     OutputStream out = res.getOutputStream();
-                    InputStream  in  = mgr.getAttachmentStream( att );
+                    InputStream in = mgr.getAttachmentStream(att);
 
                     int read = 0;
-                    byte buffer[] = new byte[8192];
-                    
-                    while( (read = in.read( buffer )) > -1 )
+                    byte [] buffer = new byte[8192];
+
+                    while ((read = in.read(buffer)) > -1)
                     {
-                        out.write( buffer, 0, read );
+                        out.write(buffer, 0, read);
                     }
-                    
+
                     in.close();
                     out.close();
 
-                    if(log.isDebugEnabled()) {
-                        log.debug("Attachment "+att.getFileName()+" sent to "+req.getRemoteUser()+" on "+req.getRemoteAddr());
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug(
+                            "Attachment " + att.getFileName() + " sent to " + req.getRemoteUser()
+                            + " on " + req.getRemoteAddr());
                     }
 
-                    if( nextPage != null )
+                    if (nextPage != null)
                     {
-                        res.sendRedirect( nextPage );
+                        res.sendRedirect(nextPage);
                     }
 
                     return;
                 }
                 else
                 {
-                    msg = "Attachment '" + page + "', version " + ver + 
-                            " does not exist.";
+                    msg = "Attachment '" + page + "', version " + ver + " does not exist.";
 
-                    log.info( msg );
-                    res.sendError( HttpServletResponse.SC_NOT_FOUND,
-                            msg );
+                    log.info(msg);
+                    res.sendError(HttpServletResponse.SC_NOT_FOUND, msg);
+
                     return;
                 }
-                
             }
-            catch( ProviderException pe )
+            catch (ProviderException pe)
             {
-                msg = "Provider error: "+pe.getMessage();
-                res.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        msg );
+                msg = "Provider error: " + pe.getMessage();
+                res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, msg);
+
                 return;
             }
-            catch( NumberFormatException nfe )
+            catch (NumberFormatException nfe)
             {
                 msg = "Invalid version number (" + version + ")";
-                res.sendError( HttpServletResponse.SC_BAD_REQUEST,
-                        msg );
+                res.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
+
                 return;
             }
-            catch( IOException ioe )
+            catch (IOException ioe)
             {
                 msg = "Error: " + ioe.getMessage();
-                res.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        msg );
+                res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, msg);
+
                 return;
             }
         }
     }
 
-
-
-
     /**
-     * Grabs mime/multipart data and stores it into the temporary area.
-     * Uses other parameters to determine which name to store as.
+     * Grabs mime/multipart data and stores it into the temporary area. Uses other parameters to
+     * determine which name to store as.
+     * 
+     * <p>
+     * The input to this servlet is generated by an HTML FORM with two parts. The first, named
+     * 'page', is the WikiName identifier for the parent file. The second, named 'content', is the
+     * binary content of the file.
+     * </p>
      *
-     * <p>The input to this servlet is generated by an HTML FORM with
-     * two parts. The first, named 'page', is the WikiName identifier
-     * for the parent file. The second, named 'content', is the binary
-     * content of the file.
+     * @param req DOCUMENT ME!
+     * @param res DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ServletException DOCUMENT ME!
      */
-    public void doPost( HttpServletRequest  req, HttpServletResponse res ) 
-            throws IOException, ServletException 
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+        throws IOException, ServletException
     {
         try
         {
-            String nextPage = upload( req );
+            String nextPage = upload(req);
             req.getSession().removeAttribute("msg");
-            res.sendRedirect( nextPage );
+            res.sendRedirect(nextPage);
         }
-        catch( RedirectException e )
+        catch (RedirectException e)
         {
             req.getSession().setAttribute("msg", e.getMessage());
-            res.sendRedirect( e.getRedirect() );
+            res.sendRedirect(e.getRedirect());
         }
     }
 
-
     /**
-     *  Uploads a specific mime multipart input set, intercepts exceptions.
+     * Uploads a specific mime multipart input set, intercepts exceptions.
      *
-     *  @return The page to which we should go next.
+     * @param req DOCUMENT ME!
+     *
+     * @return The page to which we should go next.
+     *
+     * @throws RedirectException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
      */
-    protected String upload( HttpServletRequest req )
-            throws RedirectException,
-                   IOException
+    protected String upload(HttpServletRequest req)
+        throws RedirectException, IOException
     {
-        String msg     = "";
+        String msg = "";
         String attName = "(unknown)";
-        String errorPage = m_engine.getURL( WikiContext.ERROR, "", null, false ); // If something bad happened, Upload should be able to take care of most stuff
+        String errorPage = m_engine.getURL(WikiContext.ERROR, "", null, false); // If something bad happened, Upload should be able to take care of most stuff
         String nextPage = errorPage;
 
         try
         {
             MultipartRequest multi;
 
-            multi = new MultipartRequest( null, // no debugging
-                    req.getContentType(), 
-                    req.getContentLength(), 
-                    req.getInputStream(), 
-                    m_tmpDir, 
-                    Integer.MAX_VALUE,
-                    m_engine.getContentEncoding() );
+            multi =
+                new MultipartRequest(
+                    null, // no debugging
+                    req.getContentType(), req.getContentLength(), req.getInputStream(), m_tmpDir,
+                    Integer.MAX_VALUE, m_engine.getContentEncoding());
 
-            nextPage        = multi.getURLParameter( "nextpage" );
-            String wikipage = multi.getURLParameter( "page" );
+            nextPage = multi.getURLParameter("nextpage");
 
-            WikiContext context = m_engine.createContext( req, WikiContext.UPLOAD );
-            errorPage = context.getURL( WikiContext.UPLOAD,
-                    wikipage );
+            String wikipage = multi.getURLParameter("page");
+
+            WikiContext context = m_engine.createContext(req, WikiContext.UPLOAD);
+            errorPage = context.getURL(WikiContext.UPLOAD, wikipage);
 
             //
             //  FIXME: This has the unfortunate side effect that it will receive the
             //  contents.  But we can't figure out the page to redirect to
             //  before we receive the file, due to the stupid constructor of MultipartRequest.
             //
-            if( req.getContentLength() > m_maxSize )
+            if (req.getContentLength() > m_maxSize)
             {
                 // FIXME: Does not delete the received files.
-                throw new RedirectException( "File exceeds maximum size ("+m_maxSize+" bytes)",
-                        errorPage );
+                throw new RedirectException(
+                    "File exceeds maximum size (" + m_maxSize + " bytes)", errorPage);
             }
 
-            UserProfile user    = context.getCurrentUser();
+            UserProfile user = context.getCurrentUser();
 
             //
             //  Go through all files being uploaded.
             //
             Enumeration files = multi.getFileParameterNames();
 
-            while( files.hasMoreElements() )
+            while (files.hasMoreElements())
             {
                 String part = (String) files.nextElement();
-                File   f    = multi.getFile( part );
+                File f = multi.getFile(part);
                 AttachmentManager mgr = m_engine.getAttachmentManager();
                 InputStream in;
 
@@ -374,15 +409,13 @@ public class AttachmentServlet
                     //
                     //  Is a file to be uploaded.
                     //
+                    String filename = multi.getBaseFilename(part);
 
-                    String filename = multi.getBaseFilename( part );
-
-                    if( StringUtils.isEmpty(filename))
+                    if (StringUtils.isEmpty(filename))
                     {
                         log.error("Empty file name given.");
 
-                        throw new RedirectException("Empty file name given.",
-                                errorPage);
+                        throw new RedirectException("Empty file name given.", errorPage);
                     }
 
                     //
@@ -390,16 +423,17 @@ public class AttachmentServlet
                     //
                     filename = filename.trim();
 
-                    if(log.isDebugEnabled()) {
-                        log.debug("file="+filename);
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("file=" + filename);
                     }
 
                     //
                     //  Attempt to open the input stream
                     //
-                    if( f != null )
+                    if (f != null)
                     {
-                        in = new FileInputStream( f );
+                        in = new FileInputStream(f);
                     }
                     else
                     {
@@ -407,15 +441,14 @@ public class AttachmentServlet
                         //  This happens onl when the size of the 
                         //  file is small enough to be cached in memory
                         //
-                        in = multi.getFileContents( part );
+                        in = multi.getFileContents(part);
                     }
 
-                    if( in == null )
+                    if (in == null)
                     {
                         log.error("File could not be opened.");
 
-                        throw new RedirectException("File could not be opened.",
-                                errorPage);
+                        throw new RedirectException("File could not be opened.", errorPage);
                     }
 
                     //
@@ -428,63 +461,62 @@ public class AttachmentServlet
                     //  same name than some other previous attachment,
                     //  then that attachment gains a new version.
                     //
+                    Attachment att = mgr.getAttachmentInfo(wikipage);
 
-                    Attachment att = mgr.getAttachmentInfo( wikipage );
-
-                    if( att == null )
+                    if (att == null)
                     {
-                        att = new Attachment( wikipage, filename );
+                        att = new Attachment(wikipage, filename);
                     }
 
                     //
                     //  Check if we're allowed to do this?
                     //
-
-                    if( m_engine.getAuthorizationManager().checkPermission( att,
-                                    user,
-                                    "upload" ) )
+                    if (m_engine.getAuthorizationManager().checkPermission(att, user, "upload"))
                     {
-                        if( user != null )
+                        if (user != null)
                         {
-                            att.setAuthor( user.getName() );
+                            att.setAuthor(user.getName());
                         }
-                
-                        m_engine.getAttachmentManager().storeAttachment( att, in );
 
-                        if (log.isInfoEnabled()) {
-                            log.info( "User " + user + " uploaded attachment to " + wikipage + 
-                                    " called "+filename+", size " + multi.getFileSize(part) );
+                        m_engine.getAttachmentManager().storeAttachment(att, in);
+
+                        if (log.isInfoEnabled())
+                        {
+                            log.info(
+                                "User " + user + " uploaded attachment to " + wikipage + " called "
+                                + filename + ", size " + multi.getFileSize(part));
                         }
                     }
                     else
                     {
-                        throw new RedirectException("No permission to upload a file",
-                                errorPage);
+                        throw new RedirectException("No permission to upload a file", errorPage);
                     }
                 }
                 finally
                 {
-                    if( f != null )
+                    if (f != null)
+                    {
                         f.delete();
+                    }
                 }
             }
 
             // Inform the JSP page of which file we are handling:
             // req.setAttribute( ATTR_ATTACHMENT, wikiname );
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            msg = "Upload failed because the provider failed: "+e.getMessage();
-            log.warn( msg + " (attachment: " + attName + ")", e );
+            msg = "Upload failed because the provider failed: " + e.getMessage();
+            log.warn(msg + " (attachment: " + attName + ")", e);
 
             throw new IOException(msg);
         }
-        catch( IOException e )
+        catch (IOException e)
         {
             // Show the submit page again, but with a bit more 
             // intimidating output.
             msg = "Upload failure: " + e.getMessage();
-            log.warn( msg + " (attachment: " + attName + ")", e );
+            log.warn(msg + " (attachment: " + attName + ")", e);
 
             throw e;
         }
@@ -497,28 +529,28 @@ public class AttachmentServlet
         return nextPage;
     }
 
-
     /**
      * Produces debug output listing parameters and files.
      */
+
     /*
       private void debugContentList( MultipartRequest  multi )
       {
       StringBuffer sb = new StringBuffer();
-        
+
       sb.append( "Upload information: parameters: [" );
 
       Enumeration params = multi.getParameterNames();
-      while( params.hasMoreElements() ) 
+      while( params.hasMoreElements() )
       {
       String name = (String)params.nextElement();
       String value = multi.getURLParameter( name );
       sb.append( "[" + name + " = " + value + "]" );
       }
-              
+
       sb.append( " files: [" );
       Enumeration files = multi.getFileParameterNames();
-      while( files.hasMoreElements() ) 
+      while( files.hasMoreElements() )
       {
       String name = (String)files.nextElement();
       String filename = multi.getFileSystemName( name );
@@ -527,7 +559,7 @@ public class AttachmentServlet
       sb.append( "[name: " + name );
       sb.append( " temp_file: " + filename );
       sb.append( " type: " + type );
-      if (f != null) 
+      if (f != null)
       {
       sb.append( " abs: " + f.getPath() );
       sb.append( " size: " + f.length() );
@@ -540,7 +572,4 @@ public class AttachmentServlet
       log.debug( sb.toString() );
       }
     */
-
 }
-
-

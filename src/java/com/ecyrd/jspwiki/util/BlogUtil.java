@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,20 +25,25 @@ import com.ecyrd.jspwiki.WikiEngine;
 
 
 /**
- *  Contains useful utilities for JSPWiki blogging functionality.
+ * Contains useful utilities for JSPWiki blogging functionality.
  *
- *  @author Janne Jalkanen
- *  @since 2.2.
+ * @author Janne Jalkanen
+ *
+ * @since 2.2.
  */
 public class BlogUtil
 {
+    /** DOCUMENT ME! */
     public static final String VAR_BLOGNAME = "blogname";
 
     /**
-     *  Figure out a site name for a feed.
+     * Figure out a site name for a feed.
+     *
+     * @param context DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    
-    public static String getSiteName( WikiContext context )
+    public static String getSiteName(WikiContext context)
     {
         WikiEngine engine = context.getEngine();
 
@@ -46,13 +51,15 @@ public class BlogUtil
 
         try
         {
-            blogname = engine.getVariableManager().getValue( context, VAR_BLOGNAME );
+            blogname = engine.getVariableManager().getValue(context, VAR_BLOGNAME);
         }
-        catch( NoSuchVariableException e ) {}
-
-        if( blogname == null )
+        catch (NoSuchVariableException e)
         {
-            blogname = engine.getApplicationName()+": "+context.getPage().getName();
+        }
+
+        if (blogname == null)
+        {
+            blogname = engine.getApplicationName() + ": " + context.getPage().getName();
         }
 
         return blogname;

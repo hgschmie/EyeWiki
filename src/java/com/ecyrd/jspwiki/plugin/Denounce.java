@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -40,36 +41,57 @@ import org.apache.oro.text.regex.Perl5Matcher;
 
 import com.ecyrd.jspwiki.WikiContext;
 
-/**
- *  Denounces a link by removing it from any search engine.  The bots are listed
- *  in com/ecyrd/jspwiki/plugin/denounce.properties.
- *
- *  @author Janne Jalkanen
- *  @since 2.1.40.
- */
-public class Denounce implements WikiPlugin
-{
-    private static Logger     log = Logger.getLogger(Denounce.class);
 
+/**
+ * Denounces a link by removing it from any search engine.  The bots are listed in
+ * com/ecyrd/jspwiki/plugin/denounce.properties.
+ *
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.40.
+ */
+public class Denounce
+    implements WikiPlugin
+{
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(Denounce.class);
+
+    /** DOCUMENT ME! */
     public static final String PARAM_LINK = "link";
+
+    /** DOCUMENT ME! */
     public static final String PARAM_TEXT = "text";
 
+    /** DOCUMENT ME! */
     public static final String PROPERTYFILE = "com/ecyrd/jspwiki/plugin/denounce.properties";
-    public static final String PROP_AGENTPATTERN   = "denounce.agentpattern.";
-    public static final String PROP_HOSTPATTERN    = "denounce.hostpattern.";
+
+    /** DOCUMENT ME! */
+    public static final String PROP_AGENTPATTERN = "denounce.agentpattern.";
+
+    /** DOCUMENT ME! */
+    public static final String PROP_HOSTPATTERN = "denounce.hostpattern.";
+
+    /** DOCUMENT ME! */
     public static final String PROP_REFERERPATTERN = "denounce.refererpattern.";
 
-    public static final String PROP_DENOUNCETEXT   = "denounce.denouncetext";
+    /** DOCUMENT ME! */
+    public static final String PROP_DENOUNCETEXT = "denounce.denouncetext";
 
+    /** DOCUMENT ME! */
     private static ArrayList c_refererPatterns = new ArrayList();
-    private static ArrayList c_agentPatterns   = new ArrayList();
-    private static ArrayList c_hostPatterns    = new ArrayList();
 
-    private static String    c_denounceText    = "";
+    /** DOCUMENT ME! */
+    private static ArrayList c_agentPatterns = new ArrayList();
+
+    /** DOCUMENT ME! */
+    private static ArrayList c_hostPatterns = new ArrayList();
+
+    /** DOCUMENT ME! */
+    private static String c_denounceText = "";
 
     /**
-     *  Prepares the different patterns for later use.  Compiling is
-     *  (probably) expensive, so we do it statically at class load time.
+     * Prepares the different patterns for later use.  Compiling is (probably) expensive, so we do
+     * it statically at class load time.
      */
     static
     {
@@ -78,97 +100,121 @@ public class Denounce implements WikiPlugin
             PatternCompiler compiler = new GlobCompiler();
             ClassLoader loader = Denounce.class.getClassLoader();
 
-            InputStream in = loader.getResourceAsStream( PROPERTYFILE );
+            InputStream in = loader.getResourceAsStream(PROPERTYFILE);
 
-            if( in == null )
+            if (in == null)
             {
-                throw new IOException("No property file found! (Check the installation, it should be there.)");
+                throw new IOException(
+                    "No property file found! (Check the installation, it should be there.)");
             }
 
             Properties props = new Properties();
-            props.load( in );
+            props.load(in);
 
-            c_denounceText = props.getProperty( PROP_DENOUNCETEXT, c_denounceText );
+            c_denounceText = props.getProperty(PROP_DENOUNCETEXT, c_denounceText);
 
-            for( Enumeration e = props.propertyNames(); e.hasMoreElements(); )
+            for (Enumeration e = props.propertyNames(); e.hasMoreElements();)
             {
                 String name = (String) e.nextElement();
 
-                try 
+                try
                 {
-                    if( name.startsWith( PROP_REFERERPATTERN ) )
+                    if (name.startsWith(PROP_REFERERPATTERN))
                     {
-                        c_refererPatterns.add( compiler.compile( props.getProperty(name) ) );
+                        c_refererPatterns.add(compiler.compile(props.getProperty(name)));
                     }
-                    else if( name.startsWith( PROP_AGENTPATTERN ) )
+                    else if (name.startsWith(PROP_AGENTPATTERN))
                     {
-                        c_agentPatterns.add( compiler.compile( props.getProperty(name) ) );
+                        c_agentPatterns.add(compiler.compile(props.getProperty(name)));
                     }
-                    else if( name.startsWith( PROP_HOSTPATTERN ) )
+                    else if (name.startsWith(PROP_HOSTPATTERN))
                     {
-                        c_hostPatterns.add( compiler.compile( props.getProperty(name) ) );
+                        c_hostPatterns.add(compiler.compile(props.getProperty(name)));
                     }
                 }
-                catch( MalformedPatternException ex )
+                catch (MalformedPatternException ex)
                 {
-                    log.error( "Malformed URL pattern in "+PROPERTYFILE+": "+props.getProperty(name), ex );
+                    log.error(
+                        "Malformed URL pattern in " + PROPERTYFILE + ": " + props.getProperty(name),
+                        ex);
                 }
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("Added "+c_refererPatterns.size()+c_agentPatterns.size()+c_hostPatterns.size()+" crawlers to denounce list.");
+            if (log.isDebugEnabled())
+            {
+                log.debug(
+                    "Added " + c_refererPatterns.size() + c_agentPatterns.size()
+                    + c_hostPatterns.size() + " crawlers to denounce list.");
             }
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.error( "Unable to load URL patterns from "+PROPERTYFILE, e );
+            log.error("Unable to load URL patterns from " + PROPERTYFILE, e);
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            log.error( "Unable to initialize Denounce plugin", e );
+            log.error("Unable to initialize Denounce plugin", e);
         }
     }
 
-    public String execute( WikiContext context, Map params )
-            throws PluginException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param params DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, Map params)
+        throws PluginException
     {
-        String link = (String) params.get( PARAM_LINK );
-        String text = (String) params.get( PARAM_TEXT );
+        String link = (String) params.get(PARAM_LINK);
+        String text = (String) params.get(PARAM_TEXT);
         boolean linkAllowed = true;
 
-        if( link == null )
+        if (link == null)
         {
-            throw new PluginException("Denounce: No parameter "+PARAM_LINK+" defined!");
+            throw new PluginException("Denounce: No parameter " + PARAM_LINK + " defined!");
         }
 
         HttpServletRequest request = context.getHttpRequest();
 
-        if( request != null )
+        if (request != null)
         {
-            linkAllowed = !matchHeaders( request );
+            linkAllowed = !matchHeaders(request);
         }
 
-        if( text == null ) text = link;
+        if (text == null)
+        {
+            text = link;
+        }
 
-        if( linkAllowed )
+        if (linkAllowed)
         {
             // FIXME: Should really call TranslatorReader
-            return "<a href=\""+link+"\">"+text+"</a>";
+            return "<a href=\"" + link + "\">" + text + "</a>";
         }
 
         return c_denounceText;
     }
 
     /**
-     *  Returns true, if the path is found among the referers.
+     * Returns true, if the path is found among the referers.
+     *
+     * @param list DOCUMENT ME!
+     * @param path DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private boolean matchPattern( List list, String path )
+    private boolean matchPattern(List list, String path)
     {
         PatternMatcher matcher = new Perl5Matcher();
 
-        for( Iterator i = list.iterator(); i.hasNext(); )
+        for (Iterator i = list.iterator(); i.hasNext();)
         {
-            if( matcher.matches( path, (Pattern)i.next() ) )
+            if (matcher.matches(path, (Pattern) i.next()))
             {
                 return true;
             }
@@ -178,48 +224,50 @@ public class Denounce implements WikiPlugin
     }
 
     // FIXME: Should really return immediately when a match is found.
-
-    private boolean matchHeaders( HttpServletRequest request )
+    private boolean matchHeaders(HttpServletRequest request)
     {
         //
         //  User Agent
         //
-
         String userAgent = request.getHeader("User-Agent");
 
-        if( userAgent != null && matchPattern( c_agentPatterns, userAgent ) )
+        if ((userAgent != null) && matchPattern(c_agentPatterns, userAgent))
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Matched user agent "+userAgent+" for denounce.");
+            if (log.isDebugEnabled())
+            {
+                log.debug("Matched user agent " + userAgent + " for denounce.");
             }
+
             return true;
         }
 
         //
         //  Referrer header
         //
-
         String refererPath = request.getHeader("Referer");
 
-        if( refererPath != null && matchPattern( c_refererPatterns, refererPath ) )
+        if ((refererPath != null) && matchPattern(c_refererPatterns, refererPath))
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Matched referer "+refererPath+" for denounce.");
+            if (log.isDebugEnabled())
+            {
+                log.debug("Matched referer " + refererPath + " for denounce.");
             }
+
             return true;
         }
 
         //
         //  Host
         // 
-
         String host = request.getRemoteHost();
 
-        if( host != null && matchPattern( c_hostPatterns, host ) )
+        if ((host != null) && matchPattern(c_hostPatterns, host))
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Matched host "+host+" for denounce.");
+            if (log.isDebugEnabled())
+            {
+                log.debug("Matched host " + host + " for denounce.");
             }
+
             return true;
         }
 

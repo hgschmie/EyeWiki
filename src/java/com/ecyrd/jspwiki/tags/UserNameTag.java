@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,27 +25,36 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
 
+
 /**
- *  Returns the current user name, or empty, if the user has not been
- *  validated.
+ * Returns the current user name, or empty, if the user has not been validated.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class UserNameTag
     extends WikiTagBase
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        UserManager mgr   = engine.getUserManager();
+        UserManager mgr = engine.getUserManager();
 
-        UserProfile user = mgr.getUserProfile( (javax.servlet.http.HttpServletRequest)pageContext.getRequest() );
+        UserProfile user =
+            mgr.getUserProfile((javax.servlet.http.HttpServletRequest) pageContext.getRequest());
 
-        if( user != null )
+        if (user != null)
         {
-            pageContext.getOut().print( user.getName() );
+            pageContext.getOut().print(user.getName());
         }
 
         return SKIP_BODY;

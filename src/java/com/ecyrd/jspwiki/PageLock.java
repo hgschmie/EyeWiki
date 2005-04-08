@@ -2,47 +2,88 @@ package com.ecyrd.jspwiki;
 
 import java.util.Date;
 
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
 public class PageLock
 {
+    /** DOCUMENT ME! */
     private WikiPage m_page;
-    private String   m_locker;
-    private Date     m_lockAcquired;
-    private Date     m_lockExpiry;
 
-    public PageLock( WikiPage page, 
-                     String locker,
-                     Date acquired,
-                     Date expiry )
+    /** DOCUMENT ME! */
+    private String m_locker;
+
+    /** DOCUMENT ME! */
+    private Date m_lockAcquired;
+
+    /** DOCUMENT ME! */
+    private Date m_lockExpiry;
+
+    /**
+     * Creates a new PageLock object.
+     *
+     * @param page DOCUMENT ME!
+     * @param locker DOCUMENT ME!
+     * @param acquired DOCUMENT ME!
+     * @param expiry DOCUMENT ME!
+     */
+    public PageLock(WikiPage page, String locker, Date acquired, Date expiry)
     {
-        m_page         = page;
-        m_locker       = locker;
+        m_page = page;
+        m_locker = locker;
         m_lockAcquired = acquired;
-        m_lockExpiry   = expiry;
+        m_lockExpiry = expiry;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public WikiPage getPage()
     {
         return m_page;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getLocker()
     {
         return m_locker;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public Date getAcquisitionTime()
     {
         return m_lockAcquired;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public Date getExpiryTime()
     {
         return m_lockExpiry;
     }
 
     /**
-     *  Returns the amount of time left in minutes, rounded up to the nearest
-     *  minute (so you get a zero only at the last minute).
+     * Returns the amount of time left in minutes, rounded up to the nearest minute (so you get a
+     * zero only at the last minute).
+     *
+     * @return DOCUMENT ME!
      */
     public long getTimeLeft()
     {

@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,53 +27,77 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 
+
 /**
- *  Base class for JSPWiki tags.  You do not necessarily have
- *  to derive from this class, since this does some initialization.
- *  <P>
- *  This tag is only useful if you're having an "empty" tag, with
- *  no body content.
+ * Base class for JSPWiki tags.  You do not necessarily have to derive from this class, since this
+ * does some initialization.
+ * 
+ * <P>
+ * This tag is only useful if you're having an "empty" tag, with no body content.
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public abstract class WikiTagBase
     extends TagSupport
 {
+    /** DOCUMENT ME! */
     public static final String ATTR_CONTEXT = "jspwiki.context";
 
-    static    Logger    log = Logger.getLogger( WikiTagBase.class );
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(WikiTagBase.class);
 
+    /** DOCUMENT ME! */
     protected WikiContext m_wikiContext;
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws JspException DOCUMENT ME!
+     */
     public int doStartTag()
         throws JspException
     {
         try
         {
-            m_wikiContext = (WikiContext) pageContext.getAttribute( ATTR_CONTEXT,
-                                                                    PageContext.REQUEST_SCOPE );
+            m_wikiContext =
+                (WikiContext) pageContext.getAttribute(ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
-            if( m_wikiContext == null )
+            if (m_wikiContext == null)
             {
                 throw new JspException("WikiContext may not be NULL - serious internal problem!");
             }
 
             return doWikiStartTag();
         }
-        catch( Exception e )
+        catch (Exception e)
         {
-            log.error( "Tag failed", e );
-            throw new JspException( "Tag failed, check logs: "+e.getMessage() );
+            log.error("Tag failed", e);
+            throw new JspException("Tag failed, check logs: " + e.getMessage());
         }
     }
 
     /**
-     *  This method is allowed to do pretty much whatever he wants.
-     *  We then catch all mistakes.
+     * This method is allowed to do pretty much whatever he wants. We then catch all mistakes.
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
-    public abstract int doWikiStartTag() throws Exception;
+    public abstract int doWikiStartTag()
+        throws Exception;
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws JspException DOCUMENT ME!
+     */
     public int doEndTag()
         throws JspException
     {

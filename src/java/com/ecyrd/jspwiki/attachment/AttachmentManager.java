@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -44,69 +45,76 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
+
 /**
- *  Provides facilities for handling attachments.  All attachment
- *  handling goes through this class.
- *  <p>
- *  The AttachmentManager provides a facade towards the current WikiAttachmentProvider
- *  that is in use.  It is created by the WikiEngine as a singleton object, and
- *  can be requested through the WikiEngine.
+ * Provides facilities for handling attachments.  All attachment handling goes through this class.
+ * 
+ * <p>
+ * The AttachmentManager provides a facade towards the current WikiAttachmentProvider that is in
+ * use.  It is created by the WikiEngine as a singleton object, and can be requested through the
+ * WikiEngine.
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @since 1.9.28
+ * @author Janne Jalkanen
+ *
+ * @since 1.9.28
  */
 public class AttachmentManager
-	implements WikiProperties
+    implements WikiProperties
 {
-    static Category log = Category.getInstance( AttachmentManager.class );
+    /** DOCUMENT ME! */
+    static Category log = Category.getInstance(AttachmentManager.class);
+
+    /** DOCUMENT ME! */
     private WikiAttachmentProvider m_provider;
-    private WikiEngine             m_engine;
+
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
 
     /**
-     *  Creates a new AttachmentManager.  Note that creation will never fail,
-     *  but it's quite likely that attachments do not function.
-     *  <p>
-     *  <b>DO NOT CREATE</b> an AttachmentManager on your own, unless you really
-     *  know what you're doing.  Just use WikiEngine.getAttachmentManager() if
-     *  you're making a module for JSPWiki.
+     * Creates a new AttachmentManager.  Note that creation will never fail, but it's quite likely
+     * that attachments do not function.
+     * 
+     * <p>
+     * <b>DO NOT CREATE</b> an AttachmentManager on your own, unless you really know what you're
+     * doing.  Just use WikiEngine.getAttachmentManager() if you're making a module for JSPWiki.
+     * </p>
      *
-     *  @param engine The wikiengine that owns this attachment manager.
-     *  @param props  A list of properties from which the AttachmentManager will seek
-     *  its configuration.  Typically this is the "jspwiki.properties".
+     * @param engine The wikiengine that owns this attachment manager.
+     * @param conf A list of properties from which the AttachmentManager will seek its
+     *        configuration.  Typically this is the "jspwiki.properties".
      */
 
     // FIXME: Perhaps this should fail somehow.
-    public AttachmentManager( WikiEngine engine, Configuration conf)
+    public AttachmentManager(WikiEngine engine, Configuration conf)
     {
         String classname;
 
         m_engine = engine;
 
-
         //
         //  If user wants to use a cache, then we'll use the CachingProvider.
         //
-        boolean useCache = conf.getBoolean(
-                PROP_USECACHE,
-                PROP_USECACHE_DEFAULT);
+        boolean useCache = conf.getBoolean(PROP_USECACHE, PROP_USECACHE_DEFAULT);
 
-        if( useCache )
+        if (useCache)
         {
             classname = CachingAttachmentProvider.class.getName();
         }
         else
         {
-            classname = conf.getString(
-                    PROP_CLASS_ATTACHMENTPROVIDER,
-                    PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT);
+            classname =
+                conf.getString(
+                    PROP_CLASS_ATTACHMENTPROVIDER, PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT);
         }
 
         //
         //  If no class defined, then will just simply fail.
         //
-        if( classname == null )
+        if (classname == null)
         {
-            log.info( "No attachment provider defined - disabling attachment support." );
+            log.info("No attachment provider defined - disabling attachment support.");
+
             return;
         }
 
@@ -115,39 +123,41 @@ public class AttachmentManager
         //
         try
         {
-            Class providerclass = ClassUtil.findClass( DEFAULT_PROVIDER_CLASS_PREFIX,
-                    classname );
+            Class providerclass = ClassUtil.findClass(DEFAULT_PROVIDER_CLASS_PREFIX, classname);
 
-            m_provider = (WikiAttachmentProvider)providerclass.newInstance();
+            m_provider = (WikiAttachmentProvider) providerclass.newInstance();
 
-            m_provider.initialize( m_engine, conf);
+            m_provider.initialize(m_engine, conf);
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
-            log.error( "Attachment provider class not found",e);
+            log.error("Attachment provider class not found", e);
         }
-        catch( InstantiationException e )
+        catch (InstantiationException e)
         {
-            log.error( "Attachment provider could not be created", e );
+            log.error("Attachment provider could not be created", e);
         }
-        catch( IllegalAccessException e )
+        catch (IllegalAccessException e)
         {
-            log.error( "You may not access the attachment provider class", e );
+            log.error("You may not access the attachment provider class", e);
         }
-        catch( NoRequiredPropertyException e )
+        catch (NoRequiredPropertyException e)
         {
-            log.error( "Attachment provider did not find a property that it needed: "+e.getMessage(), e );
+            log.error(
+                "Attachment provider did not find a property that it needed: " + e.getMessage(), e);
             m_provider = null; // No, it did not work.
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.error( "Attachment provider reports IO error", e );
+            log.error("Attachment provider reports IO error", e);
             m_provider = null;
         }
     }
 
     /**
-     *  Returns true, if attachments are enabled and running.
+     * Returns true, if attachments are enabled and running.
+     *
+     * @return DOCUMENT ME!
      */
     public boolean attachmentsEnabled()
     {
@@ -155,182 +165,185 @@ public class AttachmentManager
     }
 
     /**
-     *  Gets info on a particular attachment, latest version.
+     * Gets info on a particular attachment, latest version.
      *
-     *  @param name A full attachment name.
-     *  @return Attachment, or null, if no such attachment exists.
-     *  @throws ProviderException If something goes wrong.
+     * @param name A full attachment name.
+     *
+     * @return Attachment, or null, if no such attachment exists.
+     *
+     * @throws ProviderException If something goes wrong.
      */
-    public Attachment getAttachmentInfo( String name )
-            throws ProviderException
+    public Attachment getAttachmentInfo(String name)
+        throws ProviderException
     {
-        return getAttachmentInfo( name, WikiProvider.LATEST_VERSION );
+        return getAttachmentInfo(name, WikiProvider.LATEST_VERSION);
     }
 
     /**
-     *  Gets info on a particular attachment with the given version.
+     * Gets info on a particular attachment with the given version.
      *
-     *  @param name A full attachment name.
-     *  @param version A version number.
-     *  @return Attachment, or null, if no such attachment or version exists.
-     *  @throws ProviderException If something goes wrong.
+     * @param name A full attachment name.
+     * @param version A version number.
+     *
+     * @return Attachment, or null, if no such attachment or version exists.
+     *
+     * @throws ProviderException If something goes wrong.
      */
-    
-    public Attachment getAttachmentInfo( String name, int version )
-            throws ProviderException
+    public Attachment getAttachmentInfo(String name, int version)
+        throws ProviderException
     {
-        if( name == null )
+        if (name == null)
         {
             return null;
         }
 
-        return getAttachmentInfo( null, name, version );
+        return getAttachmentInfo(null, name, version);
     }
 
     /**
-     *  Figures out the full attachment name from the context and
-     *  attachment name.
+     * Figures out the full attachment name from the context and attachment name.
      *
-     *  @param context The current WikiContext
-     *  @param attachmentname The file name of the attachment.
-     *  @return Attachment, or null, if no such attachment exists.
-     *  @throws ProviderException If something goes wrong.
+     * @param context The current WikiContext
+     * @param attachmentname The file name of the attachment.
+     *
+     * @return Attachment, or null, if no such attachment exists.
+     *
+     * @throws ProviderException If something goes wrong.
      */
-
-    public Attachment getAttachmentInfo( WikiContext context,
-            String attachmentname )
-            throws ProviderException
+    public Attachment getAttachmentInfo(WikiContext context, String attachmentname)
+        throws ProviderException
     {
-        return getAttachmentInfo( context, attachmentname, WikiProvider.LATEST_VERSION );
+        return getAttachmentInfo(context, attachmentname, WikiProvider.LATEST_VERSION);
     }
 
     /**
-     *  Figures out the full attachment name from the context and
-     *  attachment name.
+     * Figures out the full attachment name from the context and attachment name.
      *
-     *  @param context The current WikiContext
-     *  @param attachmentname The file name of the attachment.
-     *  @param version A particular version.
-     *  @return Attachment, or null, if no such attachment or version exists.
-     *  @throws ProviderException If something goes wrong.
+     * @param context The current WikiContext
+     * @param attachmentname The file name of the attachment.
+     * @param version A particular version.
+     *
+     * @return Attachment, or null, if no such attachment or version exists.
+     *
+     * @throws ProviderException If something goes wrong.
      */
-
-    public Attachment getAttachmentInfo( WikiContext context, 
-            String attachmentname, 
-            int version )
-            throws ProviderException
+    public Attachment getAttachmentInfo(WikiContext context, String attachmentname, int version)
+        throws ProviderException
     {
-        if( m_provider == null )
+        if (m_provider == null)
         {
-            return( null );
+            return (null);
         }
 
         WikiPage currentPage = null;
 
-        if( context != null )
+        if (context != null)
         {
             currentPage = context.getPage();
         }
 
         int cutpt = attachmentname.lastIndexOf('/');
-        
-        if( cutpt != -1 )
+
+        if (cutpt != -1)
         {
-            currentPage = new WikiPage( attachmentname.substring(0,cutpt) );
-            attachmentname = attachmentname.substring(cutpt+1);
+            currentPage = new WikiPage(attachmentname.substring(0, cutpt));
+            attachmentname = attachmentname.substring(cutpt + 1);
         }
 
         // 
         //  If the page cannot be determined, we cannot possibly find the 
         //  attachments.
         //
-        if(currentPage == null || StringUtils.isEmpty(currentPage.getName()))
+        if ((currentPage == null) || StringUtils.isEmpty(currentPage.getName()))
         {
             return null;
         }
 
         // System.out.println("Seeking info on "+currentPage+"::"+attachmentname);
-
-        return m_provider.getAttachmentInfo( currentPage, attachmentname, version );
+        return m_provider.getAttachmentInfo(currentPage, attachmentname, version);
     }
 
     /**
-     *  Returns the list of attachments associated with a given wiki page.
-     *  If there are no attachments, returns an empty Collection.
+     * Returns the list of attachments associated with a given wiki page. If there are no
+     * attachments, returns an empty Collection.
      *
-     *  @param wikipage The wiki page from which you are seeking attachments for.
-     *  @return a valid collection of attachments.
+     * @param wikipage The wiki page from which you are seeking attachments for.
+     *
+     * @return a valid collection of attachments.
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public Collection listAttachments( WikiPage wikipage )
-            throws ProviderException
+    public Collection listAttachments(WikiPage wikipage)
+        throws ProviderException
     {
-        if( m_provider == null )
+        if (m_provider == null)
         {
             return new ArrayList();
         }
-        
-        return m_provider.listAttachments( wikipage );
+
+        return m_provider.listAttachments(wikipage);
     }
 
     /**
-     *  Returns true, if the page has any attachments at all.  This is
-     *  a convinience method.
+     * Returns true, if the page has any attachments at all.  This is a convinience method.
      *
-     *  
-     *  @param wikipage The wiki page from which you are seeking attachments for.
-     *  @return True, if the page has attachments, else false.
+     * @param wikipage The wiki page from which you are seeking attachments for.
+     *
+     * @return True, if the page has attachments, else false.
      */
-    public boolean hasAttachments( WikiPage wikipage )
+    public boolean hasAttachments(WikiPage wikipage)
     {
         try
         {
-            return listAttachments( wikipage ).size() > 0;
+            return listAttachments(wikipage).size() > 0;
         }
-        catch( Exception e ) {}
+        catch (Exception e)
+        {
+        }
 
         return false;
     }
 
     /**
-     *  Finds an attachment from the repository as a stream.
+     * Finds an attachment from the repository as a stream.
      *
-     *  @param att Attachment
-     *  @return An InputStream to read from.  May return null, if
-     *          attachments are disabled.
+     * @param att Attachment
+     *
+     * @return An InputStream to read from.  May return null, if attachments are disabled.
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
      */
-    public InputStream getAttachmentStream( Attachment att )
-            throws IOException,
-                   ProviderException
+    public InputStream getAttachmentStream(Attachment att)
+        throws IOException, ProviderException
     {
-        if( m_provider == null )
+        if (m_provider == null)
         {
-            return( null );
+            return (null);
         }
 
-        return m_provider.getAttachmentData( att );
+        return m_provider.getAttachmentData(att);
     }
 
     /**
-     *  Stores an attachment that lives in the given file.
-     *  If the attachment did not exist previously, this method
-     *  will create it.  If it did exist, it stores a new version.
+     * Stores an attachment that lives in the given file. If the attachment did not exist
+     * previously, this method will create it.  If it did exist, it stores a new version.
      *
-     *  @param att Attachment to store this under.
-     *  @param source A file to read from.
+     * @param att Attachment to store this under.
+     * @param source A file to read from.
      *
-     *  @throws IOException If writing the attachment failed.
-     *  @throws ProviderException If something else went wrong.
+     * @throws IOException If writing the attachment failed.
+     * @throws ProviderException If something else went wrong.
      */
-    public void storeAttachment( Attachment att, File source )
-            throws IOException,
-                   ProviderException
-    {        
+    public void storeAttachment(Attachment att, File source)
+        throws IOException, ProviderException
+    {
         FileInputStream in = null;
 
-        try 
+        try
         {
-            in = new FileInputStream( source );
-            storeAttachment( att, in );
+            in = new FileInputStream(source);
+            storeAttachment(att, in);
         }
         finally
         {
@@ -339,103 +352,110 @@ public class AttachmentManager
     }
 
     /**
-     *  Stores an attachment directly from a stream.
-     *  If the attachment did not exist previously, this method
-     *  will create it.  If it did exist, it stores a new version.
+     * Stores an attachment directly from a stream. If the attachment did not exist previously,
+     * this method will create it.  If it did exist, it stores a new version.
      *
-     *  @param att Attachment to store this under.
-     *  @param in  InputStream from which the attachment contents will be read.
+     * @param att Attachment to store this under.
+     * @param in InputStream from which the attachment contents will be read.
      *
-     *  @throws IOException If writing the attachment failed.
-     *  @throws ProviderException If something else went wrong.
+     * @throws IOException If writing the attachment failed.
+     * @throws ProviderException If something else went wrong.
      */
-    public void storeAttachment( Attachment att, InputStream in )
-            throws IOException,
-                   ProviderException
+    public void storeAttachment(Attachment att, InputStream in)
+        throws IOException, ProviderException
     {
-        if( m_provider == null )
+        if (m_provider == null)
         {
             return;
         }
 
-        m_provider.putAttachmentData( att, in );
+        m_provider.putAttachmentData(att, in);
 
-        m_engine.getReferenceManager().updateReferences( att.getName(),
-                new java.util.Vector() );
+        m_engine.getReferenceManager().updateReferences(att.getName(), new java.util.Vector());
 
-        m_engine.updateReferences( new WikiPage( att.getParentName() ) );
+        m_engine.updateReferences(new WikiPage(att.getParentName()));
     }
 
     /**
-     *  Returns a list of versions of the attachment.
+     * Returns a list of versions of the attachment.
      *
-     *  @param attachmentName A fully qualified name of the attachment.
+     * @param attachmentName A fully qualified name of the attachment.
      *
-     *  @return A list of Attachments.  May return null, if attachments are
-     *          disabled.
-     *  @throws ProviderException If the provider fails for some reason.
+     * @return A list of Attachments.  May return null, if attachments are disabled.
+     *
+     * @throws ProviderException If the provider fails for some reason.
      */
-    public List getVersionHistory( String attachmentName )
-            throws ProviderException
+    public List getVersionHistory(String attachmentName)
+        throws ProviderException
     {
-        if( m_provider == null )
+        if (m_provider == null)
         {
-            return( null );
+            return (null);
         }
-        
-        Attachment att = getAttachmentInfo( (WikiContext)null, attachmentName );
 
-        if( att != null )
+        Attachment att = getAttachmentInfo((WikiContext) null, attachmentName);
+
+        if (att != null)
         {
-            return m_provider.getVersionHistory( att );
+            return m_provider.getVersionHistory(att);
         }
-       
+
         return null;
     }
 
     /**
-     *  Returns a collection of Attachments, containing each and every attachment
-     *  that is in this Wiki.
+     * Returns a collection of Attachments, containing each and every attachment that is in this
+     * Wiki.
      *
-     *  @return A collection of attachments.  If attachments are disabled, will
-     *          return an empty collection.
+     * @return A collection of attachments.  If attachments are disabled, will return an empty
+     *         collection.
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
     public Collection getAllAttachments()
-            throws ProviderException
-    {        
-        if( attachmentsEnabled() )
+        throws ProviderException
+    {
+        if (attachmentsEnabled())
         {
-            return m_provider.listAllChanged( new Date(0L) );
+            return m_provider.listAllChanged(new Date(0L));
         }
 
         return new ArrayList();
     }
 
     /**
-     *  Returns the current attachment provider.
+     * Returns the current attachment provider.
      *
-     *  @return The current provider.  May be null, if attachments are disabled.
+     * @return The current provider.  May be null, if attachments are disabled.
      */
     public WikiAttachmentProvider getCurrentProvider()
     {
         return m_provider;
     }
-    
+
     /**
      * Deletes the given attachment version.
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public void deleteVersion( Attachment att )
-            throws ProviderException
+    public void deleteVersion(Attachment att)
+        throws ProviderException
     {
-        m_provider.deleteVersion( att );
+        m_provider.deleteVersion(att);
     }
 
-    /** 
+    /**
      * Deletes all versions of the given attachment.
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public void deleteAttachment( Attachment att )
-            throws ProviderException
+    public void deleteAttachment(Attachment att)
+        throws ProviderException
     {
-        m_provider.deleteAttachment( att );
+        m_provider.deleteAttachment(att);
     }
 }

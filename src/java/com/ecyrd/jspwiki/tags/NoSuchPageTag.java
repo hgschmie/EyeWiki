@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,46 +25,65 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- *  Includes the body in case there is no such page available.
+ * Includes the body in case there is no such page available.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class NoSuchPageTag
     extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     private String m_pageName;
 
-    public void setPage( String name )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     */
+    public void setPage(String name)
     {
         m_pageName = name;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getPage()
     {
         return m_pageName;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     * @throws ProviderException DOCUMENT ME!
+     */
     public int doWikiStartTag()
-        throws IOException,
-               ProviderException
+        throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        WikiPage   page;
+        WikiPage page;
 
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             page = m_wikiContext.getPage();
         }
         else
         {
-            page = engine.getPage( m_pageName );
+            page = engine.getPage(m_pageName);
         }
 
         // System.out.println("Checking "+page);
-
-        if( page != null && engine.pageExists( page.getName(), page.getVersion() ) )
+        if ((page != null) && engine.pageExists(page.getName(), page.getVersion()))
         {
             return SKIP_BODY;
         }

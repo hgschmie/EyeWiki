@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,53 +27,70 @@ import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
 
+
 /**
- *  Tells if a page may be edited.  This tag takes care of all possibilities,
- *  user permissions, page version, etc.
+ * Tells if a page may be edited.  This tag takes care of all possibilities, user permissions, page
+ * version, etc.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class PermissionTag
     extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     private String m_permission;
 
-    public void setPermission( String permission )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param permission DOCUMENT ME!
+     */
+    public void setPermission(String permission)
     {
         m_permission = permission;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
-        WikiEngine  engine         = m_wikiContext.getEngine();
-        WikiPage    page           = m_wikiContext.getPage();
-        AuthorizationManager mgr   = engine.getAuthorizationManager();
-        boolean     got_permission = false;
-        UserProfile userprofile    = m_wikiContext.getCurrentUser();
-        
-        if( page != null )
+        WikiEngine engine = m_wikiContext.getEngine();
+        WikiPage page = m_wikiContext.getPage();
+        AuthorizationManager mgr = engine.getAuthorizationManager();
+        boolean got_permission = false;
+        UserProfile userprofile = m_wikiContext.getCurrentUser();
+
+        if (page != null)
         {
             //
             //  Edit tag also checks that we're not trying to edit an
             //  old version: they cannot be edited.
             //
-            if( "edit".equals(m_permission) )
+            if ("edit".equals(m_permission))
             {
-                WikiPage latest = engine.getPage( page.getName() );
-                if( page.getVersion() != WikiProvider.LATEST_VERSION &&
-                    latest.getVersion() != page.getVersion() )
+                WikiPage latest = engine.getPage(page.getName());
+
+                if (
+                    (page.getVersion() != WikiProvider.LATEST_VERSION)
+                        && (latest.getVersion() != page.getVersion()))
                 {
                     return SKIP_BODY;
                 }
             }
 
-            got_permission = mgr.checkPermission( page,
-                                                  userprofile,
-                                                  m_permission );
+            got_permission = mgr.checkPermission(page, userprofile, m_permission);
         }
 
-        return got_permission ? EVAL_BODY_INCLUDE : SKIP_BODY;
+        return got_permission
+        ? EVAL_BODY_INCLUDE
+        : SKIP_BODY;
     }
 }

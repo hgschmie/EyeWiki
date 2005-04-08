@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,30 +25,37 @@ import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 
+
 /**
- *  Defines the interface for connecting to different authentication
- *  services.
+ * Defines the interface for connecting to different authentication services.
  *
- *  @since 2.1.11.
- *  @author Erik Bunn
+ * @author Erik Bunn
+ *
+ * @since 2.1.11.
  */
 public interface WikiAuthenticator
 {
     /**
-     * Initializes the WikiAuthenticator based on values from a Properties
-     * object.
+     * Initializes the WikiAuthenticator based on values from a Properties object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException DOCUMENT ME!
+     * @throws WikiException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, WikiException;
 
     /**
-     * Authenticates a user, using the name and password present in the
-     * parameter.
+     * Authenticates a user, using the name and password present in the parameter.
+     *
+     * @param wup DOCUMENT ME!
      *
      * @return true, if this is a valid UserProfile, false otherwise.
-     * @throws PasswordExpiredException If the password has expired, but is
-     *                                  valid otherwise.
+     *
+     * @throws WikiSecurityException If the password has expired, but is valid otherwise.
      */
-    public boolean authenticate( UserProfile wup )
+    public boolean authenticate(UserProfile wup)
         throws WikiSecurityException;
 }

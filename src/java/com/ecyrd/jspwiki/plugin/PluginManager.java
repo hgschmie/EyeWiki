@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,89 +53,101 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
+
 /**
- *  Manages plugin classes.  There exists a single instance of PluginManager
- *  per each instance of WikiEngine, that is, each JSPWiki instance.
- *  <P>
- *  A plugin is defined to have three parts:
- *  <OL>
- *    <li>The plugin class
- *    <li>The plugin parameters
- *    <li>The plugin body
- *  </ol>
- *
- *  For example, in the following line of code:
- *  <pre>
+ * Manages plugin classes.  There exists a single instance of PluginManager per each instance of
+ * WikiEngine, that is, each JSPWiki instance.
+ * 
+ * <P>
+ * A plugin is defined to have three parts:
+ * 
+ * <OL>
+ * <li>
+ * The plugin class
+ * </li>
+ * <li>
+ * The plugin parameters
+ * </li>
+ * <li>
+ * The plugin body
+ * </li>
+ * </ol>
+ * 
+ * For example, in the following line of code:
+ * <pre>
  *  [{INSERT com.ecyrd.jspwiki.plugin.FunnyPlugin  foo='bar'
  *  blob='goo'
- *
- *  abcdefghijklmnopqrstuvw
+ *   abcdefghijklmnopqrstuvw
  *  01234567890}]
  *  </pre>
- *
- *  The plugin class is "com.ecyrd.jspwiki.plugin.FunnyPlugin", the
- *  parameters are "foo" and "blob" (having values "bar" and "goo",
- *  respectively), and the plugin body is then
- *  "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is
- *  accessible via a special parameter called "_body".
- *  <p>
- *  If the parameter "debug" is set to "true" for the plugin,
- *  JSPWiki will output debugging information directly to the page if there
- *  is an exception.
- *  <P>
- *  The class name can be shortened, and marked without the package.
- *  For example, "FunnyPlugin" would be expanded to
- *  "com.ecyrd.jspwiki.plugin.FunnyPlugin" automatically.  It is also
- *  possible to defined other packages, by setting the
- *  "jspwiki.plugin.searchPath" property.  See the included
- *  jspwiki.properties file for examples.
- *  <P>
- *  Even though the nominal way of writing the plugin is
- *  <pre>
+ * The plugin class is "com.ecyrd.jspwiki.plugin.FunnyPlugin", the parameters are "foo" and "blob"
+ * (having values "bar" and "goo", respectively), and the plugin body is then
+ * "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is accessible via a special parameter
+ * called "_body".
+ * </p>
+ * 
+ * <p>
+ * If the parameter "debug" is set to "true" for the plugin, JSPWiki will output debugging
+ * information directly to the page if there is an exception.
+ * </p>
+ * 
+ * <P>
+ * The class name can be shortened, and marked without the package. For example, "FunnyPlugin"
+ * would be expanded to "com.ecyrd.jspwiki.plugin.FunnyPlugin" automatically.  It is also possible
+ * to defined other packages, by setting the "jspwiki.plugin.searchPath" property.  See the
+ * included jspwiki.properties file for examples.
+ * </p>
+ * 
+ * <P>
+ * Even though the nominal way of writing the plugin is
+ * <pre>
  *  [{INSERT pluginclass WHERE param1=value1...}],
  *  </pre>
- *  it is possible to shorten this quite a lot, by skipping the
- *  INSERT, and WHERE words, and dropping the package name.  For
- *  example:
- *
- *  <pre>
+ * it is possible to shorten this quite a lot, by skipping the INSERT, and WHERE words, and
+ * dropping the package name.  For example:
+ * <pre>
  *  [{INSERT com.ecyrd.jspwiki.plugin.Counter WHERE name='foo'}]
  *  </pre>
- *
- *  is the same as
- *  <pre>
+ * is the same as
+ * <pre>
  *  [{Counter name='foo'}]
  *  </pre>
+ * </p>
  *
- *  @author Janne Jalkanen
- *  @since 1.6.1
+ * @author Janne Jalkanen
+ *
+ * @since 1.6.1
  */
 public class PluginManager
-	implements WikiProperties
+    implements WikiProperties
 {
-    private static Logger log = Logger.getLogger( PluginManager.class );
+    /** DOCUMENT ME! */
+    private static Logger log = Logger.getLogger(PluginManager.class);
 
-    /**
-     *  The name of the body content.  Current value is "_body".
-     */
-    public static final String PARAM_BODY      = "_body";
+    /** The name of the body content.  Current value is "_body". */
+    public static final String PARAM_BODY = "_body";
 
-    /**
-     *  A special name to be used in case you want to see debug output
-     */
-    public static final String PARAM_DEBUG     = "debug";
+    /** A special name to be used in case you want to see debug output */
+    public static final String PARAM_DEBUG = "debug";
 
-    Vector  m_searchPath = new Vector();
+    /** DOCUMENT ME! */
+    Vector m_searchPath = new Vector();
 
+    /** DOCUMENT ME! */
     Pattern m_pluginPattern;
 
+    /** DOCUMENT ME! */
     private boolean m_pluginsEnabled = true;
-    private boolean m_initStage      = false;
+
+    /** DOCUMENT ME! */
+    private boolean m_initStage = false;
 
     /**
-     *  Create a new PluginManager.
+     * Create a new PluginManager.
      *
-     *  @param props Contents of a "jspwiki.properties" file.
+     * @param conf Contents of a "jspwiki.properties" file.
+     *
+     * @throws InternalWikiException DOCUMENT ME!
      */
     public PluginManager(Configuration conf)
     {
@@ -147,14 +160,14 @@ public class PluginManager
 
         try
         {
-            m_pluginPattern = compiler.compile( "\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*" );
+            m_pluginPattern =
+                compiler.compile("\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*");
         }
-        catch( MalformedPatternException e )
+        catch (MalformedPatternException e)
         {
-            log.fatal("Internal error: someone messed with pluginmanager patterns.", e );
-            throw new InternalWikiException( "PluginManager patterns are broken" );
+            log.fatal("Internal error: someone messed with pluginmanager patterns.", e);
+            throw new InternalWikiException("PluginManager patterns are broken");
         }
-
     }
 
     private void addPackages(String [] packageNames)
@@ -167,125 +180,134 @@ public class PluginManager
 
     /**
      * Enables or disables plugin execution.
+     *
+     * @param enabled DOCUMENT ME!
      */
-    public void enablePlugins( boolean enabled )
+    public void enablePlugins(boolean enabled)
     {
         m_pluginsEnabled = enabled;
     }
 
     /**
-     *  Sets the initialization stage for the initial page scan.
+     * Sets the initialization stage for the initial page scan.
+     *
+     * @param value DOCUMENT ME!
      */
-    public void setInitStage( boolean value )
+    public void setInitStage(boolean value)
     {
         m_initStage = value;
     }
 
     /**
-     * Returns plugin execution status. If false, plugins are not 
-     * executed when they are encountered on a WikiPage, and an
-     * empty string is returned in their place.
+     * Returns plugin execution status. If false, plugins are not executed when they are
+     * encountered on a WikiPage, and an empty string is returned in their place.
+     *
+     * @return DOCUMENT ME!
      */
     public boolean pluginsEnabled()
     {
-        return( m_pluginsEnabled );
+        return (m_pluginsEnabled);
     }
 
-
     /**
-     *  Returns true if the link is really command to insert
-     *  a plugin.
-     *  <P>
-     *  Currently we just check if the link starts with "{INSERT",
-     *  or just plain "{" but not "{$".
+     * Returns true if the link is really command to insert a plugin.
+     * 
+     * <P>
+     * Currently we just check if the link starts with "{INSERT", or just plain "{" but not "{$".
+     * </p>
      *
-     *  @param link Link text, i.e. the contents of text between [].
-     *  @return True, if this link seems to be a command to insert a plugin here.
+     * @param link Link text, i.e. the contents of text between [].
+     *
+     * @return True, if this link seems to be a command to insert a plugin here.
      */
-    public static boolean isPluginLink( String link )
+    public static boolean isPluginLink(String link)
     {
-        return link.startsWith("{INSERT") || 
-                (link.startsWith("{") && !link.startsWith("{$"));
+        return link.startsWith("{INSERT") || (link.startsWith("{") && !link.startsWith("{$"));
     }
 
     /**
-     *  Attempts to locate a plugin class from the class path
-     *  set in the property file.
+     * Attempts to locate a plugin class from the class path set in the property file.
      *
-     *  @param classname Either a fully fledged class name, or just
-     *  the name of the file (that is,
-     *  "com.ecyrd.jspwiki.plugin.Counter" or just plain "Counter").
+     * @param classname Either a fully fledged class name, or just the name of the file (that is,
+     *        "com.ecyrd.jspwiki.plugin.Counter" or just plain "Counter").
      *
-     *  @return A found class.
+     * @return A found class.
      *
-     *  @throws ClassNotFoundException if no such class exists.
+     * @throws ClassNotFoundException if no such class exists.
      */
-    private Class findPluginClass( String classname )
-            throws ClassNotFoundException
+    private Class findPluginClass(String classname)
+        throws ClassNotFoundException
     {
-        return ClassUtil.findClass( m_searchPath, classname );
+        return ClassUtil.findClass(m_searchPath, classname);
     }
 
     /**
-     *  Outputs a HTML-formatted version of a stack trace.
+     * Outputs a HTML-formatted version of a stack trace.
+     *
+     * @param params DOCUMENT ME!
+     * @param t DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private String stackTrace( Map params, Throwable t )
+    private String stackTrace(Map params, Throwable t)
     {
         div d = new div();
         d.setClass("debug");
         d.addElement("Plugin execution failed, stack trace follows:");
+
         StringWriter out = new StringWriter();
-        t.printStackTrace( new PrintWriter(out) );
-        d.addElement( new pre( out.toString() ) );
-        d.addElement( new b( "Parameters to the plugin" ) );
-        
+        t.printStackTrace(new PrintWriter(out));
+        d.addElement(new pre(out.toString()));
+        d.addElement(new b("Parameters to the plugin"));
+
         ul list = new ul();
-        for( Iterator i = params.keySet().iterator(); i.hasNext(); )
+
+        for (Iterator i = params.keySet().iterator(); i.hasNext();)
         {
             String key = (String) i.next();
 
-            list.addElement(new li( key+"'='"+params.get(key) ) );
+            list.addElement(new li(key + "'='" + params.get(key)));
         }
 
-        d.addElement( list );
+        d.addElement(list);
 
         return d.toString();
     }
 
     /**
-     *  Executes a plugin class in the given context.
-     *  <P>Used to be private, but is public since 1.9.21.
+     * Executes a plugin class in the given context.
+     * 
+     * <P>
+     * Used to be private, but is public since 1.9.21.
+     * </p>
      *
-     *  @param context The current WikiContext.
-     *  @param classname The name of the class.  Can also be a
-     *  shortened version without the package name, since the class name is searched from the
-     *  package search path.
+     * @param context The current WikiContext.
+     * @param classname The name of the class.  Can also be a shortened version without the package
+     *        name, since the class name is searched from the package search path.
+     * @param params A parsed map of key-value pairs.
      *
-     *  @param params A parsed map of key-value pairs.
+     * @return Whatever the plugin returns.
      *
-     *  @return Whatever the plugin returns.
+     * @throws PluginException If the plugin execution failed for some reason.
      *
-     *  @throws PluginException If the plugin execution failed for
-     *  some reason.
-     *
-     *  @since 2.0
+     * @since 2.0
      */
-    public String execute( WikiContext context,
-            String classname,
-            Map params )
-            throws PluginException
+    public String execute(WikiContext context, String classname, Map params)
+        throws PluginException
     {
-        if( !m_pluginsEnabled )
-            return( "" );
+        if (!m_pluginsEnabled)
+        {
+            return ("");
+        }
 
         try
         {
-            Class      pluginClass;
+            Class pluginClass;
             WikiPlugin plugin;
 
-            boolean debug = BooleanUtils.toBoolean((String) params.get( PARAM_DEBUG));
+            boolean debug = BooleanUtils.toBoolean((String) params.get(PARAM_DEBUG));
 
-            pluginClass = findPluginClass( classname );
+            pluginClass = findPluginClass(classname);
 
             //
             //   Create...
@@ -294,17 +316,17 @@ public class PluginManager
             {
                 plugin = (WikiPlugin) pluginClass.newInstance();
             }
-            catch( InstantiationException e )
+            catch (InstantiationException e)
             {
-                throw new PluginException( "Cannot instantiate plugin "+classname, e );
+                throw new PluginException("Cannot instantiate plugin " + classname, e);
             }
-            catch( IllegalAccessException e )
+            catch (IllegalAccessException e)
             {
-                throw new PluginException( "Not allowed to access plugin "+classname, e );
+                throw new PluginException("Not allowed to access plugin " + classname, e);
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                throw new PluginException( "Instantiation of plugin "+classname+" failed.", e );
+                throw new PluginException("Instantiation of plugin " + classname + " failed.", e);
             }
 
             //
@@ -312,120 +334,125 @@ public class PluginManager
             //
             try
             {
-                if( m_initStage )
+                if (m_initStage)
                 {
-                    if( plugin instanceof InitializablePlugin )
+                    if (plugin instanceof InitializablePlugin)
                     {
-                        ((InitializablePlugin)plugin).initialize( context, params );
+                        ((InitializablePlugin) plugin).initialize(context, params);
                     }
+
                     return "";
                 }
                 else
                 {
-                    return plugin.execute( context, params );
+                    return plugin.execute(context, params);
                 }
             }
-            catch( PluginException e )
+            catch (PluginException e)
             {
-                if( debug )
+                if (debug)
                 {
-                    return stackTrace( params, e );
+                    return stackTrace(params, e);
                 }
 
                 // Just pass this exception onward.
                 throw (PluginException) e.fillInStackTrace();
             }
-            catch( Throwable t )
+            catch (Throwable t)
             {
                 // But all others get captured here.
-                log.info( "Plugin failed while executing:", t );
-                if( debug )
+                log.info("Plugin failed while executing:", t);
+
+                if (debug)
                 {
-                    return stackTrace( params, t );
+                    return stackTrace(params, t);
                 }
 
-                throw new PluginException( "Plugin failed", t );
+                throw new PluginException("Plugin failed", t);
             }
-            
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
-            throw new PluginException( "Could not find plugin "+classname, e );
+            throw new PluginException("Could not find plugin " + classname, e);
         }
-        catch( ClassCastException e )
+        catch (ClassCastException e)
         {
-            throw new PluginException( "Class "+classname+" is not a Wiki plugin.", e );
+            throw new PluginException("Class " + classname + " is not a Wiki plugin.", e);
         }
     }
 
-
     /**
-     *  Parses plugin arguments.  Handles quotes and all other kewl
-     *  stuff.
-     *  
-     *  @param argstring The argument string to the plugin.  This is
-     *  typically a list of key-value pairs, using "'" to escape
-     *  spaces in strings, followed by an empty line and then the
-     *  plugin body.  In case the parameter is null, will return an
-     *  empty parameter list.
+     * Parses plugin arguments.  Handles quotes and all other kewl stuff.
      *
-     *  @return A parsed list of parameters.  The plugin body is put
-     *  into a special parameter defined by PluginManager.PARAM_BODY.
+     * @param argstring The argument string to the plugin.  This is typically a list of key-value
+     *        pairs, using "'" to escape spaces in strings, followed by an empty line and then the
+     *        plugin body.  In case the parameter is null, will return an empty parameter list.
      *
-     *  @throws IOException If the parsing fails.
+     * @return A parsed list of parameters.  The plugin body is put into a special parameter
+     *         defined by PluginManager.PARAM_BODY.
+     *
+     * @throws IOException If the parsing fails.
      */
-
-    public Map parseArgs( String argstring )
-            throws IOException
+    public Map parseArgs(String argstring)
+        throws IOException
     {
-        HashMap         arglist = new HashMap();
-        StringReader    in      = new StringReader(argstring);
-        StreamTokenizer tok     = new StreamTokenizer(in);
-        int             type;
+        HashMap arglist = new HashMap();
+        StringReader in = new StringReader(argstring);
+        StreamTokenizer tok = new StreamTokenizer(in);
+        int type;
 
         //
         //  Protection against funny users.
         //
-        if( argstring == null ) return arglist;
+        if (argstring == null)
+        {
+            return arglist;
+        }
 
-        String param = null, value = null;
+        String param = null;
+        String value = null;
 
-        tok.eolIsSignificant( true );
+        tok.eolIsSignificant(true);
 
         boolean potentialEmptyLine = false;
-        boolean quit               = false;
+        boolean quit = false;
 
-        while( !quit )
+        while (!quit)
         {
             String s;
 
             type = tok.nextToken();
 
-            switch( type )
+            switch (type)
             {
             case StreamTokenizer.TT_EOF:
                 quit = true;
                 s = null;
+
                 break;
 
             case StreamTokenizer.TT_WORD:
                 s = tok.sval;
                 potentialEmptyLine = false;
+
                 break;
 
             case StreamTokenizer.TT_EOL:
                 quit = potentialEmptyLine;
                 potentialEmptyLine = true;
                 s = null;
+
                 break;
 
             case StreamTokenizer.TT_NUMBER:
-                s = Integer.toString( new Double(tok.nval).intValue() );
+                s = Integer.toString(new Double(tok.nval).intValue());
                 potentialEmptyLine = false;
+
                 break;
 
             case '\'':
                 s = tok.sval;
+
                 break;
 
             default:
@@ -436,17 +463,17 @@ public class PluginManager
             //  Assume that alternate words on the line are
             //  parameter and value, respectively.
             //
-            if( s != null )
+            if (s != null)
             {
-                if( param == null ) 
+                if (param == null)
                 {
                     param = s;
                 }
                 else
                 {
                     value = s;
-                            
-                    arglist.put( param, value );
+
+                    arglist.put(param, value);
 
                     // log.debug("ARG: "+param+"="+value);
                     param = null;
@@ -457,72 +484,77 @@ public class PluginManager
         //
         //  Now, we'll check the body.
         //
-
-        if( potentialEmptyLine )
+        if (potentialEmptyLine)
         {
             StringWriter out = new StringWriter();
-            FileUtil.copyContents( in, out );
+            FileUtil.copyContents(in, out);
 
             String bodyContent = out.toString();
 
-            if( bodyContent != null )
+            if (bodyContent != null)
             {
-                arglist.put( PARAM_BODY, bodyContent );
+                arglist.put(PARAM_BODY, bodyContent);
             }
         }
-        
+
         return arglist;
     }
-    
-    /**
-     *  Parses a plugin.  Plugin commands are of the form:
-     *  [{INSERT myplugin WHERE param1=value1, param2=value2}]
-     *  myplugin may either be a class name or a plugin alias.
-     *  <P>
-     *  This is the main entry point that is used.
-     *
-     *  @param context The current WikiContext.
-     *  @param commandline The full command line, including plugin
-     *  name, parameters and body.
-     *
-     *  @return HTML as returned by the plugin, or possibly an error
-     *  message.
-     */
-    public String execute( WikiContext context,
-            String commandline )
-            throws PluginException
-    {
-        if( !m_pluginsEnabled )
-            return( "" );
 
-        PatternMatcher  matcher  = new Perl5Matcher();
+    /**
+     * Parses a plugin.  Plugin commands are of the form: [{INSERT myplugin WHERE param1=value1,
+     * param2=value2}] myplugin may either be a class name or a plugin alias.
+     * 
+     * <P>
+     * This is the main entry point that is used.
+     * </p>
+     *
+     * @param context The current WikiContext.
+     * @param commandline The full command line, including plugin name, parameters and body.
+     *
+     * @return HTML as returned by the plugin, or possibly an error message.
+     *
+     * @throws PluginException DOCUMENT ME!
+     */
+    public String execute(WikiContext context, String commandline)
+        throws PluginException
+    {
+        if (!m_pluginsEnabled)
+        {
+            return ("");
+        }
+
+        PatternMatcher matcher = new Perl5Matcher();
 
         try
         {
-            if( matcher.contains( commandline, m_pluginPattern ) )
+            if (matcher.contains(commandline, m_pluginPattern))
             {
                 MatchResult res = matcher.getMatch();
 
-                String plugin   = res.group(2);                
-                String args     = commandline.substring(res.endOffset(0),
-                        commandline.length() -
-                        (commandline.charAt(commandline.length()-1) == '}' ? 1 : 0 ) );
-                Map arglist     = parseArgs( args );
+                String plugin = res.group(2);
+                String args =
+                    commandline.substring(
+                        res.endOffset(0),
+                        commandline.length()
+                        - ((commandline.charAt(commandline.length() - 1) == '}')
+                        ? 1
+                        : 0));
+                Map arglist = parseArgs(args);
 
-                return execute( context, plugin, arglist );
+                return execute(context, plugin, arglist);
             }
         }
-        catch( NoSuchElementException e )
+        catch (NoSuchElementException e)
         {
-            String msg =  "Missing parameter in plugin definition: "+commandline;
-            log.warn( msg, e );
-            throw new PluginException( msg );
+            String msg = "Missing parameter in plugin definition: " + commandline;
+            log.warn(msg, e);
+            throw new PluginException(msg);
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            String msg = "Zyrf.  Problems with parsing arguments: "+commandline;
-            log.warn( msg, e );
-            throw new PluginException( msg );
+            String msg = "Zyrf.  Problems with parsing arguments: " + commandline;
+            log.warn(msg, e);
+            throw new PluginException(msg);
         }
 
         // FIXME: We could either return an empty string "", or
@@ -536,18 +568,18 @@ public class PluginManager
     public class TagPlugin implements WikiPlugin
     {
     private Class m_tagClass;
-        
+
     public TagPlugin( Class tagClass )
     {
     m_tagClass = tagClass;
     }
-        
+
     public String execute( WikiContext context, Map params )
     throws PluginException
     {
     WikiPluginTag plugin = m_tagClass.newInstance();
 
-            
+
     }
     }
     */

@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -26,15 +26,26 @@ import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
+
 /**
  * This interface holds all the constant names for the properties
  * available in jspwiki.properties
  *
  * @author <a href="hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
+public interface WikiProperties {
+    /**
+     * If this parameter is true, then all the page and string references are relative to the
+     * web application root. This allows a wiki to be deployed "as is" as a single war file.
+     */
+    public static final String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
 
-public interface WikiProperties
-{
+    /**
+     * The default is to have absolute pathes for backwards compatibility
+     * @value false
+     */
+    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
+
     /*
      * ========================================================================
      *
@@ -58,7 +69,7 @@ public interface WikiProperties
      */
     String PROP_PAGEDIR = "jspwiki.pageDir";
 
-    /** Property name for where the jspwiki work directory should be. 
+    /** Property name for where the jspwiki work directory should be.
         If not specified, reverts to ${java.tmpdir}. */
     String PROP_WORKDIR = "jspwiki.workDir";
 
@@ -67,18 +78,6 @@ public interface WikiProperties
      * if you use a file based AttachmentProvider.
      */
     String PROP_STORAGEDIR = "jspwiki.storageDir";
-
-    /**
-     * If this parameter is true, then all the page and string references are relative to the
-     * web application root. This allows a wiki to be deployed "as is" as a single war file.
-     */
-    public static final String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
-
-    /**
-     * The default is to have absolute pathes for backwards compatibility
-     * @value false
-     */
-    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
 
     /**
      * This property is used internally to provide the root of the web application to the logging configuration when the
@@ -91,7 +90,7 @@ public interface WikiProperties
     String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";
 
     /** If true, then the user name will be stored with the page data.*/
-    String PROP_STOREUSERNAME= "jspwiki.storeUserName";
+    String PROP_STOREUSERNAME = "jspwiki.storeUserName";
 
     /**
      * Default for storing the username with the page data
@@ -116,18 +115,15 @@ public interface WikiProperties
      * @value &quot;&quot; (empty String)
      */
     String PROP_BASEURL_DEFAULT = "";
-
     String PROP_SHORTURL_PREFIX = "jspwiki.shortURLConstructor.prefix";
-
     String PROP_REFSTYLE = "jspwiki.referenceStyle";
-
     String PROP_REFSTYLE_DEFAULT = "absolute";
 
     /** Property name for the "spaces in titles" -hack. */
     String PROP_BEAUTIFYTITLE = "jspwiki.breakTitleWithSpaces";
 
     /**
-     * Default value for the "spaces in titles" - hack. 
+     * Default value for the "spaces in titles" - hack.
      * @value false
      */
     boolean PROP_BEAUTIFYTITLE_DEFAULT = false;
@@ -158,13 +154,9 @@ public interface WikiProperties
      * @value Main
      */
     String PROP_FRONTPAGE_DEFAULT = "Main";
-
     String PROP_USECACHE = "jspwiki.usePageCache";
-
     boolean PROP_USECACHE_DEFAULT = false;
-
     String PROP_LOCKEXPIRY = "jspwiki.lockExpiryTime";
-
     int PROP_LOCKEXPIRY_DEFAULT = 60;
 
     /**
@@ -180,35 +172,29 @@ public interface WikiProperties
 
     /** If true, consider CamelCase hyperlinks as well. */
     String PROP_CAMELCASELINKS = "jspwiki.translatorReader.camelCaseLinks";
-
     boolean PROP_CAMELCASELINKS_DEFAULT = false;
 
     /** If true, all hyperlinks are translated as well, regardless whether they
         are surrounded by brackets. */
     String PROP_PLAINURIS = "jspwiki.translatorReader.plainUris";
-
     boolean PROP_PLAINURIS_DEFAULT = false;
 
     /** If true, all outward links (external links) have a small link image appended. */
     String PROP_USEOUTLINKIMAGE = "jspwiki.translatorReader.useOutlinkImage";
-
     boolean PROP_USEOUTLINKIMAGE_DEFAULT = false;
 
     /** If set to "true", allows using raw HTML within Wiki text.  Be warned,
         this is a VERY dangerous option to set - never turn this on in a publicly
         allowable Wiki, unless you are absolutely certain of what you're doing. */
     String PROP_ALLOWHTML = "jspwiki.translatorReader.allowHTML";
-
     boolean PROP_ALLOWHTML_DEFAULT = false;
 
     /** If set to "true", all external links are tagged with 'rel="nofollow"' */
     String PROP_USERRELNOFOLLOW = "jspwiki.translatorReader.useRelNofollow";
-
     boolean PROP_USERRELNOFOLLOW_DEFAULT = false;
 
     /** If set to "true", enables plugins during parsing */
     String PROP_RUNPLUGINS = "jspwiki.translatorReader.runPlugins";
-    
     boolean PROP_RUNPLUGINS_DEFAULT = true;
 
     /** Determines the command to be used for 'diff'.  This program must
@@ -220,7 +206,6 @@ public interface WikiProperties
      *  The maximum size of attachments that can be uploaded.
      */
     String PROP_MAXSIZE = "jspwiki.attachment.maxsize";
-
     int PROP_MAXSIZE_DEFAULT = 100000;
 
     /**
@@ -228,13 +213,9 @@ public interface WikiProperties
      *  at most before requiring a refresh.
      */
     String PROP_CACHECHECKINTERVAL = "jspwiki.cachingProvider.cacheCheckInterval";
-
     int PROP_CACHECHECKINTERVAL_DEFAULT = 30;
-
     String PROP_CACHECAPACITY = "jspwiki.cachingProvider.capacity";
-
     int PROP_CACHECAPACITY_DEFAULT = 1000; // Good most wikis
-
 
     /*
      * ========================================================================
@@ -245,7 +226,7 @@ public interface WikiProperties
      */
 
     /**
-     *  Defines the property name for the RSS channel description.  Default value for the 
+     *  Defines the property name for the RSS channel description.  Default value for the
      *  channel description is an empty string.
      *  @since 1.7.6.
      */
@@ -256,7 +237,6 @@ public interface WikiProperties
      * @value empty string
      */
     String PROP_RSS_CHANNEL_DESCRIPTION_DEFAULT = "";
-
 
     /**
      *  Defines the property name for the RSS channel language.  Default value for the
@@ -311,7 +291,6 @@ public interface WikiProperties
      * Shall we use Lucene with this Wiki?
      */
     String PROP_USE_LUCENE = "jspwiki.useLucene";
-
     boolean PROP_USE_LUCENE_DEFAULT = true;
 
     /*
@@ -321,22 +300,16 @@ public interface WikiProperties
      *
      * ========================================================================
      */
-
     String PROP_RCS_CHECKIN = "jspwiki.rcsFileProvider.checkinCommand";
     String PROP_RCS_CHECKIN_DEFAULT = "ci -q -m\"author=%u\" -l -t-none %s";
-
     String PROP_RCS_CHECKOUT = "jspwiki.rcsFileProvider.checkoutCommand";
     String PROP_RCS_CHECKOUT_DEFAULT = "co -l %s";
-
     String PROP_RCS_LOG = "jspwiki.rcsFileProvider.logCommand";
     String PROP_RCS_LOG_DEFAULT = "rlog -zLT -r %s";
-
     String PROP_RCS_FULLLOG = "jspwiki.rcsFileProvider.fullLogCommand";
     String PROP_RCS_FULLLOG_DEFAULT = "rlog -zLT %s";
-
     String PROP_RCS_CHECKOUTVERSION = "jspwiki.rcsFileProvider.checkoutVersionCommand";
     String PROP_RCS_CHECKOUTVERSION_DEFAULT = "co -p -r1.%v %s";
-
     String PROP_RCS_DELETEVERSION = "jspwiki.rcsFileProvider.deleteVersionCommand";
     String PROP_RCS_DELETEVERSION_DEFAULT = "rcs -o1.%v %s";
 
@@ -347,9 +320,7 @@ public interface WikiProperties
      *
      * ========================================================================
      */
-
     String PROP_FILTERXML = "jspwiki.filterConfig";
-
     String PROP_FILTERXML_DEFAULT = "WEB-INF/filters.xml";
 
     /*
@@ -359,27 +330,20 @@ public interface WikiProperties
      *
      * ========================================================================
      */
-
     String PROP_AUTH_STRICTLOGINS = "jspwiki.policy.strictLogins";
- 
     boolean PROP_AUTH_STRICTLOGINS_DEFAULT = false;
-
     String PROP_AUTH_USEOLDAUTH = "jspwiki.auth.useOldAuth";
-    
     boolean PROP_AUTH_USEOLDAUTH_DEFAULT = false;
-    
+
     /** If true, logs the IP address of the editor on saving. */
-    String PROP_AUTH_STOREIPADDRESS= "jspwiki.storeIPAddress";
-
+    String PROP_AUTH_STOREIPADDRESS = "jspwiki.storeIPAddress";
     boolean PROP_AUTH_STOREIPADDRESS_DEFAULT = true;
-
     String PROP_AUTH_ADMINISTRATOR = "jspwiki.auth.administrator";
 
     /**
      *  The default administrator group is called "AdminGroup"
      */
     String PROP_AUTH_ADMINISTRATOR_DEFAULT = "AdminGroup";
-
     String PROP_AUTH_FILENAME = "jspwiki.fileAuthenticator.fileName";
 
     /*
@@ -390,16 +354,13 @@ public interface WikiProperties
      * ========================================================================
      */
 
-    /** 
+    /**
      * Default Prefix for searching classes
      * @value com.ecyrd.jspwiki
      */
     String DEFAULT_CLASS_PREFIX = "com.ecyrd.jspwiki";
-
     String DEFAULT_PROVIDER_CLASS_PREFIX = "com.ecyrd.jspwiki.providers";
-
     String DEFAULT_AUTH_MODULES_CLASS_PREFIX = "com.ecyrd.jspwiki.auth.modules";
-
     String DEFAULT_DIFF_CLASS_PREFIX = "com.ecyrd.jspwiki.diff";
 
     /**
@@ -410,8 +371,9 @@ public interface WikiProperties
     /**
      *  These are the default packages
      */
-    String [] PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = 
-        new String [] { "com.ecyrd.jspwiki.plugin","com.ecyrd.jspwiki.forms" };
+    String[] PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = new String[] {
+            "com.ecyrd.jspwiki.plugin", "com.ecyrd.jspwiki.forms"
+        };
 
     /** Property name for setting the url generator instance */
     String PROP_CLASS_URLCONSTRUCTOR = "jspwiki.urlConstructor";
@@ -421,37 +383,21 @@ public interface WikiProperties
      * @value DefaultURLConstructor
      */
     String PROP_CLASS_URLCONSTRUCTOR_DEFAULT = DefaultURLConstructor.class.getName();
-
-    
     String PROP_CLASS_PAGEPROVIDER = "jspwiki.pageProvider";
-
     String PROP_CLASS_PAGEPROVIDER_DEFAULT = FileSystemProvider.class.getName();
 
     /**
      *  The property name for defining the attachment provider class name.
      */
     String PROP_CLASS_ATTACHMENTPROVIDER = "jspwiki.attachmentProvider";
-
     String PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT = BasicAttachmentProvider.class.getName();
-
     String PROP_CLASS_DIFF_PROVIDER = "jspwiki.diffProvider";
-
     String PROP_CLASS_DIFF_PROVIDER_DEFAULT = TraditionalDiffProvider.class.getName();
-
     String PROP_CLASS_DIFF_RSS_PROVIDER = "jspwiki.diffRssProvider";
-
     String PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT = RssTraditionalDiffProvider.class.getName();
-
     String PROP_CLASS_AUTHORIZER = "jspwiki.authorizer";
-
     String PROP_CLASS_AUTHORIZER_DEFAULT = PageAuthorizer.class.getName();
-
     String PROP_CLASS_USERDATABASE = "jspwiki.userdatabase";
-
     String PROP_CLASS_USERDATABASE_DEFAULT = WikiDatabase.class.getName();
-
     String PROP_CLASS_AUTHENTICATOR = "jspwiki.authenticator";
-
-
 }
-

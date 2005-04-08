@@ -1,13 +1,18 @@
 package com.ecyrd.jspwiki.providers;
 
 /**
- *  Indicates that an non-existing version was specified.
+ * Indicates that an non-existing version was specified.
  */
 public class NoSuchVersionException
     extends ProviderException
 {
-    public NoSuchVersionException( String msg )
+    /**
+     * Creates a new NoSuchVersionException object.
+     *
+     * @param msg DOCUMENT ME!
+     */
+    public NoSuchVersionException(String msg)
     {
-        super( msg );
+        super(msg);
     }
 }

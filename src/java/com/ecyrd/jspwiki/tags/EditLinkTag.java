@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,45 +27,72 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Writes an edit link.  Body of the link becomes the link text.
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *    <LI>format - Format, either "anchor" or "url".
- *    <LI>version - Version number of the page to refer to.  Possible values
- *        are "this", meaning the version of the current page; or a version
- *        number.  Default is always to point at the latest version of the page.
- *  </UL>
+ * Writes an edit link.  Body of the link becomes the link text.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * <li>
+ * format - Format, either "anchor" or "url".
+ * </li>
+ * <li>
+ * version - Version number of the page to refer to.  Possible values are "this", meaning the
+ * version of the current page; or a version number.  Default is always to point at the latest
+ * version of the page.
+ * </li>
+ * </ul>
+ * 
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class EditLinkTag
     extends WikiLinkTag
 {
+    /** DOCUMENT ME! */
     public String m_version = null;
 
-    public void setVersion( String vers )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param vers DOCUMENT ME!
+     */
+    public void setVersion(String vers)
     {
         m_version = vers;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
-        WikiEngine engine   = m_wikiContext.getEngine();
-        WikiPage   page     = null;
-        String     versionString = "";
-        String     pageName = null;
-        
+        WikiEngine engine = m_wikiContext.getEngine();
+        WikiPage page = null;
+        String versionString = "";
+        String pageName = null;
+
         //
         //  Determine the page and the link.
         //
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             page = m_wikiContext.getPage();
-            if( page == null )
+
+            if (page == null)
             {
                 // You can't call this on the page itself anyways.
                 return SKIP_BODY;
@@ -83,24 +110,24 @@ public class EditLinkTag
         //
         //  Determine the latest version, if the version attribute is "this".
         //
-        if( m_version != null )
+        if (m_version != null)
         {
-            if( "this".equalsIgnoreCase(m_version) )
+            if ("this".equalsIgnoreCase(m_version))
             {
-                if( page == null )
+                if (page == null)
                 {
                     // No page, so go fetch according to page name.
-                    page = engine.getPage( m_pageName );
+                    page = engine.getPage(m_pageName);
                 }
-                
-                if( page != null )
+
+                if (page != null)
                 {
-                    versionString = "version="+page.getVersion();
+                    versionString = "version=" + page.getVersion();
                 }
             }
             else
             {
-                versionString = "version="+m_version;
+                versionString = "version=" + m_version;
             }
         }
 
@@ -110,14 +137,18 @@ public class EditLinkTag
         //
         JspWriter out = pageContext.getOut();
 
-        switch( m_format )
+        switch (m_format)
         {
-          case ANCHOR:
-            out.print("<a href=\""+m_wikiContext.getURL(WikiContext.EDIT,pageName, versionString)+"\">");
+        case ANCHOR:
+            out.print(
+                "<a href=\"" + m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString)
+                + "\">");
+
             break;
 
-          case URL:
-            out.print( m_wikiContext.getURL(WikiContext.EDIT,pageName,versionString) );
+        case URL:
+            out.print(m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString));
+
             break;
         }
 

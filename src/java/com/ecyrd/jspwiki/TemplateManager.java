@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -33,29 +34,41 @@ import org.apache.log4j.Logger;
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 
+
 /**
- *  This class takes care of managing JSPWiki templates.
+ * This class takes care of managing JSPWiki templates.
  *
- *  @since 2.1.62
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.62
  */
 public class TemplateManager
 {
     /** The default directory for the properties. */
-    public static final String DIRECTORY    = "templates";
+    public static final String DIRECTORY = "templates";
 
+    /** DOCUMENT ME! */
     public static final String DEFAULT_TEMPLATE = "default";
 
-    /** Name of the file that contains the properties.*/
-
+    /** Name of the file that contains the properties. */
     public static final String PROPERTYFILE = "template.properties";
 
-    private WikiEngine         m_engine;
-    private Cache              m_propertyCache;
+    /** DOCUMENT ME! */
+    protected static Logger log = Logger.getLogger(TemplateManager.class);
 
-    protected static Logger log = Logger.getLogger( TemplateManager.class );
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
 
-    public TemplateManager( WikiEngine engine, Configuration conf)
+    /** DOCUMENT ME! */
+    private Cache m_propertyCache;
+
+    /**
+     * Creates a new TemplateManager object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     */
+    public TemplateManager(WikiEngine engine, Configuration conf)
     {
         m_engine = engine;
 
@@ -66,18 +79,24 @@ public class TemplateManager
     }
 
     /**
-     *  Check the existence of a template.
+     * Check the existence of a template.
+     *
+     * @param templateName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
+
     // FIXME: Does not work yet
-    public boolean templateExists( String templateName )
+    public boolean templateExists(String templateName)
     {
         ServletContext context = m_engine.getServletContext();
 
-        InputStream in = context.getResourceAsStream( getPath(templateName)+"ViewTemplate.jsp");
+        InputStream in = context.getResourceAsStream(getPath(templateName) + "ViewTemplate.jsp");
 
-        if( in != null )
+        if (in != null)
         {
             IOUtils.closeQuietly(in);
+
             return true;
         }
 
@@ -85,120 +104,149 @@ public class TemplateManager
     }
 
     /**
-     *  An utility method for finding a JSP page.  It searches only under
-     *  either current context or by the absolute name.
+     * An utility method for finding a JSP page.  It searches only under either current context or
+     * by the absolute name.
+     *
+     * @param pageContext DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public String findJSP( PageContext pageContext, String name )
+    public String findJSP(PageContext pageContext, String name)
     {
         ServletContext sContext = pageContext.getServletContext();
-        
-        InputStream is = sContext.getResourceAsStream( name );
 
-        if( is == null )
+        InputStream is = sContext.getResourceAsStream(name);
+
+        if (is == null)
         {
-            String defname = makeFullJSPName( DEFAULT_TEMPLATE, 
-                    removeTemplatePart(name) );
-            is = sContext.getResourceAsStream( defname );
+            String defname = makeFullJSPName(DEFAULT_TEMPLATE, removeTemplatePart(name));
+            is = sContext.getResourceAsStream(defname);
 
-            if( is != null )
+            if (is != null)
+            {
                 name = defname;
+            }
             else
+            {
                 name = null;
+            }
         }
 
         IOUtils.closeQuietly(is);
+
         return name;
     }
 
     /**
-     *  Removes the template part of a name.
+     * Removes the template part of a name.
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private final String removeTemplatePart( String name )
+    private final String removeTemplatePart(String name)
     {
         int idx = name.indexOf('/');
-        if( idx != -1 )
+
+        if (idx != -1)
         {
             idx = name.indexOf('/', idx); // Find second "/"
 
-            if( idx != -1 )
+            if (idx != -1)
             {
-                return name.substring( idx+1 );
+                return name.substring(idx + 1);
             }
         }
-        
+
         return name;
     }
 
-    private final String makeFullJSPName( String template, String name )
+    private final String makeFullJSPName(String template, String name)
     {
-        return "/"+DIRECTORY+"/"+template+"/"+name;
+        return "/" + DIRECTORY + "/" + template + "/" + name;
     }
 
     /**
-     *  Attempts to locate a JSP page under the given template.  If that template
-     *  does not exist, or the page does not exist under that template, will
-     *  attempt to locate a similarly named file under the default template.
+     * Attempts to locate a JSP page under the given template.  If that template does not exist, or
+     * the page does not exist under that template, will attempt to locate a similarly named file
+     * under the default template.
+     *
+     * @param pageContext DOCUMENT ME!
+     * @param template DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public String findJSP( PageContext pageContext, String template, String name )
+    public String findJSP(PageContext pageContext, String template, String name)
     {
         ServletContext sContext = pageContext.getServletContext();
 
-        if( name.charAt(0) == '/' )
+        if (name.charAt(0) == '/')
         {
             // This is already a full path
-            return findJSP( pageContext, name );
+            return findJSP(pageContext, name);
         }
 
-        String fullname = makeFullJSPName( template, name );
-        InputStream is = sContext.getResourceAsStream( fullname );
+        String fullname = makeFullJSPName(template, name);
+        InputStream is = sContext.getResourceAsStream(fullname);
 
-        if( is == null )
+        if (is == null)
         {
-            String defname = makeFullJSPName( DEFAULT_TEMPLATE, name );
-            is = sContext.getResourceAsStream( defname );
+            String defname = makeFullJSPName(DEFAULT_TEMPLATE, name);
+            is = sContext.getResourceAsStream(defname);
 
-            if( is != null )
+            if (is != null)
+            {
                 fullname = defname;
+            }
             else
+            {
                 fullname = null;
+            }
         }
 
         IOUtils.closeQuietly(is);
+
         return fullname;
     }
 
     /**
-     *  Returns a property, as defined in the template.  The evaluation
-     *  is lazy, i.e. the properties are not loaded until the template is
-     *  actually used for the first time.
+     * Returns a property, as defined in the template.  The evaluation is lazy, i.e. the properties
+     * are not loaded until the template is actually used for the first time.
+     *
+     * @param context DOCUMENT ME!
+     * @param key DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public String getTemplateProperty( WikiContext context, String key )
+    public String getTemplateProperty(WikiContext context, String key)
     {
         String template = context.getTemplate();
 
         try
         {
-            Properties props = (Properties)m_propertyCache.getFromCache( template, -1 );
+            Properties props = (Properties) m_propertyCache.getFromCache(template, -1);
 
-            if( props == null )
+            if (props == null)
             {
                 try
                 {
-                    props = getTemplateProperties( template );
-                    
-                    m_propertyCache.putInCache( template, props );
+                    props = getTemplateProperties(template);
+
+                    m_propertyCache.putInCache(template, props);
                 }
-                catch( IOException e )
+                catch (IOException e)
                 {
-                    log.warn("IO Exception while reading template properties",e);
+                    log.warn("IO Exception while reading template properties", e);
 
                     return null;
                 }
             }
 
-            return props.getProperty( key );
+            return props.getProperty(key);
         }
-        catch( NeedsRefreshException ex )
+        catch (NeedsRefreshException ex)
         {
             // Avoid deadlock
             m_propertyCache.cancelUpdate(template);
@@ -208,43 +256,56 @@ public class TemplateManager
         }
     }
 
-    private static final String getPath( String template )
+    private static final String getPath(String template)
     {
-        return "/"+DIRECTORY+"/"+template+"/";
+        return "/" + DIRECTORY + "/" + template + "/";
     }
 
     /**
-     *  Check if the property map requires refresh.
+     * Check if the property map requires refresh.
+     *
+     * @param templateName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-
-    private boolean checkRefresh( String templateName )
+    private boolean checkRefresh(String templateName)
     {
         // CacheEntry entry = m_propertyCache.get();
         return false;
     }
 
     /**
-     *  Always returns a valid property map.
+     * Always returns a valid property map.
+     *
+     * @param templateName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
      */
-    private Properties getTemplateProperties( String templateName )
-            throws IOException
+    private Properties getTemplateProperties(String templateName)
+        throws IOException
     {
         Properties p = new Properties();
 
         ServletContext context = m_engine.getServletContext();
 
-        InputStream propertyStream = context.getResourceAsStream(getPath(templateName)+PROPERTYFILE);
+        InputStream propertyStream =
+            context.getResourceAsStream(getPath(templateName) + PROPERTYFILE);
 
-        if( propertyStream != null )
+        if (propertyStream != null)
         {
-            p.load( propertyStream );
+            p.load(propertyStream);
 
             propertyStream.close();
         }
         else
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Template '"+templateName+"' does not have a propertyfile '"+PROPERTYFILE+"'.");
+            if (log.isDebugEnabled())
+            {
+                log.debug(
+                    "Template '" + templateName + "' does not have a propertyfile '" + PROPERTYFILE
+                    + "'.");
             }
         }
 

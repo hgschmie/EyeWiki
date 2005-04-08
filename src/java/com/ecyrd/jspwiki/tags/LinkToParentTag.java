@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,10 +19,11 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import java.io.IOException;
-
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
+
+import java.io.IOException;
+
 
 /**
  *  Writes a link to a parent of a Wiki page.
@@ -36,42 +37,32 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  *  @author Janne Jalkanen
  *  @since 2.0
  */
-public class LinkToParentTag
-    extends LinkToTag
-{
-    public int doWikiStartTag()
-        throws IOException
-    {
+public class LinkToParentTag extends LinkToTag {
+    public int doWikiStartTag() throws IOException {
         WikiPage p = m_wikiContext.getPage();
 
         //
         //  We just simply set the page to be our parent page
         //  and call the superclass.
         //
-        if( p instanceof Attachment )
-        {
-            setPage( ((Attachment)p).getParentName() );
-        }
-        else
-        {
+        if (p instanceof Attachment) {
+            setPage(((Attachment) p).getParentName());
+        } else {
             String name = p.getName();
 
             int entrystart = name.indexOf("_blogentry_");
 
-            if( entrystart != -1 )
-            {
-                setPage( name.substring( 0, entrystart ) );
+            if (entrystart != -1) {
+                setPage(name.substring(0, entrystart));
             }
 
             int commentstart = name.indexOf("_comments_");
-                
-            if( commentstart != -1 )
-            {
-                setPage( name.substring( 0, commentstart ) );
+
+            if (commentstart != -1) {
+                setPage(name.substring(0, commentstart));
             }
         }
 
         return super.doWikiStartTag();
     }
-
 }

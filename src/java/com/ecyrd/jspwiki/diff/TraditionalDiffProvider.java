@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -17,7 +17,6 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
 package com.ecyrd.jspwiki.diff;
 
 import java.io.IOException;
@@ -41,24 +40,39 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 /**
  * This is the JSPWiki 'traditional' diff.
+ *
  * @author Janne Jalkanen
- * @author Erik Bunn 
+ * @author Erik Bunn
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-
-public class TraditionalDiffProvider 
-        implements DiffProvider
+public class TraditionalDiffProvider
+    implements DiffProvider
 {
+    /** DOCUMENT ME! */
     protected final Logger log = Logger.getLogger(this.getClass());
 
-    protected String diffAdd = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";                              
-    protected String diffRem = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";                              
-    protected String diffUnchanged = "<tr><td class=\"diff\">";                                               
-    protected String diffClose = "</td></tr>\n";                                                              
-                                                                                                              
-    protected String diffPrefix = "<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n";
-    protected String diffPostfix = "</table>\n";                                                              
+    /** DOCUMENT ME! */
+    protected String diffAdd = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
 
+    /** DOCUMENT ME! */
+    protected String diffRem = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
+
+    /** DOCUMENT ME! */
+    protected String diffUnchanged = "<tr><td class=\"diff\">";
+
+    /** DOCUMENT ME! */
+    protected String diffClose = "</td></tr>\n";
+
+    /** DOCUMENT ME! */
+    protected String diffPrefix =
+        "<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n";
+
+    /** DOCUMENT ME! */
+    protected String diffPostfix = "</table>\n";
+
+    /**
+     * Creates a new TraditionalDiffProvider object.
+     */
     public TraditionalDiffProvider()
     {
     }
@@ -72,16 +86,22 @@ public class TraditionalDiffProvider
     }
 
     /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine, java.util.Properties)
+     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
+     *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
         throws NoRequiredPropertyException, IOException
     {
     }
-    
+
     /**
-     * Makes a diff using the BMSI utility package. We use our own diff printer,
-     * which makes things easier.
+     * Makes a diff using the BMSI utility package. We use our own diff printer, which makes things
+     * easier.
+     *
+     * @param p1 DOCUMENT ME!
+     * @param p2 DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     public String makeDiff(String p1, String p2)
     {
@@ -89,26 +109,25 @@ public class TraditionalDiffProvider
 
         try
         {
-            String[] first  = Diff.stringToArray(TextUtil.replaceEntities(p1));
-            String[] second = Diff.stringToArray(TextUtil.replaceEntities(p2));
+            String [] first = Diff.stringToArray(TextUtil.replaceEntities(p1));
+            String [] second = Diff.stringToArray(TextUtil.replaceEntities(p2));
             Revision rev = Diff.diff(first, second, new MyersDiff());
-            
-            if( rev == null || rev.size() == 0 )
+
+            if ((rev == null) || (rev.size() == 0))
             {
                 // No difference
-
                 return "";
             }
-            
+
             StringBuffer ret = new StringBuffer(rev.size() * 20); // Guessing how big it will become...
 
             ret.append(diffPrefix);
-            rev.accept( new RevisionPrint(ret) );
+            rev.accept(new RevisionPrint(ret));
             ret.append(diffPostfix);
 
             return ret.toString();
         }
-        catch( DifferentiationFailedException e )
+        catch (DifferentiationFailedException e)
         {
             diffResult = "makeDiff failed with DifferentiationFailedException";
             log.error(diffResult, e);
@@ -117,22 +136,43 @@ public class TraditionalDiffProvider
         return diffResult;
     }
 
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
     public class RevisionPrint
         implements RevisionVisitor
     {
+        /** DOCUMENT ME! */
         private StringBuffer m_result = null;
-       
+
+        /**
+         * Creates a new RevisionPrint object.
+         *
+         * @param sb DOCUMENT ME!
+         */
         private RevisionPrint(StringBuffer sb)
         {
             m_result = sb;
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param rev DOCUMENT ME!
+         */
         public void visit(Revision rev)
         {
             // GNDN (Goes nowhere, does nothing)
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(AddDelta delta)
         {
             Chunk changed = delta.getRevised();
@@ -140,6 +180,11 @@ public class TraditionalDiffProvider
             changed.toString(m_result, diffAdd, diffClose);
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(ChangeDelta delta)
         {
             Chunk changed = delta.getOriginal();
@@ -147,14 +192,19 @@ public class TraditionalDiffProvider
             changed.toString(m_result, diffRem, diffClose);
             delta.getRevised().toString(m_result, diffAdd, diffClose);
         }
-      
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @param delta DOCUMENT ME!
+         */
         public void visit(DeleteDelta delta)
         {
             Chunk changed = delta.getOriginal();
             print(changed, " removed ");
             changed.toString(m_result, diffRem, diffClose);
         }
-        
+
         private void print(Chunk changed, String type)
         {
             m_result.append(diffUnchanged);
@@ -163,7 +213,9 @@ public class TraditionalDiffProvider
             m_result.append(type);
             m_result.append(changed.size());
             m_result.append(" line");
-            m_result.append((changed.size() == 1) ? "." : "s.");
+            m_result.append((changed.size() == 1)
+                ? "."
+                : "s.");
             m_result.append(diffClose);
         }
     }

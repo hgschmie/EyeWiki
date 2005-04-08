@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -27,32 +27,48 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
+
 /**
- *  Writes a link to the Wiki PageInfo.  Body of the link becomes the actual text.
+ * Writes a link to the Wiki PageInfo.  Body of the link becomes the actual text.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * </ul>
+ * 
  *
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
+
 // FIXME: Refactor together with LinkToTag and EditLinkTag.
 public class PageInfoLinkTag
     extends WikiLinkTag
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
-        String     pageName = m_pageName;
+        String pageName = m_pageName;
 
-        if( m_pageName == null )
+        if (m_pageName == null)
         {
             WikiPage p = m_wikiContext.getPage();
 
-            if( p != null )
+            if (p != null)
             {
                 pageName = p.getName();
             }
@@ -62,19 +78,22 @@ public class PageInfoLinkTag
             }
         }
 
-        if( engine.pageExists(pageName) )
+        if (engine.pageExists(pageName))
         {
             JspWriter out = pageContext.getOut();
 
-            String url = m_wikiContext.getURL( WikiContext.INFO, pageName );
+            String url = m_wikiContext.getURL(WikiContext.INFO, pageName);
 
-            switch( m_format )
+            switch (m_format)
             {
-              case ANCHOR:
-                out.print("<a class=\"pageinfo\" href=\""+url+"\">");
+            case ANCHOR:
+                out.print("<a class=\"pageinfo\" href=\"" + url + "\">");
+
                 break;
-              case URL:
-                out.print( url );
+
+            case URL:
+                out.print(url);
+
                 break;
             }
 

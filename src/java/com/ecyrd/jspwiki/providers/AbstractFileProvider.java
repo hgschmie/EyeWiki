@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -29,6 +28,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -53,143 +53,187 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+
 /**
- *  Provides a simple directory based repository for Wiki pages.
- *  <P>
- *  All files have ".txt" appended to make life easier for those
- *  who insist on using Windows or other software which makes assumptions
- *  on the files contents based on its name.
- *  <p>
- *  This class functions as a superclass to all file based providers.
+ * Provides a simple directory based repository for Wiki pages.
+ * 
+ * <P>
+ * All files have ".txt" appended to make life easier for those who insist on using Windows or
+ * other software which makes assumptions on the files contents based on its name.
+ * </p>
+ * 
+ * <p>
+ * This class functions as a superclass to all file based providers.
+ * </p>
  *
- *  @since 2.1.21.
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
+ * @since 2.1.21.
  */
 public abstract class AbstractFileProvider
-        implements WikiPageProvider
+    implements WikiPageProvider
 {
-    private static final Category   log = Category.getInstance(AbstractFileProvider.class);
-
-    private String m_pageDirectory = null;
-    
-    protected String m_encoding;
+    /** DOCUMENT ME! */
+    private static final Category log = Category.getInstance(AbstractFileProvider.class);
 
     /**
-     *  All files should have this extension to be recognized as JSPWiki files.
-     *  We default to .txt, because that is probably easiest for Windows users,
-     *  and guarantees correct handling.
+     * All files should have this extension to be recognized as JSPWiki files. We default to .txt,
+     * because that is probably easiest for Windows users, and guarantees correct handling.
      */
     public static final String FILE_EXT = ".txt";
 
+    /** DOCUMENT ME! */
+    private String m_pageDirectory = null;
+
+    /** DOCUMENT ME! */
+    protected String m_encoding;
+
     /**
-     *  @throws FileNotFoundException If the specified page directory does not exist.
-     *  @throws IOException In case the specified page directory is a file, not a directory.
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException If the specified page directory does not exist.
+     * @throws IOException In case the specified page directory is a file, not a directory.
      */
-    public void initialize( WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException,
-                   IOException
+    public void initialize(WikiEngine engine, Configuration conf)
+        throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing FileSystemProvider");
         m_pageDirectory = engine.getPageDir();
 
         if (m_pageDirectory == null)
         {
-            throw new NoRequiredPropertyException("File based providers need a "
-                    + "page directory but none was found. Aborting!", WikiProperties.PROP_PAGEDIR);
+            throw new NoRequiredPropertyException(
+                "File based providers need a " + "page directory but none was found. Aborting!",
+                WikiProperties.PROP_PAGEDIR);
         }
 
-        m_encoding = conf.getString(
-                WikiProperties.PROP_ENCODING, 
-                WikiProperties.PROP_ENCODING_DEFAULT);
-                
+        m_encoding =
+            conf.getString(WikiProperties.PROP_ENCODING, WikiProperties.PROP_ENCODING_DEFAULT);
 
-        if (log.isInfoEnabled()) {
-            log.info( "Wikipages are read from '" + m_pageDirectory + "'" );
+        if (log.isInfoEnabled())
+        {
+            log.info("Wikipages are read from '" + m_pageDirectory + "'");
         }
     }
 
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     String getPageDirectory()
     {
         return m_pageDirectory;
     }
 
     /**
-     *  This makes sure that the queried page name
-     *  is still readable by the file system.
+     * This makes sure that the queried page name is still readable by the file system.
+     *
+     * @param pagename DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    protected String mangleName( String pagename )
+    protected String mangleName(String pagename)
     {
-        pagename = TextUtil.urlEncode( pagename, m_encoding );
-        
-        pagename = StringUtils.replace( pagename, "/", "%2F" );
+        pagename = TextUtil.urlEncode(pagename, m_encoding);
+
+        pagename = StringUtils.replace(pagename, "/", "%2F");
 
         return pagename;
     }
 
     /**
-     *  This makes the reverse of mangleName.
+     * This makes the reverse of mangleName.
+     *
+     * @param filename DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws InternalWikiException DOCUMENT ME!
      */
-    protected String unmangleName( String filename )
+    protected String unmangleName(String filename)
     {
         // The exception should never happen.
         try
         {
-            return TextUtil.urlDecode( filename, m_encoding );
+            return TextUtil.urlDecode(filename, m_encoding);
         }
-        catch( UnsupportedEncodingException e ) 
+        catch (UnsupportedEncodingException e)
         {
             throw new InternalWikiException("Faulty encoding; should never happen");
         }
     }
-    
+
     /**
-     *  Finds a Wiki page from the page repository.
+     * Finds a Wiki page from the page repository.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    protected File findPage( String page )
+    protected File findPage(String page)
     {
-        return new File( m_pageDirectory, mangleName(page)+FILE_EXT );
-    }
-
-    
-    public boolean pageExists( String page )
-    {
-        File pagefile = findPage( page );
-
-        return pagefile.exists();        
+        return new File(m_pageDirectory, mangleName(page) + FILE_EXT);
     }
 
     /**
-     *  This implementation just returns the current version, as filesystem
-     *  does not provide versioning information for now.
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public String getPageText( String page, int version )
-            throws ProviderException
+    public boolean pageExists(String page)
     {
-        return getPageText( page );
+        File pagefile = findPage(page);
+
+        return pagefile.exists();
     }
 
     /**
-     *  Read the text directly from the correct file.
+     * This implementation just returns the current version, as filesystem does not provide
+     * versioning information for now.
+     *
+     * @param page DOCUMENT ME!
+     * @param version DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    private String getPageText( String page )
+    public String getPageText(String page, int version)
+        throws ProviderException
     {
-        String result  = null;
+        return getPageText(page);
+    }
+
+    /**
+     * Read the text directly from the correct file.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    private String getPageText(String page)
+    {
+        String result = null;
         InputStream in = null;
 
-        File pagedata = findPage( page );
+        File pagedata = findPage(page);
 
-        if( pagedata.exists() )
+        if (pagedata.exists())
         {
-            if( pagedata.canRead() )
+            if (pagedata.canRead())
             {
                 try
-                {          
-                    in = new FileInputStream( pagedata );
-                    result = FileUtil.readContents( in, m_encoding );
+                {
+                    in = new FileInputStream(pagedata);
+                    result = FileUtil.readContents(in, m_encoding);
                 }
-                catch( IOException e )
+                catch (IOException e)
                 {
                     log.error("Failed to read", e);
                 }
@@ -200,36 +244,46 @@ public abstract class AbstractFileProvider
             }
             else
             {
-                log.warn("Failed to read page '"+page+"' from '"+pagedata.getAbsolutePath()+"', possibly a permissions problem");
+                log.warn(
+                    "Failed to read page '" + page + "' from '" + pagedata.getAbsolutePath()
+                    + "', possibly a permissions problem");
             }
         }
         else
         {
             // This is okay.
-            if (log.isInfoEnabled()) {
-                log.info("New page '"+page+"'");
+            if (log.isInfoEnabled())
+            {
+                log.info("New page '" + page + "'");
             }
         }
 
         return result;
     }
 
-    public void putPageText( WikiPage page, String text )        
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     * @param text DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public void putPageText(WikiPage page, String text)
+        throws ProviderException
     {
-        File file = findPage( page.getName() );
+        File file = findPage(page.getName());
         PrintWriter out = null;
 
         try
         {
-            out = new PrintWriter(new OutputStreamWriter( new FileOutputStream( file ),
-                            m_encoding ));
+            out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), m_encoding));
 
-            out.print( text );
+            out.print(text);
         }
-        catch( IOException e )
+        catch (IOException e)
         {
-            log.error( "Saving failed" );
+            log.error("Saving failed");
         }
         finally
         {
@@ -237,94 +291,124 @@ public abstract class AbstractFileProvider
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     * @throws InternalWikiException DOCUMENT ME!
+     */
     public Collection getAllPages()
-            throws ProviderException
+        throws ProviderException
     {
         log.debug("Getting all pages...");
 
         ArrayList set = new ArrayList();
 
-        File wikipagedir = new File( m_pageDirectory );
+        File wikipagedir = new File(m_pageDirectory);
 
-        File[] wikipages = wikipagedir.listFiles( new WikiFileFilter() );
+        File [] wikipages = wikipagedir.listFiles(new WikiFileFilter());
 
-        if( wikipages == null )
+        if (wikipages == null)
         {
             throw new InternalWikiException("Page directory does not exist");
         }
 
-        for( int i = 0; i < wikipages.length; i++ )
+        for (int i = 0; i < wikipages.length; i++)
         {
             String wikiname = wikipages[i].getName();
-            int cutpoint = wikiname.lastIndexOf( FILE_EXT );
+            int cutpoint = wikiname.lastIndexOf(FILE_EXT);
 
-            WikiPage page = getPageInfo( unmangleName(wikiname.substring(0,cutpoint)),
-                    WikiPageProvider.LATEST_VERSION );
-            if( page == null )
+            WikiPage page =
+                getPageInfo(
+                    unmangleName(wikiname.substring(0, cutpoint)), WikiPageProvider.LATEST_VERSION);
+
+            if (page == null)
             {
                 // This should not really happen.
                 // FIXME: Should we throw an exception here?
-                log.error("Page "+wikiname+" was found in directory listing, but could not be located individually.");
+                log.error(
+                    "Page " + wikiname
+                    + " was found in directory listing, but could not be located individually.");
+
                 continue;
             }
-            
-            set.add( page );
+
+            set.add(page);
         }
 
-        return set;        
+        return set;
     }
 
-    public Collection getAllChangedSince( Date date )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param date DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Collection getAllChangedSince(Date date)
     {
         return new ArrayList(); // FIXME
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPageCount()
     {
-        File wikipagedir = new File( m_pageDirectory );
+        File wikipagedir = new File(m_pageDirectory);
 
-        File[] wikipages = wikipagedir.listFiles( new WikiFileFilter() );
+        File [] wikipages = wikipagedir.listFiles(new WikiFileFilter());
 
         return wikipages.length;
     }
 
     /**
-     * Iterates through all WikiPages, matches them against the given query,
-     * and returns a Collection of SearchResult objects.
+     * Iterates through all WikiPages, matches them against the given query, and returns a
+     * Collection of SearchResult objects.
+     *
+     * @param query DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public Collection findPages( QueryItem[] query )
+    public Collection findPages(QueryItem [] query)
     {
-        File wikipagedir = new File( m_pageDirectory );
-        TreeSet res = new TreeSet( new SearchResultComparator() );
-        SearchMatcher matcher = new SearchMatcher( query );
+        File wikipagedir = new File(m_pageDirectory);
+        TreeSet res = new TreeSet(new SearchResultComparator());
+        SearchMatcher matcher = new SearchMatcher(query);
 
-        File[] wikipages = wikipagedir.listFiles( new WikiFileFilter() );
+        File [] wikipages = wikipagedir.listFiles(new WikiFileFilter());
 
-        for( int i = 0; i < wikipages.length; i++ )
+        for (int i = 0; i < wikipages.length; i++)
         {
             FileInputStream input = null;
 
             // log.debug("Searching page "+wikipages[i].getPath() );
-
             String filename = wikipages[i].getName();
-            int cutpoint    = filename.lastIndexOf( FILE_EXT );
-            String wikiname = filename.substring( 0, cutpoint );
+            int cutpoint = filename.lastIndexOf(FILE_EXT);
+            String wikiname = filename.substring(0, cutpoint);
 
-            wikiname = unmangleName( wikiname );
+            wikiname = unmangleName(wikiname);
 
             try
             {
-                input = new FileInputStream( wikipages[i] );
-                String pagetext = FileUtil.readContents( input, m_encoding );
-                SearchResult comparison = matcher.matchPageContent( wikiname, pagetext );
-                if( comparison != null )
+                input = new FileInputStream(wikipages[i]);
+
+                String pagetext = FileUtil.readContents(input, m_encoding);
+                SearchResult comparison = matcher.matchPageContent(wikiname, pagetext);
+
+                if (comparison != null)
                 {
-                    res.add( comparison );
+                    res.add(comparison);
                 }
             }
-            catch( IOException e )
+            catch (IOException e)
             {
-                log.error( "Failed to read " + filename, e );
+                log.error("Failed to read " + filename, e);
             }
             finally
             {
@@ -336,68 +420,114 @@ public abstract class AbstractFileProvider
     }
 
     /**
-     *  Always returns the latest version, since FileSystemProvider
-     *  does not support versioning.
+     * Always returns the latest version, since FileSystemProvider does not support versioning.
+     *
+     * @param page DOCUMENT ME!
+     * @param version DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public WikiPage getPageInfo( String page, int version )
-            throws ProviderException
+    public WikiPage getPageInfo(String page, int version)
+        throws ProviderException
     {
-        File file = findPage( page );
+        File file = findPage(page);
 
-        if( !file.exists() )
+        if (!file.exists())
         {
             return null;
         }
 
-        WikiPage p = new WikiPage( page );
-        p.setLastModified( new Date(file.lastModified()) );
+        WikiPage p = new WikiPage(page);
+        p.setLastModified(new Date(file.lastModified()));
 
         return p;
     }
 
     /**
-     *  The FileSystemProvider provides only one version.
+     * The FileSystemProvider provides only one version.
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public List getVersionHistory( String page )
-            throws ProviderException
+    public List getVersionHistory(String page)
+        throws ProviderException
     {
         ArrayList list = new ArrayList();
 
-        list.add( getPageInfo( page, WikiPageProvider.LATEST_VERSION ) );
+        list.add(getPageInfo(page, WikiPageProvider.LATEST_VERSION));
 
         return list;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getProviderInfo()
     {
         return "";
     }
 
-    public void deleteVersion( String pageName, int version )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param pageName DOCUMENT ME!
+     * @param version DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public void deleteVersion(String pageName, int version)
+        throws ProviderException
     {
-        if( version == WikiProvider.LATEST_VERSION )
+        if (version == WikiProvider.LATEST_VERSION)
         {
-            File f = findPage( pageName );
+            File f = findPage(pageName);
 
             f.delete();
         }
     }
 
-    public void deletePage( String pageName )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param pageName DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public void deletePage(String pageName)
+        throws ProviderException
     {
-        File f = findPage( pageName );
+        File f = findPage(pageName);
 
         f.delete();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
     public class WikiFileFilter
-            implements FilenameFilter
+        implements FilenameFilter
     {
-        public boolean accept( File dir, String name )
+        /**
+         * DOCUMENT ME!
+         *
+         * @param dir DOCUMENT ME!
+         * @param name DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
+        public boolean accept(File dir, String name)
         {
-            return name.endsWith( FILE_EXT );
+            return name.endsWith(FILE_EXT);
         }
     }
 }

@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -41,180 +42,212 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.HttpUtil;
 
+
 /**
- *  Manages user accounts, logins/logouts, passwords, etc.
+ * Manages user accounts, logins/logouts, passwords, etc.
  *
- *  @author Janne Jalkanen
- *  @author Erik Bunn
+ * @author Janne Jalkanen
+ * @author Erik Bunn
  */
 public class UserManager
-	implements WikiProperties
+    implements WikiProperties
 {
-    static Logger log = Logger.getLogger( UserManager.class );
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(UserManager.class);
 
     /** The name the UserProfile is stored in a Session by. */
-    public static final String WIKIUSER          = "currentUser";
+    public static final String WIKIUSER = "currentUser";
 
     // FIXME: These should probably be localized.
     // FIXME: All is used as a catch-all.
-    public static final String GROUP_GUEST       = "Guest";
-    public static final String GROUP_NAMEDGUEST  = "NamedGuest";
+
+    /** DOCUMENT ME! */
+    public static final String GROUP_GUEST = "Guest";
+
+    /** DOCUMENT ME! */
+    public static final String GROUP_NAMEDGUEST = "NamedGuest";
+
+    /** DOCUMENT ME! */
     public static final String GROUP_KNOWNPERSON = "KnownPerson";
 
     /** If true, logs the IP address of the editor */
-    private boolean            m_storeIPAddress = PROP_AUTH_STOREIPADDRESS_DEFAULT;
+    private boolean m_storeIPAddress = PROP_AUTH_STOREIPADDRESS_DEFAULT;
 
-    private HashMap            m_groups = new HashMap();
+    /** DOCUMENT ME! */
+    private HashMap m_groups = new HashMap();
 
-    private WikiAuthenticator  m_authenticator;
-    private UserDatabase       m_database;
+    /** DOCUMENT ME! */
+    private WikiAuthenticator m_authenticator;
 
-    private WikiEngine         m_engine;
+    /** DOCUMENT ME! */
+    private UserDatabase m_database;
 
-    private String             m_administrator;
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
 
-    private boolean            m_useOldAuth = false;
-    
+    /** DOCUMENT ME! */
+    private String m_administrator;
+
+    /** DOCUMENT ME! */
+    private boolean m_useOldAuth = false;
+
     /**
-     *  Creates an UserManager instance for the given WikiEngine and
-     *  the specified set of properties.  All initialization for the
-     *  modules is done here.
+     * Creates an UserManager instance for the given WikiEngine and the specified set of
+     * properties.  All initialization for the modules is done here.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws WikiException DOCUMENT ME!
      */
-    public UserManager( WikiEngine engine, Configuration conf)
-            throws WikiException
+    public UserManager(WikiEngine engine, Configuration conf)
+        throws WikiException
     {
         m_engine = engine;
 
-        m_storeIPAddress = conf.getBoolean(
-                PROP_AUTH_STOREIPADDRESS, 
-                PROP_AUTH_STOREIPADDRESS_DEFAULT );
+        m_storeIPAddress =
+            conf.getBoolean(PROP_AUTH_STOREIPADDRESS, PROP_AUTH_STOREIPADDRESS_DEFAULT);
 
-        m_administrator  = conf.getString(
-                PROP_AUTH_ADMINISTRATOR,
-                PROP_AUTH_ADMINISTRATOR_DEFAULT);
+        m_administrator = conf.getString(PROP_AUTH_ADMINISTRATOR, PROP_AUTH_ADMINISTRATOR_DEFAULT);
 
         m_useOldAuth = engine.getAuthorizationManager().isOldAuth();
-        
-        if( !m_useOldAuth )
+
+        if (!m_useOldAuth)
+        {
             return;
-        
+        }
+
         WikiGroup all = new AllGroup();
-        all.setName( "All" );
-        m_groups.put( GROUP_GUEST,       new AllGroup() );
+        all.setName("All");
+        m_groups.put(GROUP_GUEST, new AllGroup());
+
         // m_groups.put( "All",             all );
-        m_groups.put( GROUP_NAMEDGUEST,  new NamedGroup() );
-        m_groups.put( GROUP_KNOWNPERSON, new KnownGroup() );
+        m_groups.put(GROUP_NAMEDGUEST, new NamedGroup());
+        m_groups.put(GROUP_KNOWNPERSON, new KnownGroup());
 
-        String authClassName = conf.getString( PROP_CLASS_AUTHENTICATOR, null);
+        String authClassName = conf.getString(PROP_CLASS_AUTHENTICATOR, null);
 
-        if( authClassName != null )
+        if (authClassName != null)
         {
             try
             {
-                Class authenticatorClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
-                        authClassName );
+                Class authenticatorClass =
+                    ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName);
 
-                m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
+                m_authenticator = (WikiAuthenticator) authenticatorClass.newInstance();
                 m_authenticator.initialize(engine, conf);
 
-                if (log.isInfoEnabled()) {
-                    log.info("Initialized "+authClassName+" for authentication.");
+                if (log.isInfoEnabled())
+                {
+                    log.info("Initialized " + authClassName + " for authentication.");
                 }
             }
-            catch( ClassNotFoundException e )
+            catch (ClassNotFoundException e)
             {
-                log.fatal( "Authenticator "+authClassName+" cannot be found", e );
+                log.fatal("Authenticator " + authClassName + " cannot be found", e);
                 throw new WikiException("Authenticator cannot be found");
             }
-            catch( InstantiationException e )
+            catch (InstantiationException e)
             {
-                log.fatal( "Authenticator "+authClassName+" cannot be created", e );
+                log.fatal("Authenticator " + authClassName + " cannot be created", e);
                 throw new WikiException("Authenticator cannot be created");
             }
-            catch( IllegalAccessException e )
+            catch (IllegalAccessException e)
             {
-                log.fatal( "You are not allowed to access this authenticator class", e );
+                log.fatal("You are not allowed to access this authenticator class", e);
                 throw new WikiException("You are not allowed to access this authenticator class");
             }
         }
 
-        String dbClassName = conf.getString(
-                PROP_CLASS_USERDATABASE,
-                PROP_CLASS_USERDATABASE_DEFAULT);
+        String dbClassName =
+            conf.getString(PROP_CLASS_USERDATABASE, PROP_CLASS_USERDATABASE_DEFAULT);
 
         try
         {
-            Class dbClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
-                    dbClassName );
-            m_database = (UserDatabase)dbClass.newInstance();
-            m_database.initialize( m_engine, conf);
+            Class dbClass = ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, dbClassName);
+            m_database = (UserDatabase) dbClass.newInstance();
+            m_database.initialize(m_engine, conf);
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
-            log.fatal( "UserDatabase "+dbClassName+" cannot be found", e );
+            log.fatal("UserDatabase " + dbClassName + " cannot be found", e);
             throw new WikiException("UserDatabase cannot be found");
         }
-        catch( InstantiationException e )
+        catch (InstantiationException e)
         {
-            log.fatal( "UserDatabase "+dbClassName+" cannot be created", e );
+            log.fatal("UserDatabase " + dbClassName + " cannot be created", e);
             throw new WikiException("UserDatabase cannot be created");
         }
-        catch( IllegalAccessException e )
+        catch (IllegalAccessException e)
         {
-            log.fatal( "You are not allowed to access this user database class", e );
+            log.fatal("You are not allowed to access this user database class", e);
             throw new WikiException("You are not allowed to access this user database class");
         }
     }
 
-
     /**
      * Convenience shortcut to UserDatabase.getUserProfile().
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public UserProfile getUserProfile( String name )
+    public UserProfile getUserProfile(String name)
     {
-        if( m_database == null ) return null;
-        WikiPrincipal up = m_database.getPrincipal( name );
-
-        if( !(up instanceof UserProfile) )
+        if (m_database == null)
         {
-            if (log.isInfoEnabled()) {
-                log.info( name + " is not a user!" );
+            return null;
+        }
+
+        WikiPrincipal up = m_database.getPrincipal(name);
+
+        if (!(up instanceof UserProfile))
+        {
+            if (log.isInfoEnabled())
+            {
+                log.info(name + " is not a user!");
             }
+
             up = null;
         }
-        
-        return( (UserProfile)up );
+
+        return ((UserProfile) up);
     }
 
     /**
      * Returns the UserDatabase employed by this UserManager.
+     *
+     * @return DOCUMENT ME!
      */
     public UserDatabase getUserDatabase()
     {
-        return( m_database );
+        return (m_database);
     }
 
     /**
      * Returns the WikiAuthenticator object employed by this UserManager.
+     *
+     * @return DOCUMENT ME!
      */
     public WikiAuthenticator getAuthenticator()
     {
-        return( m_authenticator );
+        return (m_authenticator);
     }
 
     /**
-     *  Returns true, if the user or the group represents a super user,
-     *  which should be allowed access to everything.
+     * Returns true, if the user or the group represents a super user, which should be allowed
+     * access to everything.
      *
-     *  @param p Principal to check for administrator access.
-     *  @return true, if the principal is an administrator.
+     * @param p Principal to check for administrator access.
+     *
+     * @return true, if the principal is an administrator.
      */
-    public boolean isAdministrator( WikiPrincipal p )
+    public boolean isAdministrator(WikiPrincipal p)
     {
         //
         //  Direct name matches are returned always.
         //
-        if( p.getName().equals( m_administrator ) )
+        if (p.getName().equals(m_administrator))
         {
             return true;
         }
@@ -223,48 +256,48 @@ public class UserManager
         //  Try to get the super group and check if the user is a part
         //  of it.
         //
-        WikiGroup superPrincipal = getWikiGroup( m_administrator );
+        WikiGroup superPrincipal = getWikiGroup(m_administrator);
 
-        if( superPrincipal == null )
+        if (superPrincipal == null)
         {
             // log.warn("No supergroup '"+m_administrator+"' exists; you should create one.");
-
             return false;
         }
 
-        return superPrincipal.isMember( p );
+        return superPrincipal.isMember(p);
     }
 
     /**
-     *  Returns a WikiGroup instance for a given name.  WikiGroups are cached,
-     *  so there is basically a singleton across the Wiki for a group.
-     *  The reason why this class caches them instead of the WikiGroup
-     *  class itself is that it is the business of the User Manager to
-     *  handle such issues.
+     * Returns a WikiGroup instance for a given name.  WikiGroups are cached, so there is basically
+     * a singleton across the Wiki for a group. The reason why this class caches them instead of
+     * the WikiGroup class itself is that it is the business of the User Manager to handle such
+     * issues.
      *
-     *  @param name Name of the group.  This is case-sensitive.
-     *  @return A WikiGroup instance.
+     * @param name Name of the group.  This is case-sensitive.
+     *
+     * @return A WikiGroup instance.
      */
+
     // FIXME: Someone should really check when groups cease to be used,
     //        and release groups that are not being used.
-    
     // FIXME: Error handling is still deficient.
-    public WikiGroup getWikiGroup( String name )
+    public WikiGroup getWikiGroup(String name)
     {
         WikiGroup group;
 
-        synchronized( m_groups )
+        synchronized (m_groups)
         {
-            group = (WikiGroup) m_groups.get( name );
+            group = (WikiGroup) m_groups.get(name);
 
-            if( group == null )
+            if (group == null)
             {
-                WikiPrincipal p = m_database.getPrincipal( name );
+                WikiPrincipal p = m_database.getPrincipal(name);
 
-                if( !(p instanceof WikiGroup) )
+                if (!(p instanceof WikiGroup))
                 {
-                    if (log.isInfoEnabled()) {
-                        log.info( name+" is not a group!" );
+                    if (log.isInfoEnabled())
+                    {
+                        log.info(name + " is not a group!");
                     }
                 }
                 else
@@ -278,16 +311,21 @@ public class UserManager
     }
 
     /**
-     *  Returns a list of all WikiGroups this Principal is a member
-     *  of.
+     * Returns a list of all WikiGroups this Principal is a member of.
+     *
+     * @param user DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws NoSuchPrincipalException DOCUMENT ME!
      */
+
     // FIXME: This is not a very good solution; UserProfile
     //        should really cache the information.
     // FIXME: Should really query the page manager.
-
-    public List getGroupsForPrincipal( Principal user )
-            throws NoSuchPrincipalException
-    {        
+    public List getGroupsForPrincipal(Principal user)
+        throws NoSuchPrincipalException
+    {
         List list = null;
 
         //
@@ -295,32 +333,36 @@ public class UserManager
         //
         // FIXME: This is probably the wrong place, since this prevents
         // us from querying stuff later on.
-        
-        if( user instanceof UserProfile && ((UserProfile)user).isAuthenticated() )
+        if (user instanceof UserProfile && ((UserProfile) user).isAuthenticated())
         {
-            if( m_database != null )
-                list = m_database.getGroupsForPrincipal( user );
+            if (m_database != null)
+            {
+                list = m_database.getGroupsForPrincipal(user);
+            }
         }
 
-        if( list == null ) list = new ArrayList();
+        if (list == null)
+        {
+            list = new ArrayList();
+        }
 
         //
         //  Add the default groups.
         //
-
-        synchronized( m_groups )
+        synchronized (m_groups)
         {
-            for( Iterator i = m_groups.values().iterator(); i.hasNext(); )
+            for (Iterator i = m_groups.values().iterator(); i.hasNext();)
             {
                 WikiGroup g = (WikiGroup) i.next();
 
-                if( g.isMember( user ) )
+                if (g.isMember(user))
                 {
-                    if (log.isDebugEnabled()) {
-                        log.debug("User "+user.getName()+" is a member of "+g.getName());
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("User " + user.getName() + " is a member of " + g.getName());
                     }
 
-                    list.add( g );
+                    list.add(g);
                 }
             }
         }
@@ -329,24 +371,28 @@ public class UserManager
     }
 
     /**
-     *  Attempts to find a Principal from the list of known principals.
+     * Attempts to find a Principal from the list of known principals.
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-
-    public Principal getPrincipal( String name )
+    public Principal getPrincipal(String name)
     {
-        Principal p = getWikiGroup( name );
+        Principal p = getWikiGroup(name);
 
-        if( p == null )
+        if (p == null)
         {
-            p = getUserProfile( name );
+            p = getUserProfile(name);
 
-            if( p == null )
+            if (p == null)
             {
-                if (log.isDebugEnabled()) {
-                    log.debug("No such principal defined: "+name+", using UndefinedPrincipal");
+                if (log.isDebugEnabled())
+                {
+                    log.debug("No such principal defined: " + name + ", using UndefinedPrincipal");
                 }
 
-                p = new UndefinedPrincipal( name );
+                p = new UndefinedPrincipal(name);
             }
         }
 
@@ -354,147 +400,172 @@ public class UserManager
     }
 
     /**
-     *  Attempts to perform a login for the given username/password
-     *  combination.  Also sets the attribute UserManager.WIKIUSER in the current session,
-     *  which can then be used to fetch the current UserProfile.  Or you can be lazy and
-     *  just call getUserProfile()...
+     * Attempts to perform a login for the given username/password combination.  Also sets the
+     * attribute UserManager.WIKIUSER in the current session, which can then be used to fetch the
+     * current UserProfile.  Or you can be lazy and just call getUserProfile()...
      *
-     *  @param username The user name.  This is an user name, not a WikiName.  In most cases
-     *                  they are the same, but in some cases, they might not be.
-     *  @param password The password.
-     *  @return true, if the username/password is valid.
-     *  @throws PasswordException, if password has expired
+     * @param username The user name.  This is an user name, not a WikiName.  In most cases they
+     *        are the same, but in some cases, they might not be.
+     * @param password The password.
+     * @param session DOCUMENT ME!
+     *
+     * @return true, if the username/password is valid.
+     *
+     * @throws PasswordExpiredException DOCUMENT ME!
+     * @throws PasswordExpiredException if password has expired
      */
-    public boolean login( String username, String password, HttpSession session )
-            throws WikiSecurityException
+    public boolean login(String username, String password, HttpSession session)
+        throws WikiSecurityException
     {
-        if( m_authenticator == null ) return false;
-
-        if( session == null )
+        if (m_authenticator == null)
         {
-            log.error("No session provided, cannot log in.");
             return false;
         }
 
-        UserProfile wup = getUserProfile( username );
-        if( wup != null ) 
+        if (session == null)
         {
-            wup.setPassword( password );
+            log.error("No session provided, cannot log in.");
+
+            return false;
+        }
+
+        UserProfile wup = getUserProfile(username);
+
+        if (wup != null)
+        {
+            wup.setPassword(password);
 
             boolean isValid = false;
             boolean expired = false;
 
             try
             {
-                isValid = m_authenticator.authenticate( wup );
+                isValid = m_authenticator.authenticate(wup);
             }
-            catch( PasswordExpiredException e )
+            catch (PasswordExpiredException e)
             {
                 isValid = true;
                 expired = true;
             }
 
-            if( isValid )
+            if (isValid)
             {
-                wup.setLoginStatus( UserProfile.PASSWORD );
-                session.setAttribute( WIKIUSER, wup );
+                wup.setLoginStatus(UserProfile.PASSWORD);
+                session.setAttribute(WIKIUSER, wup);
 
-                if (log.isInfoEnabled()) {
-                    log.info("Logged in user "+username);
+                if (log.isInfoEnabled())
+                {
+                    log.info("Logged in user " + username);
                 }
 
-                if( expired ) throw new PasswordExpiredException(""); //FIXME!
+                if (expired)
+                {
+                    throw new PasswordExpiredException(""); //FIXME!
+                }
             }
             else
             {
-                if (log.isInfoEnabled()) {
-                    log.info("Username "+username+" attempted to log in with the wrong password.");
+                if (log.isInfoEnabled())
+                {
+                    log.info(
+                        "Username " + username + " attempted to log in with the wrong password.");
                 }
             }
 
             return isValid;
         }
-        
+
         return false;
     }
 
     /**
-     *  Logs a web user out, clearing the session.
+     * Logs a web user out, clearing the session.
      *
-     *  @param session The current HTTP session for this user.
+     * @param session The current HTTP session for this user.
      */
-    public void logout( HttpSession session )
+    public void logout(HttpSession session)
     {
-        if( session != null )
+        if (session != null)
         {
-            UserProfile wup = (UserProfile)session.getAttribute( WIKIUSER );
-            if( wup != null )
+            UserProfile wup = (UserProfile) session.getAttribute(WIKIUSER);
+
+            if (wup != null)
             {
-                if (log.isInfoEnabled()) {
-                    log.info( "logged out user " + wup.getName() );
+                if (log.isInfoEnabled())
+                {
+                    log.info("logged out user " + wup.getName());
                 }
-                wup.setLoginStatus( UserProfile.NONE );
+
+                wup.setLoginStatus(UserProfile.NONE);
             }
+
             session.invalidate();
         }
     }
 
     /**
-     *  Gets a UserProfile, either from the request (presumably
-     *  authenticated and with auth information) or a new one
-     *  (with default permissions).
+     * Gets a UserProfile, either from the request (presumably authenticated and with auth
+     * information) or a new one (with default permissions).
      *
-     *  @param request The servlet request for this user.
-     *  @return A valid UserProfile.  Can also return null in case it is not possible
-     *          to get an UserProfile.
-     *  @since 2.1.10.
+     * @param request The servlet request for this user.
+     *
+     * @return A valid UserProfile.  Can also return null in case it is not possible to get an
+     *         UserProfile.
+     *
+     * @since 2.1.10.
      */
-    public UserProfile getUserProfile( HttpServletRequest request )
+    public UserProfile getUserProfile(HttpServletRequest request)
     {
         // First, see if we already have a user profile.
-        HttpSession session = request.getSession( true );
-        UserProfile wup = (UserProfile)session.getAttribute( UserManager.WIKIUSER );
+        HttpSession session = request.getSession(true);
+        UserProfile wup = (UserProfile) session.getAttribute(UserManager.WIKIUSER);
 
-        if( wup != null )
+        if (wup != null)
         {
             return wup;
         }
 
         // Try to get a limited login. This will be inserted into the request.
+        wup = limitedLogin(request);
 
-        wup = limitedLogin( request );
-        if( wup != null )
+        if (wup != null)
         {
             return wup;
         }
 
-        log.error( "Unable to get a default UserProfile!" );
+        log.error("Unable to get a default UserProfile!");
 
         return null;
     }
 
     /**
-     *  Performs a "limited" login: sniffs for a user name from a cookie or the
-     *  client, and creates a limited user profile based on it.
+     * Performs a "limited" login: sniffs for a user name from a cookie or the client, and creates
+     * a limited user profile based on it.
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    protected UserProfile limitedLogin( HttpServletRequest request )
+    protected UserProfile limitedLogin(HttpServletRequest request)
     {
-        UserProfile wup  = null;
-        String      role = null;
+        UserProfile wup = null;
+        String role = null;
 
         //
         //  First, checks whether container has done authentication for us.
         //
         String uid = request.getRemoteUser();
 
-        if( uid != null )
+        if (uid != null)
         {
-            wup = getUserProfile( uid );
-            if( wup != null )
+            wup = getUserProfile(uid);
+
+            if (wup != null)
             {
-                wup.setLoginStatus( UserProfile.CONTAINER );            
-                HttpSession session = request.getSession( true );
-                session.setAttribute( WIKIUSER, wup );
+                wup.setLoginStatus(UserProfile.CONTAINER);
+
+                HttpSession session = request.getSession(true);
+                session.setAttribute(WIKIUSER, wup);
             }
         }
         else
@@ -502,23 +573,25 @@ public class UserManager
             // 
             //  See if a cookie exists, and create a default account.
             //
-            uid = HttpUtil.retrieveCookieValue( request, WikiEngine.PREFS_COOKIE_NAME );
+            uid = HttpUtil.retrieveCookieValue(request, WikiEngine.PREFS_COOKIE_NAME);
 
-            if( uid != null )
+            if (uid != null)
             {
-                if (log.isDebugEnabled()) {
+                if (log.isDebugEnabled())
+                {
                     log.debug("Retrieved User from Cookie: " + uid);
                 }
 
                 try
                 {
-                    wup = UserProfile.parseStringRepresentation( uid );
-                    if( wup != null )
+                    wup = UserProfile.parseStringRepresentation(uid);
+
+                    if (wup != null)
                     {
-                        wup.setLoginStatus( UserProfile.COOKIE );
+                        wup.setLoginStatus(UserProfile.COOKIE);
                     }
                 }
-                catch( NoSuchElementException e )
+                catch (NoSuchElementException e)
                 {
                     // We fail silently, as the cookie is invalid.
                 }
@@ -527,22 +600,22 @@ public class UserManager
 
         // If the UserDatabase declined to give us a UserPrincipal, 
         // we manufacture one here explicitly. 
-        if( wup == null )
+        if (wup == null)
         {
             wup = new UserProfile();
-            wup.setLoginName( GROUP_GUEST );
-            wup.setLoginStatus( UserProfile.NONE );
+            wup.setLoginName(GROUP_GUEST);
+            wup.setLoginStatus(UserProfile.NONE);
 
             //
             //  No username either, so fall back to the IP address.
             // 
-            if( m_storeIPAddress )
+            if (m_storeIPAddress)
             {
-                wup.setName( request.getRemoteHost() );
+                wup.setName(request.getRemoteHost());
             }
             else
             {
-                wup.setName( wup.getLoginName() );
+                wup.setName(wup.getLoginName());
             }
         }
 
@@ -558,38 +631,36 @@ public class UserManager
         //  tries to access the Edit.jsp page and container does auth, he will
         //  always be then known by his IP address, regardless of what the 
         //  request.getRemoteUser() says.
-
         //  So, until this is solved, we create a new UserProfile on each
         //  access.  Ouch.
-
         // Limited login hasn't been authenticated. Just to emphasize the point: 
         // wup.setPassword( null );
-
         // HttpSession session = request.getSession( true );
         // session.setAttribute( WIKIUSER, wup );
-
         return wup;
     }
 
-
     /**
-     *  Sets the username cookie.
+     * Sets the username cookie.
      *
-     *  @since 2.1.47.
+     * @param response DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     *
+     * @since 2.1.47.
      */
-    public void setUserCookie( HttpServletResponse response, String name )
+    public void setUserCookie(HttpServletResponse response, String name)
     {
-        UserProfile profile = getUserProfile( TranslatorReader.cleanLink(name) );
+        UserProfile profile = getUserProfile(TranslatorReader.cleanLink(name));
 
         // Set cookie only if we actually have a user database configured
         if (profile != null)
         {
-            Cookie prefs = new Cookie( WikiEngine.PREFS_COOKIE_NAME, 
-                    profile.getStringRepresentation() );
+            Cookie prefs =
+                new Cookie(WikiEngine.PREFS_COOKIE_NAME, profile.getStringRepresentation());
 
-            prefs.setMaxAge( 1001*24*60*60 ); // 1001 days is default.
+            prefs.setMaxAge(1001 * 24 * 60 * 60); // 1001 days is default.
 
-            response.addCookie( prefs );
+            response.addCookie(prefs);
         }
     }
 }

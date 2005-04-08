@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,6 +20,7 @@
 package com.ecyrd.jspwiki.auth.modules;
 
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,152 +43,178 @@ import com.ecyrd.jspwiki.auth.WikiPrincipal;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
+
 /**
- * This default UserDatabase implementation provides user profiles
- * and groups to JSPWiki.
+ * This default UserDatabase implementation provides user profiles and groups to JSPWiki.
  * 
- * <p>UserProfiles are simply created upon request, and cached 
- * locally. More intricate providers might look up profiles in 
- * a remote DB, provide an unauthenticatable object for unknown
- * users, etc. 
+ * <p>
+ * UserProfiles are simply created upon request, and cached locally. More intricate providers might
+ * look up profiles in a remote DB, provide an unauthenticatable object for unknown users, etc.
+ * </p>
  * 
- * <p>The authentication of a user is done elsewhere (see
- * WikiAuthenticator); newly created profiles should have
- * login status UserProfile.NONE.
+ * <p>
+ * The authentication of a user is done elsewhere (see WikiAuthenticator); newly created profiles
+ * should have login status UserProfile.NONE.
+ * </p>
  * 
- * <p>Groups are  based on WikiPages.
- *  The name of the page determines the group name (as a convention,
- *  we suggest the name of the page ends in Group, e.g. EditorGroup).
- *  By setting attribute 'members' on the page, the named members are
- *  added to the group:
- *
+ * <p>
+ * Groups are  based on WikiPages. The name of the page determines the group name (as a convention,
+ * we suggest the name of the page ends in Group, e.g. EditorGroup). By setting attribute
+ * 'members' on the page, the named members are added to the group:
  * <pre>
  * [{SET members fee fie foe foo}]
  * </pre>
- *
- * <p>The list of members can be separated by commas or spaces.
- *
- * <p>TODO: are 'named members' supposed to be usernames, or are
- *    group names allowed? (Suggestion: both)
+ * </p>
+ * 
+ * <p>
+ * The list of members can be separated by commas or spaces.
+ * </p>
+ * 
+ * <p>
+ * TODO: are 'named members' supposed to be usernames, or are group names allowed? (Suggestion:
+ * both)
+ * </p>
  */
 public class WikiDatabase
-        implements UserDatabase
+    implements UserDatabase
 {
-    private WikiEngine m_engine;
-
-    static Logger log = Logger.getLogger( WikiDatabase.class );
-
-    private HashMap m_groupPrincipals = new HashMap();
-    private HashMap m_userPrincipals = new HashMap();
+    /** DOCUMENT ME! */
+    static Logger log = Logger.getLogger(WikiDatabase.class);
 
     /**
-     * The attribute to set on a page - [{SET members ...}] - to define 
-     * members of the group named by that page. 
+     * The attribute to set on a page - [{SET members ...}] - to define members of the group named
+     * by that page.
      */
     public static final String ATTR_MEMBERLIST = "members";
 
-    public void initialize( WikiEngine engine, Configuration conf)
+    /** DOCUMENT ME! */
+    private WikiEngine m_engine;
+
+    /** DOCUMENT ME! */
+    private HashMap m_groupPrincipals = new HashMap();
+
+    /** DOCUMENT ME! */
+    private HashMap m_userPrincipals = new HashMap();
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     */
+    public void initialize(WikiEngine engine, Configuration conf)
     {
         m_engine = engine;
 
-        m_engine.getFilterManager().addPageFilter( new SaveFilter(), 1000000 );
+        m_engine.getFilterManager().addPageFilter(new SaveFilter(), 1000000);
 
         initUserDatabase();
     }
 
     // This class must contain a large cache for user databases.
-
     // FIXME: Needs to cache this somehow; this is far too slow!
-
-    public List getGroupsForPrincipal( Principal p )
-            throws NoSuchPrincipalException
-    {        
+    public List getGroupsForPrincipal(Principal p)
+        throws NoSuchPrincipalException
+    {
         List memberList = new ArrayList();
 
-        if (log.isDebugEnabled()) {
-            log.debug("Finding groups for "+p.getName());
+        if (log.isDebugEnabled())
+        {
+            log.debug("Finding groups for " + p.getName());
         }
 
-        for( Iterator i = m_groupPrincipals.values().iterator(); i.hasNext(); )
+        for (Iterator i = m_groupPrincipals.values().iterator(); i.hasNext();)
         {
             Object o = i.next();
 
-            if( o instanceof WikiGroup )
+            if (o instanceof WikiGroup)
             {
-                if (log.isDebugEnabled()) {
-                    log.debug("  Checking group: "+o);
+                if (log.isDebugEnabled())
+                {
+                    log.debug("  Checking group: " + o);
                 }
 
-                if( ((WikiGroup)o).isMember( p ) )
+                if (((WikiGroup) o).isMember(p))
                 {
-                    if (log.isDebugEnabled()) {
+                    if (log.isDebugEnabled())
+                    {
                         log.debug("     Is member");
                     }
 
-                    memberList.add( o );
+                    memberList.add(o);
                 }
             }
             else
             {
-                if (log.isDebugEnabled()) {
-                    log.debug("  Found strange object: "+o.getClass());
+                if (log.isDebugEnabled())
+                {
+                    log.debug("  Found strange object: " + o.getClass());
                 }
             }
         }
-        
+
         return memberList;
     }
 
     /**
-     *  List contains a bunch of Strings to denote members of this group.
+     * List contains a bunch of Strings to denote members of this group.
+     *
+     * @param groupName DOCUMENT ME!
+     * @param memberList DOCUMENT ME!
      */
-    protected void updateGroup( String groupName, List memberList )
+    protected void updateGroup(String groupName, List memberList)
     {
-        WikiGroup group = (WikiGroup)m_groupPrincipals.get( groupName );
+        WikiGroup group = (WikiGroup) m_groupPrincipals.get(groupName);
 
-        if( group == null && memberList == null )
+        if ((group == null) && (memberList == null))
         {
             return;
         }
-     
-        if( group == null && memberList != null )
+
+        if ((group == null) && (memberList != null))
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Adding new group: "+groupName);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Adding new group: " + groupName);
             }
 
             group = new WikiGroup();
-            group.setName( groupName );
+            group.setName(groupName);
         }
 
-        if( group != null && memberList == null )
+        if ((group != null) && (memberList == null))
         {
-            if (log.isDebugEnabled()) {
-                log.debug("Detected removed group: "+groupName);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Detected removed group: " + groupName);
             }
 
-            m_groupPrincipals.remove( groupName );
+            m_groupPrincipals.remove(groupName);
 
             return;
         }
-        
-        for( Iterator j = memberList.iterator(); j.hasNext(); )
+
+        for (Iterator j = memberList.iterator(); j.hasNext();)
         {
-            Principal udp = new UndefinedPrincipal( (String)j.next() );
-            
-            group.addMember( udp );
-            
-            if (log.isDebugEnabled()) {
-                log.debug("** Added member: "+udp.getName());
+            Principal udp = new UndefinedPrincipal((String) j.next());
+
+            group.addMember(udp);
+
+            if (log.isDebugEnabled())
+            {
+                log.debug("** Added member: " + udp.getName());
             }
         }
 
-        m_groupPrincipals.put( groupName, group );
+        m_groupPrincipals.put(groupName, group);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     protected void initUserDatabase()
     {
-        log.info( "Initializing user database group information from wiki pages..." );
+        log.info("Initializing user database group information from wiki pages...");
 
         try
         {
@@ -195,160 +222,208 @@ public class WikiDatabase
 
             m_groupPrincipals.clear();
 
-            for( Iterator i = allPages.iterator(); i.hasNext(); )
+            for (Iterator i = allPages.iterator(); i.hasNext();)
             {
                 WikiPage p = (WikiPage) i.next();
 
                 // lazy loading of pages with PageAuthorizer not possible, 
                 // because the authentication information must be 
                 // present on wiki initialization
+                List memberList = parseMemberList((String) p.getAttribute(ATTR_MEMBERLIST));
 
-                List memberList = parseMemberList( (String)p.getAttribute(ATTR_MEMBERLIST) );
-
-                if( memberList != null )
+                if (memberList != null)
                 {
-                    updateGroup( p.getName(), memberList );
+                    updateGroup(p.getName(), memberList);
                 }
             }
         }
-        catch( ProviderException e )
+        catch (ProviderException e)
         {
-            log.fatal("Cannot start database",e );
+            log.fatal("Cannot start database", e);
         }
-
-        
     }
-
 
     /**
      * Stores a UserProfile with expiry information.
+     *
+     * @param name DOCUMENT ME!
+     * @param p DOCUMENT ME!
      */
-    private void storeUserProfile( String name, UserProfile p )
+    private void storeUserProfile(String name, UserProfile p)
     {
-        m_userPrincipals.put( name, new TimeStampWrapper( p, 24*3600*1000 ) );
+        m_userPrincipals.put(name, new TimeStampWrapper(p, 24 * 3600 * 1000));
     }
-    
+
     /**
      * Returns a stored UserProfile, taking expiry into account.
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    private UserProfile getUserProfile( String name )
+    private UserProfile getUserProfile(String name)
     {
-        TimeStampWrapper w = (TimeStampWrapper)m_userPrincipals.get( name );
-        if( w != null && w.expires() < System.currentTimeMillis() )
+        TimeStampWrapper w = (TimeStampWrapper) m_userPrincipals.get(name);
+
+        if ((w != null) && (w.expires() < System.currentTimeMillis()))
         {
             w = null;
-            m_userPrincipals.remove( name );
+            m_userPrincipals.remove(name);
         }
-        if( w != null )
+
+        if (w != null)
         {
-            return( (UserProfile)w.getContent() );
+            return ((UserProfile) w.getContent());
         }
-        return( null );
+
+        return (null);
     }
 
-
     /**
-     * Returns a principal; UserPrincipal storage is scanned
-     * first, then WikiGroup storage. If neither contains the
-     * requested principal, a new (empty) UserPrincipal is
-     * returned.
+     * Returns a principal; UserPrincipal storage is scanned first, then WikiGroup storage. If
+     * neither contains the requested principal, a new (empty) UserPrincipal is returned.
+     *
+     * @param name DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public WikiPrincipal getPrincipal( String name )
+    public WikiPrincipal getPrincipal(String name)
     {
         // FIX: requests for non-existent users can now override groups.
-        WikiPrincipal rval = (WikiPrincipal)getUserProfile( name );
-        if( rval == null )
+        WikiPrincipal rval = (WikiPrincipal) getUserProfile(name);
+
+        if (rval == null)
         {
-            rval = (WikiPrincipal) m_groupPrincipals.get( name );
+            rval = (WikiPrincipal) m_groupPrincipals.get(name);
         }
-        if( rval == null )
+
+        if (rval == null)
         {
             rval = new UserProfile();
-            rval.setName( name );
+            rval.setName(name);
+
             // Store, to reduce creation overhead. Expire in one day.
-            storeUserProfile( name, (UserProfile)rval );
+            storeUserProfile(name, (UserProfile) rval);
         }
-         
-        return( rval ); 
+
+        return (rval);
     }
-    
+
     /**
-     *  Parses through the member list of a page.
+     * Parses through the member list of a page.
+     *
+     * @param memberLine DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-
-    private List parseMemberList( String memberLine )
+    private List parseMemberList(String memberLine)
     {
-        if( memberLine == null ) return null;
-
-        if (log.isDebugEnabled()) {
-            log.debug("Parsing member list: "+memberLine);
+        if (memberLine == null)
+        {
+            return null;
         }
 
-        StringTokenizer tok = new StringTokenizer( memberLine, ", " );
+        if (log.isDebugEnabled())
+        {
+            log.debug("Parsing member list: " + memberLine);
+        }
+
+        StringTokenizer tok = new StringTokenizer(memberLine, ", ");
 
         ArrayList members = new ArrayList();
 
-        while( tok.hasMoreTokens() )
+        while (tok.hasMoreTokens())
         {
             String uid = tok.nextToken();
 
-            if (log.isDebugEnabled()) {
-                log.debug("  Adding member: "+uid);
+            if (log.isDebugEnabled())
+            {
+                log.debug("  Adding member: " + uid);
             }
 
-            members.add( uid );
+            members.add(uid);
         }
-            
+
         return members;
     }
 
-
     /**
-     *  This special filter class is used to refresh the database
-     *  after a page has been changed.
+     * This special filter class is used to refresh the database after a page has been changed.
      */
-    
+
     // FIXME: JSPWiki should really take care of itself that any metadata
     //        relevant to a page is refreshed.
     public class SaveFilter
-            extends BasicPageFilter
+        extends BasicPageFilter
     {
-        public void postSave( WikiContext context, String content )
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param content DOCUMENT ME!
+         */
+        public void postSave(WikiContext context, String content)
         {
             WikiPage p = context.getPage();
 
-            if (log.isDebugEnabled()) {
-                log.debug("Skimming through page "+p.getName()+" to see if there are new users...");
+            if (log.isDebugEnabled())
+            {
+                log.debug(
+                    "Skimming through page " + p.getName() + " to see if there are new users...");
             }
 
-            m_engine.textToHTML( context, content );
+            m_engine.textToHTML(context, content);
 
-            String members = (String) p.getAttribute(ATTR_MEMBERLIST);            
+            String members = (String) p.getAttribute(ATTR_MEMBERLIST);
 
-            updateGroup( p.getName(), parseMemberList( members ) );
+            updateGroup(p.getName(), parseMemberList(members));
         }
     }
 
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
     public class TimeStampWrapper
     {
+        /** DOCUMENT ME! */
         private Object contained = null;
+
+        /** DOCUMENT ME! */
         private long expirationTime = -1;
-        
-        public TimeStampWrapper( Object item, long expiresIn )
+
+        /**
+         * Creates a new TimeStampWrapper object.
+         *
+         * @param item DOCUMENT ME!
+         * @param expiresIn DOCUMENT ME!
+         */
+        public TimeStampWrapper(Object item, long expiresIn)
         {
             contained = item;
             expirationTime = System.currentTimeMillis() + expiresIn;
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public Object getContent()
         {
-            return( contained );
+            return (contained);
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public long expires()
         {
-            return( expirationTime );
+            return (expirationTime);
         }
     }
 }

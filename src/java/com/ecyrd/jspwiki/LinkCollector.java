@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -22,27 +22,40 @@ package com.ecyrd.jspwiki;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 /**
- *  Just a simple class collecting all of the links
- *  that come in.
+ * Just a simple class collecting all of the links that come in.
  *
- *  @author Janne Jalkanen
+ * @author Janne Jalkanen
  */
 public class LinkCollector
     implements StringTransmutator
 {
+    /** DOCUMENT ME! */
     private ArrayList m_items = new ArrayList();
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public Collection getLinks()
     {
         return m_items;
     }
 
-    public String mutate( WikiContext context, String in )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param in DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String mutate(WikiContext context, String in)
     {
-        m_items.add( in );
+        m_items.add(in);
 
         return in;
     }
 }
-

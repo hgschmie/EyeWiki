@@ -1,4 +1,4 @@
-/* 
+/*
    JSPWiki - a JSP-based WikiWiki clone.
 
    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -38,182 +39,248 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.util.ClassUtil;
+
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 
+
 /**
- *  Provides a caching attachment provider.  This class rests on top of a
- *  real provider class and provides a cache to speed things up.  Only the
- *  Attachment objects are cached; the actual attachment contents are 
- *  fetched always from the provider.
+ * Provides a caching attachment provider.  This class rests on top of a real provider class and
+ * provides a cache to speed things up.  Only the Attachment objects are cached; the actual
+ * attachment contents are fetched always from the provider.
  *
- *  @author Janne Jalkanen
- *  @since 2.1.64.
+ * @author Janne Jalkanen
+ *
+ * @since 2.1.64.
  */
 
 // FIXME: Do we need to clear the cache entry if we get an NRE and the attachment is not there?
 // FIXME: We probably clear the cache a bit too aggressively in places.
 // FIXME: Does not yet react well to external cache changes.  Should really use custom
 //        EntryRefreshPolicy for that.
-
 public class CachingAttachmentProvider
-        implements WikiAttachmentProvider
+    implements WikiAttachmentProvider
 {
+    /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(CachingAttachmentProvider.class);
 
+    /** DOCUMENT ME! */
     private WikiAttachmentProvider m_provider;
 
     /**
-     *  The cache contains Collection objects which contain Attachment objects.
-     *  The key is the parent wiki page name (String).
+     * The cache contains Collection objects which contain Attachment objects. The key is the
+     * parent wiki page name (String).
      */
     private Cache m_cache;
 
+    /** DOCUMENT ME! */
     private long m_cacheMisses = 0;
-    private long m_cacheHits   = 0;
 
+    /** DOCUMENT ME! */
+    private long m_cacheHits = 0;
+
+    /** DOCUMENT ME! */
     private boolean m_gotall = false;
 
     // FIXME: Make settable.
-    private int  m_refreshPeriod = 60*10; // 10 minutes at the moment
 
-    public void initialize( WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException,
-                   IOException
+    /** DOCUMENT ME! */
+    private int m_refreshPeriod = 60 * 10; // 10 minutes at the moment
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     * @throws IllegalArgumentException DOCUMENT ME!
+     */
+    public void initialize(WikiEngine engine, Configuration conf)
+        throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingAttachmentProvider");
 
         //
         //  Construct an unlimited cache.
         //
-        m_cache = new Cache( true, false, false );
+        m_cache = new Cache(true, false, false);
 
         //
         //  Find and initialize real provider.
         //
         String classname = conf.getString(WikiProperties.PROP_CLASS_ATTACHMENTPROVIDER);
-        
+
         try
-        {            
-            Class providerclass = ClassUtil.findClass( WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX,
-                    classname );
+        {
+            Class providerclass =
+                ClassUtil.findClass(WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX, classname);
 
-            m_provider = (WikiAttachmentProvider)providerclass.newInstance();
+            m_provider = (WikiAttachmentProvider) providerclass.newInstance();
 
-            if (log.isDebugEnabled()) {
-                log.debug("Initializing real provider class "+m_provider);
+            if (log.isDebugEnabled())
+            {
+                log.debug("Initializing real provider class " + m_provider);
             }
 
-            m_provider.initialize( engine, conf );
+            m_provider.initialize(engine, conf);
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
-            log.error("Unable to locate provider class "+classname,e);
+            log.error("Unable to locate provider class " + classname, e);
             throw new IllegalArgumentException("no provider class");
         }
-        catch( InstantiationException e )
+        catch (InstantiationException e)
         {
-            log.error("Unable to create provider class "+classname,e);
+            log.error("Unable to create provider class " + classname, e);
             throw new IllegalArgumentException("faulty provider class");
         }
-        catch( IllegalAccessException e )
+        catch (IllegalAccessException e)
         {
-            log.error("Illegal access to provider class "+classname,e);
+            log.error("Illegal access to provider class " + classname, e);
             throw new IllegalArgumentException("illegal provider class");
         }
-
     }
 
-    public void putAttachmentData( Attachment att, InputStream data )
-            throws ProviderException,
-                   IOException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param att DOCUMENT ME!
+     * @param data DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
+    public void putAttachmentData(Attachment att, InputStream data)
+        throws ProviderException, IOException
     {
         // FIXME: Probably not wise.
-
-        m_cache.flushEntry( att.getParentName() );
-        m_provider.putAttachmentData( att, data );
+        m_cache.flushEntry(att.getParentName());
+        m_provider.putAttachmentData(att, data);
     }
 
-    public InputStream getAttachmentData( Attachment att )
-            throws ProviderException,
-                   IOException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
+    public InputStream getAttachmentData(Attachment att)
+        throws ProviderException, IOException
     {
-        return m_provider.getAttachmentData( att );
+        return m_provider.getAttachmentData(att);
     }
 
-    public Collection listAttachments( WikiPage page )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public Collection listAttachments(WikiPage page)
+        throws ProviderException
     {
-        if (log.isDebugEnabled()) {
-            log.debug("Listing attachments for "+page);
+        if (log.isDebugEnabled())
+        {
+            log.debug("Listing attachments for " + page);
         }
 
         try
         {
-            Collection c = (Collection)m_cache.getFromCache( page.getName(), m_refreshPeriod );
+            Collection c = (Collection) m_cache.getFromCache(page.getName(), m_refreshPeriod);
 
-            if( c != null )
+            if (c != null)
             {
-                if (log.isDebugEnabled()) {
-                    log.debug("LIST from cache, "+page.getName()+", size="+c.size());
+                if (log.isDebugEnabled())
+                {
+                    log.debug("LIST from cache, " + page.getName() + ", size=" + c.size());
                 }
 
                 m_cacheHits++;
+
                 return c;
             }
 
-            if (log.isDebugEnabled()) {
-                log.debug("list NOT in cache, "+page.getName());
+            if (log.isDebugEnabled())
+            {
+                log.debug("list NOT in cache, " + page.getName());
             }
 
-            c = refresh( page );
+            c = refresh(page);
         }
-        catch( NeedsRefreshException nre )
+        catch (NeedsRefreshException nre)
         {
             try
             {
-                Collection c = refresh( page );
+                Collection c = refresh(page);
 
                 return c;
             }
-            catch( ProviderException ex )
+            catch (ProviderException ex)
             {
                 // Make sure to avoid possible deadlock with locked cache entry
                 m_cache.cancelUpdate(page.getName());
 
                 log.warn("Provider failed, returning cached content");
-                return (Collection)nre.getCacheContent();
+
+                return (Collection) nre.getCacheContent();
             }
         }
 
         return new ArrayList();
     }
 
-    public Collection findAttachments( QueryItem[] query )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param query DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Collection findAttachments(QueryItem [] query)
     {
-        return m_provider.findAttachments( query );
-    }
-
-    public List listAllChanged( Date timestamp )
-            throws ProviderException
-    {
-        // FIXME: Should cache
-        return m_provider.listAllChanged( timestamp );
+        return m_provider.findAttachments(query);
     }
 
     /**
-     *  Simply goes through the collection and attempts to locate the
-     *  given attachment of that name.
+     * DOCUMENT ME!
      *
-     *  @return null, if no such attachment was in this collection.
+     * @param timestamp DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    private Attachment findAttachmentFromCollection( Collection c, String name )
+    public List listAllChanged(Date timestamp)
+        throws ProviderException
     {
-        for( Iterator i = c.iterator(); i.hasNext(); )
+        // FIXME: Should cache
+        return m_provider.listAllChanged(timestamp);
+    }
+
+    /**
+     * Simply goes through the collection and attempts to locate the given attachment of that name.
+     *
+     * @param c DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     *
+     * @return null, if no such attachment was in this collection.
+     */
+    private Attachment findAttachmentFromCollection(Collection c, String name)
+    {
+        for (Iterator i = c.iterator(); i.hasNext();)
         {
             Attachment att = (Attachment) i.next();
 
-            if( name.equals( att.getFileName() ) )
+            if (name.equals(att.getFileName()))
             {
                 return att;
             }
@@ -223,123 +290,167 @@ public class CachingAttachmentProvider
     }
 
     /**
-     *  Refreshes the cache content and updates counters.
+     * Refreshes the cache content and updates counters.
      *
-     *  @return The newly fetched object from the provider.
+     * @param page DOCUMENT ME!
+     *
+     * @return The newly fetched object from the provider.
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    private final Collection refresh( WikiPage page )
-            throws ProviderException
+    private final Collection refresh(WikiPage page)
+        throws ProviderException
     {
         m_cacheMisses++;
-        Collection c = m_provider.listAttachments( page );
-        m_cache.putInCache( page.getName(), c );
+
+        Collection c = m_provider.listAttachments(page);
+        m_cache.putInCache(page.getName(), c);
 
         return c;
     }
 
-    public Attachment getAttachmentInfo( WikiPage page, String name, int version )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     * @param version DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public Attachment getAttachmentInfo(WikiPage page, String name, int version)
+        throws ProviderException
     {
-        if (log.isDebugEnabled()) {
-            log.debug("Getting attachments for "+page+", name="+name+", version="+version);
+        if (log.isDebugEnabled())
+        {
+            log.debug(
+                "Getting attachments for " + page + ", name=" + name + ", version=" + version);
         }
 
         //
         //  We don't cache previous versions
         //
-        if( version != WikiProvider.LATEST_VERSION )
-        {       
-            if (log.isDebugEnabled()) {
+        if (version != WikiProvider.LATEST_VERSION)
+        {
+            if (log.isDebugEnabled())
+            {
                 log.debug("...we don't cache old versions");
             }
 
-            return m_provider.getAttachmentInfo( page, name, version );
+            return m_provider.getAttachmentInfo(page, name, version);
         }
 
         try
         {
-            Collection c = (Collection)m_cache.getFromCache( page.getName(), m_refreshPeriod );
-            
-            if( c == null )
+            Collection c = (Collection) m_cache.getFromCache(page.getName(), m_refreshPeriod);
+
+            if (c == null)
             {
-                if (log.isDebugEnabled()) {
+                if (log.isDebugEnabled())
+                {
                     log.debug("...wasn't in the cache");
                 }
 
-                c = refresh( page );
+                c = refresh(page);
 
-                if( c == null ) return null; // No such attachment
+                if (c == null)
+                {
+                    return null; // No such attachment
+                }
             }
             else
             {
-                if (log.isDebugEnabled()) {
+                if (log.isDebugEnabled())
+                {
                     log.debug("...FOUND in the cache");
                 }
+
                 m_cacheHits++;
             }
 
-            return findAttachmentFromCollection( c, name );
-
+            return findAttachmentFromCollection(c, name);
         }
-        catch( NeedsRefreshException nre )
+        catch (NeedsRefreshException nre)
         {
             log.debug("...needs refresh");
+
             Collection c = null;
 
             try
             {
-                c = refresh( page );
+                c = refresh(page);
             }
-            catch( ProviderException ex )
+            catch (ProviderException ex)
             {
                 // Make sure to avoid possible deadlock with locked cache entry
                 m_cache.cancelUpdate(page.getName());
 
                 log.warn("Provider failed, returning cached content");
 
-                c = (Collection)nre.getCacheContent();
+                c = (Collection) nre.getCacheContent();
             }
 
-            if( c != null )
+            if (c != null)
             {
-                return findAttachmentFromCollection( c, name );
+                return findAttachmentFromCollection(c, name);
             }
         }
 
         return null;
     }
 
-            
+    /**
+     * Returns version history.  Each element should be an Attachment.
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public List getVersionHistory(Attachment att)
+    {
+        return m_provider.getVersionHistory(att);
+    }
 
     /**
-     *  Returns version history.  Each element should be
-     *  an Attachment.
+     * DOCUMENT ME!
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
      */
-    public List getVersionHistory( Attachment att )
+    public void deleteVersion(Attachment att)
+        throws ProviderException
     {
-        return m_provider.getVersionHistory( att );
+        m_cache.flushEntry(att.getParentName());
+        m_provider.deleteVersion(att);
     }
 
-    public void deleteVersion( Attachment att )
-            throws ProviderException
+    /**
+     * DOCUMENT ME!
+     *
+     * @param att DOCUMENT ME!
+     *
+     * @throws ProviderException DOCUMENT ME!
+     */
+    public void deleteAttachment(Attachment att)
+        throws ProviderException
     {
-        m_cache.flushEntry( att.getParentName() );
-        m_provider.deleteVersion( att );
+        m_cache.flushEntry(att.getParentName());
+        m_provider.deleteAttachment(att);
     }
 
-    public void deleteAttachment( Attachment att )
-            throws ProviderException
-    {
-        m_cache.flushEntry( att.getParentName() );
-        m_provider.deleteAttachment( att );
-    }
-
-
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public synchronized String getProviderInfo()
-    {              
+    {
         int cachedPages = 0;
-        long totalSize  = 0;
-        
+        long totalSize = 0;
+
         /*
           for( Iterator i = m_cache.values().iterator(); i.hasNext(); )
           {
@@ -355,11 +466,15 @@ public class CachingAttachmentProvider
 
           totalSize = (totalSize+512)/1024L;
         */
-        return("Real provider: "+m_provider.getClass().getName()+
-                "<br />Cache misses: "+m_cacheMisses+
-                "<br />Cache hits: "+m_cacheHits);
+        return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
+        + m_cacheMisses + "<br />Cache hits: " + m_cacheHits);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public WikiAttachmentProvider getRealProvider()
     {
         return m_provider;

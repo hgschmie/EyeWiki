@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -20,12 +20,15 @@
 package com.ecyrd.jspwiki;
 
 /**
- *  Provides a listener interface for headings
+ * Provides a listener interface for headings
  */
 public interface HeadingListener
 {
     /**
-     *  Is called whenever a heading is encountered in the stream.
+     * Is called whenever a heading is encountered in the stream.
+     *
+     * @param context DOCUMENT ME!
+     * @param hd DOCUMENT ME!
      */
-    public void headingAdded( WikiContext context, TranslatorReader.Heading hd );
+    public void headingAdded(WikiContext context, TranslatorReader.Heading hd);
 }

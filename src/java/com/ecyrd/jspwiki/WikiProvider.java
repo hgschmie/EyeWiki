@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -23,34 +23,37 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
 
+
 /**
- *  A generic Wiki provider for all sorts of things that the Wiki can
- *  store.
+ * A generic Wiki provider for all sorts of things that the Wiki can store.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public interface WikiProvider
 {
-    /**
-     *  Passing this to any method should get the latest version
-     */
+    /** Passing this to any method should get the latest version */
     public static final int LATEST_VERSION = -1;
 
     /**
-     *  Initializes the page provider.
+     * Initializes the page provider.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
      */
-    public void initialize( WikiEngine engine, Configuration conf) 
-        throws NoRequiredPropertyException,
-               IOException;
+    public void initialize(WikiEngine engine, Configuration conf)
+        throws NoRequiredPropertyException, IOException;
 
     /**
-     *  Return a valid HTML string for information.  May
-     *  be anything.
-     *  @since 1.6.4
+     * Return a valid HTML string for information.  May be anything.
+     *
+     * @return DOCUMENT ME!
+     *
+     * @since 1.6.4
      */
-
     public String getProviderInfo();
 }
-
-

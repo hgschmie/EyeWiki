@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -19,14 +19,15 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import java.io.IOException;
-
-import javax.servlet.jsp.JspWriter;
-
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
+
+import java.io.IOException;
+
+import javax.servlet.jsp.JspWriter;
+
 
 /**
  *  Writes a link to a Wiki page.  Body of the link becomes the actual text.
@@ -42,40 +43,30 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  *  @author Janne Jalkanen
  *  @since 2.0
  */
-public class LinkToTag
-    extends WikiLinkTag
-{
+public class LinkToTag extends WikiLinkTag {
     private String m_version = null;
 
-    public String getVersion()
-    {
+    public String getVersion() {
         return m_version;
     }
 
-    public void setVersion( String arg )
-    {
+    public void setVersion(String arg) {
         m_version = arg;
     }
 
-    public int doWikiStartTag()
-        throws IOException
-    {
-        WikiEngine engine   = m_wikiContext.getEngine();
-        String     pageName = m_pageName;
-        boolean    isattachment = false;
+    public int doWikiStartTag() throws IOException {
+        WikiEngine engine = m_wikiContext.getEngine();
+        String pageName = m_pageName;
+        boolean isattachment = false;
 
-        if( m_pageName == null )
-        {
+        if (m_pageName == null) {
             WikiPage p = m_wikiContext.getPage();
 
-            if( p != null )
-            {
+            if (p != null) {
                 pageName = p.getName();
 
                 isattachment = (p instanceof Attachment);
-            }
-            else
-            {
+            } else {
                 return SKIP_BODY;
             }
         }
@@ -84,34 +75,39 @@ public class LinkToTag
         String url;
         String linkclass;
 
-        if( isattachment )
-        {
-            url = m_wikiContext.getURL(WikiContext.ATTACH,pageName,
-                                       (getVersion() != null) ? "version="+getVersion() : null );
+        if (isattachment) {
+            url = m_wikiContext.getURL(WikiContext.ATTACH, pageName,
+                    (getVersion() != null) ? ("version=" + getVersion()) : null);
             linkclass = "attachment";
-        }
-        else
-        {
+        } else {
             StringBuffer params = new StringBuffer();
-            if( getVersion() != null ) params.append( "version="+getVersion() );
-            if( getTemplate() != null ) params.append( (params.length()>0?"&amp;":"") + "skin="+getTemplate() );
 
-            url = m_wikiContext.getURL( WikiContext.VIEW, pageName,
-                                        params.toString() );
+            if (getVersion() != null) {
+                params.append("version=" + getVersion());
+            }
+
+            if (getTemplate() != null) {
+                params.append(((params.length() > 0) ? "&amp;" : "") + "skin=" +
+                    getTemplate());
+            }
+
+            url = m_wikiContext.getURL(WikiContext.VIEW, pageName,
+                    params.toString());
             linkclass = "wikipage";
         }
 
-        switch( m_format )
-        {
-          case ANCHOR:
-            out.print("<a class=\""+linkclass+"\" href=\""+url+"\">");
+        switch (m_format) {
+        case ANCHOR:
+            out.print("<a class=\"" + linkclass + "\" href=\"" + url + "\">");
+
             break;
-          case URL:
-            out.print( url );
+
+        case URL:
+            out.print(url);
+
             break;
         }
 
         return EVAL_BODY_INCLUDE;
     }
-
 }

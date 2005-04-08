@@ -1,4 +1,4 @@
-/* 
+/*
     JSPWiki - a JSP-based WikiWiki clone.
 
     Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
@@ -25,27 +25,47 @@ import javax.servlet.jsp.JspWriter;
 
 import com.ecyrd.jspwiki.WikiEngine;
 
+
 /**
- *  Writes an image link to the RSS file.
+ * Writes an image link to the RSS file.
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @author Janne Jalkanen
+ *
+ * @since 2.0
  */
 public class RSSImageLinkTag
     extends WikiTagBase
 {
+    /** DOCUMENT ME! */
     protected String m_title;
 
-    public void setTitle( String title )
+    /**
+     * DOCUMENT ME!
+     *
+     * @param title DOCUMENT ME!
+     */
+    public void setTitle(String title)
     {
         m_title = title;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getTitle()
     {
         return m_title;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public final int doWikiStartTag()
         throws IOException
     {
@@ -53,12 +73,12 @@ public class RSSImageLinkTag
 
         String rssURL = engine.getGlobalRSSURL();
 
-        if( rssURL != null )
+        if (rssURL != null)
         {
             JspWriter out = pageContext.getOut();
-            out.print("<a href=\""+rssURL+"\">");
-            out.print("<img src=\""+engine.getBaseURL()+"images/xml.png\"");
-            out.print(" alt=\"[RSS]\" border=\"0\" title=\""+getTitle()+"\"/>");
+            out.print("<a href=\"" + rssURL + "\">");
+            out.print("<img src=\"" + engine.getBaseURL() + "images/xml.png\"");
+            out.print(" alt=\"[RSS]\" border=\"0\" title=\"" + getTitle() + "\"/>");
             out.print("</a>");
         }
 
