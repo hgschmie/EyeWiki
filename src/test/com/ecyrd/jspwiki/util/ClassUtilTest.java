@@ -1,49 +1,68 @@
-
 package com.ecyrd.jspwiki.util;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class ClassUtilTest extends TestCase
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
+public class ClassUtilTest
+        extends TestCase
 {
-    public ClassUtilTest( String s )
+    /**
+     * Creates a new ClassUtilTest object.
+     *
+     * @param s DOCUMENT ME!
+     */
+    public ClassUtilTest(String s)
     {
-        super( s );
+        super(s);
     }
 
     /**
-     *  Tries to find an existing class.
+     * Tries to find an existing class.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testFindClass()
-        throws Exception
+            throws Exception
     {
-        Class foo = ClassUtil.findClass( "com.ecyrd.jspwiki", "WikiPage" );
+        Class foo = ClassUtil.findClass("com.ecyrd.jspwiki", "WikiPage");
 
-        assertEquals( foo.getName(), "com.ecyrd.jspwiki.WikiPage" );
+        assertEquals(foo.getName(), "com.ecyrd.jspwiki.WikiPage");
     }
 
     /**
-     *  Non-existant classes should throw ClassNotFoundEx.
+     * Non-existant classes should throw ClassNotFoundEx.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testFindClassNoClass()
-        throws Exception
+            throws Exception
     {
         try
         {
-            Class foo = ClassUtil.findClass( "com.ecyrd.jspwiki", "MubbleBubble" );
+            Class foo = ClassUtil.findClass("com.ecyrd.jspwiki", "MubbleBubble");
             fail("Found class");
         }
-        catch( ClassNotFoundException e )
+        catch (ClassNotFoundException e)
         {
             // Expected
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public static Test suite()
     {
-        return new TestSuite( ClassUtilTest.class );
+        return new TestSuite(ClassUtilTest.class);
     }
 }
-
-

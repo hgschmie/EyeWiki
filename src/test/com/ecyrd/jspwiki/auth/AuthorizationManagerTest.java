@@ -1,13 +1,9 @@
-
 package com.ecyrd.jspwiki.auth;
 
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
-import java.util.Enumeration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Enumeration;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
@@ -21,30 +17,53 @@ import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.UploadPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+
 /**
- *  Tests the AuthorizationManager class.
- *  @author Janne Jalkanen
+ * Tests the AuthorizationManager class.
+ *
+ * @author Janne Jalkanen
  */
-public class AuthorizationManagerTest extends TestCase
+public class AuthorizationManagerTest
+        extends TestCase
 {
+    /** DOCUMENT ME! */
     private AuthorizationManager m_manager;
+
+    /** DOCUMENT ME! */
     private TestEngine m_engine;
 
-    public AuthorizationManagerTest( String s )
+    /**
+     * Creates a new AuthorizationManagerTest object.
+     *
+     * @param s DOCUMENT ME!
+     */
+    public AuthorizationManagerTest(String s)
     {
-        super( s );
+        super(s);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void setUp()
-        throws Exception
+            throws Exception
     {
         PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load( TestEngine.findTestProperties() );
-        
+        conf.load(TestEngine.findTestProperties());
+
         m_engine = new TestEngine(conf);
         m_manager = m_engine.getAuthorizationManager();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void tearDown()
     {
         TestEngine.deleteTestPage("Test");
@@ -52,123 +71,146 @@ public class AuthorizationManagerTest extends TestCase
         TestEngine.deleteTestPage("FooGroup");
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testSimplePermissions()
-        throws Exception
+            throws Exception
     {
         String src = "[{DENY edit Guest}] [{ALLOW edit FooBar}]";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
         UserProfile wup = new UserProfile();
-        wup.setLoginStatus( UserProfile.PASSWORD );
-        wup.setName( "FooBar" );
+        wup.setLoginStatus(UserProfile.PASSWORD);
+        wup.setName("FooBar");
 
-        System.out.println(printPermissions( p ));
+        System.out.println(printPermissions(p));
 
-        assertTrue( "read 1", m_manager.checkPermission( p, wup, new ViewPermission() ) );
-        assertTrue( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
-            
-        wup.setName( "GobbleBlat" );
-        assertTrue( "read 2", m_manager.checkPermission( p, wup, new ViewPermission() ) );
-        assertFalse( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        assertTrue("read 1", m_manager.checkPermission(p, wup, new ViewPermission()));
+        assertTrue("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
+
+        wup.setName("GobbleBlat");
+        assertTrue("read 2", m_manager.checkPermission(p, wup, new ViewPermission()));
+        assertFalse("edit 2", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testNamedPermissions()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW edit NamedGuest}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
-        wup.setName( "FooBar" );
+        wup.setName("FooBar");
 
-        assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        assertFalse("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        wup.setLoginStatus( UserProfile.COOKIE );
-        
-        assertTrue( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        wup.setLoginStatus(UserProfile.COOKIE);
+
+        assertTrue("edit 2", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testAttachmentPermissions()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW edit NamedGuest}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
-        Attachment att = new Attachment( "Test", "foobar.jpg" );
+        Attachment att = new Attachment("Test", "foobar.jpg");
 
         UserProfile wup = new UserProfile();
-        wup.setName( "FooBar" );
+        wup.setName("FooBar");
 
-        assertFalse( "edit 1", m_manager.checkPermission( att, wup, new UploadPermission() ) );
+        assertFalse("edit 1", m_manager.checkPermission(att, wup, new UploadPermission()));
 
-        wup.setLoginStatus( UserProfile.COOKIE );
-        
-        assertTrue( "edit 2", m_manager.checkPermission( att, wup, new UploadPermission() ) );
+        wup.setLoginStatus(UserProfile.COOKIE);
+
+        assertTrue("edit 2", m_manager.checkPermission(att, wup, new UploadPermission()));
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testAttachmentPermissions2()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW upload FooBar}] [{ALLOW view Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
-        Attachment att = new Attachment( "Test", "foobar.jpg" );
+        Attachment att = new Attachment("Test", "foobar.jpg");
 
         UserProfile wup = new UserProfile();
-        wup.setLoginStatus( UserProfile.PASSWORD );
-        wup.setName( "FooBar" );
-                
-        assertTrue( "download", m_manager.checkPermission( att, wup, "view" ) );
+        wup.setLoginStatus(UserProfile.PASSWORD);
+        wup.setName("FooBar");
 
-        
-        assertTrue( "upload", m_manager.checkPermission( att, wup, "upload" ) );
+        assertTrue("download", m_manager.checkPermission(att, wup, "view"));
+
+        assertTrue("upload", m_manager.checkPermission(att, wup, "upload"));
     }
 
     /**
-     *  An user should not be allowed to simply set their name in the 
-     *  cookie and be allowed access.
+     * An user should not be allowed to simply set their name in the cookie and be allowed access.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testNamedPermissions2()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW edit FooBar}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
-        wup.setName( "FooBar" );
+        wup.setName("FooBar");
 
-        assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        assertFalse("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        wup.setLoginStatus( UserProfile.COOKIE );
-        
-        assertFalse( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        wup.setLoginStatus(UserProfile.COOKIE);
 
-        wup.setLoginStatus( UserProfile.CONTAINER );
+        assertFalse("edit 2", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        assertTrue( "edit 3", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        wup.setLoginStatus(UserProfile.CONTAINER);
 
-        wup.setLoginStatus( UserProfile.PASSWORD );
+        assertTrue("edit 3", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        assertTrue( "edit 4", m_manager.checkPermission( p, wup, new EditPermission() ) );
+        wup.setLoginStatus(UserProfile.PASSWORD);
+
+        assertTrue("edit 4", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
     /**
-     *  An user should not be allowed to simply set their name in the 
-     *  cookie and be allowed access (this time with group data).
+     * An user should not be allowed to simply set their name in the cookie and be allowed access
+     * (this time with group data).
+     *
+     * @throws Exception DOCUMENT ME!
      */
+
     /*
      * TODO: Fix this test
-   
+
     public void testNamedPermissions3()
         throws Exception
     {
@@ -186,7 +228,7 @@ public class AuthorizationManagerTest extends TestCase
         assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
 
         wup.setLoginStatus( UserProfile.COOKIE );
-        
+
         assertFalse( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
 
         wup.setLoginStatus( UserProfile.CONTAINER );
@@ -197,179 +239,202 @@ public class AuthorizationManagerTest extends TestCase
 
         assertTrue( "edit 4", m_manager.checkPermission( p, wup, new EditPermission() ) );
     }
-*/
+    */
+
     /**
-     *  A superuser should be allowed permissions.
+     * A superuser should be allowed permissions.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testAdminPermissions()
-        throws Exception
+            throws Exception
     {
         String src = "[{DENY view Guest}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
-        wup.setLoginStatus( UserProfile.CONTAINER );
-        wup.setName( "AdminGroup" );
+        wup.setLoginStatus(UserProfile.CONTAINER);
+        wup.setName("AdminGroup");
 
-        assertTrue( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
-        assertTrue( "view 1", m_manager.checkPermission( p, wup, new ViewPermission() ) );
-        assertTrue( "delete 1", m_manager.checkPermission( p, wup, new DeletePermission() ) );
-        assertTrue( "comment 1", m_manager.checkPermission( p, wup, new CommentPermission() ) );
+        assertTrue("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
+        assertTrue("view 1", m_manager.checkPermission(p, wup, new ViewPermission()));
+        assertTrue("delete 1", m_manager.checkPermission(p, wup, new DeletePermission()));
+        assertTrue("comment 1", m_manager.checkPermission(p, wup, new CommentPermission()));
 
-        wup.setName( "NobodyHere" );
+        wup.setName("NobodyHere");
 
-        assertFalse( "view 2", m_manager.checkPermission( p, wup, new ViewPermission() ) );
+        assertFalse("view 2", m_manager.checkPermission(p, wup, new ViewPermission()));
     }
 
     /**
-     *  Also, anyone in the supergroup should be allowed all permissions.
+     * Also, anyone in the supergroup should be allowed all permissions.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testAdminPermissions2()
-        throws Exception
+            throws Exception
     {
         String src = "[{DENY view Guest}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         src = "[{SET members=FooBar}]";
-        
-        m_engine.saveText( "AdminGroup", src );
+
+        m_engine.saveText("AdminGroup", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
-        wup.setLoginStatus( UserProfile.PASSWORD );
-        wup.setName( "FooBar" );
+        wup.setLoginStatus(UserProfile.PASSWORD);
+        wup.setName("FooBar");
 
-        assertTrue( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
-        assertTrue( "view 1", m_manager.checkPermission( p, wup, new ViewPermission() ) );
-        assertTrue( "delete 1", m_manager.checkPermission( p, wup, new DeletePermission() ) );
-        assertTrue( "comment 1", m_manager.checkPermission( p, wup, new CommentPermission() ) );
+        assertTrue("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
+        assertTrue("view 1", m_manager.checkPermission(p, wup, new ViewPermission()));
+        assertTrue("delete 1", m_manager.checkPermission(p, wup, new DeletePermission()));
+        assertTrue("comment 1", m_manager.checkPermission(p, wup, new CommentPermission()));
 
-        wup.setName( "NobodyHere" );
+        wup.setName("NobodyHere");
 
-        assertFalse( "view 2", m_manager.checkPermission( p, wup, new ViewPermission() ) );
+        assertFalse("view 2", m_manager.checkPermission(p, wup, new ViewPermission()));
     }
 
     /**
-     *  A superuser should be allowed permissions, but not if he's not logged in.
+     * A superuser should be allowed permissions, but not if he's not logged in.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testAdminPermissionsNoLogin()
-        throws Exception
+            throws Exception
     {
         String src = "[{DENY view Guest}] [{DENY edit Guest}] ";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
-        m_engine.saveText( "AdminGroup", "[{SET members=Hobble}]" );
+        m_engine.saveText("AdminGroup", "[{SET members=Hobble}]");
 
         UserProfile wup = new UserProfile();
-        wup.setName( "Hobble" );
+        wup.setName("Hobble");
 
-        assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
-        assertFalse( "view 1", m_manager.checkPermission( p, wup, new ViewPermission() ) );
-        assertFalse( "delete 1", m_manager.checkPermission( p, wup, new DeletePermission() ) );
-        assertFalse( "comment 1", m_manager.checkPermission( p, wup, new CommentPermission() ) );
+        assertFalse("edit 1", m_manager.checkPermission(p, wup, new EditPermission()));
+        assertFalse("view 1", m_manager.checkPermission(p, wup, new ViewPermission()));
+        assertFalse("delete 1", m_manager.checkPermission(p, wup, new DeletePermission()));
+        assertFalse("comment 1", m_manager.checkPermission(p, wup, new CommentPermission()));
     }
 
     /**
-     *  From Paul Downes.
+     * From Paul Downes.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testFunnyPermissions()
-        throws Exception
+            throws Exception
     {
         String src = "[{DENY edit Guest}]\n[{ALLOW edit NamedGuest}]\n";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
         wup.setName("Foogor");
 
-        assertFalse("guest edit", m_manager.checkPermission( p, wup, new EditPermission() ) );
-        
-        wup.setLoginStatus( UserProfile.COOKIE );
+        assertFalse("guest edit", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        assertTrue("namedguest edit", m_manager.checkPermission( p, wup, new EditPermission() ));
+        wup.setLoginStatus(UserProfile.COOKIE);
+
+        assertTrue("namedguest edit", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
     /**
-     *  From Paul Downes.
+     * From Paul Downes.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testFunnyPermissions2()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW edit Guest}]\n[{DENY edit Guest}]\n";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
         wup.setName("Foogor");
 
-        assertTrue("guest edit", m_manager.checkPermission( p, wup, new EditPermission() ) );
-        
-        wup.setLoginStatus( UserProfile.COOKIE );
+        assertTrue("guest edit", m_manager.checkPermission(p, wup, new EditPermission()));
 
-        assertTrue("namedguest edit", m_manager.checkPermission( p, wup, new EditPermission() ));
+        wup.setLoginStatus(UserProfile.COOKIE);
+
+        assertTrue("namedguest edit", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
     /**
-     *  From Paul Downes.
+     * From Paul Downes.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testFunnyPermissions3()
-        throws Exception
+            throws Exception
     {
         String src = "[{ALLOW edit Guest}]\n[{DENY view Guest}]\n";
 
-        m_engine.saveText( "Test", src );
+        m_engine.saveText("Test", src);
 
         WikiPage p = m_engine.getPage("Test");
 
         UserProfile wup = new UserProfile();
         wup.setName("Foogor");
 
-        assertFalse("guest edit", m_manager.checkPermission( p, wup, new ViewPermission() ) );
+        assertFalse("guest edit", m_manager.checkPermission(p, wup, new ViewPermission()));
 
-        assertTrue("view", m_manager.checkPermission( p, wup, new EditPermission() ));
+        assertTrue("view", m_manager.checkPermission(p, wup, new EditPermission()));
     }
 
-
     /**
-     *  Returns a string representation of the permissions of the page.
+     * Returns a string representation of the permissions of the page.
+     *
+     * @param p DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
-    public static String printPermissions( WikiPage p )
-        throws Exception
+    public static String printPermissions(WikiPage p)
+            throws Exception
     {
         StringBuffer sb = new StringBuffer();
 
         AccessControlList acl = p.getAcl();
 
-        sb.append("page = "+p.getName()+"\n");
+        sb.append("page = " + p.getName() + "\n");
 
-        if( acl != null )
+        if (acl != null)
         {
-            for( Enumeration e = acl.entries(); e.hasMoreElements(); )
+            for (Enumeration e = acl.entries(); e.hasMoreElements();)
             {
                 AclEntry entry = (AclEntry) e.nextElement();
 
-                sb.append("  user = "+entry.getPrincipal().getName()+": ");
+                sb.append("  user = " + entry.getPrincipal().getName() + ": ");
 
-                if( entry.isNegative() ) sb.append("NEG");
+                if (entry.isNegative())
+                {
+                    sb.append("NEG");
+                }
 
                 sb.append("(");
-                for( Enumeration perms = entry.permissions(); perms.hasMoreElements(); )
+
+                for (Enumeration perms = entry.permissions(); perms.hasMoreElements();)
                 {
                     Permission perm = (Permission) perms.nextElement();
-                    sb.append( perm.toString() );
+                    sb.append(perm.toString());
                 }
+
                 sb.append(")\n");
             }
         }
@@ -381,8 +446,13 @@ public class AuthorizationManagerTest extends TestCase
         return sb.toString();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public static Test suite()
     {
-        return new TestSuite( AuthorizationManagerTest.class );
+        return new TestSuite(AuthorizationManagerTest.class);
     }
 }

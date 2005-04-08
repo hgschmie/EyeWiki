@@ -1,4 +1,3 @@
-
 package com.ecyrd.jspwiki;
 
 import java.io.ByteArrayInputStream;
@@ -6,132 +5,176 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
-public class FileUtilTest extends TestCase
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
+public class FileUtilTest
+        extends TestCase
 {
-    public FileUtilTest( String s )
-    	throws Exception
+    /**
+     * Creates a new FileUtilTest object.
+     *
+     * @param s DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public FileUtilTest(String s)
+            throws Exception
     {
-        super( s );
+        super(s);
+
         PropertiesConfiguration conf = new PropertiesConfiguration();
+
         try
         {
-            conf.load( TestEngine.findTestProperties() );
+            conf.load(TestEngine.findTestProperties());
             PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         }
-        catch( IOException e ) {}
+        catch (IOException e)
+        {
+        }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void setUp()
-        throws Exception
+            throws Exception
     {
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void tearDown()
     {
     }
 
     /**
-     *  This test actually checks if your JDK is misbehaving.  On my own Debian
-     *  machine, changing the system to use UTF-8 suddenly broke Java, and I put
-     *  in this test to check for its brokenness.  If your tests suddenly stop
-     *  running, check if this one is failing too.  If it is, your platform is
-     *  broken.  If it's not, seek for the bug in your code.
+     * This test actually checks if your JDK is misbehaving.  On my own Debian machine, changing
+     * the system to use UTF-8 suddenly broke Java, and I put in this test to check for its
+     * brokenness.  If your tests suddenly stop running, check if this one is failing too.  If it
+     * is, your platform is broken.  If it's not, seek for the bug in your code.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testJDKString()
-        throws Exception
+            throws Exception
     {
         String src = "abc\u00e4\u00e5\u00a6";
 
-        String res = new String( src.getBytes("ISO-8859-1"), "ISO-8859-1" );
+        String res = new String(src.getBytes("ISO-8859-1"), "ISO-8859-1");
 
-        assertEquals( src, res );
-    }
-
-    public void testReadContentsLatin1()
-        throws Exception
-    {
-        String src = "abc\u00e4\u00e5\u00a6";
-
-        String res = FileUtil.readContents( new ByteArrayInputStream( src.getBytes("ISO-8859-1") ),
-                                            "ISO-8859-1" );
-
-        assertEquals( src, res );
+        assertEquals(src, res);
     }
 
     /**
-     *  Check that fallbacks to ISO-Latin1 still work.
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testReadContentsLatin1()
+            throws Exception
+    {
+        String src = "abc\u00e4\u00e5\u00a6";
+
+        String res =
+            FileUtil.readContents(
+                new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "ISO-8859-1");
+
+        assertEquals(src, res);
+    }
+
+    /**
+     * Check that fallbacks to ISO-Latin1 still work.
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public void testReadContentsLatin1_2()
-        throws Exception
+            throws Exception
     {
         String src = "abc\u00e4\u00e5\u00a6def";
 
-        String res = FileUtil.readContents( new ByteArrayInputStream( src.getBytes("ISO-8859-1") ),
-                                            "UTF-8" );
+        String res =
+            FileUtil.readContents(new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "UTF-8");
 
-        assertEquals( src, res );
+        assertEquals(src, res);
     }
 
     /**
-       ISO Latin 1 from a pipe.
-
-       FIXME: Works only on UNIX systems now.
-    */
+     * ISO Latin 1 from a pipe. FIXME: Works only on UNIX systems now.
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testReadContentsFromPipe()
-        throws Exception
+            throws Exception
     {
         String src = "abc\n123456\n\nfoobar.\n";
 
         // Make a very long string.
-
-        for( int i = 0; i < 10; i++ )
+        for (int i = 0; i < 10; i++)
         {
             src += src;
         }
 
         src += "\u00e4\u00e5\u00a6";
 
-        File f = FileUtil.newTmpFile( src, "ISO-8859-1" );
+        File f = FileUtil.newTmpFile(src, "ISO-8859-1");
 
-        String[] envp = {};
+        String [] envp = {  };
 
         try
         {
-            Process process = Runtime.getRuntime().exec( "cat "+f.getAbsolutePath(), 
-                                                         envp, 
-                                                         f.getParentFile() );
+            Process process =
+                Runtime.getRuntime().exec("cat " + f.getAbsolutePath(), envp, f.getParentFile());
 
-            String result = FileUtil.readContents( process.getInputStream(), "UTF-8" );
+            String result = FileUtil.readContents(process.getInputStream(), "UTF-8");
 
             f.delete();
 
-            assertEquals( src,
-                          result );
+            assertEquals(src, result);
         }
-        catch( IOException e ) {}
+        catch (IOException e)
+        {
+        }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
     public void testReadContentsReader()
-        throws IOException
+            throws IOException
     {
         String data = "ABCDEF";
 
-        String result = FileUtil.readContents( new StringReader( data ) );
+        String result = FileUtil.readContents(new StringReader(data));
 
-        assertEquals( data,
-                      result );
+        assertEquals(data, result);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public static Test suite()
     {
-        return new TestSuite( FileUtilTest.class );
+        return new TestSuite(FileUtilTest.class);
     }
 }
