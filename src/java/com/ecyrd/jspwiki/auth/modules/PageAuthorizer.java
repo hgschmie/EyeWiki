@@ -29,7 +29,6 @@ import java.util.StringTokenizer;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -41,6 +40,7 @@ import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.WikiAuthorizer;
 import com.ecyrd.jspwiki.auth.WikiSecurityException;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
 
 
 /**

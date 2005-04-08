@@ -33,8 +33,8 @@ import org.apache.commons.jrcs.diff.RevisionVisitor;
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 

@@ -33,12 +33,12 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.providers.CachingAttachmentProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;

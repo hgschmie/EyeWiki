@@ -19,9 +19,9 @@
  */
 package com.ecyrd.jspwiki.util;
 
-import com.ecyrd.jspwiki.NoSuchVariableException;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 
 
 /**

@@ -18,6 +18,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.util.FileUtil;
 

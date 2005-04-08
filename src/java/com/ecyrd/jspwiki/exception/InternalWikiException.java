@@ -17,7 +17,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.ecyrd.jspwiki;
+package com.ecyrd.jspwiki.exception;
 
 /**
  * Denotes something really serious going on inside Wiki. It is a runtime exception so that the API

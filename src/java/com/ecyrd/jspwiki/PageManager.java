@@ -31,6 +31,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.providers.CachingProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.RepositoryModifiedException;

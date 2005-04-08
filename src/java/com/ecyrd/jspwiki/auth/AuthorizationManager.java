@@ -27,8 +27,6 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.InternalWikiException;
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
@@ -41,6 +39,8 @@ import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
 import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 

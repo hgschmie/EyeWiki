@@ -38,11 +38,11 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.InternalWikiException;
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.FileUtil;
 
 

@@ -26,11 +26,11 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.HeadingListener;
-import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 

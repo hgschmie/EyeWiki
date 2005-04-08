@@ -39,8 +39,6 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.InternalWikiException;
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.SearchMatcher;
 import com.ecyrd.jspwiki.SearchResult;
@@ -49,6 +47,8 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 

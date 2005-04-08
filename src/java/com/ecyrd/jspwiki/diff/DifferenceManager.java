@@ -24,9 +24,9 @@ import java.io.IOException;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.ClassUtil;
 
 

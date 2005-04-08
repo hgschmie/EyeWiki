@@ -30,12 +30,12 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.auth.WikiAuthenticator;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**

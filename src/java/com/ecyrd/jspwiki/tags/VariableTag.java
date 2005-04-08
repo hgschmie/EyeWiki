@@ -24,8 +24,8 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-import com.ecyrd.jspwiki.NoSuchVariableException;
 import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 
 
 /**

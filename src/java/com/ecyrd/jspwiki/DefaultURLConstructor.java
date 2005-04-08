@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
+import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 

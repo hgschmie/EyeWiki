@@ -30,6 +30,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.auth.UserProfile;
+import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 
 
 /**

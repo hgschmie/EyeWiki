@@ -10,11 +10,11 @@ import javax.servlet.ServletException;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

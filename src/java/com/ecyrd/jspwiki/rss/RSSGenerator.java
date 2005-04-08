@@ -29,12 +29,12 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**

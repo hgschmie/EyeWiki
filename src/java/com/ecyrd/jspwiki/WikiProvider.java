@@ -23,6 +23,8 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
 
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+
 
 /**
  * A generic Wiki provider for all sorts of things that the Wiki can store.

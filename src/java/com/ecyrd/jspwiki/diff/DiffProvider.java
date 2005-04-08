@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.apache.commons.configuration.Configuration;
 
-import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**

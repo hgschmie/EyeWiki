@@ -2,7 +2,7 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
 
-import com.ecyrd.jspwiki.InternalWikiException;
+import com.ecyrd.jspwiki.exception.InternalWikiException;
 
 
 /**
