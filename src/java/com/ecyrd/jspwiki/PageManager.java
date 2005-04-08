@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
@@ -69,7 +69,7 @@ public class PageManager
      *  @throws WikiException If anything goes wrong, you get this.
      */
     public PageManager( WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         String classname;
 
@@ -100,7 +100,7 @@ public class PageManager
         try
         {
             Class providerclass = ClassUtil.findClass( DEFAULT_PROVIDER_CLASS_PREFIX,
-                                                       classname );
+                    classname );
 
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
@@ -125,7 +125,7 @@ public class PageManager
         catch( NoRequiredPropertyException e )
         {
             log.error("Provider did not found a property it was looking for: "+e.getMessage(),
-                      e);
+                    e);
             throw e;  // Same exception works.
         }
         catch( IOException e )
@@ -149,7 +149,7 @@ public class PageManager
     }
 
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         return m_provider.getAllPages();
     }
@@ -160,7 +160,7 @@ public class PageManager
      *  modified externally, it is smart enough to handle such occurrences.
      */
     public String getPageText( String pageName, int version )
-        throws ProviderException
+            throws ProviderException
     {
         if(StringUtils.isEmpty(pageName))
         {
@@ -195,7 +195,7 @@ public class PageManager
     }
 
     public void putPageText( WikiPage page, String content )
-        throws ProviderException
+            throws ProviderException
     {
         if( page == null || StringUtils.isEmpty(page.getName()))
         {
@@ -227,7 +227,7 @@ public class PageManager
                 //
                 Date d = new Date();
                 lock = new PageLock( page, user, d,
-                                     new Date( d.getTime() + m_expiryTime*60*1000L ) );
+                        new Date( d.getTime() + m_expiryTime*60*1000L ) );
 
                 m_pageLocks.put( page.getName(), lock );                
 
@@ -308,7 +308,7 @@ public class PageManager
     }
 
     public WikiPage getPageInfo( String pageName, int version )
-        throws ProviderException
+            throws ProviderException
     {
         if(StringUtils.isEmpty(pageName))
         {
@@ -346,7 +346,7 @@ public class PageManager
      *          of WikiPages.
      */
     public List getVersionHistory( String pageName )
-        throws ProviderException
+            throws ProviderException
     {
         if( pageExists( pageName ) )
         {
@@ -375,7 +375,7 @@ public class PageManager
     }
 
     public boolean pageExists( String pageName )
-        throws ProviderException
+            throws ProviderException
     {
         if(StringUtils.isEmpty(pageName))
         {
@@ -389,7 +389,7 @@ public class PageManager
      *  Deletes only a specific version of a WikiPage.
      */
     public void deleteVersion( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteVersion( page.getName(), page.getVersion() );
 
@@ -400,7 +400,7 @@ public class PageManager
      *  Deletes an entire page, all versions, all traces.
      */
     public void deletePage( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deletePage( page.getName() );
 
@@ -437,9 +437,9 @@ public class PageManager
                                 i.remove();
 
                                 log.debug( "Reaped lock: "+p.getPage().getName()+
-                                           " by "+p.getLocker()+
-                                           ", acquired "+p.getAcquisitionTime()+
-                                           ", and expired "+p.getExpiryTime() );
+                                        " by "+p.getLocker()+
+                                        ", acquired "+p.getAcquisitionTime()+
+                                        ", and expired "+p.getExpiryTime() );
                             }
                         }
                     }

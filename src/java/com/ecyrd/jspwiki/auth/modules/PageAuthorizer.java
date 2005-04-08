@@ -29,7 +29,7 @@ import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
  *  @author Janne Jalkanen
  */
 public class PageAuthorizer
-    implements WikiAuthorizer
+        implements WikiAuthorizer
 {
     private WikiEngine m_engine;
 
@@ -43,7 +43,7 @@ public class PageAuthorizer
     private AccessControlList m_defaultPermissions = null;
 
     public void initialize( WikiEngine engine,
-                            Configuration conf)
+            Configuration conf)
     {
         m_engine = engine;
     }
@@ -71,14 +71,14 @@ public class PageAuthorizer
                 try
                 {
                     AccessControlList acl = parseAcl( p,
-                                                      m_engine.getUserManager(),
-                                                      rule );
+                            m_engine.getUserManager(),
+                            rule );
                     p.setAcl( acl );
                 }
                 catch( WikiSecurityException wse )
                 {
                     log.error("Error on the default permissions page '"+
-                              DEFAULT_PERMISSIONPAGE+"':"+wse.getMessage());
+                            DEFAULT_PERMISSIONPAGE+"':"+wse.getMessage());
                     // FIXME: SHould do something else as well?  This msg only goes to the logs, and is thus not visible to users...
                 }
 
@@ -106,9 +106,9 @@ public class PageAuthorizer
      *  @since 2.2
      */
     public static AccessControlList parseAcl( WikiPage page, 
-                                              UserManager mgr, 
-                                              String ruleLine )
-        throws WikiSecurityException
+            UserManager mgr, 
+            String ruleLine )
+            throws WikiSecurityException
     {        
         AccessControlList acl = page.getAcl();
         if( acl == null ) acl = new AclImpl();

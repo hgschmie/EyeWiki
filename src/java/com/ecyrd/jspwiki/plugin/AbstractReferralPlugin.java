@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  @author Janne Jalkanen
  */
 public abstract class AbstractReferralPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     private static Logger log = Logger.getLogger( AbstractReferralPlugin.class );
 
@@ -69,7 +69,7 @@ public abstract class AbstractReferralPlugin
      *  @since 1.6.4
      */
     public void initialize( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         m_engine = context.getEngine();
         m_maxwidth = TextUtil.parseIntParameter( (String)params.get( PARAM_MAXWIDTH ), Integer.MAX_VALUE ); 
@@ -161,7 +161,7 @@ public abstract class AbstractReferralPlugin
         try
         {
             in     = new TranslatorReader( context,
-                                           new StringReader( wikitext ) );
+                    new StringReader( wikitext ) );
             in.addLinkTransmutator( new CutMutator(m_maxwidth) );
 
             result = FileUtil.readContents( in );

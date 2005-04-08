@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.filters;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import com.ecyrd.jspwiki.WikiPage;
  *  @author Janne Jalkanen
  */
 public class SpamFilter
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     private String m_forbiddenWordsPage = "SpamFilterWordList";
     private String m_errorPage          = "RejectedMessage";
@@ -65,9 +65,9 @@ public class SpamFilter
     public void initialize( Properties properties )
     {
         m_forbiddenWordsPage = properties.getProperty( PROP_WORDLIST, 
-                                                       m_forbiddenWordsPage );
+                m_forbiddenWordsPage );
         m_errorPage = properties.getProperty( PROP_ERRORPAGE, 
-                                              m_errorPage );
+                m_errorPage );
     }
 
     private Collection parseWordList( WikiPage source, String list )
@@ -100,7 +100,7 @@ public class SpamFilter
 
 
     public String preSave( WikiContext context, String content )
-        throws RedirectException
+            throws RedirectException
     {
         WikiPage source = context.getEngine().getPage( m_forbiddenWordsPage );
 
@@ -111,7 +111,7 @@ public class SpamFilter
                 m_lastRebuild = source.getLastModified();
 
                 m_spamPatterns = parseWordList( source, 
-                                                (String)source.getAttribute( LISTVAR ) );
+                        (String)source.getAttribute( LISTVAR ) );
 
                 log.info("Spam filter reloaded - recognizing "+m_spamPatterns.size()+" patterns from page "+m_forbiddenWordsPage);
             }
@@ -139,7 +139,7 @@ public class SpamFilter
                 //
 
                 throw new RedirectException( "Content matches the spam filter '"+p.getPattern()+"'", 
-                                             context.getURL(WikiContext.VIEW,m_errorPage) );
+                        context.getURL(WikiContext.VIEW,m_errorPage) );
             }
         }
 

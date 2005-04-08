@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.xmlrpc;
 
 import java.io.IOException;
@@ -60,9 +60,9 @@ public class RPCServlet extends HttpServlet
     Category log = Category.getInstance( RPCServlet.class ); 
 
     public void initHandler( String prefix, String handlerName )
-        throws ClassNotFoundException,
-               InstantiationException,
-               IllegalAccessException
+            throws ClassNotFoundException,
+                   InstantiationException,
+                   IllegalAccessException
     {
         Class handlerClass = Class.forName( handlerName );
         WikiRPCHandler rpchandler = (WikiRPCHandler) handlerClass.newInstance();
@@ -74,7 +74,7 @@ public class RPCServlet extends HttpServlet
      *  Initializes the servlet.
      */
     public void init( ServletConfig config )
-        throws ServletException
+            throws ServletException
     {
         m_engine = WikiEngine.getInstance( config );
 
@@ -106,7 +106,7 @@ public class RPCServlet extends HttpServlet
      *  the query to an XmlRpcServer.
      */
     public void doPost( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received POST to RPCServlet");
 
@@ -141,7 +141,7 @@ public class RPCServlet extends HttpServlet
      *  other than to show an explanatory text.
      */
     public void doGet( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP GET to RPCServlet");
 

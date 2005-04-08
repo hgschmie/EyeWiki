@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ import com.opensymphony.oscache.base.NeedsRefreshException;
 //        EntryRefreshPolicy for that.
 
 public class CachingAttachmentProvider
-    implements WikiAttachmentProvider
+        implements WikiAttachmentProvider
 {
     private static final Logger log = Logger.getLogger(CachingAttachmentProvider.class);
 
@@ -78,8 +78,8 @@ public class CachingAttachmentProvider
     private int  m_refreshPeriod = 60*10; // 10 minutes at the moment
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         log.debug("Initing CachingAttachmentProvider");
 
@@ -96,7 +96,7 @@ public class CachingAttachmentProvider
         try
         {            
             Class providerclass = ClassUtil.findClass( WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX,
-                                                       classname );
+                    classname );
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();
 
@@ -122,8 +122,8 @@ public class CachingAttachmentProvider
     }
 
     public void putAttachmentData( Attachment att, InputStream data )
-        throws ProviderException,
-               IOException
+            throws ProviderException,
+                   IOException
     {
         // FIXME: Probably not wise.
 
@@ -132,14 +132,14 @@ public class CachingAttachmentProvider
     }
 
     public InputStream getAttachmentData( Attachment att )
-        throws ProviderException,
-               IOException
+            throws ProviderException,
+                   IOException
     {
         return m_provider.getAttachmentData( att );
     }
 
     public Collection listAttachments( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         log.debug("Listing attachments for "+page);
         try
@@ -184,7 +184,7 @@ public class CachingAttachmentProvider
     }
 
     public List listAllChanged( Date timestamp )
-        throws ProviderException
+            throws ProviderException
     {
         // FIXME: Should cache
         return m_provider.listAllChanged( timestamp );
@@ -217,7 +217,7 @@ public class CachingAttachmentProvider
      *  @return The newly fetched object from the provider.
      */
     private final Collection refresh( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         m_cacheMisses++;
         Collection c = m_provider.listAttachments( page );
@@ -227,7 +227,7 @@ public class CachingAttachmentProvider
     }
 
     public Attachment getAttachmentInfo( WikiPage page, String name, int version )
-        throws ProviderException
+            throws ProviderException
     {
         log.debug("Getting attachments for "+page+", name="+name+", version="+version);
 
@@ -300,14 +300,14 @@ public class CachingAttachmentProvider
     }
 
     public void deleteVersion( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         m_cache.flushEntry( att.getParentName() );
         m_provider.deleteVersion( att );
     }
 
     public void deleteAttachment( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         m_cache.flushEntry( att.getParentName() );
         m_provider.deleteAttachment( att );
@@ -320,23 +320,23 @@ public class CachingAttachmentProvider
         long totalSize  = 0;
         
         /*
-        for( Iterator i = m_cache.values().iterator(); i.hasNext(); )
-        {
-            CacheItem item = (CacheItem) i.next();
+          for( Iterator i = m_cache.values().iterator(); i.hasNext(); )
+          {
+          CacheItem item = (CacheItem) i.next();
 
-            String text = (String) item.m_text.get();
-            if( text != null )
-            {
-                cachedPages++;
-                totalSize += text.length()*2;
-            }
-        }
+          String text = (String) item.m_text.get();
+          if( text != null )
+          {
+          cachedPages++;
+          totalSize += text.length()*2;
+          }
+          }
 
-        totalSize = (totalSize+512)/1024L;
+          totalSize = (totalSize+512)/1024L;
         */
         return("Real provider: "+m_provider.getClass().getName()+
-               "<br />Cache misses: "+m_cacheMisses+
-               "<br />Cache hits: "+m_cacheHits);
+                "<br />Cache misses: "+m_cacheMisses+
+                "<br />Cache hits: "+m_cacheHits);
     }
 
     public WikiAttachmentProvider getRealProvider()

@@ -22,7 +22,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 // FIXME: Should really be settable per-page.
 // FIXME: Weblog name has been set to stone
 public class PingWeblogsComFilter
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     static Logger log = Logger.getLogger( PingWeblogsComFilter.class );
 
@@ -64,32 +64,32 @@ public class PingWeblogsComFilter
                 log.debug("Pinging weblogs.com with URL: "+engine.getURL( WikiContext.VIEW, blogName, null, true ));
 
             xmlrpc.executeAsync("weblogUpdates.ping", params, 
-                                new AsyncCallback() 
-                                {
-                                    public void handleError( Exception ex,
-                                                             URL url,
-                                                             String method )
-                                    {
-                                        log.error("Unable to execute weblogs.com ping to URL: "+url.toString(),ex);
-                                    }
+                    new AsyncCallback() 
+                    {
+                        public void handleError( Exception ex,
+                                URL url,
+                                String method )
+                        {
+                            log.error("Unable to execute weblogs.com ping to URL: "+url.toString(),ex);
+                        }
 
-                                    public void handleResult( Object result,
-                                                              URL url,
-                                                              String method )
-                                    {
-                                        Hashtable res = (Hashtable) result;
+                        public void handleResult( Object result,
+                                URL url,
+                                String method )
+                        {
+                            Hashtable res = (Hashtable) result;
 
-                                        Boolean flerror = (Boolean)res.get("flerror");
-                                        String  msg     = (String)res.get("message");
+                            Boolean flerror = (Boolean)res.get("flerror");
+                            String  msg     = (String)res.get("message");
 
-                                        if( flerror == Boolean.TRUE )
-                                        {
-                                            log.error("Failed to ping: "+msg);
-                                        }
+                            if( flerror == Boolean.TRUE )
+                            {
+                                log.error("Failed to ping: "+msg);
+                            }
 
-                                        log.info("Weblogs.com has been pinged.");
-                                    }
-                                }
+                            log.info("Weblogs.com has been pinged.");
+                        }
+                    }
                                 );
         }
         catch( MalformedURLException e )

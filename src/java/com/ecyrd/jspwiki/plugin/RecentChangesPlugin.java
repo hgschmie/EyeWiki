@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.StringWriter;
@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  @author Janne Jalkanen
  */
 public class RecentChangesPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** How many days we show by default. */
     private static final int    DEFAULT_DAYS = 100*365;
@@ -63,10 +63,10 @@ public class RecentChangesPlugin
     }
 
     public String execute( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         int      since    = TextUtil.parseIntParameter( (String) params.get("since"),
-                                                        DEFAULT_DAYS );
+                DEFAULT_DAYS );
         int      spacing  = 4;
         boolean  showAuthor = true;
         WikiEngine engine = context.getEngine();
@@ -120,22 +120,22 @@ public class RecentChangesPlugin
                 {
                     out.write("<tr>\n");
                     out.write("  <td colspan=\"2\"><b>"+
-                              fmt.format(lastmod)+
-                              "</b></td>\n");
+                            fmt.format(lastmod)+
+                            "</b></td>\n");
                     out.write("</tr>\n");
                     olddate = lastmod;
                 }
 
                 String link = linkProcessor.makeLink( (pageref instanceof Attachment) ? 
-                                                      TranslatorReader.ATTACHMENT : TranslatorReader.READ,
-                                                      pageref.getName(),
-                                                      engine.beautifyTitle(pageref.getName()) );
+                        TranslatorReader.ATTACHMENT : TranslatorReader.READ,
+                        pageref.getName(),
+                        engine.beautifyTitle(pageref.getName()) );
                                                       
                 out.write("<tr>\n");
 
                 out.write("<td width=\"30%\">"+
-                          link+
-                          "</td>\n");
+                        link+
+                        "</td>\n");
 
                 if( pageref instanceof Attachment )
                 {
@@ -144,10 +144,10 @@ public class RecentChangesPlugin
                 else
                 {
                     out.write("<td><a href=\""+context.getURL(WikiContext.DIFF,
-                                                              pageref.getName(),
-                                                              "r1=-1")+"\">"+
-                              tfmt.format(lastmod)+
-                              "</a></td>\n");
+                                    pageref.getName(),
+                                    "r1=-1")+"\">"+
+                            tfmt.format(lastmod)+
+                            "</a></td>\n");
                 }
 
                 //

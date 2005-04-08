@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
@@ -81,7 +81,7 @@ public class UserManager
      *  modules is done here.
      */
     public UserManager( WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         m_engine = engine;
 
@@ -112,7 +112,7 @@ public class UserManager
             try
             {
                 Class authenticatorClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
-                                                                authClassName );
+                        authClassName );
 
                 m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
                 m_authenticator.initialize(engine, conf);
@@ -143,7 +143,7 @@ public class UserManager
         try
         {
             Class dbClass = ClassUtil.findClass( DEFAULT_AUTH_MODULES_CLASS_PREFIX,
-                                                 dbClassName );
+                    dbClassName );
             m_database = (UserDatabase)dbClass.newInstance();
             m_database.initialize( m_engine, conf);
         }
@@ -280,7 +280,7 @@ public class UserManager
     // FIXME: Should really query the page manager.
 
     public List getGroupsForPrincipal( Principal user )
-        throws NoSuchPrincipalException
+            throws NoSuchPrincipalException
     {        
         List list = null;
 
@@ -354,7 +354,7 @@ public class UserManager
      *  @throws PasswordException, if password has expired
      */
     public boolean login( String username, String password, HttpSession session )
-        throws WikiSecurityException
+            throws WikiSecurityException
     {
         if( m_authenticator == null ) return false;
 

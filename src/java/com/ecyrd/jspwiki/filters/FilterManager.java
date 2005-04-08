@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.filters;
 
 import java.io.File;
@@ -95,8 +95,8 @@ import com.ecyrd.jspwiki.util.PriorityList;
  *  @author Janne Jalkanen
  */
 public class FilterManager
-    extends HandlerBase
-    implements WikiProperties
+        extends HandlerBase
+        implements WikiProperties
 {
     private PriorityList     m_pageFilters = new PriorityList();
 
@@ -105,7 +105,7 @@ public class FilterManager
     public static final String DEFAULT_XMLFILE = "/filters.xml";
 
     public FilterManager( WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         initialize( engine, conf);
     }
@@ -140,7 +140,7 @@ public class FilterManager
             int priority = 0; // FIXME: Currently fixed.
 
             Class cl = ClassUtil.findClass( "com.ecyrd.jspwiki.filters",
-                                            className );
+                    className );
 
             PageFilter filter = (PageFilter)cl.newInstance();
 
@@ -177,7 +177,7 @@ public class FilterManager
      */
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         InputStream xmlStream = null;
         String      xmlFile   = conf.getString(
@@ -285,7 +285,7 @@ public class FilterManager
      *  Does the filtering before a translation.
      */
     public String doPreTranslateFiltering( WikiContext context, String pageData )
-        throws FilterException
+            throws FilterException
     {
         for( Iterator i = m_pageFilters.iterator(); i.hasNext(); )
         {
@@ -301,7 +301,7 @@ public class FilterManager
      *  Does the filtering after HTML translation.
      */
     public String doPostTranslateFiltering( WikiContext context, String pageData )
-        throws FilterException
+            throws FilterException
     {
         for( Iterator i = m_pageFilters.iterator(); i.hasNext(); )
         {
@@ -317,7 +317,7 @@ public class FilterManager
      *  Does the filtering before a save to the page repository.
      */
     public String doPreSaveFiltering( WikiContext context, String pageData )
-        throws FilterException
+            throws FilterException
     {
         for( Iterator i = m_pageFilters.iterator(); i.hasNext(); )
         {
@@ -333,7 +333,7 @@ public class FilterManager
      *  Does the page filtering after the page has been saved.
      */
     public void doPostSaveFiltering( WikiContext context, String pageData )
-        throws FilterException
+            throws FilterException
     {
         for( Iterator i = m_pageFilters.iterator(); i.hasNext(); )
         {

@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
@@ -205,7 +205,7 @@ public class PluginManager
     public static boolean isPluginLink( String link )
     {
         return link.startsWith("{INSERT") || 
-               (link.startsWith("{") && !link.startsWith("{$"));
+                (link.startsWith("{") && !link.startsWith("{$"));
     }
 
     /**
@@ -221,7 +221,7 @@ public class PluginManager
      *  @throws ClassNotFoundException if no such class exists.
      */
     private Class findPluginClass( String classname )
-        throws ClassNotFoundException
+            throws ClassNotFoundException
     {
         return ClassUtil.findClass( m_searchPath, classname );
     }
@@ -271,9 +271,9 @@ public class PluginManager
      *  @since 2.0
      */
     public String execute( WikiContext context,
-                           String classname,
-                           Map params )
-        throws PluginException
+            String classname,
+            Map params )
+            throws PluginException
     {
         if( !m_pluginsEnabled )
             return( "" );
@@ -376,7 +376,7 @@ public class PluginManager
      */
 
     public Map parseArgs( String argstring )
-        throws IOException
+            throws IOException
     {
         HashMap         arglist = new HashMap();
         StringReader    in      = new StringReader(argstring);
@@ -403,32 +403,32 @@ public class PluginManager
 
             switch( type )
             {
-              case StreamTokenizer.TT_EOF:
+            case StreamTokenizer.TT_EOF:
                 quit = true;
                 s = null;
                 break;
 
-              case StreamTokenizer.TT_WORD:
+            case StreamTokenizer.TT_WORD:
                 s = tok.sval;
                 potentialEmptyLine = false;
                 break;
 
-              case StreamTokenizer.TT_EOL:
+            case StreamTokenizer.TT_EOL:
                 quit = potentialEmptyLine;
                 potentialEmptyLine = true;
                 s = null;
                 break;
 
-              case StreamTokenizer.TT_NUMBER:
+            case StreamTokenizer.TT_NUMBER:
                 s = Integer.toString( new Double(tok.nval).intValue() );
                 potentialEmptyLine = false;
                 break;
 
-              case '\'':
+            case '\'':
                 s = tok.sval;
                 break;
 
-              default:
+            default:
                 s = null;
             }
 
@@ -489,8 +489,8 @@ public class PluginManager
      *  message.
      */
     public String execute( WikiContext context,
-                           String commandline )
-        throws PluginException
+            String commandline )
+            throws PluginException
     {
         if( !m_pluginsEnabled )
             return( "" );
@@ -505,8 +505,8 @@ public class PluginManager
 
                 String plugin   = res.group(2);                
                 String args     = commandline.substring(res.endOffset(0),
-                                                        commandline.length() -
-                                                        (commandline.charAt(commandline.length()-1) == '}' ? 1 : 0 ) );
+                        commandline.length() -
+                        (commandline.charAt(commandline.length()-1) == '}' ? 1 : 0 ) );
                 Map arglist     = parseArgs( args );
 
                 return execute( context, plugin, arglist );
@@ -532,23 +532,23 @@ public class PluginManager
     }
 
     /*
-      // FIXME: Not functioning, needs to create or fetch PageContext from somewhere.
+    // FIXME: Not functioning, needs to create or fetch PageContext from somewhere.
     public class TagPlugin implements WikiPlugin
     {
-        private Class m_tagClass;
+    private Class m_tagClass;
         
-        public TagPlugin( Class tagClass )
-        {
-            m_tagClass = tagClass;
-        }
+    public TagPlugin( Class tagClass )
+    {
+    m_tagClass = tagClass;
+    }
         
-        public String execute( WikiContext context, Map params )
-            throws PluginException
-        {
-            WikiPluginTag plugin = m_tagClass.newInstance();
+    public String execute( WikiContext context, Map params )
+    throws PluginException
+    {
+    WikiPluginTag plugin = m_tagClass.newInstance();
 
             
-        }
+    }
     }
     */
 }

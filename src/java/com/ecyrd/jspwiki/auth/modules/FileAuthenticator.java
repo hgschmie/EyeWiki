@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.auth.modules;
 
 import java.io.File;
@@ -44,24 +44,24 @@ import com.ecyrd.jspwiki.auth.WikiAuthenticator;
  *  @since  2.1.29.
  */
 public class FileAuthenticator
-    implements WikiAuthenticator
+        implements WikiAuthenticator
 {
     private String m_fileName;
 
     static Logger log = Logger.getLogger( FileAuthenticator.class );
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, WikiException
+            throws NoRequiredPropertyException, WikiException
     {
         // No default, you _must_ configure this
         m_fileName = engine.getValidPath(
-                	conf.getString(WikiProperties.PROP_AUTH_FILENAME));
+                conf.getString(WikiProperties.PROP_AUTH_FILENAME));
 
         log.info("Authenticator file is at " + m_fileName);
     }
 
     private Properties readPasswords( String filename )
-        throws IOException
+            throws IOException
     {
         Properties  props = new Properties();
         InputStream in    = null;

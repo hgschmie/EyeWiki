@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.attachment;
 
 import http.utils.multipartrequest.MultipartRequest;
@@ -67,7 +67,7 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  * @since 1.9.45.
  */
 public class AttachmentServlet
-    extends HttpServlet
+        extends HttpServlet
 {
     private WikiEngine m_engine;
     Logger log = Logger.getLogger(this.getClass().getName());
@@ -95,7 +95,7 @@ public class AttachmentServlet
      * Initializes the servlet from WikiEngine properties.
      */
     public void init( ServletConfig config )
-        throws ServletException 
+            throws ServletException 
     {
         super.init( config );
 
@@ -105,8 +105,8 @@ public class AttachmentServlet
         m_tmpDir         = m_engine.getWorkDir()+File.separator+"attach-tmp";
  
         m_maxSize        = conf.getInt( 
-                                                        WikiProperties.PROP_MAXSIZE,
-                                                        WikiProperties.PROP_MAXSIZE_DEFAULT);
+                WikiProperties.PROP_MAXSIZE,
+                WikiProperties.PROP_MAXSIZE_DEFAULT);
 
         File f = new File( m_tmpDir );
         if( !f.exists() )
@@ -119,7 +119,7 @@ public class AttachmentServlet
         }
 
         log.debug( "UploadServlet initialized. Using " + 
-                   m_tmpDir + " for temporary storage." );
+                m_tmpDir + " for temporary storage." );
     }
 
     /**
@@ -129,7 +129,7 @@ public class AttachmentServlet
 
     // FIXME: Messages would need to be localized somehow.
     public void doGet( HttpServletRequest  req, HttpServletResponse res ) 
-        throws IOException, ServletException 
+            throws IOException, ServletException 
     {
         String version  = m_engine.safeGetParameter( req, HDR_VERSION );
         String nextPage = m_engine.safeGetParameter( req, "nextpage" );
@@ -202,7 +202,7 @@ public class AttachmentServlet
                     //
 
                     res.addHeader( "Content-Disposition",
-                                   "inline; filename=\"" + att.getFileName() + "\";" );
+                            "inline; filename=\"" + att.getFileName() + "\";" );
                     long expires = new Date().getTime() + DEFAULT_EXPIRY;
                     res.addDateHeader("Expires",expires);
                     res.addDateHeader("Last-Modified",att.getLastModified().getTime());
@@ -240,11 +240,11 @@ public class AttachmentServlet
                 else
                 {
                     msg = "Attachment '" + page + "', version " + ver + 
-                          " does not exist.";
+                            " does not exist.";
 
                     log.info( msg );
                     res.sendError( HttpServletResponse.SC_NOT_FOUND,
-                                   msg );
+                            msg );
                     return;
                 }
                 
@@ -253,21 +253,21 @@ public class AttachmentServlet
             {
                 msg = "Provider error: "+pe.getMessage();
                 res.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                               msg );
+                        msg );
                 return;
             }
             catch( NumberFormatException nfe )
             {
                 msg = "Invalid version number (" + version + ")";
                 res.sendError( HttpServletResponse.SC_BAD_REQUEST,
-                               msg );
+                        msg );
                 return;
             }
             catch( IOException ioe )
             {
                 msg = "Error: " + ioe.getMessage();
                 res.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                               msg );
+                        msg );
                 return;
             }
         }
@@ -286,7 +286,7 @@ public class AttachmentServlet
      * content of the file.
      */
     public void doPost( HttpServletRequest  req, HttpServletResponse res ) 
-        throws IOException, ServletException 
+            throws IOException, ServletException 
     {
         try
         {
@@ -308,8 +308,8 @@ public class AttachmentServlet
      *  @return The page to which we should go next.
      */
     protected String upload( HttpServletRequest req )
-        throws RedirectException,
-               IOException
+            throws RedirectException,
+                   IOException
     {
         String msg     = "";
         String attName = "(unknown)";
@@ -321,19 +321,19 @@ public class AttachmentServlet
             MultipartRequest multi;
 
             multi = new MultipartRequest( null, // no debugging
-                                          req.getContentType(), 
-                                          req.getContentLength(), 
-                                          req.getInputStream(), 
-                                          m_tmpDir, 
-                                          Integer.MAX_VALUE,
-                                          m_engine.getContentEncoding() );
+                    req.getContentType(), 
+                    req.getContentLength(), 
+                    req.getInputStream(), 
+                    m_tmpDir, 
+                    Integer.MAX_VALUE,
+                    m_engine.getContentEncoding() );
 
             nextPage        = multi.getURLParameter( "nextpage" );
             String wikipage = multi.getURLParameter( "page" );
 
             WikiContext context = m_engine.createContext( req, WikiContext.UPLOAD );
             errorPage = context.getURL( WikiContext.UPLOAD,
-                                        wikipage );
+                    wikipage );
 
             //
             //  FIXME: This has the unfortunate side effect that it will receive the
@@ -344,7 +344,7 @@ public class AttachmentServlet
             {
                 // FIXME: Does not delete the received files.
                 throw new RedirectException( "File exceeds maximum size ("+m_maxSize+" bytes)",
-                                             errorPage );
+                        errorPage );
             }
 
             UserProfile user    = context.getCurrentUser();
@@ -374,7 +374,7 @@ public class AttachmentServlet
                         log.error("Empty file name given.");
 
                         throw new RedirectException("Empty file name given.",
-                                                    errorPage);
+                                errorPage);
                     }
 
                     //
@@ -404,7 +404,7 @@ public class AttachmentServlet
                         log.error("File could not be opened.");
 
                         throw new RedirectException("File could not be opened.",
-                                                    errorPage);
+                                errorPage);
                     }
 
                     //
@@ -430,8 +430,8 @@ public class AttachmentServlet
                     //
 
                     if( m_engine.getAuthorizationManager().checkPermission( att,
-                                                                            user,
-                                                                            "upload" ) )
+                                    user,
+                                    "upload" ) )
                     {
                         if( user != null )
                         {
@@ -441,12 +441,12 @@ public class AttachmentServlet
                         m_engine.getAttachmentManager().storeAttachment( att, in );
 
                         log.info( "User " + user + " uploaded attachment to " + wikipage + 
-                                  " called "+filename+", size " + multi.getFileSize(part) );
+                                " called "+filename+", size " + multi.getFileSize(part) );
                     }
                     else
                     {
                         throw new RedirectException("No permission to upload a file",
-                                                    errorPage);
+                                errorPage);
                     }
                 }
                 finally
@@ -489,43 +489,43 @@ public class AttachmentServlet
      * Produces debug output listing parameters and files.
      */
     /*
-    private void debugContentList( MultipartRequest  multi )
-    {
-        StringBuffer sb = new StringBuffer();
+      private void debugContentList( MultipartRequest  multi )
+      {
+      StringBuffer sb = new StringBuffer();
         
-        sb.append( "Upload information: parameters: [" );
+      sb.append( "Upload information: parameters: [" );
 
-        Enumeration params = multi.getParameterNames();
-        while( params.hasMoreElements() ) 
-        {
-            String name = (String)params.nextElement();
-            String value = multi.getURLParameter( name );
-            sb.append( "[" + name + " = " + value + "]" );
-        }
+      Enumeration params = multi.getParameterNames();
+      while( params.hasMoreElements() ) 
+      {
+      String name = (String)params.nextElement();
+      String value = multi.getURLParameter( name );
+      sb.append( "[" + name + " = " + value + "]" );
+      }
               
-        sb.append( " files: [" );
-        Enumeration files = multi.getFileParameterNames();
-        while( files.hasMoreElements() ) 
-        {
-            String name = (String)files.nextElement();
-            String filename = multi.getFileSystemName( name );
-            String type = multi.getContentType( name );
-            File f = multi.getFile( name );
-            sb.append( "[name: " + name );
-            sb.append( " temp_file: " + filename );
-            sb.append( " type: " + type );
-            if (f != null) 
-            {
-                sb.append( " abs: " + f.getPath() );
-                sb.append( " size: " + f.length() );
-            }
-            sb.append( "]" );
-        }
-        sb.append( "]" );
+      sb.append( " files: [" );
+      Enumeration files = multi.getFileParameterNames();
+      while( files.hasMoreElements() ) 
+      {
+      String name = (String)files.nextElement();
+      String filename = multi.getFileSystemName( name );
+      String type = multi.getContentType( name );
+      File f = multi.getFile( name );
+      sb.append( "[name: " + name );
+      sb.append( " temp_file: " + filename );
+      sb.append( " type: " + type );
+      if (f != null) 
+      {
+      sb.append( " abs: " + f.getPath() );
+      sb.append( " size: " + f.length() );
+      }
+      sb.append( "]" );
+      }
+      sb.append( "]" );
 
 
-        log.debug( sb.toString() );
-    }
+      log.debug( sb.toString() );
+      }
     */
 
 }

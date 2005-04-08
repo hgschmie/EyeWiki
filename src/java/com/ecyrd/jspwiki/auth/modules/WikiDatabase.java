@@ -52,7 +52,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  *    group names allowed? (Suggestion: both)
  */
 public class WikiDatabase
-    implements UserDatabase
+        implements UserDatabase
 {
     private WikiEngine m_engine;
 
@@ -81,7 +81,7 @@ public class WikiDatabase
     // FIXME: Needs to cache this somehow; this is far too slow!
 
     public List getGroupsForPrincipal( Principal p )
-        throws NoSuchPrincipalException
+            throws NoSuchPrincipalException
     {        
         List memberList = new ArrayList();
 
@@ -271,7 +271,7 @@ public class WikiDatabase
     // FIXME: JSPWiki should really take care of itself that any metadata
     //        relevant to a page is refreshed.
     public class SaveFilter
-        extends BasicPageFilter
+            extends BasicPageFilter
     {
         public void postSave( WikiContext context, String content )
         {

@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
@@ -70,7 +70,7 @@ public class AuthorizationManager
      * to take care of authorization.
      */
     public AuthorizationManager( WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         m_engine = engine;
 
@@ -170,7 +170,7 @@ public class AuthorizationManager
      * @throws WikiException
      */
     private WikiAuthorizer getAuthorizerImplementation(Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         WikiAuthorizer impl = null;
                                                                                 
@@ -206,7 +206,7 @@ public class AuthorizationManager
         else
         {
             throw new NoRequiredPropertyException( "Unable to find a " + PROP_CLASS_AUTHORIZER + 
-                                                   " entry in the properties.", PROP_CLASS_AUTHORIZER );
+                    " entry in the properties.", PROP_CLASS_AUTHORIZER );
         }
     }
 
@@ -218,12 +218,12 @@ public class AuthorizationManager
      *  @param permission Any of the available permissions "view", "edit, "comment", etc.
      */
     public boolean checkPermission( WikiPage page,
-                                    UserProfile wup,
-                                    String permission )
+            UserProfile wup,
+            String permission )
     {
         return checkPermission( page,
-                                wup,
-                                WikiPermission.newInstance( permission ) );
+                wup,
+                WikiPermission.newInstance( permission ) );
     }
 
 
@@ -232,8 +232,8 @@ public class AuthorizationManager
      *  is allowed.  This method returns true for 2.2.
      */
     public boolean checkPermission( WikiPage page, 
-                                    UserProfile wup, 
-                                    WikiPermission permission )
+            UserProfile wup, 
+            WikiPermission permission )
     {
         int         res         = AccessControlList.NONE;
         UserManager userManager = m_engine.getUserManager();

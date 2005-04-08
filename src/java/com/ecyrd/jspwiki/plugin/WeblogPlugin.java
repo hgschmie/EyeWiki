@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.ParseException;
@@ -69,8 +69,8 @@ import com.ecyrd.jspwiki.util.TextUtil;
 // FIXME: Entries arrive in wrong order.
 
 public class WeblogPlugin 
-    implements WikiPlugin,
-               InitializablePlugin
+        implements WikiPlugin,
+                   InitializablePlugin
 {
     private static Logger     log = Logger.getLogger(WeblogPlugin.class);
 
@@ -88,8 +88,8 @@ public class WeblogPlugin
     public static final String  ATTR_ISWEBLOG      = "weblogplugin.isweblog";
 
     public static String makeEntryPage( String pageName,
-                                        String date,
-                                        String entryNum )
+            String date,
+            String entryNum )
     {
         return StringUtils.replace(DEFAULT_PAGEFORMAT,"%p",pageName)+date+"_"+entryNum;
     }
@@ -113,7 +113,7 @@ public class WeblogPlugin
     }
 
     public String execute( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         Calendar   startTime;
         Calendar   stopTime;
@@ -157,7 +157,7 @@ public class WeblogPlugin
         hasComments = BooleanUtils.toBoolean((String)params.get(PARAM_ALLOWCOMMENTS));
 
         maxEntries = TextUtil.parseIntParameter( (String)params.get(PARAM_MAXENTRIES),
-                                                 Integer.MAX_VALUE );
+                Integer.MAX_VALUE );
 
         //
         //  Determine the date range which to include.
@@ -204,9 +204,9 @@ public class WeblogPlugin
         try
         {
             List blogEntries = findBlogEntries( engine.getPageManager(),
-                                                weblogName,
-                                                startTime.getTime(),
-                                                stopTime.getTime() );
+                    weblogName,
+                    startTime.getTime(),
+                    stopTime.getTime() );
 
             Collections.sort( blogEntries, new PageDateComparator() );
 
@@ -240,7 +240,7 @@ public class WeblogPlugin
                 entryCtx.setPage( p );
 
                 sb.append( engine.getHTML( entryCtx, 
-                                           engine.getPage(p.getName()) ) );
+                                engine.getPage(p.getName()) ) );
                 
                 sb.append("</div>\n");
 
@@ -266,8 +266,8 @@ public class WeblogPlugin
                 sb.append("By "+author+"&nbsp;&nbsp;");
                 sb.append( "<a href=\""+entryCtx.getURL(WikiContext.VIEW, p.getName())+"\">Permalink</a>" );
                 String commentPageName = StringUtils.replace( p.getName(),
-                                                                 "blogentry",
-                                                                 "comments" );
+                        "blogentry",
+                        "comments" );
 
                 if( hasComments )
                 {
@@ -280,12 +280,12 @@ public class WeblogPlugin
                     //
                     sb.append( "&nbsp;&nbsp;" );
                     sb.append( "<a target=\"_blank\" href=\""+
-                               entryCtx.getURL(WikiContext.COMMENT,
-                                               commentPageName,
-                                               "nc="+numComments)+
-                               "\">Comments? ("+
-                               numComments+
-                               ")</a>" );
+                            entryCtx.getURL(WikiContext.COMMENT,
+                                    commentPageName,
+                                    "nc="+numComments)+
+                            "\">Comments? ("+
+                            numComments+
+                            ")</a>" );
                 }
                 
                 sb.append("</div>\n");
@@ -308,7 +308,7 @@ public class WeblogPlugin
     }
 
     private int guessNumberOfComments( WikiEngine engine, String commentpage )
-        throws ProviderException
+            throws ProviderException
     {
         String pagedata = engine.getPureText( commentpage, WikiProvider.LATEST_VERSION );
 
@@ -322,8 +322,8 @@ public class WeblogPlugin
      *  Returns a list of pages with their FIRST revisions.
      */
     public List findBlogEntries( PageManager mgr,
-                                 String baseName, Date start, Date end )
-        throws ProviderException
+            String baseName, Date start, Date end )
+            throws ProviderException
     {
         Collection everyone = mgr.getAllPages();
         ArrayList  result = new ArrayList();

@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
@@ -67,7 +67,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  @author Janne Jalkanen
  */
 public abstract class AbstractFileProvider
-    implements WikiPageProvider
+        implements WikiPageProvider
 {
     private static final Category   log = Category.getInstance(AbstractFileProvider.class);
 
@@ -87,8 +87,8 @@ public abstract class AbstractFileProvider
      *  @throws IOException In case the specified page directory is a file, not a directory.
      */
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         log.debug("Initing FileSystemProvider");
         m_pageDirectory = engine.getPageDir();
@@ -163,7 +163,7 @@ public abstract class AbstractFileProvider
      *  does not provide versioning information for now.
      */
     public String getPageText( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         return getPageText( page );
     }
@@ -211,7 +211,7 @@ public abstract class AbstractFileProvider
     }
 
     public void putPageText( WikiPage page, String text )        
-        throws ProviderException
+            throws ProviderException
     {
         File file = findPage( page.getName() );
         PrintWriter out = null;
@@ -219,7 +219,7 @@ public abstract class AbstractFileProvider
         try
         {
             out = new PrintWriter(new OutputStreamWriter( new FileOutputStream( file ),
-                                                          m_encoding ));
+                            m_encoding ));
 
             out.print( text );
         }
@@ -234,7 +234,7 @@ public abstract class AbstractFileProvider
     }
 
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         log.debug("Getting all pages...");
 
@@ -255,7 +255,7 @@ public abstract class AbstractFileProvider
             int cutpoint = wikiname.lastIndexOf( FILE_EXT );
 
             WikiPage page = getPageInfo( unmangleName(wikiname.substring(0,cutpoint)),
-                                         WikiPageProvider.LATEST_VERSION );
+                    WikiPageProvider.LATEST_VERSION );
             if( page == null )
             {
                 // This should not really happen.
@@ -336,7 +336,7 @@ public abstract class AbstractFileProvider
      *  does not support versioning.
      */
     public WikiPage getPageInfo( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         File file = findPage( page );
 
@@ -355,7 +355,7 @@ public abstract class AbstractFileProvider
      *  The FileSystemProvider provides only one version.
      */
     public List getVersionHistory( String page )
-        throws ProviderException
+            throws ProviderException
     {
         ArrayList list = new ArrayList();
 
@@ -370,7 +370,7 @@ public abstract class AbstractFileProvider
     }
 
     public void deleteVersion( String pageName, int version )
-        throws ProviderException
+            throws ProviderException
     {
         if( version == WikiProvider.LATEST_VERSION )
         {
@@ -381,7 +381,7 @@ public abstract class AbstractFileProvider
     }
 
     public void deletePage( String pageName )
-        throws ProviderException
+            throws ProviderException
     {
         File f = findPage( pageName );
 
@@ -389,7 +389,7 @@ public abstract class AbstractFileProvider
     }
 
     public class WikiFileFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         public boolean accept( File dir, String name )
         {

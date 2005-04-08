@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki;
 
 import java.io.BufferedReader;
@@ -107,7 +107,7 @@ public class TranslatorReader
     private boolean        m_isEscaping   = false;
     private boolean        m_isdefinition = false;
 
-     // general list handling
+    // general list handling
     private int            m_genlistlevel = 0;
     private StringBuffer   m_genlistBulletBuffer = new StringBuffer();  // stores the # and * pattern
     private boolean        m_allowPHPWikiStyleLists = true;
@@ -212,7 +212,7 @@ public class TranslatorReader
         if( in != null )
         {
             m_in = new PushbackReader( new BufferedReader( in ),
-                                       PUSHBACK_BUFFER_SIZE );
+                    PUSHBACK_BUFFER_SIZE );
         }
 
         return old;
@@ -225,8 +225,8 @@ public class TranslatorReader
 
     // FIXME: TranslatorReaders should be pooled for better performance.
     private void initialize( WikiContext context, 
-                             Reader in, 
-                             TextRenderer renderer )
+            Reader in, 
+            TextRenderer renderer )
     {
         PatternCompiler compiler         = new GlobCompiler();
         ArrayList       compiledpatterns = new ArrayList();
@@ -557,7 +557,7 @@ public class TranslatorReader
             char ch = clean.charAt(i);
 
             if( !(Character.isLetterOrDigit(ch) ||
-                  PUNCTUATION_CHARS_ALLOWED.indexOf(ch) != -1 ))
+                            PUNCTUATION_CHARS_ALLOWED.indexOf(ch) != -1 ))
             {
                 clean.deleteCharAt(i);
                 --i; // We just shortened this buffer.
@@ -666,7 +666,7 @@ public class TranslatorReader
             if( res.group(1) != null )
             {
                 if( res.group(1).equals("~") ||
-                    res.group(1).indexOf('[') != -1 )
+                        res.group(1).indexOf('[') != -1 )
                 {
                     // Delete the (~) from beginning.
                     // We'll make '~' the generic kill-processing-character from
@@ -757,7 +757,7 @@ public class TranslatorReader
             res = makeLink( IMAGELINK, reallink, link );
         }
         else if( (matchedLink = linkExists( possiblePage )) != null &&
-                 hasLinkText )
+                hasLinkText )
         {
             // System.out.println("Orig="+link+", Matched: "+matchedLink);
             callMutatorChain( m_localLinkMutatorChain, possiblePage );
@@ -825,7 +825,7 @@ public class TranslatorReader
             if( name.length() > 0 && val.length() > 0 )
             {
                 val = m_engine.getVariableManager().expandVariables( m_context,
-                                                                     val );
+                        val );
             
                 m_context.getPage().setAttribute( name, val );
             }
@@ -1053,8 +1053,8 @@ public class TranslatorReader
         Attachment att = null;
 
         /*
-        System.out.println("Finding attachment of page "+currentPage.getName());
-        System.out.println("With name "+link);
+          System.out.println("Finding attachment of page "+currentPage.getName());
+          System.out.println("With name "+link);
         */
 
         try
@@ -1106,15 +1106,15 @@ public class TranslatorReader
         }
 
         /*
-        for( ; m_listlevel > 0; m_listlevel-- )
-        {
-            buf.append( "</ul>\n" );
-        }
+          for( ; m_listlevel > 0; m_listlevel-- )
+          {
+          buf.append( "</ul>\n" );
+          }
 
-        for( ; m_numlistlevel > 0; m_numlistlevel-- )
-        {
-            buf.append( "</ol>\n" );
-        }
+          for( ; m_numlistlevel > 0; m_numlistlevel-- )
+          {
+          buf.append( "</ol>\n" );
+          }
         */
         // cleanup OL and UL lists
         buf.append(unwindGeneralList());
@@ -1169,7 +1169,7 @@ public class TranslatorReader
     }
 
     private int nextToken()
-        throws IOException
+            throws IOException
     {
         if( m_in == null ) return -1;
         return m_in.read();
@@ -1180,7 +1180,7 @@ public class TranslatorReader
      *  push back a read EOF, though.
      */
     private void pushBack( int c )
-        throws IOException
+            throws IOException
     {        
         if( c != -1 && m_in != null )
         {
@@ -1195,7 +1195,7 @@ public class TranslatorReader
      *  @since 2.1.77
      */
     private void pushBack( String s )
-        throws IOException
+            throws IOException
     {
         for( int i = s.length()-1; i >= 0; i-- )
         {
@@ -1204,7 +1204,7 @@ public class TranslatorReader
     }
 
     private String handleBackslash()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1228,7 +1228,7 @@ public class TranslatorReader
     }
 
     private String handleUnderscore()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "_";
@@ -1250,7 +1250,7 @@ public class TranslatorReader
      *  For example: italics.
      */
     private String handleApostrophe()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "'";
@@ -1269,7 +1269,7 @@ public class TranslatorReader
     }
 
     private String handleOpenbrace( boolean isBlock )
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "{";
@@ -1290,7 +1290,7 @@ public class TranslatorReader
                 
                 res = m_renderer.openTextEffect(TYPED);
                 m_isTypedText = true;
-           }
+            }
         }
         else
         {
@@ -1304,7 +1304,7 @@ public class TranslatorReader
      *  Handles both }} and }}}
      */
     private String handleClosebrace()
-        throws IOException
+            throws IOException
     {
         String res = "}";
 
@@ -1351,7 +1351,7 @@ public class TranslatorReader
     }
 
     private String handleDash()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1392,7 +1392,7 @@ public class TranslatorReader
 
     // FIXME: Always returns an empty line, even if the stream is full.
     private String peekAheadLine()
-        throws IOException
+            throws IOException
     {
         String s = readUntilEOL().toString();
         pushBack( s );
@@ -1401,7 +1401,7 @@ public class TranslatorReader
     }
 
     private String handleHeading()
-        throws IOException
+            throws IOException
     {
         StringBuffer buf = new StringBuffer();
 
@@ -1443,7 +1443,7 @@ public class TranslatorReader
      *  EOL from the stream.
      */
     private StringBuffer readUntilEOL()
-        throws IOException
+            throws IOException
     {
         int ch;
         StringBuffer buf = new StringBuffer();
@@ -1487,123 +1487,123 @@ public class TranslatorReader
     // FIXME: Refactor this; it's a bit messy.
 
     private String handleGeneralList()
-        throws IOException
+            throws IOException
     {
-         String cStrShortName = "handleGeneralList()";   //put log messages in some context
+        String cStrShortName = "handleGeneralList()";   //put log messages in some context
 
-         StringBuffer buf = new StringBuffer();
+        StringBuffer buf = new StringBuffer();
 
-         buf.append( startBlockLevel() );
+        buf.append( startBlockLevel() );
 
-         String strBullets = readWhile( "*#" );
-         String strBulletsRaw = strBullets;      // to know what was original before phpwiki style substitution
-         int numBullets = strBullets.length();
+        String strBullets = readWhile( "*#" );
+        String strBulletsRaw = strBullets;      // to know what was original before phpwiki style substitution
+        int numBullets = strBullets.length();
 
-         // override the beginning portion of bullet pattern to be like the previous
-         // to simulate PHPWiki style lists
+        // override the beginning portion of bullet pattern to be like the previous
+        // to simulate PHPWiki style lists
 
-         if(m_allowPHPWikiStyleLists)
-         {
-             // only substitute if different
-             if(!( strBullets.substring(0,Math.min(numBullets,m_genlistlevel)).equals
-                   (m_genlistBulletBuffer.substring(0,Math.min(numBullets,m_genlistlevel)) ) ) )
-             {
-                 if(numBullets <= m_genlistlevel)
-                 {
-                     // Substitute all but the last character (keep the expressed bullet preference)
-                     strBullets  = (numBullets > 1 ? m_genlistBulletBuffer.substring(0, numBullets-1) : "")
-                                   + strBullets.substring(numBullets-1, numBullets);
-                 }
-                 else
-                 {
-                     strBullets = m_genlistBulletBuffer + strBullets.substring(m_genlistlevel, numBullets);
-                 }
-             }
-         }
+        if(m_allowPHPWikiStyleLists)
+        {
+            // only substitute if different
+            if(!( strBullets.substring(0,Math.min(numBullets,m_genlistlevel)).equals
+                            (m_genlistBulletBuffer.substring(0,Math.min(numBullets,m_genlistlevel)) ) ) )
+            {
+                if(numBullets <= m_genlistlevel)
+                {
+                    // Substitute all but the last character (keep the expressed bullet preference)
+                    strBullets  = (numBullets > 1 ? m_genlistBulletBuffer.substring(0, numBullets-1) : "")
+                            + strBullets.substring(numBullets-1, numBullets);
+                }
+                else
+                {
+                    strBullets = m_genlistBulletBuffer + strBullets.substring(m_genlistlevel, numBullets);
+                }
+            }
+        }
 
-         //
-         //  Check if this is still of the same type
-         //
-         if( strBullets.substring(0,Math.min(numBullets,m_genlistlevel)).equals
-            (m_genlistBulletBuffer.substring(0,Math.min(numBullets,m_genlistlevel)) ) )
-         {
-             int chBullet;
+        //
+        //  Check if this is still of the same type
+        //
+        if( strBullets.substring(0,Math.min(numBullets,m_genlistlevel)).equals
+                (m_genlistBulletBuffer.substring(0,Math.min(numBullets,m_genlistlevel)) ) )
+        {
+            int chBullet;
 
-             if( numBullets > m_genlistlevel )
-             {
-                 buf.append( m_renderer.openList(strBullets.charAt(m_genlistlevel++)) );
+            if( numBullets > m_genlistlevel )
+            {
+                buf.append( m_renderer.openList(strBullets.charAt(m_genlistlevel++)) );
 
-                 for( ; m_genlistlevel < numBullets; m_genlistlevel++ )
-                 {
-                     // bullets are growing, get from new bullet list
-                     buf.append( m_renderer.openListItem() );
-                     buf.append( m_renderer.openList(strBullets.charAt(m_genlistlevel)) );
-                 }
-             }
-             else if( numBullets < m_genlistlevel )
-             {
-                 //  Close the previous list item.
-                 buf.append( m_renderer.closeListItem() );
+                for( ; m_genlistlevel < numBullets; m_genlistlevel++ )
+                {
+                    // bullets are growing, get from new bullet list
+                    buf.append( m_renderer.openListItem() );
+                    buf.append( m_renderer.openList(strBullets.charAt(m_genlistlevel)) );
+                }
+            }
+            else if( numBullets < m_genlistlevel )
+            {
+                //  Close the previous list item.
+                buf.append( m_renderer.closeListItem() );
 
-                 for( ; m_genlistlevel > numBullets; m_genlistlevel-- )
-                 {
-                     // bullets are shrinking, get from old bullet list
-                     buf.append( m_renderer.closeList(m_genlistBulletBuffer.charAt(m_genlistlevel - 1)) );
-                     if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
+                for( ; m_genlistlevel > numBullets; m_genlistlevel-- )
+                {
+                    // bullets are shrinking, get from old bullet list
+                    buf.append( m_renderer.closeList(m_genlistBulletBuffer.charAt(m_genlistlevel - 1)) );
+                    if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
 
-                 }
-             }
-             else
-             {
-                 if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
-             }
-         }
-         else
-         {
-             //
-             //  The pattern has changed, unwind and restart
-             //
-             char chBullet;
-             int  numEqualBullets;
-             int  numCheckBullets;
+                }
+            }
+            else
+            {
+                if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
+            }
+        }
+        else
+        {
+            //
+            //  The pattern has changed, unwind and restart
+            //
+            char chBullet;
+            int  numEqualBullets;
+            int  numCheckBullets;
 
-             // find out how much is the same
-             numEqualBullets = 0;
-             numCheckBullets = Math.min(numBullets,m_genlistlevel);
+            // find out how much is the same
+            numEqualBullets = 0;
+            numCheckBullets = Math.min(numBullets,m_genlistlevel);
 
-             while( numEqualBullets < numCheckBullets )
-             {
-                 // if the bullets are equal so far, keep going
-                 if( strBullets.charAt(numEqualBullets) == m_genlistBulletBuffer.charAt(numEqualBullets))
-                     numEqualBullets++;
-                 // otherwise giveup, we have found how many are equal
-                 else
-                     break;
-             }
+            while( numEqualBullets < numCheckBullets )
+            {
+                // if the bullets are equal so far, keep going
+                if( strBullets.charAt(numEqualBullets) == m_genlistBulletBuffer.charAt(numEqualBullets))
+                    numEqualBullets++;
+                // otherwise giveup, we have found how many are equal
+                else
+                    break;
+            }
 
-             //unwind
-             for( ; m_genlistlevel > numEqualBullets; m_genlistlevel-- )
-             {
-                 buf.append( m_renderer.closeList( m_genlistBulletBuffer.charAt(m_genlistlevel - 1) ) );
-                 if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
-             }
+            //unwind
+            for( ; m_genlistlevel > numEqualBullets; m_genlistlevel-- )
+            {
+                buf.append( m_renderer.closeList( m_genlistBulletBuffer.charAt(m_genlistlevel - 1) ) );
+                if( m_genlistlevel > 0 ) buf.append( m_renderer.closeListItem() );
+            }
 
-             //rewind
-             buf.append( m_renderer.openList( strBullets.charAt(numEqualBullets++) ) );
-             for(int i = numEqualBullets; i < numBullets; i++)
-             {
-                 buf.append( m_renderer.openListItem() );
-                 buf.append( m_renderer.openList( strBullets.charAt(i) ) );
-             }
-             m_genlistlevel = numBullets;
-         }
-         buf.append( m_renderer.openListItem() );
+            //rewind
+            buf.append( m_renderer.openList( strBullets.charAt(numEqualBullets++) ) );
+            for(int i = numEqualBullets; i < numBullets; i++)
+            {
+                buf.append( m_renderer.openListItem() );
+                buf.append( m_renderer.openList( strBullets.charAt(i) ) );
+            }
+            m_genlistlevel = numBullets;
+        }
+        buf.append( m_renderer.openListItem() );
 
-         // work done, remember the new bullet list (in place of old one)
-         m_genlistBulletBuffer.setLength(0);
-         m_genlistBulletBuffer.append(strBullets);
+        // work done, remember the new bullet list (in place of old one)
+        m_genlistBulletBuffer.setLength(0);
+        m_genlistBulletBuffer.append(strBullets);
 
-         return buf.toString();
+        return buf.toString();
     }
 
     private String unwindGeneralList()
@@ -1627,7 +1627,7 @@ public class TranslatorReader
 
 
     private String handleDefinitionList()
-        throws IOException
+            throws IOException
     {
         if( !m_isdefinition )
         {
@@ -1642,7 +1642,7 @@ public class TranslatorReader
     }
 
     private String handleOpenbracket()
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch;
@@ -1698,7 +1698,7 @@ public class TranslatorReader
      *  in the stream.
      */
     private String readUntil( String endChars )
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch = nextToken();
@@ -1733,7 +1733,7 @@ public class TranslatorReader
      *  in the stream, returning then the result as a String.
      */
     private String readWhile( String endChars )
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch = nextToken();
@@ -1766,7 +1766,7 @@ public class TranslatorReader
     
 
     private String handleDiv( boolean newLine )
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1816,7 +1816,7 @@ public class TranslatorReader
     }
 
     private String handleBar( boolean newLine )
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
 
@@ -1866,7 +1866,7 @@ public class TranslatorReader
      *  Generic escape of next character or entity.
      */
     private String handleTilde()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1887,7 +1887,7 @@ public class TranslatorReader
     }
 
     private void fillBuffer()
-        throws IOException
+            throws IOException
     {
         StringBuffer buf = new StringBuffer();
         StringBuffer word = null;
@@ -1937,10 +1937,10 @@ public class TranslatorReader
                 // Quick parse of start of a word boundary.
 
                 if( word == null &&                    
-                    (Character.isWhitespace( (char)previousCh ) ||
-                     WORD_SEPARATORS.indexOf( (char)previousCh ) != -1 ||
-                     newLine ) &&
-                    !Character.isWhitespace( (char) ch ) )
+                        (Character.isWhitespace( (char)previousCh ) ||
+                                WORD_SEPARATORS.indexOf( (char)previousCh ) != -1 ||
+                                newLine ) &&
+                        !Character.isWhitespace( (char) ch ) )
                 {
                     word = new StringBuffer();
                 }
@@ -1953,8 +1953,8 @@ public class TranslatorReader
                     //
 
                     if( Character.isWhitespace( (char)ch ) || 
-                        ch == -1 ||
-                        WORD_SEPARATORS.indexOf( (char) ch ) != -1 )
+                            ch == -1 ||
+                            WORD_SEPARATORS.indexOf( (char) ch ) != -1 )
                     {
                         String potentialLink = word.toString();
 
@@ -1967,8 +1967,8 @@ public class TranslatorReader
                             // System.out.println("  Replacing "+camelCase+" with proper link.");
                             start = buf.toString().lastIndexOf( camelCase );
                             buf.replace(start,
-                                        start+camelCase.length(),
-                                        makeCamelCaseLink(camelCase) );
+                                    start+camelCase.length(),
+                                    makeCamelCaseLink(camelCase) );
 
                             // System.out.println("  Resulting with "+buf);
                         }
@@ -1989,8 +1989,8 @@ public class TranslatorReader
                                     // System.out.println("start="+start+", pl="+potentialLink);
 
                                     buf.replace( start,
-                                                 start + potentialLink.length(),
-                                                 makeDirectURILink( link ) );
+                                            start + potentialLink.length(),
+                                            makeDirectURILink( link ) );
 
                                     // System.out.println("Resulting with "+buf);
 
@@ -2034,12 +2034,12 @@ public class TranslatorReader
             //
             switch( ch )
             {
-              case '\r':
+            case '\r':
                 // DOS linefeeds we forget
                 s = null;
                 break;
 
-              case '\n':
+            case '\n':
                 //
                 //  Close things like headings, etc.
                 //
@@ -2062,11 +2062,11 @@ public class TranslatorReader
                     //
                     String nextLine = peekAheadLine();
                     if( nextLine.length() == 0 || 
-                        (nextLine.length() > 0 &&
-                         !nextLine.startsWith("{{{") &&
-                         !nextLine.startsWith("----") &&
-                         !nextLine.startsWith("%%") &&
-                         "*#!;".indexOf( nextLine.charAt(0) ) == -1) )
+                            (nextLine.length() > 0 &&
+                                    !nextLine.startsWith("{{{") &&
+                                    !nextLine.startsWith("----") &&
+                                    !nextLine.startsWith("%%") &&
+                                    "*#!;".indexOf( nextLine.charAt(0) ) == -1) )
                     {
                         buf.append( m_renderer.openParagraph() );
                         m_isOpenParagraph = true;
@@ -2080,31 +2080,31 @@ public class TranslatorReader
 
                 break;
 
-              case '\\':
+            case '\\':
                 s = handleBackslash();
                 break;
 
-              case '_':
+            case '_':
                 s = handleUnderscore();
                 break;
                 
-              case '\'':
+            case '\'':
                 s = handleApostrophe();
                 break;
 
-              case '{':
+            case '{':
                 s = handleOpenbrace( newLine );
                 break;
 
-              case '}':
+            case '}':
                 s = handleClosebrace();
                 break;
 
-              case '-':
+            case '-':
                 s = handleDash();
                 break;
 
-              case '!':
+            case '!':
                 if( newLine )
                 {
                     s = handleHeading();
@@ -2115,7 +2115,7 @@ public class TranslatorReader
                 }
                 break;
 
-              case ';':
+            case ';':
                 if( newLine )
                 {
                     s = handleDefinitionList();
@@ -2126,7 +2126,7 @@ public class TranslatorReader
                 }
                 break;
 
-              case ':':
+            case ':':
                 if( m_isdefinition )
                 {
                     s = m_renderer.closeDefinitionTitle()+m_renderer.openDefinitionItem();
@@ -2138,11 +2138,11 @@ public class TranslatorReader
                 }
                 break;
 
-              case '[':
+            case '[':
                 s = handleOpenbracket();
                 break;
 
-              case '*':
+            case '*':
                 if( newLine )
                 {
                     pushBack('*');
@@ -2154,7 +2154,7 @@ public class TranslatorReader
                 }
                 break;
 
-              case '#':
+            case '#':
                 if( newLine )
                 {
                     pushBack('#');
@@ -2166,36 +2166,36 @@ public class TranslatorReader
                 }
                 break;
 
-              case '|':
+            case '|':
                 s = handleBar( newLine );
                 break;
 
-              case '<':
+            case '<':
                 s = m_allowHTML ? "<" : "&lt;";
                 break;
 
-              case '>':
+            case '>':
                 s = m_allowHTML ? ">" : "&gt;";
                 break;
 
-              case '\"':
+            case '\"':
                 s = m_allowHTML ? "\"" : "&quot;";
                 break;
 
                 /*
-              case '&':
-                s = "&amp;";
-                break;
+                  case '&':
+                  s = "&amp;";
+                  break;
                 */
-              case '~':
+            case '~':
                 s = handleTilde();
                 break;
 
-              case '%':
+            case '%':
                 s = handleDiv( newLine );
                 break;
 
-              case -1:
+            case -1:
                 if( m_closeTag != null )
                 {
                     buf.append( m_closeTag );
@@ -2204,7 +2204,7 @@ public class TranslatorReader
                 quitReading = true;
                 break;
 
-              default:
+            default:
                 buf.append( (char)ch );
                 newLine = false;
                 break;
@@ -2216,14 +2216,14 @@ public class TranslatorReader
                 newLine = false;
             }
 
-         }
+        }
 
         m_data = new StringReader( buf.toString() );
     }
 
 
     public int read()
-        throws IOException
+            throws IOException
     {
         int val = m_data.read();
 
@@ -2244,13 +2244,13 @@ public class TranslatorReader
     }
 
     public int read( char[] buf, int off, int len )
-        throws IOException
+            throws IOException
     {
         return m_data.read( buf, off, len );
     }
 
     public boolean ready()
-        throws IOException
+            throws IOException
     {
         log.debug("ready ? "+m_data.ready() );
         if(!m_data.ready())
@@ -2274,13 +2274,13 @@ public class TranslatorReader
     // FIXME: Not everything is yet, and in the future this class will be spawned
     //        out to be its own class.
     private class HTMLRenderer
-        extends TextRenderer
+            extends TextRenderer
     {
         private boolean m_isPreBlock = false;
         private TranslatorReader m_cleanTranslator;
 
         /*
-           FIXME: It's relatively slow to create two TranslatorReaders each time.
+          FIXME: It's relatively slow to create two TranslatorReaders each time.
         */
         public HTMLRenderer()
         {
@@ -2296,10 +2296,10 @@ public class TranslatorReader
             if( m_cleanTranslator == null )
             {
                 WikiContext dummyContext = new WikiContext( m_engine, 
-                                                            new WikiPage("_Dummy"));
+                        new WikiPage("_Dummy"));
                 m_cleanTranslator = new TranslatorReader( dummyContext, 
-                                                          null,
-                                                          new TextRenderer() );
+                        null,
+                        new TextRenderer() );
                 m_cleanTranslator.m_allowHTML = true;
             }
 
@@ -2360,11 +2360,11 @@ public class TranslatorReader
         {
             switch( effect )
             {
-              case BOLD:
+            case BOLD:
                 return "<b>";
-              case ITALIC:
+            case ITALIC:
                 return "<i>";
-              case TYPED:
+            case TYPED:
                 return "<tt>";
             }
 
@@ -2375,11 +2375,11 @@ public class TranslatorReader
         {
             switch( effect )
             {
-              case BOLD:
+            case BOLD:
                 return "</b>";
-              case ITALIC:
+            case ITALIC:
                 return "</i>";
-              case TYPED:
+            case TYPED:
                 return "</tt>";
             }
 
@@ -2429,8 +2429,8 @@ public class TranslatorReader
         private final String getURL( String context, String link )
         {
             return m_context.getURL( context,
-                                     link,
-                                     null );
+                    link,
+                    null );
         }
 
         /**
@@ -2462,17 +2462,17 @@ public class TranslatorReader
 
             switch(type)
             {
-              case READ:
+            case READ:
                 result = "<a class=\"wikipage\" href=\""+getURL(WikiContext.VIEW,
-                                                                link)+section+"\">"+text+"</a>";
+                        link)+section+"\">"+text+"</a>";
                 break;
 
-              case EDIT:
+            case EDIT:
                 result = "<u>"+text+"</u><a href=\""+getURL(WikiContext.EDIT,
-                                                            link)+"\">?</a>";
+                        link)+"\">?</a>";
                 break;
 
-              case EMPTY:
+            case EMPTY:
                 result = "<u>"+text+"</u>";
                 break;
 
@@ -2482,16 +2482,16 @@ public class TranslatorReader
                 //  We embed the page name (or whatever WikiContext gives us)
                 //  to make sure the links are unique across Wiki.
                 //
-              case LOCALREF:
+            case LOCALREF:
                 result = "<a class=\"footnoteref\" href=\"#ref-"+
-                m_context.getPage().getName()+"-"+
-                link+"\">["+text+"]</a>";
+                        m_context.getPage().getName()+"-"+
+                        link+"\">["+text+"]</a>";
                 break;
 
-              case LOCAL:
+            case LOCAL:
                 result = "<a class=\"footnote\" name=\"ref-"+
-                m_context.getPage().getName()+"-"+
-                link.substring(1)+"\">["+text+"]</a>";
+                        m_context.getPage().getName()+"-"+
+                        link.substring(1)+"\">["+text+"]</a>";
                 break;
 
                 //
@@ -2501,45 +2501,45 @@ public class TranslatorReader
                 //  a haxor from stopping the link name short with quotes in 
                 //  fillBuffer().
                 //
-              case IMAGE:
+            case IMAGE:
                 result = "<img class=\"inline\" src=\""+link+"\" alt=\""+text+"\" />";
                 break;
 
-              case IMAGELINK:
+            case IMAGELINK:
                 result = "<a href=\""+text+"\"><img class=\"inline\" src=\""+link+"\" alt=\""+text+"\"/></a>";
                 break;
 
-              case IMAGEWIKILINK:
+            case IMAGEWIKILINK:
                 String pagelink = getURL(WikiContext.VIEW,text);
                 result = "<a class=\"wikipage\" href=\""+pagelink+"\"><img class=\"inline\" src=\""+link+"\" alt=\""+text+"\" /></a>";
                 break;
 
-              case EXTERNAL:
+            case EXTERNAL:
                 result = "<a class=\"external\" "+
-                         (m_useRelNofollow ? "rel=\"nofollow\" " : "")+
-                         "href=\""+link+section+"\">"+text+"</a>";
+                        (m_useRelNofollow ? "rel=\"nofollow\" " : "")+
+                        "href=\""+link+section+"\">"+text+"</a>";
                 break;
                 
-              case INTERWIKI:
+            case INTERWIKI:
                 result = "<a class=\"interwiki\" href=\""+link+section+"\">"+text+"</a>";
                 break;
 
-              case ATTACHMENT:
+            case ATTACHMENT:
                 String attlink = getURL( WikiContext.ATTACH,
-                                         link );
+                        link );
 
                 String infolink = getURL( WikiContext.INFO,
-                                          link );
+                        link );
 
                 String imglink = getURL( WikiContext.NONE,
-                                         "images/attachment_small.png" );
+                        "images/attachment_small.png" );
 
                 result = "<a class=\"attachment\" href=\""+attlink+"\">"+text+"</a>"+
-                         "<a href=\""+infolink+
-                         "\"><img src=\""+imglink+"\" border=\"0\" alt=\"(info)\"/></a>";
+                        "<a href=\""+infolink+
+                        "\"><img src=\""+imglink+"\" border=\"0\" alt=\"(info)\"/></a>";
                 break;
 
-              default:
+            default:
                 result = "";
                 break;
             }
@@ -2574,7 +2574,7 @@ public class TranslatorReader
             title = cleanLink( title );
             hd.m_titleSection = m_engine.encodeName(title);
             hd.m_titleAnchor = "section-"+m_engine.encodeName(baseName)+
-                               "-"+hd.m_titleSection;            
+                    "-"+hd.m_titleSection;            
             return "<a name=\""+hd.m_titleAnchor+"\">";
         }
 
@@ -2611,17 +2611,17 @@ public class TranslatorReader
 
             switch( level )
             {
-              case Heading.HEADING_SMALL:
+            case Heading.HEADING_SMALL:
                 res = "<h4>"+makeHeadingAnchor( pageName, outTitle.toString(), hd );
                 m_closeTag = "</a></h4>";
                 break;
 
-              case Heading.HEADING_MEDIUM:
+            case Heading.HEADING_MEDIUM:
                 res = "<h3>"+makeHeadingAnchor( pageName, outTitle.toString(), hd );
                 m_closeTag = "</a></h3>";
                 break;
 
-              case Heading.HEADING_LARGE:
+            case Heading.HEADING_LARGE:
                 res = "<h2>"+makeHeadingAnchor( pageName, outTitle.toString(), hd );
                 m_closeTag = "</a></h2>";
                 break;
@@ -2752,7 +2752,7 @@ public class TranslatorReader
             if( m_useOutlinkImage )
             {
                 return "<img class=\"outlink\" src=\""+
-                       getURL( WikiContext.NONE,"images/out.png" )+"\" alt=\"\" />";
+                        getURL( WikiContext.NONE,"images/out.png" )+"\" alt=\"\" />";
             }
 
             return "";
@@ -2899,17 +2899,17 @@ public class TranslatorReader
 
             switch( level )
             {
-              case Heading.HEADING_SMALL:
+            case Heading.HEADING_SMALL:
                 res = title;
                 m_closeTag = "\n\n";
                 break;
 
-              case Heading.HEADING_MEDIUM:
+            case Heading.HEADING_MEDIUM:
                 res = title;                
                 m_closeTag = "\n"+StringUtils.repeat("-",title.length())+"\n\n";
                 break;
 
-              case Heading.HEADING_LARGE:
+            case Heading.HEADING_LARGE:
                 res = title.toUpperCase();
                 m_closeTag= "\n"+StringUtils.repeat("=",title.length())+"\n\n";
                 break;

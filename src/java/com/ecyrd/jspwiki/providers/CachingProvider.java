@@ -1,22 +1,22 @@
 /*
-    JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
@@ -94,7 +94,7 @@ import com.opensymphony.oscache.base.events.CachewideEvent;
 //        for a lot of things.  RefactorMe.
 
 public class CachingProvider
-    implements WikiPageProvider, WikiProperties
+        implements WikiPageProvider, WikiProperties
 {
     private static final Logger log = Logger.getLogger(CachingProvider.class);
 
@@ -143,8 +143,8 @@ public class CachingProvider
     private static final String LUCENE_PAGE_CONTENTS   = "contents";
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         log.debug("Initing CachingProvider");
 
@@ -152,8 +152,8 @@ public class CachingProvider
         //  Cache consistency checks
         //
         m_expiryPeriod = conf.getInt(
-                                                      PROP_CACHECHECKINTERVAL,
-                                                      PROP_CACHECHECKINTERVAL_DEFAULT);
+                PROP_CACHECHECKINTERVAL,
+                PROP_CACHECHECKINTERVAL_DEFAULT);
 
         log.debug("Cache expiry period is "+m_expiryPeriod+" s");
 
@@ -161,8 +161,8 @@ public class CachingProvider
         //  Text cache capacity
         //
         int capacity = conf.getInt(
-                                                    PROP_CACHECAPACITY,
-                                                    PROP_CACHECAPACITY_DEFAULT );
+                PROP_CACHECAPACITY,
+                PROP_CACHECAPACITY_DEFAULT );
 
         log.debug("Cache capacity "+capacity+" pages.");
 
@@ -172,12 +172,12 @@ public class CachingProvider
         m_negCache = new Cache( true, false, false );
         
         m_textCache = new Cache( true, false, false, false,
-                                 OSCACHE_ALGORITHM,
-                                 capacity );
+                OSCACHE_ALGORITHM,
+                capacity );
 
         m_historyCache = new Cache( true, false, false, false, 
-                                    OSCACHE_ALGORITHM,
-                                    capacity );
+                OSCACHE_ALGORITHM,
+                capacity );
                                     
         //
         //  Find and initialize real provider.
@@ -187,7 +187,7 @@ public class CachingProvider
         try
         {            
             Class providerclass = ClassUtil.findClass( WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX,
-                                                       classname );
+                    classname );
 
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
@@ -251,15 +251,15 @@ public class CachingProvider
                         //        than English.
 
                         writer = new IndexWriter( m_luceneDirectory, 
-                                                  new StandardAnalyzer(), 
-                                                  true );
+                                new StandardAnalyzer(), 
+                                true );
                         Collection allPages = getAllPages();
 
                         for( Iterator iterator = allPages.iterator(); iterator.hasNext(); )
                         {
                             WikiPage page = (WikiPage) iterator.next();
                             String text = getPageText( page.getName(), 
-                                                       WikiProvider.LATEST_VERSION );
+                                    WikiProvider.LATEST_VERSION );
                             luceneIndexPage( page, text, writer );
                         }
                         writer.optimize();
@@ -271,7 +271,7 @@ public class CachingProvider
 
                     Date end = new Date();
                     log.info("Full Lucene index finished in " + 
-                             (end.getTime() - start.getTime()) + " milliseconds.");
+                            (end.getTime() - start.getTime()) + " milliseconds.");
                 }
                 else
                 {
@@ -299,13 +299,13 @@ public class CachingProvider
     }
 
     /*
-    public void finalize()
-    {
-        if( m_luceneUpdateThread != null )
-        {
-            m_luceneUpdateThread.
-        }
-    }
+      public void finalize()
+      {
+      if( m_luceneUpdateThread != null )
+      {
+      m_luceneUpdateThread.
+      }
+      }
     */
 
     /**
@@ -315,40 +315,40 @@ public class CachingProvider
     private void startLuceneUpdateThread()
     {        
         m_luceneUpdateThread = new Thread(new Runnable()
-        {
-            public void run()
             {
-                // FIXME: This is a kludge - JSPWiki should somehow report
-                //        that init phase is complete.
-                try
+                public void run()
                 {
-                    Thread.sleep( 60000L );
-                }
-                catch( InterruptedException e ) {}
-
-                while( true )
-                {
-                    while( m_updates.size() > 0 )
-                    {
-                        Object[] pair = ( Object[] ) m_updates.remove(0);
-                        WikiPage page = ( WikiPage ) pair[0];
-                        String text = ( String ) pair[1];
-                        updateLuceneIndex(page, text);
-                    }
+                    // FIXME: This is a kludge - JSPWiki should somehow report
+                    //        that init phase is complete.
                     try
                     {
-                        Thread.sleep(500);
+                        Thread.sleep( 60000L );
                     }
-                    catch ( InterruptedException e ) {}
+                    catch( InterruptedException e ) {}
+
+                    while( true )
+                    {
+                        while( m_updates.size() > 0 )
+                        {
+                            Object[] pair = ( Object[] ) m_updates.remove(0);
+                            WikiPage page = ( WikiPage ) pair[0];
+                            String text = ( String ) pair[1];
+                            updateLuceneIndex(page, text);
+                        }
+                        try
+                        {
+                            Thread.sleep(500);
+                        }
+                        catch ( InterruptedException e ) {}
+                    }
                 }
-            }
-        });
+            });
         m_luceneUpdateThread.start();
     }
 
 
     private void luceneIndexPage( WikiPage page, String text, IndexWriter writer ) 
-        throws IOException
+            throws IOException
     {
         // make a new, empty document
         Document doc = new Document();
@@ -359,7 +359,7 @@ public class CachingProvider
         // Body text is indexed, but not stored in doc. We add in the 
         // title text as well to make sure it gets considered.
         doc.add(Field.Text(LUCENE_PAGE_CONTENTS, new StringReader(text + " " +
-                TextUtil.beautifyString(page.getName()))));
+                                TextUtil.beautifyString(page.getName()))));
         writer.addDocument(doc);
     }
 
@@ -374,8 +374,8 @@ public class CachingProvider
      *         the repository
      */
     private WikiPage getPageInfoFromCache( String name )
-        throws ProviderException,
-               RepositoryModifiedException
+            throws ProviderException,
+                   RepositoryModifiedException
     {
         try
         {
@@ -556,8 +556,8 @@ public class CachingProvider
      *  @throws RepositoryModifiedException If the page has been externally modified.
      */
     public String getPageText( String pageName, int version )
-        throws ProviderException,
-               RepositoryModifiedException
+            throws ProviderException,
+                   RepositoryModifiedException
     {
         String result = null;
 
@@ -606,8 +606,8 @@ public class CachingProvider
      *  @throws RepositoryModifiedException If the page has been externally modified.
      */
     private String getTextFromCache( String pageName )
-        throws ProviderException,
-               RepositoryModifiedException
+            throws ProviderException,
+                   RepositoryModifiedException
     {
         String text;
 
@@ -616,7 +616,7 @@ public class CachingProvider
         try
         {
             text = (String)m_textCache.getFromCache( pageName,
-                                                     m_pageContentExpiryPeriod );
+                    m_pageContentExpiryPeriod );
             
             if( text == null )
             {
@@ -663,7 +663,7 @@ public class CachingProvider
     }
 
     public void putPageText( WikiPage page, String text )
-        throws ProviderException
+            throws ProviderException
     {
         synchronized(this)
         {
@@ -708,7 +708,7 @@ public class CachingProvider
         finally
         {
             try {
-            if (writer != null) writer.close();
+                if (writer != null) writer.close();
             } catch (IOException ioe) {
                 log.error("Could not update Lucene Index for " + page.getName(), ioe);
             }
@@ -742,7 +742,7 @@ public class CachingProvider
 
 
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         Collection all;
 
@@ -780,7 +780,7 @@ public class CachingProvider
     }
 
     public int getPageCount()
-        throws ProviderException
+            throws ProviderException
     {
         return m_provider.getPageCount();
     }
@@ -804,7 +804,7 @@ public class CachingProvider
         {
             if( m_useLucene )
             {
-// To keep the scoring mechanism the same, we'll only use Lucene to determine which pages to score.
+                // To keep the scoring mechanism the same, we'll only use Lucene to determine which pages to score.
                 allPages = searchLucene(query);
             }
             else
@@ -874,23 +874,23 @@ public class CachingProvider
                     StringTokenizer tok = new StringTokenizer(queryTerm.word);
                     while( tok.hasMoreTokens() )
                     {
-// Just find pages with the words, so that included stop words don't mess up search.
+                        // Just find pages with the words, so that included stop words don't mess up search.
                         String word = tok.nextToken();
                         query.add(new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)),
                                 queryTerm.type == QueryItem.REQUIRED,
                                 queryTerm.type == QueryItem.FORBIDDEN);
                     }
-/* Since we're not using Lucene to score, no reason to use PhraseQuery, which removes stop words.
-                    PhraseQuery phraseQ = new PhraseQuery();
-                    StringTokenizer tok = new StringTokenizer(queryTerm.word);
-                    while (tok.hasMoreTokens()) {
-                        String word = tok.nextToken();
-                        phraseQ.add(new Term(LUCENE_PAGE_CONTENTS, word));
-                    }
-                    query.add(phraseQ,
-                            queryTerm.type == QueryItem.REQUIRED,
-                            queryTerm.type == QueryItem.FORBIDDEN);
-*/
+                    /* Since we're not using Lucene to score, no reason to use PhraseQuery, which removes stop words.
+                       PhraseQuery phraseQ = new PhraseQuery();
+                       StringTokenizer tok = new StringTokenizer(queryTerm.word);
+                       while (tok.hasMoreTokens()) {
+                       String word = tok.nextToken();
+                       phraseQ.add(new Term(LUCENE_PAGE_CONTENTS, word));
+                       }
+                       query.add(phraseQ,
+                       queryTerm.type == QueryItem.REQUIRED,
+                       queryTerm.type == QueryItem.FORBIDDEN);
+                    */
                 }
                 else
                 { // single word query
@@ -937,15 +937,15 @@ public class CachingProvider
 
 
     public WikiPage getPageInfo( String pageName, int version )
-        throws ProviderException,
-               RepositoryModifiedException
+            throws ProviderException,
+                   RepositoryModifiedException
     {
         WikiPage cached = getPageInfoFromCache( pageName );
         
         int latestcached = (cached != null) ? cached.getVersion() : Integer.MIN_VALUE;
        
         if( version == WikiPageProvider.LATEST_VERSION ||
-            version == latestcached )
+                version == latestcached )
         {
             if( cached == null )
             {
@@ -970,14 +970,14 @@ public class CachingProvider
     }
 
     public List getVersionHistory( String page )
-        throws ProviderException
+            throws ProviderException
     {
         List history = null;
 
         try
         {
             history = (List)m_historyCache.getFromCache( page,
-                                                         m_expiryPeriod );
+                    m_expiryPeriod );
 
             log.debug("History cache hit for page "+page);
             m_historyCacheHits++;
@@ -998,16 +998,16 @@ public class CachingProvider
     public synchronized String getProviderInfo()
     {              
         return("Real provider: "+m_provider.getClass().getName()+
-               "<br />Cache misses: "+m_cacheMisses+
-               "<br />Cache hits: "+m_cacheHits+
-               "<br />History cache hits: "+m_historyCacheHits+
-               "<br />History cache misses: "+m_historyCacheMisses+
-               "<br />Cache consistency checks: "+m_expiryPeriod+"s"+
-               "<br />Lucene enabled: "+(m_useLucene?"yes":"no") );
+                "<br />Cache misses: "+m_cacheMisses+
+                "<br />Cache hits: "+m_cacheHits+
+                "<br />History cache hits: "+m_historyCacheHits+
+                "<br />History cache misses: "+m_historyCacheMisses+
+                "<br />Cache consistency checks: "+m_expiryPeriod+"s"+
+                "<br />Lucene enabled: "+(m_useLucene?"yes":"no") );
     }
 
     public void deleteVersion( String pageName, int version )
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  Luckily, this is such a rare operation it is okay
@@ -1023,7 +1023,7 @@ public class CachingProvider
             //  If we have this version cached, remove from cache.
             //
             if( version == WikiPageProvider.LATEST_VERSION ||
-                version == latestcached )
+                    version == latestcached )
             {
                 m_cache.flushEntry( pageName );
                 m_textCache.putInCache( pageName, null );
@@ -1035,7 +1035,7 @@ public class CachingProvider
     }
 
     public void deletePage( String pageName )
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  See note in deleteVersion().
@@ -1074,7 +1074,7 @@ public class CachingProvider
      *  @since
      */
     private class CacheItemCollector
-        implements CacheEntryEventListener
+            implements CacheEntryEventListener
     {
         private TreeSet m_allItems = new TreeSet();
         

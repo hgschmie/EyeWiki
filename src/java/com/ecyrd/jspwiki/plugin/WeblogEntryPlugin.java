@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
@@ -48,25 +48,25 @@ public class WeblogEntryPlugin implements WikiPlugin
     public static final String PARAM_ENTRYTEXT = "entrytext";
 
     public String getNewEntryPage( WikiEngine engine, String blogName )
-        throws ProviderException
+            throws ProviderException
     {
         SimpleDateFormat fmt = new SimpleDateFormat(WeblogPlugin.DEFAULT_DATEFORMAT);
         String today = fmt.format( new Date() );
             
         int entryNum = findFreeEntry( engine.getPageManager(),
-                                      blogName,
-                                      today );
+                blogName,
+                today );
 
                         
         String blogPage = WeblogPlugin.makeEntryPage( blogName,
-                                                      today,
-                                                      ""+entryNum );
+                today,
+                ""+entryNum );
 
         return blogPage;
     }
 
     public String execute( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         String weblogName = context.getPage().getName();
         WikiEngine engine = context.getEngine();
@@ -94,9 +94,9 @@ public class WeblogEntryPlugin implements WikiPlugin
     }
 
     private int findFreeEntry( PageManager mgr,
-                               String baseName,
-                               String date )
-        throws ProviderException
+            String baseName,
+            String date )
+            throws ProviderException
     {
         Collection everyone = mgr.getAllPages();
         int max = 0;
@@ -135,8 +135,8 @@ public class WeblogEntryPlugin implements WikiPlugin
         while( idx < MAX_BLOG_ENTRIES )
         {
             WikiPage page = new WikiPage( WeblogPlugin.makeEntryPage( baseName, 
-                                                                      date, 
-                                                                      Integer.toString(idx) ) );
+                            date, 
+                            Integer.toString(idx) ) );
             PageLock lock = mgr.getCurrentLock( page );
 
             if( lock == null )

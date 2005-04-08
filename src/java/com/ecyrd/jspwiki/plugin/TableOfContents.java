@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  @author Janne Jalkanen
  */
 public class TableOfContents
-    implements WikiPlugin, HeadingListener
+        implements WikiPlugin, HeadingListener
 {
     private static Logger log = Logger.getLogger( TableOfContents.class );
 
@@ -55,16 +55,16 @@ public class TableOfContents
 
         switch( hd.m_level )
         {
-          case TranslatorReader.Heading.HEADING_SMALL:
+        case TranslatorReader.Heading.HEADING_SMALL:
             m_buf.append("***");
             break;
-          case TranslatorReader.Heading.HEADING_MEDIUM:
+        case TranslatorReader.Heading.HEADING_MEDIUM:
             m_buf.append("**");
             break;
-          case TranslatorReader.Heading.HEADING_LARGE:
+        case TranslatorReader.Heading.HEADING_LARGE:
             m_buf.append("*");
             break;
-          default:
+        default:
             throw new InternalWikiException("Unknown depth in toc! (Please submit a bug report.)");
         }
 
@@ -72,7 +72,7 @@ public class TableOfContents
     }
 
     public String execute( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
         WikiPage   page   = context.getPage();
@@ -97,14 +97,14 @@ public class TableOfContents
             String wikiText = engine.getPureText( page );
             
             TranslatorReader in = new TranslatorReader( context,
-                                                        new StringReader(wikiText) );
+                    new StringReader(wikiText) );
             in.enablePlugins( false );
             in.addHeadingListener( this );
 
             FileUtil.readContents( in );
 
             in = new TranslatorReader( context,
-                                       new StringReader( m_buf.toString() ) );
+                    new StringReader( m_buf.toString() ) );
             sb.append(FileUtil.readContents( in ));
         }
         catch( IOException e )

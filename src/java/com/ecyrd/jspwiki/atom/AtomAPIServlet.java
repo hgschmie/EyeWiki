@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.atom;
 
 import java.io.IOException;
@@ -71,7 +71,7 @@ public class AtomAPIServlet extends HttpServlet
      *  Initializes the servlet.
      */
     public void init( ServletConfig config )
-        throws ServletException
+            throws ServletException
     {
         m_engine = WikiEngine.getInstance( config );
     }
@@ -109,7 +109,7 @@ public class AtomAPIServlet extends HttpServlet
      *  </ul>
      */
     public void doPost( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received POST to AtomAPIServlet");
 
@@ -183,7 +183,7 @@ public class AtomAPIServlet extends HttpServlet
      *  other than to show an explanatory text.
      */
     public void doGet( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP GET to AtomAPIServlet");
 
@@ -221,7 +221,7 @@ public class AtomAPIServlet extends HttpServlet
     }
 
     private Entry getBlogEntry( String entryid )
-        throws ProviderException
+            throws ProviderException
     {
         WikiPage page = m_engine.getPage( entryid );
         WikiPage firstVersion = m_engine.getPage( entryid, 1 );
@@ -249,8 +249,8 @@ public class AtomAPIServlet extends HttpServlet
         entry.setCreated( firstVersion.getLastModified() );
         entry.setModified( page.getLastModified() );
         entry.setAuthor( SyndicationFactory.createPerson( page.getAuthor(),
-                                                          null,
-                                                          null ) );
+                        null,
+                        null ) );
         
         entry.addContent( SyndicationFactory.createEscapedContent(pageText) );
         
@@ -261,8 +261,8 @@ public class AtomAPIServlet extends HttpServlet
      *  Creates and outputs a full list of all available blogs
      */
     private Feed listBlogs()
-        throws ProviderException,
-               IOException
+            throws ProviderException,
+                   IOException
     {
         Collection pages = m_engine.getPageManager().getAllPages();
 
@@ -293,16 +293,16 @@ public class AtomAPIServlet extends HttpServlet
             String title = TextUtil.replaceEntities(BlogUtil.getSiteName(context));
 
             Link postlink = createLink( "service.post",
-                                        m_engine.getBaseURL()+"atom/"+encodedName,
-                                        title );
+                    m_engine.getBaseURL()+"atom/"+encodedName,
+                    title );
 
             Link editlink = createLink( "service.edit",
-                                        m_engine.getBaseURL()+"atom/"+encodedName,
-                                        title );
+                    m_engine.getBaseURL()+"atom/"+encodedName,
+                    title );
             
             Link feedlink = createLink( "service.feed",
-                                        m_engine.getBaseURL()+"atom.jsp?page="+encodedName,
-                                        title );
+                    m_engine.getBaseURL()+"atom.jsp?page="+encodedName,
+                    title );
 
 
             feed.addLink( postlink );
@@ -314,8 +314,8 @@ public class AtomAPIServlet extends HttpServlet
     }
 
     private Link createLink( String rel,
-                             String href,
-                             String title )
+            String href,
+            String title )
     {
         LinkImpl link = new LinkImpl();
 
@@ -331,7 +331,7 @@ public class AtomAPIServlet extends HttpServlet
      *
      */
     public void doDelete( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP DELETE");
     }
@@ -340,7 +340,7 @@ public class AtomAPIServlet extends HttpServlet
      *
      */
     public void doPut( HttpServletRequest request, HttpServletResponse response )
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP PUT");
     }

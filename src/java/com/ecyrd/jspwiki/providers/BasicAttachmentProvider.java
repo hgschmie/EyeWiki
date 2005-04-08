@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.File;
@@ -81,7 +81,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  </UL>
  */
 public class BasicAttachmentProvider
-    implements WikiAttachmentProvider
+        implements WikiAttachmentProvider
 {
     private String m_storageDir;
 
@@ -93,8 +93,8 @@ public class BasicAttachmentProvider
     static final Category log = Category.getInstance( BasicAttachmentProvider.class );
 
     public void initialize( WikiEngine engine, Configuration conf) 
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         m_storageDir = engine.getStorageDir();
 
@@ -111,7 +111,7 @@ public class BasicAttachmentProvider
      *  @param wikipage Page to which this attachment is attached.
      */
     private File findPageDir( String wikipage )
-        throws ProviderException
+            throws ProviderException
     {
         wikipage = mangleName( wikipage );
 
@@ -141,10 +141,10 @@ public class BasicAttachmentProvider
      *  Finds the dir in which the attachment lives.
      */
     private File findAttachmentDir( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         File f = new File( findPageDir(att.getParentName()), 
-                           mangleName(att.getFileName()+ATTDIR_EXTENSION) );
+                mangleName(att.getFileName()+ATTDIR_EXTENSION) );
 
         //
         //  Migration code for earlier versions of JSPWiki.
@@ -155,7 +155,7 @@ public class BasicAttachmentProvider
         if( !f.exists() )
         {
             File oldf = new File( findPageDir( att.getParentName() ),
-                                  mangleName( att.getFileName() ) );
+                    mangleName( att.getFileName() ) );
             if( oldf.exists() )
             {
                 f = oldf;
@@ -163,7 +163,7 @@ public class BasicAttachmentProvider
             else
             {
                 oldf = new File( findPageDir( att.getParentName() ),
-                                 att.getFileName() );
+                        att.getFileName() );
 
                 if( oldf.exists() )
                 {
@@ -183,7 +183,7 @@ public class BasicAttachmentProvider
      *          there is no page in the repository.
      */
     private int findLatestVersion( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         // File pageDir = findPageDir( att.getName() );
         File attDir  = findAttachmentDir( att );
@@ -202,19 +202,19 @@ public class BasicAttachmentProvider
         {
             // log.debug("Checking: "+pages[i]);
             int cutpoint = pages[i].indexOf( '.' );
-                String pageNum = ( cutpoint > 0 ) ? pages[i].substring( 0, cutpoint ) : pages[i] ;
+            String pageNum = ( cutpoint > 0 ) ? pages[i].substring( 0, cutpoint ) : pages[i] ;
 
-                try
+            try
+            {
+                int res = Integer.parseInt( pageNum );
+
+                if( res > version )
                 {
-                    int res = Integer.parseInt( pageNum );
-
-                    if( res > version )
-                    {
-                        version = res;
-                    }
+                    version = res;
                 }
-                catch( NumberFormatException e ) {} // It's okay to skip these.
             }
+            catch( NumberFormatException e ) {} // It's okay to skip these.
+        }
 
         return version;
     }
@@ -242,8 +242,8 @@ public class BasicAttachmentProvider
      *  Note that it WILL overwrite any previous properties.
      */
     private void putPageProperties( Attachment att, Properties properties )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         File attDir = findAttachmentDir( att );
         File propertyFile = new File( attDir, PROPERTY_FILE );
@@ -251,9 +251,9 @@ public class BasicAttachmentProvider
         OutputStream out = new FileOutputStream( propertyFile );
 
         properties.store( out, 
-                          " JSPWiki page properties for "+
-                          att.getName()+
-                          ". DO NOT MODIFY!" );
+                " JSPWiki page properties for "+
+                att.getName()+
+                ". DO NOT MODIFY!" );
 
         out.close();
     }
@@ -262,8 +262,8 @@ public class BasicAttachmentProvider
      *  Reads page properties from the file system.
      */
     private Properties getPageProperties( Attachment att )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         Properties props = new Properties();
 
@@ -282,8 +282,8 @@ public class BasicAttachmentProvider
     }
 
     public void putAttachmentData( Attachment att, InputStream data )
-        throws ProviderException,
-               IOException
+            throws ProviderException,
+                   IOException
     {
         File attDir = findAttachmentDir( att );
 
@@ -301,7 +301,7 @@ public class BasicAttachmentProvider
             int versionNumber = latestVersion+1;
 
             File newfile = new File( attDir, versionNumber+"."+
-                                     getFileExtension(att.getFileName()) );
+                    getFileExtension(att.getFileName()) );
 
             log.info("Uploading attachment "+att.getFileName()+" to page "+att.getParentName());
             log.info("Saving attachment contents to "+newfile.getAbsolutePath());
@@ -343,8 +343,8 @@ public class BasicAttachmentProvider
     }
 
     private File findFile( File dir, Attachment att )
-        throws FileNotFoundException,
-               ProviderException
+            throws FileNotFoundException,
+                   ProviderException
     {
         int version = att.getVersion();
 
@@ -374,8 +374,8 @@ public class BasicAttachmentProvider
     }
 
     public InputStream getAttachmentData( Attachment att )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         File attDir = findAttachmentDir( att );
 
@@ -385,7 +385,7 @@ public class BasicAttachmentProvider
     }
 
     public Collection listAttachments( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         Collection result = new ArrayList();
 
@@ -434,7 +434,7 @@ public class BasicAttachmentProvider
                         }
 
                         Attachment att = getAttachmentInfo( page, attachmentName,
-                                                            WikiProvider.LATEST_VERSION );
+                                WikiProvider.LATEST_VERSION );
 
                         //
                         //  Sanity check - shouldn't really be happening, unless
@@ -443,9 +443,9 @@ public class BasicAttachmentProvider
                         if( att == null )
                         {
                             throw new ProviderException("Attachment disappeared while reading information:"+
-                                                        " if you did not touch the repository, there is a serious bug somewhere. "+
-                                                        "Attachment = "+attachments[i]+
-                                                        ", decoded = "+attachmentName );
+                                    " if you did not touch the repository, there is a serious bug somewhere. "+
+                                    "Attachment = "+attachments[i]+
+                                    ", decoded = "+attachmentName );
                         }
 
                         result.add( att );
@@ -464,7 +464,7 @@ public class BasicAttachmentProvider
 
     // FIXME: Very unoptimized.
     public List listAllChanged( Date timestamp )
-        throws ProviderException
+            throws ProviderException
     {
         File attDir = new File( m_storageDir );
 
@@ -501,7 +501,7 @@ public class BasicAttachmentProvider
     }
 
     public Attachment getAttachmentInfo( WikiPage page, String name, int version )
-        throws ProviderException
+            throws ProviderException
     {
         Attachment att = new Attachment( page.getName(), name );
         File dir = findAttachmentDir( att );
@@ -553,7 +553,7 @@ public class BasicAttachmentProvider
             for( int i = latest; i >= 1; i-- )
             {
                 Attachment a = getAttachmentInfo( new WikiPage(att.getParentName()), 
-                                                  att.getFileName(), i );
+                        att.getFileName(), i );
 
                 if( a != null )
                 {
@@ -572,13 +572,13 @@ public class BasicAttachmentProvider
 
 
     public void deleteVersion( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         // FIXME: Does nothing yet.
     }
 
     public void deleteAttachment( Attachment att )
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findAttachmentDir( att );
         String[] files = dir.list();
@@ -596,7 +596,7 @@ public class BasicAttachmentProvider
      *  Returns only those directories that contain attachments.
      */
     public class AttachmentFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         public boolean accept( File dir, String name )
         {
@@ -608,7 +608,7 @@ public class BasicAttachmentProvider
      *  Accepts only files that are actual versions, no control files.
      */
     public class AttachmentVersionFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         public boolean accept( File dir, String name )
         {

@@ -1,22 +1,22 @@
 /*
-    WikiForms - a WikiPage FORM handler for JSPWiki.
+  WikiForms - a WikiPage FORM handler for JSPWiki.
  
-    Copyright (C) 2003 BaseN. 
+  Copyright (C) 2003 BaseN. 
 
-    JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published
+  by the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
  
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
  
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
 */
 package com.ecyrd.jspwiki.forms;
 
@@ -67,17 +67,17 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  *  @author ebu
  */
 public class FormOpen
-    extends FormElement
+        extends FormElement
 {
     private static Logger log = 
-	Logger.getLogger( FormOpen.class );
+            Logger.getLogger( FormOpen.class );
 
     public static final String PARAM_METHOD = "method";
 
     /**
      */
     public String execute( WikiContext ctx, Map params )
-        throws PluginException
+            throws PluginException
     {
         String formName = (String)params.get( PARAM_FORM );
         if( formName == null )
@@ -108,8 +108,8 @@ public class FormOpen
                 // If the FormInfo exists, and if we're supposed to display on
                 // error only, we need to exit now.
                 if( hide != null && 
-                    HIDE_SUCCESS.equals( hide ) && 
-                    info.getStatus() == FormInfo.EXECUTED )
+                        HIDE_SUCCESS.equals( hide ) && 
+                        info.getStatus() == FormInfo.EXECUTED )
                 {
                     info.setHide( true );
                     return( "<p>(no need to show form open now)" );

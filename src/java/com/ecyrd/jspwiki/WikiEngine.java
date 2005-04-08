@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki;
 
 import java.io.BufferedWriter;
@@ -239,7 +239,7 @@ public class WikiEngine
     // does not react to RuntimeExceptions, or something...
 
     public static synchronized WikiEngine getInstance( ServletConfig config )
-        throws InternalWikiException
+            throws InternalWikiException
     {
         return( getInstance( config.getServletContext(), null ) );
     }
@@ -255,7 +255,7 @@ public class WikiEngine
      *               jspwiki.properties (this is the usual case).
      */
     public static synchronized WikiEngine getInstance( ServletConfig config,
-                                                       Properties props )
+            Properties props )
     {
         return( getInstance( config.getServletContext(), null ) );
     }
@@ -269,8 +269,8 @@ public class WikiEngine
      */
 
     public static synchronized WikiEngine getInstance(final ServletContext context, 
-                                                      final Configuration conf )
-        throws InternalWikiException
+            final Configuration conf )
+            throws InternalWikiException
     {
         Configuration wikiConf = conf;
         String appid = Integer.toString(context.hashCode()); //FIXME: Kludge, use real type.
@@ -309,7 +309,7 @@ public class WikiEngine
      *  Use this constructor for testing purposes only.
      */
     public WikiEngine(final Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         setRootPath(null);           // No root dir defined
         initialize( conf );
@@ -385,7 +385,7 @@ public class WikiEngine
      *  Do not use this method - use WikiEngine.getInstance() instead.
      */
     protected WikiEngine( ServletContext context, String appid, Configuration conf )
-        throws WikiException
+            throws WikiException
     {
         InputStream confStream = null;
         String      confFile   = context.getInitParameter(PARAM_CONFIGFILE);
@@ -412,7 +412,7 @@ public class WikiEngine
      *  Does all the real initialization.
      */
     private void initialize(Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         m_startTime  = new Date();
 
@@ -533,9 +533,9 @@ public class WikiEngine
         try
         {
             Class urlclass = ClassUtil.findClass( DEFAULT_CLASS_PREFIX,
-                                                  conf.getString(
-                                                          PROP_CLASS_URLCONSTRUCTOR,
-                                                          PROP_CLASS_URLCONSTRUCTOR_DEFAULT ) );
+                    conf.getString(
+                            PROP_CLASS_URLCONSTRUCTOR,
+                            PROP_CLASS_URLCONSTRUCTOR_DEFAULT ) );
 
             m_urlConstructor = (URLConstructor) urlclass.newInstance();               
             m_urlConstructor.initialize( this, conf );
@@ -581,7 +581,7 @@ public class WikiEngine
         catch( Exception e )
         {
             log.error( "Unable to start RSS generator - JSPWiki will still work, "+
-                       "but there will be no RSS feed.", e );
+                    "but there will be no RSS feed.", e );
         }
 
         // FIXME: I wonder if this should be somewhere else.
@@ -595,7 +595,7 @@ public class WikiEngine
     }
 
     public static void createDirectory(final String dir)
-    	throws WikiException
+            throws WikiException
     {
         if (dir != null)
         {
@@ -666,14 +666,14 @@ public class WikiEngine
 
     // FIXME: Should really be in some util file.
     public static String getRequiredProperty( Properties props, String key )
-        throws NoRequiredPropertyException
+            throws NoRequiredPropertyException
     {
         String value = props.getProperty(key);
 
         if( value == null )
         {
             throw new NoRequiredPropertyException( "Required property not found",
-                                                   key );
+                    key );
         }
 
         return value;
@@ -822,7 +822,7 @@ public class WikiEngine
             if( res != null ) 
             {
                 res = new String(res.getBytes("ISO-8859-1"),
-                                 getContentEncoding() );
+                        getContentEncoding() );
             }
 
             return res;
@@ -856,7 +856,7 @@ public class WikiEngine
             if( res != null ) 
             {
                 res = new String(res.getBytes("ISO-8859-1"),
-                                 getContentEncoding() );
+                        getContentEncoding() );
 
                 //
                 // Ensure that the 'page=xyz' attribute is removed
@@ -1026,7 +1026,7 @@ public class WikiEngine
      *  @param page Page name
      */
     public boolean pageExists( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         if( getSpecialPageReference(page) != null ) return true;
 
@@ -1064,7 +1064,7 @@ public class WikiEngine
      *  @since 2.0
      */
     public boolean pageExists( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         if( page != null )
         {
@@ -1093,7 +1093,7 @@ public class WikiEngine
      */
 
     public String getFinalPageName( String page )
-        throws ProviderException
+            throws ProviderException
     {
         boolean isThere = simplePageExists( page );
 
@@ -1119,7 +1119,7 @@ public class WikiEngine
      *  We also check overridden pages from jspwiki.properties
      */
     private boolean simplePageExists( String page )
-        throws ProviderException
+            throws ProviderException
     {
         if( getSpecialPageReference(page) != null ) return true;
 
@@ -1199,7 +1199,7 @@ public class WikiEngine
         //  get replaced as well with &quot; etc.
         //
         /*
-        result = TextUtil.replaceString( result, "&", "&amp;" );
+          result = TextUtil.replaceString( result, "&", "&amp;" );
         */
 
         result = TextUtil.replaceEntities( result );
@@ -1341,11 +1341,11 @@ public class WikiEngine
         LinkCollector localCollector = new LinkCollector();        
 
         textToHTML( new WikiContext(this,page),
-                    pagedata,
-                    localCollector,
-                    null,
-                    localCollector,
-                    false );
+                pagedata,
+                localCollector,
+                null,
+                localCollector,
+                false );
 
         return localCollector.getLinks();
     }
@@ -1355,9 +1355,9 @@ public class WikiEngine
      */
 
     public String textToHTML( WikiContext context, 
-                              String pagedata, 
-                              StringTransmutator localLinkHook,
-                              StringTransmutator extLinkHook )
+            String pagedata, 
+            StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook )
     {
         return textToHTML( context, pagedata, localLinkHook, extLinkHook, null, true );
     }
@@ -1367,10 +1367,10 @@ public class WikiEngine
      */
 
     public String textToHTML( WikiContext context, 
-                              String pagedata, 
-                              StringTransmutator localLinkHook,
-                              StringTransmutator extLinkHook,
-                              StringTransmutator attLinkHook )
+            String pagedata, 
+            StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook,
+            StringTransmutator attLinkHook )
     {
         return textToHTML( context, pagedata, localLinkHook, extLinkHook, attLinkHook, true );
     }
@@ -1379,11 +1379,11 @@ public class WikiEngine
      *  Helper method for doing the HTML translation.
      */
     private String textToHTML( WikiContext context, 
-                               String pagedata, 
-                               StringTransmutator localLinkHook,
-                               StringTransmutator extLinkHook,
-                               StringTransmutator attLinkHook,
-                               boolean            parseAccessRules )
+            String pagedata, 
+            StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook,
+            StringTransmutator attLinkHook,
+            boolean            parseAccessRules )
     {
         String result = "";
 
@@ -1401,7 +1401,7 @@ public class WikiEngine
             pagedata = m_filterManager.doPreTranslateFiltering( context, pagedata );
 
             in = new TranslatorReader( context,
-                                       new StringReader( pagedata ) );
+                    new StringReader( pagedata ) );
 
             in.addLocalLinkHook( localLinkHook );
             in.addExternalLinkHook( extLinkHook );
@@ -1437,7 +1437,7 @@ public class WikiEngine
         String pageData = getPureText( page.getName(), WikiProvider.LATEST_VERSION );
 
         m_referenceManager.updateReferences( page.getName(),
-                                             scanWikiLinks( page, pageData ) );
+                scanWikiLinks( page, pageData ) );
     }
 
 
@@ -1450,7 +1450,7 @@ public class WikiEngine
      *  @param text    The Wiki markup for the page.
      */
     public void saveText( WikiContext context, String text )
-        throws WikiException
+            throws WikiException
     {
         WikiPage page = context.getPage();
 
@@ -1551,7 +1551,9 @@ public class WikiEngine
         QueryItem[] items = new QueryItem[st.countTokens()];
         int word = 0;
 
-        log.debug("Expecting "+items.length+" items");
+        if (log.isDebugEnabled()) {
+            log.debug("Expecting "+items.length+" items");
+        }
 
         //
         //  Parse incoming search string
@@ -1559,28 +1561,42 @@ public class WikiEngine
 
         while( st.hasMoreTokens() )
         {
-            log.debug("Item "+word);
+
+            if (log.isDebugEnabled()) {
+                log.debug("Item "+word);
+            }
+
             String token = st.nextToken().toLowerCase();
 
             items[word] = new QueryItem();
 
             switch( token.charAt(0) )
             {
-              case '+':
+            case '+':
                 items[word].type = QueryItem.REQUIRED;
                 token = token.substring(1);
-                log.debug("Required word: "+token);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Required word: "+token);
+                }
+
                 break;
                 
-              case '-':
+            case '-':
                 items[word].type = QueryItem.FORBIDDEN;
                 token = token.substring(1);
-                log.debug("Forbidden word: "+token);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Forbidden word: "+token);
+                }
                 break;
 
-              default:
+            default:
                 items[word].type = QueryItem.REQUESTED;
-                log.debug("Requested word: "+token);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("Requested word: "+token);
+                }
                 break;
             }
 
@@ -1840,7 +1856,7 @@ public class WikiEngine
     // FIXME: We need to have a version which takes a fixed page
     //        name as well, or check it elsewhere.
     public WikiContext createContext( HttpServletRequest request,
-                                      String requestContext )
+            String requestContext )
     {
         String pagereq;
 
@@ -1852,8 +1868,8 @@ public class WikiEngine
         try
         {
             pagereq  = m_urlConstructor.parsePage( requestContext,
-                                                   request,
-                                                   getContentEncoding() );
+                    request,
+                    getContentEncoding() );
         }
         catch( IOException e )
         {
@@ -1872,250 +1888,257 @@ public class WikiEngine
         if(StringUtils.isEmpty(pagereq))
         {
             String servlet = request.getServletPath();
-            log.debug("Servlet path is: "+servlet);
 
-            pagereq = matchSpecialPagePath( servlet );
+            if (log.isDebugEnabled())
+                log.debug("Servlet path is: "+servlet);
+        }
 
+        pagereq = matchSpecialPagePath( servlet );
+
+        if (log.isDebugEnabled()) {
             log.debug("Mapped to "+pagereq);
-            if( pagereq == null )
-            {
-                pagereq = getFrontPage();
-            }
         }
-
-        int hashMark = pagereq.indexOf('#');
-
-        if( hashMark != -1 )
+        if( pagereq == null )
         {
-            pagereq = pagereq.substring( 0, hashMark );
+            pagereq = getFrontPage();
         }
+    }
 
-        int version          = WikiProvider.LATEST_VERSION;
-        String rev           = request.getParameter("version");
+    int hashMark = pagereq.indexOf('#');
 
-        if( rev != null )
+    if( hashMark != -1 )
+    {
+        pagereq = pagereq.substring( 0, hashMark );
+    }
+
+    int version          = WikiProvider.LATEST_VERSION;
+    String rev           = request.getParameter("version");
+
+    if( rev != null )
+    {
+        version = Integer.parseInt( rev );
+    }
+
+    //
+    //  Find the WikiPage object
+    //
+    String pagename = pagereq;
+    WikiPage wikipage; 
+
+    try
+    {
+        pagename = getFinalPageName( pagereq );
+    }
+    catch( ProviderException e ) {} // FIXME: Should not ignore!
+
+    if( pagename != null )
+    {
+        wikipage = getPage( pagename, version );
+    }
+    else
+    {
+        wikipage = getPage( pagereq, version );
+    }
+
+    if( wikipage == null ) 
+    {
+        pagereq = TranslatorReader.cleanLink( pagereq );
+        wikipage = new WikiPage( pagereq );
+    }
+
+    //
+    //  Figure out which template we should be using for this page.
+    //
+    if( template == null )
+    {
+        template = (String)wikipage.getAttribute( PROP_TEMPLATEDIR );
+
+        // FIXME: Most definitely this should be checked for
+        //        existence, or else it is possible to create pages that
+        //        cannot be shown.
+
+        if(StringUtils.isEmpty(template))
         {
-            version = Integer.parseInt( rev );
+            template = getTemplateDir();
         }
+    }
 
-        //
-        //  Find the WikiPage object
-        //
-        String pagename = pagereq;
-        WikiPage wikipage; 
+    WikiContext context = new WikiContext( this, 
+            wikipage );
+    context.setRequestContext( requestContext );
+    context.setHttpRequest( request );
+    context.setTemplate( template );
+
+    UserProfile user = getUserManager().getUserProfile( request );
+    context.setCurrentUser( user );
+
+    return context;
+}
+
+/**
+ *  Deletes a page completely.
+ * 
+ * @param pageName
+ * @throws ProviderException
+ */
+public void deletePage( String pageName )
+        throws ProviderException
+{
+    WikiPage p = getPage( pageName );
+    m_pageManager.deletePage( p );
+}
+    
+public void deleteVersion( WikiPage page )
+        throws ProviderException
+{
+    m_pageManager.deleteVersion( page );
+}
+    
+/**
+ *  Returns the URL of the global RSS file.  May be null, if the
+ *  RSS file generation is not operational.
+ *  @since 1.7.10
+ */
+public String getGlobalRSSURL()
+{
+    if( m_rssURL != null )
+    {
+        return getBaseURL() + m_rssURL;
+    }
+
+    return null;
+}
+
+/**
+ * Sets the internal path of the webapp base.
+ * @since 2.2
+ */
+protected void setRootPath(final String rootPath)
+{
+    m_rootPath = rootPath;
+}
+
+/**
+ * @since 2.2
+ */
+public String getRootPath()
+{
+    return m_rootPath;
+}
+
+/**
+ * Checks whether a supplied directory path is valid for the current Wiki configuration.
+ * A path is valid if
+ * - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
+ * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative
+ *   and the rootDirectory is not null.
+ *
+ * @param pathName The Directory path to check
+ * @return A valid path
+ * @throws WikiException if the supplied directory path is invalid.
+ */
+public String getValidPath(final String pathName)
+        throws WikiException
+{
+    File path = new File(pathName);
+    String rootPath = getRootPath();
+
+    // If we have a relative path reference and a root directory has been
+    // set, then return the path relative to it.
+    if (rootPath != null && !path.isAbsolute())
+    {
+        return new File(rootPath, pathName).getAbsolutePath();
+    }
+
+    // In the "Absolute Path" configuration (default), we return everything "as is".
+    if (!wikiRelativePathes)
+    {
+        return pathName;
+    }
+
+    throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
+}
+
+/**
+ *  Runs the RSS generation thread.
+ *  FIXME: MUST be somewhere else, this is not a good place.
+ */
+private class RSSThread extends Thread
+{
+    public void run()
+    {
+        String rootPath = getRootPath();
+
+        if (rootPath == null)
+        {
+            log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
+        }
 
         try
         {
-            pagename = getFinalPageName( pagereq );
-        }
-        catch( ProviderException e ) {} // FIXME: Should not ignore!
+            String fileName = conf.getString(
+                    PROP_RSS_FILE,
+                    PROP_RSS_FILE_DEFAULT);
 
-        if( pagename != null )
-        {
-            wikipage = getPage( pagename, version );
-        }
-        else
-        {
-            wikipage = getPage( pagereq, version );
-        }
+            int rssInterval = conf.getInt( 
+                    PROP_RSS_INTERVAL,
+                    PROP_RSS_INTERVAL_DEFAULT);
 
-        if( wikipage == null ) 
-        {
-            pagereq = TranslatorReader.cleanLink( pagereq );
-            wikipage = new WikiPage( pagereq );
-        }
-
-        //
-        //  Figure out which template we should be using for this page.
-        //
-        if( template == null )
-        {
-            template = (String)wikipage.getAttribute( PROP_TEMPLATEDIR );
-
-            // FIXME: Most definitely this should be checked for
-            //        existence, or else it is possible to create pages that
-            //        cannot be shown.
-
-            if(StringUtils.isEmpty(template))
-            {
-                template = getTemplateDir();
-            }
-        }
-
-        WikiContext context = new WikiContext( this, 
-                                               wikipage );
-        context.setRequestContext( requestContext );
-        context.setHttpRequest( request );
-        context.setTemplate( template );
-
-        UserProfile user = getUserManager().getUserProfile( request );
-        context.setCurrentUser( user );
-
-        return context;
-    }
-
-    /**
-     *  Deletes a page completely.
-     * 
-     * @param pageName
-     * @throws ProviderException
-     */
-    public void deletePage( String pageName )
-        throws ProviderException
-    {
-        WikiPage p = getPage( pageName );
-        m_pageManager.deletePage( p );
-    }
-    
-    public void deleteVersion( WikiPage page )
-        throws ProviderException
-    {
-        m_pageManager.deleteVersion( page );
-    }
-    
-    /**
-     *  Returns the URL of the global RSS file.  May be null, if the
-     *  RSS file generation is not operational.
-     *  @since 1.7.10
-     */
-    public String getGlobalRSSURL()
-    {
-        if( m_rssURL != null )
-        {
-            return getBaseURL() + m_rssURL;
-        }
-
-        return null;
-    }
-
-    /**
-     * Sets the internal path of the webapp base.
-     * @since 2.2
-     */
-    protected void setRootPath(final String rootPath)
-    {
-        m_rootPath = rootPath;
-    }
-
-    /**
-     * @since 2.2
-     */
-    public String getRootPath()
-    {
-        return m_rootPath;
-    }
-
-    /**
-     * Checks whether a supplied directory path is valid for the current Wiki configuration.
-     * A path is valid if
-     * - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
-     * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative
-     *   and the rootDirectory is not null.
-     *
-     * @param pathName The Directory path to check
-     * @return A valid path
-     * @throws WikiException if the supplied directory path is invalid.
-     */
-    public String getValidPath(final String pathName)
-            throws WikiException
-    {
-        File path = new File(pathName);
-        String rootPath = getRootPath();
-
-        // If we have a relative path reference and a root directory has been
-        // set, then return the path relative to it.
-        if (rootPath != null && !path.isAbsolute())
-        {
-            return new File(rootPath, pathName).getAbsolutePath();
-        }
-
-        // In the "Absolute Path" configuration (default), we return everything "as is".
-        if (!wikiRelativePathes)
-        {
-            return pathName;
-        }
-
-        throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
-    }
-
-    /**
-     *  Runs the RSS generation thread.
-     *  FIXME: MUST be somewhere else, this is not a good place.
-     */
-    private class RSSThread extends Thread
-    {
-        public void run()
-        {
-            String rootPath = getRootPath();
-
-            if (rootPath == null)
-            {
-                log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
-            }
-
-            try
-            {
-                String fileName = conf.getString(
-                        PROP_RSS_FILE,
-                        PROP_RSS_FILE_DEFAULT);
-
-                int rssInterval = conf.getInt( 
-                        PROP_RSS_INTERVAL,
-                        PROP_RSS_INTERVAL_DEFAULT);
-
+            if (log.isDebugEnabled()) {
                 log.debug("RSS file will be at "+fileName);
                 log.debug("RSS refresh interval (seconds): " + rssInterval);
-
-                while(true)
-                {
-                    Writer out = null;
-                    Reader in  = null;
-
-                    try
-                    {
-                        //
-                        //  Generate RSS file, output it to
-                        //  default "rss.rdf".
-                        //
-                        if (log.isDebugEnabled()) {
-                            log.debug("Regenerating RSS feed to " + fileName);
-                        }
-
-                        String feed = m_rssGenerator.generate();
-
-                        File file = new File( rootPath, fileName );
-
-                        in  = new StringReader(feed);
-                        out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream(file), "UTF-8") );
-
-                        FileUtil.copyContents( in, out );
-
-                        m_rssURL = fileName;
-                    }
-                    catch( IOException e )
-                    {
-                        log.error("Cannot generate RSS feed to "+fileName, e );
-                        m_rssURL = null;
-                    }
-                    finally
-                    {
-                        IOUtils.closeQuietly(in);
-                        IOUtils.closeQuietly(out);
-                    }
-
-                    Thread.sleep(rssInterval*1000L);
-                } // while
-                
             }
-            catch(InterruptedException e)
+
+            while(true)
             {
-                log.error("RSS thread interrupted, no more RSS feeds", e);
-            }
-            
-            //
-            // Signal: no more RSS feeds.
-            //
-            m_rssURL = null;
+                Writer out = null;
+                Reader in  = null;
+
+                try
+                {
+                    //
+                    //  Generate RSS file, output it to
+                    //  default "rss.rdf".
+                    //
+                    if (log.isDebugEnabled()) {
+                        log.debug("Regenerating RSS feed to " + fileName);
+                    }
+
+                    String feed = m_rssGenerator.generate();
+
+                    File file = new File( rootPath, fileName );
+
+                    in  = new StringReader(feed);
+                    out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream(file), "UTF-8") );
+
+                    FileUtil.copyContents( in, out );
+
+                    m_rssURL = fileName;
+                }
+                catch( IOException e )
+                {
+                    log.error("Cannot generate RSS feed to "+fileName, e );
+                    m_rssURL = null;
+                }
+                finally
+                {
+                    IOUtils.closeQuietly(in);
+                    IOUtils.closeQuietly(out);
+                }
+
+                Thread.sleep(rssInterval*1000L);
+            } // while
+                
         }
+        catch(InterruptedException e)
+        {
+            log.error("RSS thread interrupted, no more RSS feeds", e);
+        }
+            
+        //
+        // Signal: no more RSS feeds.
+        //
+        m_rssURL = null;
     }
+}
 }

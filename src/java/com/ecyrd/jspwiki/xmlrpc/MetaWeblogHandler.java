@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.xmlrpc;
 
 import java.io.ByteArrayInputStream;
@@ -54,7 +54,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  */
 
 public class MetaWeblogHandler
-    implements WikiRPCHandler
+        implements WikiRPCHandler
 {
     Category log = Category.getInstance( MetaWeblogHandler.class ); 
 
@@ -75,44 +75,44 @@ public class MetaWeblogHandler
      *  @throw XmlRpcException with the correct error message, if auth fails.
      */
     private void checkPermissions( WikiPage page, 
-                                   String username,
-                                   String password,
-                                   String permission )
-        throws XmlRpcException
+            String username,
+            String password,
+            String permission )
+            throws XmlRpcException
     {
         return;
         /*
-        AuthorizationManager mgr = m_engine.getAuthorizationManager();
-        UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );
-        currentUser.setPassword( password );
+          AuthorizationManager mgr = m_engine.getAuthorizationManager();
+          UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );
+          currentUser.setPassword( password );
 
-        WikiAuthenticator auth = m_engine.getUserManager().getAuthenticator();
+          WikiAuthenticator auth = m_engine.getUserManager().getAuthenticator();
 
-        if( auth != null )
-        {
-            boolean isValid = auth.authenticate( currentUser );
+          if( auth != null )
+          {
+          boolean isValid = auth.authenticate( currentUser );
         
-            if( isValid )
-            {
-                if( !mgr.checkPermission( page,
-                                          currentUser,
-                                          permission ) )
-                {
-                    return;
-                }
-                else
-                {
-                    String msg = "Insufficient permissions to do "+permission+" on "+page.getName();
-                    log.error( msg );
-                    throw new XmlRpcException(0, msg );
-                }
-            }
-            else 
-            {
-                log.error( "Username '"+username+"' or password not valid." );
-                throw new XmlRpcException(0, "Password or username not valid.");
-            }
-        }
+          if( isValid )
+          {
+          if( !mgr.checkPermission( page,
+          currentUser,
+          permission ) )
+          {
+          return;
+          }
+          else
+          {
+          String msg = "Insufficient permissions to do "+permission+" on "+page.getName();
+          log.error( msg );
+          throw new XmlRpcException(0, msg );
+          }
+          }
+          else 
+          {
+          log.error( "Username '"+username+"' or password not valid." );
+          throw new XmlRpcException(0, "Password or username not valid.");
+          }
+          }
         */
     }
 
@@ -121,9 +121,9 @@ public class MetaWeblogHandler
      *  always returns an empty list for categories.
      */
     public Hashtable getCategories( String blogid,
-                                    String username,
-                                    String password )
-        throws XmlRpcException
+            String username,
+            String password )
+            throws XmlRpcException
     {
         WikiPage page = m_engine.getPage( blogid );
 
@@ -137,9 +137,9 @@ public class MetaWeblogHandler
     private String getURL( String page )
     {
         return m_engine.getURL( WikiContext.VIEW,
-                                page,
-                                null,
-                                true ); // Force absolute urls
+                page,
+                null,
+                true ); // Force absolute urls
     }
 
     /**
@@ -191,10 +191,10 @@ public class MetaWeblogHandler
     //        goes through all of the blog entries.
 
     public Hashtable getRecentPosts( String blogid,
-                                     String username,
-                                     String password,
-                                     int numberOfPosts)
-        throws XmlRpcException
+            String username,
+            String password,
+            int numberOfPosts)
+            throws XmlRpcException
     {
         Hashtable result = new Hashtable();
 
@@ -209,9 +209,9 @@ public class MetaWeblogHandler
             WeblogPlugin plugin = new WeblogPlugin();
 
             List changed = plugin.findBlogEntries(m_engine.getPageManager(), 
-                                                  blogid,
-                                                  new Date(0L),
-                                                  new Date());
+                    blogid,
+                    new Date(0L),
+                    new Date());
 
             Collections.sort( changed, new PageTimeComparator() );
 
@@ -239,11 +239,11 @@ public class MetaWeblogHandler
      *  @param publish This parameter is ignored for JSPWiki.
      */
     public String newPost( String blogid,
-                           String username,
-                           String password,
-                           Hashtable content,
-                           boolean publish )
-        throws XmlRpcException
+            String username,
+            String password,
+            Hashtable content,
+            boolean publish )
+            throws XmlRpcException
     {
         log.info("metaWeblog.newPost() called");
         
@@ -285,10 +285,10 @@ public class MetaWeblogHandler
      *  because we do not know it at this point.
      */
     public Hashtable newMediaObject( String blogid, 
-                                     String username,
-                                     String password,
-                                     Hashtable content )
-        throws XmlRpcException
+            String username,
+            String password,
+            Hashtable content )
+            throws XmlRpcException
     {
         String url = "";
 
@@ -329,11 +329,11 @@ public class MetaWeblogHandler
      *  metaWeblog API.
      */
     boolean editPost( String postid,
-                      String username,
-                      String password,
-                      Hashtable content,
-                      boolean publish )
-        throws XmlRpcException
+            String username,
+            String password,
+            Hashtable content,
+            boolean publish )
+            throws XmlRpcException
     {
         log.info("metaWeblog.editPost("+postid+") called");
 
@@ -371,9 +371,9 @@ public class MetaWeblogHandler
      *  (if any is provided).
      */
     Hashtable getPost( String postid,
-                       String username,
-                       String password )
-        throws XmlRpcException
+            String username,
+            String password )
+            throws XmlRpcException
     {
         String wikiname = "FIXME";
 

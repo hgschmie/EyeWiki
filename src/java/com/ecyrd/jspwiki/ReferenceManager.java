@@ -1,23 +1,23 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi),
-                            Erik Bunn (ebu@memecry.net)
+   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi),
+   Erik Bunn (ebu@memecry.net)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki;
 
 import java.io.BufferedInputStream;
@@ -49,14 +49,14 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
   BUGS
 
   - if a wikilink is added to a page, then removed, RefMan still thinks that
-    the page refers to the wikilink page. Hm.
+  the page refers to the wikilink page. Hm.
 
   - if a page is deleted, gets very confused.
 
   - Serialization causes page attributes to be missing, when InitializablePlugins
-    are not executed properly.  Thus, serialization should really also mark whether
-    a page is serializable or not...
- */
+  are not executed properly.  Thus, serialization should really also mark whether
+  a page is serializable or not...
+*/
 
 
 /* 
@@ -66,7 +66,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
    - when a WikiEngine is created and it scans its wikipages
    - when the WE saves a page
    - when a JSP page accesses one of the WE's ReferenceManagers 
-     to display a list of (un)referenced pages.
+   to display a list of (un)referenced pages.
 
    So, access to this class is fairly rare, and usually triggered by 
    user interaction. OTOH, the methods in this class use their storage
@@ -117,7 +117,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  */
 
 public class ReferenceManager
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     /** Maps page wikiname to a Collection of pages it refers to. The Collection 
      *  must contain Strings. The Collection may contain names of non-existing
@@ -159,10 +159,10 @@ public class ReferenceManager
      *  Does a full reference update.
      */
     private void updatePageReferences( WikiPage page )
-        throws ProviderException
+            throws ProviderException
     {
         String content = m_engine.getPageManager().getPageText( page.getName(), 
-                                                                WikiPageProvider.LATEST_VERSION );
+                WikiPageProvider.LATEST_VERSION );
         Collection links = m_engine.scanWikiLinks( page, content );
         Collection attachments = m_engine.getAttachmentManager().listAttachments( page );
 
@@ -183,7 +183,7 @@ public class ReferenceManager
      *  @since 2.2
      */
     public void initialize( Collection pages )
-        throws ProviderException
+            throws ProviderException
     {
         log.debug( "Initializing new ReferenceManager with "+pages.size()+" initial pages." );
         long start = System.currentTimeMillis();
@@ -250,8 +250,8 @@ public class ReferenceManager
         }
 
         log.info( "Cross reference scan done (" +
-                  (System.currentTimeMillis()-start) +
-                  " ms)" );
+                (System.currentTimeMillis()-start) +
+                " ms)" );
 
     }
 
@@ -260,8 +260,8 @@ public class ReferenceManager
      *  Returns the date when the data was last written on disk
      */
     private synchronized long unserializeFromDisk()
-        throws IOException,
-               ClassNotFoundException
+            throws IOException,
+                   ClassNotFoundException
     {
         ObjectInputStream in = null;
         long saved = 0L;
@@ -332,7 +332,7 @@ public class ReferenceManager
         WikiPage page = context.getPage();
 
         updateReferences( page.getName(),
-                          context.getEngine().scanWikiLinks( page, content ) );
+                context.getEngine().scanWikiLinks( page, content ) );
 
         serializeToDisk();
     }
@@ -407,8 +407,8 @@ public class ReferenceManager
      * any other page. Called after 'referrer' is removed. 
      */
     private void cleanReferredBy( String referrer, 
-                                  Collection oldReferred,
-                                  Collection newReferred )
+            Collection oldReferred,
+            Collection newReferred )
     {
         // Two ways to go about this. One is to look up all pages previously
         // referred by referrer and remove referrer from their lists, and let
@@ -435,7 +435,7 @@ public class ReferenceManager
             // exist, we might just as well forget about this entry.
             // It will be added again elsewhere if new references appear.
             if( ( ( oldRefBy == null ) || ( oldRefBy.isEmpty() ) ) &&
-                ( m_engine.pageExists( referredPage ) == false ) )
+                    ( m_engine.pageExists( referredPage ) == false ) )
             {
                 m_referredBy.remove( referredPage );
             }

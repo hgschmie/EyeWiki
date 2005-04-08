@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 
 package com.ecyrd.jspwiki;
 
@@ -74,7 +74,7 @@ public class FileUtil
      *  @throws IOException If the content creation failed.
      */
     public static File newTmpFile( String content, String encoding )
-        throws IOException
+            throws IOException
     {
         Writer out = null;
         Reader in  = null;
@@ -87,7 +87,7 @@ public class FileUtil
             in = new StringReader( content );
 
             out = new OutputStreamWriter( new FileOutputStream( f ),
-                                          encoding );
+                    encoding );
 
             copyContents( in, out );
         }
@@ -102,7 +102,7 @@ public class FileUtil
 
     /** Default encoding is ISO-8859-1 */
     public static File newTmpFile( String content )
-        throws IOException
+            throws IOException
     {
         return newTmpFile( content, "ISO-8859-1" );
     }
@@ -114,8 +114,8 @@ public class FileUtil
      *  @return Standard output from the command.
      */
     public static String runSimpleCommand( String command, String directory )
-        throws IOException,
-               InterruptedException
+            throws IOException,
+                   InterruptedException
     {
         StringBuffer result = new StringBuffer();        
 
@@ -162,7 +162,7 @@ public class FileUtil
      */
     // FIXME: Could probably be more optimized
     public static void copyContents( Reader in, Writer out )
-        throws IOException
+            throws IOException
     {
         int c;
         
@@ -181,7 +181,7 @@ public class FileUtil
      */
     // FIXME: Could probably be more optimized
     public static void copyContents( InputStream in, OutputStream out )
-        throws IOException
+            throws IOException
     {
         int c;
         
@@ -209,7 +209,7 @@ public class FileUtil
     // This may fail in a number of ways, a better way is seriously needed.
 
     public static String readContents( InputStream input, String encoding )
-        throws IOException
+            throws IOException
     {        
         if( c_hasNIO )
         {
@@ -226,7 +226,7 @@ public class FileUtil
         try
         {
             in = new BufferedReader( new InputStreamReader( realinput, 
-                                                            encoding ) );
+                            encoding ) );
             out = new StringWriter();
 
             copyContents( in, out );
@@ -276,7 +276,7 @@ public class FileUtil
      *  @since 1.5.8
      */
     public static String readContents( Reader in )
-        throws IOException
+            throws IOException
     {
         Writer out = null;
 

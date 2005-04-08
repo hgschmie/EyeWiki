@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.BufferedReader;
@@ -96,8 +96,8 @@ public class RCSFileProvider
     private SimpleDateFormat m_rcsdatefmt_utc = new SimpleDateFormat( RCSFMT_DATE_UTC );
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         log.debug("Initing RCS");
         super.initialize( engine, conf);
@@ -126,7 +126,7 @@ public class RCSFileProvider
     // NB: This is a very slow method.
 
     public WikiPage getPageInfo( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         PatternMatcher  matcher  = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
@@ -181,8 +181,8 @@ public class RCSFileProvider
                     else
                     {
                         log.info("WikiPage "+info.getName()+
-                                 " has null modification date for version "+
-                                 version);
+                                " has null modification date for version "+
+                                version);
                     }
                 }
                 else if( matcher.contains( line, userpattern ) && found )
@@ -229,7 +229,7 @@ public class RCSFileProvider
     }
 
     public String getPageText( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         String result = null;
         InputStream stdout = null;
@@ -340,7 +340,7 @@ public class RCSFileProvider
      *  the directory as well.
      */
     public void putPageText( WikiPage page, String text )
-        throws ProviderException
+            throws ProviderException
     {
         String pagename = page.getName();
         // Writes it in the dir.
@@ -398,8 +398,8 @@ public class RCSFileProvider
             Pattern userpattern = compiler.compile( PATTERN_AUTHOR );
 
             String cmd = StringUtils.replace( m_fullLogCommand,
-                                                 "%s",
-                                                 mangleName(page)+FILE_EXT );
+                    "%s",
+                    mangleName(page)+FILE_EXT );
             
             Process process = Runtime.getRuntime().exec( cmd, null, new File(getPageDirectory()) );
 
@@ -477,7 +477,7 @@ public class RCSFileProvider
      *  This method assumes that the page archive ends with ",v".
      */
     public void deletePage( String page )
-        throws ProviderException
+            throws ProviderException
     {
         log.debug( "Deleting page "+page );
         super.deletePage( page );
