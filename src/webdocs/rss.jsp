@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<%@ page import="org.apache.log4j.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="org.apache.log4j.*" %>
 <%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.ecyrd.jspwiki.rss.*" %>
@@ -16,7 +16,6 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Category log = Category.getInstance("JSPWiki");
     WikiEngine wiki;
     static int MAX_CHARACTERS = 4000;
 %>

@@ -12,7 +12,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Category log = Category.getInstance("JSPWikiSearch");
+    Logger log = Logger.getLogger("JSPWikiSearch");
     WikiEngine wiki;
 %>
 
@@ -34,7 +34,9 @@
 
     if( query != null )
     {
-        log.info("Searching for string "+query);
+        if (log.isInfoEnabled()) {
+            log.info("Searching for string "+query);
+        }
 
         list = wiki.findPages( query );
 
@@ -48,7 +50,9 @@
                                   query,
                                   PageContext.REQUEST_SCOPE );
 
-        log.info("Found "+list.size()+" pages");
+        if (log.isInfoEnabled()) {
+            log.info("Found "+list.size()+" pages");
+        }
     }
 
     String contentPage = wiki.getTemplateManager().findJSP( pageContext,

@@ -13,7 +13,7 @@
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Category log = Category.getInstance("JSPWiki"); 
+    Logger log = Logger.getLogger("JSPWiki"); 
     WikiEngine wiki;
 %><%
     WikiContext wikiContext = wiki.createContext( request, WikiContext.VIEW );
@@ -22,7 +22,9 @@
 
     NDC.push( wiki.getApplicationName()+":"+pagereq );
     
-    log.info("Vote '"+pagereq+"' from "+request.getRemoteAddr()+" by "+request.getRemoteUser() );
+    if (log.isInfoEnabled()) {
+        log.info("Vote '"+pagereq+"' from "+request.getRemoteAddr()+" by "+request.getRemoteUser() );
+    }
 
 
     pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT,

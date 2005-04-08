@@ -11,7 +11,7 @@
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Category log = Category.getInstance("JSPWiki"); 
+    Logger log = Logger.getLogger("JSPWiki"); 
     WikiEngine wiki;
 %>
 
@@ -31,14 +31,18 @@
     {
         if( mgr.strictLogins() )
         {
-            log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+            if (log.isInfoEnabled()) {
+                log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+            }
             String pageurl = wiki.encodeName( pagereq );
             response.sendRedirect( wiki.getBaseURL()+"Login.jsp?page="+pageurl );
             return;
         }
         else
         {
-            log.info("User "+currentUser.getName()+" has no access - displaying message.");
+            if (log.isInfoEnabled()) {
+                log.info("User "+currentUser.getName()+" has no access - displaying message.");
+            }
             response.sendRedirect( wikiContext.getViewURL("LoginError") );
         }
     }
@@ -47,8 +51,7 @@
                               wikiContext,
                               PageContext.REQUEST_SCOPE );
 
-    if( log.isDebugEnabled() ) 
-    {
+    if(log.isDebugEnabled()) {
         log.debug("Page info request for page '"+pagereq+"' from "+request.getRemoteAddr()+" by "+request.getRemoteUser() );
     }
 

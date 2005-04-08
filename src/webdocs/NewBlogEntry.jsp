@@ -8,7 +8,6 @@
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Category log = Category.getInstance("JSPWiki"); 
     WikiEngine wiki;
 
 %><%

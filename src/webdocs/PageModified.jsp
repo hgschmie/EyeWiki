@@ -13,7 +13,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Category log = Category.getInstance("JSPWiki");
+    Logger log = Logger.getLogger("JSPWiki");
     WikiEngine wiki;
 
 %>
@@ -51,7 +51,9 @@
                               conflicttext,
                               PageContext.REQUEST_SCOPE );
 
-    log.info("Page concurrently modified "+pagereq);
+    if (log.isInfoEnabled()) {
+        log.info("Page concurrently modified "+pagereq);
+    }
 
     String contentPage = wiki.getTemplateManager().findJSP( pageContext,
                                                             wikiContext.getTemplate(),

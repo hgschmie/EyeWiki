@@ -50,7 +50,9 @@
                               currentUser,
                               new CommentPermission() ) )
     {
-        log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        if (log.isInfoEnabled()) {
+            log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        }
         String pageurl = wiki.encodeName( pagereq );
         response.sendRedirect( wiki.getBaseURL()+"Login.jsp?page="+pageurl );
         return;
@@ -69,11 +71,15 @@
     response.setDateHeader( "Expires", new Date().getTime() );
     response.setDateHeader( "Last-Modified", new Date().getTime() );
 
-    log.debug("preview="+preview+", ok="+ok);
+    if (log.isDebugEnabled()) {
+        log.debug("preview="+preview+", ok="+ok);
+    }
 
     if( ok != null )
     {
-        log.info("Saving page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        if (log.isInfoEnabled()) {
+            log.info("Saving page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        }
 
         //  FIXME: I am not entirely sure if the JSP page is the
         //  best place to check for concurrent changes.  It certainly
@@ -111,7 +117,9 @@
 
         StringBuffer pageText = new StringBuffer(wiki.getPureText( wikipage ));
 
-        log.debug("Page initial contents are "+pageText.length()+" chars");
+        if (log.isDebugEnabled()) {
+            log.debug("Page initial contents are "+pageText.length()+" chars");
+        }
 
         //
         //  Add a line on top only if we need to separate it from the content.
@@ -123,7 +131,10 @@
 
         pageText.append( wiki.safeGetParameter( request, "text" ) );
 
-        log.debug("Author name ="+author);
+        if (log.isDebugEnabled()) {
+            log.debug("Author name ="+author);
+        }
+
         if( author != null && author.length() > 0 )
         {
             Calendar cal = Calendar.getInstance();
@@ -144,13 +155,19 @@
     }
     else if( preview != null )
     {
-        log.debug("Previewing "+pagereq);
+        if (log.isDebugEnabled()) {
+            log.debug("Previewing "+pagereq);
+        }
+
         if( author == null ) author = "";
         pageContext.forward( "Preview.jsp?action=comment&author="+author );
     }
     else if( cancel != null )
     {
-        log.debug("Cancelled editing "+pagereq);
+        if (log.isDebugEnabled()) {
+            log.debug("Cancelled editing "+pagereq);
+        }
+
         PageLock lock = (PageLock) session.getAttribute( "lock-"+pagereq );
 
         if( lock != null )
@@ -162,7 +179,9 @@
         return;
     }
 
-    log.info("Commenting page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+    if (log.isInfoEnabled()) {
+        log.info("Commenting page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+    }
 
     //
     //  Determine and store the date the latest version was changed.  Since

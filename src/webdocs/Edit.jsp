@@ -17,7 +17,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Category log = Category.getInstance("JSPWiki");
+    Logger log = Logger.getLogger("JSPWiki");
     WikiEngine wiki;
 %>
 
@@ -61,7 +61,9 @@
                                currentUser,
                                requiredPermission ) )
     {
-        log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        if (log.isInfoEnabled()) {
+            log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        }
         String msg = "You do not seem to have the permissions for this operation. Would you like to login as another user?";
         wikiContext.setVariable( "msg", msg );
         String pageurl = wiki.encodeName( pagereq );
@@ -82,13 +84,17 @@
     response.setDateHeader( "Expires", new Date().getTime() );
     response.setDateHeader( "Last-Modified", new Date().getTime() );
 
-    //log.debug("Request character encoding="+request.getCharacterEncoding());
-    //log.debug("Request content type+"+request.getContentType());
-    log.debug("preview="+preview+", ok="+ok);
+    if (log.isDebugEnabled()) {
+        //log.debug("Request character encoding="+request.getCharacterEncoding());
+        //log.debug("Request content type+"+request.getContentType());
+        log.debug("preview="+preview+", ok="+ok);
+    }
 
     if( ok != null )
     {
-        log.info("Saving page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        if (log.isInfoEnabled()) {
+            log.info("Saving page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        }
 
         //  FIXME: I am not entirely sure if the JSP page is the
         //  best place to check for concurrent changes.  It certainly
@@ -166,12 +172,16 @@
     }
     else if( preview != null )
     {
-        log.debug("Previewing "+pagereq);
+        if (log.isDebugEnabled()) {
+            log.debug("Previewing "+pagereq);
+        }
         pageContext.forward( "Preview.jsp" );
     }
     else if( cancel != null )
     {
-        log.debug("Cancelled editing "+pagereq);
+        if (log.isDebugEnabled()) {
+            log.debug("Cancelled editing "+pagereq);
+        }
         PageLock lock = (PageLock) session.getAttribute( "lock-"+pagereq );
 
         if( lock != null )
@@ -183,7 +193,9 @@
         return;
     }
 
-    log.info("Editing page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+    if (log.isInfoEnabled()) {
+        log.info("Editing page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+    }
 
     //
     //  Determine and store the date the latest version was changed.  Since

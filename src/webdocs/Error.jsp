@@ -8,7 +8,7 @@
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Category log = Category.getInstance("JSPWiki"); 
+    Logger log = Logger.getLogger("JSPWiki"); 
     WikiEngine wiki;
 %>
 <%
@@ -45,9 +45,11 @@
 
         if( exception instanceof javax.servlet.jsp.JspException )
         {
-            log.debug("IS JSPEXCEPTION");
-            realcause = ((javax.servlet.jsp.JspException)exception).getRootCause();
-            log.debug("REALCAUSE="+realcause);
+            if (log.isDebugEnabled()) {
+                log.debug("IS JSPEXCEPTION");
+                realcause = ((javax.servlet.jsp.JspException)exception).getRootCause();
+                log.debug("REALCAUSE="+realcause);
+            }
         }
 
         if( realcause == null ) realcause = exception;    
@@ -57,7 +59,9 @@
         realcause = new Exception("Unknown general exception");
     }
 
-    log.debug("Error.jsp exception is: ",exception);
+    if (log.isDebugEnabled()) {
+        log.debug("Error.jsp exception is: ",exception);
+    }
 
 
     pageContext.setAttribute( "message", msg, PageContext.REQUEST_SCOPE );

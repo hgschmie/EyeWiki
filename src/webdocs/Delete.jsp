@@ -14,7 +14,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Category log = Category.getInstance("JSPWiki");
+    Logger log = Logger.getLogger("JSPWiki");
     WikiEngine wiki;
 %>
 
@@ -44,7 +44,9 @@
                               currentUser,
                               new DeletePermission() ) )
     {
-        log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        if (log.isInfoEnabled()) {
+            log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
+        }
         String pageurl = wiki.encodeName( pagereq );
         response.sendRedirect( wiki.getBaseURL()+"Login.jsp?page="+pageurl );
         return;
@@ -62,7 +64,9 @@
 
     if( deleteall != null )
     {
-        log.info("Deleting page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        if (log.isInfoEnabled()) {
+            log.info("Deleting page "+pagereq+". User="+request.getRemoteUser()+", host="+request.getRemoteAddr() );
+        }
 
         wiki.deletePage( pagereq );
         response.sendRedirect(wikiContext.getViewURL(pagereq));
@@ -70,7 +74,9 @@
     }
     else if( delete != null )
     {
-        log.info("Deleting a range of pages from "+pagereq);
+        if (log.isInfoEnabled()) {
+            log.info("Deleting a range of pages from "+pagereq);
+        }
         
         for( Enumeration params = request.getParameterNames(); params.hasMoreElements(); )
         {
@@ -82,7 +88,9 @@
                 
                 WikiPage p = wiki.getPage( pagereq, version );
                 
-                log.debug("Deleting version "+version);
+                if (log.isDebugEnabled()) {
+                    log.debug("Deleting version "+version);
+                }
                 wiki.deleteVersion( p );
             }
         }
