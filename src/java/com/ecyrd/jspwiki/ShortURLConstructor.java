@@ -1,3 +1,22 @@
+/* 
+   JSPWiki - a JSP-based WikiWiki clone.
+
+   Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
+
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki;
 
 import java.io.UnsupportedEncodingException;
@@ -20,14 +39,14 @@ import com.ecyrd.jspwiki.util.TextUtil;
  *  @since 2.2
  */
 public class ShortURLConstructor
-    extends DefaultURLConstructor
+        extends DefaultURLConstructor
 {
     static Logger log = Logger.getLogger( ShortURLConstructor.class );
     
     private String m_urlPrefix = "";
     
     public void initialize( WikiEngine engine, 
-                            Configuration conf)
+            Configuration conf)
     {
         super.initialize( engine, conf);
         
@@ -57,8 +76,8 @@ public class ShortURLConstructor
      *  Constructs the actual URL based on the context.
      */
     private String makeURL( String context,
-                            String name,
-                            boolean absolute )
+            String name,
+            boolean absolute )
     {
         String viewurl = m_urlPrefix+"%n";
 
@@ -110,9 +129,9 @@ public class ShortURLConstructor
      *  @param parameters If null or empty, no parameters are added.
      */
     public String makeURL( String context,
-                           String name,
-                           boolean absolute,
-                           String parameters )
+            String name,
+            boolean absolute,
+            String parameters )
     {
         if( parameters != null && parameters.length() > 0 )
         {            
@@ -137,9 +156,9 @@ public class ShortURLConstructor
      *  request.
      */
     public String parsePage( String context,
-                             HttpServletRequest request,
-                             String encoding )
-        throws UnsupportedEncodingException
+            HttpServletRequest request,
+            String encoding )
+            throws UnsupportedEncodingException
     {
         String pagereq = m_engine.safeGetParameter( request, "page" );
 

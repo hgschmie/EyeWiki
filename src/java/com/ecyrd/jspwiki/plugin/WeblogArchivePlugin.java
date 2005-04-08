@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2003 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
@@ -52,7 +52,7 @@ public class WeblogArchivePlugin implements WikiPlugin
     private SimpleDateFormat m_monthUrlFormat;
 
     public String execute( WikiContext context, Map params )
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
 
@@ -65,8 +65,8 @@ public class WeblogArchivePlugin implements WikiPlugin
         
 
         m_monthUrlFormat = new SimpleDateFormat("'"+
-                                                context.getURL( WikiContext.VIEW, weblogName,
-                                                                "weblog.startDate='ddMMyy'&amp;weblog.days=%d")+"'");
+                context.getURL( WikiContext.VIEW, weblogName,
+                        "weblog.startDate='ddMMyy'&amp;weblog.days=%d")+"'");
 
         StringBuffer sb = new StringBuffer();
 
@@ -126,14 +126,14 @@ public class WeblogArchivePlugin implements WikiPlugin
     }
 
     private SortedSet collectMonths( WikiEngine engine, String page )
-        throws ProviderException
+            throws ProviderException
     {
         TreeSet res = new TreeSet();
 
         WeblogPlugin pl = new WeblogPlugin();
 
         List blogEntries = pl.findBlogEntries( engine.getPageManager(),
-                                               page, new Date(0L), new Date() );
+                page, new Date(0L), new Date() );
         
         Calendar urCalendar = Calendar.getInstance();
         for( Iterator i = blogEntries.iterator(); i.hasNext(); )
@@ -187,8 +187,8 @@ public class WeblogArchivePlugin implements WikiPlugin
      *  to be equal.
      */
     private class ArchiveCalendar
-        extends GregorianCalendar
-        implements Comparable
+            extends GregorianCalendar
+            implements Comparable
     {
         public ArchiveCalendar( Calendar cal )
         {
@@ -219,7 +219,7 @@ public class WeblogArchivePlugin implements WikiPlugin
                 Calendar c = (Calendar) o;
 
                 if( c.get( Calendar.YEAR ) == get( Calendar.YEAR ) &&
-                    c.get( Calendar.MONTH ) == get( Calendar.MONTH ) )
+                        c.get( Calendar.MONTH ) == get( Calendar.MONTH ) )
                 {
                     return true;
                 }

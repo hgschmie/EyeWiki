@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.BufferedInputStream;
@@ -73,7 +73,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  *  @author Janne Jalkanen
  */
 public class VersioningFileProvider
-    extends AbstractFileProvider
+        extends AbstractFileProvider
 {
     private static final Logger     log = Logger.getLogger(VersioningFileProvider.class);
    
@@ -81,8 +81,8 @@ public class VersioningFileProvider
     public static final String      PROPERTYFILE = "page.properties";
 
     public void initialize( WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException,
-               IOException
+            throws NoRequiredPropertyException,
+                   IOException
     {
         super.initialize( engine, conf);
     }
@@ -113,44 +113,44 @@ public class VersioningFileProvider
 
     // FIXME: This is relatively slow.
     /*
+      private int findLatestVersion( String page )
+      {
+      File pageDir = findOldPageDir( page );
+
+      String[] pages = pageDir.list( new WikiFileFilter() );
+
+      if( pages == null )
+      {
+      return -1; // No such thing found.
+      }
+
+      int version = -1;
+
+      for( int i = 0; i < pages.length; i++ )
+      {
+      int cutpoint = pages[i].indexOf( '.' );
+      if( cutpoint > 0 )
+      {
+      String pageNum = pages[i].substring( 0, cutpoint );
+
+      try
+      {
+      int res = Integer.parseInt( pageNum );
+
+      if( res > version )
+      {
+      version = res;
+      }
+      }
+      catch( NumberFormatException e ) {} // It's okay to skip these.
+      }
+      }
+
+      return version;
+      }
+    */
     private int findLatestVersion( String page )
-    {
-        File pageDir = findOldPageDir( page );
-
-        String[] pages = pageDir.list( new WikiFileFilter() );
-
-        if( pages == null )
-        {
-            return -1; // No such thing found.
-        }
-
-        int version = -1;
-
-        for( int i = 0; i < pages.length; i++ )
-        {
-            int cutpoint = pages[i].indexOf( '.' );
-            if( cutpoint > 0 )
-            {
-                String pageNum = pages[i].substring( 0, cutpoint );
-
-                try
-                {
-                    int res = Integer.parseInt( pageNum );
-
-                    if( res > version )
-                    {
-                        version = res;
-                    }
-                }
-                catch( NumberFormatException e ) {} // It's okay to skip these.
-            }
-        }
-
-        return version;
-    }
-*/
-    private int findLatestVersion( String page )
-        throws ProviderException
+            throws ProviderException
     {
         int version = -1;
         
@@ -195,7 +195,7 @@ public class VersioningFileProvider
      *  Reads page properties from the file system.
      */
     private Properties getPageProperties( String page )
-        throws IOException
+            throws IOException
     {
         Properties props = new Properties();
 
@@ -218,7 +218,7 @@ public class VersioningFileProvider
      *  Note that it WILL overwrite any previous properties.
      */
     private void putPageProperties( String page, Properties properties )
-        throws IOException
+            throws IOException
     {
         File propertyFile = new File( findOldPageDir(page), PROPERTYFILE );
 
@@ -236,8 +236,8 @@ public class VersioningFileProvider
      *  @throws NoSuchVersionException if there is no such version.
      */
     private int realVersion( String page, int requestedVersion )
-        throws NoSuchVersionException,
-               ProviderException
+            throws NoSuchVersionException,
+                   ProviderException
     {
         //
         //  Quickly check for the most common case.
@@ -250,7 +250,7 @@ public class VersioningFileProvider
         int latest = findLatestVersion(page);
 
         if( requestedVersion == latest ||
-            (requestedVersion == 1 && latest == -1 ) )
+                (requestedVersion == 1 && latest == -1 ) )
         {
             return -1;
         }
@@ -263,7 +263,7 @@ public class VersioningFileProvider
     }
 
     public synchronized String getPageText( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findOldPageDir( page );
 
@@ -286,7 +286,7 @@ public class VersioningFileProvider
 
     // FIXME: Should this really be here?
     private String readFile( File pagedata )
-        throws ProviderException
+            throws ProviderException
     {
         String      result = null;
         InputStream in     = null;
@@ -331,14 +331,14 @@ public class VersioningFileProvider
     /*
       This is how the page directory should look like:
 
-         version    pagedir       olddir
-          none       empty         empty
-           1         Main.txt (1)  empty
-           2         Main.txt (2)  1.txt
-           3         Main.txt (3)  1.txt, 2.txt
+      version    pagedir       olddir
+      none       empty         empty
+      1         Main.txt (1)  empty
+      2         Main.txt (2)  1.txt
+      3         Main.txt (3)  1.txt, 2.txt
     */
     public synchronized void putPageText( WikiPage page, String text )
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  This is a bit complicated.  We'll first need to
@@ -423,7 +423,7 @@ public class VersioningFileProvider
     }
 
     public WikiPage getPageInfo( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         int latest = findLatestVersion(page);
         int realVersion;
@@ -431,8 +431,8 @@ public class VersioningFileProvider
         WikiPage p = null;
 
         if( version == WikiPageProvider.LATEST_VERSION ||
-            version == latest || 
-            (version == 1 && latest == -1) )
+                version == latest || 
+                (version == 1 && latest == -1) )
         {
             //
             // Yes, we need to talk to the top level directory
@@ -505,7 +505,7 @@ public class VersioningFileProvider
      *  FIXME: Does not get user information.
      */
     public List getVersionHistory( String page )
-        throws ProviderException
+            throws ProviderException
     {
         ArrayList list = new ArrayList();
 
@@ -533,7 +533,7 @@ public class VersioningFileProvider
      */
     // FIXME: Should log errors.
     public void deletePage( String page )
-        throws ProviderException
+            throws ProviderException
     {
         super.deletePage( page );
 
@@ -560,15 +560,15 @@ public class VersioningFileProvider
     }
 
     public void deleteVersion( String page, int version )
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findOldPageDir( page );
 
         int latest = findLatestVersion( page );
 
         if( version == WikiPageProvider.LATEST_VERSION ||
-            version == latest || 
-            (version == 1 && latest == -1) )
+                version == latest || 
+                (version == 1 && latest == -1) )
         {
             //
             //  Delete the properties

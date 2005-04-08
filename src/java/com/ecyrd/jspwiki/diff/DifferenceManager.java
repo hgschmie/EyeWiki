@@ -58,12 +58,12 @@ public class DifferenceManager
     private void loadProvider(Configuration conf)
     {
         String providerClassName = conf.getString( PROP_CLASS_DIFF_PROVIDER, 
-                                                      PROP_CLASS_DIFF_PROVIDER_DEFAULT);
+                PROP_CLASS_DIFF_PROVIDER_DEFAULT);
 
         m_provider = getProvider(providerClassName, new DiffProvider.NullDiffProvider());
 
         providerClassName = conf.getString( PROP_CLASS_DIFF_RSS_PROVIDER, 
-                                                      PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT);
+                PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT);
 
         m_rssProvider = getProvider(providerClassName, m_provider);
     }

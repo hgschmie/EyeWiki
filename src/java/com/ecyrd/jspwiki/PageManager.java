@@ -266,9 +266,9 @@ public class PageManager
             String pageName = lock.getPage().getName();
             m_pageLocks.remove(pageName );
 
-                if (log.isDebugEnabled()) {
-                    log.debug( "Unlocked page "+pageName);
-                }
+            if (log.isDebugEnabled()) {
+                log.debug( "Unlocked page "+pageName);
+            }
         }
     }
 

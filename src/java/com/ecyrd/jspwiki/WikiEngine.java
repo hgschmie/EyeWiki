@@ -1889,256 +1889,256 @@ public class WikiEngine
         {
             String servlet = request.getServletPath();
 
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Servlet path is: "+servlet);
+            }
+
+            pagereq = matchSpecialPagePath( servlet );
+
+            if (log.isDebugEnabled()) {
+                log.debug("Mapped to "+pagereq);
+            }
+            if( pagereq == null )
+            {
+                pagereq = getFrontPage();
+            }
         }
 
-        pagereq = matchSpecialPagePath( servlet );
+        int hashMark = pagereq.indexOf('#');
 
-        if (log.isDebugEnabled()) {
-            log.debug("Mapped to "+pagereq);
-        }
-        if( pagereq == null )
+        if( hashMark != -1 )
         {
-            pagereq = getFrontPage();
+            pagereq = pagereq.substring( 0, hashMark );
         }
-    }
 
-    int hashMark = pagereq.indexOf('#');
+        int version          = WikiProvider.LATEST_VERSION;
+        String rev           = request.getParameter("version");
 
-    if( hashMark != -1 )
-    {
-        pagereq = pagereq.substring( 0, hashMark );
-    }
-
-    int version          = WikiProvider.LATEST_VERSION;
-    String rev           = request.getParameter("version");
-
-    if( rev != null )
-    {
-        version = Integer.parseInt( rev );
-    }
-
-    //
-    //  Find the WikiPage object
-    //
-    String pagename = pagereq;
-    WikiPage wikipage; 
-
-    try
-    {
-        pagename = getFinalPageName( pagereq );
-    }
-    catch( ProviderException e ) {} // FIXME: Should not ignore!
-
-    if( pagename != null )
-    {
-        wikipage = getPage( pagename, version );
-    }
-    else
-    {
-        wikipage = getPage( pagereq, version );
-    }
-
-    if( wikipage == null ) 
-    {
-        pagereq = TranslatorReader.cleanLink( pagereq );
-        wikipage = new WikiPage( pagereq );
-    }
-
-    //
-    //  Figure out which template we should be using for this page.
-    //
-    if( template == null )
-    {
-        template = (String)wikipage.getAttribute( PROP_TEMPLATEDIR );
-
-        // FIXME: Most definitely this should be checked for
-        //        existence, or else it is possible to create pages that
-        //        cannot be shown.
-
-        if(StringUtils.isEmpty(template))
+        if( rev != null )
         {
-            template = getTemplateDir();
+            version = Integer.parseInt( rev );
         }
-    }
 
-    WikiContext context = new WikiContext( this, 
-            wikipage );
-    context.setRequestContext( requestContext );
-    context.setHttpRequest( request );
-    context.setTemplate( template );
-
-    UserProfile user = getUserManager().getUserProfile( request );
-    context.setCurrentUser( user );
-
-    return context;
-}
-
-/**
- *  Deletes a page completely.
- * 
- * @param pageName
- * @throws ProviderException
- */
-public void deletePage( String pageName )
-        throws ProviderException
-{
-    WikiPage p = getPage( pageName );
-    m_pageManager.deletePage( p );
-}
-    
-public void deleteVersion( WikiPage page )
-        throws ProviderException
-{
-    m_pageManager.deleteVersion( page );
-}
-    
-/**
- *  Returns the URL of the global RSS file.  May be null, if the
- *  RSS file generation is not operational.
- *  @since 1.7.10
- */
-public String getGlobalRSSURL()
-{
-    if( m_rssURL != null )
-    {
-        return getBaseURL() + m_rssURL;
-    }
-
-    return null;
-}
-
-/**
- * Sets the internal path of the webapp base.
- * @since 2.2
- */
-protected void setRootPath(final String rootPath)
-{
-    m_rootPath = rootPath;
-}
-
-/**
- * @since 2.2
- */
-public String getRootPath()
-{
-    return m_rootPath;
-}
-
-/**
- * Checks whether a supplied directory path is valid for the current Wiki configuration.
- * A path is valid if
- * - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
- * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative
- *   and the rootDirectory is not null.
- *
- * @param pathName The Directory path to check
- * @return A valid path
- * @throws WikiException if the supplied directory path is invalid.
- */
-public String getValidPath(final String pathName)
-        throws WikiException
-{
-    File path = new File(pathName);
-    String rootPath = getRootPath();
-
-    // If we have a relative path reference and a root directory has been
-    // set, then return the path relative to it.
-    if (rootPath != null && !path.isAbsolute())
-    {
-        return new File(rootPath, pathName).getAbsolutePath();
-    }
-
-    // In the "Absolute Path" configuration (default), we return everything "as is".
-    if (!wikiRelativePathes)
-    {
-        return pathName;
-    }
-
-    throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
-}
-
-/**
- *  Runs the RSS generation thread.
- *  FIXME: MUST be somewhere else, this is not a good place.
- */
-private class RSSThread extends Thread
-{
-    public void run()
-    {
-        String rootPath = getRootPath();
-
-        if (rootPath == null)
-        {
-            log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
-        }
+        //
+        //  Find the WikiPage object
+        //
+        String pagename = pagereq;
+        WikiPage wikipage; 
 
         try
         {
-            String fileName = conf.getString(
-                    PROP_RSS_FILE,
-                    PROP_RSS_FILE_DEFAULT);
+            pagename = getFinalPageName( pagereq );
+        }
+        catch( ProviderException e ) {} // FIXME: Should not ignore!
 
-            int rssInterval = conf.getInt( 
-                    PROP_RSS_INTERVAL,
-                    PROP_RSS_INTERVAL_DEFAULT);
+        if( pagename != null )
+        {
+            wikipage = getPage( pagename, version );
+        }
+        else
+        {
+            wikipage = getPage( pagereq, version );
+        }
 
-            if (log.isDebugEnabled()) {
-                log.debug("RSS file will be at "+fileName);
-                log.debug("RSS refresh interval (seconds): " + rssInterval);
+        if( wikipage == null ) 
+        {
+            pagereq = TranslatorReader.cleanLink( pagereq );
+            wikipage = new WikiPage( pagereq );
+        }
+
+        //
+        //  Figure out which template we should be using for this page.
+        //
+        if( template == null )
+        {
+            template = (String)wikipage.getAttribute( PROP_TEMPLATEDIR );
+
+            // FIXME: Most definitely this should be checked for
+            //        existence, or else it is possible to create pages that
+            //        cannot be shown.
+
+            if(StringUtils.isEmpty(template))
+            {
+                template = getTemplateDir();
+            }
+        }
+
+        WikiContext context = new WikiContext( this, 
+                wikipage );
+        context.setRequestContext( requestContext );
+        context.setHttpRequest( request );
+        context.setTemplate( template );
+
+        UserProfile user = getUserManager().getUserProfile( request );
+        context.setCurrentUser( user );
+
+        return context;
+    }
+
+    /**
+     *  Deletes a page completely.
+     * 
+     * @param pageName
+     * @throws ProviderException
+     */
+    public void deletePage( String pageName )
+            throws ProviderException
+    {
+        WikiPage p = getPage( pageName );
+        m_pageManager.deletePage( p );
+    }
+    
+    public void deleteVersion( WikiPage page )
+            throws ProviderException
+    {
+        m_pageManager.deleteVersion( page );
+    }
+    
+    /**
+     *  Returns the URL of the global RSS file.  May be null, if the
+     *  RSS file generation is not operational.
+     *  @since 1.7.10
+     */
+    public String getGlobalRSSURL()
+    {
+        if( m_rssURL != null )
+        {
+            return getBaseURL() + m_rssURL;
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the internal path of the webapp base.
+     * @since 2.2
+     */
+    protected void setRootPath(final String rootPath)
+    {
+        m_rootPath = rootPath;
+    }
+
+    /**
+     * @since 2.2
+     */
+    public String getRootPath()
+    {
+        return m_rootPath;
+    }
+
+    /**
+     * Checks whether a supplied directory path is valid for the current Wiki configuration.
+     * A path is valid if
+     * - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
+     * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative
+     *   and the rootDirectory is not null.
+     *
+     * @param pathName The Directory path to check
+     * @return A valid path
+     * @throws WikiException if the supplied directory path is invalid.
+     */
+    public String getValidPath(final String pathName)
+            throws WikiException
+    {
+        File path = new File(pathName);
+        String rootPath = getRootPath();
+
+        // If we have a relative path reference and a root directory has been
+        // set, then return the path relative to it.
+        if (rootPath != null && !path.isAbsolute())
+        {
+            return new File(rootPath, pathName).getAbsolutePath();
+        }
+
+        // In the "Absolute Path" configuration (default), we return everything "as is".
+        if (!wikiRelativePathes)
+        {
+            return pathName;
+        }
+
+        throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
+    }
+
+    /**
+     *  Runs the RSS generation thread.
+     *  FIXME: MUST be somewhere else, this is not a good place.
+     */
+    private class RSSThread extends Thread
+    {
+        public void run()
+        {
+            String rootPath = getRootPath();
+
+            if (rootPath == null)
+            {
+                log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
             }
 
-            while(true)
+            try
             {
-                Writer out = null;
-                Reader in  = null;
+                String fileName = conf.getString(
+                        PROP_RSS_FILE,
+                        PROP_RSS_FILE_DEFAULT);
 
-                try
+                int rssInterval = conf.getInt( 
+                        PROP_RSS_INTERVAL,
+                        PROP_RSS_INTERVAL_DEFAULT);
+
+                if (log.isDebugEnabled()) {
+                    log.debug("RSS file will be at "+fileName);
+                    log.debug("RSS refresh interval (seconds): " + rssInterval);
+                }
+
+                while(true)
                 {
-                    //
-                    //  Generate RSS file, output it to
-                    //  default "rss.rdf".
-                    //
-                    if (log.isDebugEnabled()) {
-                        log.debug("Regenerating RSS feed to " + fileName);
+                    Writer out = null;
+                    Reader in  = null;
+
+                    try
+                    {
+                        //
+                        //  Generate RSS file, output it to
+                        //  default "rss.rdf".
+                        //
+                        if (log.isDebugEnabled()) {
+                            log.debug("Regenerating RSS feed to " + fileName);
+                        }
+
+                        String feed = m_rssGenerator.generate();
+
+                        File file = new File( rootPath, fileName );
+
+                        in  = new StringReader(feed);
+                        out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream(file), "UTF-8") );
+
+                        FileUtil.copyContents( in, out );
+
+                        m_rssURL = fileName;
+                    }
+                    catch( IOException e )
+                    {
+                        log.error("Cannot generate RSS feed to "+fileName, e );
+                        m_rssURL = null;
+                    }
+                    finally
+                    {
+                        IOUtils.closeQuietly(in);
+                        IOUtils.closeQuietly(out);
                     }
 
-                    String feed = m_rssGenerator.generate();
-
-                    File file = new File( rootPath, fileName );
-
-                    in  = new StringReader(feed);
-                    out = new BufferedWriter( new OutputStreamWriter( new FileOutputStream(file), "UTF-8") );
-
-                    FileUtil.copyContents( in, out );
-
-                    m_rssURL = fileName;
-                }
-                catch( IOException e )
-                {
-                    log.error("Cannot generate RSS feed to "+fileName, e );
-                    m_rssURL = null;
-                }
-                finally
-                {
-                    IOUtils.closeQuietly(in);
-                    IOUtils.closeQuietly(out);
-                }
-
-                Thread.sleep(rssInterval*1000L);
-            } // while
+                    Thread.sleep(rssInterval*1000L);
+                } // while
                 
-        }
-        catch(InterruptedException e)
-        {
-            log.error("RSS thread interrupted, no more RSS feeds", e);
-        }
+            }
+            catch(InterruptedException e)
+            {
+                log.error("RSS thread interrupted, no more RSS feeds", e);
+            }
             
-        //
-        // Signal: no more RSS feeds.
-        //
-        m_rssURL = null;
+            //
+            // Signal: no more RSS feeds.
+            //
+            m_rssURL = null;
+        }
     }
-}
 }

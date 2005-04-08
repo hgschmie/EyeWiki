@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
@@ -42,7 +42,7 @@ import com.ecyrd.jspwiki.WikiPage;
  *  @since 2.0
  */
 public class InsertDiffTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     public static final String ATTR_OLDVERSION = "insertdiff.old";
     public static final String ATTR_NEWVERSION = "insertdiff.new";
@@ -60,7 +60,7 @@ public class InsertDiffTag
     }
 
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage   page;
@@ -75,9 +75,9 @@ public class InsertDiffTag
         }
 
         Integer vernew = (Integer) pageContext.getAttribute( ATTR_NEWVERSION,
-                                                             PageContext.REQUEST_SCOPE );
+                PageContext.REQUEST_SCOPE );
         Integer verold = (Integer) pageContext.getAttribute( ATTR_OLDVERSION,
-                                                             PageContext.REQUEST_SCOPE );
+                PageContext.REQUEST_SCOPE );
 
         log.info("Request diff between version "+verold+" and "+vernew);
 
@@ -86,9 +86,9 @@ public class InsertDiffTag
             JspWriter out = pageContext.getOut();
 
             String diff = engine.getDiff( page.getName(), 
-                                          vernew.intValue(), 
-                                          verold.intValue(),
-                                          true);
+                    vernew.intValue(), 
+                    verold.intValue(),
+                    true);
 
             if(StringUtils.isEmpty(diff))
             {

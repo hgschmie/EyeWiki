@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.attachment;
 
 import java.io.File;
@@ -116,7 +116,7 @@ public class AttachmentManager
         try
         {
             Class providerclass = ClassUtil.findClass( DEFAULT_PROVIDER_CLASS_PREFIX,
-                                                       classname );
+                    classname );
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();
 
@@ -162,7 +162,7 @@ public class AttachmentManager
      *  @throws ProviderException If something goes wrong.
      */
     public Attachment getAttachmentInfo( String name )
-        throws ProviderException
+            throws ProviderException
     {
         return getAttachmentInfo( name, WikiProvider.LATEST_VERSION );
     }
@@ -177,7 +177,7 @@ public class AttachmentManager
      */
     
     public Attachment getAttachmentInfo( String name, int version )
-        throws ProviderException
+            throws ProviderException
     {
         if( name == null )
         {
@@ -198,8 +198,8 @@ public class AttachmentManager
      */
 
     public Attachment getAttachmentInfo( WikiContext context,
-                                         String attachmentname )
-        throws ProviderException
+            String attachmentname )
+            throws ProviderException
     {
         return getAttachmentInfo( context, attachmentname, WikiProvider.LATEST_VERSION );
     }
@@ -216,9 +216,9 @@ public class AttachmentManager
      */
 
     public Attachment getAttachmentInfo( WikiContext context, 
-                                         String attachmentname, 
-                                         int version )
-        throws ProviderException
+            String attachmentname, 
+            int version )
+            throws ProviderException
     {
         if( m_provider == null )
         {
@@ -262,7 +262,7 @@ public class AttachmentManager
      *  @return a valid collection of attachments.
      */
     public Collection listAttachments( WikiPage wikipage )
-        throws ProviderException
+            throws ProviderException
     {
         if( m_provider == null )
         {
@@ -299,8 +299,8 @@ public class AttachmentManager
      *          attachments are disabled.
      */
     public InputStream getAttachmentStream( Attachment att )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         if( m_provider == null )
         {
@@ -322,8 +322,8 @@ public class AttachmentManager
      *  @throws ProviderException If something else went wrong.
      */
     public void storeAttachment( Attachment att, File source )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {        
         FileInputStream in = null;
 
@@ -350,8 +350,8 @@ public class AttachmentManager
      *  @throws ProviderException If something else went wrong.
      */
     public void storeAttachment( Attachment att, InputStream in )
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         if( m_provider == null )
         {
@@ -361,7 +361,7 @@ public class AttachmentManager
         m_provider.putAttachmentData( att, in );
 
         m_engine.getReferenceManager().updateReferences( att.getName(),
-                                                         new java.util.Vector() );
+                new java.util.Vector() );
 
         m_engine.updateReferences( new WikiPage( att.getParentName() ) );
     }
@@ -376,7 +376,7 @@ public class AttachmentManager
      *  @throws ProviderException If the provider fails for some reason.
      */
     public List getVersionHistory( String attachmentName )
-        throws ProviderException
+            throws ProviderException
     {
         if( m_provider == null )
         {
@@ -401,7 +401,7 @@ public class AttachmentManager
      *          return an empty collection.
      */
     public Collection getAllAttachments()
-        throws ProviderException
+            throws ProviderException
     {        
         if( attachmentsEnabled() )
         {
@@ -425,7 +425,7 @@ public class AttachmentManager
      * Deletes the given attachment version.
      */
     public void deleteVersion( Attachment att )
-    	throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteVersion( att );
     }
@@ -434,7 +434,7 @@ public class AttachmentManager
      * Deletes all versions of the given attachment.
      */
     public void deleteAttachment( Attachment att )
-    	throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteAttachment( att );
     }
