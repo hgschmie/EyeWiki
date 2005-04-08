@@ -181,7 +181,9 @@ public class PageManager
             //
             //  This only occurs with the latest version.
             //
-            log.info("Repository has been modified externally while fetching page "+pageName );
+            if (log.isInfoEnabled()) {
+                log.info("Repository has been modified externally while fetching page "+pageName );
+            }
 
             //
             //  Empty the references and yay, it shall be recalculated
@@ -337,7 +339,9 @@ public class PageManager
             //
             //  This only occurs with the latest version.
             //
-            log.info("Repository has been modified externally while fetching info for "+pageName );
+            if (log.isInfoEnabled()) {
+                log.info("Repository has been modified externally while fetching info for "+pageName );
+            }
 
             WikiPage p = new WikiPage( pageName );
             

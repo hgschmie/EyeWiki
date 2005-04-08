@@ -64,7 +64,9 @@ public class WikiServlet
                 req,
                 m_engine.getContentEncoding() );
 
-        log.info("Request for page: "+pageName);
+        if (log.isInfoEnabled()) {
+            log.info("Request for page: "+pageName);
+        }
 
         if( pageName == null)
         {

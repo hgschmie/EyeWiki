@@ -871,8 +871,11 @@ public class TranslatorReader
             }
             catch( PluginException e )
             {
-                log.info( "Failed to insert plugin", e );
-                log.info( "Root cause:",e.getRootThrowable() );
+                if (log.isInfoEnabled()) {
+                    log.info( "Failed to insert plugin", e );
+                    log.info( "Root cause:",e.getRootThrowable() );
+                }
+
                 included = m_renderer.makeError("Plugin insertion failed: "+e.getMessage());
             }
                             
@@ -2648,7 +2651,11 @@ public class TranslatorReader
             else if( bullet == '*' )
                 res = "<ul>\n";
             else
-                log.info("Warning: unknown bullet character '" + bullet + "' at (+)" );
+            {
+                if (log.isInfoEnabled()) {
+                    log.info("Warning: unknown bullet character '" + bullet + "' at (+)" );
+                }
+            }
 
             return res;
         }
@@ -2682,7 +2689,9 @@ public class TranslatorReader
             else
             {
                 //FIXME unknown character -> error
-                log.info("Warning: unknown character in unwind '" + bullet + "'" );
+                if (log.isInfoEnabled()) {
+                    log.info("Warning: unknown character in unwind '" + bullet + "'" );
+                }
             }
 
             return res;

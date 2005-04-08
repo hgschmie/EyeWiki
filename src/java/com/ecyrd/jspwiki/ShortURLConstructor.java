@@ -62,8 +62,10 @@ public class ShortURLConstructor
                 String path = url.getPath();
             
                 m_urlPrefix = path+"wiki/";
-            
-                log.info("Short URL prefix path="+m_urlPrefix+" (You can use "+WikiProperties.PROP_SHORTURL_PREFIX+" to override this)");
+
+                if (log.isInfoEnabled()) {
+                    log.info("Short URL prefix path="+m_urlPrefix+" (You can use "+WikiProperties.PROP_SHORTURL_PREFIX+" to override this)");
+                }
             }
             catch( MalformedURLException e )
             {

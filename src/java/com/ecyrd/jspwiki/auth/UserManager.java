@@ -117,7 +117,9 @@ public class UserManager
                 m_authenticator = (WikiAuthenticator)authenticatorClass.newInstance();
                 m_authenticator.initialize(engine, conf);
 
-                log.info("Initialized "+authClassName+" for authentication.");
+                if (log.isInfoEnabled()) {
+                    log.info("Initialized "+authClassName+" for authentication.");
+                }
             }
             catch( ClassNotFoundException e )
             {
@@ -175,7 +177,9 @@ public class UserManager
 
         if( !(up instanceof UserProfile) )
         {
-            log.info( name + " is not a user!" );
+            if (log.isInfoEnabled()) {
+                log.info( name + " is not a user!" );
+            }
             up = null;
         }
         
@@ -259,7 +263,9 @@ public class UserManager
 
                 if( !(p instanceof WikiGroup) )
                 {
-                    log.info( name+" is not a group!" );
+                    if (log.isInfoEnabled()) {
+                        log.info( name+" is not a group!" );
+                    }
                 }
                 else
                 {
@@ -392,13 +398,18 @@ public class UserManager
             {
                 wup.setLoginStatus( UserProfile.PASSWORD );
                 session.setAttribute( WIKIUSER, wup );
-                log.info("Logged in user "+username);
+
+                if (log.isInfoEnabled()) {
+                    log.info("Logged in user "+username);
+                }
 
                 if( expired ) throw new PasswordExpiredException(""); //FIXME!
             }
             else
             {
-                log.info("Username "+username+" attempted to log in with the wrong password.");
+                if (log.isInfoEnabled()) {
+                    log.info("Username "+username+" attempted to log in with the wrong password.");
+                }
             }
 
             return isValid;
@@ -419,7 +430,9 @@ public class UserManager
             UserProfile wup = (UserProfile)session.getAttribute( WIKIUSER );
             if( wup != null )
             {
-                log.info( "logged out user " + wup.getName() );
+                if (log.isInfoEnabled()) {
+                    log.info( "logged out user " + wup.getName() );
+                }
                 wup.setLoginStatus( UserProfile.NONE );
             }
             session.invalidate();

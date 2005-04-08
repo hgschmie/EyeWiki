@@ -231,7 +231,9 @@ public class ReferenceManager
         }
         catch( Exception e )
         {
-            log.info("Unable to unserialize old refmgr information, rebuilding database: "+e.getMessage());
+            if (log.isInfoEnabled()) {
+                log.info("Unable to unserialize old refmgr information, rebuilding database: "+e.getMessage());
+            }
             buildKeyLists( pages );
 
             // Scan the existing pages from disk and update references in the manager.
@@ -252,9 +254,11 @@ public class ReferenceManager
             serializeToDisk();
         }
 
-        log.info( "Cross reference scan done (" +
-                (System.currentTimeMillis()-start) +
-                " ms)" );
+        if (log.isInfoEnabled()) {
+            log.info( "Cross reference scan done (" +
+                    (System.currentTimeMillis()-start) +
+                    " ms)" );
+        }
 
     }
 

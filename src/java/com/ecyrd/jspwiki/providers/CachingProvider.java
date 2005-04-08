@@ -232,7 +232,9 @@ public class CachingProvider
 
             File dir = new File(m_luceneDirectory);
 
-            log.info("Lucene enabled, cache will be in: "+dir.getAbsolutePath());
+            if (log.isInfoEnabled()) {
+                log.info("Lucene enabled, cache will be in: "+dir.getAbsolutePath());
+            }
 
             try
             {
@@ -277,8 +279,10 @@ public class CachingProvider
                     }
 
                     Date end = new Date();
-                    log.info("Full Lucene index finished in " + 
-                            (end.getTime() - start.getTime()) + " milliseconds.");
+                    if (log.isInfoEnabled()) {
+                        log.info("Full Lucene index finished in " + 
+                                (end.getTime() - start.getTime()) + " milliseconds.");
+                    }
                 }
                 else
                 {
@@ -462,7 +466,9 @@ public class CachingProvider
             {
                 //  Yes, the page has been modified externally and nobody told us
          
-                log.info("Page "+cached.getName()+" changed, reloading...");
+                if (log.isInfoEnabled()) {
+                    log.info("Page "+cached.getName()+" changed, reloading...");
+                }
 
                 m_cache.putInCache( name, refreshed );
                 // Requests for this page are now no longer denied
@@ -524,7 +530,10 @@ public class CachingProvider
         }
         catch( ProviderException e ) 
         {
-            log.info("Provider failed while trying to check if page exists: "+pageName);
+            if (log.isInfoEnabled()) {
+                log.info("Provider failed while trying to check if page exists: "+pageName);
+            }
+
             return false;
         }
         

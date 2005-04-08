@@ -303,8 +303,10 @@ public class BasicAttachmentProvider
             File newfile = new File( attDir, versionNumber+"."+
                     getFileExtension(att.getFileName()) );
 
-            log.info("Uploading attachment "+att.getFileName()+" to page "+att.getParentName());
-            log.info("Saving attachment contents to "+newfile.getAbsolutePath());
+            if (log.isInfoEnabled()) {
+                log.info("Uploading attachment "+att.getFileName()+" to page "+att.getParentName());
+                log.info("Saving attachment contents to "+newfile.getAbsolutePath());
+            }
             
             OutputStream out = null;
 

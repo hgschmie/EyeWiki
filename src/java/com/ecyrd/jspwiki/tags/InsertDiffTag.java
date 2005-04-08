@@ -79,7 +79,9 @@ public class InsertDiffTag
         Integer verold = (Integer) pageContext.getAttribute( ATTR_OLDVERSION,
                 PageContext.REQUEST_SCOPE );
 
-        log.info("Request diff between version "+verold+" and "+vernew);
+        if (log.isInfoEnabled()) {
+            log.info("Request diff between version "+verold+" and "+vernew);
+        }
 
         if( page != null )
         {

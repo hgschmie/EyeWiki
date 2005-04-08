@@ -115,7 +115,9 @@ public class SpamFilter
                 m_spamPatterns = parseWordList( source, 
                         (String)source.getAttribute( LISTVAR ) );
 
-                log.info("Spam filter reloaded - recognizing "+m_spamPatterns.size()+" patterns from page "+m_forbiddenWordsPage);
+                if (log.isInfoEnabled()) {
+                    log.info("Spam filter reloaded - recognizing "+m_spamPatterns.size()+" patterns from page "+m_forbiddenWordsPage);
+                }
             }
         }
 

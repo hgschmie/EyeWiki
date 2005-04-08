@@ -104,7 +104,9 @@ public abstract class AbstractFileProvider
                 WikiProperties.PROP_ENCODING_DEFAULT);
                 
 
-        log.info( "Wikipages are read from '" + m_pageDirectory + "'" );
+        if (log.isInfoEnabled()) {
+            log.info( "Wikipages are read from '" + m_pageDirectory + "'" );
+        }
     }
 
 
@@ -204,7 +206,9 @@ public abstract class AbstractFileProvider
         else
         {
             // This is okay.
-            log.info("New page '"+page+"'");
+            if (log.isInfoEnabled()) {
+                log.info("New page '"+page+"'");
+            }
         }
 
         return result;

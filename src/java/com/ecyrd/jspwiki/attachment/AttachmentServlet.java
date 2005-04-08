@@ -451,8 +451,10 @@ public class AttachmentServlet
                 
                         m_engine.getAttachmentManager().storeAttachment( att, in );
 
-                        log.info( "User " + user + " uploaded attachment to " + wikipage + 
-                                " called "+filename+", size " + multi.getFileSize(part) );
+                        if (log.isInfoEnabled()) {
+                            log.info( "User " + user + " uploaded attachment to " + wikipage + 
+                                    " called "+filename+", size " + multi.getFileSize(part) );
+                        }
                     }
                     else
                     {

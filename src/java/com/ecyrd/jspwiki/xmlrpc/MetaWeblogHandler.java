@@ -337,7 +337,9 @@ public class MetaWeblogHandler
             boolean publish )
             throws XmlRpcException
     {
-        log.info("metaWeblog.editPost("+postid+") called");
+        if (log.isInfoEnabled()) {
+            log.info("metaWeblog.editPost("+postid+") called");
+        }
 
         // FIXME: Is postid correct?  Should we determine it from the page name?
         WikiPage page = m_engine.getPage( postid );

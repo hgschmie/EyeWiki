@@ -182,9 +182,11 @@ public class RCSFileProvider
                     }
                     else
                     {
-                        log.info("WikiPage "+info.getName()+
-                                " has null modification date for version "+
-                                version);
+                        if (log.isInfoEnabled()) {
+                            log.info("WikiPage "+info.getName()+
+                                    " has null modification date for version "+
+                                    version);
+                        }
                     }
                 }
                 else if( matcher.contains( line, userpattern ) && found )
@@ -512,12 +514,16 @@ public class RCSFileProvider
             }
             else
             {
-                log.info( "RCS file does not exist for page: "+page );
+                if (log.isInfoEnabled()) {
+                    log.info( "RCS file does not exist for page: "+page );
+                }
             }
         }
         else
         {
-            log.info( "No RCS directory at "+rcsdir.getAbsolutePath() );
+            if (log.isInfoEnabled()) {
+                log.info( "No RCS directory at "+rcsdir.getAbsolutePath() );
+            }
         }
     }
 

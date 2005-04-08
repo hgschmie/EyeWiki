@@ -57,7 +57,9 @@ public class FileAuthenticator
         m_fileName = engine.getValidPath(
                 conf.getString(WikiProperties.PROP_AUTH_FILENAME));
 
-        log.info("Authenticator file is at " + m_fileName);
+        if (log.isInfoEnabled()) {
+            log.info("Authenticator file is at " + m_fileName);
+        }
     }
 
     private Properties readPasswords( String filename )

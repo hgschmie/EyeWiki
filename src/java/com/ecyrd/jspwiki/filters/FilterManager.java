@@ -147,7 +147,10 @@ public class FilterManager
             filter.initialize(props);
 
             addPageFilter( filter, priority );
-            log.info("Added page filter "+cl.getName()+" with priority "+priority);
+
+            if (log.isInfoEnabled()) {
+                log.info("Added page filter "+cl.getName()+" with priority "+priority);
+            }
         }
         catch( ClassNotFoundException e )
         {
@@ -194,7 +197,9 @@ public class FilterManager
 
             if( xmlStream == null )
             {
-                log.info("Cannot find property file for filters (this is okay, expected to find it as: '"+ xmlFile  +"')");
+                if (log.isInfoEnabled()) {
+                    log.info("Cannot find property file for filters (this is okay, expected to find it as: '"+ xmlFile  +"')");
+                }
                 return;
             }
             Parser parser = new MinML(); // FIXME: Should be settable
@@ -207,7 +212,9 @@ public class FilterManager
         }
         catch (FileNotFoundException fnf)
         {
-            log.info("Could not open " + xmlFile + ". No filters are defined.");
+            if (log.isInfoEnabled()) {
+                log.info("Could not open " + xmlFile + ". No filters are defined.");
+            }
         }
         catch( IOException e )
         {

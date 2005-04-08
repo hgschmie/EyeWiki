@@ -400,7 +400,10 @@ public class WikiEngine
             //
             setRootPath(context.getRealPath("/"));
             initialize( conf );
-            log.info("Root path for this Wiki is: '" + getRootPath() + "'");
+
+            if (log.isInfoEnabled()) {
+                log.info("Root path for this Wiki is: '" + getRootPath() + "'");
+            }
         }
         catch( Exception e )
         {
@@ -442,8 +445,10 @@ public class WikiEngine
             c_configured = true;
         }
 
-        log.info("*******************************************");
-        log.info("JSPWiki " + Release.VERSTR + " starting. Whee!");
+        if (log.isInfoEnabled()) {
+            log.info("*******************************************");
+            log.info("JSPWiki " + Release.VERSTR + " starting. Whee!");
+        }
 
         log.debug("Configuring WikiEngine...");
 
@@ -463,7 +468,10 @@ public class WikiEngine
         }
        
         createDirectory(m_workDir);
-        log.info("JSPWiki working directory is '" + m_workDir + "'");
+
+        if (log.isInfoEnabled()) {
+            log.info("JSPWiki working directory is '" + m_workDir + "'");
+        }
 
         //
         //  Create and find the pages directory (might be null e.g. for JDBC)
@@ -474,7 +482,10 @@ public class WikiEngine
         {
             m_pageDir = getValidPath(m_pageDir);
             createDirectory(m_pageDir);
-            log.info("JSPWiki pages directory is '" + m_pageDir + "'");
+
+            if (log.isInfoEnabled()) {
+                log.info("JSPWiki pages directory is '" + m_pageDir + "'");
+            }
         }
         else
         {
@@ -490,7 +501,10 @@ public class WikiEngine
         {
             m_storageDir = getValidPath(m_storageDir);
             createDirectory(m_storageDir);
-            log.info("JSPWiki storage directory is '" + m_storageDir + "'");
+
+            if (log.isInfoEnabled()) {
+                log.info("JSPWiki storage directory is '" + m_storageDir + "'");
+            }
         }
         else
         {

@@ -85,7 +85,9 @@ public class Search implements WikiPlugin
     
     private Collection doBasicQuery( WikiContext context, String query )
     {
-        log.info("Searching for string "+query);
+        if (log.isInfoEnabled()) {
+            log.info("Searching for string "+query);
+        }
 
         Collection list = context.getEngine().findPages( query );
 

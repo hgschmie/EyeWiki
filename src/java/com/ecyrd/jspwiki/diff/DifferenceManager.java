@@ -52,7 +52,9 @@ public class DifferenceManager
 
         initializeProvider(engine, conf);
         
-        log.info("Using difference provider: " + m_provider.getProviderInfo());   
+        if (log.isInfoEnabled()) {
+            log.info("Using difference provider: " + m_provider.getProviderInfo());   
+        }
     }
 
     private void loadProvider(Configuration conf)

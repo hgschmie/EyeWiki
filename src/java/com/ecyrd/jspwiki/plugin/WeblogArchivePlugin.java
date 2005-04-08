@@ -118,7 +118,10 @@ public class WeblogArchivePlugin implements WikiPlugin
         }
         catch( ProviderException ex )
         {
-            log.info( "Cannot get archive", ex );
+            if (log.isInfoEnabled()) {
+                log.info( "Cannot get archive", ex );
+            }
+
             sb.append("Cannot get archive: "+ex.getMessage());
         }
 

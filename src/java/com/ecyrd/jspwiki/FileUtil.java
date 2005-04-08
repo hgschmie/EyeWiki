@@ -54,7 +54,9 @@ public class FileUtil
         {
             if( java.nio.charset.Charset.forName( "UTF-8" ) != null )
             {
-                log.info("JDK 1.4 detected.  Using NIO library.");
+                if (log.isInfoEnabled()) {
+                    log.info("JDK 1.4 detected.  Using NIO library.");
+                }
                 c_hasNIO = true;
             }
         }
@@ -119,7 +121,9 @@ public class FileUtil
     {
         StringBuffer result = new StringBuffer();        
 
-        log.info("Running simple command "+command+" in "+directory);
+        if (log.isInfoEnabled()) {
+            log.info("Running simple command "+command+" in "+directory);
+        }
 
         Process process = Runtime.getRuntime().exec( command, null, new File(directory) );
 
@@ -248,7 +252,9 @@ public class FileUtil
                 // encoding are sun.io.MalformedInputExceptions, but they are not
                 // java standard, so we'd better not catch them.
 
-                log.info( "Unable to read stream - odd exception.  Assuming this data is ISO-8859-1 and retrying.\n  "+e.getMessage() );
+                if (log.isInfoEnabled()) {
+                    log.info( "Unable to read stream - odd exception.  Assuming this data is ISO-8859-1 and retrying.\n  "+e.getMessage() );
+                }
 
                 if (log.isDebugEnabled()) {
                     log.debug( "Full exception is", e );
