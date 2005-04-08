@@ -1,22 +1,22 @@
 /* 
-    JSPWiki - a JSP-based WikiWiki clone.
+   JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+   Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU Lesser General Public License as published by
+   the Free Software Foundation; either version 2.1 of the License, or
+   (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+   You should have received a copy of the GNU Lesser General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 // FIXME: This class is extraordinarily lacking.
 
 public class CalendarTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     private String m_year  = null;
     private String m_month = null;
@@ -67,15 +67,15 @@ public class CalendarTag
     private SimpleDateFormat m_dateFormat = new SimpleDateFormat( "ddMMyy" );
 
     /*
-    public void setYear( String year )
-    {
-        m_year = year;
-    }
+      public void setYear( String year )
+      {
+      m_year = year;
+      }
 
-    public void setMonth( String month )
-    {
-        m_month = month;
-    }
+      public void setMonth( String month )
+      {
+      m_month = month;
+      }
     */
 
     public void setPageformat( String format )
@@ -128,7 +128,7 @@ public class CalendarTag
                 else
                 {
                     result = "<td class=\"link\"><a href=\""+m_wikiContext.getViewURL( pagename )+"\">"+
-                             day.get( Calendar.DATE )+"</a></td>";
+                            day.get( Calendar.DATE )+"</a></td>";
                 }
             }
             else
@@ -192,7 +192,7 @@ public class CalendarTag
 
             String calendarDate = m_dateFormat.format(day.getTime());
             String url = m_wikiContext.getURL( WikiContext.VIEW, pageName, 
-                                               "calendar.date="+calendarDate );
+                    "calendar.date="+calendarDate );
 
             if ( (queryString != null) && (queryString.length() > 0) )
 	    {
@@ -235,8 +235,8 @@ public class CalendarTag
     }
 
     public final int doWikiStartTag()
-        throws IOException,
-               ProviderException
+            throws IOException,
+                   ProviderException
     {
         WikiEngine       engine   = m_wikiContext.getEngine();
         JspWriter        out      = pageContext.getOut();
@@ -248,11 +248,11 @@ public class CalendarTag
         //  Check if there is a parameter in the request to set the date.
         //
         String calendarDate = engine.safeGetParameter( pageContext.getRequest(), 
-                                                       "calendar.date" );
+                "calendar.date" );
         if( calendarDate == null )
         {
             calendarDate = engine.safeGetParameter( pageContext.getRequest(),
-                                                    "weblog.startDate" );
+                    "weblog.startDate" );
         }
         
         if( calendarDate != null )
@@ -282,24 +282,24 @@ public class CalendarTag
         HttpServletRequest httpServletRequest = m_wikiContext.getHttpRequest();
         String queryString = engine.safeGetQueryString( httpServletRequest );
         out.write( "<tr>"+
-                   getMonthNaviLink(prevCal,"&lt;&lt;", queryString)+
-                   "<td colspan=5 class=\"month\">"+
-                   getMonthLink( cal )+
-                   "</td>"+
-                   getMonthNaviLink(nextCal,"&gt;&gt;", queryString)+ 
-                   "</tr>\n"
-                 );
+                getMonthNaviLink(prevCal,"&lt;&lt;", queryString)+
+                "<td colspan=5 class=\"month\">"+
+                getMonthLink( cal )+
+                "</td>"+
+                getMonthNaviLink(nextCal,"&gt;&gt;", queryString)+ 
+                "</tr>\n"
+                   );
 
         int month = cal.get( Calendar.MONTH );
         cal.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY ); // Then, find the first day of the week.
 
         out.write( "<tr><td class=\"weekdays\">Mon</td>"+
-                   "<td class=\"weekdays\">Tue</td>"+
-                   "<td class=\"weekdays\">Wed</td>"+
-                   "<td class=\"weekdays\">Thu</td>"+
-                   "<td class=\"weekdays\">Fri</td>"+
-                   "<td class=\"weekdays\">Sat</td>"+
-                   "<td class=\"weekdays\">Sun</td></tr>\n" );
+                "<td class=\"weekdays\">Tue</td>"+
+                "<td class=\"weekdays\">Wed</td>"+
+                "<td class=\"weekdays\">Thu</td>"+
+                "<td class=\"weekdays\">Fri</td>"+
+                "<td class=\"weekdays\">Sat</td>"+
+                "<td class=\"weekdays\">Sun</td></tr>\n" );
 
         boolean noMoreDates = false;
         while( !noMoreDates )
