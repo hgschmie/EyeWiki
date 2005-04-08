@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
 /**
  */
 public class WikiServlet
-    extends HttpServlet
+        extends HttpServlet
 {
     /** DOCUMENT ME! */
     private WikiEngine m_engine = null;
@@ -51,7 +51,7 @@ public class WikiServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void init(ServletConfig config)
-        throws ServletException
+            throws ServletException
     {
         super.init(config);
 
@@ -72,7 +72,7 @@ public class WikiServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws IOException, ServletException
+            throws IOException, ServletException
     {
         doGet(req, res);
     }
@@ -87,7 +87,7 @@ public class WikiServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doGet(HttpServletRequest req, HttpServletResponse res)
-        throws IOException, ServletException
+            throws IOException, ServletException
     {
         String pageName =
             DefaultURLConstructor.parsePageFromURL(req, m_engine.getContentEncoding());

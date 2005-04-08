@@ -65,7 +65,7 @@ public class SearchMatcher
      * @throws IOException DOCUMENT ME!
      */
     public SearchResult matchPageContent(String wikiname, String pageText)
-        throws IOException
+            throws IOException
     {
         if (m_queries == null)
         {
@@ -110,7 +110,7 @@ public class SearchMatcher
             // of the word in the wiki name.
             if (
                 (wikiname.toLowerCase().indexOf(m_queries[j].word) != -1)
-                    && (m_queries[j].type != QueryItem.FORBIDDEN))
+                            && (m_queries[j].type != QueryItem.FORBIDDEN))
             {
                 scores[j] += 5;
             }
@@ -143,7 +143,7 @@ public class SearchMatcher
      * @version $Revision$
      */
     public class SearchResultImpl
-        implements SearchResult
+            implements SearchResult
     {
         /** DOCUMENT ME! */
         int m_score;

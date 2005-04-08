@@ -82,7 +82,7 @@ public class FileUtil
      * @throws IOException If the content creation failed.
      */
     public static File newTmpFile(String content, String encoding)
-        throws IOException
+            throws IOException
     {
         Writer out = null;
         Reader in = null;
@@ -117,7 +117,7 @@ public class FileUtil
      * @throws IOException DOCUMENT ME!
      */
     public static File newTmpFile(String content)
-        throws IOException
+            throws IOException
     {
         return newTmpFile(content, "ISO-8859-1");
     }
@@ -135,7 +135,7 @@ public class FileUtil
      * @throws InterruptedException DOCUMENT ME!
      */
     public static String runSimpleCommand(String command, String directory)
-        throws IOException, InterruptedException
+            throws IOException, InterruptedException
     {
         StringBuffer result = new StringBuffer();
 
@@ -191,7 +191,7 @@ public class FileUtil
 
     // FIXME: Could probably be more optimized
     public static void copyContents(Reader in, Writer out)
-        throws IOException
+            throws IOException
     {
         int c;
 
@@ -216,7 +216,7 @@ public class FileUtil
 
     // FIXME: Could probably be more optimized
     public static void copyContents(InputStream in, OutputStream out)
-        throws IOException
+            throws IOException
     {
         int c;
 
@@ -253,7 +253,7 @@ public class FileUtil
     // and use a minimum buffer size to compensate.
     // This may fail in a number of ways, a better way is seriously needed.
     public static String readContents(InputStream input, String encoding)
-        throws IOException
+            throws IOException
     {
         if (c_hasNIO)
         {
@@ -330,7 +330,7 @@ public class FileUtil
      * @since 1.5.8
      */
     public static String readContents(Reader in)
-        throws IOException
+            throws IOException
     {
         Writer out = null;
 

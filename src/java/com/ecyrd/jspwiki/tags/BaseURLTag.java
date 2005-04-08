@@ -30,7 +30,7 @@ import java.io.IOException;
  * @since 2.2
  */
 public class BaseURLTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -40,7 +40,7 @@ public class BaseURLTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         pageContext.getOut().print(m_wikiContext.getEngine().getBaseURL());
 

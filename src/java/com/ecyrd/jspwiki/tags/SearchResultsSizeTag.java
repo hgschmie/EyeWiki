@@ -35,7 +35,7 @@ import javax.servlet.jsp.PageContext;
  * @since 2.0
  */
 public class SearchResultsSizeTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -45,7 +45,7 @@ public class SearchResultsSizeTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         Collection list =
             (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);

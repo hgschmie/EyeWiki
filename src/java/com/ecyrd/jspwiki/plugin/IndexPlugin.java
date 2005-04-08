@@ -71,7 +71,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 1.9.9
  */
 public class IndexPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     protected static Logger log = Logger.getLogger(IndexPlugin.class);
@@ -123,7 +123,7 @@ public class IndexPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext i_context, Map i_params)
-        throws PluginException
+            throws PluginException
     {
         //
         //  Parse arguments and create patterns.

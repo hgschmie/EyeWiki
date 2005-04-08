@@ -29,7 +29,7 @@ import com.ecyrd.jspwiki.WikiException;
  * @version $Revision$
  */
 public class PluginException
-    extends WikiException
+        extends WikiException
 {
     /** DOCUMENT ME! */
     private Throwable m_throwable;

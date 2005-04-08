@@ -76,8 +76,8 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 // FIXME: Not all commands read their format from the property file yet.
 public class RCSFileProvider
-    extends AbstractFileProvider
-    implements WikiProperties
+        extends AbstractFileProvider
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(RCSFileProvider.class);
@@ -133,7 +133,7 @@ public class RCSFileProvider
      * @throws IOException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing RCS");
         super.initialize(engine, conf);
@@ -166,7 +166,7 @@ public class RCSFileProvider
 
     // NB: This is a very slow method.
     public WikiPage getPageInfo(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         PatternMatcher matcher = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
@@ -285,7 +285,7 @@ public class RCSFileProvider
      * @throws InternalWikiException DOCUMENT ME!
      */
     public String getPageText(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         String result = null;
         InputStream stdout = null;
@@ -409,7 +409,7 @@ public class RCSFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String text)
-        throws ProviderException
+            throws ProviderException
     {
         String pagename = page.getName();
 
@@ -560,7 +560,7 @@ public class RCSFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deletePage(String page)
-        throws ProviderException
+            throws ProviderException
     {
         if (log.isDebugEnabled())
         {

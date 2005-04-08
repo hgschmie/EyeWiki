@@ -45,5 +45,5 @@ public interface URLConstructor
      * @throws IOException DOCUMENT ME!
      */
     public String parsePage(String context, HttpServletRequest request, String encoding)
-        throws IOException;
+            throws IOException;
 }

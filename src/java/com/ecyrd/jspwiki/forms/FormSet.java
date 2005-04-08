@@ -69,7 +69,7 @@ import com.ecyrd.jspwiki.plugin.WikiPlugin;
  * @see FormInfo
  */
 public class FormSet
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormSet.class);
@@ -85,7 +85,7 @@ public class FormSet
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         String formName = (String) params.remove(FormElement.PARAM_FORM);
 

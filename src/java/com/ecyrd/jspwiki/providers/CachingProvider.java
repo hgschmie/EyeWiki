@@ -104,7 +104,7 @@ import com.opensymphony.oscache.base.events.CachewideEvent;
 // FIXME: A part of the stuff is now redundant, since we could easily use the text cache
 //        for a lot of things.  RefactorMe.
 public class CachingProvider
-    implements WikiPageProvider, WikiProperties
+        implements WikiPageProvider, WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(CachingProvider.class);
@@ -195,7 +195,7 @@ public class CachingProvider
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingProvider");
 
@@ -415,7 +415,7 @@ public class CachingProvider
     }
 
     private void luceneIndexPage(WikiPage page, String text, IndexWriter writer)
-        throws IOException
+            throws IOException
     {
         // make a new, empty document
         Document doc = new Document();
@@ -445,7 +445,7 @@ public class CachingProvider
      *         repository
      */
     private WikiPage getPageInfoFromCache(String name)
-        throws ProviderException, RepositoryModifiedException
+            throws ProviderException, RepositoryModifiedException
     {
         try
         {
@@ -529,7 +529,8 @@ public class CachingProvider
             }
             else if (
                 Math.abs(
-                        refreshed.getLastModified().getTime() - cached.getLastModified().getTime()) > 1000L)
+                                refreshed.getLastModified().getTime()
+                                - cached.getLastModified().getTime()) > 1000L)
             {
                 //  Yes, the page has been modified externally and nobody told us
                 if (log.isInfoEnabled())
@@ -666,7 +667,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException If the page has been externally modified.
      */
     public String getPageText(String pageName, int version)
-        throws ProviderException, RepositoryModifiedException
+            throws ProviderException, RepositoryModifiedException
     {
         String result = null;
 
@@ -729,7 +730,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException If the page has been externally modified.
      */
     private String getTextFromCache(String pageName)
-        throws ProviderException, RepositoryModifiedException
+            throws ProviderException, RepositoryModifiedException
     {
         String text;
 
@@ -793,7 +794,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String text)
-        throws ProviderException
+            throws ProviderException
     {
         synchronized (this)
         {
@@ -898,7 +899,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         Collection all;
 
@@ -950,7 +951,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public int getPageCount()
-        throws ProviderException
+            throws ProviderException
     {
         return m_provider.getPageCount();
     }
@@ -1149,7 +1150,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String pageName, int version)
-        throws ProviderException, RepositoryModifiedException
+            throws ProviderException, RepositoryModifiedException
     {
         WikiPage cached = getPageInfoFromCache(pageName);
 
@@ -1193,7 +1194,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List getVersionHistory(String page)
-        throws ProviderException
+            throws ProviderException
     {
         List history = null;
 
@@ -1250,7 +1251,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(String pageName, int version)
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  Luckily, this is such a rare operation it is okay
@@ -1286,7 +1287,7 @@ public class CachingProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deletePage(String pageName)
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  See note in deleteVersion().
@@ -1328,7 +1329,7 @@ public class CachingProvider
      * @since
      */
     private class CacheItemCollector
-        implements CacheEntryEventListener
+            implements CacheEntryEventListener
     {
         /** DOCUMENT ME! */
         private TreeSet m_allItems = new TreeSet();

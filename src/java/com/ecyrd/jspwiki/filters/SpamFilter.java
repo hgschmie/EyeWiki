@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.1.112
  */
 public class SpamFilter
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     /** DOCUMENT ME! */
     private static final String LISTVAR = "spamwords";
@@ -131,7 +131,7 @@ public class SpamFilter
      * @throws RedirectException DOCUMENT ME!
      */
     public String preSave(WikiContext context, String content)
-        throws RedirectException
+            throws RedirectException
     {
         WikiPage source = context.getEngine().getPage(m_forbiddenWordsPage);
 
@@ -139,7 +139,7 @@ public class SpamFilter
         {
             if (
                 (m_spamPatterns == null) || m_spamPatterns.isEmpty()
-                    || source.getLastModified().after(m_lastRebuild))
+                            || source.getLastModified().after(m_lastRebuild))
             {
                 m_lastRebuild = source.getLastModified();
 

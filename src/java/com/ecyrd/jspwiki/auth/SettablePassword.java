@@ -40,5 +40,5 @@ public interface SettablePassword
      * @throws ProviderException If the password cannot be set.
      */
     public void setPassword(UserProfile wup, String password)
-        throws ProviderException;
+            throws ProviderException;
 }

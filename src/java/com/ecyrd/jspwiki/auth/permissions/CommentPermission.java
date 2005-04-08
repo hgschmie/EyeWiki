@@ -7,7 +7,7 @@ package com.ecyrd.jspwiki.auth.permissions;
  * @version $Revision$
  */
 public class CommentPermission
-    extends WikiPermission
+        extends WikiPermission
 {
     /**
      * DOCUMENT ME!

@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 // FIXME: Perhaps unnecessary?
 public class IncludeTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     protected String m_page;
@@ -71,7 +71,7 @@ public class IncludeTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         // WikiEngine engine = m_wikiContext.getEngine();
         return SKIP_BODY;
@@ -85,7 +85,7 @@ public class IncludeTag
      * @throws JspException DOCUMENT ME!
      */
     public final int doEndTag()
-        throws JspException
+            throws JspException
     {
         try
         {

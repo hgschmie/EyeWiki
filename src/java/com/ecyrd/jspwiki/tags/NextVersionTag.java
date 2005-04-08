@@ -33,7 +33,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.2
  */
 public class NextVersionTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -43,7 +43,7 @@ public class NextVersionTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

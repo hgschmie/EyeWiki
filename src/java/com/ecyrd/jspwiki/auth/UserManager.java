@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  * @author Erik Bunn
  */
 public class UserManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(UserManager.class);
@@ -101,7 +101,7 @@ public class UserManager
      * @throws WikiException DOCUMENT ME!
      */
     public UserManager(WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         m_engine = engine;
 
@@ -324,7 +324,7 @@ public class UserManager
     //        should really cache the information.
     // FIXME: Should really query the page manager.
     public List getGroupsForPrincipal(Principal user)
-        throws NoSuchPrincipalException
+            throws NoSuchPrincipalException
     {
         List list = null;
 
@@ -411,11 +411,11 @@ public class UserManager
      *
      * @return true, if the username/password is valid.
      *
+     * @throws WikiSecurityException if password has expired
      * @throws PasswordExpiredException DOCUMENT ME!
-     * @throws PasswordExpiredException if password has expired
      */
     public boolean login(String username, String password, HttpSession session)
-        throws WikiSecurityException
+            throws WikiSecurityException
     {
         if (m_authenticator == null)
         {

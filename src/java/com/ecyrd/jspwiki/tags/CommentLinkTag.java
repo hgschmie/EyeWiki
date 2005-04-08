@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.0
  */
 public class CommentLinkTag
-    extends WikiLinkTag
+        extends WikiLinkTag
 {
     /**
      * DOCUMENT ME!
@@ -60,7 +60,7 @@ public class CommentLinkTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = null;

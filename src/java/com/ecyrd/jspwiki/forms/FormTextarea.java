@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  * @author ebu
  */
 public class FormTextarea
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormTextarea.class);
@@ -59,7 +59,7 @@ public class FormTextarea
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
@@ -95,7 +95,7 @@ public class FormTextarea
     }
 
     private TextArea buildTextArea(Map params, Map previousValues)
-        throws PluginException
+            throws PluginException
     {
         String inputName = (String) params.get(PARAM_INPUTNAME);
         String rows = (String) params.get(PARAM_ROWS);

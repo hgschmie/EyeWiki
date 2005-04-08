@@ -41,7 +41,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @author Janne Jalkanen
  */
 public class UnusedPagesPlugin
-    extends AbstractReferralPlugin
+        extends AbstractReferralPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(UnusedPagesPlugin.class);
@@ -57,7 +57,7 @@ public class UnusedPagesPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         ReferenceManager refmgr = context.getEngine().getReferenceManager();
         Collection links = refmgr.findUnreferenced();

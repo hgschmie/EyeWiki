@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 1.9.21
  */
 public class WeblogArchivePlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(WeblogArchivePlugin.class);
@@ -68,7 +68,7 @@ public class WeblogArchivePlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
 
@@ -148,7 +148,7 @@ public class WeblogArchivePlugin
     }
 
     private SortedSet collectMonths(WikiEngine engine, String page)
-        throws ProviderException
+            throws ProviderException
     {
         TreeSet res = new TreeSet();
 
@@ -208,8 +208,8 @@ public class WeblogArchivePlugin
      * objects that are in the same month to be equal.
      */
     private class ArchiveCalendar
-        extends GregorianCalendar
-        implements Comparable
+            extends GregorianCalendar
+            implements Comparable
     {
         /**
          * Creates a new ArchiveCalendar object.
@@ -262,7 +262,7 @@ public class WeblogArchivePlugin
 
                 if (
                     (c.get(Calendar.YEAR) == get(Calendar.YEAR))
-                        && (c.get(Calendar.MONTH) == get(Calendar.MONTH)))
+                                && (c.get(Calendar.MONTH) == get(Calendar.MONTH)))
                 {
                     return true;
                 }

@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class NoSuchPageTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_pageName;
@@ -68,7 +68,7 @@ public class NoSuchPageTag
      * @throws ProviderException DOCUMENT ME!
      */
     public int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page;

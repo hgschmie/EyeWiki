@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  * @author ebu
  */
 public class FormSelect
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormSelect.class);
@@ -53,7 +53,7 @@ public class FormSelect
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
@@ -99,7 +99,7 @@ public class FormSelect
      * @throws PluginException DOCUMENT ME!
      */
     private Select buildSelect(Map pluginParams, Map ctxValues)
-        throws PluginException
+            throws PluginException
     {
         String inputName = (String) pluginParams.get(PARAM_INPUTNAME);
 

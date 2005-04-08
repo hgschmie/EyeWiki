@@ -41,7 +41,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 2.0
  */
 public abstract class WikiTagBase
-    extends TagSupport
+        extends TagSupport
 {
     /** DOCUMENT ME! */
     public static final String ATTR_CONTEXT = "jspwiki.context";
@@ -60,7 +60,7 @@ public abstract class WikiTagBase
      * @throws JspException DOCUMENT ME!
      */
     public int doStartTag()
-        throws JspException
+            throws JspException
     {
         try
         {
@@ -89,7 +89,7 @@ public abstract class WikiTagBase
      * @throws Exception DOCUMENT ME!
      */
     public abstract int doWikiStartTag()
-        throws Exception;
+            throws Exception;
 
     /**
      * DOCUMENT ME!
@@ -99,7 +99,7 @@ public abstract class WikiTagBase
      * @throws JspException DOCUMENT ME!
      */
     public int doEndTag()
-        throws JspException
+            throws JspException
     {
         return EVAL_PAGE;
     }

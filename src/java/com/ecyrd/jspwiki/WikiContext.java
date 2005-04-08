@@ -45,7 +45,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * @see com.ecyrd.jspwiki.plugin.Counter
  */
 public class WikiContext
-    implements Cloneable
+        implements Cloneable
 {
     /** The VIEW context - the user just wants to view the page contents. */
     public static final String VIEW = "view";

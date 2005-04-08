@@ -55,7 +55,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.0
  */
 public class EditLinkTag
-    extends WikiLinkTag
+        extends WikiLinkTag
 {
     /** DOCUMENT ME! */
     public String m_version = null;
@@ -78,7 +78,7 @@ public class EditLinkTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = null;

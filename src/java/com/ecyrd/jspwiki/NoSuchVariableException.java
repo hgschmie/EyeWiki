@@ -25,7 +25,7 @@ package com.ecyrd.jspwiki;
  * @author Janne Jalkanen
  */
 public class NoSuchVariableException
-    extends WikiException
+        extends WikiException
 {
     /**
      * Constructs an exception.

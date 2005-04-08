@@ -45,5 +45,5 @@ public interface InitializablePlugin
      * @throws PluginException DOCUMENT ME!
      */
     public void initialize(WikiContext context, Map params)
-        throws PluginException;
+            throws PluginException;
 }

@@ -34,7 +34,7 @@ import javax.servlet.jsp.PageContext;
  * @since 2.0
  */
 public class IfNoSearchResultsTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -44,7 +44,7 @@ public class IfNoSearchResultsTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         Collection list =
             (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);

@@ -58,7 +58,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  * @since 2.0
  */
 public class DiffLinkTag
-    extends WikiLinkTag
+        extends WikiLinkTag
 {
     /** DOCUMENT ME! */
     public static final String VER_LATEST = "latest";
@@ -123,7 +123,7 @@ public class DiffLinkTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         String pageName = m_pageName;

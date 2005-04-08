@@ -47,7 +47,7 @@ import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
  * @since 1.6.13
  */
 public class RPCHandlerUTF8
-    extends AbstractRPCHandler
+        extends AbstractRPCHandler
 {
     /** DOCUMENT ME! */
     Category log = Category.getInstance(RPCHandlerUTF8.class);
@@ -177,7 +177,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException if there is something wrong with the page.
      */
     private String parsePageCheckCondition(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         if (!m_engine.pageExists(pagename))
         {
@@ -207,7 +207,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Hashtable getPageInfo(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -225,7 +225,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Hashtable getPageInfoVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -242,7 +242,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public String getPage(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -262,7 +262,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public String getPageVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -279,7 +279,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public String getPageHTML(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -297,7 +297,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public String getPageHTMLVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -314,7 +314,7 @@ public class RPCHandlerUTF8
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Vector listLinks(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 

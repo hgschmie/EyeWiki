@@ -30,7 +30,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @author Janne Jalkanen
  */
 public class Attachment
-    extends WikiPage
+        extends WikiPage
 {
     /** DOCUMENT ME! */
     public static final int CREATED = 0;

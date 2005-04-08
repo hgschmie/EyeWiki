@@ -12,10 +12,14 @@ import com.ecyrd.jspwiki.WikiContext;
  * @version $Revision$
  */
 public class ProfanityFilter
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     /** DOCUMENT ME! */
-    private static final String [] c_profanities = { "fuck", "shit" };
+    private static final String [] c_profanities = 
+        {
+            "fuck",
+            "shit"
+        };
 
     /**
      * DOCUMENT ME!

@@ -55,7 +55,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 // FIXME: Too much in common with IteratorTag - REFACTOR
 public class HistoryIteratorTag
-    extends IteratorTag
+        extends IteratorTag
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(HistoryIteratorTag.class);

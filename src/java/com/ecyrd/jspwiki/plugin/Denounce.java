@@ -51,7 +51,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 2.1.40.
  */
 public class Denounce
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(Denounce.class);
@@ -168,7 +168,7 @@ public class Denounce
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         String link = (String) params.get(PARAM_LINK);
         String text = (String) params.get(PARAM_TEXT);

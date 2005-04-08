@@ -28,7 +28,7 @@ package com.ecyrd.jspwiki;
  * @since 1.6.9
  */
 public class InternalWikiException
-    extends RuntimeException
+        extends RuntimeException
 {
     /**
      * Creates a new InternalWikiException object.

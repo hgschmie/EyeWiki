@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.0
  */
 public class HistoryIteratorInfo
-    extends TagExtraInfo
+        extends TagExtraInfo
 {
     /**
      * DOCUMENT ME!

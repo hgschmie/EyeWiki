@@ -76,7 +76,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  * @author Janne Jalkanen
  */
 public class VersioningFileProvider
-    extends AbstractFileProvider
+        extends AbstractFileProvider
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(VersioningFileProvider.class);
@@ -97,7 +97,7 @@ public class VersioningFileProvider
      * @throws IOException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         super.initialize(engine, conf);
     }
@@ -174,7 +174,7 @@ public class VersioningFileProvider
       }
     */
     private int findLatestVersion(String page)
-        throws ProviderException
+            throws ProviderException
     {
         int version = -1;
 
@@ -228,7 +228,7 @@ public class VersioningFileProvider
      * @throws IOException DOCUMENT ME!
      */
     private Properties getPageProperties(String page)
-        throws IOException
+            throws IOException
     {
         Properties props = new Properties();
 
@@ -256,7 +256,7 @@ public class VersioningFileProvider
      * @throws IOException DOCUMENT ME!
      */
     private void putPageProperties(String page, Properties properties)
-        throws IOException
+            throws IOException
     {
         File propertyFile = new File(findOldPageDir(page), PROPERTYFILE);
 
@@ -279,7 +279,7 @@ public class VersioningFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private int realVersion(String page, int requestedVersion)
-        throws NoSuchVersionException, ProviderException
+            throws NoSuchVersionException, ProviderException
     {
         //
         //  Quickly check for the most common case.
@@ -316,7 +316,7 @@ public class VersioningFileProvider
      * @throws NoSuchVersionException DOCUMENT ME!
      */
     public synchronized String getPageText(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findOldPageDir(page);
 
@@ -341,7 +341,7 @@ public class VersioningFileProvider
 
     // FIXME: Should this really be here?
     private String readFile(File pagedata)
-        throws ProviderException
+            throws ProviderException
     {
         String result = null;
         InputStream in = null;
@@ -395,7 +395,7 @@ public class VersioningFileProvider
       3         Main.txt (3)  1.txt, 2.txt
     */
     public synchronized void putPageText(WikiPage page, String text)
-        throws ProviderException
+            throws ProviderException
     {
         //
         //  This is a bit complicated.  We'll first need to
@@ -490,7 +490,7 @@ public class VersioningFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         int latest = findLatestVersion(page);
         int realVersion;
@@ -499,7 +499,7 @@ public class VersioningFileProvider
 
         if (
             (version == WikiPageProvider.LATEST_VERSION) || (version == latest)
-                || ((version == 1) && (latest == -1)))
+                        || ((version == 1) && (latest == -1)))
         {
             //
             // Yes, we need to talk to the top level directory
@@ -582,7 +582,7 @@ public class VersioningFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List getVersionHistory(String page)
-        throws ProviderException
+            throws ProviderException
     {
         ArrayList list = new ArrayList();
 
@@ -614,7 +614,7 @@ public class VersioningFileProvider
 
     // FIXME: Should log errors.
     public void deletePage(String page)
-        throws ProviderException
+            throws ProviderException
     {
         super.deletePage(page);
 
@@ -650,7 +650,7 @@ public class VersioningFileProvider
      * @throws NoSuchVersionException DOCUMENT ME!
      */
     public void deleteVersion(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findOldPageDir(page);
 
@@ -658,7 +658,7 @@ public class VersioningFileProvider
 
         if (
             (version == WikiPageProvider.LATEST_VERSION) || (version == latest)
-                || ((version == 1) && (latest == -1)))
+                        || ((version == 1) && (latest == -1)))
         {
             //
             //  Delete the properties
@@ -742,7 +742,7 @@ public class VersioningFileProvider
 
     // FIXME: This is kinda slow, we should need to do this only once.
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         Collection pages = super.getAllPages();
         Collection returnedPages = new ArrayList();

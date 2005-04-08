@@ -38,7 +38,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @deprecated
  */
 public class RSSLinkTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -48,7 +48,7 @@ public class RSSLinkTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
 

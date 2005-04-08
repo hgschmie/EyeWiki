@@ -30,7 +30,7 @@ import java.security.Principal;
  * @since 2.2
  */
 public abstract class WikiPrincipal
-    implements Principal
+        implements Principal
 {
     /** DOCUMENT ME! */
     private String m_name;

@@ -7,7 +7,7 @@ import java.security.Principal;
  * A special kind of WikiGroup.  Everyone is a member of this group.
  */
 public class AllGroup
-    extends WikiGroup
+        extends WikiGroup
 {
     /**
      * Creates a new AllGroup object.

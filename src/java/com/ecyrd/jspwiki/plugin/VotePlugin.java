@@ -44,7 +44,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * probably change it at some point.
  */
 public class VotePlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(VotePlugin.class);
@@ -127,7 +127,7 @@ public class VotePlugin
     }
 
     private Attachment findAttachment(WikiContext context)
-        throws ProviderException
+            throws ProviderException
     {
         Attachment att =
             context.getEngine().getAttachmentManager().getAttachmentInfo(context, ATTACHMENT_NAME);
@@ -198,7 +198,7 @@ public class VotePlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
 

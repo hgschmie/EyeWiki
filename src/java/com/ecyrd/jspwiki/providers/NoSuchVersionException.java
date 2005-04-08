@@ -4,7 +4,7 @@ package com.ecyrd.jspwiki.providers;
  * Indicates that an non-existing version was specified.
  */
 public class NoSuchVersionException
-    extends ProviderException
+        extends ProviderException
 {
     /**
      * Creates a new NoSuchVersionException object.

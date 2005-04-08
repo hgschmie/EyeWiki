@@ -12,7 +12,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @author Janne Jalkanen
  */
 public class BasicPageFilter
-    implements PageFilter
+        implements PageFilter
 {
     /**
      * DOCUMENT ME!
@@ -22,7 +22,7 @@ public class BasicPageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public void initialize(Properties properties)
-        throws FilterException
+            throws FilterException
     {
     }
 
@@ -37,7 +37,7 @@ public class BasicPageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String preTranslate(WikiContext wikiContext, String content)
-        throws FilterException
+            throws FilterException
     {
         return content;
     }
@@ -53,7 +53,7 @@ public class BasicPageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String postTranslate(WikiContext wikiContext, String htmlContent)
-        throws FilterException
+            throws FilterException
     {
         return htmlContent;
     }
@@ -69,7 +69,7 @@ public class BasicPageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String preSave(WikiContext wikiContext, String content)
-        throws FilterException
+            throws FilterException
     {
         return content;
     }
@@ -83,7 +83,7 @@ public class BasicPageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public void postSave(WikiContext wikiContext, String content)
-        throws FilterException
+            throws FilterException
     {
     }
 }

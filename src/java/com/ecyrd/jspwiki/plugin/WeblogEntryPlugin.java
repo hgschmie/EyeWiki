@@ -42,7 +42,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 1.9.21
  */
 public class WeblogEntryPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(WeblogEntryPlugin.class);
@@ -64,7 +64,7 @@ public class WeblogEntryPlugin
      * @throws ProviderException DOCUMENT ME!
      */
     public String getNewEntryPage(WikiEngine engine, String blogName)
-        throws ProviderException
+            throws ProviderException
     {
         SimpleDateFormat fmt = new SimpleDateFormat(WeblogPlugin.DEFAULT_DATEFORMAT);
         String today = fmt.format(new Date());
@@ -87,7 +87,7 @@ public class WeblogEntryPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         String weblogName = context.getPage().getName();
         WikiEngine engine = context.getEngine();
@@ -121,7 +121,7 @@ public class WeblogEntryPlugin
     }
 
     private int findFreeEntry(PageManager mgr, String baseName, String date)
-        throws ProviderException
+            throws ProviderException
     {
         Collection everyone = mgr.getAllPages();
         int max = 0;

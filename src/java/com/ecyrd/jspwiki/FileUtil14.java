@@ -57,7 +57,7 @@ public class FileUtil14
      * @throws IOException DOCUMENT ME!
      */
     public static String readContents(InputStream input, String encoding)
-        throws IOException
+            throws IOException
     {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         FileUtil.copyContents(input, out);

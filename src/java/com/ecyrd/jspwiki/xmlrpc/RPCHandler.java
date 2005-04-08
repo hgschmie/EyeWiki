@@ -53,7 +53,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
 // We could use WikiEngine directly, but because of introspection it would
 // show just too many methods to be safe.
 public class RPCHandler
-    extends AbstractRPCHandler
+        extends AbstractRPCHandler
 {
     /** DOCUMENT ME! */
     Logger log = Logger.getLogger(RPCHandler.class);
@@ -243,7 +243,7 @@ public class RPCHandler
      * @throws XmlRpcException if there is something wrong with the page.
      */
     private String parsePageCheckCondition(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = fromRPCString(pagename);
 
@@ -275,7 +275,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Hashtable getPageInfo(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -293,7 +293,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Hashtable getPageInfoVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -310,7 +310,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public byte [] getPage(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -330,7 +330,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public byte [] getPageVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -347,7 +347,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public byte [] getPageHTML(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -365,7 +365,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public byte [] getPageHTMLVersion(String pagename, int version)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 
@@ -382,7 +382,7 @@ public class RPCHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Vector listLinks(String pagename)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         pagename = parsePageCheckCondition(pagename);
 

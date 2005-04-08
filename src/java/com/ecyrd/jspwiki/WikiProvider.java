@@ -46,7 +46,7 @@ public interface WikiProvider
      * @throws IOException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException;
+            throws NoRequiredPropertyException, IOException;
 
     /**
      * Return a valid HTML string for information.  May be anything.

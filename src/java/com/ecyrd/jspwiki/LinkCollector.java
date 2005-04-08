@@ -29,7 +29,7 @@ import java.util.Collection;
  * @author Janne Jalkanen
  */
 public class LinkCollector
-    implements StringTransmutator
+        implements StringTransmutator
 {
     /** DOCUMENT ME! */
     private ArrayList m_items = new ArrayList();

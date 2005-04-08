@@ -284,7 +284,7 @@ public class TemplateManager
      * @throws IOException DOCUMENT ME!
      */
     private Properties getTemplateProperties(String templateName)
-        throws IOException
+            throws IOException
     {
         Properties p = new Properties();
 

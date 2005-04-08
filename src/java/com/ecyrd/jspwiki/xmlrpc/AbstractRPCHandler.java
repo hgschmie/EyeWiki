@@ -38,7 +38,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 1.6.13
  */
 public abstract class AbstractRPCHandler
-    implements WikiRPCHandler
+        implements WikiRPCHandler
 {
     /** Error code: no such page. */
     public static final int ERR_NOPAGE = 1;

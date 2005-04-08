@@ -70,7 +70,7 @@ import http.utils.multipartrequest.MultipartRequest;
  * @since 1.9.45.
  */
 public class AttachmentServlet
-    extends HttpServlet
+        extends HttpServlet
 {
     /** DOCUMENT ME! */
     public static final String HDR_VERSION = "version";
@@ -109,7 +109,7 @@ public class AttachmentServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void init(ServletConfig config)
-        throws ServletException
+            throws ServletException
     {
         super.init(config);
 
@@ -153,7 +153,7 @@ public class AttachmentServlet
 
     // FIXME: Messages would need to be localized somehow.
     public void doGet(HttpServletRequest req, HttpServletResponse res)
-        throws IOException, ServletException
+            throws IOException, ServletException
     {
         String version = m_engine.safeGetParameter(req, HDR_VERSION);
         String nextPage = m_engine.safeGetParameter(req, "nextpage");
@@ -328,7 +328,7 @@ public class AttachmentServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doPost(HttpServletRequest req, HttpServletResponse res)
-        throws IOException, ServletException
+            throws IOException, ServletException
     {
         try
         {
@@ -354,7 +354,7 @@ public class AttachmentServlet
      * @throws IOException DOCUMENT ME!
      */
     protected String upload(HttpServletRequest req)
-        throws RedirectException, IOException
+            throws RedirectException, IOException
     {
         String msg = "";
         String attName = "(unknown)";

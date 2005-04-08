@@ -17,7 +17,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @version $Revision$
  */
 public class DefaultURLConstructor
-    implements URLConstructor
+        implements URLConstructor
 {
     /** DOCUMENT ME! */
     protected WikiEngine m_engine;
@@ -167,7 +167,7 @@ public class DefaultURLConstructor
      * @throws UnsupportedEncodingException DOCUMENT ME!
      */
     public String parsePage(String context, HttpServletRequest request, String encoding)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         String pagereq = m_engine.safeGetParameter(request, "page");
 
@@ -196,7 +196,7 @@ public class DefaultURLConstructor
      * @throws UnsupportedEncodingException DOCUMENT ME!
      */
     public static String parsePageFromURL(HttpServletRequest request, String encoding)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         String name = request.getPathInfo();
 

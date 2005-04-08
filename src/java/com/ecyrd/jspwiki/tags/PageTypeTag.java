@@ -41,7 +41,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  * @since 2.0
  */
 public class PageTypeTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_type;
@@ -64,7 +64,7 @@ public class PageTypeTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();
@@ -83,7 +83,7 @@ public class PageTypeTag
 
             if (
                 m_type.equals("weblogentry") && !(page instanceof Attachment)
-                    && (page.getName().indexOf("_blogentry_") != -1))
+                            && (page.getName().indexOf("_blogentry_") != -1))
             {
                 return EVAL_BODY_INCLUDE;
             }

@@ -57,7 +57,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.1.7
  */
 public class MetaWeblogHandler
-    implements WikiRPCHandler
+        implements WikiRPCHandler
 {
     /** DOCUMENT ME! */
     Category log = Category.getInstance(MetaWeblogHandler.class);
@@ -92,7 +92,7 @@ public class MetaWeblogHandler
      */
     private void checkPermissions(
         WikiPage page, String username, String password, String permission)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         return;
 
@@ -144,7 +144,7 @@ public class MetaWeblogHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     public Hashtable getCategories(String blogid, String username, String password)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         WikiPage page = m_engine.getPage(blogid);
 
@@ -222,7 +222,7 @@ public class MetaWeblogHandler
     //        goes through all of the blog entries.
     public Hashtable getRecentPosts(
         String blogid, String username, String password, int numberOfPosts)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         Hashtable result = new Hashtable();
 
@@ -244,7 +244,7 @@ public class MetaWeblogHandler
             int items = 0;
 
             for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
-                    items++)
+                            items++)
             {
                 WikiPage p = (WikiPage) i.next();
 
@@ -276,7 +276,7 @@ public class MetaWeblogHandler
      */
     public String newPost(
         String blogid, String username, String password, Hashtable content, boolean publish)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         log.info("metaWeblog.newPost() called");
 
@@ -330,7 +330,7 @@ public class MetaWeblogHandler
      */
     public Hashtable newMediaObject(
         String blogid, String username, String password, Hashtable content)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         String url = "";
 
@@ -380,7 +380,7 @@ public class MetaWeblogHandler
      */
     boolean editPost(
         String postid, String username, String password, Hashtable content, boolean publish)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         if (log.isInfoEnabled())
         {
@@ -431,7 +431,7 @@ public class MetaWeblogHandler
      * @throws XmlRpcException DOCUMENT ME!
      */
     Hashtable getPost(String postid, String username, String password)
-        throws XmlRpcException
+            throws XmlRpcException
     {
         String wikiname = "FIXME";
 

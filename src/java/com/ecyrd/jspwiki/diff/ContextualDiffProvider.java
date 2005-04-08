@@ -52,7 +52,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class ContextualDiffProvider
-    implements DiffProvider
+        implements DiffProvider
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(ContextualDiffProvider.class);
@@ -127,7 +127,7 @@ public class ContextualDiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
     }
 
@@ -216,7 +216,7 @@ public class ContextualDiffProvider
      * sure that the whole change process is threadsafe by encapsulating all necessary variables.
      */
     private class ChangeMerger
-        implements RevisionVisitor
+            implements RevisionVisitor
     {
         /** DOCUMENT ME! */
         private StringBuffer sb = null;

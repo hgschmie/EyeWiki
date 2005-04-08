@@ -47,7 +47,7 @@ import com.ecyrd.jspwiki.auth.WikiAuthenticator;
  * @since 2.1.29.
  */
 public class FileAuthenticator
-    implements WikiAuthenticator
+        implements WikiAuthenticator
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(FileAuthenticator.class);
@@ -65,7 +65,7 @@ public class FileAuthenticator
      * @throws WikiException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, WikiException
+            throws NoRequiredPropertyException, WikiException
     {
         // No default, you _must_ configure this
         m_fileName = engine.getValidPath(conf.getString(WikiProperties.PROP_AUTH_FILENAME));
@@ -77,7 +77,7 @@ public class FileAuthenticator
     }
 
     private Properties readPasswords(String filename)
-        throws IOException
+            throws IOException
     {
         Properties props = new Properties();
         InputStream in = null;

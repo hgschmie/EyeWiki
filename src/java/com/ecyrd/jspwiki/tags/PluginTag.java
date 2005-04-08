@@ -55,7 +55,7 @@ import com.ecyrd.jspwiki.plugin.PluginManager;
  * @since 2.0
  */
 public class PluginTag
-    extends BodyTagSupport
+        extends BodyTagSupport
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(PluginTag.class);
@@ -97,7 +97,7 @@ public class PluginTag
      * @throws JspException DOCUMENT ME!
      */
     public int doAfterBody()
-        throws JspException
+            throws JspException
     {
         try
         {

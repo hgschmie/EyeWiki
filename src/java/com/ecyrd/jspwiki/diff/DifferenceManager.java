@@ -36,7 +36,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @author John Volkar
  */
 public class DifferenceManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(DifferenceManager.class);

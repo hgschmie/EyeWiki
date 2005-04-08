@@ -53,7 +53,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
 // FIXME: Merge with rss.jsp
 // FIXME: Limit diff and page content size.
 public class RSSGenerator
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private WikiEngine m_engine;
@@ -73,7 +73,7 @@ public class RSSGenerator
      * @throws NoRequiredPropertyException DOCUMENT ME!
      */
     public RSSGenerator(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException
+            throws NoRequiredPropertyException
     {
         m_engine = engine;
 

@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  * @author Janne Jalkanen
  */
 public interface WikiPageProvider
-    extends WikiProvider
+        extends WikiProvider
 {
     /**
      * Attempts to save the page text for page "page".
@@ -61,7 +61,7 @@ public interface WikiPageProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String text)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Return true, if page exists.
@@ -92,7 +92,7 @@ public interface WikiPageProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String page, int version)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Returns all pages.  Each element in the returned Collection should be a WikiPage.
@@ -102,7 +102,7 @@ public interface WikiPageProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection getAllPages()
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Gets a list of recent changes.
@@ -125,7 +125,7 @@ public interface WikiPageProvider
      * @since 1.6.4
      */
     public int getPageCount()
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Returns version history.  Each element should be a WikiPage.
@@ -137,7 +137,7 @@ public interface WikiPageProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List getVersionHistory(String page)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Gets a specific version out of the repository.
@@ -150,7 +150,7 @@ public interface WikiPageProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public String getPageText(String page, int version)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Removes a specific version from the repository.  The implementations should really do no
@@ -165,7 +165,7 @@ public interface WikiPageProvider
      * @since 2.0.17.
      */
     public void deleteVersion(String pageName, int version)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Removes an entire page from the repository.  The implementations should really do no more
@@ -186,5 +186,5 @@ public interface WikiPageProvider
      * @since 2.0.17.
      */
     public void deletePage(String pageName)
-        throws ProviderException;
+            throws ProviderException;
 }

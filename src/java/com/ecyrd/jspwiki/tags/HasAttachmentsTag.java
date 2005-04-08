@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.attachment.AttachmentManager;
  * @since 2.0
  */
 public class HasAttachmentsTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -44,7 +44,7 @@ public class HasAttachmentsTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

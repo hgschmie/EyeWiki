@@ -65,7 +65,7 @@ import org.intabulas.sandler.exceptions.MarshallException;
  * @since 2.1.97
  */
 public class AtomAPIServlet
-    extends HttpServlet
+        extends HttpServlet
 {
     /** DOCUMENT ME! */
     Logger log = Logger.getLogger(AtomAPIServlet.class);
@@ -81,7 +81,7 @@ public class AtomAPIServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void init(ServletConfig config)
-        throws ServletException
+            throws ServletException
     {
         m_engine = WikiEngine.getInstance(config);
     }
@@ -134,7 +134,7 @@ public class AtomAPIServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received POST to AtomAPIServlet");
 
@@ -215,7 +215,7 @@ public class AtomAPIServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP GET to AtomAPIServlet");
 
@@ -256,7 +256,7 @@ public class AtomAPIServlet
     }
 
     private Entry getBlogEntry(String entryid)
-        throws ProviderException
+            throws ProviderException
     {
         WikiPage page = m_engine.getPage(entryid);
         WikiPage firstVersion = m_engine.getPage(entryid, 1);
@@ -302,7 +302,7 @@ public class AtomAPIServlet
      * @throws IOException DOCUMENT ME!
      */
     private Feed listBlogs()
-        throws ProviderException, IOException
+            throws ProviderException, IOException
     {
         Collection pages = m_engine.getPageManager().getAllPages();
 
@@ -367,19 +367,19 @@ public class AtomAPIServlet
     }
 
     /**
-             *
-             */
+                                             *
+                                             */
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP DELETE");
     }
 
     /**
-             *
-             */
+                                             *
+                                             */
     public void doPut(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP PUT");
     }

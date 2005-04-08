@@ -76,7 +76,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * </p>
  */
 public class WikiDatabase
-    implements UserDatabase
+        implements UserDatabase
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(WikiDatabase.class);
@@ -114,7 +114,7 @@ public class WikiDatabase
     // This class must contain a large cache for user databases.
     // FIXME: Needs to cache this somehow; this is far too slow!
     public List getGroupsForPrincipal(Principal p)
-        throws NoSuchPrincipalException
+            throws NoSuchPrincipalException
     {
         List memberList = new ArrayList();
 
@@ -354,7 +354,7 @@ public class WikiDatabase
     // FIXME: JSPWiki should really take care of itself that any metadata
     //        relevant to a page is refreshed.
     public class SaveFilter
-        extends BasicPageFilter
+            extends BasicPageFilter
     {
         /**
          * DOCUMENT ME!

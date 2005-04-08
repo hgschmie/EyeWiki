@@ -34,7 +34,7 @@ package com.ecyrd.jspwiki.providers;
  * @since 2.1.25
  */
 public class RepositoryModifiedException
-    extends ProviderException
+        extends ProviderException
 {
     /** DOCUMENT ME! */
     protected String m_page;

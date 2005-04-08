@@ -51,7 +51,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @see UserManager
  */
 public class AuthorizationManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     static Category log = Category.getInstance(AuthorizationManager.class);
@@ -83,7 +83,7 @@ public class AuthorizationManager
      * @throws InternalWikiException DOCUMENT ME!
      */
     public AuthorizationManager(WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         m_engine = engine;
 
@@ -187,7 +187,7 @@ public class AuthorizationManager
      * @throws NoRequiredPropertyException DOCUMENT ME!
      */
     private WikiAuthorizer getAuthorizerImplementation(Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         WikiAuthorizer impl = null;
 

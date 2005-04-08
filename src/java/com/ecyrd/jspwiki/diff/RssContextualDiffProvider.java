@@ -35,8 +35,8 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class RssContextualDiffProvider
-    extends ContextualDiffProvider
-    implements DiffProvider
+        extends ContextualDiffProvider
+        implements DiffProvider
 {
     /**
      * Creates a new RssContextualDiffProvider object.
@@ -72,7 +72,7 @@ public class RssContextualDiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         super.initialize(engine, conf);
     }

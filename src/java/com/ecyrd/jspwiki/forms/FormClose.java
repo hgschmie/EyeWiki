@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  * @author ebu
  */
 public class FormClose
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormClose.class);
@@ -50,7 +50,7 @@ public class FormClose
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         StringBuffer tags = new StringBuffer();
         tags.append("</form>\n");

@@ -18,7 +18,7 @@ import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
  * @version $Revision$
  */
 public class AclEntryImpl
-    implements AclEntry
+        implements AclEntry
 {
     /** DOCUMENT ME! */
     private Principal m_principal;

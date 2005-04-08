@@ -98,8 +98,8 @@ import uk.co.wilson.xml.MinML;
  * @author Janne Jalkanen
  */
 public class FilterManager
-    extends HandlerBase
-    implements WikiProperties
+        extends HandlerBase
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(WikiEngine.class);
@@ -142,7 +142,7 @@ public class FilterManager
      * @throws WikiException DOCUMENT ME!
      */
     public FilterManager(WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         initialize(engine, conf);
     }
@@ -223,7 +223,7 @@ public class FilterManager
      * @throws WikiException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         InputStream xmlStream = null;
         String xmlFile = conf.getString(PROP_FILTERXML, PROP_FILTERXML_DEFAULT);
@@ -353,7 +353,7 @@ public class FilterManager
      * @throws FilterException DOCUMENT ME!
      */
     public String doPreTranslateFiltering(WikiContext context, String pageData)
-        throws FilterException
+            throws FilterException
     {
         for (Iterator i = m_pageFilters.iterator(); i.hasNext();)
         {
@@ -376,7 +376,7 @@ public class FilterManager
      * @throws FilterException DOCUMENT ME!
      */
     public String doPostTranslateFiltering(WikiContext context, String pageData)
-        throws FilterException
+            throws FilterException
     {
         for (Iterator i = m_pageFilters.iterator(); i.hasNext();)
         {
@@ -399,7 +399,7 @@ public class FilterManager
      * @throws FilterException DOCUMENT ME!
      */
     public String doPreSaveFiltering(WikiContext context, String pageData)
-        throws FilterException
+            throws FilterException
     {
         for (Iterator i = m_pageFilters.iterator(); i.hasNext();)
         {
@@ -420,7 +420,7 @@ public class FilterManager
      * @throws FilterException DOCUMENT ME!
      */
     public void doPostSaveFiltering(WikiContext context, String pageData)
-        throws FilterException
+            throws FilterException
     {
         for (Iterator i = m_pageFilters.iterator(); i.hasNext();)
         {

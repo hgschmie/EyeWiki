@@ -29,7 +29,7 @@ import com.ecyrd.jspwiki.plugin.WikiPlugin;
 /**
  */
 public abstract class FormElement
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormElement.class);

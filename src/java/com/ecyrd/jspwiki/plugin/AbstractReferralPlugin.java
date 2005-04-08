@@ -49,7 +49,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author Janne Jalkanen
  */
 public abstract class AbstractReferralPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(AbstractReferralPlugin.class);
@@ -95,7 +95,7 @@ public abstract class AbstractReferralPlugin
      * @since 1.6.4
      */
     public void initialize(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         m_engine = context.getEngine();
         m_maxwidth =
@@ -226,7 +226,7 @@ public abstract class AbstractReferralPlugin
      * cutpoint.
      */
     private class CutMutator
-        implements StringTransmutator
+            implements StringTransmutator
     {
         /** DOCUMENT ME! */
         private int m_length;

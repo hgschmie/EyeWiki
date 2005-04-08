@@ -44,7 +44,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 // FIXME: Should really be settable per-page.
 // FIXME: Weblog name has been set to stone
 public class PingWeblogsComFilter
-    extends BasicPageFilter
+        extends BasicPageFilter
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(PingWeblogsComFilter.class);

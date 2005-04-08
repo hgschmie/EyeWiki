@@ -26,7 +26,7 @@ package com.ecyrd.jspwiki.filters;
  * @since 2.1.112
  */
 public class RedirectException
-    extends FilterException
+        extends FilterException
 {
     /** DOCUMENT ME! */
     private String m_where;

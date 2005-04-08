@@ -47,7 +47,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 1.9.30
  */
 public class Counter
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(Counter.class);
@@ -66,7 +66,7 @@ public class Counter
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         //
         //  First, determine which kind of name we use to store in

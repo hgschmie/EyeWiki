@@ -51,7 +51,7 @@ import com.ecyrd.jspwiki.WikiContext;
 
 // FIXME: Shares MUCH too much in common with IteratorTag.  Must refactor.
 public class SearchResultIteratorTag
-    extends IteratorTag
+        extends IteratorTag
 {
     /** DOCUMENT ME! */
     private int m_maxItems;

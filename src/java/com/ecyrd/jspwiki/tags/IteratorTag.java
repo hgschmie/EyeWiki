@@ -53,7 +53,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.0
  */
 public abstract class IteratorTag
-    extends BodyTagSupport
+        extends BodyTagSupport
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(IteratorTag.class);

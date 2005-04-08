@@ -53,7 +53,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
 //        complicating things.  We need to move more provider-specific functionality
 //        from WikiEngine (which is too big now) into this class.
 public class PageManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     static Category log = Category.getInstance(PageManager.class);
@@ -79,7 +79,7 @@ public class PageManager
      * @throws WikiException If anything goes wrong, you get this.
      */
     public PageManager(WikiEngine engine, Configuration conf)
-        throws WikiException
+            throws WikiException
     {
         String classname;
 
@@ -166,7 +166,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         return m_provider.getAllPages();
     }
@@ -184,7 +184,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public String getPageText(String pageName, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (StringUtils.isEmpty(pageName))
         {
@@ -230,7 +230,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String content)
-        throws ProviderException
+            throws ProviderException
     {
         if ((page == null) || StringUtils.isEmpty(page.getName()))
         {
@@ -378,7 +378,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String pageName, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (StringUtils.isEmpty(pageName))
         {
@@ -424,7 +424,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public List getVersionHistory(String pageName)
-        throws ProviderException
+            throws ProviderException
     {
         if (pageExists(pageName))
         {
@@ -473,7 +473,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public boolean pageExists(String pageName)
-        throws ProviderException
+            throws ProviderException
     {
         if (StringUtils.isEmpty(pageName))
         {
@@ -491,7 +491,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(WikiPage page)
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteVersion(page.getName(), page.getVersion());
 
@@ -506,7 +506,7 @@ public class PageManager
      * @throws ProviderException DOCUMENT ME!
      */
     public void deletePage(WikiPage page)
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deletePage(page.getName());
 
@@ -518,7 +518,7 @@ public class PageManager
      * important, as long as it runs), and removes all locks that have expired.
      */
     private class LockReaper
-        extends Thread
+            extends Thread
     {
         /**
          * DOCUMENT ME!

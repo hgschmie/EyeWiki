@@ -95,7 +95,7 @@ public class HttpUtil
         //
         if (
             "no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
-                || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
+                        || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
         {
             // Wants specifically a fresh copy
         }

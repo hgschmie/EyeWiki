@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * @since 2.0
  */
 public class UserNameTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -44,7 +44,7 @@ public class UserNameTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         UserManager mgr = engine.getUserManager();

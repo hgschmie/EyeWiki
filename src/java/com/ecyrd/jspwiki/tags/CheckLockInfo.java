@@ -14,7 +14,7 @@ import com.ecyrd.jspwiki.PageLock;
  * @version $Revision$
  */
 public class CheckLockInfo
-    extends TagExtraInfo
+        extends TagExtraInfo
 {
     /**
      * DOCUMENT ME!

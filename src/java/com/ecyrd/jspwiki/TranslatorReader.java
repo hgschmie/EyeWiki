@@ -70,8 +70,8 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author Janne Jalkanen
  */
 public class TranslatorReader
-    extends Reader
-    implements WikiProperties
+        extends Reader
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     public static final int READ = 0;
@@ -139,11 +139,49 @@ public class TranslatorReader
      */
     static final String [] c_externalLinks =
         {
-            "http:", "ftp:", "https:", "mailto:", "news:", "file:", "rtsp:", "mms:", "ldap:",
-            "gopher:", "nntp:", "telnet:", "wais:", "prospero:", "z39.50s", "z39.50r", "vemmi:",
-            "imap:", "nfs:", "acap:", "tip:", "pop:", "dav:", "opaquelocktoken:", "sip:", "sips:",
-            "tel:", "fax:", "modem:", "soap.beep:", "soap.beeps", "xmlrpc.beep", "xmlrpc.beeps",
-            "urn:", "go:", "h323:", "ipp:", "tftp:", "mupdate:", "pres:", "im:", "mtqp", "smb:"
+            "http:",
+            "ftp:",
+            "https:",
+            "mailto:",
+            "news:",
+            "file:",
+            "rtsp:",
+            "mms:",
+            "ldap:",
+            "gopher:",
+            "nntp:",
+            "telnet:",
+            "wais:",
+            "prospero:",
+            "z39.50s",
+            "z39.50r",
+            "vemmi:",
+            "imap:",
+            "nfs:",
+            "acap:",
+            "tip:",
+            "pop:",
+            "dav:",
+            "opaquelocktoken:",
+            "sip:",
+            "sips:",
+            "tel:",
+            "fax:",
+            "modem:",
+            "soap.beep:",
+            "soap.beeps",
+            "xmlrpc.beep",
+            "xmlrpc.beeps",
+            "urn:",
+            "go:",
+            "h323:",
+            "ipp:",
+            "tftp:",
+            "mupdate:",
+            "pres:",
+            "im:",
+            "mtqp",
+            "smb:"
         };
 
     /** DOCUMENT ME! */
@@ -376,7 +414,7 @@ public class TranslatorReader
 
         if (
             (m_engine.getUserManager() == null)
-                || (m_engine.getUserManager().getAuthenticator() == null))
+                        || (m_engine.getUserManager().getAuthenticator() == null))
         {
             disableAccessRules();
         }
@@ -1326,8 +1364,8 @@ public class TranslatorReader
 
         for (
             count = 0;
-                ((startPos + count) < line.length()) && (line.charAt(count + startPos) == c);
-                count++)
+                        ((startPos + count) < line.length())
+                        && (line.charAt(count + startPos) == c); count++)
         {
             ;
         }
@@ -1356,7 +1394,7 @@ public class TranslatorReader
     }
 
     private int nextToken()
-        throws IOException
+            throws IOException
     {
         if (m_in == null)
         {
@@ -1374,7 +1412,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private void pushBack(int c)
-        throws IOException
+            throws IOException
     {
         if ((c != -1) && (m_in != null))
         {
@@ -1393,7 +1431,7 @@ public class TranslatorReader
      * @since 2.1.77
      */
     private void pushBack(String s)
-        throws IOException
+            throws IOException
     {
         for (int i = s.length() - 1; i >= 0; i--)
         {
@@ -1402,7 +1440,7 @@ public class TranslatorReader
     }
 
     private String handleBackslash()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1426,7 +1464,7 @@ public class TranslatorReader
     }
 
     private String handleUnderscore()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "_";
@@ -1454,7 +1492,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private String handleApostrophe()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "'";
@@ -1475,7 +1513,7 @@ public class TranslatorReader
     }
 
     private String handleOpenbrace(boolean isBlock)
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
         String res = "{";
@@ -1514,7 +1552,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private String handleClosebrace()
-        throws IOException
+            throws IOException
     {
         String res = "}";
 
@@ -1561,7 +1599,7 @@ public class TranslatorReader
     }
 
     private String handleDash()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -1609,7 +1647,7 @@ public class TranslatorReader
 
     // FIXME: Always returns an empty line, even if the stream is full.
     private String peekAheadLine()
-        throws IOException
+            throws IOException
     {
         String s = readUntilEOL().toString();
         pushBack(s);
@@ -1618,7 +1656,7 @@ public class TranslatorReader
     }
 
     private String handleHeading()
-        throws IOException
+            throws IOException
     {
         StringBuffer buf = new StringBuffer();
 
@@ -1666,7 +1704,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private StringBuffer readUntilEOL()
-        throws IOException
+            throws IOException
     {
         int ch;
         StringBuffer buf = new StringBuffer();
@@ -1719,7 +1757,7 @@ public class TranslatorReader
 
     // FIXME: Refactor this; it's a bit messy.
     private String handleGeneralList()
-        throws IOException
+            throws IOException
     {
         String cStrShortName = "handleGeneralList()"; //put log messages in some context
 
@@ -1738,7 +1776,8 @@ public class TranslatorReader
             // only substitute if different
             if (
                 !(strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(
-                        m_genlistBulletBuffer.substring(0, Math.min(numBullets, m_genlistlevel)))))
+                                m_genlistBulletBuffer.substring(
+                                    0, Math.min(numBullets, m_genlistlevel)))))
             {
                 if (numBullets <= m_genlistlevel)
                 {
@@ -1761,7 +1800,8 @@ public class TranslatorReader
         //
         if (
             strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(
-                    m_genlistBulletBuffer.substring(0, Math.min(numBullets, m_genlistlevel))))
+                            m_genlistBulletBuffer.substring(
+                                0, Math.min(numBullets, m_genlistlevel))))
         {
             int chBullet;
 
@@ -1819,7 +1859,7 @@ public class TranslatorReader
                 // if the bullets are equal so far, keep going
                 if (
                     strBullets.charAt(numEqualBullets) == m_genlistBulletBuffer.charAt(
-                            numEqualBullets))
+                                    numEqualBullets))
                 {
                     numEqualBullets++;
                 }
@@ -1882,7 +1922,7 @@ public class TranslatorReader
     }
 
     private String handleDefinitionList()
-        throws IOException
+            throws IOException
     {
         if (!m_isdefinition)
         {
@@ -1898,7 +1938,7 @@ public class TranslatorReader
     }
 
     private String handleOpenbracket()
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch;
@@ -1959,7 +1999,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private String readUntil(String endChars)
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch = nextToken();
@@ -2003,7 +2043,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private String readWhile(String endChars)
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
         int ch = nextToken();
@@ -2037,7 +2077,7 @@ public class TranslatorReader
     }
 
     private String handleDiv(boolean newLine)
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -2086,7 +2126,7 @@ public class TranslatorReader
     }
 
     private String handleBar(boolean newLine)
-        throws IOException
+            throws IOException
     {
         StringBuffer sb = new StringBuffer();
 
@@ -2142,7 +2182,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     private String handleTilde()
-        throws IOException
+            throws IOException
     {
         int ch = nextToken();
 
@@ -2168,7 +2208,7 @@ public class TranslatorReader
     }
 
     private void fillBuffer()
-        throws IOException
+            throws IOException
     {
         StringBuffer buf = new StringBuffer();
         StringBuffer word = null;
@@ -2217,9 +2257,9 @@ public class TranslatorReader
                 // Quick parse of start of a word boundary.
                 if (
                     (word == null)
-                        && (Character.isWhitespace((char) previousCh)
-                        || (WORD_SEPARATORS.indexOf((char) previousCh) != -1) || newLine)
-                        && !Character.isWhitespace((char) ch))
+                                && (Character.isWhitespace((char) previousCh)
+                                || (WORD_SEPARATORS.indexOf((char) previousCh) != -1) || newLine)
+                                && !Character.isWhitespace((char) ch))
                 {
                     word = new StringBuffer();
                 }
@@ -2232,7 +2272,7 @@ public class TranslatorReader
                     //
                     if (
                         Character.isWhitespace((char) ch) || (ch == -1)
-                            || (WORD_SEPARATORS.indexOf((char) ch) != -1))
+                                    || (WORD_SEPARATORS.indexOf((char) ch) != -1))
                     {
                         String potentialLink = word.toString();
 
@@ -2340,9 +2380,9 @@ public class TranslatorReader
 
                     if (
                         (nextLine.length() == 0)
-                            || ((nextLine.length() > 0) && !nextLine.startsWith("{{{")
-                            && !nextLine.startsWith("----") && !nextLine.startsWith("%%")
-                            && ("*#!;".indexOf(nextLine.charAt(0)) == -1)))
+                                    || ((nextLine.length() > 0) && !nextLine.startsWith("{{{")
+                                    && !nextLine.startsWith("----") && !nextLine.startsWith("%%")
+                                    && ("*#!;".indexOf(nextLine.charAt(0)) == -1)))
                     {
                         buf.append(m_renderer.openParagraph());
                         m_isOpenParagraph = true;
@@ -2537,7 +2577,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     public int read()
-        throws IOException
+            throws IOException
     {
         int val = m_data.read();
 
@@ -2569,7 +2609,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     public int read(char [] buf, int off, int len)
-        throws IOException
+            throws IOException
     {
         return m_data.read(buf, off, len);
     }
@@ -2582,7 +2622,7 @@ public class TranslatorReader
      * @throws IOException DOCUMENT ME!
      */
     public boolean ready()
-        throws IOException
+            throws IOException
     {
         if (log.isDebugEnabled())
         {
@@ -2612,7 +2652,7 @@ public class TranslatorReader
     // FIXME: Not everything is yet, and in the future this class will be spawned
     //        out to be its own class.
     private class HTMLRenderer
-        extends TextRenderer
+            extends TextRenderer
     {
         /** DOCUMENT ME! */
         private boolean m_isPreBlock = false;

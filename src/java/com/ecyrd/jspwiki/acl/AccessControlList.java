@@ -31,7 +31,7 @@ import java.security.acl.Permission;
  * @author Janne Jalkanen
  */
 public interface AccessControlList
-    extends Acl
+        extends Acl
 {
     /** DOCUMENT ME! */
     public static final int ALLOW = 1;

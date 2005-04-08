@@ -71,7 +71,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 2.1.21.
  */
 public abstract class AbstractFileProvider
-    implements WikiPageProvider
+        implements WikiPageProvider
 {
     /** DOCUMENT ME! */
     private static final Category log = Category.getInstance(AbstractFileProvider.class);
@@ -98,7 +98,7 @@ public abstract class AbstractFileProvider
      * @throws IOException In case the specified page directory is a file, not a directory.
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing FileSystemProvider");
         m_pageDirectory = engine.getPageDir();
@@ -205,7 +205,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public String getPageText(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         return getPageText(page);
     }
@@ -270,7 +270,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String text)
-        throws ProviderException
+            throws ProviderException
     {
         File file = findPage(page.getName());
         PrintWriter out = null;
@@ -300,7 +300,7 @@ public abstract class AbstractFileProvider
      * @throws InternalWikiException DOCUMENT ME!
      */
     public Collection getAllPages()
-        throws ProviderException
+            throws ProviderException
     {
         log.debug("Getting all pages...");
 
@@ -430,7 +430,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         File file = findPage(page);
 
@@ -455,7 +455,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List getVersionHistory(String page)
-        throws ProviderException
+            throws ProviderException
     {
         ArrayList list = new ArrayList();
 
@@ -483,7 +483,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(String pageName, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (version == WikiProvider.LATEST_VERSION)
         {
@@ -501,7 +501,7 @@ public abstract class AbstractFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deletePage(String pageName)
-        throws ProviderException
+            throws ProviderException
     {
         File f = findPage(pageName);
 
@@ -515,7 +515,7 @@ public abstract class AbstractFileProvider
      * @version $Revision$
      */
     public class WikiFileFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         /**
          * DOCUMENT ME!

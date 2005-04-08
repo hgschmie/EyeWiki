@@ -5,7 +5,7 @@ package com.ecyrd.jspwiki.auth.permissions;
  * (CommentPermission) and uploading of files.
  */
 public class EditPermission
-    extends WikiPermission
+        extends WikiPermission
 {
     /**
      * DOCUMENT ME!

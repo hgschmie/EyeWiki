@@ -47,7 +47,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 // FIXME: Should also take the current user TimeZone into account.
 public class PageDateTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final String DEFAULT_FORMAT = "dd-MMM-yyyy HH:mm:ss zzz";
@@ -88,7 +88,7 @@ public class PageDateTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

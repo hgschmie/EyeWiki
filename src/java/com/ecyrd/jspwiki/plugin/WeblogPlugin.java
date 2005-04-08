@@ -84,7 +84,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
 // FIXME: Add "entries" param as an alternative to "days".
 // FIXME: Entries arrive in wrong order.
 public class WeblogPlugin
-    implements WikiPlugin, InitializablePlugin
+        implements WikiPlugin, InitializablePlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(WeblogPlugin.class);
@@ -177,7 +177,7 @@ public class WeblogPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         Calendar startTime;
         Calendar stopTime;
@@ -369,7 +369,7 @@ public class WeblogPlugin
     }
 
     private int guessNumberOfComments(WikiEngine engine, String commentpage)
-        throws ProviderException
+            throws ProviderException
     {
         String pagedata = engine.getPureText(commentpage, WikiProvider.LATEST_VERSION);
 
@@ -391,7 +391,7 @@ public class WeblogPlugin
      * @throws ProviderException DOCUMENT ME!
      */
     public List findBlogEntries(PageManager mgr, String baseName, Date start, Date end)
-        throws ProviderException
+            throws ProviderException
     {
         Collection everyone = mgr.getAllPages();
         ArrayList result = new ArrayList();
@@ -461,7 +461,7 @@ public class WeblogPlugin
      * Reverse comparison.
      */
     private class PageDateComparator
-        implements Comparator
+            implements Comparator
     {
         /**
          * DOCUMENT ME!

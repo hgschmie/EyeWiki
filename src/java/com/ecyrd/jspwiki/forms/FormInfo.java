@@ -32,7 +32,7 @@ import java.util.Map;
  * @author ebu
  */
 public class FormInfo
-    implements Serializable
+        implements Serializable
 {
     /** DOCUMENT ME! */
     public static final int EXECUTED = 1;

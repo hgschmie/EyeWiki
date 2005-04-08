@@ -19,38 +19,57 @@
  */
 package com.ecyrd.jspwiki.util;
 
-import org.apache.commons.lang.StringUtils;
-
 import java.io.UnsupportedEncodingException;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 
 /**
- *  Contains a number of static utility methods.
+ * Contains a number of static utility methods.
  */
-public class TextUtil {
+public class TextUtil
+{
+    /** DOCUMENT ME! */
     static final String HEX_DIGITS = "0123456789ABCDEF";
+
+    /** DOCUMENT ME! */
     private static final int EOI = 0;
+
+    /** DOCUMENT ME! */
     private static final int LOWER = 1;
+
+    /** DOCUMENT ME! */
     private static final int UPPER = 2;
+
+    /** DOCUMENT ME! */
     private static final int DIGIT = 3;
+
+    /** DOCUMENT ME! */
     private static final int OTHER = 4;
 
     /**
-     *  java.net.URLEncoder.encode() method in JDK < 1.4 is buggy.  This duplicates
-     *  its functionality.
+     * java.net.URLEncoder.encode() method in JDK &lt; 1.4 is buggy.  This duplicates its
+     * functionality.
+     *
+     * @param rs DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    protected static String urlEncode(byte[] rs) {
+    protected static String urlEncode(byte [] rs)
+    {
         StringBuffer result = new StringBuffer();
 
         // Does the URLEncoding.  We could use the java.net one, but
         // it does not eat byte[]s.
-        for (int i = 0; i < rs.length; i++) {
+        for (int i = 0; i < rs.length; i++)
+        {
             char c = (char) rs[i];
 
-            switch (c) {
+            switch (c)
+            {
             case '_':
             case '.':
             case '*':
@@ -67,10 +86,14 @@ public class TextUtil {
 
             default:
 
-                if (((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) ||
-                        ((c >= '0') && (c <= '9'))) {
+                if (
+                    ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z'))
+                                || ((c >= '0') && (c <= '9')))
+                {
                     result.append(c);
-                } else {
+                }
+                else
+                {
                     result.append('%');
                     result.append(HEX_DIGITS.charAt((c & 0xF0) >> 4));
                     result.append(HEX_DIGITS.charAt(c & 0x0F));
@@ -82,32 +105,47 @@ public class TextUtil {
     }
 
     /**
-     *  URL encoder does not handle all characters correctly.
-     *  See <A HREF="http://developer.java.sun.com/developer/bugParade/bugs/4257115.html">
-     *  Bug parade, bug #4257115</A> for more information.
-     *  <P>
-     *  Thanks to CJB for this fix.
+     * URL encoder does not handle all characters correctly. See <A
+     * HREF="http://developer.java.sun.com/developer/bugParade/bugs/4257115.html">Bug parade, bug
+     * #4257115</A> for more information.
+     * 
+     * <P>
+     * Thanks to CJB for this fix.
+     * </p>
+     *
+     * @param bytes DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws UnsupportedEncodingException DOCUMENT ME!
+     * @throws IllegalArgumentException DOCUMENT ME!
      */
-    protected static String urlDecode(byte[] bytes)
-        throws UnsupportedEncodingException, IllegalArgumentException {
-        if (bytes == null) {
+    protected static String urlDecode(byte [] bytes)
+            throws UnsupportedEncodingException, IllegalArgumentException
+    {
+        if (bytes == null)
+        {
             return null;
         }
 
-        byte[] decodeBytes = new byte[bytes.length];
+        byte [] decodeBytes = new byte[bytes.length];
         int decodedByteCount = 0;
 
-        try {
-            for (int count = 0; count < bytes.length; count++) {
-                switch (bytes[count]) {
+        try
+        {
+            for (int count = 0; count < bytes.length; count++)
+            {
+                switch (bytes[count])
+                {
                 case '+':
                     decodeBytes[decodedByteCount++] = (byte) ' ';
 
                     break;
 
                 case '%':
-                    decodeBytes[decodedByteCount++] = (byte) ((HEX_DIGITS.indexOf(bytes[++count]) << 4) +
-                        (HEX_DIGITS.indexOf(bytes[++count])));
+                    decodeBytes[decodedByteCount++] =
+                        (byte) ((HEX_DIGITS.indexOf(bytes[++count]) << 4)
+                        + (HEX_DIGITS.indexOf(bytes[++count])));
 
                     break;
 
@@ -115,54 +153,83 @@ public class TextUtil {
                     decodeBytes[decodedByteCount++] = bytes[count];
                 }
             }
-        } catch (IndexOutOfBoundsException ae) {
+        }
+        catch (IndexOutOfBoundsException ae)
+        {
             throw new IllegalArgumentException("Malformed UTF-8 string?");
         }
 
         String processedPageName = null;
 
-        try {
-            processedPageName = new String(decodeBytes, 0, decodedByteCount,
-                    "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new UnsupportedEncodingException(
-                "UTF-8 encoding not supported on this platform");
+        try
+        {
+            processedPageName = new String(decodeBytes, 0, decodedByteCount, "UTF-8");
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            throw new UnsupportedEncodingException("UTF-8 encoding not supported on this platform");
         }
 
         return (processedPageName.toString());
     }
 
     /**
-     *  As java.net.URLEncoder class, but this does it in UTF8 character set.
+     * As java.net.URLEncoder class, but this does it in UTF8 character set.
+     *
+     * @param text DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      */
-    public static String urlEncodeUTF8(String text) {
-        byte[] rs = {  };
+    public static String urlEncodeUTF8(String text)
+    {
+        byte [] rs = {  };
 
-        try {
+        try
+        {
             rs = text.getBytes("UTF-8");
 
             return urlEncode(rs);
-        } catch (UnsupportedEncodingException e) {
-            try {
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            try
+            {
                 return java.net.URLEncoder.encode(text, "UTF-8");
-            } catch (UnsupportedEncodingException uee) {
+            }
+            catch (UnsupportedEncodingException uee)
+            {
                 throw new RuntimeException("Could not encode UTF-8!?!", uee);
             }
         }
     }
 
     /**
-     *  As java.net.URLDecoder class, but for UTF-8 strings.
+     * As java.net.URLDecoder class, but for UTF-8 strings.
+     *
+     * @param utf8 DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      */
-    public static String urlDecodeUTF8(String utf8) {
+    public static String urlDecodeUTF8(String utf8)
+    {
         String rs = null;
 
-        try {
+        try
+        {
             rs = urlDecode(utf8.getBytes("ISO-8859-1"));
-        } catch (UnsupportedEncodingException e) {
-            try {
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            try
+            {
                 rs = java.net.URLDecoder.decode(utf8, "UTF-8");
-            } catch (UnsupportedEncodingException uee) {
+            }
+            catch (UnsupportedEncodingException uee)
+            {
                 throw new RuntimeException("Could not decode UTF-8!?!", uee);
             }
         }
@@ -171,58 +238,92 @@ public class TextUtil {
     }
 
     /**
-     * Provides encoded version of string depending on encoding.
-     * Encoding may be UTF-8 or ISO-8859-1 (default).
+     * Provides encoded version of string depending on encoding. Encoding may be UTF-8 or
+     * ISO-8859-1 (default).
+     * 
+     * <p>
+     * This implementation is the same as in FileSystemProvider.mangleName().
+     * </p>
      *
-     * <p>This implementation is the same as in
-     * FileSystemProvider.mangleName().
+     * @param data DOCUMENT ME!
+     * @param encoding DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      */
-    public static String urlEncode(String data, String encoding) {
+    public static String urlEncode(String data, String encoding)
+    {
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though. 
-        if ("UTF-8".equals(encoding)) {
+        if ("UTF-8".equals(encoding))
+        {
             return (TextUtil.urlEncodeUTF8(data));
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 return (TextUtil.urlEncode(data.getBytes(encoding)));
-            } catch (UnsupportedEncodingException uee) {
-                throw new RuntimeException("Could not encode String into" +
-                    encoding);
+            }
+            catch (UnsupportedEncodingException uee)
+            {
+                throw new RuntimeException("Could not encode String into" + encoding);
             }
         }
     }
 
     /**
-     * Provides decoded version of string depending on encoding.
-     * Encoding may be UTF-8 or ISO-8859-1 (default).
+     * Provides decoded version of string depending on encoding. Encoding may be UTF-8 or
+     * ISO-8859-1 (default).
+     * 
+     * <p>
+     * This implementation is the same as in FileSystemProvider.unmangleName().
+     * </p>
      *
-     * <p>This implementation is the same as in
-     * FileSystemProvider.unmangleName().
+     * @param data DOCUMENT ME!
+     * @param encoding DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws UnsupportedEncodingException DOCUMENT ME!
+     * @throws IllegalArgumentException DOCUMENT ME!
+     * @throws RuntimeException DOCUMENT ME!
      */
     public static String urlDecode(String data, String encoding)
-        throws UnsupportedEncodingException, IllegalArgumentException {
+            throws UnsupportedEncodingException, IllegalArgumentException
+    {
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though. 
-        if ("UTF-8".equals(encoding)) {
+        if ("UTF-8".equals(encoding))
+        {
             return (TextUtil.urlDecodeUTF8(data));
-        } else {
-            try {
+        }
+        else
+        {
+            try
+            {
                 return (TextUtil.urlDecode(data.getBytes(encoding)));
-            } catch (UnsupportedEncodingException uee) {
-                throw new RuntimeException("Could not decode String into" +
-                    encoding);
+            }
+            catch (UnsupportedEncodingException uee)
+            {
+                throw new RuntimeException("Could not decode String into" + encoding);
             }
         }
     }
 
     /**
-     *  Replaces the relevant entities inside the String.
-     *  All &amp; &gt;, &lt;, and &quot; are replaced by their
-     *  respective names.
+     * Replaces the relevant entities inside the String. All &amp; &gt;, &lt;, and &quot; are
+     * replaced by their respective names.
      *
-     *  @since 1.6.1
+     * @param src DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @since 1.6.1
      */
-    public static String replaceEntities(String src) {
+    public static String replaceEntities(String src)
+    {
         src = StringUtils.replace(src, "&", "&amp;");
         src = StringUtils.replace(src, "<", "&lt;");
         src = StringUtils.replace(src, ">", "&gt;");
@@ -232,16 +333,19 @@ public class TextUtil {
     }
 
     /**
-     *  Replaces a part of a string with a new String.
+     * Replaces a part of a string with a new String.
      *
-     *  @param start Where in the original string the replacing should start.
-     *  @param end Where the replacing should end.
-     *  @param orig Original string.  Null is safe.
-     *  @param text The new text to insert into the string.
+     * @param orig Original string.  Null is safe.
+     * @param start Where in the original string the replacing should start.
+     * @param end Where the replacing should end.
+     * @param text The new text to insert into the string.
+     *
+     * @return DOCUMENT ME!
      */
-    public static String replaceString(String orig, int start, int end,
-        String text) {
-        if (orig == null) {
+    public static String replaceString(String orig, int start, int end, String text)
+    {
+        if (orig == null)
+        {
             return null;
         }
 
@@ -253,38 +357,56 @@ public class TextUtil {
     }
 
     /**
-     *  Parses an integer parameter, returning a default value
-     *  if the value is null or a non-number.
+     * Parses an integer parameter, returning a default value if the value is null or a non-number.
+     *
+     * @param value DOCUMENT ME!
+     * @param defvalue DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public static int parseIntParameter(String value, int defvalue) {
+    public static int parseIntParameter(String value, int defvalue)
+    {
         int val = defvalue;
 
-        try {
+        try
+        {
             val = Integer.parseInt(value);
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
         }
 
         return val;
     }
 
     /**
-     *  Makes sure that the POSTed data is conforms to certain rules.  These
-     *  rules are:
-     *  <UL>
-     *  <LI>The data always ends with a newline (some browsers, such
-     *      as NS4.x series, does not send a newline at the end, which makes
-     *      the diffs a bit strange sometimes.
-     *  <LI>The CR/LF/CRLF mess is normalized to plain CRLF.
-     *  </UL>
+     * Makes sure that the POSTed data is conforms to certain rules.  These rules are:
+     * 
+     * <UL>
+     * <li>
+     * The data always ends with a newline (some browsers, such as NS4.x series, does not send a
+     * newline at the end, which makes the diffs a bit strange sometimes.
+     * </li>
+     * <li>
+     * The CR/LF/CRLF mess is normalized to plain CRLF.
+     * </li>
+     * </ul>
+     * 
+     * The reason why we're using CRLF is that most browser already return CRLF since that is the
+     * closest thing to a HTTP standard.
      *
-     *  The reason why we're using CRLF is that most browser already
-     *  return CRLF since that is the closest thing to a HTTP standard.
+     * @param postData DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public static String normalizePostData(String postData) {
+    public static String normalizePostData(String postData)
+    {
         StringBuffer sb = new StringBuffer();
 
-        for (int i = 0; i < postData.length(); i++) {
-            switch (postData.charAt(i)) {
+        for (int i = 0; i < postData.length(); i++)
+        {
+            switch (postData.charAt(i))
+            {
             case 0x0a: // LF, UNIX
                 sb.append("\r\n");
 
@@ -294,8 +416,8 @@ public class TextUtil {
                 sb.append("\r\n");
 
                 // If it's MSDOS, skip the LF so that we don't add it again.
-                if ((i < (postData.length() - 1)) &&
-                        (postData.charAt(i + 1) == 0x0a)) {
+                if ((i < (postData.length() - 1)) && (postData.charAt(i + 1) == 0x0a))
+                {
                     i++;
                 }
 
@@ -308,55 +430,71 @@ public class TextUtil {
             }
         }
 
-        if ((sb.length() < 2) || !sb.substring(sb.length() - 2).equals("\r\n")) {
+        if ((sb.length() < 2) || !sb.substring(sb.length() - 2).equals("\r\n"))
+        {
             sb.append("\r\n");
         }
 
         return sb.toString();
     }
 
-    private static int getCharKind(int c) {
-        if (c == -1) {
+    private static int getCharKind(int c)
+    {
+        if (c == -1)
+        {
             return EOI;
         }
 
         char ch = (char) c;
 
-        if (Character.isLowerCase(ch)) {
+        if (Character.isLowerCase(ch))
+        {
             return LOWER;
-        } else if (Character.isUpperCase(ch)) {
+        }
+        else if (Character.isUpperCase(ch))
+        {
             return UPPER;
-        } else if (Character.isDigit(ch)) {
+        }
+        else if (Character.isDigit(ch))
+        {
             return DIGIT;
-        } else {
+        }
+        else
+        {
             return OTHER;
         }
     }
 
     /**
-     *  Adds spaces in suitable locations of the input string.  This is
-     *  used to transform a WikiName into a more readable format.
+     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName
+     * into a more readable format.
      *
-     *  @param s String to be beautified.
-     *  @return A beautified string.
+     * @param s String to be beautified.
+     *
+     * @return A beautified string.
      */
-    public static String beautifyString(String s) {
+    public static String beautifyString(String s)
+    {
         return beautifyString(s, " ");
     }
 
     /**
-     *  Adds spaces in suitable locations of the input string.  This is
-     *  used to transform a WikiName into a more readable format.
+     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName
+     * into a more readable format.
      *
-     *  @param s String to be beautified.
-     *  @param space Use this string for the space character.
-     *  @return A beautified string.
-     *  @since 2.1.127
+     * @param s String to be beautified.
+     * @param space Use this string for the space character.
+     *
+     * @return A beautified string.
+     *
+     * @since 2.1.127
      */
-    public static String beautifyString(String s, String space) {
+    public static String beautifyString(String s, String space)
+    {
         StringBuffer result = new StringBuffer();
 
-        if (StringUtils.isEmpty(s)) {
+        if (StringUtils.isEmpty(s))
+        {
             return "";
         }
 
@@ -369,22 +507,29 @@ public class TextUtil {
         int next = -1;
         int nextPos = 1;
 
-        while (curKind != EOI) {
-            next = (nextPos < s.length()) ? s.charAt(nextPos++) : (-1);
+        while (curKind != EOI)
+        {
+            next = (nextPos < s.length())
+                ? s.charAt(nextPos++)
+                : (-1);
             nextKind = getCharKind(next);
 
-            if ((prevKind == UPPER) && (curKind == UPPER) &&
-                    (nextKind == LOWER)) {
+            if ((prevKind == UPPER) && (curKind == UPPER) && (nextKind == LOWER))
+            {
                 result.append(space);
                 result.append((char) cur);
-            } else {
+            }
+            else
+            {
                 result.append((char) cur);
 
-                if (((curKind == UPPER) && (nextKind == DIGIT)) ||
-                        ((curKind == LOWER) &&
-                        ((nextKind == DIGIT) || (nextKind == UPPER))) ||
-                        ((curKind == DIGIT) &&
-                        ((nextKind == UPPER) || (nextKind == LOWER)))) {
+                if (
+                    ((curKind == UPPER) && (nextKind == DIGIT))
+                                || ((curKind == LOWER)
+                                && ((nextKind == DIGIT) || (nextKind == UPPER)))
+                                || ((curKind == DIGIT)
+                                && ((nextKind == UPPER) || (nextKind == LOWER))))
+                {
                     result.append(space);
                 }
             }
@@ -398,28 +543,33 @@ public class TextUtil {
     }
 
     /**
-     *  Adds string mappings like
-     *  <pre>
+     * Adds string mappings like
+     * <pre>
      *     String[] properties = { "jspwiki.property1", "value1",
      *                             "jspwiki.property2", "value2 };
      *  </pre>
-     *  to a configuration object.
+     * to a configuration object.
      *
-     * @param conf A configuration object
-     * @parm values The values to use.
-     *  @throws IllegalArgumentException, if the property array is missing
-     *          a value for a key.
-     *  @since 2.2.
+     * @param values The values to use.
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IllegalArgumentException if the property array is missing a value for a key.
+     *
+     * @since 2.2.
      */
-    public static Map createMap(String[] values)
-        throws IllegalArgumentException {
-        if ((values.length % 2) != 0) {
+    public static Map createMap(String [] values)
+            throws IllegalArgumentException
+    {
+        if ((values.length % 2) != 0)
+        {
             throw new IllegalArgumentException("One value is missing.");
         }
 
         Map map = new HashMap();
 
-        for (int i = 0; i < values.length; i += 2) {
+        for (int i = 0; i < values.length; i += 2)
+        {
             map.put(values[i], values[i + 1]);
         }
 
@@ -427,17 +577,21 @@ public class TextUtil {
     }
 
     /**
-     *  Counts the number of sections (separated with "----") from the page.
+     * Counts the number of sections (separated with "----") from the page.
      *
-     *  @param pagedata The WikiText to parse.
-     *  @return int Number of counted sections.
-     *  @since 2.1.86.
+     * @param pagedata The WikiText to parse.
+     *
+     * @return int Number of counted sections.
+     *
+     * @since 2.1.86.
      */
-    public static int countSections(String pagedata) {
+    public static int countSections(String pagedata)
+    {
         int tags = 0;
         int start = 0;
 
-        while ((start = pagedata.indexOf("----", start)) != -1) {
+        while ((start = pagedata.indexOf("----", start)) != -1)
+        {
             tags++;
             start += 4; // Skip this "----"
         }
@@ -445,28 +599,36 @@ public class TextUtil {
         //
         // The first section does not get the "----"
         //
-        return (pagedata.length() > 0) ? (tags + 1) : 0;
+        return (pagedata.length() > 0)
+        ? (tags + 1)
+        : 0;
     }
 
     /**
-     *  Gets the given section (separated with "----") from the page text.
-     *  Note that the first section is always #1.  If a page has no section markers,
-     *  them there is only a single section, #1.
+     * Gets the given section (separated with "----") from the page text. Note that the first
+     * section is always #1.  If a page has no section markers, them there is only a single
+     * section, #1.
      *
-     *  @param pagedata WikiText to parse.
-     *  @param section  Which section to get.
-     *  @return String  The section.
-     *  @throws IllegalArgumentException If the page does not contain this many sections.
-     *  @since 2.1.86.
+     * @param pagedata WikiText to parse.
+     * @param section Which section to get.
+     *
+     * @return String  The section.
+     *
+     * @throws IllegalArgumentException If the page does not contain this many sections.
+     *
+     * @since 2.1.86.
      */
     public static String getSection(String pagedata, int section)
-        throws IllegalArgumentException {
+            throws IllegalArgumentException
+    {
         int tags = 0;
         int start = 0;
         int previous = 0;
 
-        while ((start = pagedata.indexOf("----", start)) != -1) {
-            if (++tags == section) {
+        while ((start = pagedata.indexOf("----", start)) != -1)
+        {
+            if (++tags == section)
+            {
                 return pagedata.substring(previous, start);
             }
 
@@ -475,11 +637,11 @@ public class TextUtil {
             previous = start;
         }
 
-        if (++tags == section) {
+        if (++tags == section)
+        {
             return pagedata.substring(previous);
         }
 
-        throw new IllegalArgumentException("There is no section no. " +
-            section + " on the page.");
+        throw new IllegalArgumentException("There is no section no. " + section + " on the page.");
     }
 }

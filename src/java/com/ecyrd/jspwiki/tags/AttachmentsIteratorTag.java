@@ -57,7 +57,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 // FIXME: Too much in common with IteratorTag - REFACTOR
 public class AttachmentsIteratorTag
-    extends IteratorTag
+        extends IteratorTag
 {
     /** DOCUMENT ME! */
     static Category log = Category.getInstance(AttachmentsIteratorTag.class);

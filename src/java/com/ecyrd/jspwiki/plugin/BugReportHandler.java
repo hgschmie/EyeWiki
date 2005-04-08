@@ -55,7 +55,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * @author Janne Jalkanen
  */
 public class BugReportHandler
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(BugReportHandler.class);
@@ -89,7 +89,7 @@ public class BugReportHandler
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         ArrayList otherparams = new ArrayList();
         String title;
@@ -162,9 +162,9 @@ public class BugReportHandler
 
                 if (
                     entry.getKey().equals(TITLE) || entry.getKey().equals(DESCRIPTION)
-                        || entry.getKey().equals(VERSION) || entry.getKey().equals(MAPPINGS)
-                        || entry.getKey().equals(PAGE)
-                        || entry.getKey().equals(PluginManager.PARAM_BODY))
+                                || entry.getKey().equals(VERSION)
+                                || entry.getKey().equals(MAPPINGS) || entry.getKey().equals(PAGE)
+                                || entry.getKey().equals(PluginManager.PARAM_BODY))
                 {
                     // Ignore this
                 }

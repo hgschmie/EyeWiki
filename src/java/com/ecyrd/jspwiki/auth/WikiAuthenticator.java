@@ -45,7 +45,7 @@ public interface WikiAuthenticator
      * @throws WikiException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, WikiException;
+            throws NoRequiredPropertyException, WikiException;
 
     /**
      * Authenticates a user, using the name and password present in the parameter.
@@ -57,5 +57,5 @@ public interface WikiAuthenticator
      * @throws WikiSecurityException If the password has expired, but is valid otherwise.
      */
     public boolean authenticate(UserProfile wup)
-        throws WikiSecurityException;
+            throws WikiSecurityException;
 }

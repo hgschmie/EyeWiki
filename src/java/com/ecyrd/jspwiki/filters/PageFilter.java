@@ -34,7 +34,7 @@ public interface PageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public void initialize(Properties props)
-        throws FilterException;
+            throws FilterException;
 
     /**
      * This method is called whenever a page has been loaded from the provider, but not yet been
@@ -49,7 +49,7 @@ public interface PageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String preTranslate(WikiContext wikiContext, String content)
-        throws FilterException;
+            throws FilterException;
 
     /**
      * This method is called after a page has been fed through the TranslatorReader, so anything
@@ -64,7 +64,7 @@ public interface PageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String postTranslate(WikiContext wikiContext, String htmlContent)
-        throws FilterException;
+            throws FilterException;
 
     /**
      * This method is called before the page has been saved to the PageProvider.
@@ -77,7 +77,7 @@ public interface PageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public String preSave(WikiContext wikiContext, String content)
-        throws FilterException;
+            throws FilterException;
 
     /**
      * This method is called after the page has been successfully saved. If the saving fails for
@@ -94,5 +94,5 @@ public interface PageFilter
      * @throws FilterException DOCUMENT ME!
      */
     public void postSave(WikiContext wikiContext, String content)
-        throws FilterException;
+            throws FilterException;
 }

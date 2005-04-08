@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  * Creates a simple input text field.
  */
 public class FormInput
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormInput.class);
@@ -56,7 +56,7 @@ public class FormInput
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         String inputName = (String) params.get(PARAM_INPUTNAME);
         String inputValue = (String) params.get(PARAM_VALUE);

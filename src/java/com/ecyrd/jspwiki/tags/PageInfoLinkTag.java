@@ -49,7 +49,7 @@ import com.ecyrd.jspwiki.WikiPage;
 
 // FIXME: Refactor together with LinkToTag and EditLinkTag.
 public class PageInfoLinkTag
-    extends WikiLinkTag
+        extends WikiLinkTag
 {
     /**
      * DOCUMENT ME!
@@ -59,7 +59,7 @@ public class PageInfoLinkTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         String pageName = m_pageName;

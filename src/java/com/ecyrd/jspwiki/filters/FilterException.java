@@ -28,7 +28,7 @@ import com.ecyrd.jspwiki.WikiException;
  * @since 2.1.112
  */
 public class FilterException
-    extends WikiException
+        extends WikiException
 {
     /**
      * Creates a new FilterException object.

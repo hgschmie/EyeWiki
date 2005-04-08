@@ -10,7 +10,7 @@ import com.ecyrd.jspwiki.InternalWikiException;
  * group.
  */
 public class NamedGroup
-    extends AllGroup
+        extends AllGroup
 {
     /**
      * Creates a new NamedGroup object.

@@ -32,7 +32,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class CheckRequestContextTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_context;
@@ -66,7 +66,7 @@ public class CheckRequestContextTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         if (m_wikiContext.getRequestContext().equalsIgnoreCase(getContext()))
         {

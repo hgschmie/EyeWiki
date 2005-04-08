@@ -30,7 +30,7 @@ import java.io.IOException;
  * @since 2.1.15.
  */
 public class TemplateDirTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -40,7 +40,7 @@ public class TemplateDirTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         String template = m_wikiContext.getTemplate();
 

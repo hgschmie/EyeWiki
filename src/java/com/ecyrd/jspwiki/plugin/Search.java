@@ -43,7 +43,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @since
  */
 public class Search
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(Search.class);
@@ -64,7 +64,7 @@ public class Search
      * @see com.ecyrd.jspwiki.plugin.WikiPlugin#execute(com.ecyrd.jspwiki.WikiContext, java.util.Map)
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         int maxItems = Integer.MAX_VALUE;
         Collection results = null;

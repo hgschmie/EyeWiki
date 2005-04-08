@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 2.2
  */
 public class ShortURLConstructor
-    extends DefaultURLConstructor
+        extends DefaultURLConstructor
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(ShortURLConstructor.class);
@@ -194,7 +194,7 @@ public class ShortURLConstructor
      * @throws UnsupportedEncodingException DOCUMENT ME!
      */
     public String parsePage(String context, HttpServletRequest request, String encoding)
-        throws UnsupportedEncodingException
+            throws UnsupportedEncodingException
     {
         String pagereq = m_engine.safeGetParameter(request, "page");
 

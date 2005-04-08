@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
 // FIXME: It is not yet possible to do wiki internal links.  In order to
 //        do this cleanly, a TranslatorReader revamp is needed.
 public class Image
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     public static final String PARAM_SRC = "src";
@@ -99,7 +99,7 @@ public class Image
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
         String src = getCleanParameter(params, PARAM_SRC);

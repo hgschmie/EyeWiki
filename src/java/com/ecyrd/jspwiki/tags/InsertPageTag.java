@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class InsertPageTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final int HTML = 0;
@@ -110,7 +110,7 @@ public class InsertPageTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page;

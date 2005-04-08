@@ -50,7 +50,7 @@ import java.io.IOException;
  * @since 2.0
  */
 public abstract class WikiLinkTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final int ANCHOR = 0;

@@ -39,7 +39,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 1.7.8
  */
 public class CurrentTimePlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(CurrentTimePlugin.class);
@@ -58,7 +58,7 @@ public class CurrentTimePlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         String formatString = (String) params.get("format");
 

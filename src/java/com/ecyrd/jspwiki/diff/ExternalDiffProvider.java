@@ -39,7 +39,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * This DiffProvider allows external command line tools to be used to generate the diff.
  */
 public class ExternalDiffProvider
-    implements DiffProvider
+        implements DiffProvider
 {
     /** DOCUMENT ME! */
     private static final Category log = Category.getInstance(ExternalDiffProvider.class);
@@ -96,7 +96,7 @@ public class ExternalDiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         m_diffCommand = conf.getString(WikiProperties.PROP_DIFFCOMMAND);
         m_encoding = engine.getContentEncoding();
@@ -176,7 +176,7 @@ public class ExternalDiffProvider
      * @throws IOException DOCUMENT ME!
      */
     static String colorizeDiff(String diffText)
-        throws IOException
+            throws IOException
     {
         if (diffText == null)
         {

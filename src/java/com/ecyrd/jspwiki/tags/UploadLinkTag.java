@@ -19,38 +19,63 @@
  */
 package com.ecyrd.jspwiki.tags;
 
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+
 
 /**
- *  Writes a link to the upload page.  Body of the link becomes the actual text.
- *  The link is written regardless to whether the page exists or not.
+ * Writes a link to the upload page.  Body of the link becomes the actual text. The link is written
+ * regardless to whether the page exists or not.
+ * 
+ * <P>
+ * <B>Attributes</B>
+ * </p>
+ * 
+ * <UL>
+ * <li>
+ * page - Page name to refer to.  Default is the current page.
+ * </li>
+ * <li>
+ * format - either "anchor" or "url" to output either an &lt;A&gt;... or just the HREF part of one.
+ * </li>
+ * </ul>
+ * 
  *
- *  <P><B>Attributes</B></P>
- *  <UL>
- *    <LI>page - Page name to refer to.  Default is the current page.
- *    <LI>format - either "anchor" or "url" to output either an <A>... or just the HREF part of one.
- *  </UL>
+ * @author Janne Jalkanen
  *
- *  @author Janne Jalkanen
- *  @since 2.0
+ * @since 2.0
  */
-public class UploadLinkTag extends WikiLinkTag {
+public class UploadLinkTag
+        extends WikiLinkTag
+{
+    /** DOCUMENT ME! */
     private String m_version = null;
 
-    public final int doWikiStartTag() throws IOException {
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws IOException DOCUMENT ME!
+     */
+    public final int doWikiStartTag()
+            throws IOException
+    {
         WikiEngine engine = m_wikiContext.getEngine();
         String pageName = m_pageName;
 
-        if (m_pageName == null) {
-            if (m_wikiContext.getPage() != null) {
+        if (m_pageName == null)
+        {
+            if (m_wikiContext.getPage() != null)
+            {
                 pageName = m_wikiContext.getPage().getName();
-            } else {
+            }
+            else
+            {
                 return SKIP_BODY;
             }
         }
@@ -59,10 +84,10 @@ public class UploadLinkTag extends WikiLinkTag {
 
         String url = m_wikiContext.getURL(WikiContext.UPLOAD, pageName);
 
-        switch (m_format) {
+        switch (m_format)
+        {
         case ANCHOR:
-            out.print("<a target=\"_new\" class=\"uploadlink\" href=\"" + url +
-                "\">");
+            out.print("<a target=\"_new\" class=\"uploadlink\" href=\"" + url + "\">");
 
             break;
 

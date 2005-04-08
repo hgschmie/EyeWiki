@@ -35,7 +35,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  * @since 2.0
  */
 public class ParentPageNameTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -45,7 +45,7 @@ public class ParentPageNameTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

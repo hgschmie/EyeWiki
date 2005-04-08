@@ -45,7 +45,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @author Janne Jalkanen
  */
 public class FileSystemProvider
-    extends AbstractFileProvider
+        extends AbstractFileProvider
 {
     /** DOCUMENT ME! */
     private static final Category log = Category.getInstance(FileSystemProvider.class);
@@ -62,7 +62,7 @@ public class FileSystemProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void putPageText(WikiPage page, String text)
-        throws ProviderException
+            throws ProviderException
     {
         try
         {
@@ -83,7 +83,7 @@ public class FileSystemProvider
      * @throws IOException DOCUMENT ME!
      */
     private void putPageProperties(WikiPage page)
-        throws IOException
+            throws IOException
     {
         Properties props = new Properties();
         OutputStream out = null;
@@ -118,7 +118,7 @@ public class FileSystemProvider
      * @throws IOException DOCUMENT ME!
      */
     private void getPageProperties(WikiPage page)
-        throws IOException
+            throws IOException
     {
         Properties props = new Properties();
         InputStream in = null;
@@ -153,7 +153,7 @@ public class FileSystemProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String page, int version)
-        throws ProviderException
+            throws ProviderException
     {
         WikiPage p = super.getPageInfo(page, version);
 

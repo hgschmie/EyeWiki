@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.WikiProvider;
  * TODO
  */
 public interface DiffProvider
-    extends WikiProvider
+        extends WikiProvider
 {
     /**
      * The return string is to be XHTML compliant ready to display html.  No further processing of
@@ -33,7 +33,7 @@ public interface DiffProvider
      * @version $Revision$
      */
     public static class NullDiffProvider
-        implements DiffProvider
+            implements DiffProvider
     {
         /**
          * DOCUMENT ME!
@@ -58,7 +58,7 @@ public interface DiffProvider
          * @throws IOException DOCUMENT ME!
          */
         public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
+                throws NoRequiredPropertyException, IOException
         {
         }
 

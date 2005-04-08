@@ -35,8 +35,8 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class RssTraditionalDiffProvider
-    extends TraditionalDiffProvider
-    implements DiffProvider
+        extends TraditionalDiffProvider
+        implements DiffProvider
 {
     /**
      * Creates a new RssTraditionalDiffProvider object.
@@ -66,7 +66,7 @@ public class RssTraditionalDiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         super.initialize(engine, conf);
     }

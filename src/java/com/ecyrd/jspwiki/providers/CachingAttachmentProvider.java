@@ -59,7 +59,7 @@ import com.opensymphony.oscache.base.NeedsRefreshException;
 // FIXME: Does not yet react well to external cache changes.  Should really use custom
 //        EntryRefreshPolicy for that.
 public class CachingAttachmentProvider
-    implements WikiAttachmentProvider
+        implements WikiAttachmentProvider
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(CachingAttachmentProvider.class);
@@ -98,7 +98,7 @@ public class CachingAttachmentProvider
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingAttachmentProvider");
 
@@ -153,7 +153,7 @@ public class CachingAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public void putAttachmentData(Attachment att, InputStream data)
-        throws ProviderException, IOException
+            throws ProviderException, IOException
     {
         // FIXME: Probably not wise.
         m_cache.flushEntry(att.getParentName());
@@ -171,7 +171,7 @@ public class CachingAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public InputStream getAttachmentData(Attachment att)
-        throws ProviderException, IOException
+            throws ProviderException, IOException
     {
         return m_provider.getAttachmentData(att);
     }
@@ -186,7 +186,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection listAttachments(WikiPage page)
-        throws ProviderException
+            throws ProviderException
     {
         if (log.isDebugEnabled())
         {
@@ -260,7 +260,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List listAllChanged(Date timestamp)
-        throws ProviderException
+            throws ProviderException
     {
         // FIXME: Should cache
         return m_provider.listAllChanged(timestamp);
@@ -299,7 +299,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private final Collection refresh(WikiPage page)
-        throws ProviderException
+            throws ProviderException
     {
         m_cacheMisses++;
 
@@ -321,7 +321,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Attachment getAttachmentInfo(WikiPage page, String name, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (log.isDebugEnabled())
         {
@@ -421,7 +421,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         m_cache.flushEntry(att.getParentName());
         m_provider.deleteVersion(att);
@@ -435,7 +435,7 @@ public class CachingAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteAttachment(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         m_cache.flushEntry(att.getParentName());
         m_provider.deleteAttachment(att);

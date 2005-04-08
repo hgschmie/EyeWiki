@@ -45,7 +45,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class CheckVersionTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final int LATEST = 0;
@@ -96,7 +96,7 @@ public class CheckVersionTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

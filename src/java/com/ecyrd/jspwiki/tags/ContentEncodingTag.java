@@ -32,7 +32,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @since 2.0
  */
 public class ContentEncodingTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -42,7 +42,7 @@ public class ContentEncodingTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
 

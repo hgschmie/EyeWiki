@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.SearchResult;
  * @since 2.0
  */
 public class SearchResultIteratorInfo
-    extends TagExtraInfo
+        extends TagExtraInfo
 {
     /**
      * DOCUMENT ME!

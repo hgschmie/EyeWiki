@@ -10,7 +10,7 @@ import com.ecyrd.jspwiki.InternalWikiException;
  * this group.
  */
 public class KnownGroup
-    extends AllGroup
+        extends AllGroup
 {
     /**
      * Creates a new KnownGroup object.

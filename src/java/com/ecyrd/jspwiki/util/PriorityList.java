@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * @author Janne Jalkanen
  */
 public class PriorityList
-    extends AbstractList
+        extends AbstractList
 {
     /**
      * This is the default priority, which is used if no priority is defined.  It's current value

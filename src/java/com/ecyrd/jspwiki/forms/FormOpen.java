@@ -72,7 +72,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  * @author ebu
  */
 public class FormOpen
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormOpen.class);
@@ -81,9 +81,9 @@ public class FormOpen
     public static final String PARAM_METHOD = "method";
 
     /**
-             */
+                                                 */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         String formName = (String) params.get(PARAM_FORM);
 
@@ -128,7 +128,7 @@ public class FormOpen
                 // error only, we need to exit now.
                 if (
                     (hide != null) && HIDE_SUCCESS.equals(hide)
-                        && (info.getStatus() == FormInfo.EXECUTED))
+                                && (info.getStatus() == FormInfo.EXECUTED))
                 {
                     info.setHide(true);
 

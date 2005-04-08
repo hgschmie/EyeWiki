@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author Janne Jalkanen
  */
 public class RecentChangesPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** How many days we show by default. */
     private static final int DEFAULT_DAYS = 100 * 365;
@@ -77,7 +77,7 @@ public class RecentChangesPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         int since = TextUtil.parseIntParameter((String) params.get("since"), DEFAULT_DAYS);
         int spacing = 4;

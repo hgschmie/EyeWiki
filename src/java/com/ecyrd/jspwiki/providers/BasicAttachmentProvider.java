@@ -85,7 +85,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * </p>
  */
 public class BasicAttachmentProvider
-    implements WikiAttachmentProvider
+        implements WikiAttachmentProvider
 {
     /** DOCUMENT ME! */
     public static final String PROPERTY_FILE = "attachment.properties";
@@ -112,7 +112,7 @@ public class BasicAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
         m_storageDir = engine.getStorageDir();
 
@@ -134,7 +134,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private File findPageDir(String wikipage)
-        throws ProviderException
+            throws ProviderException
     {
         wikipage = mangleName(wikipage);
 
@@ -171,7 +171,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private File findAttachmentDir(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         File f =
             new File(
@@ -216,7 +216,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private int findLatestVersion(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         // File pageDir = findPageDir( att.getName() );
         File attDir = findAttachmentDir(att);
@@ -292,7 +292,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private void putPageProperties(Attachment att, Properties properties)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         File attDir = findAttachmentDir(att);
         File propertyFile = new File(attDir, PROPERTY_FILE);
@@ -315,7 +315,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private Properties getPageProperties(Attachment att)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         Properties props = new Properties();
 
@@ -343,7 +343,7 @@ public class BasicAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public void putAttachmentData(Attachment att, InputStream data)
-        throws ProviderException, IOException
+            throws ProviderException, IOException
     {
         File attDir = findAttachmentDir(att);
 
@@ -411,7 +411,7 @@ public class BasicAttachmentProvider
     }
 
     private File findFile(File dir, Attachment att)
-        throws FileNotFoundException, ProviderException
+            throws FileNotFoundException, ProviderException
     {
         int version = att.getVersion();
 
@@ -456,7 +456,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public InputStream getAttachmentData(Attachment att)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         File attDir = findAttachmentDir(att);
 
@@ -475,7 +475,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection listAttachments(WikiPage page)
-        throws ProviderException
+            throws ProviderException
     {
         Collection result = new ArrayList();
 
@@ -564,7 +564,7 @@ public class BasicAttachmentProvider
 
     // FIXME: Very unoptimized.
     public List listAllChanged(Date timestamp)
-        throws ProviderException
+            throws ProviderException
     {
         File attDir = new File(m_storageDir);
 
@@ -613,7 +613,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Attachment getAttachmentInfo(WikiPage page, String name, int version)
-        throws ProviderException
+            throws ProviderException
     {
         Attachment att = new Attachment(page.getName(), name);
         File dir = findAttachmentDir(att);
@@ -697,7 +697,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         // FIXME: Does nothing yet.
     }
@@ -710,7 +710,7 @@ public class BasicAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteAttachment(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         File dir = findAttachmentDir(att);
         String [] files = dir.list();
@@ -728,7 +728,7 @@ public class BasicAttachmentProvider
      * Returns only those directories that contain attachments.
      */
     public class AttachmentFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         /**
          * DOCUMENT ME!
@@ -748,7 +748,7 @@ public class BasicAttachmentProvider
      * Accepts only files that are actual versions, no control files.
      */
     public class AttachmentVersionFilter
-        implements FilenameFilter
+            implements FilenameFilter
     {
         /**
          * DOCUMENT ME!

@@ -60,7 +60,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @since 1.9.28
  */
 public class AttachmentManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     static Category log = Category.getInstance(AttachmentManager.class);
@@ -174,7 +174,7 @@ public class AttachmentManager
      * @throws ProviderException If something goes wrong.
      */
     public Attachment getAttachmentInfo(String name)
-        throws ProviderException
+            throws ProviderException
     {
         return getAttachmentInfo(name, WikiProvider.LATEST_VERSION);
     }
@@ -190,7 +190,7 @@ public class AttachmentManager
      * @throws ProviderException If something goes wrong.
      */
     public Attachment getAttachmentInfo(String name, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (name == null)
         {
@@ -211,7 +211,7 @@ public class AttachmentManager
      * @throws ProviderException If something goes wrong.
      */
     public Attachment getAttachmentInfo(WikiContext context, String attachmentname)
-        throws ProviderException
+            throws ProviderException
     {
         return getAttachmentInfo(context, attachmentname, WikiProvider.LATEST_VERSION);
     }
@@ -228,7 +228,7 @@ public class AttachmentManager
      * @throws ProviderException If something goes wrong.
      */
     public Attachment getAttachmentInfo(WikiContext context, String attachmentname, int version)
-        throws ProviderException
+            throws ProviderException
     {
         if (m_provider == null)
         {
@@ -274,7 +274,7 @@ public class AttachmentManager
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection listAttachments(WikiPage wikipage)
-        throws ProviderException
+            throws ProviderException
     {
         if (m_provider == null)
         {
@@ -315,7 +315,7 @@ public class AttachmentManager
      * @throws ProviderException DOCUMENT ME!
      */
     public InputStream getAttachmentStream(Attachment att)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         if (m_provider == null)
         {
@@ -336,7 +336,7 @@ public class AttachmentManager
      * @throws ProviderException If something else went wrong.
      */
     public void storeAttachment(Attachment att, File source)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         FileInputStream in = null;
 
@@ -362,7 +362,7 @@ public class AttachmentManager
      * @throws ProviderException If something else went wrong.
      */
     public void storeAttachment(Attachment att, InputStream in)
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         if (m_provider == null)
         {
@@ -386,7 +386,7 @@ public class AttachmentManager
      * @throws ProviderException If the provider fails for some reason.
      */
     public List getVersionHistory(String attachmentName)
-        throws ProviderException
+            throws ProviderException
     {
         if (m_provider == null)
         {
@@ -413,7 +413,7 @@ public class AttachmentManager
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection getAllAttachments()
-        throws ProviderException
+            throws ProviderException
     {
         if (attachmentsEnabled())
         {
@@ -441,7 +441,7 @@ public class AttachmentManager
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteVersion(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteVersion(att);
     }
@@ -454,7 +454,7 @@ public class AttachmentManager
      * @throws ProviderException DOCUMENT ME!
      */
     public void deleteAttachment(Attachment att)
-        throws ProviderException
+            throws ProviderException
     {
         m_provider.deleteAttachment(att);
     }

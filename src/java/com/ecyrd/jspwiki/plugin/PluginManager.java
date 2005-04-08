@@ -119,7 +119,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @since 1.6.1
  */
 public class PluginManager
-    implements WikiProperties
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(PluginManager.class);
@@ -236,7 +236,7 @@ public class PluginManager
      * @throws ClassNotFoundException if no such class exists.
      */
     private Class findPluginClass(String classname)
-        throws ClassNotFoundException
+            throws ClassNotFoundException
     {
         return ClassUtil.findClass(m_searchPath, classname);
     }
@@ -293,7 +293,7 @@ public class PluginManager
      * @since 2.0
      */
     public String execute(WikiContext context, String classname, Map params)
-        throws PluginException
+            throws PluginException
     {
         if (!m_pluginsEnabled)
         {
@@ -394,7 +394,7 @@ public class PluginManager
      * @throws IOException If the parsing fails.
      */
     public Map parseArgs(String argstring)
-        throws IOException
+            throws IOException
     {
         HashMap arglist = new HashMap();
         StringReader in = new StringReader(argstring);
@@ -516,7 +516,7 @@ public class PluginManager
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, String commandline)
-        throws PluginException
+            throws PluginException
     {
         if (!m_pluginsEnabled)
         {

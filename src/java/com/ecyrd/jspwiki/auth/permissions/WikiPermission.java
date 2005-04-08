@@ -9,7 +9,7 @@ import java.security.acl.Permission;
  * @author Janne Jalkanen
  */
 public abstract class WikiPermission
-    implements Permission
+        implements Permission
 {
     /** DOCUMENT ME! */
     private static WikiPermission c_viewPermission = new ViewPermission();
@@ -50,7 +50,7 @@ public abstract class WikiPermission
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     public static WikiPermission newInstance(String representation)
-        throws IllegalArgumentException
+            throws IllegalArgumentException
     {
         if (representation.equalsIgnoreCase("view"))
         {

@@ -47,7 +47,7 @@ public interface UserDatabase
      * @throws NoRequiredPropertyException DOCUMENT ME!
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException;
+            throws NoRequiredPropertyException;
 
     /**
      * Returns a list of WikiGroup objects for the given Principal.
@@ -59,7 +59,7 @@ public interface UserDatabase
      * @throws NoSuchPrincipalException DOCUMENT ME!
      */
     public List getGroupsForPrincipal(Principal p)
-        throws NoSuchPrincipalException;
+            throws NoSuchPrincipalException;
 
     /**
      * Creates a principal.  This method should return either a WikiGroup or a UserProfile (or a

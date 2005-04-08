@@ -55,7 +55,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @since 2.0
  */
 public class VariableTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_var = null;
@@ -102,7 +102,7 @@ public class VariableTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws JspException, IOException
+            throws JspException, IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         JspWriter out = pageContext.getOut();

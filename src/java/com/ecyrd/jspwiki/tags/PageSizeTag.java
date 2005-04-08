@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class PageSizeTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /**
      * DOCUMENT ME!
@@ -44,7 +44,7 @@ public class PageSizeTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();

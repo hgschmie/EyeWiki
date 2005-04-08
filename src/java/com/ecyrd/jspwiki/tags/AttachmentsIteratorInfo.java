@@ -13,7 +13,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  * @since 2.0
  */
 public class AttachmentsIteratorInfo
-    extends TagExtraInfo
+        extends TagExtraInfo
 {
     /**
      * DOCUMENT ME!

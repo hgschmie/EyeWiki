@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 2.2
  */
 public class ContentTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private static Map c_defaultMappings;
@@ -59,11 +59,26 @@ public class ContentTag
      */
     public static final String [] DEFAULT_JSP_PAGES =
         {
-            WikiContext.VIEW, "PageContent.jsp", WikiContext.DIFF, "DiffContent.jsp",
-            WikiContext.INFO, "InfoContent.jsp", WikiContext.PREVIEW, "PreviewContent.jsp",
-            WikiContext.CONFLICT, "ConflictContent.jsp", WikiContext.FIND, "FindContent.jsp",
-            WikiContext.PREFS, "PreferencesContent.jsp", WikiContext.ERROR, "DisplayMessage.jsp",
-            WikiContext.EDIT, "EditContent.jsp", WikiContext.COMMENT, "CommentContent.jsp"
+            WikiContext.VIEW,
+            "PageContent.jsp",
+            WikiContext.DIFF,
+            "DiffContent.jsp",
+            WikiContext.INFO,
+            "InfoContent.jsp",
+            WikiContext.PREVIEW,
+            "PreviewContent.jsp",
+            WikiContext.CONFLICT,
+            "ConflictContent.jsp",
+            WikiContext.FIND,
+            "FindContent.jsp",
+            WikiContext.PREFS,
+            "PreferencesContent.jsp",
+            WikiContext.ERROR,
+            "DisplayMessage.jsp",
+            WikiContext.EDIT,
+            "EditContent.jsp",
+            WikiContext.COMMENT,
+            "CommentContent.jsp"
         };
 
     static
@@ -183,7 +198,7 @@ public class ContentTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         return SKIP_BODY;
     }
@@ -196,7 +211,7 @@ public class ContentTag
      * @throws JspException DOCUMENT ME!
      */
     public final int doEndTag()
-        throws JspException
+            throws JspException
     {
         try
         {

@@ -39,7 +39,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 2.0.22.
  */
 public class ListLocksPlugin
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ListLocksPlugin.class);
@@ -55,7 +55,7 @@ public class ListLocksPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         StringBuffer result = new StringBuffer();
 

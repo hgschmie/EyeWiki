@@ -57,7 +57,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  * @since 1.6.6
  */
 public class RPCServlet
-    extends HttpServlet
+        extends HttpServlet
 {
     /** This is what is appended to each command, if the handler has not been specified. */
 
@@ -84,7 +84,7 @@ public class RPCServlet
      * @throws IllegalAccessException DOCUMENT ME!
      */
     public void initHandler(String prefix, String handlerName)
-        throws ClassNotFoundException, InstantiationException, IllegalAccessException
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         Class handlerClass = Class.forName(handlerName);
         WikiRPCHandler rpchandler = (WikiRPCHandler) handlerClass.newInstance();
@@ -100,7 +100,7 @@ public class RPCServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void init(ServletConfig config)
-        throws ServletException
+            throws ServletException
     {
         m_engine = WikiEngine.getInstance(config);
 
@@ -143,7 +143,7 @@ public class RPCServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received POST to RPCServlet");
 
@@ -183,7 +183,7 @@ public class RPCServlet
      * @throws ServletException DOCUMENT ME!
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException
+            throws ServletException
     {
         log.debug("Received HTTP GET to RPCServlet");
 

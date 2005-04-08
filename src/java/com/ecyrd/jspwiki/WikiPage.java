@@ -35,7 +35,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
 //        author, date, etc. should also be part of the metadata.  We also
 //        need to figure out the metadata lifecycle.
 public class WikiPage
-    implements Cloneable, Comparable
+        implements Cloneable, Comparable
 {
     /** "Summary" is a short summary of the page.  It is a String. */
     public static final String DESCRIPTION = "summary";

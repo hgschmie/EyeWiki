@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.attachment.Attachment;
  * @author Janne Jalkanen
  */
 public interface WikiAttachmentProvider
-    extends WikiProvider
+        extends WikiProvider
 {
     /**
      * Put new attachment data.
@@ -58,7 +58,7 @@ public interface WikiAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public void putAttachmentData(Attachment att, InputStream data)
-        throws ProviderException, IOException;
+            throws ProviderException, IOException;
 
     /**
      * Get attachment data.
@@ -71,7 +71,7 @@ public interface WikiAttachmentProvider
      * @throws IOException DOCUMENT ME!
      */
     public InputStream getAttachmentData(Attachment att)
-        throws ProviderException, IOException;
+            throws ProviderException, IOException;
 
     /**
      * Lists all attachments attached to a page.
@@ -83,7 +83,7 @@ public interface WikiAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Collection listAttachments(WikiPage page)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Finds attachments based on the query.
@@ -115,7 +115,7 @@ public interface WikiAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public List listAllChanged(Date timestamp)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Returns info about an attachment.
@@ -129,7 +129,7 @@ public interface WikiAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      */
     public Attachment getAttachmentInfo(WikiPage page, String name, int version)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Returns version history.  Each element should be an Attachment.
@@ -153,7 +153,7 @@ public interface WikiAttachmentProvider
      * @since 2.0.19.
      */
     public void deleteVersion(Attachment att)
-        throws ProviderException;
+            throws ProviderException;
 
     /**
      * Removes an entire page from the repository.  The implementations should really do no more
@@ -168,5 +168,5 @@ public interface WikiAttachmentProvider
      * @since 2.0.17.
      */
     public void deleteAttachment(Attachment att)
-        throws ProviderException;
+            throws ProviderException;
 }

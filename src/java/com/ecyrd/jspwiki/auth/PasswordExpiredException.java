@@ -27,7 +27,7 @@ package com.ecyrd.jspwiki.auth;
  * @since 2.2
  */
 public class PasswordExpiredException
-    extends WikiSecurityException
+        extends WikiSecurityException
 {
     /**
      * Constructs an exception.

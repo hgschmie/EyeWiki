@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author Janne Jalkanen
  */
 public class ReferringPagesPlugin
-    extends AbstractReferralPlugin
+        extends AbstractReferralPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ReferringPagesPlugin.class);
@@ -62,7 +62,7 @@ public class ReferringPagesPlugin
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         ReferenceManager refmgr = context.getEngine().getReferenceManager();
         WikiPage page = context.getPage();

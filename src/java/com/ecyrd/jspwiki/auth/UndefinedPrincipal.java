@@ -4,7 +4,7 @@ package com.ecyrd.jspwiki.auth;
  * If a proper group/user cannot be located, then we use this class.
  */
 public class UndefinedPrincipal
-    extends WikiPrincipal
+        extends WikiPrincipal
 {
     /**
      * Creates a new UndefinedPrincipal object.

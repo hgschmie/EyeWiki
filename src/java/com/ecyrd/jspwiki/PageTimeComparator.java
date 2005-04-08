@@ -26,7 +26,7 @@ import org.apache.log4j.Category;
 
 // FIXME: Does not implement equals().
 public class PageTimeComparator
-    implements Comparator
+        implements Comparator
 {
     /** DOCUMENT ME! */
     static Category log = Category.getInstance(PageTimeComparator.class);

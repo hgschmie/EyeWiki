@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
 
 // FIXME: contains magic strings.
 public class UserProfile
-    extends WikiPrincipal
+        extends WikiPrincipal
 {
     /** DOCUMENT ME! */
     public static final int NONE = 0;
@@ -125,7 +125,7 @@ public class UserProfile
      * @throws NoSuchElementException DOCUMENT ME!
      */
     public static UserProfile parseStringRepresentation(String res)
-        throws NoSuchElementException
+            throws NoSuchElementException
     {
         UserProfile prof = new UserProfile();
 

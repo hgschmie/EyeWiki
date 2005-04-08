@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @author jalkanen
  */
 public abstract class WikiBodyTag
-    extends BodyTagSupport
+        extends BodyTagSupport
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(WikiBodyTag.class);
@@ -53,7 +53,7 @@ public abstract class WikiBodyTag
      * @throws JspException DOCUMENT ME!
      */
     public int doStartTag()
-        throws JspException
+            throws JspException
     {
         try
         {
@@ -84,5 +84,5 @@ public abstract class WikiBodyTag
      * @throws IOException
      */
     public abstract int doWikiStartTag()
-        throws JspException, IOException;
+            throws JspException, IOException;
 }

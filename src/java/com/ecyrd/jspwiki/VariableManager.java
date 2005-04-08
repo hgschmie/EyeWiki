@@ -94,7 +94,7 @@ public class VariableManager
      * @throws NoSuchVariableException If a variable is not known.
      */
     public String parseAndGetValue(WikiContext context, String link)
-        throws IllegalArgumentException, NoSuchVariableException
+            throws IllegalArgumentException, NoSuchVariableException
     {
         if (!link.startsWith("{$"))
         {
@@ -191,7 +191,7 @@ public class VariableManager
     // FIXME: Currently a bit complicated.  Perhaps should use reflection
     //        or something to make an easy way of doing stuff.
     public String getValue(WikiContext context, String varName)
-        throws IllegalArgumentException, NoSuchVariableException
+            throws IllegalArgumentException, NoSuchVariableException
     {
         if (varName == null)
         {
@@ -264,7 +264,7 @@ public class VariableManager
             // FIXME: Use StringBuffer
             for (
                 Iterator i = context.getEngine().getAllInlinedImagePatterns().iterator();
-                    i.hasNext();)
+                            i.hasNext();)
             {
                 String ptrn = (String) i.next();
                 res += (ptrn + "<br />\n");

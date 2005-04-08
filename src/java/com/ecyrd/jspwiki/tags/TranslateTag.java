@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.WikiContext;
  * @since 2.0
  */
 public class TranslateTag
-    extends BodyTagSupport
+        extends BodyTagSupport
 {
     /** DOCUMENT ME! */
     static Logger log = Logger.getLogger(TranslateTag.class);
@@ -50,7 +50,7 @@ public class TranslateTag
      * @throws JspException DOCUMENT ME!
      */
     public final int doAfterBody()
-        throws JspException
+            throws JspException
     {
         try
         {

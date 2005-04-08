@@ -27,7 +27,7 @@ package com.ecyrd.jspwiki;
  * @since 2.0
  */
 public class WikiException
-    extends Exception
+        extends Exception
 {
     /**
      * Constructs an exception.

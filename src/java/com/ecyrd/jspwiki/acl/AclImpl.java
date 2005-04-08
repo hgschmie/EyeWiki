@@ -37,7 +37,7 @@ import java.util.Vector;
  * </p>
  */
 public class AclImpl
-    implements AccessControlList
+        implements AccessControlList
 {
     /** DOCUMENT ME! */
     private Vector m_entries = new Vector();
@@ -238,7 +238,7 @@ public class AclImpl
 
             if (
                 entry.getPrincipal().getName().equals(principal.getName())
-                    && (entry.isNegative() == isNegative))
+                            && (entry.isNegative() == isNegative))
             {
                 return entry;
             }

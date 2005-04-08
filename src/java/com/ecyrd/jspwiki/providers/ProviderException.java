@@ -28,7 +28,7 @@ import com.ecyrd.jspwiki.WikiException;
  * loading is considered to be broken, and the user is notified.
  */
 public class ProviderException
-    extends WikiException
+        extends WikiException
 {
     /**
      * Creates a new ProviderException object.

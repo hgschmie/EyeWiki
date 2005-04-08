@@ -37,7 +37,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  * @since 2.0
  */
 public class PermissionTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_permission;
@@ -60,7 +60,7 @@ public class PermissionTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();
@@ -80,7 +80,7 @@ public class PermissionTag
 
                 if (
                     (page.getVersion() != WikiProvider.LATEST_VERSION)
-                        && (latest.getVersion() != page.getVersion()))
+                                && (latest.getVersion() != page.getVersion()))
                 {
                     return SKIP_BODY;
                 }

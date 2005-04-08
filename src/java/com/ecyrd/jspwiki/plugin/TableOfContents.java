@@ -44,7 +44,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 2.2
  */
 public class TableOfContents
-    implements WikiPlugin, HeadingListener
+        implements WikiPlugin, HeadingListener
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(TableOfContents.class);
@@ -107,7 +107,7 @@ public class TableOfContents
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
         WikiPage page = context.getPage();

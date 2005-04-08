@@ -15,8 +15,8 @@ import java.util.Vector;
  * @version $Revision$
  */
 public class WikiGroup
-    extends WikiPrincipal
-    implements Group
+        extends WikiPrincipal
+        implements Group
 {
     /** DOCUMENT ME! */
     private Vector m_members = new Vector();

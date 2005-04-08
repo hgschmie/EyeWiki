@@ -30,7 +30,7 @@ import com.ecyrd.jspwiki.WikiException;
  * @since 2.0
  */
 public class WikiSecurityException
-    extends WikiException
+        extends WikiException
 {
     /**
      * Constructs an exception.

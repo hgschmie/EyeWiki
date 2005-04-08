@@ -50,7 +50,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.0
  */
 public class InsertDiffTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final String ATTR_OLDVERSION = "insertdiff.old";
@@ -89,7 +89,7 @@ public class InsertDiffTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page;

@@ -47,7 +47,7 @@ public class ClassUtil
      * @throws ClassNotFoundException if this particular class cannot be found from the list.
      */
     public static Class findClass(List packages, String className)
-        throws ClassNotFoundException
+            throws ClassNotFoundException
     {
         ClassLoader loader = ClassUtil.class.getClassLoader();
 
@@ -88,7 +88,7 @@ public class ClassUtil
      * @throws ClassNotFoundException if this particular class cannot be found.
      */
     public static Class findClass(String packageName, String className)
-        throws ClassNotFoundException
+            throws ClassNotFoundException
     {
         ArrayList list = new ArrayList();
         list.add(packageName);

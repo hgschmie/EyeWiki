@@ -46,7 +46,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class TraditionalDiffProvider
-    implements DiffProvider
+        implements DiffProvider
 {
     /** DOCUMENT ME! */
     protected final Logger log = Logger.getLogger(this.getClass());
@@ -90,7 +90,7 @@ public class TraditionalDiffProvider
      *      java.util.Properties)
      */
     public void initialize(WikiEngine engine, Configuration conf)
-        throws NoRequiredPropertyException, IOException
+            throws NoRequiredPropertyException, IOException
     {
     }
 
@@ -143,7 +143,7 @@ public class TraditionalDiffProvider
      * @version $Revision$
      */
     public class RevisionPrint
-        implements RevisionVisitor
+            implements RevisionVisitor
     {
         /** DOCUMENT ME! */
         private StringBuffer m_result = null;

@@ -38,7 +38,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * @since 2.0
  */
 public class CheckLockTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     public static final int LOCKED = 0;
@@ -82,7 +82,7 @@ public class CheckLockTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();
@@ -99,8 +99,8 @@ public class CheckLockTag
 
             if (
                 ((lock != null) && (m_mode == LOCKED) && (lock != userLock))
-                    || ((lock != null) && (m_mode == OWNED) && (lock == userLock))
-                    || ((lock == null) && (m_mode == NOTLOCKED)))
+                            || ((lock != null) && (m_mode == OWNED) && (lock == userLock))
+                            || ((lock == null) && (m_mode == NOTLOCKED)))
             {
                 String id = getId();
 

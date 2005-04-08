@@ -51,7 +51,7 @@ import com.ecyrd.jspwiki.WikiPage;
  * @since 2.2
  */
 public class EditorTag
-    extends WikiBodyTag
+        extends WikiBodyTag
 {
     /** DOCUMENT ME! */
     private String m_submit = "Save";
@@ -152,7 +152,7 @@ public class EditorTag
         }
         else if (
             m_wikiContext.getRequestContext().equals(WikiContext.COMMENT)
-                || "comment".equals(m_wikiContext.getHttpParameter("action")))
+                        || "comment".equals(m_wikiContext.getHttpParameter("action")))
         {
             f.setAction(m_wikiContext.getURL(WikiContext.COMMENT, page.getName()));
         }
@@ -235,7 +235,7 @@ public class EditorTag
      * @throws IOException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException
+            throws IOException
     {
         return EVAL_BODY_AGAIN;
     }
@@ -248,7 +248,7 @@ public class EditorTag
      * @throws JspException DOCUMENT ME!
      */
     public int doEndTag()
-        throws JspException
+            throws JspException
     {
         BodyContent bc = getBodyContent();
 

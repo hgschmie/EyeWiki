@@ -5,7 +5,7 @@ package com.ecyrd.jspwiki.auth.permissions;
  * or comment a page.
  */
 public class DeletePermission
-    extends WikiPermission
+        extends WikiPermission
 {
     /**
      * DOCUMENT ME!

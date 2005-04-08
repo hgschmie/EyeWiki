@@ -34,7 +34,7 @@ import com.ecyrd.jspwiki.util.FormUtil;
 /**
  */
 public class FormOutput
-    extends FormElement
+        extends FormElement
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormOutput.class);
@@ -58,7 +58,7 @@ public class FormOutput
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext ctx, Map params)
-        throws PluginException
+            throws PluginException
     {
         // If we are NOT here due to this form being submitted, we do nothing.
         // The submitted form MUST have parameter 'formname' equal to the name

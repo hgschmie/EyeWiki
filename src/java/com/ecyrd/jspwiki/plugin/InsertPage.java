@@ -40,7 +40,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @since 2.1.37
  */
 public class InsertPage
-    implements WikiPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(InsertPage.class);
@@ -77,7 +77,7 @@ public class InsertPage
      * @throws PluginException DOCUMENT ME!
      */
     public String execute(WikiContext context, Map params)
-        throws PluginException
+            throws PluginException
     {
         WikiEngine engine = context.getEngine();
 

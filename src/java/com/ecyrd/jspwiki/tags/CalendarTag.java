@@ -61,7 +61,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 
 // FIXME: This class is extraordinarily lacking.
 public class CalendarTag
-    extends WikiTagBase
+        extends WikiTagBase
 {
     /** DOCUMENT ME! */
     private String m_year = null;
@@ -278,7 +278,7 @@ public class CalendarTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         WikiEngine engine = m_wikiContext.getEngine();
         JspWriter out = pageContext.getOut();

@@ -26,7 +26,7 @@ import java.util.Comparator;
  * Simple class that decides which search results are more important than others.
  */
 public class SearchResultComparator
-    implements Comparator
+        implements Comparator
 {
     /**
      * Compares two SearchResult objects, returning the one that scored higher.

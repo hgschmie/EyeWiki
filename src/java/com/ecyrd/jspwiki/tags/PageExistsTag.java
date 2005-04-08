@@ -35,7 +35,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 // FIXME: Logically, this should probably be the master one, then
 //        NoSuchPageTag should be the one that derives from this.
 public class PageExistsTag
-    extends NoSuchPageTag
+        extends NoSuchPageTag
 {
     /**
      * DOCUMENT ME!
@@ -46,7 +46,7 @@ public class PageExistsTag
      * @throws ProviderException DOCUMENT ME!
      */
     public final int doWikiStartTag()
-        throws IOException, ProviderException
+            throws IOException, ProviderException
     {
         return (super.doWikiStartTag() == SKIP_BODY)
         ? EVAL_BODY_INCLUDE
