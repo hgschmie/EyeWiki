@@ -263,9 +263,11 @@ public class AuthorizationManager
         //
         if( acl != null )
         {
-            log.debug("ACL for this page is: "+acl);
-            log.debug("Checking for wup: "+wup);
-            log.debug("Permission: "+permission);
+            if (log.isDebugEnabled()) {
+                log.debug("ACL for this page is: "+acl);
+                log.debug("Checking for wup: "+wup);
+                log.debug("Permission: "+permission);
+            }
 
             if( wup.isAuthenticated() )
             {
@@ -306,7 +308,9 @@ public class AuthorizationManager
 
         if( res == AccessControlList.NONE )
         {
-            log.debug("Page defines no permissions for "+wup.getName()+", checking defaults.");
+            if (log.isDebugEnabled()) {
+                log.debug("Page defines no permissions for "+wup.getName()+", checking defaults.");
+            }
 
             acl = m_authorizer.getDefaultPermissions();
 
@@ -323,11 +327,16 @@ public class AuthorizationManager
 
         if( res == AccessControlList.NONE )
         {
-            log.debug("No defaults exist, falling back to hardcoded permissions.");
+            if (log.isDebugEnabled()) {
+                log.debug("No defaults exist, falling back to hardcoded permissions.");
+            }
+
             res = m_defaultPermissions.findPermission( wup, permission );
         }
 
-        log.debug("Permission "+permission+" for user "+wup+" is "+res );
+        if (log.isDebugEnabled()) {
+            log.debug("Permission "+permission+" for user "+wup+" is "+res );
+        }
         
         if( res == AccessControlList.NONE )
         {

@@ -88,7 +88,9 @@ public class SpamFilter
                 }
                 catch( MalformedPatternException e )
                 {
-                    log.debug( "Malformed spam filter pattern "+pattern );
+                    if (log.isDebugEnabled()) {
+                        log.debug( "Malformed spam filter pattern "+pattern );
+                    }
                 
                     source.setAttribute("error", "Malformed spam filter pattern "+pattern);
                 }
@@ -130,7 +132,9 @@ public class SpamFilter
         {
             Pattern p = (Pattern) i.next();
 
-            log.debug("Attempting to match page contents with "+p.getPattern());
+            if (log.isDebugEnabled()) {
+                log.debug("Attempting to match page contents with "+p.getPattern());
+            }
 
             if( m_matcher.contains( content, p ) )
             {

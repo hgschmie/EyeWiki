@@ -115,7 +115,9 @@ public class Denounce implements WikiPlugin
                 }
             }
 
-            log.debug("Added "+c_refererPatterns.size()+c_agentPatterns.size()+c_hostPatterns.size()+" crawlers to denounce list.");
+            if (log.isDebugEnabled()) {
+                log.debug("Added "+c_refererPatterns.size()+c_agentPatterns.size()+c_hostPatterns.size()+" crawlers to denounce list.");
+            }
         }
         catch( IOException e )
         {
@@ -187,7 +189,9 @@ public class Denounce implements WikiPlugin
 
         if( userAgent != null && matchPattern( c_agentPatterns, userAgent ) )
         {
-            log.debug("Matched user agent "+userAgent+" for denounce.");
+            if (log.isDebugEnabled()) {
+                log.debug("Matched user agent "+userAgent+" for denounce.");
+            }
             return true;
         }
 
@@ -199,7 +203,9 @@ public class Denounce implements WikiPlugin
 
         if( refererPath != null && matchPattern( c_refererPatterns, refererPath ) )
         {
-            log.debug("Matched referer "+refererPath+" for denounce.");
+            if (log.isDebugEnabled()) {
+                log.debug("Matched referer "+refererPath+" for denounce.");
+            }
             return true;
         }
 
@@ -211,7 +217,9 @@ public class Denounce implements WikiPlugin
 
         if( host != null && matchPattern( c_hostPatterns, host ) )
         {
-            log.debug("Matched host "+host+" for denounce.");
+            if (log.isDebugEnabled()) {
+                log.debug("Matched host "+host+" for denounce.");
+            }
             return true;
         }
 

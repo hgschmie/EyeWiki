@@ -100,7 +100,10 @@ public class CachingAttachmentProvider
 
             m_provider = (WikiAttachmentProvider)providerclass.newInstance();
 
-            log.debug("Initializing real provider class "+m_provider);
+            if (log.isDebugEnabled()) {
+                log.debug("Initializing real provider class "+m_provider);
+            }
+
             m_provider.initialize( engine, conf );
         }
         catch( ClassNotFoundException e )
@@ -141,19 +144,27 @@ public class CachingAttachmentProvider
     public Collection listAttachments( WikiPage page )
             throws ProviderException
     {
-        log.debug("Listing attachments for "+page);
+        if (log.isDebugEnabled()) {
+            log.debug("Listing attachments for "+page);
+        }
+
         try
         {
             Collection c = (Collection)m_cache.getFromCache( page.getName(), m_refreshPeriod );
 
             if( c != null )
             {
-                log.debug("LIST from cache, "+page.getName()+", size="+c.size());
+                if (log.isDebugEnabled()) {
+                    log.debug("LIST from cache, "+page.getName()+", size="+c.size());
+                }
+
                 m_cacheHits++;
                 return c;
             }
 
-            log.debug("list NOT in cache, "+page.getName());
+            if (log.isDebugEnabled()) {
+                log.debug("list NOT in cache, "+page.getName());
+            }
 
             c = refresh( page );
         }
@@ -229,14 +240,19 @@ public class CachingAttachmentProvider
     public Attachment getAttachmentInfo( WikiPage page, String name, int version )
             throws ProviderException
     {
-        log.debug("Getting attachments for "+page+", name="+name+", version="+version);
+        if (log.isDebugEnabled()) {
+            log.debug("Getting attachments for "+page+", name="+name+", version="+version);
+        }
 
         //
         //  We don't cache previous versions
         //
         if( version != WikiProvider.LATEST_VERSION )
         {       
-            log.debug("...we don't cache old versions");
+            if (log.isDebugEnabled()) {
+                log.debug("...we don't cache old versions");
+            }
+
             return m_provider.getAttachmentInfo( page, name, version );
         }
 
@@ -246,14 +262,19 @@ public class CachingAttachmentProvider
             
             if( c == null )
             {
-                log.debug("...wasn't in the cache");
+                if (log.isDebugEnabled()) {
+                    log.debug("...wasn't in the cache");
+                }
+
                 c = refresh( page );
 
                 if( c == null ) return null; // No such attachment
             }
             else
             {
-                log.debug("...FOUND in the cache");
+                if (log.isDebugEnabled()) {
+                    log.debug("...FOUND in the cache");
+                }
                 m_cacheHits++;
             }
 

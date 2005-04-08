@@ -249,7 +249,10 @@ public class FileUtil
                 // java standard, so we'd better not catch them.
 
                 log.info( "Unable to read stream - odd exception.  Assuming this data is ISO-8859-1 and retrying.\n  "+e.getMessage() );
-                log.debug( "Full exception is", e );
+
+                if (log.isDebugEnabled()) {
+                    log.debug( "Full exception is", e );
+                }
                 
                 // We try again, this time with a more conventional encoding
                 // for backwards compatibility.            

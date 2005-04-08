@@ -85,7 +85,9 @@ public class WikiDatabase
     {        
         List memberList = new ArrayList();
 
-        log.debug("Finding groups for "+p.getName());
+        if (log.isDebugEnabled()) {
+            log.debug("Finding groups for "+p.getName());
+        }
 
         for( Iterator i = m_groupPrincipals.values().iterator(); i.hasNext(); )
         {
@@ -93,16 +95,24 @@ public class WikiDatabase
 
             if( o instanceof WikiGroup )
             {
-                log.debug("  Checking group: "+o);
+                if (log.isDebugEnabled()) {
+                    log.debug("  Checking group: "+o);
+                }
+
                 if( ((WikiGroup)o).isMember( p ) )
                 {
-                    log.debug("     Is member");
+                    if (log.isDebugEnabled()) {
+                        log.debug("     Is member");
+                    }
+
                     memberList.add( o );
                 }
             }
             else
             {
-                log.debug("  Found strange object: "+o.getClass());
+                if (log.isDebugEnabled()) {
+                    log.debug("  Found strange object: "+o.getClass());
+                }
             }
         }
         
@@ -123,14 +133,19 @@ public class WikiDatabase
      
         if( group == null && memberList != null )
         {
-            log.debug("Adding new group: "+groupName);
+            if (log.isDebugEnabled()) {
+                log.debug("Adding new group: "+groupName);
+            }
+
             group = new WikiGroup();
             group.setName( groupName );
         }
 
         if( group != null && memberList == null )
         {
-            log.debug("Detected removed group: "+groupName);
+            if (log.isDebugEnabled()) {
+                log.debug("Detected removed group: "+groupName);
+            }
 
             m_groupPrincipals.remove( groupName );
 
@@ -143,7 +158,9 @@ public class WikiDatabase
             
             group.addMember( udp );
             
-            log.debug("** Added member: "+udp.getName());
+            if (log.isDebugEnabled()) {
+                log.debug("** Added member: "+udp.getName());
+            }
         }
 
         m_groupPrincipals.put( groupName, group );
@@ -244,7 +261,9 @@ public class WikiDatabase
     {
         if( memberLine == null ) return null;
 
-        log.debug("Parsing member list: "+memberLine);
+        if (log.isDebugEnabled()) {
+            log.debug("Parsing member list: "+memberLine);
+        }
 
         StringTokenizer tok = new StringTokenizer( memberLine, ", " );
 
@@ -254,7 +273,9 @@ public class WikiDatabase
         {
             String uid = tok.nextToken();
 
-            log.debug("  Adding member: "+uid);
+            if (log.isDebugEnabled()) {
+                log.debug("  Adding member: "+uid);
+            }
 
             members.add( uid );
         }
@@ -277,7 +298,9 @@ public class WikiDatabase
         {
             WikiPage p = context.getPage();
 
-            log.debug("Skimming through page "+p.getName()+" to see if there are new users...");
+            if (log.isDebugEnabled()) {
+                log.debug("Skimming through page "+p.getName()+" to see if there are new users...");
+            }
 
             m_engine.textToHTML( context, content );
 

@@ -101,7 +101,10 @@ public class BreadcrumbsTag extends WikiTagBase
                 if( !((String) trail.getLast()).equals(page) )
                 {
                     trail.push(page);
-                    log.debug("added page: " + page);
+
+                    if (log.isDebugEnabled()) {
+                        log.debug("added page: " + page);
+                    }
                 }
                 log.debug("didn't add page because of refresh");
             }

@@ -122,7 +122,9 @@ public class WeblogEntryPlugin implements WikiPlugin
                 }
                 catch( NumberFormatException e )
                 {
-                    log.debug("Was not a log entry: "+p.getName() );
+                    if (log.isDebugEnabled()) {
+                        log.debug("Was not a log entry: "+p.getName() );
+                    }
                 }
             }
         }

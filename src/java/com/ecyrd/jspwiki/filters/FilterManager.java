@@ -186,7 +186,10 @@ public class FilterManager
 
         try
         {
-            log.debug("Attempting to load property file " + xmlFile);
+            if (log.isDebugEnabled()) {
+                log.debug("Attempting to load property file " + xmlFile);
+            }
+
             xmlStream = new FileInputStream( new File(xmlFile) );
 
             if( xmlStream == null )

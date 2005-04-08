@@ -266,7 +266,9 @@ public class MetaWeblogHandler
             text.append( "\n\n" );
             text.append( content.get("description") );
 
-            log.debug("Writing entry: "+text);
+            if (log.isDebugEnabled()) {
+                log.debug("Writing entry: "+text);
+            }
 
             m_engine.saveText( context, text.toString() );
         }
@@ -353,7 +355,9 @@ public class MetaWeblogHandler
             text.append( "\n\n" );
             text.append( content.get("description") );
 
-            log.debug("Updating entry: "+text);
+            if (log.isDebugEnabled()) {
+                log.debug("Updating entry: "+text);
+            }
 
             m_engine.saveText( context, text.toString() );
         }

@@ -51,7 +51,9 @@ public class TableOfContents
 
     public void headingAdded( WikiContext context, TranslatorReader.Heading hd )
     {
-        log.debug("HD: "+hd.m_level+", "+hd.m_titleText+", "+hd.m_titleAnchor);
+        if (log.isDebugEnabled()) {
+            log.debug("HD: "+hd.m_level+", "+hd.m_titleText+", "+hd.m_titleAnchor);
+        }
 
         switch( hd.m_level )
         {

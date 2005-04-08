@@ -310,7 +310,10 @@ public class UserManager
 
                 if( g.isMember( user ) )
                 {
-                    log.debug("User "+user.getName()+" is a member of "+g.getName());
+                    if (log.isDebugEnabled()) {
+                        log.debug("User "+user.getName()+" is a member of "+g.getName());
+                    }
+
                     list.add( g );
                 }
             }
@@ -333,7 +336,10 @@ public class UserManager
 
             if( p == null )
             {
-                log.debug("No such principal defined: "+name+", using UndefinedPrincipal");
+                if (log.isDebugEnabled()) {
+                    log.debug("No such principal defined: "+name+", using UndefinedPrincipal");
+                }
+
                 p = new UndefinedPrincipal( name );
             }
         }
@@ -487,7 +493,9 @@ public class UserManager
 
             if( uid != null )
             {
-                log.debug("Retrieved User from Cookie: " + uid);
+                if (log.isDebugEnabled()) {
+                    log.debug("Retrieved User from Cookie: " + uid);
+                }
 
                 try
                 {

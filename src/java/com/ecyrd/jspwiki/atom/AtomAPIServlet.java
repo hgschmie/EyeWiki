@@ -156,7 +156,9 @@ public class AtomAPIServlet extends HttpServlet
             text.append( "\n\n" );
             text.append( content.getBody() );
 
-            log.debug("Writing entry: "+text);
+            if (log.isDebugEnabled()) {
+                log.debug("Writing entry: "+text);
+            }
 
             m_engine.saveText( context, text.toString() );
 
@@ -189,7 +191,9 @@ public class AtomAPIServlet extends HttpServlet
 
         String blogid = getPageName( request );
 
-        log.debug("Requested page "+blogid);
+        if (log.isDebugEnabled()) {
+            log.debug("Requested page "+blogid);
+        }
 
         try
         {
@@ -281,7 +285,9 @@ public class AtomAPIServlet extends HttpServlet
             //         the initial startup phase.
             //
 
-            log.debug( p.getName()+" = "+p.getAttribute(WeblogPlugin.ATTR_ISWEBLOG)) ;
+            if (log.isDebugEnabled()) {
+                log.debug( p.getName()+" = "+p.getAttribute(WeblogPlugin.ATTR_ISWEBLOG)) ;
+            }
 
             if( !("true".equals(p.getAttribute(WeblogPlugin.ATTR_ISWEBLOG)) ) )
                 continue;

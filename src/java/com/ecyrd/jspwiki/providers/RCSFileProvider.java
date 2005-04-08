@@ -116,11 +116,13 @@ public class RCSFileProvider
             rcsdir.mkdirs();
         }
 
-        log.debug("checkin="+m_checkinCommand);
-        log.debug("checkout="+m_checkoutCommand);
-        log.debug("log="+m_logCommand);
-        log.debug("fulllog="+m_fullLogCommand);
-        log.debug("checkoutversion="+m_checkoutVersionCommand);
+        if (log.isDebugEnabled()) {
+            log.debug("checkin="+m_checkinCommand);
+            log.debug("checkout="+m_checkoutCommand);
+            log.debug("log="+m_logCommand);
+            log.debug("fulllog="+m_fullLogCommand);
+            log.debug("checkoutversion="+m_checkoutVersionCommand);
+        }
     }
 
     // NB: This is a very slow method.
@@ -240,7 +242,9 @@ public class RCSFileProvider
         if( version == WikiPageProvider.LATEST_VERSION )
             return super.getPageText( page, version );
 
-        log.debug("Fetching specific version "+version+" of page "+page);
+        if (log.isDebugEnabled()) {
+            log.debug("Fetching specific version "+version+" of page "+page);
+        }
 
         try
         {
@@ -253,7 +257,9 @@ public class RCSFileProvider
             cmd = StringUtils.replace( cmd, "%s", mangleName(page)+FILE_EXT );
             cmd = StringUtils.replace( cmd, "%v", Integer.toString(version ) );
 
-            log.debug("Command = '"+cmd+"'");
+            if (log.isDebugEnabled()) {
+                log.debug("Command = '"+cmd+"'");
+            }
 
             Process process = Runtime.getRuntime().exec( cmd, null, new File(getPageDirectory()) );
             stdout = process.getInputStream();
@@ -281,7 +287,9 @@ public class RCSFileProvider
             IOUtils.closeQuietly(process.getOutputStream());
             IOUtils.closeQuietly(process.getErrorStream());
 
-            log.debug("Done, returned = "+exitVal);
+            if (log.isDebugEnabled()) {
+                log.debug("Done, returned = "+exitVal);
+            }
 
             //
             //  If fetching failed, assume that this is because of the user
@@ -358,13 +366,17 @@ public class RCSFileProvider
             cmd = StringUtils.replace( cmd, "%s", mangleName(pagename)+FILE_EXT );
             cmd = StringUtils.replace( cmd, "%u", TextUtil.urlEncodeUTF8(author) );
 
-            log.debug("Command = '"+cmd+"'");
+            if (log.isDebugEnabled()) {
+                log.debug("Command = '"+cmd+"'");
+            }
 
             Process process = Runtime.getRuntime().exec( cmd, null, new File(getPageDirectory()) );
 
             process.waitFor();
 
-            log.debug("Done, returned = "+process.exitValue());
+            if (log.isDebugEnabled()) {
+                log.debug("Done, returned = "+process.exitValue());
+            }
 
             // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
             IOUtils.closeQuietly(process.getInputStream());
@@ -479,7 +491,10 @@ public class RCSFileProvider
     public void deletePage( String page )
             throws ProviderException
     {
-        log.debug( "Deleting page "+page );
+        if (log.isDebugEnabled()) {
+            log.debug( "Deleting page "+page );
+        }
+
         super.deletePage( page );
 
         File rcsdir  = new File( getPageDirectory(), "RCS" );
@@ -513,12 +528,17 @@ public class RCSFileProvider
         boolean        success = false;
         String         cmd     = m_deleteVersionCommand;
 
-        log.debug("Deleting version "+version+" of page "+page);
+        if (log.isDebugEnabled()) {
+            log.debug("Deleting version "+version+" of page "+page);
+        }
 
         cmd = StringUtils.replace( cmd, "%s", mangleName(page)+FILE_EXT );
         cmd = StringUtils.replace( cmd, "%v", Integer.toString( version ) );
 
-        log.debug("Running command "+cmd);
+        if (log.isDebugEnabled()) {
+            log.debug("Running command "+cmd);
+        }
+
         try
         {
             Process process = Runtime.getRuntime().exec( cmd, null, new File(getPageDirectory()) );
@@ -533,7 +553,10 @@ public class RCSFileProvider
         
             while( (line = stderr.readLine()) != null )
             {
-                log.debug( "LINE="+line );
+                if (log.isDebugEnabled()) {
+                    log.debug( "LINE="+line );
+                }
+
                 if( line.equals("done") )
                 {
                     success = true;

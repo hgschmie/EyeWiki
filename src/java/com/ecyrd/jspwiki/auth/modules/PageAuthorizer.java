@@ -132,12 +132,18 @@ public class PageAuthorizer
 
                 if( oldEntry != null )
                 {
-                    log.debug("Adding to old acl list: "+principal+", "+chain);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Adding to old acl list: "+principal+", "+chain);
+                    }
+
                     oldEntry.addPermission( WikiPermission.newInstance( chain ) );
                 }
                 else
                 {
-                    log.debug("Adding new acl entry for "+chain);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Adding new acl entry for "+chain);
+                    }
+
                     AclEntry entry = new AclEntryImpl();
             
                     entry.setPrincipal( principal );
@@ -185,7 +191,9 @@ public class PageAuthorizer
             acl = page.getAcl();
         }
 
-        log.debug( "page="+page.getName()+"\n"+acl );
+        if (log.isDebugEnabled()) {
+            log.debug( "page="+page.getName()+"\n"+acl );
+        }
 
         return acl;
     }

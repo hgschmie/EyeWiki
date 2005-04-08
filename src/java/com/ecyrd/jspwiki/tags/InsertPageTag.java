@@ -97,7 +97,9 @@ public class InsertPageTag
             // FIXME: Do version setting later.
             // page.setVersion( WikiProvider.LATEST_VERSION );
 
-            log.debug("Inserting page "+page);
+            if (log.isDebugEnabled()) {
+                log.debug("Inserting page "+page);
+            }
 
             JspWriter out = pageContext.getOut();
 

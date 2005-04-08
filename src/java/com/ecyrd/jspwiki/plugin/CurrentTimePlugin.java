@@ -52,7 +52,9 @@ public class CurrentTimePlugin
             formatString = DEFAULT_FORMAT;
         }
 
-        log.debug("Date format string is: "+formatString);
+        if (log.isDebugEnabled()) {
+            log.debug("Date format string is: "+formatString);
+        }
 
         try
         {

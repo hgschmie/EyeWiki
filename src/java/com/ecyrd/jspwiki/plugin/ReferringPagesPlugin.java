@@ -71,8 +71,10 @@ public class ReferringPagesPlugin
                 extras = "...and %d more\\\\";
             }
 
-            log.debug( "Fetching referring pages for "+context.getPage().getName()+
-                    " with a max of "+items);
+            if (log.isDebugEnabled()) {
+                log.debug( "Fetching referring pages for "+context.getPage().getName()+
+                        " with a max of "+items);
+            }
         
             if( links != null && links.size() > 0 )
             {

@@ -784,7 +784,9 @@ public class TranslatorReader
         if( ruleLine.endsWith( "}" ) )
             ruleLine = ruleLine.substring( 0, ruleLine.length() - 1 );
 
-        log.debug("page="+page.getName()+", ACL = "+ruleLine);
+        if (log.isDebugEnabled()) {
+            log.debug("page="+page.getName()+", ACL = "+ruleLine);
+        }
         
         try
         {
@@ -2252,7 +2254,10 @@ public class TranslatorReader
     public boolean ready()
             throws IOException
     {
-        log.debug("ready ? "+m_data.ready() );
+        if (log.isDebugEnabled()) {
+            log.debug("ready ? "+m_data.ready() );
+        }
+
         if(!m_data.ready())
         {
             fillBuffer();

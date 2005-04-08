@@ -185,7 +185,10 @@ public class ReferenceManager
     public void initialize( Collection pages )
             throws ProviderException
     {
-        log.debug( "Initializing new ReferenceManager with "+pages.size()+" initial pages." );
+        if (log.isDebugEnabled()) {
+            log.debug( "Initializing new ReferenceManager with "+pages.size()+" initial pages." );
+        }
+
         long start = System.currentTimeMillis();
         log.info( "Starting cross reference scan of WikiPages" );
 
@@ -281,7 +284,10 @@ public class ReferenceManager
             in.close();
 
             long finish = System.currentTimeMillis();
-            log.debug("Read serialized data successfully in "+(finish-start)+"ms");
+
+            if (log.isDebugEnabled()) {
+                log.debug("Read serialized data successfully in "+(finish-start)+"ms");
+            }
         }
         finally
         {
@@ -314,7 +320,9 @@ public class ReferenceManager
 
             long finish = System.currentTimeMillis();
 
-            log.debug("serialization done - took "+(finish-start)+"ms");
+            if (log.isDebugEnabled()) {
+                log.debug("serialization done - took "+(finish-start)+"ms");
+            }
         }
         catch( IOException e )
         {

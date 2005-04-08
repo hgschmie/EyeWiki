@@ -155,7 +155,9 @@ public class CachingProvider
                 PROP_CACHECHECKINTERVAL,
                 PROP_CACHECHECKINTERVAL_DEFAULT);
 
-        log.debug("Cache expiry period is "+m_expiryPeriod+" s");
+        if (log.isDebugEnabled()) {
+            log.debug("Cache expiry period is "+m_expiryPeriod+" s");
+        }
 
         //
         //  Text cache capacity
@@ -164,7 +166,9 @@ public class CachingProvider
                 PROP_CACHECAPACITY,
                 PROP_CACHECAPACITY_DEFAULT );
 
-        log.debug("Cache capacity "+capacity+" pages.");
+        if (log.isDebugEnabled()) {
+            log.debug("Cache capacity "+capacity+" pages.");
+        }
 
         m_cache = new Cache( true, false, false );
         m_cache.addCacheEventListener( m_allCollector, CacheEntryEventListener.class );
@@ -191,7 +195,10 @@ public class CachingProvider
 
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
-            log.debug("Initializing real provider class "+m_provider);
+            if (log.isDebugEnabled()) {
+                log.debug("Initializing real provider class "+m_provider);
+            }
+
             m_provider.initialize( engine, conf );
         }
         catch( ClassNotFoundException e )
@@ -398,7 +405,9 @@ public class CachingProvider
             {
                 //  Page has been removed evilly by a goon from outer space
 
-                log.debug("Page "+name+" has been removed externally.");
+                if (log.isDebugEnabled()) {
+                    log.debug("Page "+name+" has been removed externally.");
+                }
                 
                 m_cache.putInCache( name, null );
                 m_textCache.putInCache( name, null );
@@ -436,7 +445,9 @@ public class CachingProvider
             else if( cached.getVersion() != refreshed.getVersion() )
             {
                 //  The newest version has been deleted, but older versions still remain
-                log.debug("Page "+cached.getName()+" newest version deleted, reloading...");
+                if (log.isDebugEnabled()) {
+                    log.debug("Page "+cached.getName()+" newest version deleted, reloading...");
+                }
                 
                 m_cache.putInCache( name, refreshed );
                 // Requests for this page are now no longer denied
@@ -598,7 +609,10 @@ public class CachingProvider
             pair[0] = page;
             pair[1] = text;
             m_updates.add(pair);
-            log.debug("Scheduling page " + page.getName() + " for index update");
+
+            if (log.isDebugEnabled()) {
+                log.debug("Scheduling page " + page.getName() + " for index update");
+            }
         }
     }
 
@@ -685,7 +699,9 @@ public class CachingProvider
     {
         IndexWriter writer = null;
 
-        log.debug("Updating Lucene index for page '" + page.getName() + "'...");        
+        if (log.isDebugEnabled()) {
+            log.debug("Updating Lucene index for page '" + page.getName() + "'...");        
+        }
 
         try
         {
@@ -714,7 +730,9 @@ public class CachingProvider
             }
         }
 
-        log.debug("Done updating Lucene index for page '" + page.getName() + "'.");
+        if (log.isDebugEnabled()) {
+            log.debug("Done updating Lucene index for page '" + page.getName() + "'.");
+        }
     }
 
     private void deleteFromLucene( WikiPage page )
@@ -979,7 +997,10 @@ public class CachingProvider
             history = (List)m_historyCache.getFromCache( page,
                     m_expiryPeriod );
 
-            log.debug("History cache hit for page "+page);
+            if (log.isDebugEnabled()) {
+                log.debug("History cache hit for page "+page);
+            }
+
             m_historyCacheHits++;
         }
         catch( NeedsRefreshException e )
@@ -988,7 +1009,10 @@ public class CachingProvider
 
             m_historyCache.putInCache( page, history );
 
-            log.debug("History cache miss for page "+page);
+            if (log.isDebugEnabled()) {
+                log.debug("History cache miss for page "+page);
+            }
+
             m_historyCacheMisses++;
         }
 

@@ -243,7 +243,9 @@ public class TemplateManager
         }
         else
         {
-            log.debug("Template '"+templateName+"' does not have a propertyfile '"+PROPERTYFILE+"'.");
+            if (log.isDebugEnabled()) {
+                log.debug("Template '"+templateName+"' does not have a propertyfile '"+PROPERTYFILE+"'.");
+            }
         }
 
         return p;

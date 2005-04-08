@@ -76,7 +76,9 @@ public class FileAuthenticator
 
                 props.load(in);
 
-                log.debug("Loaded "+props.size()+" usernames.");
+                if (log.isDebugEnabled()) {
+                    log.debug("Loaded "+props.size()+" usernames.");
+                }
             }            
         }
         finally

@@ -60,8 +60,9 @@ public class PingWeblogsComFilter
             params.addElement( "The Butt Ugly Weblog" ); // FIXME: Must be settable
             params.addElement( engine.getURL( WikiContext.VIEW, blogName, null, true ) );
 
-            if( log.isDebugEnabled() )
+            if( log.isDebugEnabled() ) {
                 log.debug("Pinging weblogs.com with URL: "+engine.getURL( WikiContext.VIEW, blogName, null, true ));
+            }
 
             xmlrpc.executeAsync("weblogUpdates.ping", params, 
                     new AsyncCallback() 

@@ -84,7 +84,9 @@ public class RecentChangesPlugin
         Calendar sincedate = new GregorianCalendar();
         sincedate.add( Calendar.DAY_OF_MONTH, -since );
 
-        log.debug("Calculating recent changes from "+sincedate.getTime());
+        if (log.isDebugEnabled()) {
+            log.debug("Calculating recent changes from "+sincedate.getTime());
+        }
 
         // FIXME: Should really have a since date on the getRecentChanges
         // method.

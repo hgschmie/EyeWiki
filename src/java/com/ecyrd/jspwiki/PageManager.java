@@ -104,7 +104,10 @@ public class PageManager
 
             m_provider = (WikiPageProvider)providerclass.newInstance();
 
-            log.debug("Initializing page provider class "+m_provider);
+            if (log.isDebugEnabled()) {
+                log.debug("Initializing page provider class "+m_provider);
+            }
+
             m_provider.initialize( m_engine, conf );
         }
         catch( ClassNotFoundException e )
@@ -231,11 +234,16 @@ public class PageManager
 
                 m_pageLocks.put( page.getName(), lock );                
 
-                log.debug( "Locked page "+page.getName()+" for "+user);
+                if (log.isDebugEnabled()) {
+                    log.debug( "Locked page "+page.getName()+" for "+user);
+                }
             }
             else
             {
-                log.debug( "Page "+page.getName()+" already locked by "+lock.getLocker() );
+                if (log.isDebugEnabled()) {
+                    log.debug( "Page "+page.getName()+" already locked by "+lock.getLocker() );
+                }
+
                 lock = null; // Nothing to return
             }
         }
@@ -257,7 +265,10 @@ public class PageManager
         {
             String pageName = lock.getPage().getName();
             m_pageLocks.remove(pageName );
-            log.debug( "Unlocked page "+pageName);
+
+                if (log.isDebugEnabled()) {
+                    log.debug( "Unlocked page "+pageName);
+                }
         }
     }
 
@@ -436,10 +447,12 @@ public class PageManager
                             {
                                 i.remove();
 
-                                log.debug( "Reaped lock: "+p.getPage().getName()+
-                                        " by "+p.getLocker()+
-                                        ", acquired "+p.getAcquisitionTime()+
-                                        ", and expired "+p.getExpiryTime() );
+                                if (log.isDebugEnabled()) {
+                                    log.debug( "Reaped lock: "+p.getPage().getName()+
+                                            " by "+p.getLocker()+
+                                            ", acquired "+p.getAcquisitionTime()+
+                                            ", and expired "+p.getExpiryTime() );
+                                }
                             }
                         }
                     }

@@ -374,7 +374,9 @@ public class WeblogPlugin
                 }
                 catch( Exception e )
                 {
-                    log.debug("Page name :"+pageName+" was suspected as a blog entry but it isn't because of parsing errors",e);
+                    if (log.isDebugEnabled()) {
+                        log.debug("Page name :"+pageName+" was suspected as a blog entry but it isn't because of parsing errors",e);
+                    }
                 }
             }
         }

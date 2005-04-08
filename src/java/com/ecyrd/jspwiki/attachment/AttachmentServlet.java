@@ -118,8 +118,10 @@ public class AttachmentServlet
             log.fatal("A file already exists where the temporary dir is supposed to be: "+m_tmpDir+".  Please remove it.");
         }
 
-        log.debug( "UploadServlet initialized. Using " + 
-                m_tmpDir + " for temporary storage." );
+        if (log.isDebugEnabled()) {
+            log.debug( "UploadServlet initialized. Using " + 
+                    m_tmpDir + " for temporary storage." );
+        }
     }
 
     /**
@@ -155,7 +157,9 @@ public class AttachmentServlet
         {
             try 
             {
-                log.debug("Attempting to download att "+page+", version "+version);
+                if (log.isDebugEnabled()) {
+                    log.debug("Attempting to download att "+page+", version "+version);
+                }
                 if( version != null )
                 {
                     ver = Integer.parseInt( version );
@@ -171,7 +175,9 @@ public class AttachmentServlet
 
                     if( !authmgr.checkPermission( att, wup, "view" ) )
                     {
-                        log.debug("User does not have permission for this");
+                        if (log.isDebugEnabled()) {
+                            log.debug("User does not have permission for this");
+                        }
                         res.sendError( HttpServletResponse.SC_FORBIDDEN );
                         return;
                     }
@@ -228,12 +234,14 @@ public class AttachmentServlet
                     in.close();
                     out.close();
 
-                    if(log.isDebugEnabled())
-                    {
-                        msg = "Attachment "+att.getFileName()+" sent to "+req.getRemoteUser()+" on "+req.getRemoteAddr();
-                        log.debug( msg );
+                    if(log.isDebugEnabled()) {
+                        log.debug("Attachment "+att.getFileName()+" sent to "+req.getRemoteUser()+" on "+req.getRemoteAddr());
                     }
-                    if( nextPage != null ) res.sendRedirect( nextPage );
+
+                    if( nextPage != null )
+                    {
+                        res.sendRedirect( nextPage );
+                    }
 
                     return;
                 }
@@ -382,7 +390,10 @@ public class AttachmentServlet
                     //
                     filename = filename.trim();
 
-                    log.debug("file="+filename);
+                    if(log.isDebugEnabled()) {
+                        log.debug("file="+filename);
+                    }
+
                     //
                     //  Attempt to open the input stream
                     //
