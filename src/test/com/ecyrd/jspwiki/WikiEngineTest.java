@@ -15,6 +15,7 @@ import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.CachingProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
 import com.ecyrd.jspwiki.providers.VerySimpleProvider;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

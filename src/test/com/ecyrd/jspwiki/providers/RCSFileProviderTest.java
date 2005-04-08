@@ -9,12 +9,12 @@ import java.util.List;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
