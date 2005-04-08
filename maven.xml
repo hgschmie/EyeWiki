@@ -20,13 +20,6 @@
     <ant:replace file="${maven.war.webapp.dir}/WEB-INF/jspwiki.properties"
                replacefilterfile="build.properties"/>
 
-    <!-- Copy TagLibs Files -->
-    <ant:copy todir="${maven.war.webapp.dir}/WEB-INF" >
-      <ant:fileset dir="etc">
-        <include name="**/*.tld"/>
-      </ant:fileset>
-    </ant:copy>
-
     <!-- copy wiki pages -->
     <ant:copy todir="${maven.war.webapp.dir}/jspwiki/pages" >
       <ant:fileset dir="src/wikipages">
