@@ -374,6 +374,7 @@ public class TextUtil
         }
         catch (Exception e)
         {
+            // IGNORE
         }
 
         return val;

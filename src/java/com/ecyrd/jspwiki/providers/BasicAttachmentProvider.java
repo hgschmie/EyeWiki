@@ -27,7 +27,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,7 +37,7 @@ import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -97,7 +96,7 @@ public class BasicAttachmentProvider
     public static final String ATTDIR_EXTENSION = "-dir";
 
     /** DOCUMENT ME! */
-    static final Category log = Category.getInstance(BasicAttachmentProvider.class);
+    static final Logger log = Logger.getLogger(BasicAttachmentProvider.class);
 
     /** DOCUMENT ME! */
     private String m_storageDir;
@@ -250,7 +249,8 @@ public class BasicAttachmentProvider
             }
             catch (NumberFormatException e)
             {
-            } // It's okay to skip these.
+                log.debug("Skipped NumberFormatException", e);
+            }
         }
 
         return version;

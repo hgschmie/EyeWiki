@@ -23,8 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.WikiContext;
@@ -41,9 +39,6 @@ import com.ecyrd.jspwiki.WikiContext;
 public class ListLocksPlugin
         implements WikiPlugin
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(ListLocksPlugin.class);
-
     /**
      * DOCUMENT ME!
      *

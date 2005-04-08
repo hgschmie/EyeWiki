@@ -21,6 +21,11 @@ public class ViewPermission
         return (p != null) && (p instanceof ViewPermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

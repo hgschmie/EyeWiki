@@ -93,48 +93,45 @@ public class HttpUtil
         //    pragma: no-cache
         //    cache-control: no-cache
         //
-        if (
-            "no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
-                        || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
+        if ("no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
+                || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
         {
-            // Wants specifically a fresh copy
+            return false;
+        }
+
+        long ifModifiedSince = req.getDateHeader("If-Modified-Since");
+
+        //log.info("ifModifiedSince:"+ifModifiedSince);
+        if (ifModifiedSince != -1)
+        {
+            long lastModifiedTime = lastModified.getTime();
+            
+            //log.info("lastModifiedTime:" + lastModifiedTime);
+            if (lastModifiedTime <= ifModifiedSince)
+            {
+                return true;
+            }
         }
         else
         {
-            long ifModifiedSince = req.getDateHeader("If-Modified-Since");
-
-            //log.info("ifModifiedSince:"+ifModifiedSince);
-            if (ifModifiedSince != -1)
+            try
             {
-                long lastModifiedTime = lastModified.getTime();
-
-                //log.info("lastModifiedTime:" + lastModifiedTime);
-                if (lastModifiedTime <= ifModifiedSince)
+                String s = req.getHeader("If-Modified-Since");
+                
+                if (s != null)
                 {
-                    return true;
-                }
-            }
-            else
-            {
-                try
-                {
-                    String s = req.getHeader("If-Modified-Since");
-
-                    if (s != null)
+                    Date ifModifiedSinceDate = rfcDateFormat.parse(s);
+                    
+                    //log.info("ifModifiedSinceDate:" + ifModifiedSinceDate);
+                    if (lastModified.before(ifModifiedSinceDate))
                     {
-                        Date ifModifiedSinceDate = rfcDateFormat.parse(s);
-
-                        //log.info("ifModifiedSinceDate:" + ifModifiedSinceDate);
-                        if (lastModified.before(ifModifiedSinceDate))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
-                catch (ParseException e)
-                {
-                    log.warn(e.getLocalizedMessage(), e);
-                }
+            }
+            catch (ParseException e)
+            {
+                log.warn(e.getLocalizedMessage(), e);
             }
         }
 

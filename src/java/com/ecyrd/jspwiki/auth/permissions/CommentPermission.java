@@ -21,6 +21,11 @@ public class CommentPermission
         return (p != null) && (p instanceof CommentPermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

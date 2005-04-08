@@ -53,4 +53,9 @@ public class KnownGroup
     {
         return (o != null) && o instanceof KnownGroup;
     }
+
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

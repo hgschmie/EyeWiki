@@ -249,8 +249,6 @@ public class RSSGenerator
         {
             WikiPage page = (WikiPage) i.next();
 
-            String encodedName = m_engine.encodeName(page.getName());
-
             String url;
 
             if (page instanceof Attachment)
@@ -377,7 +375,6 @@ public class RSSGenerator
     public String generateRSS(WikiContext wikiContext, List items, int limit)
     {
         StringBuffer result = new StringBuffer();
-        SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         //
         //  Preamble
@@ -416,6 +413,7 @@ public class RSSGenerator
         result.append("  <items>\n   <rdf:Seq>\n");
 
         /*
+        SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
         int numItems = 0;
         for( Iterator i = items.iterator(); i.hasNext() && numItems < limit; numItems++ )
         {

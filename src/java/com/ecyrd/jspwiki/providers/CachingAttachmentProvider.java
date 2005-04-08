@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.providers;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -39,7 +38,6 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.util.ClassUtil;
-
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 
@@ -78,11 +76,6 @@ public class CachingAttachmentProvider
 
     /** DOCUMENT ME! */
     private long m_cacheHits = 0;
-
-    /** DOCUMENT ME! */
-    private boolean m_gotall = false;
-
-    // FIXME: Make settable.
 
     /** DOCUMENT ME! */
     private int m_refreshPeriod = 60 * 10; // 10 minutes at the moment
@@ -448,10 +441,10 @@ public class CachingAttachmentProvider
      */
     public synchronized String getProviderInfo()
     {
-        int cachedPages = 0;
-        long totalSize = 0;
-
         /*
+          int cachedPages = 0;
+          long totalSize = 0;
+
           for( Iterator i = m_cache.values().iterator(); i.hasNext(); )
           {
           CacheItem item = (CacheItem) i.next();
@@ -466,6 +459,7 @@ public class CachingAttachmentProvider
 
           totalSize = (totalSize+512)/1024L;
         */
+
         return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
         + m_cacheMisses + "<br />Cache hits: " + m_cacheHits);
     }

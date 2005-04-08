@@ -34,7 +34,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -43,7 +43,7 @@ import org.apache.log4j.Category;
 public class FileUtil
 {
     /** DOCUMENT ME! */
-    private static final Category log = Category.getInstance(FileUtil.class);
+    private static final Logger log = Logger.getLogger(FileUtil.class);
 
     /** DOCUMENT ME! */
     static boolean c_hasNIO = false;

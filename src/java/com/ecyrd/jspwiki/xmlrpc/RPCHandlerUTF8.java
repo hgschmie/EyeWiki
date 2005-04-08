@@ -26,7 +26,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.ecyrd.jspwiki.LinkCollector;
@@ -50,7 +50,7 @@ public class RPCHandlerUTF8
         extends AbstractRPCHandler
 {
     /** DOCUMENT ME! */
-    Category log = Category.getInstance(RPCHandlerUTF8.class);
+    Logger log = Logger.getLogger(RPCHandlerUTF8.class);
 
     /**
      * DOCUMENT ME!
@@ -71,7 +71,6 @@ public class RPCHandlerUTF8
     {
         Collection pages = m_engine.getRecentChanges();
         Vector result = new Vector();
-        int count = 0;
 
         for (Iterator i = pages.iterator(); i.hasNext();)
         {

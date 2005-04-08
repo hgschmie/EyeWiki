@@ -21,7 +21,6 @@
 package com.ecyrd.jspwiki.forms;
 
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.xmlrpc;
 
 import java.io.ByteArrayInputStream;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
@@ -28,7 +27,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.ecyrd.jspwiki.PageTimeComparator;
@@ -60,7 +59,7 @@ public class MetaWeblogHandler
         implements WikiRPCHandler
 {
     /** DOCUMENT ME! */
-    Category log = Category.getInstance(MetaWeblogHandler.class);
+    Logger log = Logger.getLogger(MetaWeblogHandler.class);
 
     /** DOCUMENT ME! */
     private WikiEngine m_engine;
@@ -94,8 +93,6 @@ public class MetaWeblogHandler
         WikiPage page, String username, String password, String permission)
             throws XmlRpcException
     {
-        return;
-
         /*
           AuthorizationManager mgr = m_engine.getAuthorizationManager();
           UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );

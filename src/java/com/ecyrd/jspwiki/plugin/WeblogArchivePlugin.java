@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -269,6 +268,11 @@ public class WeblogArchivePlugin
             }
 
             return false;
+        }
+
+        public int hashCode()
+        {
+            return super.hashCode();
         }
     }
 }

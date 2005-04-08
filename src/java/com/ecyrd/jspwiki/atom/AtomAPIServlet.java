@@ -159,7 +159,6 @@ public class AtomAPIServlet
             Content title = entry.getTitle();
             Content content = entry.getContent(0);
 
-            Date issued = entry.getIssued();
             Person author = entry.getAuthor();
 
             //FIXME: Sandler 0.5 does not support generator

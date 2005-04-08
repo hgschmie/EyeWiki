@@ -21,10 +21,7 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
 import java.text.SimpleDateFormat;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -91,7 +88,6 @@ public class BugReportHandler
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        ArrayList otherparams = new ArrayList();
         String title;
         String description;
         String version;
@@ -166,21 +162,19 @@ public class BugReportHandler
                                 || entry.getKey().equals(MAPPINGS) || entry.getKey().equals(PAGE)
                                 || entry.getKey().equals(PluginManager.PARAM_BODY))
                 {
-                    // Ignore this
+                    continue; // Ignore this
                 }
-                else
-                {
-                    //
-                    //  If no mapping has been defined, just ignore
-                    //  it.
-                    //
-                    String head =
-                        mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
 
-                    if (head.length() > 0)
-                    {
-                        out.println("|" + head + "|" + entry.getValue());
-                    }
+                //
+                //  If no mapping has been defined, just ignore
+                //  it.
+                //
+                String head =
+                        mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
+                
+                if (head.length() > 0)
+                {
+                    out.println("|" + head + "|" + entry.getValue());
                 }
             }
 

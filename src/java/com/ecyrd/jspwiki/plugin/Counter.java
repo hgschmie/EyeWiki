@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -49,9 +47,6 @@ import com.ecyrd.jspwiki.WikiContext;
 public class Counter
         implements WikiPlugin
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(Counter.class);
-
     /** DOCUMENT ME! */
     static final String VARIABLE_NAME = "counter";
 

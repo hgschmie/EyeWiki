@@ -22,8 +22,6 @@ package com.ecyrd.jspwiki.auth;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Category;
-
 import com.ecyrd.jspwiki.util.TextUtil;
 
 
@@ -50,9 +48,6 @@ public class UserProfile
 
     /** DOCUMENT ME! */
     public static final int PASSWORD = 3;
-
-    /** DOCUMENT ME! */
-    private Category log = Category.getInstance(UserProfile.class);
 
     /** DOCUMENT ME! */
     private int m_loginStatus = NONE;
@@ -165,7 +160,6 @@ public class UserProfile
      */
     public boolean equals(Object o)
     {
-        // System.out.println(this+".equals("+o+")");
         if ((o != null) && (o instanceof UserProfile))
         {
             String name = getName();
@@ -177,6 +171,11 @@ public class UserProfile
         }
 
         return false;
+    }
+
+    public int hashCode()
+    {
+        return super.hashCode();
     }
 
     /**

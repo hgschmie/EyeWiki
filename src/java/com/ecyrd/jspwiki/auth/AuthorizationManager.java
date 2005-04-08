@@ -21,12 +21,11 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
 import java.security.acl.NotOwnerException;
-
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.InternalWikiException;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -54,7 +53,7 @@ public class AuthorizationManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Category log = Category.getInstance(AuthorizationManager.class);
+    static Logger log = Logger.getLogger(AuthorizationManager.class);
 
     /** DOCUMENT ME! */
     private WikiAuthorizer m_authorizer;

@@ -21,7 +21,7 @@ package com.ecyrd.jspwiki;
 
 import java.util.Comparator;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 // FIXME: Does not implement equals().
@@ -29,7 +29,7 @@ public class PageTimeComparator
         implements Comparator
 {
     /** DOCUMENT ME! */
-    static Category log = Category.getInstance(PageTimeComparator.class);
+    static Logger log = Logger.getLogger(PageTimeComparator.class);
 
     /**
      * DOCUMENT ME!

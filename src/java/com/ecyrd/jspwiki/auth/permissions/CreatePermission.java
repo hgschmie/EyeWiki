@@ -19,6 +19,11 @@ public class CreatePermission
         return (p != null) && (p instanceof CreatePermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

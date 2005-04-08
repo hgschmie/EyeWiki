@@ -24,7 +24,6 @@ import java.io.IOException;
 import javax.servlet.jsp.JspWriter;
 
 import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
 
@@ -62,7 +61,6 @@ public class CommentLinkTag
     public final int doWikiStartTag()
             throws IOException
     {
-        WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = null;
         String pageName = null;
 

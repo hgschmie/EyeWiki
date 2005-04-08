@@ -20,12 +20,9 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
 
@@ -90,7 +87,6 @@ public class PageDateTag
     public final int doWikiStartTag()
             throws IOException
     {
-        WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();
 
         if (page != null)

@@ -21,13 +21,9 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.auth.AuthorizationManager;
-import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 
@@ -42,9 +38,6 @@ import com.ecyrd.jspwiki.util.TextUtil;
 public class InsertPage
         implements WikiPlugin
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(InsertPage.class);
-
     /** DOCUMENT ME! */
     public static final String PARAM_PAGENAME = "page";
 
@@ -106,12 +99,12 @@ public class InsertPage
 
             if (page != null)
             {
-                AuthorizationManager mgr = engine.getAuthorizationManager();
-                UserProfile currentUser = context.getCurrentUser();
-
                 /*
                   // Disabled, because this seems to fail when used
                   // to insert something from a weblog entry.
+                AuthorizationManager mgr = engine.getAuthorizationManager();
+                UserProfile currentUser = context.getCurrentUser();
+
                 if( !mgr.checkPermission( page,
                                           currentUser,
                                           new ViewPermission() ) )

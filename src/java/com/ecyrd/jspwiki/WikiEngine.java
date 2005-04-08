@@ -31,7 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -273,9 +272,6 @@ public class WikiEngine
     protected WikiEngine(ServletContext context, String appid, Configuration conf)
             throws WikiException
     {
-        InputStream confStream = null;
-        String confFile = context.getInitParameter(PARAM_CONFIGFILE);
-
         m_servletContext = context;
         m_appid = appid;
 
@@ -1412,7 +1408,7 @@ public class WikiEngine
         }
         catch (ProviderException e)
         {
-            // FIXME
+            log.error("Caught ProviderException", e);
         }
         finally
         {
@@ -1589,7 +1585,6 @@ public class WikiEngine
         }
 
         TranslatorReader in = null;
-        Collection links = null;
 
         try
         {
@@ -1616,7 +1611,7 @@ public class WikiEngine
         }
         catch (FilterException e)
         {
-            // FIXME: Don't yet know what to do
+            log.error("Caught Filter Exception:", e);
         }
         finally
         {
@@ -2195,7 +2190,8 @@ public class WikiEngine
         }
         catch (ProviderException e)
         {
-        } // FIXME: Should not ignore!
+            log.error("Caught ProviderException", e);
+        }
 
         if (pagename != null)
         {

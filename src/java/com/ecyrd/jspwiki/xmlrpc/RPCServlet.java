@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcServer;
 
 import com.ecyrd.jspwiki.WikiEngine;
@@ -71,7 +71,7 @@ public class RPCServlet
     private XmlRpcServer m_xmlrpcServer = new XmlRpcServer();
 
     /** DOCUMENT ME! */
-    Category log = Category.getInstance(RPCServlet.class);
+    Logger log = Logger.getLogger(RPCServlet.class);
 
     /**
      * DOCUMENT ME!

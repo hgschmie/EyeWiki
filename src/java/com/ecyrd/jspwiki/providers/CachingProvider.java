@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.providers;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -60,7 +59,6 @@ import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
-
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 import com.opensymphony.oscache.base.algorithm.LRUCache;
@@ -1020,7 +1018,7 @@ public class CachingProvider
             }
             catch (RepositoryModifiedException rme)
             {
-                // FIXME: What to do in this case???
+                log.error("Repository has been modified!", rme);
             }
             catch (ProviderException pe)
             {
@@ -1032,7 +1030,7 @@ public class CachingProvider
             }
         }
 
-        return (res);
+        return res;
     }
 
     /**

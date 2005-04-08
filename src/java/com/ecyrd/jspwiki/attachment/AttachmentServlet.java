@@ -19,15 +19,13 @@
 */
 package com.ecyrd.jspwiki.attachment;
 
+import http.utils.multipartrequest.MultipartRequest;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -50,8 +48,6 @@ import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.filters.RedirectException;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.util.HttpUtil;
-
-import http.utils.multipartrequest.MultipartRequest;
 
 
 /**
@@ -92,14 +88,6 @@ public class AttachmentServlet
 
     /** The maximum size that an attachment can be. */
     private int m_maxSize = Integer.MAX_VALUE;
-
-    //
-    // Not static as DateFormat objects are not thread safe.
-    // Used to handle the RFC date format = Sat, 13 Apr 2002 13:23:01 GMT
-    //
-
-    /** DOCUMENT ME! */
-    private final DateFormat rfcDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
 
     /**
      * Initializes the servlet from WikiEngine properties.
@@ -518,12 +506,9 @@ public class AttachmentServlet
             msg = "Upload failure: " + e.getMessage();
             log.warn(msg + " (attachment: " + attName + ")", e);
 
-            throw e;
-        }
-        finally
-        {
             // FIXME: In case of exceptions should absolutely
             //        remove the uploaded file.
+            throw e;
         }
 
         return nextPage;

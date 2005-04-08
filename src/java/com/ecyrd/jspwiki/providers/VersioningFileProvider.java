@@ -27,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -205,7 +204,8 @@ public class VersioningFileProvider
                         }
                         catch (NumberFormatException e)
                         {
-                        } // It's okay to skip these.
+                            log.debug("Skipped NumberFormatException", e);
+                        }
                     }
                 }
             }

@@ -25,7 +25,6 @@ import java.io.PushbackReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -830,9 +829,6 @@ public class TranslatorReader
         {
             MatchResult res = m_matcher.getMatch();
 
-            int start = res.beginOffset(2);
-            int end = res.endOffset(2);
-
             String link = res.group(2);
 
             if (res.group(1) != null)
@@ -1254,13 +1250,8 @@ public class TranslatorReader
     private String findAttachment(String link)
     {
         AttachmentManager mgr = m_engine.getAttachmentManager();
-        WikiPage currentPage = m_context.getPage();
         Attachment att = null;
 
-        /*
-          System.out.println("Finding attachment of page "+currentPage.getName());
-          System.out.println("With name "+link);
-        */
         try
         {
             att = mgr.getAttachmentInfo(m_context, link);
@@ -1345,52 +1336,6 @@ public class TranslatorReader
         }
 
         return buf.toString();
-    }
-
-    // FIXME: should remove countChar() as it is unused
-
-    /**
-     * Counts how many consecutive characters of a certain type exists on the line.
-     *
-     * @param line String of chars to check.
-     * @param startPos Position to start reading from.
-     * @param c Character to check for.
-     *
-     * @return DOCUMENT ME!
-     */
-    private int countChar(String line, int startPos, char c)
-    {
-        int count;
-
-        for (
-            count = 0;
-                        ((startPos + count) < line.length())
-                        && (line.charAt(count + startPos) == c); count++)
-        {
-            ;
-        }
-
-        return count;
-    }
-
-    /**
-     * Returns a new String that has char c n times.
-     *
-     * @param c DOCUMENT ME!
-     * @param n DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    private String repeatChar(char c, int n)
-    {
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < n; i++)
-        {
-            sb.append(c);
-        }
-
-        return sb.toString();
     }
 
     private int nextToken()
@@ -1759,14 +1704,12 @@ public class TranslatorReader
     private String handleGeneralList()
             throws IOException
     {
-        String cStrShortName = "handleGeneralList()"; //put log messages in some context
-
         StringBuffer buf = new StringBuffer();
 
         buf.append(startBlockLevel());
 
         String strBullets = readWhile("*#");
-        String strBulletsRaw = strBullets; // to know what was original before phpwiki style substitution
+
         int numBullets = strBullets.length();
 
         // override the beginning portion of bullet pattern to be like the previous
@@ -1803,8 +1746,6 @@ public class TranslatorReader
                             m_genlistBulletBuffer.substring(
                                 0, Math.min(numBullets, m_genlistlevel))))
         {
-            int chBullet;
-
             if (numBullets > m_genlistlevel)
             {
                 buf.append(m_renderer.openList(strBullets.charAt(m_genlistlevel++)));
@@ -1846,7 +1787,6 @@ public class TranslatorReader
             //
             //  The pattern has changed, unwind and restart
             //
-            char chBullet;
             int numEqualBullets;
             int numCheckBullets;
 
@@ -1905,9 +1845,7 @@ public class TranslatorReader
 
     private String unwindGeneralList()
     {
-        // String cStrShortName = "unwindGeneralList()";
         StringBuffer buf = new StringBuffer();
-        int bulletCh;
 
         //unwind
         for (; m_genlistlevel > 0; m_genlistlevel--)
@@ -3575,9 +3513,6 @@ public class TranslatorReader
         public String makeHeading(int level, String title, Heading hd)
         {
             String res = "";
-
-            String pageName = m_context.getPage().getName();
-
             title = title.trim();
 
             hd.m_level = level;

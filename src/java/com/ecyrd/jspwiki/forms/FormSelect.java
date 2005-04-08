@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.Select;
-import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -39,9 +38,6 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormSelect
         extends FormElement
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(FormSelect.class);
-
     /**
      * DOCUMENT ME!
      *

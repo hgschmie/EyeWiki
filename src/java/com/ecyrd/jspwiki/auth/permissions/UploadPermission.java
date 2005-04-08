@@ -21,6 +21,11 @@ public class UploadPermission
         return (p != null) && (p instanceof UploadPermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

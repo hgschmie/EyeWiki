@@ -38,4 +38,9 @@ public class UndefinedPrincipal
         return (o != null) && o instanceof WikiPrincipal
         && ((WikiPrincipal) o).getName().equals(getName());
     }
+
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

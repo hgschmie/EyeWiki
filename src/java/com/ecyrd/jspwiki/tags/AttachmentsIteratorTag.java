@@ -20,13 +20,12 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-
 import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -60,7 +59,7 @@ public class AttachmentsIteratorTag
         extends IteratorTag
 {
     /** DOCUMENT ME! */
-    static Category log = Category.getInstance(AttachmentsIteratorTag.class);
+    static Logger log = Logger.getLogger(AttachmentsIteratorTag.class);
 
     /**
      * DOCUMENT ME!

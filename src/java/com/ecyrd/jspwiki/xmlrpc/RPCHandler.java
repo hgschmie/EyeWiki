@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.xmlrpc;
 
 import java.io.UnsupportedEncodingException;
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -137,7 +136,6 @@ public class RPCHandler
     {
         Collection pages = m_engine.getRecentChanges();
         Vector result = new Vector();
-        int count = 0;
 
         for (Iterator i = pages.iterator(); i.hasNext();)
         {

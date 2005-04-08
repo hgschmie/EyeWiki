@@ -26,7 +26,7 @@ import java.io.StringReader;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
@@ -42,7 +42,7 @@ public class ExternalDiffProvider
         implements DiffProvider
 {
     /** DOCUMENT ME! */
-    private static final Category log = Category.getInstance(ExternalDiffProvider.class);
+    private static final Logger log = Logger.getLogger(ExternalDiffProvider.class);
 
     /** DOCUMENT ME! */
     private static final char DIFF_ADDED_SYMBOL = '+';

@@ -23,7 +23,6 @@ package com.ecyrd.jspwiki.forms;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -36,9 +35,6 @@ import com.ecyrd.jspwiki.util.FormUtil;
 public class FormOutput
         extends FormElement
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(FormOutput.class);
-
     /**
      * Executes the FormHandler specified in a Form 'output' plugin, using entries provided in the
      * HttpRequest as FormHandler parameters.

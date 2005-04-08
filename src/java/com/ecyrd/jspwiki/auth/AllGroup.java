@@ -64,4 +64,9 @@ public class AllGroup
     {
         return (o != null) && o instanceof AllGroup;
     }
+
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

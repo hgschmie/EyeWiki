@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -30,7 +29,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.providers.CachingProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
@@ -56,7 +55,7 @@ public class PageManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Category log = Category.getInstance(PageManager.class);
+    static Logger log = Logger.getLogger(PageManager.class);
 
     /** DOCUMENT ME! */
     private WikiPageProvider m_provider;

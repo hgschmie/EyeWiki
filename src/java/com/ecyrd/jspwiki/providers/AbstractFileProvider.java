@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -38,7 +37,7 @@ import java.util.TreeSet;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.FileUtil;
 import com.ecyrd.jspwiki.InternalWikiException;
@@ -74,7 +73,7 @@ public abstract class AbstractFileProvider
         implements WikiPageProvider
 {
     /** DOCUMENT ME! */
-    private static final Category log = Category.getInstance(AbstractFileProvider.class);
+    private static final Logger log = Logger.getLogger(AbstractFileProvider.class);
 
     /**
      * All files should have this extension to be recognized as JSPWiki files. We default to .txt,

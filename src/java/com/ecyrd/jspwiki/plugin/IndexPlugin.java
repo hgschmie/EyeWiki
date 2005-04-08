@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.StringWriter;
-
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;

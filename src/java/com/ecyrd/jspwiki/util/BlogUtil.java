@@ -55,6 +55,7 @@ public class BlogUtil
         }
         catch (NoSuchVariableException e)
         {
+            // IGNORE
         }
 
         if (blogname == null)

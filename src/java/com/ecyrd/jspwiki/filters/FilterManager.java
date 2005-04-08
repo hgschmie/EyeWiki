@@ -24,20 +24,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
-
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiException;
-import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.util.ClassUtil;
-import com.ecyrd.jspwiki.util.PriorityList;
 
 import org.xml.sax.AttributeList;
 import org.xml.sax.HandlerBase;
@@ -46,6 +38,13 @@ import org.xml.sax.Parser;
 import org.xml.sax.SAXException;
 
 import uk.co.wilson.xml.MinML;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiProperties;
+import com.ecyrd.jspwiki.util.ClassUtil;
+import com.ecyrd.jspwiki.util.PriorityList;
 
 
 /**

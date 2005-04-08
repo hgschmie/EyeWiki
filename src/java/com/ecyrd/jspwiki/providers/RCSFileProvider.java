@@ -24,10 +24,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -42,7 +40,6 @@ import org.apache.oro.text.regex.MatchResult;
 import org.apache.oro.text.regex.Pattern;
 import org.apache.oro.text.regex.PatternCompiler;
 import org.apache.oro.text.regex.PatternMatcher;
-import org.apache.oro.text.regex.PatternMatcherInput;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
@@ -170,7 +167,6 @@ public class RCSFileProvider
     {
         PatternMatcher matcher = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
-        PatternMatcherInput input;
         BufferedReader stdout = null;
 
         WikiPage info = super.getPageInfo(page, version);
@@ -249,9 +245,7 @@ public class RCSFileProvider
             //  process.waitFor() hangs unless you read all of the
             //  standard output.  So we make sure it's all emptied.
             //
-            while ((line = stdout.readLine()) != null)
-            {
-            }
+            while ((line = stdout.readLine()) != null);
 
             process.waitFor();
 
@@ -462,7 +456,6 @@ public class RCSFileProvider
     {
         PatternMatcher matcher = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
-        PatternMatcherInput input;
         BufferedReader stdout = null;
 
         log.debug("Getting RCS version history");
@@ -673,11 +666,11 @@ public class RCSFileProvider
         try
         {
             d = m_rcsdatefmt.parse(str);
-
             return d;
         }
         catch (ParseException pe)
         {
+            // IGNORE
         }
 
         try
@@ -688,6 +681,7 @@ public class RCSFileProvider
         }
         catch (ParseException pe)
         {
+            // IGNORE
         }
 
         return d;

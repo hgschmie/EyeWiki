@@ -19,6 +19,11 @@ public class EditPermission
         return (p != null) && (p instanceof EditPermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.auth.UserProfile;
 
 
@@ -120,7 +119,6 @@ public class UserCheckTag
     public final int doWikiStartTag()
             throws IOException
     {
-        WikiEngine engine = m_wikiContext.getEngine();
         UserProfile wup = m_wikiContext.getCurrentUser();
 
         if (m_status != null)

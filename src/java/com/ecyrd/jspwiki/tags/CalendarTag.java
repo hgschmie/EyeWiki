@@ -20,10 +20,8 @@
 package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -63,12 +61,6 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 public class CalendarTag
         extends WikiTagBase
 {
-    /** DOCUMENT ME! */
-    private String m_year = null;
-
-    /** DOCUMENT ME! */
-    private String m_month = null;
-
     /** DOCUMENT ME! */
     private SimpleDateFormat m_pageFormat = null;
 
@@ -218,7 +210,6 @@ public class CalendarTag
 
         if (day.before(nextMonth))
         {
-            WikiEngine engine = m_wikiContext.getEngine();
             WikiPage thePage = m_wikiContext.getPage();
             String pageName = thePage.getName();
 
@@ -344,7 +335,6 @@ public class CalendarTag
 
             for (int i = 0; i < 7; i++)
             {
-                int day = cal.get(Calendar.DATE);
                 int mth = cal.get(Calendar.MONTH);
 
                 if (mth != month)

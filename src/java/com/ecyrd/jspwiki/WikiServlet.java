@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 
@@ -54,11 +53,7 @@ public class WikiServlet
             throws ServletException
     {
         super.init(config);
-
         m_engine = WikiEngine.getInstance(config);
-
-        Configuration conf = m_engine.getWikiConfiguration();
-
         log.info("WikiServlet initialized.");
     }
 

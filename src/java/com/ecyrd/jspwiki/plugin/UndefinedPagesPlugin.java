@@ -23,8 +23,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.ReferenceManager;
 import com.ecyrd.jspwiki.WikiContext;
 
@@ -39,9 +37,6 @@ import com.ecyrd.jspwiki.WikiContext;
 public class UndefinedPagesPlugin
         extends AbstractReferralPlugin
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(UndefinedPagesPlugin.class);
-
     /**
      * DOCUMENT ME!
      *

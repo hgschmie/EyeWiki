@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
-
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;

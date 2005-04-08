@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -549,7 +548,6 @@ public class UserManager
     protected UserProfile limitedLogin(HttpServletRequest request)
     {
         UserProfile wup = null;
-        String role = null;
 
         //
         //  First, checks whether container has done authentication for us.
@@ -593,7 +591,7 @@ public class UserManager
                 }
                 catch (NoSuchElementException e)
                 {
-                    // We fail silently, as the cookie is invalid.
+                    log.debug("No cookie found");
                 }
             }
         }

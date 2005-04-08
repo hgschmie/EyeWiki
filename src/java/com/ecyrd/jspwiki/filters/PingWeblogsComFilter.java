@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.filters;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Vector;

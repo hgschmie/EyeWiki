@@ -23,8 +23,6 @@ package com.ecyrd.jspwiki.forms;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.ecs.html.Form;
-import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
@@ -65,15 +63,11 @@ import com.ecyrd.jspwiki.plugin.WikiPlugin;
  *
  * @author ebu
  *
- * @see Form
  * @see FormInfo
  */
 public class FormSet
         implements WikiPlugin
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(FormSet.class);
-
     /**
      * DOCUMENT ME!
      *

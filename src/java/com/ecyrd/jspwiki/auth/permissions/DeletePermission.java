@@ -19,6 +19,11 @@ public class DeletePermission
         return (p != null) && (p instanceof DeletePermission);
     }
 
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
+
     /**
      * DOCUMENT ME!
      *

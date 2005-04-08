@@ -238,9 +238,6 @@ public class PageAuthorizer
         {
             WikiContext context = new WikiContext(m_engine, page);
             context.setVariable(TranslatorReader.PROP_RUNPLUGINS, "false");
-
-            String html = m_engine.getHTML(context, page);
-
             acl = page.getAcl();
         }
 

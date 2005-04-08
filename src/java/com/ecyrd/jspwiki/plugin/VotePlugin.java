@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.plugin;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
 import java.util.Map;
 import java.util.Properties;
 
@@ -32,7 +31,6 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
@@ -65,8 +63,6 @@ public class VotePlugin
      */
     public int vote(WikiContext context, int vote)
     {
-        Properties props = getVotes(context);
-
         if (vote > 0)
         {
             int nVotes = getYesVotes(context);
@@ -89,7 +85,6 @@ public class VotePlugin
 
     private void putVotes(WikiContext context, String yesno, int nVotes)
     {
-        WikiEngine engine = context.getEngine();
         WikiPage page = context.getPage();
 
         Properties props = getVotes(context);
@@ -200,8 +195,6 @@ public class VotePlugin
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        WikiEngine engine = context.getEngine();
-
         String posneg = (String) params.get("value");
 
         if (BooleanUtils.toBoolean(posneg))

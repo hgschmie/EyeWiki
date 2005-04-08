@@ -22,8 +22,6 @@ package com.ecyrd.jspwiki.forms;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 
@@ -36,9 +34,6 @@ import com.ecyrd.jspwiki.plugin.PluginException;
 public class FormClose
         extends FormElement
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(FormClose.class);
-
     /**
      * Builds a Form close tag. Removes any information on the form from the WikiContext.
      *

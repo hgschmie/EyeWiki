@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.Map;
 

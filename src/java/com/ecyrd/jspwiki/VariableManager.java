@@ -28,7 +28,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.auth.UserProfile;
 
@@ -43,9 +42,6 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  */
 public class VariableManager
 {
-    /** DOCUMENT ME! */
-    private static Logger log = Logger.getLogger(VariableManager.class);
-
     /** DOCUMENT ME! */
     public static final String VAR_ERROR = "error";
 
@@ -411,20 +407,16 @@ public class VariableManager
             {
                 HttpSession session = req.getSession();
 
-                try
-                {
-                    if ((res = (String) session.getAttribute(varName)) != null)
-                    {
-                        return res;
-                    }
+                Object attribute = session.getAttribute(varName);
 
-                    if ((res = context.getHttpParameter(varName)) != null)
-                    {
-                        return res;
-                    }
-                }
-                catch (ClassCastException e)
+                if (attribute != null)
                 {
+                    return String.valueOf(attribute);
+                }
+
+                if ((res = context.getHttpParameter(varName)) != null)
+                {
+                    return res;
                 }
             }
 

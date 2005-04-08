@@ -25,11 +25,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiPage;
 
@@ -48,7 +47,7 @@ public class FileSystemProvider
         extends AbstractFileProvider
 {
     /** DOCUMENT ME! */
-    private static final Category log = Category.getInstance(FileSystemProvider.class);
+    private static final Logger log = Logger.getLogger(FileSystemProvider.class);
 
     /** All metadata is stored in a file with this extension. */
     public static final String EXTENSION_PROPS = ".properties";

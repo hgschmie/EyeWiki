@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.text.SimpleDateFormat;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -71,9 +70,7 @@ public class WeblogEntryPlugin
 
         int entryNum = findFreeEntry(engine.getPageManager(), blogName, today);
 
-        String blogPage = WeblogPlugin.makeEntryPage(blogName, today, "" + entryNum);
-
-        return blogPage;
+        return WeblogPlugin.makeEntryPage(blogName, today, "" + entryNum);
     }
 
     /**
@@ -101,21 +98,13 @@ public class WeblogEntryPlugin
             entryText = "New entry";
         }
 
-        try
-        {
-            String blogPage = getNewEntryPage(engine, weblogName);
+        // FIXME: Generate somehow else.
+        // String blogPage = getNewEntryPage(engine, weblogName);
+        //sb.append("<a href=\""+engine.getEditURL(blogPage)+"\">New entry</a>");
 
-            // FIXME: Generate somehow else.
-            //sb.append("<a href=\""+engine.getEditURL(blogPage)+"\">New entry</a>");
-            sb.append(
-                "<a href=\"" + engine.getBaseURL() + "NewBlogEntry.jsp?page="
-                + engine.encodeName(weblogName) + "\">" + entryText + "</a>");
-        }
-        catch (ProviderException e)
-        {
-            log.error("Could not locate blog entries", e);
-            throw new PluginException("Could not locate blog entries: " + e.getMessage());
-        }
+        sb.append(
+            "<a href=\"" + engine.getBaseURL() + "NewBlogEntry.jsp?page="
+            + engine.encodeName(weblogName) + "\">" + entryText + "</a>");
 
         return sb.toString();
     }

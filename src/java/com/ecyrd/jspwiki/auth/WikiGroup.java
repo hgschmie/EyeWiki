@@ -2,7 +2,6 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.Principal;
 import java.security.acl.Group;
-
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
@@ -162,6 +161,11 @@ public class WikiGroup
         }
 
         return true;
+    }
+
+    public int hashCode()
+    {
+        return super.hashCode();
     }
 
     /**

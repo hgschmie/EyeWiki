@@ -24,7 +24,6 @@ import java.io.IOException;
 import javax.servlet.jsp.JspWriter;
 
 import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
 
 
 /**
@@ -52,9 +51,6 @@ import com.ecyrd.jspwiki.WikiEngine;
 public class UploadLinkTag
         extends WikiLinkTag
 {
-    /** DOCUMENT ME! */
-    private String m_version = null;
-
     /**
      * DOCUMENT ME!
      *
@@ -65,7 +61,6 @@ public class UploadLinkTag
     public final int doWikiStartTag()
             throws IOException
     {
-        WikiEngine engine = m_wikiContext.getEngine();
         String pageName = m_pageName;
 
         if (m_pageName == null)

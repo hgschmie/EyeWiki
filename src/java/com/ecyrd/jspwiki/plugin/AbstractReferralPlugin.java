@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.io.IOException;
 import java.io.StringReader;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;

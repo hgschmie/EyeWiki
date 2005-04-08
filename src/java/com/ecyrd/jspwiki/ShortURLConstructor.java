@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki;
 
 import java.io.UnsupportedEncodingException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 

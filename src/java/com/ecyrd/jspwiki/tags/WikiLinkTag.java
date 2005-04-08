@@ -140,7 +140,7 @@ public abstract class WikiLinkTag
         }
         catch (IOException e)
         {
-            // FIXME: Should do something?
+            // IGNORE
         }
 
         return EVAL_PAGE;

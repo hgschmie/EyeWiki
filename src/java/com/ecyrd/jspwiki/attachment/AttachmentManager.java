@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -32,7 +31,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.WikiContext;
@@ -63,7 +62,7 @@ public class AttachmentManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Category log = Category.getInstance(AttachmentManager.class);
+    static Logger log = Logger.getLogger(AttachmentManager.class);
 
     /** DOCUMENT ME! */
     private WikiAttachmentProvider m_provider;
@@ -299,6 +298,7 @@ public class AttachmentManager
         }
         catch (Exception e)
         {
+            log.error("While fetching an attachment: ", e);
         }
 
         return false;

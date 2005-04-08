@@ -59,4 +59,9 @@ public class NamedGroup
     {
         return (o != null) && o instanceof NamedGroup;
     }
+
+    public int hashCode()
+    {
+        return super.hashCode();
+    }
 }

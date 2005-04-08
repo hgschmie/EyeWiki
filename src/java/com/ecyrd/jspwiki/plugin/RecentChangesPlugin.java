@@ -20,9 +20,7 @@
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.StringWriter;
-
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -87,8 +85,6 @@ public class RecentChangesPlugin
         //
         //  Which format we want to see?
         //
-        String format = (String) params.get("format");
-
         if ("compact".equals(params.get("format")))
         {
             spacing = 0;
