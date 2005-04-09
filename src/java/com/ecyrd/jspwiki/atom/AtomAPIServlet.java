@@ -68,7 +68,7 @@ public class AtomAPIServlet
         extends HttpServlet
 {
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(AtomAPIServlet.class);
+    private static final Logger log = Logger.getLogger(AtomAPIServlet.class);
 
     /** DOCUMENT ME! */
     private WikiEngine m_engine;

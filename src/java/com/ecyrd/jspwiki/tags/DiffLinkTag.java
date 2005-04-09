@@ -210,6 +210,9 @@ public class DiffLinkTag
             out.print(url);
 
             break;
+
+        default:
+            break;
         }
 
         return EVAL_BODY_INCLUDE;

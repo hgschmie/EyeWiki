@@ -52,7 +52,7 @@ public class PageAuthorizer
         implements WikiAuthorizer
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(PageAuthorizer.class);
+    private static final Logger log = Logger.getLogger(PageAuthorizer.class);
 
     // FIXME: Should be settable.
 

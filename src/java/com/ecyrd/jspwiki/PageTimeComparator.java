@@ -29,7 +29,8 @@ public class PageTimeComparator
         implements Comparator
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(PageTimeComparator.class);
+    private static final Logger log =
+            Logger.getLogger(PageTimeComparator.class);
 
     /**
      * DOCUMENT ME!

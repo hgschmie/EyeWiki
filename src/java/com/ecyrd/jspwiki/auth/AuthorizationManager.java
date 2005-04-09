@@ -53,7 +53,7 @@ public class AuthorizationManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(AuthorizationManager.class);
+    private static final Logger log = Logger.getLogger(AuthorizationManager.class);
 
     /** DOCUMENT ME! */
     private WikiAuthorizer m_authorizer;

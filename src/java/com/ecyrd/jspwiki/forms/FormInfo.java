@@ -43,30 +43,30 @@ public class FormInfo
     public static final int ERROR = -1;
 
     /** DOCUMENT ME! */
-    public int status;
+    private int status;
 
     /** DOCUMENT ME! */
-    public boolean hide;
+    private boolean hide;
 
     /** DOCUMENT ME! */
-    public String action;
+    private String action;
 
     /** DOCUMENT ME! */
-    public String name;
+    private String name;
 
     /** DOCUMENT ME! */
-    public String handler;
+    private String handler;
 
     /** DOCUMENT ME! */
-    public String result;
+    private String result;
 
     /** DOCUMENT ME! */
-    public String error;
+    private String error;
 
-    //public PluginParameters submission;
+    //private PluginParameters submission;
 
     /** DOCUMENT ME! */
-    public Map submission;
+    private Map submission;
 
     /**
      * Creates a new FormInfo object.

@@ -37,8 +37,33 @@ public class QueryItem
     public static final int REQUESTED = 0;
 
     /** The word that is being searched */
-    public String word;
+    private String word;
 
     /** The type of the word.  See above for types.  The default is REQUESTED. */
-    public int type = REQUESTED;
+    private int type;
+
+    public QueryItem()
+    {
+        type = REQUESTED;
+    }
+
+    public int getType()
+    {
+        return type;
+    }
+
+    public void setType(int type)
+    {
+        this.type = type;
+    }
+
+    public String getWord()
+    {
+        return word;
+    }
+
+    public void setWord(String word)
+    {
+        this.word = word;
+    }
 }

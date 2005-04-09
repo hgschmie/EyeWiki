@@ -50,7 +50,7 @@ public class FileAuthenticator
         implements WikiAuthenticator
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(FileAuthenticator.class);
+    private static final Logger log = Logger.getLogger(FileAuthenticator.class);
 
     /** DOCUMENT ME! */
     private String m_fileName;

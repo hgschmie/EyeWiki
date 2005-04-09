@@ -40,7 +40,7 @@ public class TranslateTag
         extends BodyTagSupport
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(TranslateTag.class);
+    private static final Logger log = Logger.getLogger(TranslateTag.class);
 
     /**
      * DOCUMENT ME!

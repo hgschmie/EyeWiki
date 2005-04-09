@@ -95,6 +95,9 @@ public class PageInfoLinkTag
                 out.print(url);
 
                 break;
+
+            default:
+                break;
             }
 
             return EVAL_BODY_INCLUDE;

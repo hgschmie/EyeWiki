@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Contains a number of static utility methods.
  */
-public class TextUtil
+public final class TextUtil
 {
     /** DOCUMENT ME! */
     static final String HEX_DIGITS = "0123456789ABCDEF";
@@ -49,6 +49,10 @@ public class TextUtil
 
     /** DOCUMENT ME! */
     private static final int OTHER = 4;
+
+    private TextUtil()
+    {
+    }
 
     /**
      * java.net.URLEncoder.encode() method in JDK &lt; 1.4 is buggy.  This duplicates its

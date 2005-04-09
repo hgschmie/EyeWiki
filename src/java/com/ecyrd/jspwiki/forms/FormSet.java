@@ -90,7 +90,7 @@ public class FormSet
 
         FormInfo info = (FormInfo) ctx.getVariable(FormElement.FORM_VALUES_CARRIER);
 
-        if ((info == null) || (formName.equals(info.getName()) == false))
+        if ((info == null) || !formName.equals(info.getName()))
         {
             info = new FormInfo();
             ctx.setVariable(FormElement.FORM_VALUES_CARRIER, info);

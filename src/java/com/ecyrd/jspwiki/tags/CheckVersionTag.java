@@ -131,6 +131,9 @@ public class CheckVersionTag
                 include = (version > 1);
 
                 break;
+
+            default:
+                break;
             }
 
             if (include)

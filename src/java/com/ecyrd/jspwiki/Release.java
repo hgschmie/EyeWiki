@@ -24,8 +24,15 @@ package com.ecyrd.jspwiki;
  *
  * @author Janne Jalkanen
  */
-public class Release
+public final class Release
 {
+    /**
+     * Hidden C'tor
+     */
+    private Release()
+    {
+    }
+
     /** This is the default application name. */
     public static final String APPNAME = "JSPWiki";
 

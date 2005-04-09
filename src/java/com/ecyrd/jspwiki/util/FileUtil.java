@@ -40,16 +40,20 @@ import org.apache.log4j.Logger;
 /**
  * Generic utilities related to file and stream handling.
  */
-public class FileUtil
+public final class FileUtil
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(FileUtil.class);
 
     /** DOCUMENT ME! */
-    static boolean c_hasNIO = false;
+    private static boolean c_hasNIO = false;
 
     /** DOCUMENT ME! */
     private static final int MINBUFSIZ = 32768; // bytes
+
+    private FileUtil()
+    {
+    }
 
     static
     {

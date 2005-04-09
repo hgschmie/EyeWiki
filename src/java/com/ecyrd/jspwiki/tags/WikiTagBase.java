@@ -47,7 +47,7 @@ public abstract class WikiTagBase
     public static final String ATTR_CONTEXT = "jspwiki.context";
 
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(WikiTagBase.class);
+    protected Logger log = Logger.getLogger(this.getClass());
 
     /** DOCUMENT ME! */
     protected WikiContext m_wikiContext;

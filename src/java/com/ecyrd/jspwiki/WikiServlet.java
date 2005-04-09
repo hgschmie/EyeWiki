@@ -40,7 +40,7 @@ public class WikiServlet
     private WikiEngine m_engine = null;
 
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(this.getClass().getName());
+    protected Logger log = Logger.getLogger(this.getClass());
 
     /**
      * DOCUMENT ME!

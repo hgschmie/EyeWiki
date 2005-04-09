@@ -46,13 +46,13 @@ public class PingWeblogsComFilter
         extends BasicPageFilter
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(PingWeblogsComFilter.class);
+    private static final Logger log = Logger.getLogger(PingWeblogsComFilter.class);
 
     /** DOCUMENT ME! */
     public static final String PROP_PINGURL = "pingurl";
 
     /** DOCUMENT ME! */
-    public String m_pingURL;
+    private String m_pingURL;
 
     /**
      * DOCUMENT ME!

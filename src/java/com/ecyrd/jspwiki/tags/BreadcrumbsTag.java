@@ -53,9 +53,6 @@ public class BreadcrumbsTag
         extends WikiTagBase
 {
     /** DOCUMENT ME! */
-    private static final Logger log = Logger.getLogger(BreadcrumbsTag.class);
-
-    /** DOCUMENT ME! */
     private static final String BREADCRUMBTRAIL_KEY = "breadCrumbTrail";
 
     /** DOCUMENT ME! */

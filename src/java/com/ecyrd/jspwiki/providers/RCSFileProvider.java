@@ -118,7 +118,7 @@ public class RCSFileProvider
     private SimpleDateFormat m_rcsdatefmt = new SimpleDateFormat(RCSFMT_DATE);
 
     /** DOCUMENT ME! */
-    private SimpleDateFormat m_rcsdatefmt_utc = new SimpleDateFormat(RCSFMT_DATE_UTC);
+    private SimpleDateFormat m_rcsdatefmtUTC = new SimpleDateFormat(RCSFMT_DATE_UTC);
 
     /**
      * DOCUMENT ME!
@@ -675,7 +675,7 @@ public class RCSFileProvider
 
         try
         {
-            d = m_rcsdatefmt_utc.parse(str);
+            d = m_rcsdatefmtUTC.parse(str);
 
             return d;
         }

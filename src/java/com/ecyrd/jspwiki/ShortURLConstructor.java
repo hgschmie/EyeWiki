@@ -43,7 +43,7 @@ public class ShortURLConstructor
         extends DefaultURLConstructor
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(ShortURLConstructor.class);
+    private static Logger log = Logger.getLogger(ShortURLConstructor.class);
 
     /** DOCUMENT ME! */
     private String m_urlPrefix = "";

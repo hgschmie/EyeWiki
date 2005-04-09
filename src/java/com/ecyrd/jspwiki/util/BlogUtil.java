@@ -31,10 +31,14 @@ import com.ecyrd.jspwiki.exception.NoSuchVariableException;
  *
  * @since 2.2.
  */
-public class BlogUtil
+public final class BlogUtil
 {
     /** DOCUMENT ME! */
     public static final String VAR_BLOGNAME = "blogname";
+
+    private BlogUtil()
+    {
+    }
 
     /**
      * Figure out a site name for a feed.

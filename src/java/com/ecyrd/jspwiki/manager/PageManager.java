@@ -62,7 +62,7 @@ public class PageManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(PageManager.class);
+    private static final Logger log = Logger.getLogger(PageManager.class);
 
     /** DOCUMENT ME! */
     private WikiPageProvider m_provider;

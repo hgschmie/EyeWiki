@@ -31,8 +31,12 @@ import java.util.List;
  *
  * @since 2.1.29.
  */
-public class ClassUtil
+public final class ClassUtil
 {
+    private ClassUtil()
+    {
+    }
+
     /**
      * Attempts to find a class from a collection of packages.  This will first attempt to find the
      * class based on just the className parameter, but should that fail, will iterate through the

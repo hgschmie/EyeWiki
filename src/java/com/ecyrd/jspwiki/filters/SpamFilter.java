@@ -52,7 +52,7 @@ public class SpamFilter
     private static final String LISTVAR = "spamwords";
 
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(SpamFilter.class);
+    private static final Logger log = Logger.getLogger(SpamFilter.class);
 
     /** DOCUMENT ME! */
     public static final String PROP_WORDLIST = "wordlist";

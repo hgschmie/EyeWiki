@@ -15,11 +15,11 @@ public class ProfanityFilter
         extends BasicPageFilter
 {
     /** DOCUMENT ME! */
-    private static final String [] c_profanities =
-        {
-            "fuck",
-            "shit"
-        };
+    private String [] profanities =
+    {
+        "fuck",
+        "shit"
+    };
 
     /**
      * DOCUMENT ME!
@@ -31,9 +31,9 @@ public class ProfanityFilter
      */
     public String preTranslate(WikiContext context, String content)
     {
-        for (int i = 0; i < c_profanities.length; i++)
+        for (int i = 0; i < profanities.length; i++)
         {
-            String word = c_profanities[i];
+            String word = profanities[i];
             String replacement = word.charAt(0) + "*" + word.charAt(word.length() - 1);
 
             content = StringUtils.replace(content, word, replacement);

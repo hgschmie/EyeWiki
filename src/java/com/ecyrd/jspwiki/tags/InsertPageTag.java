@@ -156,6 +156,9 @@ public class InsertPageTag
                 out.print(engine.getText(m_wikiContext, page));
 
                 break;
+
+            default:
+                break;
             }
         }
 

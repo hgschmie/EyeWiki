@@ -46,7 +46,7 @@ public class Search
         implements WikiPlugin
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(Search.class);
+    private static final Logger log = Logger.getLogger(Search.class);
 
     /** DOCUMENT ME! */
     public static final String PARAM_QUERY = "query";

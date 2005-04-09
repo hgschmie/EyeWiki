@@ -55,7 +55,7 @@ public class RPCHandler
         extends AbstractRPCHandler
 {
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(RPCHandler.class);
+    private static final Logger log = Logger.getLogger(RPCHandler.class);
 
     /**
      * DOCUMENT ME!

@@ -45,13 +45,13 @@ public class VotePlugin
         implements WikiPlugin
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(VotePlugin.class);
+    private static final Logger log = Logger.getLogger(VotePlugin.class);
 
     /** DOCUMENT ME! */
-    public static String ATTACHMENT_NAME = "VotePlugin.properties";
+    public static final String ATTACHMENT_NAME = "VotePlugin.properties";
 
     /** DOCUMENT ME! */
-    public static String VAR_VOTES = "VotePlugin.votes";
+    public static final String VAR_VOTES = "VotePlugin.votes";
 
     /**
      * +1 for yes, -1 for no.

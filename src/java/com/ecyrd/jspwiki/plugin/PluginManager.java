@@ -130,10 +130,10 @@ public class PluginManager
     public static final String PARAM_DEBUG = "debug";
 
     /** DOCUMENT ME! */
-    Vector m_searchPath = new Vector();
+    private Vector m_searchPath = new Vector();
 
     /** DOCUMENT ME! */
-    Pattern m_pluginPattern;
+    private Pattern m_pluginPattern;
 
     /** DOCUMENT ME! */
     private boolean m_pluginsEnabled = true;

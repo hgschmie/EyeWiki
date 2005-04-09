@@ -52,7 +52,7 @@ public class TableOfContents
     public static final String PARAM_TITLE = "title";
 
     /** DOCUMENT ME! */
-    StringBuffer m_buf = new StringBuffer();
+    private StringBuffer m_buf = new StringBuffer();
 
     /**
      * DOCUMENT ME!
@@ -66,10 +66,10 @@ public class TableOfContents
     {
         if (log.isDebugEnabled())
         {
-            log.debug("HD: " + hd.m_level + ", " + hd.m_titleText + ", " + hd.m_titleAnchor);
+            log.debug("HD: " + hd.getLevel() + ", " + hd.getTitleText() + ", " + hd.getTitleAnchor());
         }
 
-        switch (hd.m_level)
+        switch (hd.getLevel())
         {
         case TranslatorReader.Heading.HEADING_SMALL:
             m_buf.append("***");
@@ -91,7 +91,7 @@ public class TableOfContents
         }
 
         m_buf.append(
-            " [" + hd.m_titleText + "|" + context.getPage().getName() + "#" + hd.m_titleSection
+            " [" + hd.getTitleText() + "|" + context.getPage().getName() + "#" + hd.getTitleSection()
             + "]\n");
     }
 

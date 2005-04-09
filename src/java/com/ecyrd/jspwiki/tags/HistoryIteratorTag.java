@@ -57,7 +57,7 @@ public class HistoryIteratorTag
         extends IteratorTag
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(HistoryIteratorTag.class);
+    private static final Logger log = Logger.getLogger(HistoryIteratorTag.class);
 
     /**
      * DOCUMENT ME!

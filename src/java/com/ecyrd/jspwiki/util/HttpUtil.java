@@ -40,10 +40,14 @@ import com.ecyrd.jspwiki.WikiPage;
  *
  * @since 2.1.61.
  */
-public class HttpUtil
+public final class HttpUtil
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(HttpUtil.class);
+    private static final Logger log = Logger.getLogger(HttpUtil.class);
+
+    private HttpUtil()
+    {
+    }
 
     /**
      * Attempts to retrieve the given cookie value from the request. Returns the string value

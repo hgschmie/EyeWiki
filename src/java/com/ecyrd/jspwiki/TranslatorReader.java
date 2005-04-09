@@ -140,8 +140,7 @@ public class TranslatorReader
      * This list contains all IANA registered URI protocol types as of September 2004 + a few
      * well-known extra types. JSPWiki recognises all of them as external links.
      */
-    static final String [] c_externalLinks =
-        {
+    private static final String [] EXTERNAL_LINKS = {
             "http:",
             "ftp:",
             "https:",
@@ -728,9 +727,9 @@ public class TranslatorReader
     //        then searching for them would be faster.
     private boolean isExternalLink(String link)
     {
-        for (int i = 0; i < c_externalLinks.length; i++)
+        for (int i = 0; i < EXTERNAL_LINKS.length; i++)
         {
-            if (link.startsWith(c_externalLinks[i]))
+            if (link.startsWith(EXTERNAL_LINKS[i]))
             {
                 return true;
             }
@@ -1564,10 +1563,7 @@ public class TranslatorReader
                 {
                     // Empty away all the rest of the dashes.
                     // Do not forget to return the first non-match back.
-                    while ((ch = nextToken()) == '-')
-                    {
-                        ;
-                    }
+                    while ((ch = nextToken()) == '-');
 
                     pushBack(ch);
 
@@ -2726,9 +2722,10 @@ public class TranslatorReader
 
             case TYPED:
                 return "<tt>";
-            }
 
-            return "";
+            default:
+                return "";
+            }
         }
 
         /**
@@ -2750,9 +2747,10 @@ public class TranslatorReader
 
             case TYPED:
                 return "</tt>";
-            }
 
-            return "";
+            default:
+                return "";
+            }
         }
 
         /**
@@ -3008,12 +3006,12 @@ public class TranslatorReader
          */
         private String makeHeadingAnchor(String baseName, String title, Heading hd)
         {
-            hd.m_titleText = title;
+            hd.setTitleText(title);
             title = cleanLink(title);
-            hd.m_titleSection = m_engine.encodeName(title);
-            hd.m_titleAnchor = "section-" + m_engine.encodeName(baseName) + "-" + hd.m_titleSection;
+            hd.setTitleSection(m_engine.encodeName(title));
+            hd.setTitleAnchor("section-" + m_engine.encodeName(baseName) + "-" + hd.getTitleSection());
 
-            return "<a name=\"" + hd.m_titleAnchor + "\">";
+            return "<a name=\"" + hd.getTitleAnchor() + "\">";
         }
 
         /**
@@ -3050,7 +3048,7 @@ public class TranslatorReader
                     "CleanTranslator not working as expected, when cleaning title" + e.getMessage());
             }
 
-            hd.m_level = level;
+            hd.setLevel(level);
 
             switch (level)
             {
@@ -3070,6 +3068,9 @@ public class TranslatorReader
                 res = "<h2>" + makeHeadingAnchor(pageName, outTitle.toString(), hd);
                 m_closeTag = "</a></h2>";
 
+                break;
+
+            default:
                 break;
             }
 
@@ -3519,10 +3520,10 @@ public class TranslatorReader
             String res = "";
             title = title.trim();
 
-            hd.m_level = level;
-            hd.m_titleText = title;
-            hd.m_titleSection = "";
-            hd.m_titleAnchor = "";
+            hd.setLevel(level);
+            hd.setTitleText(title);
+            hd.setTitleSection("");
+            hd.setTitleAnchor("");
 
             switch (level)
             {
@@ -3543,8 +3544,12 @@ public class TranslatorReader
                 m_closeTag = "\n" + StringUtils.repeat("=", title.length()) + "\n\n";
 
                 break;
-            }
 
+            default:
+                break;
+
+            }
+           
             return res;
         }
 
@@ -3726,7 +3731,7 @@ public class TranslatorReader
      * This class is used to store the headings in a manner which allow the building of a Table Of
      * Contents.
      */
-    public class Heading
+    public static class Heading
     {
         /** DOCUMENT ME! */
         public static final int HEADING_SMALL = 1;
@@ -3738,15 +3743,54 @@ public class TranslatorReader
         public static final int HEADING_LARGE = 3;
 
         /** DOCUMENT ME! */
-        public int m_level;
+        private int level;
 
         /** DOCUMENT ME! */
-        public String m_titleText;
+        private String titleText;
 
         /** DOCUMENT ME! */
-        public String m_titleAnchor;
+        private String titleAnchor;
 
         /** DOCUMENT ME! */
-        public String m_titleSection;
+        private String titleSection;
+
+        public int getLevel()
+        {
+            return level;
+        }
+
+        public void setLevel(int level)
+        {
+            this.level = level;
+        }
+
+        public String getTitleAnchor()
+        {
+            return titleAnchor;
+        }
+
+        public void setTitleAnchor(String titleAnchor)
+        {
+            this.titleAnchor = titleAnchor;
+        }
+
+        public String getTitleSection()
+        {
+            return titleSection;
+        }
+
+        public void setTitleSection(String titleSection)
+        {
+            this.titleSection = titleSection;
+        }
+        public String getTitleText()
+        {
+            return titleText;
+        }
+
+        public void setTitleText(String titleText)
+        {
+            this.titleText = titleText;
+        }
     }
 }

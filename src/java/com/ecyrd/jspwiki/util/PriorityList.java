@@ -61,15 +61,15 @@ public class PriorityList
         {
             Item item = (Item) m_elements.get(i);
 
-            if (item.m_priority < priority)
+            if (item.getPriority() < priority)
             {
                 break;
             }
         }
 
         Item newItem = new Item();
-        newItem.m_priority = priority;
-        newItem.m_object = o;
+        newItem.setPriority(priority);
+        newItem.setObject(o);
 
         m_elements.add(i, newItem);
     }
@@ -97,7 +97,7 @@ public class PriorityList
      */
     public Object get(int index)
     {
-        return ((Item) m_elements.get(index)).m_object;
+        return ((Item) m_elements.get(index)).getObject();
     }
 
     /**
@@ -116,9 +116,38 @@ public class PriorityList
     private class Item
     {
         /** DOCUMENT ME! */
-        public int m_priority;
+        private int priority;
 
         /** DOCUMENT ME! */
-        public Object m_object;
+        private Object object;
+
+        /**
+         * @return Returns the object.
+         */
+        public Object getObject()
+        {
+            return object;
+        }
+        /**
+         * @param object The object to set.
+         */
+        public void setObject(final Object object)
+        {
+            this.object = object;
+        }
+        /**
+         * @return Returns the priority.
+         */
+        public int getPriority()
+        {
+            return priority;
+        }
+        /**
+         * @param priority The priority to set.
+         */
+        public void setPriority(final int priority)
+        {
+            this.priority = priority;
+        }
     }
 }

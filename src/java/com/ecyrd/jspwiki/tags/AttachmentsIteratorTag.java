@@ -59,7 +59,7 @@ public class AttachmentsIteratorTag
         extends IteratorTag
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(AttachmentsIteratorTag.class);
+    private static final Logger log = Logger.getLogger(AttachmentsIteratorTag.class);
 
     /**
      * DOCUMENT ME!

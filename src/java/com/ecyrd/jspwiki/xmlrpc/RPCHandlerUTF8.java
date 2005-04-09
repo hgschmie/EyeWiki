@@ -50,7 +50,7 @@ public class RPCHandlerUTF8
         extends AbstractRPCHandler
 {
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(RPCHandlerUTF8.class);
+    private static final Logger log = Logger.getLogger(RPCHandlerUTF8.class);
 
     /**
      * DOCUMENT ME!

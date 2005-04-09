@@ -58,7 +58,7 @@ public class EditLinkTag
         extends WikiLinkTag
 {
     /** DOCUMENT ME! */
-    public String m_version = null;
+    private String m_version = null;
 
     /**
      * DOCUMENT ME!
@@ -149,6 +149,9 @@ public class EditLinkTag
         case URL:
             out.print(m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString));
 
+            break;
+
+        default:
             break;
         }
 

@@ -79,7 +79,7 @@ public class WikiDatabase
         implements UserDatabase
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(WikiDatabase.class);
+    private static final Logger log = Logger.getLogger(WikiDatabase.class);
 
     /**
      * The attribute to set on a page - [{SET members ...}] - to define members of the group named

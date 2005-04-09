@@ -84,9 +84,9 @@ public class SearchMatcher
             {
                 int index = -1;
 
-                while ((index = line.indexOf(m_queries[j].word, index + 1)) != -1)
+                while ((index = line.indexOf(m_queries[j].getWord(), index + 1)) != -1)
                 {
-                    if (m_queries[j].type != QueryItem.FORBIDDEN)
+                    if (m_queries[j].getType() != QueryItem.FORBIDDEN)
                     {
                         scores[j]++; // Mark, found this word n times
                     }
@@ -109,15 +109,15 @@ public class SearchMatcher
             // Give five points for each occurrence
             // of the word in the wiki name.
             if (
-                (wikiname.toLowerCase().indexOf(m_queries[j].word) != -1)
-                            && (m_queries[j].type != QueryItem.FORBIDDEN))
+                (wikiname.toLowerCase().indexOf(m_queries[j].getWord()) != -1)
+                            && (m_queries[j].getType() != QueryItem.FORBIDDEN))
             {
                 scores[j] += 5;
             }
 
             //  Filter out pages if the search word is marked 'required'
             //  but they have no score.
-            if ((m_queries[j].type == QueryItem.REQUIRED) && (scores[j] == 0))
+            if ((m_queries[j].getType() == QueryItem.REQUIRED) && (scores[j] == 0))
             {
                 return (null);
             }
@@ -146,10 +146,10 @@ public class SearchMatcher
             implements SearchResult
     {
         /** DOCUMENT ME! */
-        int m_score;
+        private int m_score;
 
         /** DOCUMENT ME! */
-        WikiPage m_page;
+        private WikiPage m_page;
 
         /**
          * Creates a new SearchResultImpl object.

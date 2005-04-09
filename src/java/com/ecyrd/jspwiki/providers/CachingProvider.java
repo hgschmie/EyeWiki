@@ -1054,10 +1054,10 @@ public class CachingProvider
             {
                 QueryItem queryTerm = queryTerms[curr];
 
-                if (queryTerm.word.indexOf(' ') >= 0)
+                if (queryTerm.getWord().indexOf(' ') >= 0)
                 { // this is a phrase search
 
-                    StringTokenizer tok = new StringTokenizer(queryTerm.word);
+                    StringTokenizer tok = new StringTokenizer(queryTerm.getWord());
 
                     while (tok.hasMoreTokens())
                     {
@@ -1065,8 +1065,8 @@ public class CachingProvider
                         String word = tok.nextToken();
                         query.add(
                             new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)),
-                            queryTerm.type == QueryItem.REQUIRED,
-                            queryTerm.type == QueryItem.FORBIDDEN);
+                            queryTerm.getType() == QueryItem.REQUIRED,
+                            queryTerm.getType() == QueryItem.FORBIDDEN);
                     }
 
                     /* Since we're not using Lucene to score, no reason to use PhraseQuery, which removes stop words.
@@ -1084,8 +1084,8 @@ public class CachingProvider
                 else
                 { // single word query
                     query.add(
-                        new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.word)),
-                        queryTerm.type == QueryItem.REQUIRED, queryTerm.type == QueryItem.FORBIDDEN);
+                        new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.getWord())),
+                        queryTerm.getType() == QueryItem.REQUIRED, queryTerm.getType() == QueryItem.FORBIDDEN);
                 }
             }
 

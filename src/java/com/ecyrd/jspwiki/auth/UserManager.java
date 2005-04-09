@@ -52,7 +52,7 @@ public class UserManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(UserManager.class);
+    private static final Logger log = Logger.getLogger(UserManager.class);
 
     /** The name the UserProfile is stored in a Session by. */
     public static final String WIKIUSER = "currentUser";

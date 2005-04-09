@@ -142,7 +142,7 @@ public class TraditionalDiffProvider
      * @author $author$
      * @version $Revision$
      */
-    public class RevisionPrint
+    private final class RevisionPrint
             implements RevisionVisitor
     {
         /** DOCUMENT ME! */

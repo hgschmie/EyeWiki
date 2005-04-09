@@ -65,7 +65,7 @@ public class PermissionTag
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page = m_wikiContext.getPage();
         AuthorizationManager mgr = engine.getAuthorizationManager();
-        boolean got_permission = false;
+        boolean gotPermission = false;
         UserProfile userprofile = m_wikiContext.getCurrentUser();
 
         if (page != null)
@@ -86,11 +86,11 @@ public class PermissionTag
                 }
             }
 
-            got_permission = mgr.checkPermission(page, userprofile, m_permission);
+            gotPermission = mgr.checkPermission(page, userprofile, m_permission);
         }
 
-        return got_permission
-        ? EVAL_BODY_INCLUDE
-        : SKIP_BODY;
+        return gotPermission
+                ? EVAL_BODY_INCLUDE
+                : SKIP_BODY;
     }
 }

@@ -81,7 +81,7 @@ public class AttachmentServlet
     private WikiEngine m_engine;
 
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(this.getClass().getName());
+    protected Logger log = Logger.getLogger(this.getClass());
 
     /** DOCUMENT ME! */
     private String m_tmpDir;

@@ -40,7 +40,7 @@ public abstract class WikiBodyTag
         extends BodyTagSupport
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(WikiBodyTag.class);
+    private static final Logger log = Logger.getLogger(WikiBodyTag.class);
 
     /** DOCUMENT ME! */
     protected WikiContext m_wikiContext;

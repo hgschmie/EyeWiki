@@ -62,7 +62,7 @@ public class AttachmentManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(AttachmentManager.class);
+    private static final Logger log = Logger.getLogger(AttachmentManager.class);
 
     /** DOCUMENT ME! */
     private WikiAttachmentProvider m_provider;

@@ -55,7 +55,7 @@ public abstract class IteratorTag
         extends BodyTagSupport
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(IteratorTag.class);
+    protected Logger log = Logger.getLogger(this.getClass());
 
     /** DOCUMENT ME! */
     protected String m_pageName;

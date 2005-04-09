@@ -36,8 +36,12 @@ import org.apache.commons.lang.StringUtils;
  *
  * @author ebu
  */
-public class FormUtil
+public final class FormUtil
 {
+    private FormUtil()
+    {
+    }
+
     /**
      * Looks for a named value in the Map. Returns either the value named by key, or values named
      * by key.0, key.1, ... if the direct value is not found. The values are packed in an

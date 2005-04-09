@@ -1787,7 +1787,7 @@ public class WikiEngine
             switch (token.charAt(0))
             {
             case '+':
-                items[word].type = QueryItem.REQUIRED;
+                items[word].setType(QueryItem.REQUIRED);
                 token = token.substring(1);
 
                 if (log.isDebugEnabled())
@@ -1798,7 +1798,7 @@ public class WikiEngine
                 break;
 
             case '-':
-                items[word].type = QueryItem.FORBIDDEN;
+                items[word].setType(QueryItem.FORBIDDEN);
                 token = token.substring(1);
 
                 if (log.isDebugEnabled())
@@ -1809,7 +1809,7 @@ public class WikiEngine
                 break;
 
             default:
-                items[word].type = QueryItem.REQUESTED;
+                items[word].setType(QueryItem.REQUESTED);
 
                 if (log.isDebugEnabled())
                 {
@@ -1819,7 +1819,7 @@ public class WikiEngine
                 break;
             }
 
-            items[word++].word = token;
+            items[word++].setWord(token);
         }
 
         Collection results = m_pageManager.findPages(items);

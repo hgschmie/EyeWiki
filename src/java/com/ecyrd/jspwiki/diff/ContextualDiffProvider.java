@@ -214,7 +214,7 @@ public class ContextualDiffProvider
      * This helper class does the housekeeping for merging our various changes down and also makes
      * sure that the whole change process is threadsafe by encapsulating all necessary variables.
      */
-    private class ChangeMerger
+    private final class ChangeMerger
             implements RevisionVisitor
     {
         /** DOCUMENT ME! */

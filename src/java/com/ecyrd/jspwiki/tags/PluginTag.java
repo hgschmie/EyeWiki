@@ -58,7 +58,7 @@ public class PluginTag
         extends BodyTagSupport
 {
     /** DOCUMENT ME! */
-    static Logger log = Logger.getLogger(PluginTag.class);
+    private static final Logger log = Logger.getLogger(PluginTag.class);
 
     /** DOCUMENT ME! */
     private String m_plugin;

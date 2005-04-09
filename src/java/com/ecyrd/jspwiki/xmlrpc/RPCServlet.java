@@ -71,7 +71,7 @@ public class RPCServlet
     private XmlRpcServer m_xmlrpcServer = new XmlRpcServer();
 
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(RPCServlet.class);
+    private static final Logger log = Logger.getLogger(RPCServlet.class);
 
     /**
      * DOCUMENT ME!

@@ -59,7 +59,7 @@ public class MetaWeblogHandler
         implements WikiRPCHandler
 {
     /** DOCUMENT ME! */
-    Logger log = Logger.getLogger(MetaWeblogHandler.class);
+    private static final Logger log = Logger.getLogger(MetaWeblogHandler.class);
 
     /** DOCUMENT ME! */
     private WikiEngine m_engine;

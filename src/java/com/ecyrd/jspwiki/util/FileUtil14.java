@@ -42,8 +42,13 @@ import java.nio.charset.CodingErrorAction;
 // FIXME: It would be so much neater to do a clean subclassing here
 // but since this is a static class, we'd need to do some kind of
 // redirection.  For later.
-public class FileUtil14
+public final class FileUtil14
 {
+    private FileUtil14()
+    {
+    }
+
+
     /**
      * JDK 1.4 version of FileUtil.readContents.  This version circumvents all kinds of problems
      * just by gulping in the entire inputstream to a ByteArray.

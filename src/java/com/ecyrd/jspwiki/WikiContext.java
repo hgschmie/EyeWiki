@@ -99,25 +99,25 @@ public class WikiContext
     public static final String NONE = ""; // This is not a JSPWiki context, use it to access static files
 
     /** DOCUMENT ME! */
-    WikiPage m_page;
+    protected WikiPage m_page;
 
     /** DOCUMENT ME! */
-    WikiEngine m_engine;
+    protected WikiEngine m_engine;
 
     /** DOCUMENT ME! */
-    String m_requestContext = VIEW;
+    protected String m_requestContext = VIEW;
 
     /** DOCUMENT ME! */
-    String m_template = "default";
+    protected String m_template = "default";
 
     /** DOCUMENT ME! */
-    Map m_variableMap = new HashMap();
+    protected Map m_variableMap = new HashMap();
 
     /** DOCUMENT ME! */
-    HttpServletRequest m_request = null;
+    protected HttpServletRequest m_request = null;
 
     /** DOCUMENT ME! */
-    UserProfile m_currentUser;
+    protected UserProfile m_currentUser;
 
     /**
      * Create a new WikiContext.
