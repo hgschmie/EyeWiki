@@ -50,7 +50,6 @@ public abstract class WikiPermission
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     public static WikiPermission newInstance(String representation)
-            throws IllegalArgumentException
     {
         if (representation.equalsIgnoreCase("view"))
         {

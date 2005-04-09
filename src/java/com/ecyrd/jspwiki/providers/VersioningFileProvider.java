@@ -279,7 +279,7 @@ public class VersioningFileProvider
      * @throws ProviderException DOCUMENT ME!
      */
     private int realVersion(String page, int requestedVersion)
-            throws NoSuchVersionException, ProviderException
+            throws ProviderException
     {
         //
         //  Quickly check for the most common case.

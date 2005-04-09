@@ -38,14 +38,14 @@ public interface WikiProperties
      * If this parameter is true, then all the page and string references are relative to the web
      * application root. This allows a wiki to be deployed "as is" as a single war file.
      */
-    public static final String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
+    String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
 
     /**
      * The default is to have absolute pathes for backwards compatibility
      *
      * @value false
      */
-    public static final boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
+    boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
 
     /*
      * ========================================================================

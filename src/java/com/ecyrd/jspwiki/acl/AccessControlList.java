@@ -34,13 +34,13 @@ public interface AccessControlList
         extends Acl
 {
     /** DOCUMENT ME! */
-    public static final int ALLOW = 1;
+    int ALLOW = 1;
 
     /** DOCUMENT ME! */
-    public static final int DENY = -1;
+    int DENY = -1;
 
     /** DOCUMENT ME! */
-    public static final int NONE = 0;
+    int NONE = 0;
 
     /**
      * DOCUMENT ME!
@@ -50,7 +50,7 @@ public interface AccessControlList
      *
      * @return DOCUMENT ME!
      */
-    public int findPermission(Principal principal, Permission permission);
+    int findPermission(Principal principal, Permission permission);
 
     /**
      * DOCUMENT ME!
@@ -60,5 +60,5 @@ public interface AccessControlList
      *
      * @return DOCUMENT ME!
      */
-    public AclEntry getEntry(Principal principal, boolean isNegative);
+    AclEntry getEntry(Principal principal, boolean isNegative);
 }

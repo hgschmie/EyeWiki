@@ -291,7 +291,7 @@ public class CachingAttachmentProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    private final Collection refresh(WikiPage page)
+    private Collection refresh(final WikiPage page)
             throws ProviderException
     {
         m_cacheMisses++;

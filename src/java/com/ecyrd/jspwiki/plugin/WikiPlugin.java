@@ -25,8 +25,8 @@ import com.ecyrd.jspwiki.WikiContext;
 
 
 /**
- * Defines an interface for plugins.  Any instance of a wiki plugin should implement this
- * interface.
+ * Defines an interface for plugins.  Any instance of a wiki plugin
+ * should implement this interface.
  *
  * @author Janne Jalkanen
  */
@@ -52,6 +52,6 @@ public interface WikiPlugin
      *
      * @throws PluginException In case anything goes wrong.
      */
-    public String execute(WikiContext context, Map params)
+    String execute(WikiContext context, Map params)
             throws PluginException;
 }

@@ -95,7 +95,7 @@ public class VariableManager
      * @throws NoSuchVariableException If a variable is not known.
      */
     public String parseAndGetValue(WikiContext context, String link)
-            throws IllegalArgumentException, NoSuchVariableException
+            throws NoSuchVariableException
     {
         if (!link.startsWith("{$"))
         {
@@ -192,7 +192,7 @@ public class VariableManager
     // FIXME: Currently a bit complicated.  Perhaps should use reflection
     //        or something to make an easy way of doing stuff.
     public String getValue(WikiContext context, String varName)
-            throws IllegalArgumentException, NoSuchVariableException
+            throws NoSuchVariableException
     {
         if (varName == null)
         {

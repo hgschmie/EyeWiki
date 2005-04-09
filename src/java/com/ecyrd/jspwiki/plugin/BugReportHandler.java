@@ -171,7 +171,7 @@ public class BugReportHandler
                 //
                 String head =
                         mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
-                
+
                 if (head.length() > 0)
                 {
                     out.println("|" + head + "|" + entry.getValue());

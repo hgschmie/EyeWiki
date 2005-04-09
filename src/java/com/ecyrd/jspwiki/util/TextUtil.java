@@ -121,7 +121,7 @@ public class TextUtil
      * @throws IllegalArgumentException DOCUMENT ME!
      */
     protected static String urlDecode(byte [] bytes)
-            throws UnsupportedEncodingException, IllegalArgumentException
+            throws UnsupportedEncodingException
     {
         if (bytes == null)
         {
@@ -287,11 +287,10 @@ public class TextUtil
      * @return DOCUMENT ME!
      *
      * @throws UnsupportedEncodingException DOCUMENT ME!
-     * @throws IllegalArgumentException DOCUMENT ME!
      * @throws RuntimeException DOCUMENT ME!
      */
     public static String urlDecode(String data, String encoding)
-            throws UnsupportedEncodingException, IllegalArgumentException
+            throws UnsupportedEncodingException
     {
         // Presumably, the same caveats apply as in FileSystemProvider.
         // Don't see why it would be horribly kludgy, though.
@@ -560,7 +559,6 @@ public class TextUtil
      * @since 2.2.
      */
     public static Map createMap(String [] values)
-            throws IllegalArgumentException
     {
         if ((values.length % 2) != 0)
         {
@@ -620,7 +618,6 @@ public class TextUtil
      * @since 2.1.86.
      */
     public static String getSection(String pagedata, int section)
-            throws IllegalArgumentException
     {
         int tags = 0;
         int start = 0;

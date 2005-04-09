@@ -39,7 +39,7 @@ public class LinkCollector
      *
      * @return DOCUMENT ME!
      */
-    public Collection getLinks()
+    public final Collection getLinks()
     {
         return m_items;
     }
@@ -52,7 +52,7 @@ public class LinkCollector
      *
      * @return DOCUMENT ME!
      */
-    public String mutate(WikiContext context, String in)
+    public final String mutate(final WikiContext context, final String in)
     {
         m_items.add(in);
 

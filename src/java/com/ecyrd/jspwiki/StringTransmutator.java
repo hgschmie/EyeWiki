@@ -34,5 +34,5 @@ public interface StringTransmutator
      *
      * @return DOCUMENT ME!
      */
-    public String mutate(WikiContext context, String source);
+    String mutate(WikiContext context, String source);
 }

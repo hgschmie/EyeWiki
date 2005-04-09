@@ -21,7 +21,7 @@ public interface WikiAuthorizer
      * @param engine The WikiEngine that owns this authorizer.
      * @param conf A bunch of properties.
      */
-    public void initialize(WikiEngine engine, Configuration conf);
+    void initialize(WikiEngine engine, Configuration conf);
 
     /**
      * Returns the permissions for this page.
@@ -30,7 +30,7 @@ public interface WikiAuthorizer
      *
      * @return DOCUMENT ME!
      */
-    public AccessControlList getPermissions(WikiPage page);
+    AccessControlList getPermissions(WikiPage page);
 
     /**
      * Returns the default permissions.  For example, fetch always from a page called
@@ -38,5 +38,5 @@ public interface WikiAuthorizer
      *
      * @return DOCUMENT ME!
      */
-    public AccessControlList getDefaultPermissions();
+    AccessControlList getDefaultPermissions();
 }

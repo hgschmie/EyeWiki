@@ -146,7 +146,7 @@ public class TemplateManager
      *
      * @return DOCUMENT ME!
      */
-    private final String removeTemplatePart(String name)
+    private String removeTemplatePart(final String name)
     {
         int idx = name.indexOf('/');
 
@@ -163,9 +163,15 @@ public class TemplateManager
         return name;
     }
 
-    private final String makeFullJSPName(String template, String name)
+    private String makeFullJSPName(final String template, final String name)
     {
-        return "/" + DIRECTORY + "/" + template + "/" + name;
+        StringBuffer sb = new StringBuffer("/")
+                .append(DIRECTORY)
+                .append("/")
+                .append(template)
+                .append("/")
+                .append(name);
+        return sb.toString();
     }
 
     /**
@@ -257,9 +263,15 @@ public class TemplateManager
         }
     }
 
-    private static final String getPath(String template)
+    private static String getPath(final String template)
     {
-        return "/" + DIRECTORY + "/" + template + "/";
+        StringBuffer sb =  new StringBuffer("/")
+                .append(DIRECTORY)
+                .append("/")
+                .append(template)
+                .append("/");
+
+        return sb.toString();
     }
 
     /**

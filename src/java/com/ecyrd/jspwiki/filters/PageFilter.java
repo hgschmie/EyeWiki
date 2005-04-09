@@ -33,7 +33,7 @@ public interface PageFilter
      *
      * @throws FilterException DOCUMENT ME!
      */
-    public void initialize(Properties props)
+    void initialize(Properties props)
             throws FilterException;
 
     /**
@@ -48,7 +48,7 @@ public interface PageFilter
      *
      * @throws FilterException DOCUMENT ME!
      */
-    public String preTranslate(WikiContext wikiContext, String content)
+    String preTranslate(WikiContext wikiContext, String content)
             throws FilterException;
 
     /**
@@ -63,7 +63,7 @@ public interface PageFilter
      *
      * @throws FilterException DOCUMENT ME!
      */
-    public String postTranslate(WikiContext wikiContext, String htmlContent)
+    String postTranslate(WikiContext wikiContext, String htmlContent)
             throws FilterException;
 
     /**
@@ -76,7 +76,7 @@ public interface PageFilter
      *
      * @throws FilterException DOCUMENT ME!
      */
-    public String preSave(WikiContext wikiContext, String content)
+    String preSave(WikiContext wikiContext, String content)
             throws FilterException;
 
     /**
@@ -93,6 +93,6 @@ public interface PageFilter
      *
      * @throws FilterException DOCUMENT ME!
      */
-    public void postSave(WikiContext wikiContext, String content)
+    void postSave(WikiContext wikiContext, String content)
             throws FilterException;
 }

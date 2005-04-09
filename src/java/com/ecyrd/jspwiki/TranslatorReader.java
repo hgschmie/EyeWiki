@@ -2833,7 +2833,7 @@ public class TranslatorReader
             return makeLink(type, link, text, null);
         }
 
-        private final String getURL(String context, String link)
+        private String getURL(String context, String link)
         {
             return m_context.getURL(context, link, null);
         }

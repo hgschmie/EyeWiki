@@ -120,7 +120,6 @@ public class UserProfile
      * @throws NoSuchElementException DOCUMENT ME!
      */
     public static UserProfile parseStringRepresentation(String res)
-            throws NoSuchElementException
     {
         UserProfile prof = new UserProfile();
 

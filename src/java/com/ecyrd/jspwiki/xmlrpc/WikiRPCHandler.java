@@ -37,5 +37,5 @@ public interface WikiRPCHandler
      *
      * @param engine DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine);
+    void initialize(WikiEngine engine);
 }

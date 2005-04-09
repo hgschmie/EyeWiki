@@ -30,5 +30,5 @@ public interface HeadingListener
      * @param context DOCUMENT ME!
      * @param hd DOCUMENT ME!
      */
-    public void headingAdded(WikiContext context, TranslatorReader.Heading hd);
+    void headingAdded(WikiContext context, TranslatorReader.Heading hd);
 }

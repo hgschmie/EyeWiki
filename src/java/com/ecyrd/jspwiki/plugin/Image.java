@@ -83,7 +83,7 @@ public class Image
      *
      * @return DOCUMENT ME!
      */
-    private static final String getCleanParameter(Map params, String paramId)
+    private static String getCleanParameter(final Map params, final String paramId)
     {
         return TextUtil.replaceEntities((String) params.get(paramId));
     }

@@ -35,8 +35,9 @@ import com.ecyrd.jspwiki.WikiContext;
 public interface InitializablePlugin
 {
     /**
-     * The initialization routine.  The context is to a Wiki page, and the parameters are exactly
-     * like in the execute() -routine. However, this routine is not expected to return anything,
+     * The initialization routine.  The context is to a Wiki page, and
+     * the parameters are exactly like in the execute()-routine.
+     * However, this routine is not expected to return anything,
      * as any output will be discarded.
      *
      * @param context DOCUMENT ME!
@@ -44,6 +45,6 @@ public interface InitializablePlugin
      *
      * @throws PluginException DOCUMENT ME!
      */
-    public void initialize(WikiContext context, Map params)
+    void initialize(WikiContext context, Map params)
             throws PluginException;
 }

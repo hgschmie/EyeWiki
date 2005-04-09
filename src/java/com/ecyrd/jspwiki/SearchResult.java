@@ -32,12 +32,12 @@ public interface SearchResult
      *
      * @return DOCUMENT ME!
      */
-    public WikiPage getPage();
+    WikiPage getPage();
 
     /**
      * Returns the score.
      *
      * @return DOCUMENT ME!
      */
-    public int getScore();
+    int getScore();
 }

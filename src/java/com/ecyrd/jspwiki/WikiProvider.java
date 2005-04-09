@@ -36,7 +36,7 @@ import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 public interface WikiProvider
 {
     /** Passing this to any method should get the latest version */
-    public static final int LATEST_VERSION = -1;
+    int LATEST_VERSION = -1;
 
     /**
      * Initializes the page provider.
@@ -47,7 +47,7 @@ public interface WikiProvider
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    void initialize(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException;
 
     /**
@@ -57,5 +57,5 @@ public interface WikiProvider
      *
      * @since 1.6.4
      */
-    public String getProviderInfo();
+    String getProviderInfo();
 }

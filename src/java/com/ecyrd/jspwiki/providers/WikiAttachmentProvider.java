@@ -1,22 +1,22 @@
 /*
-    JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public interface WikiAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public void putAttachmentData(Attachment att, InputStream data)
+    void putAttachmentData(Attachment att, InputStream data)
             throws ProviderException, IOException;
 
     /**
@@ -69,7 +69,7 @@ public interface WikiAttachmentProvider
      * @throws ProviderException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public InputStream getAttachmentData(Attachment att)
+    InputStream getAttachmentData(Attachment att)
             throws ProviderException, IOException;
 
     /**
@@ -81,7 +81,7 @@ public interface WikiAttachmentProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public Collection listAttachments(WikiPage page)
+    Collection listAttachments(WikiPage page)
             throws ProviderException;
 
     /**
@@ -91,7 +91,7 @@ public interface WikiAttachmentProvider
      *
      * @return DOCUMENT ME!
      */
-    public Collection findAttachments(QueryItem [] query);
+    Collection findAttachments(QueryItem [] query);
 
     /**
      * Lists changed attachments since given date.  Can also be used to fetch a list of all pages.
@@ -113,7 +113,7 @@ public interface WikiAttachmentProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public List listAllChanged(Date timestamp)
+    List listAllChanged(Date timestamp)
             throws ProviderException;
 
     /**
@@ -127,7 +127,7 @@ public interface WikiAttachmentProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public Attachment getAttachmentInfo(WikiPage page, String name, int version)
+    Attachment getAttachmentInfo(WikiPage page, String name, int version)
             throws ProviderException;
 
     /**
@@ -137,7 +137,7 @@ public interface WikiAttachmentProvider
      *
      * @return DOCUMENT ME!
      */
-    public List getVersionHistory(Attachment att);
+    List getVersionHistory(Attachment att);
 
     /**
      * Removes a specific version from the repository.  The implementations should really do no
@@ -151,7 +151,7 @@ public interface WikiAttachmentProvider
      *
      * @since 2.0.19.
      */
-    public void deleteVersion(Attachment att)
+    void deleteVersion(Attachment att)
             throws ProviderException;
 
     /**
@@ -166,6 +166,6 @@ public interface WikiAttachmentProvider
      *
      * @since 2.0.17.
      */
-    public void deleteAttachment(Attachment att)
+    void deleteAttachment(Attachment att)
             throws ProviderException;
 }

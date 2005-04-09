@@ -1,22 +1,22 @@
 /*
-    JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2001-2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.providers;
 
 import java.util.Collection;
@@ -60,7 +60,7 @@ public interface WikiPageProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public void putPageText(WikiPage page, String text)
+    void putPageText(WikiPage page, String text)
             throws ProviderException;
 
     /**
@@ -70,7 +70,7 @@ public interface WikiPageProvider
      *
      * @return DOCUMENT ME!
      */
-    public boolean pageExists(String page);
+    boolean pageExists(String page);
 
     /**
      * Finds pages based on the query.
@@ -79,7 +79,7 @@ public interface WikiPageProvider
      *
      * @return DOCUMENT ME!
      */
-    public Collection findPages(QueryItem [] query);
+    Collection findPages(QueryItem [] query);
 
     /**
      * Returns info about the page.
@@ -91,7 +91,7 @@ public interface WikiPageProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public WikiPage getPageInfo(String page, int version)
+    WikiPage getPageInfo(String page, int version)
             throws ProviderException;
 
     /**
@@ -101,7 +101,7 @@ public interface WikiPageProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public Collection getAllPages()
+    Collection getAllPages()
             throws ProviderException;
 
     /**
@@ -113,7 +113,7 @@ public interface WikiPageProvider
      *
      * @since 1.6.4
      */
-    public Collection getAllChangedSince(Date date);
+    Collection getAllChangedSince(Date date);
 
     /**
      * Gets the number of pages.
@@ -124,7 +124,7 @@ public interface WikiPageProvider
      *
      * @since 1.6.4
      */
-    public int getPageCount()
+    int getPageCount()
             throws ProviderException;
 
     /**
@@ -136,7 +136,7 @@ public interface WikiPageProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public List getVersionHistory(String page)
+    List getVersionHistory(String page)
             throws ProviderException;
 
     /**
@@ -149,7 +149,7 @@ public interface WikiPageProvider
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public String getPageText(String page, int version)
+    String getPageText(String page, int version)
             throws ProviderException;
 
     /**
@@ -164,7 +164,7 @@ public interface WikiPageProvider
      *
      * @since 2.0.17.
      */
-    public void deleteVersion(String pageName, int version)
+    void deleteVersion(String pageName, int version)
             throws ProviderException;
 
     /**
@@ -185,6 +185,6 @@ public interface WikiPageProvider
      *
      * @since 2.0.17.
      */
-    public void deletePage(String pageName)
+    void deletePage(String pageName)
             throws ProviderException;
 }

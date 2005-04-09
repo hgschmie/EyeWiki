@@ -443,7 +443,7 @@ public class CachingProvider
      *         repository
      */
     private WikiPage getPageInfoFromCache(String name)
-            throws ProviderException, RepositoryModifiedException
+            throws ProviderException
     {
         try
         {
@@ -665,7 +665,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException If the page has been externally modified.
      */
     public String getPageText(String pageName, int version)
-            throws ProviderException, RepositoryModifiedException
+            throws ProviderException
     {
         String result = null;
 
@@ -728,7 +728,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException If the page has been externally modified.
      */
     private String getTextFromCache(String pageName)
-            throws ProviderException, RepositoryModifiedException
+            throws ProviderException
     {
         String text;
 
@@ -1148,7 +1148,7 @@ public class CachingProvider
      * @throws RepositoryModifiedException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String pageName, int version)
-            throws ProviderException, RepositoryModifiedException
+            throws ProviderException
     {
         WikiPage cached = getPageInfoFromCache(pageName);
 

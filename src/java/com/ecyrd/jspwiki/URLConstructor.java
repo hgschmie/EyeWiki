@@ -19,7 +19,7 @@ public interface URLConstructor
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf);
+    void initialize(WikiEngine engine, Configuration conf);
 
     /**
      * Constructs the URL with a bunch of parameters.
@@ -31,7 +31,7 @@ public interface URLConstructor
      *
      * @return DOCUMENT ME!
      */
-    public String makeURL(String context, String name, boolean absolute, String parameters);
+    String makeURL(String context, String name, boolean absolute, String parameters);
 
     /**
      * Should parse the "page" parameter from the actual request.
@@ -44,6 +44,6 @@ public interface URLConstructor
      *
      * @throws IOException DOCUMENT ME!
      */
-    public String parsePage(String context, HttpServletRequest request, String encoding)
+    String parsePage(String context, HttpServletRequest request, String encoding)
             throws IOException;
 }

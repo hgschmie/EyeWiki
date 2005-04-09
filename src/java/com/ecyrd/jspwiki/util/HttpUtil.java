@@ -105,7 +105,7 @@ public class HttpUtil
         if (ifModifiedSince != -1)
         {
             long lastModifiedTime = lastModified.getTime();
-            
+
             //log.info("lastModifiedTime:" + lastModifiedTime);
             if (lastModifiedTime <= ifModifiedSince)
             {
@@ -117,11 +117,11 @@ public class HttpUtil
             try
             {
                 String s = req.getHeader("If-Modified-Since");
-                
+
                 if (s != null)
                 {
                     Date ifModifiedSinceDate = rfcDateFormat.parse(s);
-                    
+
                     //log.info("ifModifiedSinceDate:" + ifModifiedSinceDate);
                     if (lastModified.before(ifModifiedSinceDate))
                     {
