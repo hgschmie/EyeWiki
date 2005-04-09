@@ -20,7 +20,8 @@
 package com.ecyrd.jspwiki.util;
 
 import java.io.UnsupportedEncodingException;
-
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -188,19 +189,15 @@ public final class TextUtil
      */
     public static String urlEncodeUTF8(String text)
     {
-        byte [] rs = {  };
-
         try
         {
-            rs = text.getBytes("UTF-8");
-
-            return urlEncode(rs);
+            return urlEncode(text.getBytes("UTF-8"));
         }
         catch (UnsupportedEncodingException e)
         {
             try
             {
-                return java.net.URLEncoder.encode(text, "UTF-8");
+                return URLEncoder.encode(text, "UTF-8");
             }
             catch (UnsupportedEncodingException uee)
             {
@@ -220,25 +217,21 @@ public final class TextUtil
      */
     public static String urlDecodeUTF8(String utf8)
     {
-        String rs = null;
-
         try
         {
-            rs = urlDecode(utf8.getBytes("ISO-8859-1"));
+            return urlDecode(utf8.getBytes("ISO-8859-1"));
         }
         catch (UnsupportedEncodingException e)
         {
             try
             {
-                rs = java.net.URLDecoder.decode(utf8, "UTF-8");
+                return URLDecoder.decode(utf8, "UTF-8");
             }
             catch (UnsupportedEncodingException uee)
             {
                 throw new RuntimeException("Could not decode UTF-8!?!", uee);
             }
         }
-
-        return rs;
     }
 
     /**

@@ -386,7 +386,7 @@ public class WikiDatabase
      * @author $author$
      * @version $Revision$
      */
-    public class TimeStampWrapper
+    public static class TimeStampWrapper
     {
         /** DOCUMENT ME! */
         private Object contained = null;

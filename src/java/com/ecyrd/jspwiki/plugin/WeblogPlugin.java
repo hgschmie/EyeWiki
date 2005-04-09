@@ -459,7 +459,7 @@ public class WeblogPlugin
     /**
      * Reverse comparison.
      */
-    private class PageDateComparator
+    private static class PageDateComparator
             implements Comparator
     {
         /**

@@ -103,6 +103,9 @@ public class CommentLinkTag
             out.print(getCommentURL(pageName));
 
             break;
+
+        default:
+            break;
         }
 
         return EVAL_BODY_INCLUDE;

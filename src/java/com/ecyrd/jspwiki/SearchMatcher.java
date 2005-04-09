@@ -142,7 +142,7 @@ public class SearchMatcher
      * @author $author$
      * @version $Revision$
      */
-    public class SearchResultImpl
+    public static class SearchResultImpl
             implements SearchResult
     {
         /** DOCUMENT ME! */

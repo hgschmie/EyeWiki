@@ -570,7 +570,7 @@ public class RCSFileProvider
 
             if (rcsfile.exists())
             {
-                if (rcsfile.delete() == false)
+                if (!rcsfile.delete())
                 {
                     log.warn("Deletion of RCS file " + rcsfile.getAbsolutePath() + " failed!");
                 }

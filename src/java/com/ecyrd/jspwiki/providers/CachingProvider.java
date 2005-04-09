@@ -1326,7 +1326,7 @@ public class CachingProvider
      *
      * @since
      */
-    private class CacheItemCollector
+    private static class CacheItemCollector
             implements CacheEntryEventListener
     {
         /** DOCUMENT ME! */

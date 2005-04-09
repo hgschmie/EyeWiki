@@ -513,7 +513,7 @@ public abstract class AbstractFileProvider
      * @author $author$
      * @version $Revision$
      */
-    public class WikiFileFilter
+    public static class WikiFileFilter
             implements FilenameFilter
     {
         /**

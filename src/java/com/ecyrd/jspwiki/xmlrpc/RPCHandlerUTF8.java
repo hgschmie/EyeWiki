@@ -26,7 +26,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.ecyrd.jspwiki.LinkCollector;
@@ -49,9 +48,6 @@ import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 public class RPCHandlerUTF8
         extends AbstractRPCHandler
 {
-    /** DOCUMENT ME! */
-    private static final Logger log = Logger.getLogger(RPCHandlerUTF8.class);
-
     /**
      * DOCUMENT ME!
      *

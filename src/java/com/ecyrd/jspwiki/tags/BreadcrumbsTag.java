@@ -26,8 +26,6 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
-import org.apache.log4j.Logger;
-
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -180,7 +178,7 @@ public class BreadcrumbsTag
     /**
      * Extends the LinkedList class to provide a fixed-size queue implementation
      */
-    private class FixedQueue
+    private static class FixedQueue
             extends LinkedList
             implements Serializable
     {

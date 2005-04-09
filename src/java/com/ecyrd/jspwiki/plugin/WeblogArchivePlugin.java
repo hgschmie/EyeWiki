@@ -206,7 +206,7 @@ public class WeblogArchivePlugin
      * interface so that it can be put in a Set and sorted.  In addition, it also evaluates two
      * objects that are in the same month to be equal.
      */
-    private class ArchiveCalendar
+    private static class ArchiveCalendar
             extends GregorianCalendar
             implements Comparable
     {
