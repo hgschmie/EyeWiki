@@ -1,16 +1,19 @@
-package com.ecyrd.jspwiki;
+package com.ecyrd.jspwiki.manager;
 
 import java.io.File;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.Util;
+import com.ecyrd.jspwiki.WikiProperties;
 
 
 /**
@@ -22,7 +25,7 @@ public class ReferenceManagerTest
         extends TestCase
 {
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -48,7 +51,7 @@ public class ReferenceManagerTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
         conf.setProperty(WikiProperties.PROP_MATCHPLURALS, "true");
 
         //
@@ -79,11 +82,7 @@ public class ReferenceManagerTest
      */
     public void tearDown()
     {
-        TestEngine.deleteTestPage("TestPage");
-        TestEngine.deleteTestPage("Foobar");
-        TestEngine.deleteTestPage("Foobars");
-        TestEngine.deleteTestPage("Foobar2");
-        TestEngine.deleteTestPage("Foobar2s");
+        engine.cleanup();
     }
 
     /**

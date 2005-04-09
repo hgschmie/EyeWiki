@@ -1,14 +1,15 @@
-package com.ecyrd.jspwiki;
-
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.PropertyConfigurator;
-
-import com.ecyrd.jspwiki.providers.CachingProvider;
+package com.ecyrd.jspwiki.manager;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.providers.CachingProvider;
 
 
 /**
@@ -21,7 +22,7 @@ public class PageManagerTest
         extends TestCase
 {
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -44,7 +45,7 @@ public class PageManagerTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         engine = new TestEngine(conf);
     }
@@ -54,6 +55,7 @@ public class PageManagerTest
      */
     public void tearDown()
     {
+        engine.cleanup();
     }
 
     /**

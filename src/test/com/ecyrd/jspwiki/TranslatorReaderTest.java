@@ -1,30 +1,26 @@
 package com.ecyrd.jspwiki;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.servlet.ServletException;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang.StringUtils;
-
-import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
-import com.ecyrd.jspwiki.util.FileUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
+
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 
 /**
@@ -66,10 +62,7 @@ public class TranslatorReaderTest
         + "author: [Asser], [Ebu], [JanneJalkanen], [Jarmo|mailto:jarmo@regex.com.au]\n";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
-
-    /** DOCUMENT ME! */
-    Vector created = new Vector();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine testEngine;
@@ -92,7 +85,7 @@ public class TranslatorReaderTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         conf.setProperty("jspwiki.translatorReader.matchEnglishPlurals", "true");
         testEngine = new TestEngine(conf);
@@ -103,28 +96,13 @@ public class TranslatorReaderTest
      */
     public void tearDown()
     {
-        deleteCreatedPages();
+        testEngine.cleanup();
     }
 
     private void newPage(String name)
             throws WikiException
     {
         testEngine.saveText(name, "<test>");
-
-        created.addElement(name);
-    }
-
-    private void deleteCreatedPages()
-    {
-        for (Iterator i = created.iterator(); i.hasNext();)
-        {
-            String name = (String) i.next();
-
-            TestEngine.deleteTestPage(name);
-            testEngine.deleteAttachments(name);
-        }
-
-        created.clear();
     }
 
     private String translate(String src)
@@ -162,7 +140,7 @@ public class TranslatorReaderTest
     private String translate_nofollow(String src)
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         conf.setProperty("jspwiki.translatorReader.useRelNofollow", "true");
 
@@ -2434,46 +2412,32 @@ public class TranslatorReaderTest
             throws Exception
     {
         // First, make an attachment.
-        try
-        {
-            Attachment att = new Attachment(PAGE_NAME, "TestAtt.txt");
-            att.setAuthor("FirstPost");
-            testEngine.getAttachmentManager().storeAttachment(att, testEngine.makeAttachmentFile());
+        Attachment att = new Attachment(PAGE_NAME, "TestAtt.txt");
+        att.setAuthor("FirstPost");
+        testEngine.getAttachmentManager().storeAttachment(att, testEngine.makeAttachmentFile());
 
-            LinkCollector coll = new LinkCollector();
-            LinkCollector coll_others = new LinkCollector();
+        LinkCollector coll = new LinkCollector();
+        LinkCollector coll_others = new LinkCollector();
 
-            String src = "[TestAtt.txt]";
-            WikiContext context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
+        String src = "[TestAtt.txt]";
+        WikiContext context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
 
-            TranslatorReader r =
-                new TranslatorReader(context, new BufferedReader(new StringReader(src)));
-            r.addLocalLinkHook(coll_others);
-            r.addExternalLinkHook(coll_others);
-            r.addAttachmentLinkHook(coll);
+        TranslatorReader r =
+            new TranslatorReader(context, new BufferedReader(new StringReader(src)));
+        r.addLocalLinkHook(coll_others);
+        r.addExternalLinkHook(coll_others);
+        r.addAttachmentLinkHook(coll);
 
-            StringWriter out = new StringWriter();
+    	StringWriter out = new StringWriter();
 
-            FileUtil.copyContents(r, out);
+    	FileUtil.copyContents(r, out);
 
-            Collection links = coll.getLinks();
+    	Collection links = coll.getLinks();
 
-            assertEquals("no links found", 1, links.size());
-            assertEquals("wrong link", PAGE_NAME + "/TestAtt.txt", links.iterator().next());
+    	assertEquals("no links found", 1, links.size());
+    	assertEquals("wrong link", PAGE_NAME + "/TestAtt.txt", links.iterator().next());
 
-            assertEquals("wrong links found", 0, coll_others.getLinks().size());
-        }
-        finally
-        {
-            String files =
-                testEngine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR);
-            File storagedir = new File(files, PAGE_NAME + BasicAttachmentProvider.DIR_EXTENSION);
-
-            if (storagedir.exists() && storagedir.isDirectory())
-            {
-                TestEngine.deleteAll(storagedir);
-            }
-        }
+    	assertEquals("wrong links found", 0, coll_others.getLinks().size());
     }
 
     /**

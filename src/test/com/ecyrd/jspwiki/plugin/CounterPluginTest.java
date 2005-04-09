@@ -8,17 +8,17 @@ import java.io.StringWriter;
 
 import javax.servlet.ServletException;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -31,7 +31,7 @@ public class CounterPluginTest
         extends TestCase
 {
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine testEngine;
@@ -60,7 +60,7 @@ public class CounterPluginTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         testEngine = new TestEngine(conf);
     }
@@ -70,6 +70,7 @@ public class CounterPluginTest
      */
     public void tearDown()
     {
+        testEngine.cleanup();
     }
 
     private String translate(String src)

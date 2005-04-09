@@ -1,15 +1,14 @@
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
-
-import com.ecyrd.jspwiki.TestEngine;
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiPage;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiPage;
 
 
 /**
@@ -25,10 +24,10 @@ public class PluginManagerTest
     public static final String NAME1 = "Test1";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
-    WikiEngine engine;
+    TestEngine engine;
 
     /** DOCUMENT ME! */
     WikiContext context;
@@ -54,7 +53,7 @@ public class PluginManagerTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         engine = new TestEngine(conf);
         context = new WikiContext(engine, new WikiPage("testpage"));
@@ -66,6 +65,7 @@ public class PluginManagerTest
      */
     public void tearDown()
     {
+        engine.cleanup();
     }
 
     /**

@@ -1,17 +1,15 @@
 package com.ecyrd.jspwiki.auth;
 
-import java.io.IOException;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.util.TextUtil;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -34,16 +32,8 @@ public class UserProfileTest
     {
         super(s);
 
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-
-        try
-        {
-            conf.load(TestEngine.findTestProperties());
-            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
-        }
-        catch (IOException e)
-        {
-        }
+        Configuration conf = TestEngine.getConfiguration();
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
     }
 
     /**

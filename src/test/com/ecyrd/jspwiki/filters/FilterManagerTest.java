@@ -4,15 +4,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.PropertyConfigurator;
-
-import com.ecyrd.jspwiki.TestEngine;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.TestEngine;
 
 
 /**
@@ -25,7 +25,7 @@ public class FilterManagerTest
         extends TestCase
 {
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -48,7 +48,7 @@ public class FilterManagerTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
         engine = new TestEngine(conf);
     }
@@ -58,6 +58,7 @@ public class FilterManagerTest
      */
     public void tearDown()
     {
+        engine.cleanup();
     }
 
     /**

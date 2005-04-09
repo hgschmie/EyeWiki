@@ -2,10 +2,13 @@ package com.ecyrd.jspwiki.auth;
 
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
-
 import java.util.Enumeration;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -16,10 +19,6 @@ import com.ecyrd.jspwiki.auth.permissions.DeletePermission;
 import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.UploadPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -54,8 +53,7 @@ public class AuthorizationManagerTest
     public void setUp()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf = TestEngine.getConfiguration();
 
         m_engine = new TestEngine(conf);
         m_manager = m_engine.getAuthorizationManager();
@@ -66,9 +64,7 @@ public class AuthorizationManagerTest
      */
     public void tearDown()
     {
-        TestEngine.deleteTestPage("Test");
-        TestEngine.deleteTestPage("AdminGroup");
-        TestEngine.deleteTestPage("FooGroup");
+        m_engine.cleanup();
     }
 
     /**

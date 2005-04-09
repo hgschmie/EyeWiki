@@ -5,15 +5,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.PropertyConfigurator;
-
-import com.ecyrd.jspwiki.util.FileUtil;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.util.FileUtil;
 
 
 /**
@@ -37,16 +37,10 @@ public class FileUtilTest
     {
         super(s);
 
-        PropertiesConfiguration conf = new PropertiesConfiguration();
+        Configuration conf = null;
 
-        try
-        {
-            conf.load(TestEngine.findTestProperties());
-            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
-        }
-        catch (IOException e)
-        {
-        }
+        conf = TestEngine.getConfiguration();
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
     }
 
     /**
@@ -139,20 +133,14 @@ public class FileUtilTest
 
         String [] envp = {  };
 
-        try
-        {
-            Process process =
+        Process process =
                 Runtime.getRuntime().exec("cat " + f.getAbsolutePath(), envp, f.getParentFile());
 
-            String result = FileUtil.readContents(process.getInputStream(), "UTF-8");
+        String result = FileUtil.readContents(process.getInputStream(), "UTF-8");
 
-            f.delete();
+        f.delete();
 
-            assertEquals(src, result);
-        }
-        catch (IOException e)
-        {
-        }
+        assertEquals(src, result);
     }
 
     /**

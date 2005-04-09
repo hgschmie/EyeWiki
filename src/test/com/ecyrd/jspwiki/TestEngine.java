@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
@@ -43,65 +42,62 @@ public class TestEngine
         super(conf);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public static void emptyWorkDir()
-            throws Exception
+    public void cleanup()
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
+        cleanWorkDir();
+        cleanPageDir();
+        cleanStorageDir();
+    }
 
-        try
-        {
-            conf.load(findTestProperties());
+    public void cleanWorkDir()
+    {
+        deleteAll(new File(getWorkDir()));
+    }
 
-            String workdir = conf.getString(WikiEngine.PROP_WORKDIR);
+    public void cleanPageDir()
+    {
+        deleteAll(new File(getPageDir()));
+    }
 
-            if (workdir != null)
-            {
-                File f = new File(workdir);
-
-                if (f.exists() && f.isDirectory() && new File(f, "refmgr.ser").exists())
-                {
-                    deleteAll(f);
-                }
-            }
-        }
-        catch (IOException e)
-        {
-        } // Fine
+    public void cleanStorageDir()
+    {
+        deleteAll(new File(getStorageDir()));
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns the default configuration for the Test cases
      *
-     * @return DOCUMENT ME!
+     * @return A configuration object
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception When the configuration object cannot be opened
      */
-    public static final Reader findTestProperties()
+    public static final Configuration getConfiguration()
             throws Exception
     {
-        return findTestProperties("/jspwiki.properties");
+        return getConfiguration("/jspwiki.properties");
     }
 
     /**
-     * DOCUMENT ME!
      *
-     * @param properties DOCUMENT ME!
+     * Loads a configuration file
      *
-     * @return DOCUMENT ME!
+     * @param properties The resource name of the properties file.
+     * @return A configuration object
      *
-     * @throws Exception DOCUMENT ME!
+     * @throws Exception When the configuration object cannot be opened
      */
-    public static final Reader findTestProperties(String properties)
+    public static final Configuration getConfiguration(String properties)
             throws Exception
     {
         InputStream is = TestEngine.class.getResourceAsStream(properties);
 
-        return new InputStreamReader(is, "UTF-8");
+        Reader isr = new InputStreamReader(is, "UTF-8");
+        PropertiesConfiguration conf = new PropertiesConfiguration();
+        conf.load(isr);
+        isr.close();
+        
+        conf.setThrowExceptionOnMissing(true);
+        return conf;
     }
 
     /**
@@ -109,7 +105,7 @@ public class TestEngine
      *
      * @param file DOCUMENT ME!
      */
-    public static void deleteAll(File file)
+    private void deleteAll(File file)
     {
         if (file != null)
         {
@@ -162,18 +158,13 @@ public class TestEngine
      *
      * @param name DOCUMENT ME!
      */
-    public static void deleteTestPage(String name)
+    public void deleteTestPage(String name)
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
 
         try
         {
-            conf.load(findTestProperties());
-
-            String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-
+            String files = getPageDir();
             File f = new File(files, mangleName(name) + FileSystemProvider.FILE_EXT);
-
             f.delete();
         }
         catch (Exception e)
@@ -191,13 +182,13 @@ public class TestEngine
     {
         try
         {
-            String files = getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR);
+            String files = getStorageDir();
 
-            File f =
-                new File(
-                    files, TextUtil.urlEncodeUTF8(page) + BasicAttachmentProvider.DIR_EXTENSION);
-
-            deleteAll(f);
+            if (files != null)
+            {
+                File f = new File(files, TextUtil.urlEncodeUTF8(page) + BasicAttachmentProvider.DIR_EXTENSION);
+                deleteAll(f);
+            }
         }
         catch (Exception e)
         {
@@ -241,20 +232,5 @@ public class TestEngine
         WikiContext context = new WikiContext(this, new WikiPage(pageName));
 
         saveText(context, content);
-    }
-
-    /**
-     * DOCUMENT ME!
-     */
-    public static void trace()
-    {
-        try
-        {
-            throw new Exception("Foo");
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 }

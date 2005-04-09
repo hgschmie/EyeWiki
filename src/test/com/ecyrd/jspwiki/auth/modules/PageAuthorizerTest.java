@@ -1,15 +1,16 @@
 package com.ecyrd.jspwiki.auth.modules;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -42,8 +43,7 @@ public class PageAuthorizerTest
     public void setUp()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf = TestEngine.getConfiguration();
 
         m_engine = new TestEngine(conf);
 
@@ -60,8 +60,7 @@ public class PageAuthorizerTest
      */
     public void tearDown()
     {
-        TestEngine.deleteTestPage("DefaultPermissions");
-        TestEngine.deleteTestPage("TestPage");
+        m_engine.cleanup();
     }
 
     // TODO: Fix this test

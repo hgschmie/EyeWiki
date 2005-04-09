@@ -4,20 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.StringReader;
-
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.util.FileUtil;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -39,7 +38,7 @@ public class BasicAttachmentProviderTest
     private static final String c_fileContents = "gy th tgyhgthygyth tgyfgftrfgvtgfgtr";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine m_engine;
@@ -65,7 +64,7 @@ public class BasicAttachmentProviderTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         m_engine = new TestEngine(conf);
 
@@ -112,20 +111,7 @@ public class BasicAttachmentProviderTest
     public void tearDown()
             throws Exception
     {
-        TestEngine.deleteTestPage(NAME1);
-        TestEngine.deleteTestPage(NAME2);
-
-        String tmpfiles = conf.getString(WikiProperties.PROP_STORAGEDIR);
-
-        File f = new File(tmpfiles, NAME1 + BasicAttachmentProvider.DIR_EXTENSION);
-
-        TestEngine.deleteAll(f);
-
-        f = new File(tmpfiles, NAME2 + BasicAttachmentProvider.DIR_EXTENSION);
-
-        TestEngine.deleteAll(f);
-
-        TestEngine.emptyWorkDir();
+        m_engine.cleanup();
     }
 
     /**

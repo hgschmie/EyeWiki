@@ -4,21 +4,20 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.Writer;
-
 import java.util.Collection;
 import java.util.List;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
-
-import com.ecyrd.jspwiki.PageManager;
-import com.ecyrd.jspwiki.TestEngine;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.util.FileUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
+import com.ecyrd.jspwiki.manager.PageManager;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 
 // FIXME: Should this thingy go directly to the VersioningFileProvider,
@@ -30,7 +29,7 @@ public class VersioningFileProviderTest
     public static final String NAME1 = "Test1";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -53,7 +52,7 @@ public class VersioningFileProviderTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties("/jspwiki_vers.properties"));
+        conf = TestEngine.getConfiguration("/jspwiki_vers.properties");
 
         engine = new TestEngine(conf);
     }
@@ -66,15 +65,7 @@ public class VersioningFileProviderTest
     public void tearDown()
             throws Exception
     {
-        String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-
-        // Remove file
-        File f = new File(files, NAME1 + FileSystemProvider.FILE_EXT);
-        f.delete();
-
-        f = new File(files, "OLD");
-
-        TestEngine.deleteAll(f);
+        engine.cleanup();
     }
 
     /**

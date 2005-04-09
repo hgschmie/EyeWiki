@@ -1,16 +1,17 @@
-package com.ecyrd.jspwiki;
-
-import java.io.IOException;
-
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.PropertyConfigurator;
-
-import com.ecyrd.jspwiki.exception.NoSuchVariableException;
+package com.ecyrd.jspwiki.manager;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 
 
 /**
@@ -30,6 +31,9 @@ public class VariableManagerTest
 
     /** DOCUMENT ME! */
     WikiContext m_context;
+    
+    /** The internally used engine */
+    private TestEngine testEngine = null;
 
     /**
      * Creates a new VariableManagerTest object.
@@ -49,21 +53,15 @@ public class VariableManagerTest
     public void setUp()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
+        Configuration conf = null;
 
-        try
-        {
-            conf.load(TestEngine.findTestProperties());
-            PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
+        conf = TestEngine.getConfiguration();
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
 
-            m_variableManager = new VariableManager(conf);
+        m_variableManager = new VariableManager(conf);
 
-            TestEngine testEngine = new TestEngine(conf);
-            m_context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
-        }
-        catch (IOException e)
-        {
-        }
+        testEngine = new TestEngine(conf);
+        m_context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
     }
 
     /**
@@ -71,6 +69,7 @@ public class VariableManagerTest
      */
     public void tearDown()
     {
+        testEngine.cleanup();
     }
 
     /**

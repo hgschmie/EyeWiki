@@ -3,23 +3,22 @@ package com.ecyrd.jspwiki;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringReader;
-
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
-
-import com.ecyrd.jspwiki.attachment.Attachment;
-import com.ecyrd.jspwiki.attachment.AttachmentManager;
-import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
-import com.ecyrd.jspwiki.providers.CachingProvider;
-import com.ecyrd.jspwiki.providers.FileSystemProvider;
-import com.ecyrd.jspwiki.providers.VerySimpleProvider;
-import com.ecyrd.jspwiki.util.FileUtil;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.ecyrd.jspwiki.attachment.Attachment;
+import com.ecyrd.jspwiki.attachment.AttachmentManager;
+import com.ecyrd.jspwiki.manager.ReferenceManager;
+import com.ecyrd.jspwiki.providers.CachingProvider;
+import com.ecyrd.jspwiki.providers.FileSystemProvider;
+import com.ecyrd.jspwiki.providers.VerySimpleProvider;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 
 /**
@@ -38,7 +37,7 @@ public class WikiEngineTest
     public static final long PAGEPROVIDER_RESCAN_PERIOD = 2;
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine m_engine;
@@ -84,8 +83,7 @@ public class WikiEngineTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
-
+        conf = TestEngine.getConfiguration();
         conf.setProperty(WikiEngine.PROP_MATCHPLURALS, "true");
 
         // We'll need a shorter-than-default consistency check for
@@ -94,7 +92,6 @@ public class WikiEngineTest
         conf.setProperty(
             WikiProperties.PROP_CACHECHECKINTERVAL, Long.toString(PAGEPROVIDER_RESCAN_PERIOD));
 
-        TestEngine.emptyWorkDir();
         m_engine = new TestEngine(conf);
     }
 
@@ -106,16 +103,7 @@ public class WikiEngineTest
     public void tearDown()
             throws Exception
     {
-        String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-
-        if (files != null)
-        {
-            File f = new File(files);
-
-            TestEngine.deleteAll(f);
-        }
-
-        TestEngine.emptyWorkDir();
+        m_engine.cleanup();
     }
 
     /**
@@ -126,10 +114,10 @@ public class WikiEngineTest
     public void testNonExistantDirectory()
             throws Exception
     {
-        String tmpdir = System.getProperties().getProperty("java.io.tmpdir");
+        String tmpdir = "target/tests/workdir";
         String dirname = "non-existant-directory";
 
-        String newdir = tmpdir + File.separator + dirname;
+        String newdir = new File(tmpdir, dirname).getAbsolutePath();
 
         conf.setProperty(WikiProperties.PROP_PAGEDIR, newdir);
 
@@ -431,7 +419,7 @@ public class WikiEngineTest
     public void testLatestGet()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.VerySimpleProvider");
+        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
         conf.setProperty("jspwiki.usePageCache", "false");
 
         WikiEngine engine = new TestEngine(conf);
@@ -452,7 +440,7 @@ public class WikiEngineTest
     public void testLatestGet2()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.VerySimpleProvider");
+        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
         conf.setProperty("jspwiki.usePageCache", "false");
 
         WikiEngine engine = new TestEngine(conf);
@@ -473,7 +461,7 @@ public class WikiEngineTest
     public void testLatestGet3()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.VerySimpleProvider");
+        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
         conf.setProperty("jspwiki.usePageCache", "false");
 
         WikiEngine engine = new TestEngine(conf);
@@ -499,7 +487,7 @@ public class WikiEngineTest
     public void testLatestGet4()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.VerySimpleProvider");
+        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
         conf.setProperty("jspwiki.usePageCache", "true");
 
         WikiEngine engine = new TestEngine(conf);
@@ -551,7 +539,7 @@ public class WikiEngineTest
         {
             // do cleanup
             String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-            TestEngine.deleteAll(new File(files, NAME1 + BasicAttachmentProvider.DIR_EXTENSION));
+            m_engine.deleteAttachments(files);
         }
     }
 
@@ -623,7 +611,7 @@ public class WikiEngineTest
         {
             // do cleanup
             String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-            TestEngine.deleteAll(new File(files, NAME1 + BasicAttachmentProvider.DIR_EXTENSION));
+            m_engine.deleteAttachments(files);
         }
     }
 
@@ -660,7 +648,7 @@ public class WikiEngineTest
         {
             // do cleanup
             String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-            TestEngine.deleteAll(new File(files, NAME1 + BasicAttachmentProvider.DIR_EXTENSION));
+            m_engine.deleteAttachments(files);
         }
     }
 
@@ -697,8 +685,7 @@ public class WikiEngineTest
         {
             // do cleanup
             String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-            TestEngine.deleteAll(new File(files, NAME1 + BasicAttachmentProvider.DIR_EXTENSION));
-            new File(files, "TestPage2" + FileSystemProvider.FILE_EXT).delete();
+            m_engine.deleteAttachments(files);
         }
     }
 

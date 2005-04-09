@@ -5,16 +5,16 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 import org.apache.xmlrpc.XmlRpcException;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -53,8 +53,7 @@ public class RPCHandlerTest
     public void setUp()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf = TestEngine.getConfiguration();
 
         m_engine = new TestEngine(conf);
 
@@ -70,9 +69,7 @@ public class RPCHandlerTest
     public void tearDown()
             throws Exception
     {
-        TestEngine.deleteTestPage(NAME1);
-        m_engine.deleteAttachments(NAME1);
-        TestEngine.emptyWorkDir();
+        m_engine.cleanup();
     }
 
     /**

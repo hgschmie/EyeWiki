@@ -6,19 +6,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import java.util.Collection;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.util.FileUtil;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -40,7 +39,7 @@ public class AttachmentManagerTest
     static String c_fileContents = "ABCDEFGHIJKLMNOPQRSTUVWxyz";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine m_engine;
@@ -66,7 +65,7 @@ public class AttachmentManagerTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         m_engine = new TestEngine(conf);
         m_manager = m_engine.getAttachmentManager();
@@ -98,13 +97,7 @@ public class AttachmentManagerTest
     public void tearDown()
             throws Exception
     {
-        TestEngine.deleteTestPage(NAME1);
-        TestEngine.deleteTestPage(NAMEU);
-
-        m_engine.deleteAttachments(NAME1);
-        m_engine.deleteAttachments(NAMEU);
-
-        TestEngine.emptyWorkDir();
+        m_engine.cleanup();
     }
 
     /**

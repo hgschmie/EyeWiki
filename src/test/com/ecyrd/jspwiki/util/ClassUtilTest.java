@@ -4,6 +4,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
+
 
 /**
  * DOCUMENT ME!
@@ -32,9 +35,8 @@ public class ClassUtilTest
     public void testFindClass()
             throws Exception
     {
-        Class foo = ClassUtil.findClass("com.ecyrd.jspwiki", "WikiPage");
-
-        assertEquals(foo.getName(), "com.ecyrd.jspwiki.WikiPage");
+        Class foo = ClassUtil.findClass(WikiProperties.DEFAULT_CLASS_PREFIX, WikiPage.class.getName());
+        assertEquals("No WikiPage found!", foo, WikiPage.class);
     }
 
     /**
@@ -47,8 +49,8 @@ public class ClassUtilTest
     {
         try
         {
-            Class foo = ClassUtil.findClass("com.ecyrd.jspwiki", "MubbleBubble");
-            fail("Found class");
+            Class foo = ClassUtil.findClass(WikiProperties.DEFAULT_CLASS_PREFIX, "MubbleBubble");
+            fail("Found class 'MubbleBubble'?!?");
         }
         catch (ClassNotFoundException e)
         {

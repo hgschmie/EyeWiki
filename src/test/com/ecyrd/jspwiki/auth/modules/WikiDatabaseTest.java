@@ -3,16 +3,16 @@ package com.ecyrd.jspwiki.auth.modules;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.auth.WikiGroup;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -45,8 +45,7 @@ public class WikiDatabaseTest
     public void setUp()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf = TestEngine.getConfiguration();
 
         // props.setProperty("jspwiki.userDatabase", "WikiDatabase");
         m_engine = new TestEngine(conf);
@@ -63,8 +62,7 @@ public class WikiDatabaseTest
      */
     public void tearDown()
     {
-        TestEngine.deleteTestPage("TestGroup");
-        TestEngine.deleteTestPage("TestGroup2");
+        m_engine.cleanup();
     }
 
     private boolean containsGroup(List l, String name)

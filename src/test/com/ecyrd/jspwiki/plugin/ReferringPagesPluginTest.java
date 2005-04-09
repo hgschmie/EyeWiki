@@ -1,14 +1,14 @@
 package com.ecyrd.jspwiki.plugin;
 
-import org.apache.commons.configuration.PropertiesConfiguration;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -21,7 +21,7 @@ public class ReferringPagesPluginTest
         extends TestCase
 {
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -50,7 +50,7 @@ public class ReferringPagesPluginTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties());
+        conf = TestEngine.getConfiguration();
 
         conf.setProperty("jspwiki.breakTitleWithSpaces", "false");
         engine = new TestEngine(conf);
@@ -73,14 +73,7 @@ public class ReferringPagesPluginTest
      */
     public void tearDown()
     {
-        TestEngine.deleteTestPage("TestPage");
-        TestEngine.deleteTestPage("Foobar");
-        TestEngine.deleteTestPage("Foobar2");
-        TestEngine.deleteTestPage("Foobar3");
-        TestEngine.deleteTestPage("Foobar4");
-        TestEngine.deleteTestPage("Foobar5");
-        TestEngine.deleteTestPage("Foobar6");
-        TestEngine.deleteTestPage("Foobar7");
+        engine.cleanup();
     }
 
     private String mkLink(String page)

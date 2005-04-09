@@ -5,18 +5,17 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.FileUtil;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 
 /**
@@ -46,12 +45,8 @@ public class CachingProviderTest
     public void setUp()
             throws Exception
     {
-        TestEngine.emptyWorkDir();
-
-        PropertiesConfiguration conf2 = new PropertiesConfiguration();
-
-        conf2.load(TestEngine.findTestProperties());
-        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf2));
+        Configuration conf = TestEngine.getConfiguration();
+        PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
     }
 
     /**
@@ -62,8 +57,6 @@ public class CachingProviderTest
     public void tearDown()
             throws Exception
     {
-        TestEngine.emptyWorkDir();
-        TestEngine.deleteTestPage("Testi");
     }
 
     /**
@@ -74,14 +67,13 @@ public class CachingProviderTest
     public void testInitialization()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf2 = TestEngine.getConfiguration();
 
-        conf.setProperty("jspwiki.usePageCache", "true");
-        conf.setProperty("jspwiki.pageProvider", "com.ecyrd.jspwiki.providers.CounterProvider");
-        conf.setProperty("jspwiki.cachingProvider.capacity", "100");
+        conf2.setProperty("jspwiki.usePageCache", "true");
+        conf2.setProperty("jspwiki.pageProvider", CounterProvider.class.getName());
+        conf2.setProperty("jspwiki.cachingProvider.capacity", "100");
 
-        TestEngine engine = new TestEngine(conf);
+        TestEngine engine = new TestEngine(conf2);
 
         CounterProvider p =
             (CounterProvider) ((CachingProvider) engine.getPageManager().getProvider())
@@ -97,6 +89,8 @@ public class CachingProviderTest
 
         assertEquals("pageExists2", 0, p.m_pageExistsCalls);
         assertEquals("getPage2", 2, p.m_getPageCalls);
+        
+        engine.cleanup();
     }
 
     /**
@@ -107,14 +101,12 @@ public class CachingProviderTest
     public void testSneakyAdd()
             throws Exception
     {
-        PropertiesConfiguration conf = new PropertiesConfiguration();
-        conf.load(TestEngine.findTestProperties());
+        Configuration conf2 = TestEngine.getConfiguration();
+        conf2.setProperty("jspwiki.cachingProvider.cacheCheckInterval", "2");
 
-        conf.setProperty("jspwiki.cachingProvider.cacheCheckInterval", "2");
+        TestEngine engine = new TestEngine(conf2);
 
-        TestEngine engine = new TestEngine(conf);
-
-        String dir = conf.getString(WikiProperties.PROP_PAGEDIR);
+        String dir = engine.getPageDir();
 
         File f = new File(dir, "Testi.txt");
         String content = "[fuufaa]";
@@ -132,6 +124,8 @@ public class CachingProviderTest
         assertEquals("text", "[fuufaa]", text);
 
         // TODO: ReferenceManager check as well
+        
+        engine.cleanup();
     }
 
     /**

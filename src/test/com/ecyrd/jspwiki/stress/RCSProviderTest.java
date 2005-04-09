@@ -1,17 +1,13 @@
 package com.ecyrd.jspwiki.stress;
 
-import java.io.File;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
-
-import com.ecyrd.jspwiki.TestEngine;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.providers.FileSystemProvider;
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import org.apache.commons.configuration.Configuration;
+
+import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiPage;
 
 
 /**
@@ -24,7 +20,7 @@ public class RCSProviderTest
     public static final String NAME1 = "Test1";
 
     /** DOCUMENT ME! */
-    PropertiesConfiguration conf = new PropertiesConfiguration();
+    Configuration conf = null;
 
     /** DOCUMENT ME! */
     TestEngine engine;
@@ -47,7 +43,7 @@ public class RCSProviderTest
     public void setUp()
             throws Exception
     {
-        conf.load(TestEngine.findTestProperties("/jspwiki_rcs.properties"));
+        conf = TestEngine.getConfiguration("/jspwiki_rcs.properties");
 
         engine = new TestEngine(conf);
     }
@@ -60,19 +56,7 @@ public class RCSProviderTest
     public void tearDown()
             throws Exception
     {
-        String files = conf.getString(WikiProperties.PROP_PAGEDIR);
-
-        File f = new File(files, NAME1 + FileSystemProvider.FILE_EXT);
-
-        f.delete();
-
-        f = new File(files + File.separator + "RCS", NAME1 + FileSystemProvider.FILE_EXT + ",v");
-
-        f.delete();
-
-        f = new File(files, "RCS");
-
-        f.delete();
+        engine.cleanup();
     }
 
     /**
