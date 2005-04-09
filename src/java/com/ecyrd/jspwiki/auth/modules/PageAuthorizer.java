@@ -238,6 +238,7 @@ public class PageAuthorizer
         {
             WikiContext context = new WikiContext(m_engine, page);
             context.setVariable(TranslatorReader.PROP_RUNPLUGINS, "false");
+            m_engine.getHTML(context, page); // Do not remove; this method call updates the ACLs!
             acl = page.getAcl();
         }
 
