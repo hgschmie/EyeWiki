@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeSet;
 
-import com.ecyrd.jspwiki.ReferenceManager;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.manager.ReferenceManager;
 
 
 /**

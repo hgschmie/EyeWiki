@@ -28,10 +28,10 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.PageLock;
-import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.manager.PageManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 

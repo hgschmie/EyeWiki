@@ -467,16 +467,17 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     String DEFAULT_DIFF_CLASS_PREFIX = "com.ecyrd.jspwiki.diff";
 
+    /** The default package for filter classes */
+    String DEFAULT_FILTER_CLASS_PREFIX = "com.ecyrd.jspwiki.filters";
+
     /** The property name defining which packages will be searched for properties. */
     String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
 
     /** These are the default packages */
-    String [] PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT =
-        new String []
-        {
-            "com.ecyrd.jspwiki.plugin",
-            "com.ecyrd.jspwiki.forms"
-        };
+    String [] PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT = new String [] {
+        "com.ecyrd.jspwiki.plugin",
+        "com.ecyrd.jspwiki.forms"
+    };
 
     /** Property name for setting the url generator instance */
     String PROP_CLASS_URLCONSTRUCTOR = "jspwiki.urlConstructor";

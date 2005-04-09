@@ -25,9 +25,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.ReferenceManager;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.manager.ReferenceManager;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 

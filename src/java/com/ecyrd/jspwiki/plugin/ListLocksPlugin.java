@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.ecyrd.jspwiki.PageLock;
-import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.manager.PageManager;
 
 
 /**

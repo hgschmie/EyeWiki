@@ -178,7 +178,7 @@ public class FilterManager
         {
             int priority = 0; // FIXME: Currently fixed.
 
-            Class cl = ClassUtil.findClass("com.ecyrd.jspwiki.filters", className);
+            Class cl = ClassUtil.findClass(WikiProperties.DEFAULT_FILTER_CLASS_PREFIX, className);
 
             PageFilter filter = (PageFilter) cl.newInstance();
 

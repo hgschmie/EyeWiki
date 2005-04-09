@@ -70,7 +70,7 @@ public class FileSystemProvider
         }
         catch (IOException e)
         {
-            log.error("Saving failed");
+            log.error("Saving failed", e);
         }
     }
 

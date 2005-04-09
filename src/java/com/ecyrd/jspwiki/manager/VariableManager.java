@@ -17,7 +17,7 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-package com.ecyrd.jspwiki;
+package com.ecyrd.jspwiki.manager;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -29,6 +29,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
+import com.ecyrd.jspwiki.Release;
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 

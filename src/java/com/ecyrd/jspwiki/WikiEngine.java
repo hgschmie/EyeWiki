@@ -66,6 +66,10 @@ import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 import com.ecyrd.jspwiki.filters.FilterException;
 import com.ecyrd.jspwiki.filters.FilterManager;
+import com.ecyrd.jspwiki.manager.PageManager;
+import com.ecyrd.jspwiki.manager.ReferenceManager;
+import com.ecyrd.jspwiki.manager.TemplateManager;
+import com.ecyrd.jspwiki.manager.VariableManager;
 import com.ecyrd.jspwiki.plugin.PluginManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
@@ -1518,7 +1522,7 @@ public class WikiEngine
      *
      * @return DOCUMENT ME!
      */
-    protected Collection scanWikiLinks(WikiPage page, String pagedata)
+    public Collection scanWikiLinks(WikiPage page, String pagedata)
     {
         LinkCollector localCollector = new LinkCollector();
 

@@ -47,7 +47,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 
-import com.ecyrd.jspwiki.PageManager;
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.SearchMatcher;
 import com.ecyrd.jspwiki.SearchResult;
@@ -57,6 +56,7 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.manager.PageManager;
 import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 import com.opensymphony.oscache.base.Cache;
