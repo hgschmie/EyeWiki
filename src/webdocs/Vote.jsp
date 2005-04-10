@@ -6,7 +6,7 @@
 
 <%@ page errorPage="/Error.jsp" %>
 
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
 <%! 
     public void jspInit()

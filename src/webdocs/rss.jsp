@@ -8,7 +8,7 @@
 <%@ page import="com.ecyrd.jspwiki.rss.*" %>
 <%@ page import="com.ecyrd.jspwiki.util.*" %>
 <%@ page import="com.ecyrd.jspwiki.plugin.WeblogPlugin" %>
-<%@ taglib uri="/WEB-INF/oscache.tld" prefix="oscache" %>
+<%@ taglib uri="/WEB-INF/tld/oscache.tld" prefix="oscache" %>
 
 <%!
     public void jspInit()

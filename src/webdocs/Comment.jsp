@@ -7,7 +7,7 @@
 <%@ page import="com.ecyrd.jspwiki.auth.UserProfile" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.CommentPermission" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
 <%! 
     public void jspInit()

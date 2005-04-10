@@ -1,5 +1,5 @@
 <%@ page import="com.ecyrd.jspwiki.Release" %>
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 <!-- LeftMenuFooter is automatically generated from a Wiki page called "LeftMenuFooter" -->
 
 <wiki:InsertPage page="LeftMenuFooter" />

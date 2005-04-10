@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
   <link rel="stylesheet" type="text/css" href="<wiki:BaseURL/>templates/<wiki:TemplateDir/>/jspwiki.css" />
   <%@ include file="/scripts/cssinclude.js" %>
   <script src="<wiki:BaseURL/>scripts/search_highlight.js" type="text/javascript"></script>

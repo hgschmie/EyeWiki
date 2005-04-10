@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
    <div class="conflictnote">
       <p><b>Oops!  Someone modified the page while you were editing it!</b></p>

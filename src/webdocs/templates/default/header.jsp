@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="templates/<wiki:TemplateDir/>/jspwiki.css" />
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 <%@ include file="cssinclude.js" %>
+<link rel="stylesheet" type="text/css" href="templates/<wiki:TemplateDir/>/jspwiki.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=<wiki:ContentEncoding />" />
 <link rel="search" href="<wiki:LinkTo format="url" page="FindPage"/>"            title="Search <wiki:Variable var="ApplicationName" />" />
 <link rel="help"   href="<wiki:LinkTo format="url" page="TextFormattingRules"/>" title="Help" />

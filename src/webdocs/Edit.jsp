@@ -9,7 +9,7 @@
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.EditPermission" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.CreatePermission" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
 <%! 
     public void jspInit()
