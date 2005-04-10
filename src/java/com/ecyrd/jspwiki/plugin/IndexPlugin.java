@@ -1,22 +1,22 @@
 /*
-    JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.io.StringWriter;
@@ -73,7 +73,7 @@ public class IndexPlugin
         implements WikiPlugin
 {
     /** DOCUMENT ME! */
-    protected static Logger log = Logger.getLogger(IndexPlugin.class);
+    private static final Logger log = Logger.getLogger(IndexPlugin.class);
 
     /** DOCUMENT ME! */
     public static final String INITIALS_COLOR = "red";
@@ -129,8 +129,8 @@ public class IndexPlugin
         //
         PatternCompiler compiler = new GlobCompiler();
         m_itemsPerLine =
-            TextUtil.parseIntParameter(
-                (String) i_params.get(PARAM_ITEMS_PER_LINE), DEFAULT_ITEMS_PER_LINE);
+                TextUtil.parseIntParameter(
+                        (String) i_params.get(PARAM_ITEMS_PER_LINE), DEFAULT_ITEMS_PER_LINE);
 
         try
         {
@@ -162,7 +162,7 @@ public class IndexPlugin
         //
         final Collection allPages = getAllPagesSortedByName(i_context);
         final TranslatorReader linkProcessor =
-            new TranslatorReader(i_context, new java.io.StringReader(""));
+                new TranslatorReader(i_context, new java.io.StringReader(""));
 
         //
         //  Build the page.
@@ -183,7 +183,7 @@ public class IndexPlugin
     }
 
     private void buildIndexPageHeaderAndBody(
-        WikiContext context, final Collection i_allPages, final TranslatorReader i_linkProcessor)
+            WikiContext context, final Collection i_allPages, final TranslatorReader i_linkProcessor)
     {
         PatternMatcher matcher = new Perl5Matcher();
 
@@ -199,7 +199,7 @@ public class IndexPlugin
 
                     String pageNameFirstLetter = curPage.getName().substring(0, 1).toUpperCase();
                     boolean sameFirstLetterAsPreviousPage =
-                        m_previousPageFirstLetter.equals(pageNameFirstLetter);
+                            m_previousPageFirstLetter.equals(pageNameFirstLetter);
 
                     if (!sameFirstLetterAsPreviousPage)
                     {
@@ -236,22 +236,22 @@ public class IndexPlugin
         }
 
         Collection result =
-            new TreeSet(
-                new Comparator()
-                {
-                    public int compare(Object o1, Object o2)
-                    {
-                        if ((o1 == null) || (o2 == null))
+                new TreeSet(
+                        new Comparator()
                         {
-                            return 0;
-                        }
+                            public int compare(Object o1, Object o2)
+                            {
+                                if ((o1 == null) || (o2 == null))
+                                {
+                                    return 0;
+                                }
 
-                        WikiPage page1 = (WikiPage) o1;
-                        WikiPage page2 = (WikiPage) o2;
+                                WikiPage page1 = (WikiPage) o1;
+                                WikiPage page2 = (WikiPage) o2;
 
-                        return page1.getName().compareTo(page2.getName());
-                    }
-                });
+                                return page1.getName().compareTo(page2.getName());
+                            }
+                        });
 
         try
         {
@@ -281,8 +281,8 @@ public class IndexPlugin
     private void addLetterHeaderWithLine(final String i_firstLetter)
     {
         m_bodyPart.write(
-            "\n<br /><br />" + "<span class=\"section\">" + "<a name=\"" + i_firstLetter + "\">"
-            + i_firstLetter + "</a></span>" + "<hr />\n");
+                "\n<br /><br />" + "<span class=\"section\">" + "<a name=\"" + i_firstLetter + "\">"
+                + i_firstLetter + "</a></span>" + "<hr />\n");
     }
 
     /**
@@ -293,7 +293,7 @@ public class IndexPlugin
      * @param i_linkProcessor DOCUMENT ME!
      */
     protected void addPageToIndex(
-        WikiContext context, WikiPage i_curPage, final TranslatorReader i_linkProcessor)
+            WikiContext context, WikiPage i_curPage, final TranslatorReader i_linkProcessor)
     {
         final boolean notFirstPageOnLine = 2 <= m_currentNofPagesOnLine;
 
@@ -303,9 +303,9 @@ public class IndexPlugin
         }
 
         m_bodyPart.write(
-            i_linkProcessor.makeLink(
-                TranslatorReader.READ, i_curPage.getName(),
-                context.getEngine().beautifyTitleNoBreak(i_curPage.getName())));
+                i_linkProcessor.makeLink(
+                        TranslatorReader.READ, i_curPage.getName(),
+                        context.getEngine().beautifyTitleNoBreak(i_curPage.getName())));
     }
 
     /**

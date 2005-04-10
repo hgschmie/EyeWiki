@@ -175,7 +175,7 @@ public final class TextUtil
             throw new UnsupportedEncodingException("UTF-8 encoding not supported on this platform");
         }
 
-        return (processedPageName.toString());
+        return processedPageName;
     }
 
     /**

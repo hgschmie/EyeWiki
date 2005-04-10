@@ -167,7 +167,6 @@ public class RCSFileProvider
     {
         PatternMatcher matcher = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
-        BufferedReader stdout = null;
 
         WikiPage info = super.getPageInfo(page, version);
 
@@ -176,13 +175,16 @@ public class RCSFileProvider
             return null;
         }
 
+        Process process = null;
+        BufferedReader stdout = null;
+
         try
         {
             String cmd = m_fullLogCommand;
 
             cmd = StringUtils.replace(cmd, "%s", mangleName(page) + FILE_EXT);
 
-            Process process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
+            process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
 
             // FIXME: Should this use encoding as well?
             stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -249,10 +251,6 @@ public class RCSFileProvider
 
             process.waitFor();
 
-            // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            IOUtils.closeQuietly(process.getInputStream());
-            IOUtils.closeQuietly(process.getOutputStream());
-            IOUtils.closeQuietly(process.getErrorStream());
         }
         catch (Exception e)
         {
@@ -261,7 +259,14 @@ public class RCSFileProvider
         }
         finally
         {
-            IOUtils.closeQuietly(stdout);
+            if (process != null)
+            {
+                IOUtils.closeQuietly(stdout);
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
         }
 
         return info;
@@ -283,6 +288,7 @@ public class RCSFileProvider
     {
         String result = null;
         InputStream stdout = null;
+        BufferedReader stderr = null;
 
         // Let parent handle latest fetches, since the FileSystemProvider
         // can do the file reading just as well.
@@ -295,6 +301,8 @@ public class RCSFileProvider
         {
             log.debug("Fetching specific version " + version + " of page " + page);
         }
+        
+        Process process = null;
 
         try
         {
@@ -312,12 +320,11 @@ public class RCSFileProvider
                 log.debug("Command = '" + cmd + "'");
             }
 
-            Process process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
+            process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
             stdout = process.getInputStream();
             result = FileUtil.readContents(stdout, m_encoding);
 
-            BufferedReader stderr =
-                new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
             Pattern headpattern = compiler.compile(PATTERN_REVISION);
 
@@ -333,11 +340,6 @@ public class RCSFileProvider
             process.waitFor();
 
             int exitVal = process.exitValue();
-
-            // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            IOUtils.closeQuietly(process.getInputStream());
-            IOUtils.closeQuietly(process.getOutputStream());
-            IOUtils.closeQuietly(process.getErrorStream());
 
             if (log.isDebugEnabled())
             {
@@ -388,7 +390,15 @@ public class RCSFileProvider
         }
         finally
         {
-            IOUtils.closeQuietly(stdout);
+            if (process != null)
+            {
+                IOUtils.closeQuietly(stdout);
+                IOUtils.closeQuietly(stderr);
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
         }
 
         return result;
@@ -412,6 +422,8 @@ public class RCSFileProvider
 
         log.debug("Checking in text...");
 
+        Process process = null;
+
         try
         {
             String cmd = m_checkinCommand;
@@ -431,7 +443,7 @@ public class RCSFileProvider
                 log.debug("Command = '" + cmd + "'");
             }
 
-            Process process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
+            process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
 
             process.waitFor();
 
@@ -439,15 +451,20 @@ public class RCSFileProvider
             {
                 log.debug("Done, returned = " + process.exitValue());
             }
-
-            // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            IOUtils.closeQuietly(process.getInputStream());
-            IOUtils.closeQuietly(process.getOutputStream());
-            IOUtils.closeQuietly(process.getErrorStream());
         }
         catch (Exception e)
         {
             log.error("RCS checkin failed", e);
+        }
+        finally
+        {
+            if (process != null)
+            {
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
         }
     }
 
@@ -456,12 +473,13 @@ public class RCSFileProvider
     {
         PatternMatcher matcher = new Perl5Matcher();
         PatternCompiler compiler = new Perl5Compiler();
-        BufferedReader stdout = null;
 
         log.debug("Getting RCS version history");
 
         ArrayList list = new ArrayList();
 
+        Process process = null;
+        BufferedReader stdout = null;
         try
         {
             Pattern revpattern = compiler.compile(PATTERN_REVISION);
@@ -473,7 +491,7 @@ public class RCSFileProvider
 
             String cmd = StringUtils.replace(m_fullLogCommand, "%s", mangleName(page) + FILE_EXT);
 
-            Process process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
+            process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
 
             // FIXME: Should this use encoding as well?
             stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -515,11 +533,6 @@ public class RCSFileProvider
 
             process.waitFor();
 
-            // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-            IOUtils.closeQuietly(process.getInputStream());
-            IOUtils.closeQuietly(process.getOutputStream());
-            IOUtils.closeQuietly(process.getErrorStream());
-
             //
             // FIXME: This is very slow
             //
@@ -538,7 +551,14 @@ public class RCSFileProvider
         }
         finally
         {
-            IOUtils.closeQuietly(stdout);
+            if (process != null)
+            {
+                IOUtils.closeQuietly(stdout);
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
         }
 
         return list;
@@ -601,7 +621,7 @@ public class RCSFileProvider
     public void deleteVersion(String page, int version)
     {
         String line = "<rcs not run>";
-        BufferedReader stderr;
+        BufferedReader stderr = null;
         boolean success = false;
         String cmd = m_deleteVersionCommand;
 
@@ -618,9 +638,11 @@ public class RCSFileProvider
             log.debug("Running command " + cmd);
         }
 
+        Process process = null;
+
         try
         {
-            Process process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
+            process = Runtime.getRuntime().exec(cmd, null, new File(getPageDirectory()));
 
             //
             // 'rcs' command outputs to stderr methinks.
@@ -645,6 +667,18 @@ public class RCSFileProvider
         {
             log.error("Page deletion failed: ", e);
         }
+        finally
+        {
+            if (process != null)
+            {
+                IOUtils.closeQuietly(stderr);
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
+        }
+
 
         if (!success)
         {

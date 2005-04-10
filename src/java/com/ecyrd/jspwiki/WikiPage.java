@@ -84,6 +84,21 @@ public class WikiPage
     }
 
     /**
+     * Needed for clone()'ing
+     */
+    private WikiPage()
+    {
+    }
+
+    /**
+     * Needed for clone()'ing
+     */
+    private void setName(String name)
+    {
+        this.m_name = name;
+    }
+
+    /**
      * DOCUMENT ME!
      *
      * @return DOCUMENT ME!
@@ -140,7 +155,7 @@ public class WikiPage
      */
     public Date getLastModified()
     {
-        return m_lastModified;
+        return new Date(m_lastModified.getTime());
     }
 
     /**
@@ -150,7 +165,7 @@ public class WikiPage
      */
     public void setLastModified(Date date)
     {
-        m_lastModified = date;
+        m_lastModified = new Date(date.getTime());
     }
 
     /**
@@ -283,12 +298,20 @@ public class WikiPage
      */
     public Object clone()
     {
-        WikiPage p = new WikiPage(m_name);
-
-        p.m_author = m_author;
-        p.m_version = m_version;
-        p.m_lastModified = (Date) m_lastModified.clone();
-
+        WikiPage p = null;
+        
+        try
+        {
+            p = (WikiPage) super.clone();
+        }
+        catch (CloneNotSupportedException cne)
+        {
+            throw new RuntimeException("Could not clone WikiPage", cne);
+        }
+        p.setName(m_name);
+        p.setAuthor(m_author);
+        p.setVersion(m_version);
+        p.setLastModified(m_lastModified);
         return p;
     }
 

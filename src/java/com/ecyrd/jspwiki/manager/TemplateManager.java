@@ -55,7 +55,7 @@ public class TemplateManager
     public static final String PROPERTYFILE = "template.properties";
 
     /** DOCUMENT ME! */
-    protected static Logger log = Logger.getLogger(TemplateManager.class);
+    private static final Logger log = Logger.getLogger(TemplateManager.class);
 
     /** DOCUMENT ME! */
     private WikiEngine m_engine;
@@ -76,7 +76,7 @@ public class TemplateManager
         //
         //  Uses the unlimited cache.
         //
-        // m_propertyCache = new Cache( true, false );
+        m_propertyCache = new Cache( true, false, false);
     }
 
     /**

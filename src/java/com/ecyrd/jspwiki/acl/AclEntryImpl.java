@@ -167,7 +167,16 @@ public class AclEntryImpl
      */
     public Object clone()
     {
-        AclEntryImpl aei = new AclEntryImpl();
+        AclEntryImpl aei = null;
+        
+        try
+        {
+            aei = (AclEntryImpl) super.clone();
+        }
+        catch (CloneNotSupportedException cne)
+        {
+            throw new RuntimeException("Could not clone AclEntryImpl", cne);
+        }
 
         aei.setPrincipal(m_principal);
 

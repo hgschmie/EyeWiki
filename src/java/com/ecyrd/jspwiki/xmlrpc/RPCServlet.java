@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcServer;
 
@@ -187,14 +188,15 @@ public class RPCServlet
     {
         log.debug("Received HTTP GET to RPCServlet");
 
+        PrintWriter writer = null;
+
         try
         {
             String msg = "We do not support HTTP GET here.  Sorry.";
             response.setContentType("text/plain");
             response.setContentLength(msg.length());
 
-            PrintWriter writer =
-                new PrintWriter(new OutputStreamWriter(response.getOutputStream()));
+            writer = new PrintWriter(new OutputStreamWriter(response.getOutputStream()));
 
             writer.println(msg);
             writer.flush();
@@ -202,6 +204,10 @@ public class RPCServlet
         catch (IOException e)
         {
             throw new ServletException("Failed to build RPC result", e);
+        }
+        finally
+        {
+            IOUtils.closeQuietly(writer);
         }
     }
 }

@@ -150,10 +150,12 @@ public class PluginManager
      */
     public PluginManager(Configuration conf)
     {
-        String [] packageNames = conf.getStringArray(PROP_CLASS_PLUGIN_SEARCHPATH);
+        addPackages(conf.getStringArray(PROP_CLASS_PLUGIN_SEARCHPATH));
 
-        addPackages(packageNames);
-        addPackages(PROP_CLASS_PLUGIN_SEARCHPATH_DEFAULT);
+        addPackages(new String [] {
+                    DEFAULT_PLUGIN_CLASS_PREFIX,
+                    DEFAULT_FORM_CLASS_PREFIX
+                });
 
         PatternCompiler compiler = new Perl5Compiler();
 
@@ -171,9 +173,12 @@ public class PluginManager
 
     private void addPackages(String [] packageNames)
     {
-        for (int i = 0; i < packageNames.length; i++)
+        if (packageNames != null)
         {
-            m_searchPath.add(packageNames[i]);
+            for (int i = 0; i < packageNames.length; i++)
+            {
+                m_searchPath.add(packageNames[i]);
+            }
         }
     }
 

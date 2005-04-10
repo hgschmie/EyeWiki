@@ -253,23 +253,31 @@ public class VariableManager
         }
         else if (name.equals("interwikilinks"))
         {
-            // FIXME: Use StringBuffer
+            StringBuffer sb = new StringBuffer();
             for (Iterator i = context.getEngine().getAllInterWikiLinks().iterator(); i.hasNext();)
             {
                 String link = (String) i.next();
-                res += (link + " --&gt; " + context.getEngine().getInterWikiURL(link) + "<br />\n");
+                sb.append(link)
+                        .append(" --&gt; ")
+                        .append(context.getEngine().getInterWikiURL(link))
+                        .append("<br />\n");
             }
+
+            res = sb.toString();
         }
         else if (name.equals("inlinedimages"))
         {
-            // FIXME: Use StringBuffer
+            StringBuffer sb = new StringBuffer();
             for (
                 Iterator i = context.getEngine().getAllInlinedImagePatterns().iterator();
                             i.hasNext();)
             {
                 String ptrn = (String) i.next();
-                res += (ptrn + "<br />\n");
+                sb.append(ptrn)
+                        .append("<br />\n");
             }
+
+            res = sb.toString();
         }
         else if (name.equals("pluginpath"))
         {

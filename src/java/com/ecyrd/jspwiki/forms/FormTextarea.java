@@ -59,6 +59,7 @@ public class FormTextarea
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
+        Map previousValues = new HashMap();
 
         if (info != null)
         {
@@ -66,13 +67,8 @@ public class FormTextarea
             {
                 return ("<p>(no need to show textarea field now)</p>");
             }
-        }
 
-        Map previousValues = info.getSubmission();
-
-        if (previousValues == null)
-        {
-            previousValues = new HashMap();
+            previousValues = info.getSubmission();
         }
 
         ConcreteElement field = null;
@@ -80,14 +76,8 @@ public class FormTextarea
         field = buildTextArea(params, previousValues);
 
         // We should look for extra params, e.g. width, ..., here.
-        if (field != null)
-        {
-            return (field.toString());
-        }
-        else
-        {
-            return ("");
-        }
+
+        return (field == null) ? "" : field.toString();
     }
 
     private TextArea buildTextArea(Map params, Map previousValues)

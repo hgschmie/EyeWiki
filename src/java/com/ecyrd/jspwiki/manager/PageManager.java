@@ -58,7 +58,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
 // FIXME: This class currently only functions just as an extra layer over providers,
 //        complicating things.  We need to move more provider-specific functionality
 //        from WikiEngine (which is too big now) into this class.
-public class PageManager
+public final class PageManager
         implements WikiProperties
 {
     /** DOCUMENT ME! */

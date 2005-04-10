@@ -35,8 +35,8 @@ public class PageLock
     {
         m_page = page;
         m_locker = locker;
-        m_lockAcquired = acquired;
-        m_lockExpiry = expiry;
+        m_lockAcquired = new Date(acquired.getTime());
+        m_lockExpiry = new Date(expiry.getTime());
     }
 
     /**
@@ -66,7 +66,7 @@ public class PageLock
      */
     public Date getAcquisitionTime()
     {
-        return m_lockAcquired;
+        return new Date(m_lockAcquired.getTime());
     }
 
     /**
@@ -76,7 +76,7 @@ public class PageLock
      */
     public Date getExpiryTime()
     {
-        return m_lockExpiry;
+        return new Date(m_lockExpiry.getTime());
     }
 
     /**

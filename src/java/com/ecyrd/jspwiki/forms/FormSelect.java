@@ -53,6 +53,7 @@ public class FormSelect
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
+        Map previousValues = new HashMap();
 
         if (info != null)
         {
@@ -60,13 +61,8 @@ public class FormSelect
             {
                 return ("<p>(no need to show input field now)</p>");
             }
-        }
 
-        Map previousValues = info.getSubmission();
-
-        if (previousValues == null)
-        {
-            previousValues = new HashMap();
+            previousValues = info.getSubmission();
         }
 
         ConcreteElement field = null;

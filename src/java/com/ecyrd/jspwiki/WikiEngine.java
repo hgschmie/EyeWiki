@@ -156,7 +156,7 @@ public class WikiEngine
     private Configuration conf = null;
 
     /** Should the user info be saved with the page data as well? */
-    private boolean m_saveUserInfo = true;
+    // NOT YET USED private boolean m_saveUserInfo = true;
 
     /** If true, uses UTF8 encoding for all data */
     private boolean m_useUTF8 = true;
@@ -568,7 +568,7 @@ public class WikiEngine
                 "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
-        m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
+        // NOT YET USED m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
 
         m_useUTF8 = "UTF-8".equals(conf.getString(PROP_ENCODING, PROP_ENCODING_DEFAULT));
 
@@ -840,7 +840,7 @@ public class WikiEngine
      */
     public Date getStartTime()
     {
-        return m_startTime;
+        return new Date(m_startTime.getTime());
     }
 
     /**

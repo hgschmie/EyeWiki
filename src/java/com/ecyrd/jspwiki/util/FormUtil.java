@@ -185,7 +185,10 @@ public final class FormUtil
 
             if ((filterPrefix == null) || param.startsWith(filterPrefix))
             {
-                String realName = param.substring(filterPrefix.length());
+                String realName = (filterPrefix == null) 
+                        ? param
+                        : param.substring(filterPrefix.length());
+
                 String [] values = req.getParameterValues(param);
 
                 if (values != null)

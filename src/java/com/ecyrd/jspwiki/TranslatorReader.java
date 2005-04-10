@@ -265,7 +265,7 @@ public class TranslatorReader
     /** If true, consider URIs that have no brackets as well. */
 
     // FIXME: Currently reserved, but not used.
-    private boolean m_plainUris = false;
+    // private boolean m_plainUris = false;
 
     /** If true, all outward links use a small link image. */
     private boolean m_useOutlinkImage = true;
@@ -399,7 +399,7 @@ public class TranslatorReader
 
         m_camelCaseLinks = conf.getBoolean(PROP_CAMELCASELINKS, PROP_CAMELCASELINKS_DEFAULT);
 
-        m_plainUris = conf.getBoolean(PROP_PLAINURIS, PROP_PLAINURIS_DEFAULT);
+        // m_plainUris = conf.getBoolean(PROP_PLAINURIS, PROP_PLAINURIS_DEFAULT);
 
         m_useOutlinkImage = conf.getBoolean(PROP_USEOUTLINKIMAGE, PROP_USEOUTLINKIMAGE_DEFAULT);
 

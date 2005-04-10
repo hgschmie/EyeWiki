@@ -71,6 +71,7 @@ public class FormInput
 
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
+        Map previousValues = new HashMap();
 
         if (info != null)
         {
@@ -78,13 +79,8 @@ public class FormInput
             {
                 return ("<p>(no need to show input field now)</p>");
             }
-        }
 
-        Map previousValues = info.getSubmission();
-
-        if (previousValues == null)
-        {
-            previousValues = new HashMap();
+            previousValues = info.getSubmission();
         }
 
         // In order to isolate posted form elements into their own

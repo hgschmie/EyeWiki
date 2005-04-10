@@ -899,34 +899,29 @@ public class CachingProvider
     public Collection getAllPages()
             throws ProviderException
     {
-        Collection all;
-
-        if (m_gotall == false)
+        if (m_gotall)
         {
-            all = m_provider.getAllPages();
+            return m_allCollector.getAllItems();
+        }
 
-            // Make sure that all pages are in the cache.
-            synchronized (this)
+        // Make sure that all pages are in the cache.
+        synchronized (this)
+        {
+            Collection all = m_provider.getAllPages();
+
+            for (Iterator i = all.iterator(); i.hasNext();)
             {
-                for (Iterator i = all.iterator(); i.hasNext();)
-                {
-                    WikiPage p = (WikiPage) i.next();
+                WikiPage p = (WikiPage) i.next();
 
-                    m_cache.putInCache(p.getName(), p);
+                m_cache.putInCache(p.getName(), p);
 
-                    // Requests for this page are now no longer denied
-                    m_negCache.putInCache(p.getName(), null);
-                }
-
-                m_gotall = true;
+                // Requests for this page are now no longer denied
+                m_negCache.putInCache(p.getName(), null);
             }
-        }
-        else
-        {
-            all = m_allCollector.getAllItems();
-        }
 
-        return all;
+            m_gotall = true;
+            return all;
+        }
     }
 
     /**

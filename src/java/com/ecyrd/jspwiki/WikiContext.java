@@ -120,22 +120,6 @@ public class WikiContext
     protected UserProfile m_currentUser;
 
     /**
-     * Create a new WikiContext.
-     *
-     * @param engine The WikiEngine that is handling the request.
-     * @param pagename The name of the page.  A new WikiPage is created.
-     *
-     * @deprecated
-     */
-
-    // Changed to private - nobody should ever call this method.
-    private WikiContext(WikiEngine engine, String pagename)
-    {
-        m_page = new WikiPage(pagename);
-        m_engine = engine;
-    }
-
-    /**
      * Create a new WikiContext for the given WikiPage.
      *
      * @param engine The WikiEngine that is handling the request.
@@ -146,6 +130,21 @@ public class WikiContext
     {
         m_page = page;
         m_engine = engine;
+    }
+
+    /**
+     * Needed for clone
+     */
+    private WikiContext()
+    {
+    }
+
+    /**
+     * Needed for clone
+     */
+    private void setEngine(final WikiEngine engine)
+    {
+        this.m_engine = engine;
     }
 
     /**
@@ -370,13 +369,25 @@ public class WikiContext
      */
     public Object clone()
     {
-        WikiContext copy = new WikiContext(m_engine, m_page);
+        WikiContext copy = null;
+        
+        try
+        {
+            copy = (WikiContext) super.clone();
+        }
+        catch (CloneNotSupportedException cne)
+        {
+            throw new RuntimeException("Could not clone WikiContext", cne);
+        }
 
-        copy.m_requestContext = m_requestContext;
-        copy.m_template = m_template;
+        copy.setEngine(m_engine);
+        copy.setPage(m_page);
+
+        copy.setRequestContext(m_requestContext);
+        copy.setTemplate(m_template);
+        copy.setHttpRequest(m_request);
+        copy.setCurrentUser(m_currentUser);
         copy.m_variableMap = m_variableMap;
-        copy.m_request = m_request;
-        copy.m_currentUser = m_currentUser;
 
         return copy;
     }

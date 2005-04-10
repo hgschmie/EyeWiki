@@ -120,7 +120,7 @@ public class PingWeblogsComFilter
                         Boolean flerror = (Boolean) res.get("flerror");
                         String msg = (String) res.get("message");
 
-                        if (flerror == Boolean.TRUE)
+                        if (Boolean.TRUE.equals(flerror))
                         {
                             log.error("Failed to ping: " + msg);
                         }

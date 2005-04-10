@@ -148,38 +148,54 @@ public final class FileUtil
             log.info("Running simple command " + command + " in " + directory);
         }
 
-        Process process = Runtime.getRuntime().exec(command, null, new File(directory));
+        Process process = null;
 
-        BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        BufferedReader stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        BufferedReader stdout = null;
+        BufferedReader stderr = null;
 
-        String line;
-
-        while ((line = stdout.readLine()) != null)
+        try
         {
-            result.append(line + "\n");
+            process = Runtime.getRuntime().exec(command, null, new File(directory));
+
+            stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+
+            String line;
+
+            while ((line = stdout.readLine()) != null)
+            {
+                result.append(line + "\n");
+            }
+            
+            StringBuffer error = new StringBuffer();
+            
+            while ((line = stderr.readLine()) != null)
+            {
+                error.append(line + "\n");
+            }
+            
+            if (error.length() > 0)
+            {
+                log.error("Command failed, error stream is: " + error);
+            }
+            
+            process.waitFor();
+            return result.toString();
         }
-
-        StringBuffer error = new StringBuffer();
-
-        while ((line = stderr.readLine()) != null)
+        finally
         {
-            error.append(line + "\n");
+            if (process != null)
+            {
+                IOUtils.closeQuietly(stdout);
+                IOUtils.closeQuietly(stderr);
+
+                // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
+                IOUtils.closeQuietly(process.getInputStream());
+                IOUtils.closeQuietly(process.getOutputStream());
+                IOUtils.closeQuietly(process.getErrorStream());
+            }
         }
-
-        if (error.length() > 0)
-        {
-            log.error("Command failed, error stream is: " + error);
-        }
-
-        process.waitFor();
-
-        // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
-        IOUtils.closeQuietly(process.getInputStream());
-        IOUtils.closeQuietly(process.getOutputStream());
-        IOUtils.closeQuietly(process.getErrorStream());
-
-        return result.toString();
     }
 
     /**
