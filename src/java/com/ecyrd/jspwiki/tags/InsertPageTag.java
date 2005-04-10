@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.tags;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -51,6 +52,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  */
 public class InsertPageTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     public static final int HTML = 0;

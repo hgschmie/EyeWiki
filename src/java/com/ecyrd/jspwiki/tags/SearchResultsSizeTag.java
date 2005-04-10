@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.JspTag;
 
 
 /**
@@ -35,6 +36,7 @@ import javax.servlet.jsp.PageContext;
  */
 public class SearchResultsSizeTag
         extends WikiTagBase
+        implements JspTag
 {
     /**
      * DOCUMENT ME!

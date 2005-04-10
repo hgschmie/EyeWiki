@@ -24,6 +24,7 @@ import java.io.IOException;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
+import javax.servlet.jsp.tagext.JspTag;
 
 import org.apache.log4j.Logger;
 
@@ -38,6 +39,7 @@ import com.ecyrd.jspwiki.WikiContext;
  */
 public abstract class WikiBodyTag
         extends BodyTagSupport
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(WikiBodyTag.class);

@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.providers.ProviderException;
 
@@ -38,6 +39,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 // FIXME: Perhaps unnecessary?
 public class IncludeTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     protected String m_page;

@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProvider;
@@ -38,6 +40,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  */
 public class PermissionTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private String m_permission;

@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 
@@ -36,6 +38,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 //        NoSuchPageTag should be the one that derives from this.
 public class PageExistsTag
         extends NoSuchPageTag
+        implements JspTag
 {
     /**
      * DOCUMENT ME!

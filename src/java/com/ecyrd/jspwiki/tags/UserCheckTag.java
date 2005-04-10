@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 import com.ecyrd.jspwiki.auth.UserProfile;
 
 
@@ -65,6 +67,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  */
 public class UserCheckTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private String m_status;

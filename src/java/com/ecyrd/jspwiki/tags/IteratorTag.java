@@ -26,6 +26,7 @@ import java.util.Iterator;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyTagSupport;
+import javax.servlet.jsp.tagext.JspTag;
 
 import org.apache.log4j.Logger;
 
@@ -53,6 +54,7 @@ import com.ecyrd.jspwiki.WikiPage;
  */
 public abstract class IteratorTag
         extends BodyTagSupport
+        implements JspTag
 {
     /** DOCUMENT ME! */
     protected Logger log = Logger.getLogger(this.getClass());

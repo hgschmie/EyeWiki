@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 import com.ecyrd.jspwiki.WikiEngine;
 
 
@@ -33,6 +35,7 @@ import com.ecyrd.jspwiki.WikiEngine;
  */
 public class ContentEncodingTag
         extends WikiTagBase
+        implements JspTag
 {
     /**
      * DOCUMENT ME!

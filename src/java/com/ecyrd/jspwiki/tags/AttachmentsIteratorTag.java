@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.JspTag;
 
 import org.apache.log4j.Logger;
 
@@ -57,6 +58,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 // FIXME: Too much in common with IteratorTag - REFACTOR
 public class AttachmentsIteratorTag
         extends IteratorTag
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(AttachmentsIteratorTag.class);

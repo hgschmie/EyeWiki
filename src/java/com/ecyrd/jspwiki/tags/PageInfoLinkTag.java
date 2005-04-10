@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.tags;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -50,6 +51,7 @@ import com.ecyrd.jspwiki.WikiPage;
 // FIXME: Refactor together with LinkToTag and EditLinkTag.
 public class PageInfoLinkTag
         extends WikiLinkTag
+        implements JspTag
 {
     /**
      * DOCUMENT ME!

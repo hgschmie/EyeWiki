@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 
 /**
  * Writes the jspwiki.baseURL property.
@@ -31,6 +33,7 @@ import java.io.IOException;
  */
 public class BaseURLTag
         extends WikiTagBase
+        implements JspTag
 {
     /**
      * DOCUMENT ME!

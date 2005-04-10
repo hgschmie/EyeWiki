@@ -24,6 +24,7 @@ import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.SearchResult;
 import com.ecyrd.jspwiki.WikiContext;
@@ -51,6 +52,7 @@ import com.ecyrd.jspwiki.WikiContext;
 // FIXME: Shares MUCH too much in common with IteratorTag.  Must refactor.
 public class SearchResultIteratorTag
         extends IteratorTag
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private int m_maxItems;

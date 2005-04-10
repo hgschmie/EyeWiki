@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.providers.ProviderException;
@@ -40,6 +41,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  */
 public class ContentTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private static Map c_defaultMappings;
@@ -56,29 +58,18 @@ public class ContentTag
      *
      * @see TextUtil.createProperties()
      */
-    public static final String [] DEFAULT_JSP_PAGES =
-        {
-            WikiContext.VIEW,
-            "PageContent.jsp",
-            WikiContext.DIFF,
-            "DiffContent.jsp",
-            WikiContext.INFO,
-            "InfoContent.jsp",
-            WikiContext.PREVIEW,
-            "PreviewContent.jsp",
-            WikiContext.CONFLICT,
-            "ConflictContent.jsp",
-            WikiContext.FIND,
-            "FindContent.jsp",
-            WikiContext.PREFS,
-            "PreferencesContent.jsp",
-            WikiContext.ERROR,
-            "DisplayMessage.jsp",
-            WikiContext.EDIT,
-            "EditContent.jsp",
-            WikiContext.COMMENT,
-            "CommentContent.jsp"
-        };
+    private static final String [] DEFAULT_JSP_PAGES = {
+        WikiContext.VIEW,     "PageContent.jsp",
+        WikiContext.DIFF,     "DiffContent.jsp",
+        WikiContext.INFO,     "InfoContent.jsp",
+        WikiContext.PREVIEW,  "PreviewContent.jsp",
+        WikiContext.CONFLICT, "ConflictContent.jsp",
+        WikiContext.FIND,     "FindContent.jsp",
+        WikiContext.PREFS,    "PreferencesContent.jsp",
+        WikiContext.ERROR,    "DisplayMessage.jsp",
+        WikiContext.EDIT,     "EditContent.jsp",
+        WikiContext.COMMENT,  "CommentContent.jsp"
+    };
 
     static
     {

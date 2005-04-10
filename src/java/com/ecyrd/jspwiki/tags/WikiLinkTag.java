@@ -21,6 +21,8 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import javax.servlet.jsp.tagext.JspTag;
+
 
 /**
  * Root class for different internal wiki links.  Cannot be used directly, but provides basic stuff
@@ -51,6 +53,7 @@ import java.io.IOException;
  */
 public abstract class WikiLinkTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     public static final int ANCHOR = 0;

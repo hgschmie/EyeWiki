@@ -27,6 +27,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.tagext.JspTag;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -60,6 +61,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 // FIXME: This class is extraordinarily lacking.
 public class CalendarTag
         extends WikiTagBase
+        implements JspTag
 {
     /** DOCUMENT ME! */
     private SimpleDateFormat m_pageFormat = null;
