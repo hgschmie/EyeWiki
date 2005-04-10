@@ -23,8 +23,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.WikiPage;
 
 
@@ -47,7 +45,6 @@ import com.ecyrd.jspwiki.WikiPage;
 // FIXME: Should also take the current user TimeZone into account.
 public class PageDateTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     public static final String DEFAULT_FORMAT = "dd-MMM-yyyy HH:mm:ss zzz";

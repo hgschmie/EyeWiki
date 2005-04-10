@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.tags;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -40,7 +39,6 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  */
 public class CheckLockTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     public static final int LOCKED = 0;

@@ -25,7 +25,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.providers.ProviderException;
@@ -41,7 +40,6 @@ import com.ecyrd.jspwiki.util.TextUtil;
  */
 public class ContentTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     private static Map c_defaultMappings;

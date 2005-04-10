@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
@@ -37,7 +35,6 @@ import com.ecyrd.jspwiki.attachment.AttachmentManager;
  */
 public class HasAttachmentsTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

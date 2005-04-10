@@ -25,7 +25,6 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiContext;
 
@@ -50,7 +49,6 @@ import com.ecyrd.jspwiki.WikiContext;
  */
 public class BreadcrumbsTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     private static final String BREADCRUMBTRAIL_KEY = "breadCrumbTrail";

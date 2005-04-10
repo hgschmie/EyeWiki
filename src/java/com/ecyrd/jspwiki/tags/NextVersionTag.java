@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.WikiPage;
 
 
@@ -35,7 +33,6 @@ import com.ecyrd.jspwiki.WikiPage;
  */
 public class NextVersionTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

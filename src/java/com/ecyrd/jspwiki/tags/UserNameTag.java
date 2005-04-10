@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.auth.UserManager;
 import com.ecyrd.jspwiki.auth.UserProfile;
@@ -37,7 +35,6 @@ import com.ecyrd.jspwiki.auth.UserProfile;
  */
 public class UserNameTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

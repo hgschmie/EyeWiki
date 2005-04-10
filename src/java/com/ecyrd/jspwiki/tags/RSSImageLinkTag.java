@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.tags;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiEngine;
 
@@ -36,7 +35,6 @@ import com.ecyrd.jspwiki.WikiEngine;
  */
 public class RSSImageLinkTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     protected String m_title;

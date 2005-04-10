@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.Collection;
 
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspTag;
 
 
 /**
@@ -35,7 +34,6 @@ import javax.servlet.jsp.tagext.JspTag;
  */
 public class IfNoSearchResultsTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

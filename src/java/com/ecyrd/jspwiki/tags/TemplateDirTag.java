@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 
 /**
  * Returns the currently used template.  For example "default"
@@ -33,7 +31,6 @@ import javax.servlet.jsp.tagext.JspTag;
  */
 public class TemplateDirTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

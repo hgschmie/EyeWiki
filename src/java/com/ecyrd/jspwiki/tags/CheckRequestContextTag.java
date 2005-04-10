@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 
@@ -35,7 +33,6 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  */
 public class CheckRequestContextTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     private String m_context;

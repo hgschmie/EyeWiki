@@ -21,8 +21,6 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
-import javax.servlet.jsp.tagext.JspTag;
-
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.util.BlogUtil;
@@ -38,7 +36,6 @@ import com.ecyrd.jspwiki.util.TextUtil;
  */
 public class FeedDiscoveryTag
         extends WikiTagBase
-        implements JspTag
 {
     /**
      * DOCUMENT ME!

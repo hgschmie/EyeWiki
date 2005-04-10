@@ -23,7 +23,6 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspTag;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -52,7 +51,6 @@ import com.ecyrd.jspwiki.WikiPage;
  */
 public class InsertDiffTag
         extends WikiTagBase
-        implements JspTag
 {
     /** DOCUMENT ME! */
     public static final String ATTR_OLDVERSION = "insertdiff.old";

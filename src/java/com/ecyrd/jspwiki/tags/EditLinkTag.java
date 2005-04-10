@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.tags;
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.JspTag;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -57,7 +56,6 @@ import com.ecyrd.jspwiki.WikiPage;
  */
 public class EditLinkTag
         extends WikiLinkTag
-        implements JspTag
 {
     /** DOCUMENT ME! */
     private String m_version = null;
