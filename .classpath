@@ -22,8 +22,7 @@
 	<classpathentry sourcepath="USER_HOME/java/jrcs-latest/src" kind="var" path="MAVEN_REPO/jrcs/jars/jrcs-diff-20050404.105550.jar"/>
 	<classpathentry kind="src" path="j2src"/>
 	<classpathentry kind="var" path="JDK_TOOLS"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/bin/bootstrap.jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/[servletapi5].jar"/>
-	<classpathentry kind="var" path="TOMCAT_HOME/common/lib/[jspapi].jar"/>
+	<classpathentry kind="var" path="TOMCAT411/common/lib/[servletapi4].jar"/>
+	<classpathentry kind="var" path="TOMCAT411/bin/bootstrap.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
