@@ -25,6 +25,7 @@ import com.ecyrd.jspwiki.diff.RssTraditionalDiffProvider;
 import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
+import com.ecyrd.jspwiki.url.DefaultURLConstructor;
 
 
 /**

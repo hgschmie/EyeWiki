@@ -1,4 +1,4 @@
-package com.ecyrd.jspwiki;
+package com.ecyrd.jspwiki.url;
 
 import java.io.UnsupportedEncodingException;
 
@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.util.TextUtil;
 

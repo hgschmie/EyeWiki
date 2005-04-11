@@ -17,7 +17,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-package com.ecyrd.jspwiki;
+package com.ecyrd.jspwiki.url;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -28,6 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.util.TextUtil;
 

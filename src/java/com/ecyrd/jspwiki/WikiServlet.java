@@ -30,6 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.url.DefaultURLConstructor;
+
 
 /**
  */
