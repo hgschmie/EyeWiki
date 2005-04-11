@@ -20,8 +20,18 @@
 
     NDC.push( wiki.getApplicationName()+":"+pagereq );
 
-    if (log.isInfoEnabled()) {
-    	log.info("Request for page '"+pagereq+"' from "+request.getRemoteAddr()+" by "+request.getRemoteUser() );
+    if (log.isInfoEnabled())
+    {
+        String remoteUser = request.getRemoteUser();
+
+        if (remoteUser == null)
+        {
+            log.info("Anonymous request for page '"+pagereq+"' from "+request.getRemoteAddr()  );
+        }
+        else
+        {
+            log.info("Request for page '"+pagereq+"' from "+request.getRemoteAddr()+" by " + remoteUser);
+        }
     }
 
     String redirect = wiki.getRedirectURL( wikiContext );
