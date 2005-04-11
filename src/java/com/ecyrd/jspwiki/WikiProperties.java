@@ -350,6 +350,11 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     boolean PROP_USE_LUCENE_DEFAULT = true;
 
+    /** Prefix for the Wiki Special pages */
+    String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";
+
+
+
     /*
      * ========================================================================
      *

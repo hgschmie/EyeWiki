@@ -71,7 +71,7 @@ public class ContentTag
 
     static
     {
-        c_defaultMappings = TextUtil.createMap(DEFAULT_JSP_PAGES);
+        c_defaultMappings = TextUtil.createMap(null, DEFAULT_JSP_PAGES);
     }
 
     /** DOCUMENT ME! */

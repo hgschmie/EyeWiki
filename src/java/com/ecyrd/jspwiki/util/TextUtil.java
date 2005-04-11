@@ -555,7 +555,7 @@ public final class TextUtil
      *
      * @since 2.2.
      */
-    public static Map createMap(String [] values)
+    public static Map createMap(String prefix, String [] values)
     {
         if ((values.length % 2) != 0)
         {
@@ -566,7 +566,17 @@ public final class TextUtil
 
         for (int i = 0; i < values.length; i += 2)
         {
-            map.put(values[i], values[i + 1]);
+            if (StringUtils.isEmpty(prefix))
+            {
+                map.put(values[i], values[i + 1]);
+            }
+            else
+            {
+                StringBuffer key = new StringBuffer(prefix);
+                key.append(".")
+                        .append(values[i]);
+                map.put(key.toString(), values[i + 1]);
+            }
         }
 
         return map;

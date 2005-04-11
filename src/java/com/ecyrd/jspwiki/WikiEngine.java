@@ -38,6 +38,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
@@ -126,24 +127,13 @@ public class WikiEngine
      */
     public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
-    /**
-     * Prefix for the elements in the PARAM_PAGES field.
-     *
-     * @value jspwiki.specialPage
-     */
-    private static final String PARAM_PAGES_PREFIX = "jspwiki.specialPage";
-
     /** Contains the default properties for JSPWiki. */
-    private static final String [] PARAM_PAGES =
+    private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
         {
-            "jspwiki.specialPage.Login",
-            "Login.jsp",
-            "jspwiki.specialPage.UserPreferences",
-            "UserPreferences.jsp",
-            "jspwiki.specialPage.Search",
-            "Search.jsp",
-            "jspwiki.specialPage.FindPage",
-            "FindPage.jsp"
+            "Login", "Login.jsp",
+            "UserPreferences", "UserPreferences.jsp",
+            "Search", "Search.jsp",
+            "FindPage", "FindPage.jsp"
         };
 
     /** The name of the cookie that gets stored to the user browser. */
@@ -154,6 +144,9 @@ public class WikiEngine
 
     /** Stores Configuration per WikiEngine. */
     private Configuration conf = null;
+
+    /** Stores special pages per WikiEngine */
+    private Configuration pagesConf = null;
 
     /** Should the user info be saved with the page data as well? */
     // NOT YET USED private boolean m_saveUserInfo = true;
@@ -433,12 +426,19 @@ public class WikiEngine
             conf.setThrowExceptionOnMissing(true);
             conf.load(isr);
 
-            Map pageMap = TextUtil.createMap(PARAM_PAGES);
+            Map pageMap = TextUtil.createMap(PROP_SPECIAL_PAGES_PREFIX, PROP_SPECIAL_PAGES_DEFAULT);
 
             for (Iterator it = pageMap.keySet().iterator(); it.hasNext();)
             {
                 String key = (String) it.next();
-                conf.addProperty(key, pageMap.get(key));
+                try
+                {
+                    String val = conf.getString(key);
+                }
+                catch (NoSuchElementException e)
+                {
+                    conf.addProperty(key, pageMap.get(key));
+                }
             }
 
             return conf;
@@ -477,6 +477,7 @@ public class WikiEngine
             : "");
 
         this.conf = conf;
+        this.pagesConf = conf.subset(PROP_SPECIAL_PAGES_PREFIX);
 
         //
         //  Initialized log4j.  However, make sure that
@@ -1038,15 +1039,16 @@ public class WikiEngine
      */
     public String getSpecialPageReference(String original)
     {
-        String propname = PARAM_PAGES_PREFIX + original;
-        String specialpage = conf.getString(propname, null);
-
-        if (specialpage != null)
+        try
         {
-            specialpage = getURL(WikiContext.NONE, specialpage, null, true);
-        }
+            String specialPage = pagesConf.getString(original);
 
-        return specialpage;
+            return getURL(WikiContext.NONE, specialPage, null, true);
+        }
+        catch (NoSuchElementException nse)
+        {
+            return null;
+        }
     }
 
     /**
@@ -2056,8 +2058,6 @@ public class WikiEngine
         {
             path = path.substring(1);
         }
-
-        Configuration pagesConf = conf.subset(PARAM_PAGES_PREFIX);
 
         for (Iterator it = pagesConf.getKeys(); it.hasNext();)
         {
