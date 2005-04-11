@@ -838,7 +838,7 @@ public class WikiEngine
      */
     public Date getStartTime()
     {
-        return new Date(m_startTime.getTime());
+        return new Date((m_startTime != null) ? m_startTime.getTime() : 0);
     }
 
     /**

@@ -66,7 +66,7 @@ public class PageLock
      */
     public Date getAcquisitionTime()
     {
-        return new Date(m_lockAcquired.getTime());
+        return new Date((m_lockAcquired != null) ? m_lockAcquired.getTime() : 0);
     }
 
     /**
@@ -76,7 +76,7 @@ public class PageLock
      */
     public Date getExpiryTime()
     {
-        return new Date(m_lockExpiry.getTime());
+        return new Date((m_lockExpiry != null) ? m_lockExpiry.getTime() : 0);
     }
 
     /**

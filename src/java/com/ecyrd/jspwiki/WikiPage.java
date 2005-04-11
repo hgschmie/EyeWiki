@@ -155,7 +155,7 @@ public class WikiPage
      */
     public Date getLastModified()
     {
-        return new Date(m_lastModified.getTime());
+        return new Date((m_lastModified != null) ? m_lastModified.getTime() : 0);
     }
 
     /**
