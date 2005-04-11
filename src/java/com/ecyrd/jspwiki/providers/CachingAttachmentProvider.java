@@ -148,9 +148,8 @@ public class CachingAttachmentProvider
     public void putAttachmentData(Attachment att, InputStream data)
             throws ProviderException, IOException
     {
-        // FIXME: Probably not wise.
-        m_cache.flushEntry(att.getParentName());
         m_provider.putAttachmentData(att, data);
+        m_cache.flushEntry(att.getParentName());
     }
 
     /**
@@ -416,7 +415,8 @@ public class CachingAttachmentProvider
     public void deleteVersion(Attachment att)
             throws ProviderException
     {
-        m_cache.flushEntry(att.getParentName());
+        // This isn't strictly speaking correct, but it does not really matter
+        m_cache.putInCache( att.getParentName(), null );
         m_provider.deleteVersion(att);
     }
 
@@ -430,7 +430,7 @@ public class CachingAttachmentProvider
     public void deleteAttachment(Attachment att)
             throws ProviderException
     {
-        m_cache.flushEntry(att.getParentName());
+        m_cache.putInCache( att.getParentName(), null );
         m_provider.deleteAttachment(att);
     }
 
@@ -441,25 +441,6 @@ public class CachingAttachmentProvider
      */
     public synchronized String getProviderInfo()
     {
-        /*
-          int cachedPages = 0;
-          long totalSize = 0;
-
-          for( Iterator i = m_cache.values().iterator(); i.hasNext(); )
-          {
-          CacheItem item = (CacheItem) i.next();
-
-          String text = (String) item.m_text.get();
-          if( text != null )
-          {
-          cachedPages++;
-          totalSize += text.length()*2;
-          }
-          }
-
-          totalSize = (totalSize+512)/1024L;
-        */
-
         return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
         + m_cacheMisses + "<br />Cache hits: " + m_cacheHits);
     }

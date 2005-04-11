@@ -53,7 +53,7 @@ public final class Release
     public static final int REVISION = 1;
 
     /** DOCUMENT ME! */
-    public static final int MINORREVISION = 159;
+    public static final int MINORREVISION = 164;
 
     /**
      * This is the generic version string you should use when printing out the version.  It is of

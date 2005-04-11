@@ -26,7 +26,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
@@ -36,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -166,6 +166,9 @@ public class AttachmentServlet
         }
         else
         {
+            OutputStream out = null;
+            InputStream  in  = null;
+            
             try
             {
                 if (log.isDebugEnabled())
@@ -226,8 +229,8 @@ public class AttachmentServlet
                     res.addHeader(
                         "Content-Disposition", "inline; filename=\"" + att.getFileName() + "\";");
 
-                    long expires = new Date().getTime() + DEFAULT_EXPIRY;
-                    res.addDateHeader("Expires", expires);
+                    // long expires = new Date().getTime() + DEFAULT_EXPIRY;
+                    // res.addDateHeader("Expires", expires);
                     res.addDateHeader("Last-Modified", att.getLastModified().getTime());
 
                     // If a size is provided by the provider, report it.
@@ -237,8 +240,8 @@ public class AttachmentServlet
                         res.setContentLength((int) att.getSize());
                     }
 
-                    OutputStream out = res.getOutputStream();
-                    InputStream in = mgr.getAttachmentStream(att);
+                    out = res.getOutputStream();
+                    in = mgr.getAttachmentStream(att);
 
                     int read = 0;
                     byte [] buffer = new byte[8192];
@@ -247,9 +250,6 @@ public class AttachmentServlet
                     {
                         out.write(buffer, 0, read);
                     }
-
-                    in.close();
-                    out.close();
 
                     if (log.isDebugEnabled())
                     {
@@ -295,6 +295,11 @@ public class AttachmentServlet
                 res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, msg);
 
                 return;
+            }
+            finally
+            {
+                IOUtils.closeQuietly(in);
+                IOUtils.closeQuietly(out);
             }
         }
     }

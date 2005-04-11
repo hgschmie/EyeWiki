@@ -193,11 +193,17 @@ public class UserManager
      */
     public UserProfile getUserProfile(String name)
     {
-        if (m_database == null)
+        if (m_database == null) 
         {
-            return null;
+            // No user database, so return a dummy profile
+            UserProfile wup = new UserProfile();
+            wup.setName(name);
+            wup.setLoginName(name);
+            wup.setLoginStatus(UserProfile.COOKIE);
+            
+            return wup;
         }
-
+        
         WikiPrincipal up = m_database.getPrincipal(name);
 
         if (!(up instanceof UserProfile))

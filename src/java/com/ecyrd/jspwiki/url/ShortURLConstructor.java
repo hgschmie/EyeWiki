@@ -26,13 +26,13 @@ import java.net.URL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
-import com.ecyrd.jspwiki.util.TextUtil;
 
 
 /**
@@ -166,7 +166,7 @@ public class ShortURLConstructor
      */
     public String makeURL(String context, String name, boolean absolute, String parameters)
     {
-        if ((parameters != null) && (parameters.length() > 0))
+        if (StringUtils.isNotEmpty(parameters))
         {
             if (context.equals(WikiContext.ATTACH) || context.equals(WikiContext.VIEW))
             {
@@ -204,11 +204,6 @@ public class ShortURLConstructor
         if (pagereq == null)
         {
             pagereq = parsePageFromURL(request, encoding);
-
-            if (pagereq != null)
-            {
-                pagereq = TextUtil.urlDecodeUTF8(pagereq);
-            }
         }
 
         return pagereq;

@@ -1,3 +1,59 @@
+2005-04-10  Janne Jalkanen  <Janne.Jalkanen@ecyrd.com>
+
+        * v2.1.164
+        
+        * Fixed NPE in UserPreferences.jsp when auth was not being used.
+
+        * Default template now has "noindex,nofollow" on old versions.
+        This is one way to combat spam.
+
+        * Refactoring: Removed all references to Category, replaced with
+        Logger.  Also cleaned away a number of compiler warnings in
+        tests.
+
+        * v2.1.163
+        
+        * Attachment deletion works now as well.
+
+        * BreadcrumbsTag.FixedQueue is now static.  This should help
+        with some serialization issues.  Reported by many people,
+        forgotten by me.
+
+        * UTF-8 attachment names would fail (again).  Thanks to Stephan
+        Schiessling.
+
+2005-04-07  Janne Jalkanen  <Janne.Jalkanen@ecyrd.com>
+
+        * v2.1.162
+        
+        * Bug fix: Long values in filter.xml would cause truncation.
+        Patch from Mario.  Fixes BugLargeValuesTruncatedInFilters.xml.
+
+        * Bug fix: DefaultURLConstructor would append both & and ? to
+        parameters, causing confusion.  Reported by Jake Vogelaar.
+
+2005-04-06  Janne Jalkanen  <Janne.Jalkanen@ecyrd.com>
+
+        * v2.1.161
+
+        * Refactored TraditionalDiffProvider to be more JSPWiki coding
+        guidelines compliant.
+
+        * Added a functional ContextualDiffProvider (thanks to Henning
+        Schmiedehausen).
+
+        * CachingAttachmentProvider now empties the cache in case
+        the attachment is deleted.  Reported by Raghavan Srinivasa.
+
+2005-04-05  Janne Jalkanen  <Janne.Jalkanen@ecyrd.com>
+
+        * Fixed BugCommentBoxStyle.
+
+        * v2.1.160
+        
+        * Removed the Expires-header from AttachmentServlet for
+        now; checking if that helps with BugStaleAttachments.
+
 2005-04-04  Janne Jalkanen  <Janne.Jalkanen@ecyrd.com>
 
         * v2.1.159

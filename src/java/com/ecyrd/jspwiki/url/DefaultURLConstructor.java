@@ -142,14 +142,16 @@ public class DefaultURLConstructor
      */
     public String makeURL(String context, String name, boolean absolute, String parameters)
     {
-        if ((parameters != null) && (parameters.length() > 0))
+        if (StringUtils.isNotEmpty(parameters))
         {
             if (context.equals(WikiContext.ATTACH))
             {
                 parameters = "?" + parameters;
             }
-
-            parameters = "&amp;" + parameters;
+            else
+            {
+                parameters = "&amp;" + parameters;
+            }
         }
         else
         {
@@ -178,11 +180,6 @@ public class DefaultURLConstructor
         if (context.equals(WikiContext.ATTACH))
         {
             pagereq = parsePageFromURL(request, encoding);
-
-            if (pagereq != null)
-            {
-                pagereq = TextUtil.urlDecodeUTF8(pagereq);
-            }
         }
 
         return pagereq;
@@ -213,8 +210,11 @@ public class DefaultURLConstructor
             name = name.substring(1);
         }
 
-        name = new String(name.getBytes("ISO-8859-1"), encoding);
-
-        return name;
+        //
+        //  This is required, because by default all URLs are handled
+        //  as Latin1, even if they are really UTF-8.
+        //
+        
+        return TextUtil.urlDecode( name, encoding );
     }
 }
