@@ -28,16 +28,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import org.xml.sax.AttributeList;
-import org.xml.sax.HandlerBase;
+import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
-import org.xml.sax.Parser;
 import org.xml.sax.SAXException;
-
-import uk.co.wilson.xml.MinML;
+import org.xml.sax.helpers.DefaultHandler;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -97,7 +98,7 @@ import com.ecyrd.jspwiki.util.PriorityList;
  * @author Janne Jalkanen
  */
 public class FilterManager
-        extends HandlerBase
+        extends DefaultHandler
         implements WikiProperties
 {
     /** DOCUMENT ME! */
@@ -124,13 +125,16 @@ public class FilterManager
     private boolean parsingFilters = false;
 
     /** DOCUMENT ME! */
-    private String lastReadCharacters = null;
+    private StringBuffer lastReadCharacters = null;
 
     /** DOCUMENT ME! */
     private String lastReadParamName = null;
 
     /** DOCUMENT ME! */
     private String lastReadParamValue = null;
+
+    /** The SAX Parser Factory */
+    private static SAXParserFactory saxFactory = null;
 
     /**
      * Creates a new FilterManager object.
@@ -143,7 +147,15 @@ public class FilterManager
     public FilterManager(WikiEngine engine, Configuration conf)
             throws WikiException
     {
+        super();
         initialize(engine, conf);
+    }
+
+    static
+    {
+        saxFactory = SAXParserFactory.newInstance();
+        saxFactory.setValidating(false);
+        saxFactory.setNamespaceAware(false);
     }
 
     /**
@@ -248,12 +260,8 @@ public class FilterManager
                 return;
             }
 
-            Parser parser = new MinML(); // FIXME: Should be settable
-
-            parser.setDocumentHandler(this);
-            parser.setErrorHandler(this);
-
-            parser.parse(new InputSource(xmlStream));
+            SAXParser parser = saxFactory.newSAXParser();
+            parser.parse(new InputSource(xmlStream), this);
         }
         catch (FileNotFoundException fnf)
         {
@@ -270,6 +278,10 @@ public class FilterManager
         {
             log.error("Problem in the XML file", e);
         }
+        catch (ParserConfigurationException pce)
+        {
+            log.error("Problem while configuring the parser", pce);
+        }
     }
 
     /**
@@ -278,15 +290,18 @@ public class FilterManager
      * @param name DOCUMENT ME!
      * @param atts DOCUMENT ME!
      */
-    public void startElement(String name, AttributeList atts)
+    public void startElement(String namespace, String name, String qName, Attributes atts)
+    	throws SAXException
     {
-        if ("pagefilters".equals(name))
+        lastReadCharacters = new StringBuffer();
+
+        if ("pagefilters".equals(qName))
         {
             parsingFilters = true;
         }
         else if (parsingFilters)
         {
-            if ("filter".equals(name))
+            if ("filter".equals(qName))
             {
                 filterName = null;
             }
@@ -298,33 +313,34 @@ public class FilterManager
      *
      * @param name DOCUMENT ME!
      */
-    public void endElement(String name)
+    public void endElement(String namespace, String name, String qName)
+    	throws SAXException
     {
-        if ("pagefilters".equals(name))
+        if ("pagefilters".equals(qName))
         {
             parsingFilters = false;
         }
         else if (parsingFilters)
         {
-            if ("filter".equals(name))
+            if ("filter".equals(qName))
             {
                 initPageFilter(filterName, filterProperties);
             }
-            else if ("class".equals(name))
+            else if ("class".equals(qName))
             {
-                filterName = lastReadCharacters;
+                filterName = lastReadCharacters.toString();
             }
-            else if ("param".equals(name))
+            else if ("param".equals(qName))
             {
                 filterProperties.setProperty(lastReadParamName, lastReadParamValue);
             }
-            else if ("name".equals(name))
+            else if ("name".equals(qName))
             {
-                lastReadParamName = lastReadCharacters;
+                lastReadParamName = lastReadCharacters.toString();
             }
-            else if ("value".equals(name))
+            else if ("value".equals(qName))
             {
-                lastReadParamValue = lastReadCharacters;
+                lastReadParamValue = lastReadCharacters.toString();
             }
         }
     }
@@ -338,7 +354,7 @@ public class FilterManager
      */
     public void characters(char [] ch, int start, int length)
     {
-        lastReadCharacters = new String(ch, start, length);
+        lastReadCharacters.append(ch, start, length);
     }
 
     /**
