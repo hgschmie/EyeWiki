@@ -36,17 +36,9 @@ import com.ecyrd.jspwiki.url.DefaultURLConstructor;
 public interface WikiProperties
 {
     /**
-     * If this parameter is true, then all the page and string references are relative to the web
-     * application root. This allows a wiki to be deployed "as is" as a single war file.
+     * The main prefix for all the jspwiki properties. Note the trailing dot.
      */
-    String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
-
-    /**
-     * The default is to have absolute pathes for backwards compatibility
-     *
-     * @value false
-     */
-    boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
+    String PROP_PREFIX = "jspwiki.";
 
     /*
      * ========================================================================
@@ -92,8 +84,21 @@ public interface WikiProperties
      */
     String PROP_ROOTDIR = "jspwiki.rootDir";
 
+    /**
+     * If this parameter is true, then all the page and string references are relative to the web
+     * application root. This allows a wiki to be deployed "as is" as a single war file.
+     */
+    String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
+
+    /**
+     * The default is to have absolute pathes for backwards compatibility
+     *
+     * @value false
+     */
+    boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
+
     /** Property start for any interwiki reference. */
-    String PROP_INTERWIKIREF = "jspwiki.interWikiRef.";
+    String PROP_INTERWIKIREF = "jspwiki.interWikiRef";
 
     /** If true, then the user name will be stored with the page data. */
     String PROP_STOREUSERNAME = "jspwiki.storeUserName";

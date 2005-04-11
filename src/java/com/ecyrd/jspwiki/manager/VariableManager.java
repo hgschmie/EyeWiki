@@ -22,6 +22,7 @@ package com.ecyrd.jspwiki.manager;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,6 +33,7 @@ import org.apache.commons.lang.StringUtils;
 import com.ecyrd.jspwiki.Release;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.exception.NoSuchVariableException;
@@ -385,15 +387,17 @@ public class VariableManager
             // We don't allow fetching any other properties than those starting
             // with "jspwiki.".  I know my own code, but I can't vouch for bugs
             // in other people's code... :-)
-            if (varName.startsWith("jspwiki."))
+            if (varName.startsWith(WikiProperties.PROP_PREFIX))
             {
                 Configuration conf = context.getEngine().getWikiConfiguration();
 
-                res = conf.getString(res, null);
-
-                if (res != null)
+                try
                 {
-                    return res;
+                    return conf.getString(varName);
+                }
+                catch (NoSuchElementException nsee)
+                {
+                    // Does nothing, just continue searching...
                 }
             }
 

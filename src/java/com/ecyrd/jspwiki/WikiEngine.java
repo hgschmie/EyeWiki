@@ -146,9 +146,6 @@ public class WikiEngine
     /** Stores Configuration per WikiEngine. */
     private Configuration conf = null;
 
-    /** Stores special pages per WikiEngine */
-    private Configuration pagesConf = null;
-
     /** Should the user info be saved with the page data as well? */
     // NOT YET USED private boolean m_saveUserInfo = true;
 
@@ -478,7 +475,6 @@ public class WikiEngine
             : "");
 
         this.conf = conf;
-        this.pagesConf = conf.subset(PROP_SPECIAL_PAGES_PREFIX);
 
         //
         //  Initialized log4j.  However, make sure that
@@ -991,7 +987,16 @@ public class WikiEngine
      */
     public String getInterWikiURL(String wikiName)
     {
-        return conf.getString(PROP_INTERWIKIREF + wikiName, "");
+        Configuration iwConf = conf.subset(PROP_INTERWIKIREF);
+        
+        try
+        {
+            return iwConf.getString(wikiName);
+        }
+        catch (NoSuchElementException nsee)
+        {
+            return "";
+        }
     }
 
     /**
@@ -1008,7 +1013,7 @@ public class WikiEngine
         for (Iterator it = iwConf.getKeys(); it.hasNext();)
         {
             String key = (String) it.next();
-            l.add(iwConf.getString(key));
+            l.add(key);
         }
 
         return l;
@@ -1040,6 +1045,8 @@ public class WikiEngine
      */
     public String getSpecialPageReference(String original)
     {
+        Configuration pagesConf = conf.subset(PROP_SPECIAL_PAGES_PREFIX);
+
         try
         {
             String specialPage = pagesConf.getString(original);
@@ -2059,6 +2066,8 @@ public class WikiEngine
         {
             path = path.substring(1);
         }
+
+        Configuration pagesConf = conf.subset(PROP_SPECIAL_PAGES_PREFIX);
 
         for (Iterator it = pagesConf.getKeys(); it.hasNext();)
         {
