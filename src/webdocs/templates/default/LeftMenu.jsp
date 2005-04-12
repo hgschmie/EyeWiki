@@ -30,5 +30,7 @@
     </wiki:UserCheck>
 </div>
 
+<%@ include file="LoginBox.jsp" %>
+
 <!-- End of automatically generated page -->
 
