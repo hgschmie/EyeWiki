@@ -70,22 +70,6 @@ public class PermissionTag
 
         if (page != null)
         {
-            //
-            //  Edit tag also checks that we're not trying to edit an
-            //  old version: they cannot be edited.
-            //
-            if ("edit".equals(m_permission))
-            {
-                WikiPage latest = engine.getPage(page.getName());
-
-                if (
-                    (page.getVersion() != WikiProvider.LATEST_VERSION)
-                                && (latest.getVersion() != page.getVersion()))
-                {
-                    return SKIP_BODY;
-                }
-            }
-
             gotPermission = mgr.checkPermission(page, userprofile, m_permission);
         }
 
