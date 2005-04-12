@@ -10,7 +10,9 @@
             <p class="versionnote">This is version <wiki:PageVersion/>.  
             It is not the current version, and thus it cannot be edited.<br />
             <wiki:LinkTo>[Back to current version]</wiki:LinkTo>&nbsp;&nbsp;
-            <wiki:EditLink version="this">[Restore this version]</wiki:EditLink></p>
+            <wiki:Permission permission="edit">
+              <wiki:EditLink version="this">[Restore this version]</wiki:EditLink></p>
+            </wiki:Permission>
          </font>
          <hr />
       </wiki:CheckVersion>
@@ -48,9 +50,11 @@
         <tr>
           <td align="left">
              <a href="#Top">Go to top</a>&nbsp;&nbsp;
-             <wiki:Permission permission="edit">
-                 <wiki:EditLink>Edit this page</wiki:EditLink>&nbsp;&nbsp;
-             </wiki:Permission>
+             <wiki:CheckVersion mode="latest">
+               <wiki:Permission permission="edit">
+                   <wiki:EditLink>Edit this page</wiki:EditLink>&nbsp;&nbsp;
+               </wiki:Permission>
+             </wiki:CheckVersion>
              <wiki:PageInfoLink>More info...</wiki:PageInfoLink>&nbsp;&nbsp;
              <wiki:Permission permission="upload">
                  <a href="javascript:window.open('<wiki:UploadLink format="url" />','Upload','width=640,height=480,toolbar=1,menubar=1,scrollbars=1,resizable=1,').focus()">Attach file...</a>
