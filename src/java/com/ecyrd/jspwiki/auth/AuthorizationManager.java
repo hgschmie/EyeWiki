@@ -129,17 +129,6 @@ public class AuthorizationManager
     }
 
     /**
-     * Returns true, if strict logins are required.  Strict logins mean that all pages are
-     * accessible only to users who have logged in.
-     *
-     * @return DOCUMENT ME!
-     */
-    public boolean strictLogins()
-    {
-        return m_strictLogins;
-    }
-
-    /**
      * Attempts to find the ACL of a page. If the page has a parent page, then that is tried also.
      *
      * @param page DOCUMENT ME!

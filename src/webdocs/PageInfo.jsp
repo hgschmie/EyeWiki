@@ -29,7 +29,7 @@
                               currentUser,
                               WikiPermission.newInstance("view") ) )
     {
-        if( mgr.strictLogins() )
+        if( mgr.isStrictLogins() )
         {
             if (log.isInfoEnabled()) {
                 log.info("User "+currentUser.getName()+" has no access - redirecting to login page.");
