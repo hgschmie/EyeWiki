@@ -4,10 +4,11 @@
 
 <div class="loginbox" align="center">
   <wiki:UserCheck status="unvalidated">
+    <tt>Please log in</tt>
     <form action="<wiki:Variable var="baseURL"/>Login.jsp" accept-charset="UTF-8" method="post" >
     <p>
       <input type="hidden" name="page" value="<wiki:Variable var="pagename"/>" />
-      <input type="text" name="uid" size="8" />
+      <input type="text" name="uid" size="8" value="<wiki:UserCheck status="known"><wiki:UserName /></wiki:UserCheck>" />
       <br />
       <input type="password" name="passwd" size="8" />
       <br />
