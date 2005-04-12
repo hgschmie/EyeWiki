@@ -1,8 +1,7 @@
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 
@@ -14,22 +13,30 @@
   </wiki:CheckVersion>
 </head>
 
-<body bgcolor="#FFFFFF">
+<body>
 
-<table border="0" cellspacing="8" width="95%">
-
+<table class="fullpage">
   <tr>
-    <td class="leftmenu" width="10%" valign="top" nowrap="nowrap">
+  
+    <td class="leftmenu">
        <wiki:Include page="LeftMenu.jsp"/>
+       <p>
+       <wiki:CheckRequestContext context="view">
+          <wiki:Permission permission="edit">
+             <wiki:EditLink>Edit this page</wiki:EditLink>
+          </wiki:Permission>
+       </wiki:CheckRequestContext>
+       </p>
        <wiki:Include page="LeftMenuFooter.jsp"/>
+       <p />
        <div align="center">
            <wiki:RSSImageLink title="Aggregate the RSS feed" />
        </div>
     </td>
 
-    <td class="page" width="85%" valign="top">
+    <td class="page">
 
-      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+      <table class="pageHeader">
          <tr>
             <td align="left">
                 <h1 class="pagename"><a name="Top"><wiki:PageName/></a></h1>
@@ -39,6 +46,9 @@
          <tr>
             <td colspan="2" class="breadcrumbs">Your trail: <wiki:Breadcrumbs /></td>
          </tr>
+         <tr>
+            <td colspan="2"><hr /></td>
+         </tr>
       </table>
 
       <hr />
@@ -47,7 +57,6 @@
 
     </td>
   </tr>
-
 </table>
 
 </body>
