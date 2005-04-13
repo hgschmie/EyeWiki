@@ -95,38 +95,30 @@
   <meta name="robots" content="noindex,nofollow">
 </head>
 
-<body class="login" bgcolor="#FFFFFF">
-  <br />
-  <br />
+<body class="login">
   <form action="<wiki:Variable var="baseURL"/>Login.jsp" accept-charset="<wiki:ContentEncoding />" method="post" />
   <input type="hidden" name="page" value="<wiki:Variable var="pagename" />" />
-  <div align="center">
-    <table border="0" cellspacing="3" cellpadding="5" width="35%" bgcolor="#efefef" />
-      <tr>
-        <td colspan="2" bgcolor="#bfbfff">
-          <div align="center">
-            <h3>Welcome to <wiki:Variable var="applicationname"/></h3>
-            <p style="color:red"><wiki:Variable var="msg" /></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>Login:</td>
-        <td><input type="text" name="uid" value="<wiki:Variable var="uid" default="" />" /></td>
-      </tr>
-      <tr>
-        <td>Password:</td>
-        <td><input type="password" name="passwd" /></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <div align="center">
-            <input type="submit" name="action" value="login" />
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+  <table class="login" width="35%" />
+    <tr>
+      <td colspan="2" class="login">
+        <h3 class="login">Welcome to <wiki:Variable var="applicationname"/></h3>
+        <p style="color:red"><wiki:Variable var="msg" /></p>
+      </td>
+    </tr>
+    <tr>
+      <td class="loginmsg">Login:</td>
+      <td class="logininput"><input type="text" name="uid" value="<wiki:Variable var="uid" default="" />" /></td>
+    </tr>
+    <tr>
+      <td class="loginmsg">Password:</td>
+      <td class="logininput"><input type="password" name="passwd" /></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="logininput">
+        <input type="submit" name="action" value="login" />
+      </td>
+    </tr>
+  </table>
 </body>
 
 </html>
