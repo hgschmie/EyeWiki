@@ -1,0 +1,128 @@
+/*
+ * The JSP Wiki style sheet
+ */
+
+/*
+ * general
+ *
+ * wiki:	body, table, td
+ * wikitable:	table
+ * wikiform: 	form
+ *
+ * wikimenu:	td
+ * wikihead:    td, h1
+ * wikiview:    table, td
+ * wikiedit:    table, td, div
+ * wikisearch:  td
+ * breadcrumbs:	td
+ *
+ * wikiupload:	body
+ * attachment:  table, a, h1
+ * upload:	table, th, td
+ * uploadmsg:	td
+ * searchbox:	div
+ * preview:	h1,div, h2, table, td, textarea
+ * prefs:	h1, div, table, td
+ * prefsmsg:	td
+ * editor:	area
+ * debug:	div
+ * notlatest:	div
+ * nopage:	div
+ * pageaction:	table, td
+ * pageprops:	td
+ * logo:	div, a, img
+ * username:	div
+ * release:	div
+ * pageinfo:	a, table, td
+ * pageinfomsg:	td
+ * pagerev	table, th, td
+ * pagefind:    h1, h2, div, table, th, td, pre
+ * pagefindscore:	th, td
+ * pagefindform:	table, td
+ * pagefindformmsg:	td
+ * lockwarn:	div
+ * message:	div
+ * comment:	h1, h2, textarea, table, td
+ * commentmsg:	td
+ */
+
+/*
+ * Login
+ *
+ * login:    	body, table, td, h3
+ * loginmsg: 	td
+ * logininput: 	td
+ * loginbox:	div, table, td
+ * loginboxmsg: td
+ */
+
+/*
+ * Errors
+ *
+ * errorpage: dt, dd, h3
+ * error: span, p
+ */
+
+/*
+ * Links
+ *
+ * wikipage	a
+ * footnoteref	a
+ * footnote 	a
+ * external	a
+ * interwiki	a
+ */
+
+/*
+ * Images (IMG)
+ *
+ * inline	img
+ * outline	img
+ */
+
+/*
+ * RSS
+ *
+ * rss		a, img
+
+/*
+ * diff
+ *
+ * diffadd:	td, span
+ * diffrem	td, span
+ * diff		td, a, h1, div
+ * diffblock	div, table
+ */
+
+/*
+ * weblog
+ *
+ * weblog		div, li
+ * weblogentry		div
+ * weblogentryheader	div
+ * weblogentrybody	div
+ * weblogentryfooter	div
+ */
+
+/*
+ * Table of Contents
+ *
+ * toc		div, h1
+ */
+
+/*
+ * Index
+ * 
+ * index		div, h1, h2, a
+ * indexbody		div
+ */
+
+/*
+ * Calendar
+ *
+ * calendar		table
+ * calendarday		td
+ * calendarweekday	td
+ * calendarmonth	td
+ * calendarothermonth	td
+ */
