@@ -46,6 +46,7 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
@@ -256,21 +257,29 @@ public class PluginManager
     private String stackTrace(Map params, Throwable t)
     {
         div d = new div();
-        d.setClass("debug");
+        d.setClass(WikiConstants.DEBUG);
         d.addElement("Plugin execution failed, stack trace follows:");
 
         StringWriter out = new StringWriter();
+        pre pre = new pre(out.toString());
+        pre.setClass(WikiConstants.DEBUG);
+        b b = new b("Parameters to the plugin");
+        b.setClass(WikiConstants.DEBUG);
+
         t.printStackTrace(new PrintWriter(out));
-        d.addElement(new pre(out.toString()));
-        d.addElement(new b("Parameters to the plugin"));
+        d.addElement(pre);
+        d.addElement(b);
 
         ul list = new ul();
+        list.setClass(WikiConstants.DEBUG);
 
         for (Iterator i = params.keySet().iterator(); i.hasNext();)
         {
             String key = (String) i.next();
 
-            list.addElement(new li(key + "'='" + params.get(key)));
+            li li = new li(key + "'='" + params.get(key));
+            li.setClass(WikiConstants.DEBUG);
+            list.addElement(li);
         }
 
         d.addElement(list);

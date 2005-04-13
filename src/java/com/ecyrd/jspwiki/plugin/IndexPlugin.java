@@ -35,6 +35,7 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Matcher;
 
 import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -171,11 +172,11 @@ public class IndexPlugin
 
         StringBuffer res = new StringBuffer();
 
-        res.append("<div class=\"index\">\n");
-        res.append("<div class=\"header\">\n");
+        res.append("<div class=\"" + WikiConstants.INDEX_BODY + "\">\n");
+        res.append("<h1 class=\"" + WikiConstants.INDEX + "\">\n");
         res.append(m_headerPart.toString());
         res.append("</div>\n");
-        res.append("<div class=\"body\">\n");
+        res.append("<div class=\"" + WikiConstants.INDEX + "\">\n");
         res.append(m_bodyPart.toString());
         res.append("</div>\n</div>\n");
 
@@ -275,13 +276,13 @@ public class IndexPlugin
             m_headerPart.write(" - ");
         }
 
-        m_headerPart.write("<a href=\"#" + i_firstLetter + "\">" + i_firstLetter + "</a>");
+        m_headerPart.write("<a class=\"" + WikiConstants.INDEX + "\" href=\"#" + i_firstLetter + "\">" + i_firstLetter + "</a>");
     }
 
     private void addLetterHeaderWithLine(final String i_firstLetter)
     {
         m_bodyPart.write(
-                "\n<br /><br />" + "<span class=\"section\">" + "<a name=\"" + i_firstLetter + "\">"
+                "\n<br /><br />" + "<h2 class=\"" + WikiConstants.INDEX + "\">" + "<a name=\"" + i_firstLetter + "\">"
                 + i_firstLetter + "</a></span>" + "<hr />\n");
     }
 

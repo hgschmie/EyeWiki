@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 
@@ -154,7 +155,7 @@ public class FormOpen
         info.setAction(submitServlet);
 
         StringBuffer tag = new StringBuffer();
-        tag.append("<div class=\"wikiform\">\n");
+        tag.append("<div class=\"" + WikiConstants.FORM_WIKIFORM + "\">\n");
         tag.append("<form action=\"" + submitServlet);
         tag.append("\" name=\"" + formName);
         tag.append("\" method=\"" + method + "\" enctype=\"application/x-www-form-urlencoded\">\n");

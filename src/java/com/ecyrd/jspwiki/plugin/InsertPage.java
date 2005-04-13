@@ -21,6 +21,7 @@ package com.ecyrd.jspwiki.plugin;
 
 import java.util.Map;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -109,7 +110,7 @@ public class InsertPage
                                           currentUser,
                                           new ViewPermission() ) )
                 {
-                    res.append("<span class=\"error\">You do not have permission to view this included page.</span>");
+                    res.append("<span class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">You do not have permission to view this included page.</span>");
                     return res.toString();
                 }
                 */
@@ -171,7 +172,7 @@ public class InsertPage
         }
         else
         {
-            res.append("<span class=\"error\">");
+            res.append("<span class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">");
             res.append("You have to define a page!");
             res.append("</span>");
         }

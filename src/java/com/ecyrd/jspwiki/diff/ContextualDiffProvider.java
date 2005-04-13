@@ -37,6 +37,7 @@ import org.apache.commons.jrcs.diff.RevisionVisitor;
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.TextUtil;
@@ -71,19 +72,19 @@ public class ContextualDiffProvider
     protected String m_changeEndHtml = ""; //and an image for an end '<' marker
 
     /** DOCUMENT ME! */
-    protected String m_diffStart = "<div class=\"diff-wikitext\">";
+    protected String m_diffStart = "<div class=\""+ WikiConstants.DIFF_BLOCK + "\">";
 
     /** DOCUMENT ME! */
     protected String m_diffEnd = "</div>";
 
     /** DOCUMENT ME! */
-    protected String m_insertionStartHtml = "<span class=\"diff-insertion\">";
+    protected String m_insertionStartHtml = "<span class=\"" + WikiConstants.DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
     protected String m_insertionEndHtml = "</span>";
 
     /** DOCUMENT ME! */
-    protected String m_deletionStartHtml = "<span class=\"diff-deletion\">";
+    protected String m_deletionStartHtml = "<span class=\"" + WikiConstants.DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
     protected String m_deletionEndHtml = "</span>";
@@ -95,13 +96,13 @@ public class ContextualDiffProvider
     protected String m_anchorPostIndex = "\" />";
 
     /** DOCUMENT ME! */
-    protected String m_backPreIndex = "<a class=\"diff-nextprev\" href=\"#change-";
+    protected String m_backPreIndex = "<a class=\"" + WikiConstants.LINK_DIFF + "\" href=\"#change-";
 
     /** DOCUMENT ME! */
     protected String m_backPostIndex = "\">&lt;&lt;</a>";
 
     /** DOCUMENT ME! */
-    protected String m_forwardPreIndex = "<a class=\"diff-nextprev\" href=\"#change-";
+    protected String m_forwardPreIndex = "<a class=\"" + WikiConstants.LINK_DIFF + "\" href=\"#change-";
 
     /** DOCUMENT ME! */
     protected String m_forwardPostIndex = "\">&gt;&gt;</a>";

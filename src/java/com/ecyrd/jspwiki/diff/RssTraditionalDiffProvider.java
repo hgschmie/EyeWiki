@@ -46,7 +46,7 @@ public class RssTraditionalDiffProvider
         super();
         diffAdd = "<font color=\"#99FF99\">";
         diffRem = "<font color=\"#FF9933\">";
-        diffUnchanged = "<font color=\"white\">";
+        diffComment = "<font color=\"white\">";
         diffClose = "</font>\n";
 
         diffPrefix = "";

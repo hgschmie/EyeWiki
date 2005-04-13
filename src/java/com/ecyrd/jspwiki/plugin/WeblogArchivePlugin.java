@@ -33,6 +33,7 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -90,7 +91,7 @@ public class WeblogArchivePlugin
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<div class=\"weblogarchive\">\n");
+        sb.append("<div class=\"" + WikiConstants.WEBLOG_BODY + "\">\n");
 
         //
         //  Collect months that have blog entries
@@ -109,7 +110,7 @@ public class WeblogArchivePlugin
             {
                 year = ((Calendar) months.iterator().next()).get(Calendar.YEAR);
 
-                sb.append("<li class=\"archiveyear\">" + year + "</li>\n");
+                sb.append("<li class=\"" + WikiConstants.WEBLOG_BODY + "\">" + year + "</li>\n");
             }
 
             for (Iterator i = months.iterator(); i.hasNext();)
@@ -120,7 +121,7 @@ public class WeblogArchivePlugin
                 {
                     year = cal.get(Calendar.YEAR);
 
-                    sb.append("<li class=\"archiveyear\">" + year + "</li>\n");
+                    sb.append("<li class=\"" + WikiConstants.WEBLOG_BODY + "\">" + year + "</li>\n");
                 }
 
                 sb.append("  <li>");

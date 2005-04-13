@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -87,7 +88,7 @@ public class PageInfoLinkTag
             switch (m_format)
             {
             case ANCHOR:
-                out.print("<a class=\"pageinfo\" href=\"" + url + "\">");
+                out.print("<a class=\"" + WikiConstants.LINK_PAGEINFO + "\" href=\"" + url + "\">");
 
                 break;
 

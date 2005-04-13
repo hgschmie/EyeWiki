@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.HeadingListener;
 import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -113,17 +114,17 @@ public class TableOfContents
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<div class=\"toc\">\n");
+        sb.append("<div class=\"" + WikiConstants.TOC + "\">\n");
 
         String title = (String) params.get(PARAM_TITLE);
 
         if (title != null)
         {
-            sb.append("<h4>" + TextUtil.replaceEntities(title) + "</h4>\n");
+            sb.append("<h1 class=\"" + WikiConstants.TOC + "\">" + TextUtil.replaceEntities(title) + "</h1>\n");
         }
         else
         {
-            sb.append("<h4>Table of Contents</h4>\n");
+            sb.append("<h1 class=\"" + WikiConstants.TOC + "\">Table of Contents</h1>\n");
         }
 
         try

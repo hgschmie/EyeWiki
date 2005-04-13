@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.ecs.xhtml.b;
 import org.apache.ecs.xhtml.table;
 import org.apache.ecs.xhtml.td;
 import org.apache.ecs.xhtml.th;
@@ -31,6 +30,7 @@ import org.apache.ecs.xhtml.tr;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.SearchResult;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 
@@ -119,14 +119,20 @@ public class Search
     {
         WikiEngine engine = context.getEngine();
         table t = new table();
-        t.setBorder(0);
-        t.setCellPadding(4);
+        t.setClass(WikiConstants.SEARCH);
 
         tr row = new tr();
         t.addElement(row);
 
-        row.addElement(new th().setWidth("30%").setAlign("left").addElement("Page"));
-        row.addElement(new th().setAlign("left").addElement("Score"));
+        th searchHeader = new th();
+        searchHeader.setClass(WikiConstants.SEARCH);
+        searchHeader.addElement("Page");
+        row.addElement(searchHeader);
+        
+        th scoreHeader = new th();
+        scoreHeader.setClass(WikiConstants.SEARCHSCORE);
+        scoreHeader.addElement("Score");
+        row.addElement(scoreHeader);
 
         int idx = 0;
 
@@ -135,13 +141,17 @@ public class Search
             SearchResult sr = (SearchResult) i.next();
             row = new tr();
 
-            td name = new td().setWidth("30%");
+            td name = new td();
+            name.setClass(WikiConstants.SEARCH);
             name.addElement(
-                "<a href=\"" + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">"
+                "<a class=\"" + WikiConstants.SEARCH + "\" href=\"" + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">"
                 + engine.beautifyTitle(sr.getPage().getName()) + "</a>");
             row.addElement(name);
 
-            row.addElement(new td().addElement("" + sr.getScore()));
+            td score = new td();
+            score.setClass(WikiConstants.SEARCHSCORE);
+            score.addElement("" + sr.getScore());
+            row.addElement(score);
 
             t.addElement(row);
         }
@@ -149,9 +159,10 @@ public class Search
         if (results.isEmpty())
         {
             row = new tr();
-
-            row.addElement(new td().setColSpan(2).addElement(new b().addElement("No results")));
-
+            td result = new td();
+            result.setColSpan(2).setClass(WikiConstants.SEARCH);
+            result.addElement("No results");
+            row.addElement(result);
             t.addElement(row);
         }
 

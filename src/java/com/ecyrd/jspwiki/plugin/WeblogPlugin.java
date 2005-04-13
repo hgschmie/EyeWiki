@@ -35,6 +35,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -272,18 +273,18 @@ public class WeblogPlugin
 
             SimpleDateFormat entryDateFmt = new SimpleDateFormat("dd-MMM-yyyy HH:mm");
 
-            sb.append("<div class=\"weblog\">\n");
+            sb.append("<div class=\"" + WikiConstants.WEBLOG_BODY + "\">\n");
 
             for (Iterator i = blogEntries.iterator(); i.hasNext() && (maxEntries-- > 0);)
             {
                 WikiPage p = (WikiPage) i.next();
 
-                sb.append("<div class=\"weblogentry\">\n");
+                sb.append("<div class=\"" + WikiConstants.WEBLOG_ENTRY + "\">\n");
 
                 //
                 //  Heading
                 //
-                sb.append("<div class=\"weblogentryheading\">\n");
+                sb.append("<div class=\"" + WikiConstants.WEBLOG_ENTRY_HEADER + "\">\n");
 
                 Date entryDate = p.getLastModified();
                 sb.append(entryDateFmt.format(entryDate));
@@ -294,7 +295,7 @@ public class WeblogPlugin
                 //  Append the text of the latest version.  Reset the
                 //  context to that page.
                 //
-                sb.append("<div class=\"weblogentrybody\">\n");
+                sb.append("<div class=\"" + WikiConstants.WEBLOG_ENTRY_BODY + "\">\n");
 
                 WikiContext entryCtx = (WikiContext) context.clone();
                 entryCtx.setPage(p);
@@ -306,7 +307,7 @@ public class WeblogPlugin
                 //
                 //  Append footer
                 //
-                sb.append("<div class=\"weblogentryfooter\">\n");
+                sb.append("<div class=\"" + WikiConstants.WEBLOG_ENTRY_FOOTER + "\">\n");
 
                 String author = p.getAuthor();
 

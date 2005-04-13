@@ -33,6 +33,7 @@ import org.apache.ecs.xhtml.input;
 import org.apache.ecs.xhtml.p;
 import org.apache.ecs.xhtml.textarea;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -193,12 +194,11 @@ public class EditorTag
     {
         textarea area = new textarea();
 
-        area.setClass("editor");
+        area.setClass(WikiConstants.EDITOR);
         area.setWrap("virtual");
         area.setName("text");
         area.setRows(25);
         area.setCols(80);
-        area.setStyle("width:100%;");
 
         if (m_wikiContext.getRequestContext().equals("edit"))
         {

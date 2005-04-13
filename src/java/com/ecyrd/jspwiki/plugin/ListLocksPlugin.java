@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ecyrd.jspwiki.PageLock;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.manager.PageManager;
 
@@ -57,7 +58,7 @@ public class ListLocksPlugin
         PageManager mgr = context.getEngine().getPageManager();
         List locks = mgr.getActiveLocks();
 
-        result.append("<table class=\"listlocksplugin\" border=1>\n");
+        result.append("<table class=\"" + WikiConstants.TABLE_WIKITABLE + "\" border=1>\n");
         result.append("<tr>\n");
         result.append("<th>Page</th><th>Locked by</th><th>Acquired</th><th>Expires</th>\n");
         result.append("</tr>");

@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 
 
@@ -76,8 +77,8 @@ public class RSSImageLinkTag
         if (rssURL != null)
         {
             JspWriter out = pageContext.getOut();
-            out.print("<a href=\"" + rssURL + "\">");
-            out.print("<img src=\"" + engine.getBaseURL() + "images/xml.png\"");
+            out.print("<a class=\"" + WikiConstants.RSS + "\" href=\"" + rssURL + "\">");
+            out.print("<img class=\"" + WikiConstants.RSS + "\" src=\"" + engine.getBaseURL() + "images/xml.png\"");
             out.print(" alt=\"[RSS]\" border=\"0\" title=\"" + getTitle() + "\"/>");
             out.print("</a>");
         }

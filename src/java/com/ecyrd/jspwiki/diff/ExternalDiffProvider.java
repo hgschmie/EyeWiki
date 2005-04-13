@@ -28,6 +28,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
@@ -51,13 +52,13 @@ public class ExternalDiffProvider
     private static final char DIFF_REMOVED_SYMBOL = '-';
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_ADDED = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
+    private static final String CSS_DIFF_ADDED = "<tr><td class=\"" + WikiConstants.DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_REMOVED = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
+    private static final String CSS_DIFF_REMOVED = "<tr><td class=\"" + WikiConstants.DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_UNCHANGED = "<tr><td class=\"diff\">";
+    private static final String CSS_DIFF_COMMENT = "<tr><td class=\"" + WikiConstants.DIFF + "\">";
 
     /** DOCUMENT ME! */
     private static final String CSS_DIFF_CLOSE = "</td></tr>";
@@ -190,7 +191,7 @@ public class ExternalDiffProvider
         BufferedReader in = new BufferedReader(new StringReader(diffText));
         StringBuffer out = new StringBuffer();
 
-        out.append("<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n");
+        out.append("<table class=\""+ WikiConstants.DIFF_BLOCK + "\">\n");
 
         while ((line = in.readLine()) != null)
         {
@@ -211,12 +212,12 @@ public class ExternalDiffProvider
                     break;
 
                 default:
-                    start = CSS_DIFF_UNCHANGED;
+                    start = CSS_DIFF_COMMENT;
                 }
             }
             else
             {
-                start = CSS_DIFF_UNCHANGED;
+                start = CSS_DIFF_COMMENT;
             }
 
             out.append(start);

@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
@@ -119,7 +120,7 @@ public class LinkToTag
                     (getVersion() != null)
                     ? ("version=" + getVersion())
                     : null);
-            linkclass = "attachment";
+            linkclass = WikiConstants.LINK_ATTACHMENT;
         }
         else
         {
@@ -138,7 +139,7 @@ public class LinkToTag
             }
 
             url = m_wikiContext.getURL(WikiContext.VIEW, pageName, params.toString());
-            linkclass = "wikipage";
+            linkclass = WikiConstants.LINK_WIKIPAGE;
         }
 
         switch (m_format)

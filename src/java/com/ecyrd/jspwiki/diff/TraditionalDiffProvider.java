@@ -33,6 +33,7 @@ import org.apache.commons.jrcs.diff.RevisionVisitor;
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.TextUtil;
@@ -52,20 +53,20 @@ public class TraditionalDiffProvider
     protected final Logger log = Logger.getLogger(this.getClass());
 
     /** DOCUMENT ME! */
-    protected String diffAdd = "<tr><td bgcolor=\"#99FF99\" class=\"diffadd\">";
+    protected String diffAdd = "<tr><td class=\"" + WikiConstants.DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
-    protected String diffRem = "<tr><td bgcolor=\"#FF9933\" class=\"diffrem\">";
+    protected String diffRem = "<tr><td class=\"" + WikiConstants.DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
-    protected String diffUnchanged = "<tr><td class=\"diff\">";
+    protected String diffComment = "<tr><td class=\"" + WikiConstants.DIFF + "\">";
 
     /** DOCUMENT ME! */
     protected String diffClose = "</td></tr>\n";
 
     /** DOCUMENT ME! */
     protected String diffPrefix =
-        "<table class=\"diff\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n";
+        "<table class=\""+ WikiConstants.DIFF_BLOCK + "\">\n";
 
     /** DOCUMENT ME! */
     protected String diffPostfix = "</table>\n";
@@ -207,7 +208,7 @@ public class TraditionalDiffProvider
 
         private void print(Chunk changed, String type)
         {
-            m_result.append(diffUnchanged);
+            m_result.append(diffComment);
             m_result.append("At line ");
             m_result.append(changed.first() + 1);
             m_result.append(type);

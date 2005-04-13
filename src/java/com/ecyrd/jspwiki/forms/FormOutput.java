@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 import com.ecyrd.jspwiki.plugin.PluginManager;
@@ -82,7 +83,7 @@ public class FormOutput
         if (StringUtils.isEmpty(handler))
         {
             // Need to print out an error here as this form is misconfigured
-            return ("<p class=\"error\">Argument '" + PARAM_HANDLER
+            return ("<p class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">Argument '" + PARAM_HANDLER
             + "' required for Form plugin</p>");
         }
 
@@ -129,7 +130,7 @@ public class FormOutput
         }
         catch (PluginException pe)
         {
-            error = "<p class=\"error\">" + pe.getMessage();
+            error = "<p class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">" + pe.getMessage();
             info.setError(error);
             info.setStatus(FormInfo.ERROR);
         }

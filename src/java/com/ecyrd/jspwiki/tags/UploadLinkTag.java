@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -82,7 +83,7 @@ public class UploadLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a target=\"_new\" class=\"uploadlink\" href=\"" + url + "\">");
+            out.print("<a target=\"_new\" class=\"" + WikiConstants.LINK_WIKIPAGE + "\" href=\"" + url + "\">");
 
             break;
 
