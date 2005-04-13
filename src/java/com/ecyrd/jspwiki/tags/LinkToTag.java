@@ -120,7 +120,7 @@ public class LinkToTag
                     (getVersion() != null)
                     ? ("version=" + getVersion())
                     : null);
-            linkclass = WikiConstants.LINK_ATTACHMENT;
+            linkclass = WikiConstants.CSS_LINK_ATTACHMENT;
         }
         else
         {
@@ -139,7 +139,7 @@ public class LinkToTag
             }
 
             url = m_wikiContext.getURL(WikiContext.VIEW, pageName, params.toString());
-            linkclass = WikiConstants.LINK_WIKIPAGE;
+            linkclass = WikiConstants.CSS_LINK_WIKIPAGE;
         }
 
         switch (m_format)

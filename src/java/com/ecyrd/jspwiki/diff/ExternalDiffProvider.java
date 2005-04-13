@@ -52,16 +52,16 @@ public class ExternalDiffProvider
     private static final char DIFF_REMOVED_SYMBOL = '-';
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_ADDED = "<tr><td class=\"" + WikiConstants.DIFF_ADD + "\">";
+    private static final String DIFF_ADDED = "<tr><td class=\"" + WikiConstants.CSS_DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_REMOVED = "<tr><td class=\"" + WikiConstants.DIFF_REM + "\">";
+    private static final String DIFF_REMOVED = "<tr><td class=\"" + WikiConstants.CSS_DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_COMMENT = "<tr><td class=\"" + WikiConstants.DIFF + "\">";
+    private static final String DIFF_COMMENT = "<tr><td class=\"" + WikiConstants.CSS_DIFF + "\">";
 
     /** DOCUMENT ME! */
-    private static final String CSS_DIFF_CLOSE = "</td></tr>";
+    private static final String DIFF_CLOSE = "</td></tr>";
 
     /** DOCUMENT ME! */
     private String m_diffCommand = null;
@@ -191,33 +191,33 @@ public class ExternalDiffProvider
         BufferedReader in = new BufferedReader(new StringReader(diffText));
         StringBuffer out = new StringBuffer();
 
-        out.append("<table class=\""+ WikiConstants.DIFF_BLOCK + "\">\n");
+        out.append("<table class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">\n");
 
         while ((line = in.readLine()) != null)
         {
-            stop = CSS_DIFF_CLOSE;
+            stop = DIFF_CLOSE;
 
             if (line.length() > 0)
             {
                 switch (line.charAt(0))
                 {
                 case DIFF_ADDED_SYMBOL:
-                    start = CSS_DIFF_ADDED;
+                    start = DIFF_ADDED;
 
                     break;
 
                 case DIFF_REMOVED_SYMBOL:
-                    start = CSS_DIFF_REMOVED;
+                    start = DIFF_REMOVED;
 
                     break;
 
                 default:
-                    start = CSS_DIFF_COMMENT;
+                    start = DIFF_COMMENT;
                 }
             }
             else
             {
-                start = CSS_DIFF_COMMENT;
+                start = DIFF_COMMENT;
             }
 
             out.append(start);

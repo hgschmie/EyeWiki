@@ -88,7 +88,7 @@ public class PageInfoLinkTag
             switch (m_format)
             {
             case ANCHOR:
-                out.print("<a class=\"" + WikiConstants.LINK_PAGEINFO + "\" href=\"" + url + "\">");
+                out.print("<a class=\"" + WikiConstants.CSS_LINK_PAGEINFO + "\" href=\"" + url + "\">");
 
                 break;
 

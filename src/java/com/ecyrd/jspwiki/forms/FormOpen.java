@@ -155,7 +155,7 @@ public class FormOpen
         info.setAction(submitServlet);
 
         StringBuffer tag = new StringBuffer();
-        tag.append("<div class=\"" + WikiConstants.FORM_WIKIFORM + "\">\n");
+        tag.append("<div class=\"" + WikiConstants.CSS_FORM_WIKIFORM + "\">\n");
         tag.append("<form action=\"" + submitServlet);
         tag.append("\" name=\"" + formName);
         tag.append("\" method=\"" + method + "\" enctype=\"application/x-www-form-urlencoded\">\n");

@@ -72,19 +72,19 @@ public class ContextualDiffProvider
     protected String m_changeEndHtml = ""; //and an image for an end '<' marker
 
     /** DOCUMENT ME! */
-    protected String m_diffStart = "<div class=\""+ WikiConstants.DIFF_BLOCK + "\">";
+    protected String m_diffStart = "<div class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">";
 
     /** DOCUMENT ME! */
     protected String m_diffEnd = "</div>";
 
     /** DOCUMENT ME! */
-    protected String m_insertionStartHtml = "<span class=\"" + WikiConstants.DIFF_ADD + "\">";
+    protected String m_insertionStartHtml = "<span class=\"" + WikiConstants.CSS_DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
     protected String m_insertionEndHtml = "</span>";
 
     /** DOCUMENT ME! */
-    protected String m_deletionStartHtml = "<span class=\"" + WikiConstants.DIFF_REM + "\">";
+    protected String m_deletionStartHtml = "<span class=\"" + WikiConstants.CSS_DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
     protected String m_deletionEndHtml = "</span>";
@@ -96,13 +96,13 @@ public class ContextualDiffProvider
     protected String m_anchorPostIndex = "\" />";
 
     /** DOCUMENT ME! */
-    protected String m_backPreIndex = "<a class=\"" + WikiConstants.LINK_DIFF + "\" href=\"#change-";
+    protected String m_backPreIndex = "<a class=\"" + WikiConstants.CSS_LINK_DIFF + "\" href=\"#change-";
 
     /** DOCUMENT ME! */
     protected String m_backPostIndex = "\">&lt;&lt;</a>";
 
     /** DOCUMENT ME! */
-    protected String m_forwardPreIndex = "<a class=\"" + WikiConstants.LINK_DIFF + "\" href=\"#change-";
+    protected String m_forwardPreIndex = "<a class=\"" + WikiConstants.CSS_LINK_DIFF + "\" href=\"#change-";
 
     /** DOCUMENT ME! */
     protected String m_forwardPostIndex = "\">&gt;&gt;</a>";

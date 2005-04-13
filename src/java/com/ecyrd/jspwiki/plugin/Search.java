@@ -119,18 +119,18 @@ public class Search
     {
         WikiEngine engine = context.getEngine();
         table t = new table();
-        t.setClass(WikiConstants.SEARCH);
+        t.setClass(WikiConstants.CSS_SEARCH);
 
         tr row = new tr();
         t.addElement(row);
 
         th searchHeader = new th();
-        searchHeader.setClass(WikiConstants.SEARCH);
+        searchHeader.setClass(WikiConstants.CSS_SEARCH);
         searchHeader.addElement("Page");
         row.addElement(searchHeader);
         
         th scoreHeader = new th();
-        scoreHeader.setClass(WikiConstants.SEARCHSCORE);
+        scoreHeader.setClass(WikiConstants.CSS_SEARCHSCORE);
         scoreHeader.addElement("Score");
         row.addElement(scoreHeader);
 
@@ -142,14 +142,14 @@ public class Search
             row = new tr();
 
             td name = new td();
-            name.setClass(WikiConstants.SEARCH);
+            name.setClass(WikiConstants.CSS_SEARCH);
             name.addElement(
-                "<a class=\"" + WikiConstants.SEARCH + "\" href=\"" + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">"
+                "<a class=\"" + WikiConstants.CSS_SEARCH + "\" href=\"" + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">"
                 + engine.beautifyTitle(sr.getPage().getName()) + "</a>");
             row.addElement(name);
 
             td score = new td();
-            score.setClass(WikiConstants.SEARCHSCORE);
+            score.setClass(WikiConstants.CSS_SEARCHSCORE);
             score.addElement("" + sr.getScore());
             row.addElement(score);
 
@@ -160,7 +160,7 @@ public class Search
         {
             row = new tr();
             td result = new td();
-            result.setColSpan(2).setClass(WikiConstants.SEARCH);
+            result.setColSpan(2).setClass(WikiConstants.CSS_SEARCH);
             result.addElement("No results");
             row.addElement(result);
             t.addElement(row);

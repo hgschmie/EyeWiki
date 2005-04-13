@@ -91,7 +91,7 @@ public class WeblogArchivePlugin
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<div class=\"" + WikiConstants.WEBLOG_BODY + "\">\n");
+        sb.append("<div class=\"" + WikiConstants.CSS_WEBLOG_BODY + "\">\n");
 
         //
         //  Collect months that have blog entries
@@ -110,7 +110,7 @@ public class WeblogArchivePlugin
             {
                 year = ((Calendar) months.iterator().next()).get(Calendar.YEAR);
 
-                sb.append("<li class=\"" + WikiConstants.WEBLOG_BODY + "\">" + year + "</li>\n");
+                sb.append("<li class=\"" + WikiConstants.CSS_WEBLOG_BODY + "\">" + year + "</li>\n");
             }
 
             for (Iterator i = months.iterator(); i.hasNext();)
@@ -121,7 +121,7 @@ public class WeblogArchivePlugin
                 {
                     year = cal.get(Calendar.YEAR);
 
-                    sb.append("<li class=\"" + WikiConstants.WEBLOG_BODY + "\">" + year + "</li>\n");
+                    sb.append("<li class=\"" + WikiConstants.CSS_WEBLOG_BODY + "\">" + year + "</li>\n");
                 }
 
                 sb.append("  <li>");

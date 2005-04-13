@@ -257,28 +257,28 @@ public class PluginManager
     private String stackTrace(Map params, Throwable t)
     {
         div d = new div();
-        d.setClass(WikiConstants.DEBUG);
+        d.setClass(WikiConstants.CSS_DEBUG);
         d.addElement("Plugin execution failed, stack trace follows:");
 
         StringWriter out = new StringWriter();
         pre pre = new pre(out.toString());
-        pre.setClass(WikiConstants.DEBUG);
+        pre.setClass(WikiConstants.CSS_DEBUG);
         b b = new b("Parameters to the plugin");
-        b.setClass(WikiConstants.DEBUG);
+        b.setClass(WikiConstants.CSS_DEBUG);
 
         t.printStackTrace(new PrintWriter(out));
         d.addElement(pre);
         d.addElement(b);
 
         ul list = new ul();
-        list.setClass(WikiConstants.DEBUG);
+        list.setClass(WikiConstants.CSS_DEBUG);
 
         for (Iterator i = params.keySet().iterator(); i.hasNext();)
         {
             String key = (String) i.next();
 
             li li = new li(key + "'='" + params.get(key));
-            li.setClass(WikiConstants.DEBUG);
+            li.setClass(WikiConstants.CSS_DEBUG);
             list.addElement(li);
         }
 

@@ -114,17 +114,17 @@ public class TableOfContents
 
         StringBuffer sb = new StringBuffer();
 
-        sb.append("<div class=\"" + WikiConstants.TOC + "\">\n");
+        sb.append("<div class=\"" + WikiConstants.CSS_TOC + "\">\n");
 
         String title = (String) params.get(PARAM_TITLE);
 
         if (title != null)
         {
-            sb.append("<h1 class=\"" + WikiConstants.TOC + "\">" + TextUtil.replaceEntities(title) + "</h1>\n");
+            sb.append("<h1 class=\"" + WikiConstants.CSS_TOC + "\">" + TextUtil.replaceEntities(title) + "</h1>\n");
         }
         else
         {
-            sb.append("<h1 class=\"" + WikiConstants.TOC + "\">Table of Contents</h1>\n");
+            sb.append("<h1 class=\"" + WikiConstants.CSS_TOC + "\">Table of Contents</h1>\n");
         }
 
         try

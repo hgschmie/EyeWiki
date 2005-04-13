@@ -56,7 +56,7 @@ public class WikiContext
     /** User is preparing for a login/authentication. */
     public static final String LOGIN = "login";
 
-    /** User is viewing a DIFF between the two versions of the page. */
+    /** User is viewing a diff between the two versions of the page. */
     public static final String DIFF = "diff";
 
     /** User is viewing page history. */

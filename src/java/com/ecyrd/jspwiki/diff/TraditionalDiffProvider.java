@@ -53,20 +53,20 @@ public class TraditionalDiffProvider
     protected final Logger log = Logger.getLogger(this.getClass());
 
     /** DOCUMENT ME! */
-    protected String diffAdd = "<tr><td class=\"" + WikiConstants.DIFF_ADD + "\">";
+    protected String diffAdd = "<tr><td class=\"" + WikiConstants.CSS_DIFF_ADD + "\">";
 
     /** DOCUMENT ME! */
-    protected String diffRem = "<tr><td class=\"" + WikiConstants.DIFF_REM + "\">";
+    protected String diffRem = "<tr><td class=\"" + WikiConstants.CSS_DIFF_REM + "\">";
 
     /** DOCUMENT ME! */
-    protected String diffComment = "<tr><td class=\"" + WikiConstants.DIFF + "\">";
+    protected String diffComment = "<tr><td class=\"" + WikiConstants.CSS_DIFF + "\">";
 
     /** DOCUMENT ME! */
     protected String diffClose = "</td></tr>\n";
 
     /** DOCUMENT ME! */
     protected String diffPrefix =
-        "<table class=\""+ WikiConstants.DIFF_BLOCK + "\">\n";
+        "<table class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">\n";
 
     /** DOCUMENT ME! */
     protected String diffPostfix = "</table>\n";

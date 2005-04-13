@@ -2873,7 +2873,7 @@ public class TranslatorReader
             {
             case READ:
                 result =
-                    "<a class=\"" + WikiConstants.LINK_WIKIPAGE + "\" href=\"" + getURL(WikiContext.VIEW, link) + section
+                    "<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + getURL(WikiContext.VIEW, link) + section
                     + "\">" + text + "</a>";
 
                 break;
@@ -2897,14 +2897,14 @@ public class TranslatorReader
             //
             case LOCALREF:
                 result =
-                    "<a class=\"" + WikiConstants.LINK_FOOTNOTE_REF + "\" href=\"#ref-" + m_context.getPage().getName() + "-"
+                    "<a class=\"" + WikiConstants.CSS_LINK_FOOTNOTE_REF + "\" href=\"#ref-" + m_context.getPage().getName() + "-"
                     + link + "\">[" + text + "]</a>";
 
                 break;
 
             case LOCAL:
                 result =
-                    "<a class=\"" + WikiConstants.LINK_FOOTNOTE_ANCHOR + "\" name=\"ref-" + m_context.getPage().getName() + "-"
+                    "<a class=\"" + WikiConstants.CSS_LINK_FOOTNOTE_ANCHOR + "\" name=\"ref-" + m_context.getPage().getName() + "-"
                     + link.substring(1) + "\">[" + text + "]</a>";
 
                 break;
@@ -2917,13 +2917,13 @@ public class TranslatorReader
             //  fillBuffer().
             //
             case IMAGE:
-                result = "<img class=\"" + WikiConstants.IMG_INLINE + "\" src=\"" + link + "\" alt=\"" + text + "\" />";
+                result = "<img class=\"" + WikiConstants.CSS_IMG_INLINE + "\" src=\"" + link + "\" alt=\"" + text + "\" />";
 
                 break;
 
             case IMAGELINK:
                 result =
-                    "<a href=\"" + text + "\"><img class=\"" + WikiConstants.IMG_INLINE + "\" src=\"" + link + "\" alt=\""
+                    "<a href=\"" + text + "\"><img class=\"" + WikiConstants.CSS_IMG_INLINE + "\" src=\"" + link + "\" alt=\""
                     + text + "\"/></a>";
 
                 break;
@@ -2932,21 +2932,21 @@ public class TranslatorReader
 
                 String pagelink = getURL(WikiContext.VIEW, text);
                 result =
-                    "<a class=\"" + WikiConstants.LINK_WIKIPAGE + "\" href=\"" + pagelink + "\"><img class=\"" + WikiConstants.IMG_INLINE + "\" src=\""
+                    "<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + pagelink + "\"><img class=\"" + WikiConstants.CSS_IMG_INLINE + "\" src=\""
                     + link + "\" alt=\"" + text + "\" /></a>";
 
                 break;
 
             case EXTERNAL:
                 result =
-                    "<a class=\"" + WikiConstants.LINK_EXTERNAL + "\" " + (m_useRelNofollow
+                    "<a class=\"" + WikiConstants.CSS_LINK_EXTERNAL + "\" " + (m_useRelNofollow
                     ? "rel=\"nofollow\" "
                     : "") + "href=\"" + link + section + "\">" + text + "</a>";
 
                 break;
 
             case INTERWIKI:
-                result = "<a class=\"" + WikiConstants.LINK_INTERWIKI + "\" href=\"" + link + section + "\">" + text + "</a>";
+                result = "<a class=\"" + WikiConstants.CSS_LINK_INTERWIKI + "\" href=\"" + link + section + "\">" + text + "</a>";
 
                 break;
 
@@ -2958,7 +2958,7 @@ public class TranslatorReader
                 String imglink = getURL(WikiContext.NONE, "images/attachment_small.png");
 
                 result =
-                    "<a class=\"" + WikiConstants.LINK_ATTACHMENT + "\" href=\"" + attlink + "\">" + text + "</a>"
+                    "<a class=\"" + WikiConstants.CSS_LINK_ATTACHMENT + "\" href=\"" + attlink + "\">" + text + "</a>"
                     + "<a href=\"" + infolink + "\"><img src=\"" + imglink
                     + "\" border=\"0\" alt=\"(info)\"/></a>";
 
@@ -3167,7 +3167,7 @@ public class TranslatorReader
          */
         public String openTable()
         {
-            return "<table class=\"" + WikiConstants.TABLE_WIKITABLE + "\" border=\"1\">\n";
+            return "<table class=\"" + WikiConstants.CSS_TABLE_WIKITABLE + "\" border=\"1\">\n";
         }
 
         /**
@@ -3283,7 +3283,7 @@ public class TranslatorReader
         {
             if (m_useOutlinkImage)
             {
-                return "<img class=\"" + WikiConstants.IMG_OUTLINK + "\" src=\"" + getURL(WikiContext.NONE, "images/out.png")
+                return "<img class=\"" + WikiConstants.CSS_IMG_OUTLINK + "\" src=\"" + getURL(WikiContext.NONE, "images/out.png")
                 + "\" alt=\"\" />";
             }
 
