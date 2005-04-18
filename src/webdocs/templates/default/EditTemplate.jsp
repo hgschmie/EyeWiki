@@ -29,7 +29,7 @@
 
     <td class="wiki">
       <table class="wikiedit">
-         <tr>
+         <tr class="wikihead">
             <td class="wikihead"><h1 class="wikihead"><a class="wikianchor" name="Top">Edit <wiki:PageName/></a></h1></td>
             <td class="wikisearch"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>

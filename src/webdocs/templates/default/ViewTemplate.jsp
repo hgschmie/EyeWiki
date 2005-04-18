@@ -26,7 +26,7 @@
 
     <td class="wiki">
       <table class="wikiview">
-         <tr>
+         <tr class="wikihead">
             <td class="wikihead"><h1 class="wikihead"><a class="wikianchor" name="Top"><wiki:PageName/></a></h1></td>
             <td class="wikisearch"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>
