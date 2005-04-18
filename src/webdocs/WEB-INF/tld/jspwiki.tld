@@ -445,12 +445,6 @@
   </tag>
 
   <tag>
-    <name>RSSLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.RSSLinkTag</tagclass>
-    <bodycontent>empty</bodycontent>
-  </tag>
-
-  <tag>
     <name>RSSImageLink</name>
     <tagclass>com.ecyrd.jspwiki.tags.RSSImageLinkTag</tagclass>
     <bodycontent>empty</bodycontent>

@@ -90,26 +90,6 @@ public class UserCheckTag
     }
 
     /**
-     * Sets the "exists" attribute, which is converted on-the-fly into an equivalent "status"
-     * -attribute.  This is only for backwards compatibility.
-     *
-     * @param arg DOCUMENT ME!
-     *
-     * @deprecated
-     */
-    public void setExists(String arg)
-    {
-        if ("true".equals(arg))
-        {
-            m_status = "known";
-        }
-        else
-        {
-            m_status = "unknown";
-        }
-    }
-
-    /**
      * DOCUMENT ME!
      *
      * @return DOCUMENT ME!
