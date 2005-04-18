@@ -60,9 +60,11 @@
       <wiki:PageInfoLink>More info...</wiki:PageInfoLink>
     </td>
     <td class="pageaction">
-      <wiki:Permission permission="upload">
-        <a class="pageinfo" href="#" onclick="javascript:window.open('<wiki:UploadLink format="url" />','Upload','width=640,height=480,toolbar=1,menubar=1,scrollbars=1,resizable=1,').focus()">Attach file...</a>
-      </wiki:Permission>
+      <wiki:PageExists>
+        <wiki:Permission permission="upload">
+          <a class="pageinfo" href="#" onclick="javascript:window.open('<wiki:UploadLink format="url" />','Upload','width=640,height=480,toolbar=1,menubar=1,scrollbars=1,resizable=1,').focus()">Attach file...</a>
+        </wiki:Permission>
+      </wiki:PageExists>
     </td>
   </tr>
   <tr>
