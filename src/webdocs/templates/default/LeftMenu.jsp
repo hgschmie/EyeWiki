@@ -18,14 +18,14 @@
   <div class="username">
     G'day,<br /><wiki:Translate>[<wiki:UserName />]</wiki:Translate>
   </div>
+  <%@ include file="LoginBox.jsp" %>
 </wiki:UserCheck>
+
 <wiki:UserCheck status="unknown">
   <div class="username">
     Set your name in<br /><wiki:LinkTo page="UserPreferences">UserPreferences</wiki:LinkTo>
   </div>
 </wiki:UserCheck>
-
-<%@ include file="LoginBox.jsp" %>
 
 <!-- End of automatically generated page -->
 
