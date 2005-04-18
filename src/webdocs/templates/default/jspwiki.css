@@ -62,17 +62,20 @@ u.wikicontent {
   	padding-bottom: 2px;
 }
 
-h2.wikicontent, h3.wikicontent{
+h2.wikicontent, h3.wikicontent {
 	color: #ff0000;
         background: #eeeeee;
         padding: 10px;
         border: solid black 1px;
 }
 
-h4.wikicontent, h3.wikicontent{
+h4.wikicontent {
 	color: #ff0000;
         background: #eeeeee;
-        padding: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
         border: solid black 1px;
 }
 
@@ -97,10 +100,6 @@ td.wiki {
         vertical-align: top;
 }
 
-h1.wikihead {
-	margin: 0px;
-}
-
 /*
  * wikiform: 	form, div
  *
@@ -117,6 +116,13 @@ td.wikimenu {
 
 /*
  * wikihead:    td, h1
+ */
+
+h1.wikihead {
+	margin: 0px;
+}
+
+/*
  * wikiview:    table, td
  */
 
@@ -667,9 +673,40 @@ A.diff:active {
 /*
  * Index
  * 
- * index		div, h1, h2, a
- * indexbody		div
+ * index		a
  */
+
+A.index {
+	text-decoration: none;
+        color:red;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.index:visited {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.index:hover {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.index:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
 
 /*
  * Calendar
