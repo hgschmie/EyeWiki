@@ -203,6 +203,7 @@ public class FileSystemProviderTest
 
         conf2.setProperty(WikiProperties.PROP_PAGEDIR, newDir.getAbsolutePath());
         conf2.setThrowExceptionOnMissing(true);
+        conf2.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "etc/wikiComponents.xml");
 
         FileSystemProvider test = new FileSystemProvider();
 
