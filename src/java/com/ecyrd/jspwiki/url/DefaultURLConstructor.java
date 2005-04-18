@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
@@ -21,10 +23,13 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @version $Revision$
  */
 public class DefaultURLConstructor
-        implements URLConstructor
+        implements URLConstructor, Startable
 {
     /** DOCUMENT ME! */
-    protected WikiEngine m_engine;
+    protected WikiEngine engine;
+
+    /** The configuration */
+    protected Configuration conf;
 
     /** DOCUMENT ME! */
     private String m_viewURLPattern = "%uWiki.jsp?page=%n";
@@ -32,19 +37,27 @@ public class DefaultURLConstructor
     /** Are URL styles relative or absolute? */
     protected boolean m_useRelativeURLStyle = true;
 
+    public DefaultURLConstructor(final WikiEngine engine, final Configuration conf)
+    {
+        this.engine = engine;
+        this.conf = conf;
+    }
+
     /**
      * DOCUMENT ME!
      *
-     * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public void start()
     {
-        m_engine = engine;
-
         m_useRelativeURLStyle =
-            "relative".equals(
-                conf.getString(WikiProperties.PROP_REFSTYLE, WikiProperties.PROP_REFSTYLE_DEFAULT));
+                "relative".equals(conf.getString(
+                                          WikiProperties.PROP_REFSTYLE, 
+                                          WikiProperties.PROP_REFSTYLE_DEFAULT));
+    }
+    
+    public void stop()
+    {
+        // GNDN
     }
 
     /**
@@ -62,12 +75,12 @@ public class DefaultURLConstructor
 
         if (absolute || !m_useRelativeURLStyle)
         {
-            baseurl = m_engine.getBaseURL();
+            baseurl = engine.getBaseURL();
         }
 
         baseptrn = StringUtils.replace(baseptrn, "%u", baseurl);
-        baseptrn = StringUtils.replace(baseptrn, "%U", m_engine.getBaseURL());
-        baseptrn = StringUtils.replace(baseptrn, "%n", m_engine.encodeName(name));
+        baseptrn = StringUtils.replace(baseptrn, "%U", engine.getBaseURL());
+        baseptrn = StringUtils.replace(baseptrn, "%n", engine.encodeName(name));
 
         return baseptrn;
     }
@@ -175,7 +188,7 @@ public class DefaultURLConstructor
     public String parsePage(String context, HttpServletRequest request, String encoding)
             throws UnsupportedEncodingException
     {
-        String pagereq = m_engine.safeGetParameter(request, "page");
+        String pagereq = engine.safeGetParameter(request, "page");
 
         if (context.equals(WikiContext.ATTACH))
         {

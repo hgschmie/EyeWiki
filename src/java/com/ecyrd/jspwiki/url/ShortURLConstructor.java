@@ -51,15 +51,20 @@ public class ShortURLConstructor
     /** DOCUMENT ME! */
     private String m_urlPrefix = "";
 
+    public ShortURLConstructor(WikiEngine engine, Configuration conf)
+    {
+        super(engine, conf);
+    }
+
     /**
      * DOCUMENT ME!
      *
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public void start()
     {
-        super.initialize(engine, conf);
+        super.start();
 
         m_urlPrefix = conf.getString(WikiProperties.PROP_SHORTURL_PREFIX, null);
 
@@ -199,7 +204,7 @@ public class ShortURLConstructor
     public String parsePage(String context, HttpServletRequest request, String encoding)
             throws UnsupportedEncodingException
     {
-        String pagereq = m_engine.safeGetParameter(request, "page");
+        String pagereq = engine.safeGetParameter(request, "page");
 
         if (pagereq == null)
         {

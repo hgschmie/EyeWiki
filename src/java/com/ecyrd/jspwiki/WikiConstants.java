@@ -28,6 +28,31 @@ public interface WikiConstants
     String DEFAULT_ENCODING = "UTF-8";
 
     /*
+     *
+     * ========================================================================
+     *
+     * The PicoContainer keys
+     *
+     * ========================================================================
+     *
+     */
+
+    /** The key used to determine the URL Constructor */
+    String URL_CONSTRUCTOR = "URLConstructor";
+
+    String PAGE_MANAGER = "PageManager";
+
+    String PLUGIN_MANAGER = "PluginManager";
+
+    String DIFFERENCE_MANAGER = "DifferenceManager";
+
+    String ATTACHMENT_MANAGER = "AttachmentManager";
+
+    String VARIABLE_MANAGER = "VariableManager";
+
+    String FILTER_MANAGER = "FilterManager";
+
+    /*
      * ========================================================================
      * 
      * Used Styles
@@ -67,6 +92,9 @@ public interface WikiConstants
 
     /** Class for a breadcrumbs link. Used with HREF tags */
     String CSS_LINK_BREADCRUMBS = "breadcrumbs";
+
+    /** Class for building the index page. Used with A  tags */
+    String CSS_LINK_INDEX = "index";
 
     /** Image class for an inline image. Used with IMG tags. */
     String CSS_IMG_INLINE = "inline";
@@ -112,12 +140,6 @@ public interface WikiConstants
 
     /** Class for the Table of Contents. Used with DIV, H1 tags */
     String CSS_TOC = "toc";
-
-    /** Class for building the index page. Used with DIV, H1, A, H2 tags */
-    String CSS_INDEX = "index";
-
-    /** Class to wrap around the index. Used with DIV tags */
-    String CSS_INDEX_BODY = "indexbody";
 
     /** Class to wrap around a calendar. Used with TABLE */
     String CSS_CALENDAR = "calendar";

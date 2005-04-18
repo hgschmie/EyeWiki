@@ -56,6 +56,14 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import org.nanocontainer.integrationkit.ContainerBuilder;
+import org.nanocontainer.script.xml.XMLContainerBuilder;
+import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.PicoContainer;
+import org.picocontainer.defaults.DefaultPicoContainer;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
+
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
@@ -76,7 +84,6 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 import com.ecyrd.jspwiki.rss.RSSGenerator;
 import com.ecyrd.jspwiki.url.URLConstructor;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 
@@ -128,6 +135,7 @@ public class WikiEngine
      */
     public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
+
     /** Contains the default properties for JSPWiki. */
     private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
         {
@@ -167,18 +175,6 @@ public class WikiEngine
     /** Stores references between wikipages. */
     private ReferenceManager m_referenceManager = null;
 
-    /** Stores the Plugin manager */
-    private PluginManager m_pluginManager;
-
-    /** Stores the Variable manager */
-    private VariableManager m_variableManager;
-
-    /** Stores the Attachment manager */
-    private AttachmentManager m_attachmentManager = null;
-
-    /** Stores the Page manager */
-    private PageManager m_pageManager = null;
-
     /** Stores the authorization manager */
     private AuthorizationManager m_authorizationManager = null;
 
@@ -187,15 +183,6 @@ public class WikiEngine
 
     /** DOCUMENT ME! */
     private TemplateManager m_templateManager = null;
-
-    /** Does all our diffs for us. */
-    private DifferenceManager m_differenceManager;
-
-    /** Handlers page filters. */
-    private FilterManager m_filterManager;
-
-    /** Constructs URLs */
-    private URLConstructor m_urlConstructor;
 
     /** Generates RSS feed when requested. */
     private RSSGenerator m_rssGenerator;
@@ -241,6 +228,12 @@ public class WikiEngine
      * application
      */
     private boolean wikiRelativePathes = PROP_WIKIRELATIVE_PATHES_DEFAULT;
+
+    /** The main container reference */
+    private ObjectReference mainContainerRef = null;
+
+    /** The component container reference */
+    private ObjectReference componentContainerRef = null;
 
     /**
      * Instantiate the WikiEngine using a given set of properties. Use this constructor for testing
@@ -581,26 +574,32 @@ public class WikiEngine
         m_frontPage = conf.getString(PROP_FRONTPAGE, PROP_FRONTPAGE_DEFAULT);
 
         //
+        // Start up the Picocontainer
+        //
+        
+        PicoContainer componentContainer = null;
+        
+        try
+        {
+            setupMainContainer();
+
+            String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
+            componentContainer = getComponentContainer(m_servletContext, wikiComponentsFile);
+        }
+        catch (Exception e)
+        {
+            // RuntimeExceptions may occur here, even if they shouldn't.
+            log.fatal("Failed to start component container.", e);
+            throw new WikiException("Failed to component container: " + e.getMessage());
+        }
+
+
+        //
         //  Initialize the important modules.  Any exception thrown by the
         //  managers means that we will not start up.
         //
         try
         {
-            Class urlclass =
-                ClassUtil.findClass(
-                    DEFAULT_CLASS_PREFIX,
-                    conf.getString(PROP_CLASS_URLCONSTRUCTOR, PROP_CLASS_URLCONSTRUCTOR_DEFAULT));
-
-            m_urlConstructor = (URLConstructor) urlclass.newInstance();
-            m_urlConstructor.initialize(this, conf);
-
-            m_pageManager = new PageManager(this, conf);
-            m_pluginManager = new PluginManager(conf);
-            m_differenceManager = new DifferenceManager(this, conf);
-            m_attachmentManager = new AttachmentManager(this, conf);
-            m_variableManager = new VariableManager(conf);
-            m_filterManager = new FilterManager(this, conf);
-
             //
             //  ReferenceManager has the side effect of loading all
             //  pages.  Therefore after this point, all page attributes
@@ -687,12 +686,12 @@ public class WikiEngine
      */
     private void initReferenceManager()
     {
-        m_pluginManager.setInitStage(true);
+        getPluginManager().setInitStage(true);
 
         try
         {
-            Collection pages = m_pageManager.getAllPages();
-            pages.addAll(m_attachmentManager.getAllAttachments());
+            Collection pages = getPageManager().getAllPages();
+            pages.addAll(getAttachmentManager().getAllAttachments());
 
             // Build a new manager with default key lists.
             if (m_referenceManager == null)
@@ -706,9 +705,9 @@ public class WikiEngine
             log.fatal("PageProvider is unable to list pages: ", e);
         }
 
-        m_pluginManager.setInitStage(false);
+        getPluginManager().setInitStage(false);
 
-        m_filterManager.addPageFilter(m_referenceManager, -1000); // FIXME: Magic number.
+        getFilterManager().addPageFilter(m_referenceManager, -1000); // FIXME: Magic number.
     }
 
     /**
@@ -853,7 +852,7 @@ public class WikiEngine
      */
     public String getURL(String context, String pageName, String params, boolean absolute)
     {
-        return m_urlConstructor.makeURL(context, pageName, absolute, params);
+        return getURLConstructor().makeURL(context, pageName, absolute, params);
     }
 
     /**
@@ -1173,7 +1172,7 @@ public class WikiEngine
             //  Go and check if this particular version of this page
             //  exists.
             //
-            p = m_pageManager.getPageInfo(finalName, version);
+            p = getPageManager().getPageInfo(finalName, version);
         }
 
         if (p == null)
@@ -1280,7 +1279,7 @@ public class WikiEngine
             return true;
         }
 
-        return m_pageManager.pageExists(page);
+        return getPageManager().pageExists(page);
     }
 
     /**
@@ -1422,7 +1421,7 @@ public class WikiEngine
 
         try
         {
-            result = m_pageManager.getPageText(page, version);
+            result = getPageManager().getPageText(page, version);
         }
         catch (ProviderException e)
         {
@@ -1606,7 +1605,8 @@ public class WikiEngine
 
         try
         {
-            pagedata = m_filterManager.doPreTranslateFiltering(context, pagedata);
+            FilterManager filterManager = getFilterManager();
+            pagedata = filterManager.doPreTranslateFiltering(context, pagedata);
 
             in = new TranslatorReader(context, new StringReader(pagedata));
 
@@ -1621,7 +1621,7 @@ public class WikiEngine
 
             result = FileUtil.readContents(in);
 
-            result = m_filterManager.doPostTranslateFiltering(context, result);
+            result = filterManager.doPostTranslateFiltering(context, result);
         }
         catch (IOException e)
         {
@@ -1665,6 +1665,7 @@ public class WikiEngine
             throws WikiException
     {
         WikiPage page = context.getPage();
+        FilterManager filterManager = getFilterManager();
 
         if (page.getAuthor() == null)
         {
@@ -1678,12 +1679,12 @@ public class WikiEngine
 
         text = TextUtil.normalizePostData(text);
 
-        text = m_filterManager.doPreSaveFiltering(context, text);
+        text = filterManager.doPreSaveFiltering(context, text);
 
         // Hook into cross reference collection.
-        m_pageManager.putPageText(page, text);
+        getPageManager().putPageText(page, text);
 
-        m_filterManager.doPostSaveFiltering(context, text);
+        filterManager.doPostSaveFiltering(context, text);
     }
 
     /**
@@ -1693,7 +1694,7 @@ public class WikiEngine
      */
     public int getPageCount()
     {
-        return m_pageManager.getTotalPageCount();
+        return getPageManager().getTotalPageCount();
     }
 
     /**
@@ -1703,7 +1704,7 @@ public class WikiEngine
      */
     public String getCurrentProvider()
     {
-        return m_pageManager.getProvider().getClass().getName();
+        return getPageManager().getProvider().getClass().getName();
     }
 
     /**
@@ -1715,7 +1716,7 @@ public class WikiEngine
      */
     public String getCurrentProviderInfo()
     {
-        return m_pageManager.getProviderDescription();
+        return getPageManager().getProviderDescription();
     }
 
     /**
@@ -1730,8 +1731,8 @@ public class WikiEngine
     {
         try
         {
-            Collection pages = m_pageManager.getAllPages();
-            Collection atts = m_attachmentManager.getAllAttachments();
+            Collection pages = getPageManager().getAllPages();
+            Collection atts = getAttachmentManager().getAllAttachments();
 
             TreeSet sortedPages = new TreeSet(new PageTimeComparator());
 
@@ -1832,7 +1833,7 @@ public class WikiEngine
             items[word++].setWord(token);
         }
 
-        Collection results = m_pageManager.findPages(items);
+        Collection results = getPageManager().findPages(items);
 
         return results;
     }
@@ -1863,11 +1864,11 @@ public class WikiEngine
     {
         try
         {
-            WikiPage p = m_pageManager.getPageInfo(pagereq, version);
+            WikiPage p = getPageManager().getPageInfo(pagereq, version);
 
             if (p == null)
             {
-                p = m_attachmentManager.getAttachmentInfo((WikiContext) null, pagereq);
+                p = getAttachmentManager().getAttachmentInfo((WikiContext) null, pagereq);
             }
 
             return p;
@@ -1893,11 +1894,11 @@ public class WikiEngine
 
         try
         {
-            c = m_pageManager.getVersionHistory(page);
+            c = getPageManager().getVersionHistory(page);
 
             if (c == null)
             {
-                c = m_attachmentManager.getVersionHistory(page);
+                c = getAttachmentManager().getVersionHistory(page);
             }
         }
         catch (ProviderException e)
@@ -1932,9 +1933,25 @@ public class WikiEngine
             page1 = "";
         }
 
-        return m_differenceManager.makeDiff(page1, page2, wantHtml);
+        return getDifferenceManager().makeDiff(page1, page2, wantHtml);
     }
 
+    /**
+     * Returns the current URL constructor
+     */
+    protected URLConstructor getURLConstructor()
+    {
+        return (URLConstructor) getComponentContainer().getComponentInstance(WikiConstants.URL_CONSTRUCTOR);
+    }
+
+    /**
+     * Returns the current Difference Manager
+     */
+    public DifferenceManager getDifferenceManager()
+    {
+        return (DifferenceManager) getComponentContainer().getComponentInstance(WikiConstants.DIFFERENCE_MANAGER);
+    }
+    
     /**
      * Returns this object's ReferenceManager.
      *
@@ -1958,7 +1975,7 @@ public class WikiEngine
      */
     public PluginManager getPluginManager()
     {
-        return m_pluginManager;
+        return (PluginManager)  getComponentContainer().getComponentInstance(WikiConstants.PLUGIN_MANAGER);
     }
 
     /**
@@ -1968,7 +1985,7 @@ public class WikiEngine
      */
     public VariableManager getVariableManager()
     {
-        return m_variableManager;
+        return (VariableManager) getComponentContainer().getComponentInstance(WikiConstants.VARIABLE_MANAGER); 
     }
 
     /**
@@ -1986,7 +2003,7 @@ public class WikiEngine
     {
         try
         {
-            return m_variableManager.getValue(context, name);
+            return getVariableManager().getValue(context, name);
         }
         catch (NoSuchVariableException e)
         {
@@ -2001,7 +2018,7 @@ public class WikiEngine
      */
     public PageManager getPageManager()
     {
-        return m_pageManager;
+        return (PageManager) getComponentContainer().getComponentInstance(WikiConstants.PAGE_MANAGER);
     }
 
     /**
@@ -2013,7 +2030,7 @@ public class WikiEngine
      */
     public AttachmentManager getAttachmentManager()
     {
-        return m_attachmentManager;
+        return (AttachmentManager) getComponentContainer().getComponentInstance(WikiConstants.ATTACHMENT_MANAGER);
     }
 
     /**
@@ -2045,7 +2062,7 @@ public class WikiEngine
      */
     public FilterManager getFilterManager()
     {
-        return m_filterManager;
+        return (FilterManager) getComponentContainer().getComponentInstance(WikiConstants.FILTER_MANAGER); 
     }
 
     /**
@@ -2144,7 +2161,7 @@ public class WikiEngine
 
         try
         {
-            pagereq = m_urlConstructor.parsePage(requestContext, request, getContentEncoding());
+            pagereq = getURLConstructor().parsePage(requestContext, request, getContentEncoding());
         }
         catch (IOException e)
         {
@@ -2267,11 +2284,11 @@ public class WikiEngine
         
         if( p instanceof Attachment )
         {
-            m_attachmentManager.deleteAttachment( (Attachment) p );
+            getAttachmentManager().deleteAttachment( (Attachment) p );
         }
         else
         {
-            m_pageManager.deletePage( p );
+            getPageManager().deletePage( p );
         }
     }
 
@@ -2286,11 +2303,11 @@ public class WikiEngine
     {
         if( page instanceof Attachment )
         {
-            m_attachmentManager.deleteVersion( (Attachment) page );
+            getAttachmentManager().deleteVersion( (Attachment) page );
         }
         else
         {
-            m_pageManager.deleteVersion( page );
+            getPageManager().deleteVersion( page );
         }
     }
 
@@ -2369,6 +2386,66 @@ public class WikiEngine
 
         throw new WikiException(
             "The path name " + pathName + " is invalid in the current Wiki configuration!");
+    }
+
+    /**
+     * Starts the PicoContainer which contains all the pluggable elements of the Wiki
+     */
+    public PicoContainer getComponentContainer(ServletContext context, String confFile)
+            throws Exception
+    {
+        PicoContainer container = null;
+
+        InputStream configStream = null;
+        InputStreamReader isr = null;
+        
+        try
+        {
+            configStream = context.getResourceAsStream(confFile);
+
+            if (configStream != null)
+            {
+                isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+                ContainerBuilder builder = new XMLContainerBuilder(isr, classLoader);
+                
+                componentContainerRef = new SimpleReference();
+                
+                builder.buildContainer(componentContainerRef, mainContainerRef, "wiki", true);
+                container = (PicoContainer) componentContainerRef.get();
+            }
+        }
+        finally
+        {
+            IOUtils.closeQuietly(configStream);
+            IOUtils.closeQuietly(isr);
+        }
+
+        return container;
+    }
+
+    /**
+     * Prepares the 'root' container which all other containers use as their
+     * base to get configuration and Wiki reference
+     */
+    public void setupMainContainer()
+            throws Exception
+    {
+        MutablePicoContainer mainContainer = new DefaultPicoContainer();
+        
+        // Register ourselves with the Container
+        mainContainer.registerComponentInstance("WikiEngine", this);
+
+        // Register our configuration with the Container
+        mainContainer.registerComponentInstance("Configuration", this.getWikiConfiguration());
+                
+        mainContainerRef = new SimpleReference();
+        mainContainerRef.set(mainContainer);
+    }
+    
+    private PicoContainer getComponentContainer()
+    {
+        return (PicoContainer) componentContainerRef.get();
     }
 
     /**

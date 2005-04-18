@@ -25,7 +25,6 @@ import com.ecyrd.jspwiki.diff.RssTraditionalDiffProvider;
 import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
 import com.ecyrd.jspwiki.providers.FileSystemProvider;
-import com.ecyrd.jspwiki.url.DefaultURLConstructor;
 
 
 /**
@@ -57,6 +56,12 @@ public interface WikiProperties
      * @value value of Release.APPNAME
      */
     String PROP_APPNAME_DEFAULT = Release.APPNAME;
+
+    /** Property for the components configuration file */
+    String PROP_COMPONENTS_FILE = "jspwiki.componentsFile";
+
+    /** Default value for the components configuration file */
+    String PROP_COMPONENTS_FILE_DEFAULT = "/WEB-INF/wikiComponents.xml";
 
     /**
      * Name of the property that defines a directory where the pages are. Must be defined if you
@@ -489,16 +494,6 @@ public interface WikiProperties
 
     /** The property name defining which packages will be searched for properties. */
     String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
-
-    /** Property name for setting the url generator instance */
-    String PROP_CLASS_URLCONSTRUCTOR = "jspwiki.urlConstructor";
-
-    /**
-     * Default value for the URL Constructor
-     *
-     * @value DefaultURLConstructor
-     */
-    String PROP_CLASS_URLCONSTRUCTOR_DEFAULT = DefaultURLConstructor.class.getName();
 
     /** DOCUMENT ME! */
     String PROP_CLASS_PAGEPROVIDER = "jspwiki.pageProvider";

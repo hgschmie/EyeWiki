@@ -4,25 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.configuration.Configuration;
-
-import com.ecyrd.jspwiki.WikiEngine;
-
 
 /**
  * An utility class for creating URLs for different purposes.
  */
 public interface URLConstructor
 {
-    /**
-     * Initializes.  Note that the engine is not fully initialized at this point, so don't do
-     * anything fancy here - use lazy init, if you have to.
-     *
-     * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
-     */
-    void initialize(WikiEngine engine, Configuration conf);
-
     /**
      * Constructs the URL with a bunch of parameters.
      *
