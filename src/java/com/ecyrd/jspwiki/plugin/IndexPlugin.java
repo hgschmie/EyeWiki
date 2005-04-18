@@ -172,15 +172,14 @@ public class IndexPlugin
 
         StringBuffer res = new StringBuffer();
 
-        res.append("<div class=\"" + WikiConstants.CSS_INDEX_BODY + "\">\n");
-        res.append("<h1 class=\"" + WikiConstants.CSS_INDEX + "\">\n");
-        res.append(m_headerPart.toString());
-        res.append("</div>\n");
-        res.append("<div class=\"" + WikiConstants.CSS_INDEX + "\">\n");
-        res.append(m_bodyPart.toString());
-        res.append("</div>\n</div>\n");
-
-        return res.toString();
+        return res.append("<h3 class=\"")
+                .append(WikiConstants.CSS_WIKICONTENT)
+                .append("\">\n")
+                .append(m_headerPart.toString())
+                .append("</h3>\n")
+                .append(m_bodyPart.toString())
+                .append("\n")
+                .toString();
     }
 
     private void buildIndexPageHeaderAndBody(
@@ -199,13 +198,11 @@ public class IndexPlugin
                     ++m_currentNofPagesOnLine;
 
                     String pageNameFirstLetter = curPage.getName().substring(0, 1).toUpperCase();
-                    boolean sameFirstLetterAsPreviousPage =
-                            m_previousPageFirstLetter.equals(pageNameFirstLetter);
 
-                    if (!sameFirstLetterAsPreviousPage)
+                    if (!m_previousPageFirstLetter.equals(pageNameFirstLetter))
                     {
                         addLetterToIndexHeader(pageNameFirstLetter);
-                        addLetterHeaderWithLine(pageNameFirstLetter);
+                        addLetterHeader(pageNameFirstLetter);
 
                         m_currentNofPagesOnLine = 1;
                         m_previousPageFirstLetter = pageNameFirstLetter;
@@ -276,14 +273,30 @@ public class IndexPlugin
             m_headerPart.write(" - ");
         }
 
-        m_headerPart.write("<a class=\"" + WikiConstants.CSS_INDEX + "\" href=\"#" + i_firstLetter + "\">" + i_firstLetter + "</a>");
+        StringBuffer sb = new StringBuffer("<a class=\"")
+                .append(WikiConstants.CSS_LINK_INDEX)
+                .append("\" href=\"#")
+                .append(i_firstLetter)
+                .append("\">")
+                .append(i_firstLetter)
+                .append("</a>");
+
+        m_headerPart.write(sb.toString());
     }
 
-    private void addLetterHeaderWithLine(final String i_firstLetter)
+    private void addLetterHeader(final String i_firstLetter)
     {
-        m_bodyPart.write(
-                "\n<br /><br />" + "<h2 class=\"" + WikiConstants.CSS_INDEX + "\">" + "<aclass=\"" + WikiConstants.CSS_ANCHOR + "\" name=\"" + i_firstLetter + "\">"
-                + i_firstLetter + "</a></span>" + "<hr />\n");
+        StringBuffer sb = new StringBuffer("<h4 class=\"")
+                .append(WikiConstants.CSS_WIKICONTENT)
+                .append("\"><a class=\"")
+                .append(WikiConstants.CSS_ANCHOR)
+                .append("\" name=\"")
+                .append(i_firstLetter)
+                .append("\">")
+                .append(i_firstLetter)
+                .append("</a></h4>\n");
+
+        m_bodyPart.write(sb.toString());
     }
 
     /**
