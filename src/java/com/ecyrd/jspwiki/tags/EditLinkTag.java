@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -141,7 +142,7 @@ public class EditLinkTag
         {
         case ANCHOR:
             out.print(
-                "<a href=\"" + m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString)
+                "<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString)
                 + "\">");
 
             break;

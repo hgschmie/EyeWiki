@@ -58,14 +58,18 @@ public class ListLocksPlugin
         PageManager mgr = context.getEngine().getPageManager();
         List locks = mgr.getActiveLocks();
 
-        result.append("<table class=\"" + WikiConstants.CSS_TABLE_WIKITABLE + "\" border=1>\n");
-        result.append("<tr>\n");
-        result.append("<th>Page</th><th>Locked by</th><th>Acquired</th><th>Expires</th>\n");
+        result.append("<table class=\"" + WikiConstants.CSS_WIKICONTENT + "\">\n");
+        result.append("<tr class=\"" + WikiConstants.CSS_WIKICONTENT + "\">\n");
+        result.append("<th class=\"" + WikiConstants.CSS_WIKICONTENT + "\">Page</th>");
+        result.append("<th class=\"" + WikiConstants.CSS_WIKICONTENT + "\">Locked by</th>");
+        result.append("<th class=\"" + WikiConstants.CSS_WIKICONTENT + "\">Acquired</th>");
+        result.append("<th class=\"" + WikiConstants.CSS_WIKICONTENT + "\">Expires</th>\n");
         result.append("</tr>");
 
         if (locks.size() == 0)
         {
-            result.append("<tr><td colspan=4>No locks exist currently.</td></tr>\n");
+            result.append("<tr class=\"" + WikiConstants.CSS_WIKICONTENT + "\">");
+            result.append("<td  class=\"" + WikiConstants.CSS_WIKICONTENT + "\" colspan=\"4\">No locks exist currently.</td></tr>\n");
         }
         else
         {
@@ -73,11 +77,11 @@ public class ListLocksPlugin
             {
                 PageLock lock = (PageLock) i.next();
 
-                result.append("<tr>");
-                result.append("<td>" + lock.getPage().getName() + "</td>");
-                result.append("<td>" + lock.getLocker() + "</td>");
-                result.append("<td>" + lock.getAcquisitionTime() + "</td>");
-                result.append("<td>" + lock.getExpiryTime() + "</td>");
+                result.append("<tr class=\"" + WikiConstants.CSS_WIKICONTENT + "\">");
+                result.append("<td class=\"" + WikiConstants.CSS_WIKICONTENT + "\">" + lock.getPage().getName() + "</td>");
+                result.append("<td class=\"" + WikiConstants.CSS_WIKICONTENT + "\">" + lock.getLocker() + "</td>");
+                result.append("<td class=\"" + WikiConstants.CSS_WIKICONTENT + "\">" + lock.getAcquisitionTime() + "</td>");
+                result.append("<td class=\"" + WikiConstants.CSS_WIKICONTENT + "\">" + lock.getExpiryTime() + "</td>");
                 result.append("</tr>\n");
             }
         }

@@ -53,7 +53,7 @@ function confirmDelete() {
          </tr>
          <wiki:HistoryIterator id="currentPage">
            <tr>
-             <td class="pagerev"><wiki:LinkTo version="<%=Integer.toString(currentPage.getVersion())%>">wiki:PageVersion/></wiki:LinkTo></td>
+             <td class="pagerev"><wiki:LinkTo version="<%=Integer.toString(currentPage.getVersion())%>"><wiki:PageVersion/></wiki:LinkTo></td>
              <td class="pagerev">
                <wiki:PageType type="page"><wiki:DiffLink version="latest" newVersion="current"><wiki:PageDate/></wiki:DiffLink></wiki:PageType>
                <wiki:PageType type="attachment"><wiki:PageDate/></wiki:PageType>
@@ -111,13 +111,12 @@ function confirmDelete() {
           <input type="hidden" name="page" value="<wiki:Variable var="pagename"/>">
 
           <table class="upload">
-            <tr><th colspan="2" class="upload">
+            <tr><td class="upload">
                  In order to upload a new attachment to this page, please use the following
                  box to find the file, then click on "Upload".
             </td></tr>
-            <tr><td class="uploadmsg">File</td></tr>
             <tr><td class="upload"><input type="file" name="content"></td></tr>
-            <tr><td class="uploadmsg" colspan="2"><input type="submit" name="upload" value="Upload"></td></tr>
+            <tr><td class="uploadmsg"><input type="submit" name="upload" value="Upload"></td></tr>
           </table>
           <input type="hidden" name="action" value="upload">
           <input type="hidden" name="nextpage" value="<wiki:PageInfoLink format="url"/>" />
@@ -130,5 +129,5 @@ function confirmDelete() {
 </wiki:PageExists>
 
 <wiki:NoSuchPage>
-  <div class="nopage">This page does not exist.  Why don't you go and<wiki:EditLink>create it</wiki:EditLink>?</div>
+  <div class="nopage">This page does not exist. Why don't you go and <wiki:EditLink>create it</wiki:EditLink>?</div>
 </wiki:NoSuchPage>

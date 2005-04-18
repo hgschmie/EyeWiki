@@ -90,7 +90,7 @@ public class ContextualDiffProvider
     protected String m_deletionEndHtml = "</span>";
 
     /** DOCUMENT ME! */
-    protected String m_anchorPreIndex = "<a name=\"change-";
+    protected String m_anchorPreIndex = "<a class=\"" + WikiConstants.CSS_DIFF_ANCHOR + "\" name=\"change-";
 
     /** DOCUMENT ME! */
     protected String m_anchorPostIndex = "\" />";
@@ -445,7 +445,7 @@ public class ContextualDiffProvider
                 }
 
                 // Do we want a "forward" link?
-                if (m_emitChangeNextPreviousHyperlinks && (index < max))
+                if (m_emitChangeNextPreviousHyperlinks && (index <= max))
                 {
                     sb.append(m_forwardPreIndex);
                     sb.append(count); // Has already been incremented.

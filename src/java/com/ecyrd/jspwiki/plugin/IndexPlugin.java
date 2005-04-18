@@ -282,7 +282,7 @@ public class IndexPlugin
     private void addLetterHeaderWithLine(final String i_firstLetter)
     {
         m_bodyPart.write(
-                "\n<br /><br />" + "<h2 class=\"" + WikiConstants.CSS_INDEX + "\">" + "<a name=\"" + i_firstLetter + "\">"
+                "\n<br /><br />" + "<h2 class=\"" + WikiConstants.CSS_INDEX + "\">" + "<aclass=\"" + WikiConstants.CSS_ANCHOR + "\" name=\"" + i_firstLetter + "\">"
                 + i_firstLetter + "</a></span>" + "<hr />\n");
     }
 

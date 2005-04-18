@@ -2,41 +2,407 @@
  * The JSP Wiki style sheet
  */
 
+/* Universal Selector to make all fonts look better */
+body {
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+	background-color: white;
+}
+
+A {
+	text-decoration: none;
+}
+
+h1 { font-size: 18px; }
+h2 { font-size: 16px; }
+h3 { font-size: 14px; }
+h4,h5,h6 { font-size: 12px; }
+
+/*
+ * wikicontent - Everything from the translator is rendered with this tag
+ *
+ * table,td, th, tr, div, p, b, i, tt, u, dd, dt, dl, hr, h2, h3, h4, ol, ul, li, pre
+ */
+
+table.wikicontent {
+	border: 1px solid black;
+        border-collapse: collapse;
+}
+
+td.wikicontent {
+	border: 1px solid black;
+        padding: 2px;
+        text-align: left;
+}
+
+
+th.wikicontent {
+	border: 1px solid black;
+        padding: 2px;
+        text-align: center;
+        font-weight: bold;
+}
+
+b.wikicontent {
+	font-weight: bold;
+}
+
+i.wikicontent {
+  font-style: italic;
+}
+
+tt.wikicontent {
+  font-family: monospace;
+}
+
+u.wikicontent {
+	text-decoration: none;
+  	border-bottom: dashed blue;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+h2.wikicontent, h3.wikicontent{
+	color: #ff0000;
+        background: #eeeeee;
+        padding: 10px;
+        border: solid black 1px;
+}
+
+h4.wikicontent, h3.wikicontent{
+	color: #ff0000;
+        background: #eeeeee;
+        padding: 5px;
+        border: solid black 1px;
+}
+
+
 /*
  * general
  *
  * wiki:	body, table, td
- * wikitable:	table
- * wikiform: 	form
+ */
+
+table.wiki {
+	width: 100%;
+	height: 100%;
+	border: none;
+	padding: 4 px;
+}
+
+td.wiki {
+	width: 85%;
+        line-height: 1.5;
+        padding: 8px;
+        vertical-align: top;
+}
+
+h1.wikihead {
+	margin: 0px;
+}
+
+/*
+ * wikiform: 	form, div
  *
  * wikimenu:	td
+ */
+
+td.wikimenu {
+	vertical-align: top;
+        width: 10%;
+        line-height: 1.5;
+        padding-right: 5px;
+        border-right: solid black 1px;
+}
+
+/*
  * wikihead:    td, h1
  * wikiview:    table, td
+ */
+
+table.wikiview {
+	width: 100%;
+}
+
+/*
  * wikiedit:    table, td, div
+ */
+
+table.wikiedit {
+   background: #ccffff;
+}
+
+/*
  * wikisearch:  td
- * breadcrumbs:	td
- *
- * wikiupload:	body
- * attachment:  table, a, h1
+ */
+
+td.wikisearch {
+	text-align: right;
+}
+
+/*
+ * breadcrumbs:	td, a
+ */
+
+.breadcrumbs {
+	font-size: 9px;
+	color: #008888;
+}
+
+A.breadcrumbs {
+	color: #008888;
+	text-decoration: none;
+}
+
+A.breadcrumbs:visited {
+	color: #008888;
+	text-decoration: none;
+}
+
+A.breadcrumbs:hover {
+	text-decoration: none;
+        color:red;
+}
+
+A.breadcrumbs:active {
+	text-decoration: none;
+        color: red;
+}
+
+/*
+ * attachment:  table, h1, a
+ */
+
+h1.attachment {
+  font-decoration: none;
+  font-size: 12px;
+}
+
+table.attachment {
+  border: solid black 1px;
+  width: 75%;
+}
+
+A.attachment {
+	text-decoration: none;
+        color:#000077;
+  	border-bottom: dashed #000077;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.attachment:visited {
+	text-decoration: none;
+        color:#000077;
+  	border-bottom: dashed #000077;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.attachment:hover {
+	text-decoration: none;
+        color:#000077;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.attachment:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+/*
  * upload:	table, th, td
- * uploadmsg:	td
+ */
+
+table.upload {
+  background: #eeeeee;
+  border: solid black 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 50%;
+}
+
+td.upload {
+  text-align: left;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+/*
+ * uploadmsg: td
+ */
+
+td.uploadmsg {
+  text-align: right;
+}
+
+
+/*
  * searchbox:	div
- * preview:	h1,div, h2, table, td, textarea
- * prefs:	h1, div, table, td
+ */
+
+/*
+ * preview:	h1,div
+ */
+
+h1.preview {
+	color: red;
+}
+
+div.preview {
+	background: #ffcccc;
+}
+
+/*
+ * prefs:	table, div, td
+ */
+
+table.prefs {
+  background: #eeeeee;
+  border: solid black 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 50%;
+}
+
+div.prefs {
+    text-align: left;
+}
+
+td.prefs {
+    text-align: left;
+    width: 85%;
+}
+
+/*
  * prefsmsg:	td
+ */
+
+td.prefsmsg {
+  text-align: right;
+}
+
+
+/*
  * editor:	area
- * debug:	div
+ * debug:	div, pre, b, li
  * notlatest:	div
+ */
+div.nopage {
+  font-style: italic;
+}
+
+/*
  * nopage:	div
+ */
+
+/*
  * pageaction:	table, td
+ */
+
+table.pageaction {
+  width: 75%;
+  text-align: left;
+  margin-left: 0px;
+  margin-right: auto;
+}
+
+td.pageaction {
+  font-size: 9px;
+}
+  
+
+/*
  * pageprops:	td
  * logo:	div, a, img
+ */
+
+img.logo {
+	border: none;
+}
+
+div.logo {
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+/*
  * username:	div
+ */
+
+div.username {
+  font-size: 10px;
+  text-align:center;
+  font-weight: bold;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+/*
  * release:	div
+ */
+
+div.release {
+   font-size: 10px;
+   color: #aabbaa;
+   text-align: center;
+   margin-top: 50px;
+}
+
+/*
  * pageinfo:	a, table, td
+ */
+
+A.pageinfo {
+	text-decoration: none;
+        color:#007700;
+  	border-bottom: dashed #007700;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.pageinfo:visited {
+	text-decoration: none;
+        color:#007700;
+  	border-bottom: dashed #007700;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.pageinfo:hover {
+	text-decoration: none;
+        color:#007700;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.pageinfo:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+/*
  * pageinfomsg:	td
  * pagerev	table, th, td
- * pagefind:    h1, h2, div, table, th, td, pre
+ * pagefind:    h1, h2, div, table, th, td, pre, a
+ */
+
+/*
  * pagefindscore:	th, td
  * pagefindform:	table, td
  * pagefindformmsg:	td
@@ -50,11 +416,64 @@
  * Login
  *
  * login:    	body, table, td, h3
+ */
+
+table.login {
+  background: #eeeeee;
+  border: solid black 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 25%;
+}
+
+td.login {
+  text-align: right;
+  padding: 5px;
+}
+
+/*
  * loginmsg: 	td
- * logininput: 	td
+ */
+
+td.loginmsg {
+  text-align: left;
+  padding: 5px;
+  width: 15%;
+}
+
+/*
  * loginbox:	div, table, td
+ */
+
+table.loginbox {
+  background: #eeeeee;
+  border: solid black 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td.loginbox {
+  text-align: center;
+  padding: 5px;
+}
+
+td.loginbox input {
+  font-size: 10px;
+}
+
+/*
  * loginboxmsg: td
  */
+
+td.loginboxmsg {
+  text-align: left;
+  font-size: 10px;
+}
 
 /*
  * Errors
@@ -63,13 +482,89 @@
  * error: span, p
  */
 
+.error {
+	color: red;
+	font-size: 12px;
+}
+
 /*
  * Links
  *
  * wikipage	a
+ */
+
+A.wikipage {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikipage:visited {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikipage:hover {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikipage:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+/*
  * footnoteref	a
  * footnote 	a
  * external	a
+ */
+
+A.external {
+	text-decoration: none;
+        color: #002255;
+  	border-bottom: dashed #002255;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.external:visited {
+	text-decoration: none;
+        color:#002255;
+  	border-bottom: dashed #002255;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.external:hover {
+	text-decoration: none;
+        color:#002255;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.external:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+
+/*
  * interwiki	a
  */
 
@@ -84,15 +579,74 @@
  * RSS
  *
  * rss		a, img
+ */
 
 /*
  * diff
  *
  * diffadd:	td, span
+ */
+
+.diffadd { 
+  background: #ddffdd;
+  text-decoration:  none;
+  color: #8000ff;
+}
+
+
+/*
  * diffrem	td, span
+ */
+
+.diffrem { 
+  background: #ffdddd;
+  text-decoration: line-through;
+  color: red;
+}
+
+/*
  * diff		td, a, h1, div
+ */
+
+A.diff {
+	text-decoration: none;
+        color:black;
+        font-size: 60%;
+        vertical-align: super;
+}
+
+A.diff:visited {
+	text-decoration: none;
+        color:black;
+        font-size: 60%;
+        vertical-align: super;
+}
+
+A.diff:hover {
+	text-decoration: none;
+        color:red;
+        font-size: 60%;
+        vertical-align: super;
+}
+
+A.diff:active {
+	text-decoration: none;
+        color: red;
+        font-size: 60%;
+        vertical-align: super;
+}
+
+/*
  * diffblock	div, table
  */
+
+.diffblock {
+  font-family: monospace;
+  background: #ffffee;
+  border: solid black 1px;
+  padding: 5px;
+  line-height: 1.0;
+}
 
 /*
  * weblog

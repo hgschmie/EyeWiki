@@ -12,7 +12,7 @@
   <meta name="robots" content="noindex">
 </head>
 
-<body class="wikiupload">
+<body class="wiki">
   <h1 class="wikihead">Upload new attachment to <wiki:PageName /></h1>
   <hr />
 
@@ -41,13 +41,12 @@
           <input type="hidden" name="page" value="<wiki:Variable var="pagename"/>">
 
           <table class="upload">
-            <tr><th colspan="2" class="upload">
+            <tr><td class="upload">
                  In order to upload a new attachment to this page, please use the following
                  box to find the file, then click on "Upload".
             </td></tr>
-            <tr><td class="uploadmsg">File</td></tr>
             <tr><td class="upload"><input type="file" name="content"></td></tr>
-            <tr><td class="uploadmsg" colspan="2"><input type="submit" name="upload" value="Upload"></td></tr>
+            <tr><td class="uploadmsg"><input type="submit" name="upload" value="Upload"></td></tr>
           </table>
           <input type="hidden" name="action" value="upload">
           <input type="hidden" name="nextpage" value="<wiki:UploadLink format="url"/>">

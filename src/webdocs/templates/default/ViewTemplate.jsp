@@ -18,23 +18,23 @@
 
 <table class="wiki">
   <tr>
-    <td class="wikimenu" width="10%">
-       <wiki:Include page="LeftMenu.jsp"/>
-       <wiki:Include page="LeftMenuFooter.jsp"/>
-       <wiki:RSSImageLink title="Aggregate the RSS feed" />
+    <td class="wikimenu">
+      <wiki:Include page="LeftMenu.jsp"/>
+      <wiki:Include page="LeftMenuFooter.jsp"/>
+      <wiki:RSSImageLink title="Aggregate the RSS feed" />
     </td>
 
-    <td class="wiki" width="85%">
+    <td class="wiki">
       <table class="wikiview">
          <tr>
-            <td class="wikihead"><h1 class="wikihead"><a name="Top"><wiki:PageName/></a></h1></td>
+            <td class="wikihead"><h1 class="wikihead"><a class="wikianchor" name="Top"><wiki:PageName/></a></h1></td>
             <td class="wikisearch"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>
          <tr>
             <td colspan="2" class="breadcrumbs">Your trail: <wiki:Breadcrumbs /></td>
          </tr>
-         <tr><td><hr /></td></tr>
-         <tr><td class="wikiview"><wiki:Content/></td></tr>
+         <tr><td colspan="2"><hr /></td></tr>
+         <tr><td colspan="2" class="wikiview"><wiki:Content/></td></tr>
       </table> 
     </td>
   </tr>

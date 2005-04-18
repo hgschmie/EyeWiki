@@ -1,6 +1,6 @@
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
-<h1 class="prefs">Setting your preferences</h3>
+<h2 class="wikihead">Setting your preferences</h2>
 
 <div class="prefs">
   This is a page which allows you to set up all sorts of interesting things.
@@ -17,7 +17,7 @@
      <td class="prefs"><input type="text" name="username" size="30" value="<wiki:UserName/>" /></td>
    </tr>
    <tr>
-     <td class="prefsmsg" colspan="2">This must be a proper WikiName, no punctuation.</td>
+     <td colspan="2">This must be a proper WikiName, no punctuation.</td>
    </tr>
    <tr>
      <td class="prefsmsg" colspan="2"><input type="submit" name="ok" value="Set my preferences!" /></td>
@@ -28,7 +28,7 @@
 
 <hr />
 
-<h1 class="prefs">Removing your preferences</h3>
+<h2 class="prefs">Removing your preferences</h2>
 
 <div class="prefs">
   In some cases, you may need to remove the above preferences from the computer.
@@ -41,7 +41,7 @@
       accept-charset="UTF-8">
    <table class="prefs">
    <tr>
-     <td class="prefsmsg" colspan="2"><input type="submit" name="clear" value="Remove preferences from this computer" /></td>
+     <td><input type="submit" name="clear" value="Remove preferences from this computer" /></td>
    </tr>
    </table>
 </form>

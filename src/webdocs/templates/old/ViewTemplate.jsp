@@ -31,9 +31,7 @@
 
       <table width="100%" cellspacing="0" cellpadding="0" border="0">
          <tr>
-            <td align="left">
-                <h1 class="pagename"><a name="Top"><wiki:PageName/></a></h1>
-            </td>
+            <td align="left"><h1 class="pagename"><a name="Top"><wiki:PageName/></a></h1></td>
             <td align="right"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>
          <tr>

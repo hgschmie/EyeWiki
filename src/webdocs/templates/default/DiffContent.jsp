@@ -8,18 +8,18 @@
 %>
 
 <wiki:PageExists>
-  <h1 class="diff">Difference between 
+  <h2 class="diff">Difference between 
   <%=getVersionText((Integer)pageContext.getAttribute(InsertDiffTag.ATTR_OLDVERSION, PageContext.REQUEST_SCOPE))%> 
   and 
   <%=getVersionText((Integer)pageContext.getAttribute(InsertDiffTag.ATTR_NEWVERSION, PageContext.REQUEST_SCOPE))%>:
-  </h1>
+  </h2>
   <wiki:InsertDiff>
     <div class="diff">No difference detected.</div>
   </wiki:InsertDiff>
 </wiki:PageExists>
 
 <wiki:NoSuchPage>
-  <div class="nopage">This page does not exist.  Why don't you go and<wiki:EditLink>create it</wiki:EditLink>?</div>
+  <div class="nopage">This page does not exist. Why don't you go and <wiki:EditLink>create it</wiki:EditLink>?</div>
 </wiki:NoSuchPage>
 
 <table class="pageaction">

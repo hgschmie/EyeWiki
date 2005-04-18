@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -202,7 +203,7 @@ public class DiffLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a href=\"" + url + "\">");
+            out.print("<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">");
 
             break;
 

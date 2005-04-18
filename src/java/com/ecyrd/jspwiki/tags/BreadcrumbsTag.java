@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -153,7 +154,7 @@ public class BreadcrumbsTag
         // wiki engine to output the appropriate wikilink
         JspWriter out = pageContext.getOut();
         int queueSize = trail.size();
-        String linkclass = "wikipage";
+        String linkclass = WikiConstants.CSS_LINK_BREADCRUMBS;
         String curPage = null;
 
         for (int i = 0; i < (queueSize - 1); i++)

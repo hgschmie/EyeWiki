@@ -35,8 +35,14 @@ public interface WikiConstants
      * ========================================================================
      */
 
+    /** Class for the internal wiki content rendering */
+    String CSS_WIKICONTENT = "wikicontent";
+    
     /** Class for an internal wiki page. Used with A HREF tags. */
     String CSS_LINK_WIKIPAGE = "wikipage";
+
+    /** Class for an internal link target. Used with A tags */
+    String CSS_ANCHOR = "wikianchor";
 
     /** Class for referencing a footnote. Used with A HREF tags. */
     String CSS_LINK_FOOTNOTE_REF = "footnoteref";
@@ -59,6 +65,9 @@ public interface WikiConstants
     /** Class for a diff internal link (next/prev). Used with A HREF tags */
     String CSS_LINK_DIFF = "diff";
 
+    /** Class for a breadcrumbs link. Used with HREF tags */
+    String CSS_LINK_BREADCRUMBS = "breadcrumbs";
+
     /** Image class for an inline image. Used with IMG tags. */
     String CSS_IMG_INLINE = "inline";
 
@@ -68,11 +77,11 @@ public interface WikiConstants
     /** Generic Error CSS. Used with SPAN, P tags. */
     String CSS_CLASS_ERROR = "error";
 
-    /** Class for a Wiki internal table. Used with TABLE tags. */
-    String CSS_TABLE_WIKITABLE = "wikitable";
-
     /** Class for a Wiki internal form */
     String CSS_FORM_WIKIFORM = "wikiform";
+
+    /** String for a diff anchor target. Used with A tags */
+    String CSS_DIFF_ANCHOR = "diffanchor";
 
     /** Class for an added Element in a diff. Used with TD, SPAN tags */
     String CSS_DIFF_ADD = "diffadd";

@@ -28,9 +28,13 @@ import javax.servlet.jsp.tagext.BodyContent;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.GenericElement;
+import org.apache.ecs.wml.Tr;
 import org.apache.ecs.xhtml.form;
+import org.apache.ecs.xhtml.h2;
 import org.apache.ecs.xhtml.input;
 import org.apache.ecs.xhtml.p;
+import org.apache.ecs.xhtml.table;
+import org.apache.ecs.xhtml.td;
 import org.apache.ecs.xhtml.textarea;
 
 import com.ecyrd.jspwiki.WikiConstants;
@@ -216,15 +220,35 @@ public class EditorTag
      */
     private ConcreteElement getButtons()
     {
-        p para2 = new p();
+        h2 h2 = new h2();
+        h2.setClass(WikiConstants.CSS_EDITOR);
 
-        para2.addElement(createSubmit("ok", m_submit));
-        para2.addElement("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-        para2.addElement(createSubmit("preview", m_preview));
-        para2.addElement("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-        para2.addElement(createSubmit("cancel", m_cancel));
+        table t = new table();
+        t.setClass(WikiConstants.CSS_EDITOR);
 
-        return para2;
+        h2.addElement(t);
+
+        Tr tr = new Tr();
+        t.addElement(tr);
+
+        td td = null;
+
+        td = new td();
+        td.setClass(WikiConstants.CSS_EDITOR);
+        td.addElement(createSubmit("ok", m_submit));
+        tr.addElement(td);
+
+        td = new td();
+        td.setClass(WikiConstants.CSS_EDITOR);
+        td.addElement(createSubmit("preview", m_preview));
+        tr.addElement(td);
+
+        td = new td();
+        td.setClass(WikiConstants.CSS_EDITOR);
+        td.addElement(createSubmit("cancel", m_cancel));
+        tr.addElement(td);
+
+        return h2;
     }
 
     /**

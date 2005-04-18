@@ -22,19 +22,19 @@
 
 <table class="wiki">
   <tr>
-    <td class="wikimenu" width="10%">
+    <td class="wikimenu">
       <wiki:Include page="LeftMenu.jsp"/>
       <wiki:Include page="LeftMenuFooter.jsp"/>
     </td>
 
-    <td class="wiki" width="85%">
+    <td class="wiki">
       <table class="wikiedit">
          <tr>
-            <td class="wikihead"><h1 class="wikihead"><a name="Top">Edit <wiki:PageName/></a></h1></td>
+            <td class="wikihead"><h1 class="wikihead"><a class="wikianchor" name="Top">Edit <wiki:PageName/></a></h1></td>
             <td class="wikisearch"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>
-         <tr><td><hr /></td></tr>
-         <tr><td class="wikiedit"><wiki:Content/></td></tr>
+         <tr><td colspan="2"><hr /></td></tr>
+         <tr><td colspan="2" class="wikiedit"><wiki:Content/></td></tr>
       </table> 
     </td>
   </tr>

@@ -24,14 +24,14 @@
 <hr />
 
 <wiki:Editor>
-  <textarea class="preview" rows="4" cols="20" readonly="true" name="text"><%=pageContext.getAttribute("usertext", PageContext.REQUEST_SCOPE) %></textarea>
+  <textarea class="editor" rows="4" cols="80" readonly="true" name="text"><%=pageContext.getAttribute("usertext", PageContext.REQUEST_SCOPE) %></textarea>
 
-  <h2 id="previewsavebutton" class="preview">
-    <table class="preview">
+  <h2 id="previewsavebutton" class="editor">
+    <table class="editor">
       <tr>
-        <td class="preview"><input type="button" name="edit" value="Keep editing" onClick="javascript:history.back();"/></td>
-        <td class="preview"><input type="submit" name="ok" value="Save" /></td>
-        <td class="preview"><input type="submit" name="cancel" value="Cancel" /></td>
+        <td class="editor"><input type="button" name="edit" value="Keep editing" onClick="javascript:history.back();"/></td>
+        <td class="editor"><input type="submit" name="ok" value="Save" /></td>
+        <td class="editor"><input type="submit" name="cancel" value="Cancel" /></td>
       </tr>
     </table>
   </h2>

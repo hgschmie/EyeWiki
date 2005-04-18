@@ -137,7 +137,6 @@
    <!--
        By default we just limit access to the Delete.jsp, as it
        is actually dangerous.
-   -->
 
    <security-constraint>
        <web-resource-collection>
@@ -149,6 +148,7 @@
            <role-name>user</role-name>
        </auth-constraint>
    </security-constraint>
+   -->
       
    <!--
        Here we define the users which are allowed to access JSPWiki

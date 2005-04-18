@@ -9,7 +9,7 @@
 <h1 class="pagefind">Find pages</h2>
 
 <wiki:SearchResults>
-  <h2 class="pagefind">Search results for '<%=query%>'</h2x>
+  <h2 class="pagefind">Search results for '<%=query%>'</h2>
 
   <div class="pagefind">Found <wiki:SearchResultsSize/> hits, here are the top 20.</div>
 

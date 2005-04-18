@@ -98,23 +98,25 @@
 <body class="login">
   <form action="<wiki:Variable var="baseURL"/>Login.jsp" accept-charset="<wiki:ContentEncoding />" method="post" />
   <input type="hidden" name="page" value="<wiki:Variable var="pagename" />" />
-  <table class="login" width="35%" />
+  <table class="login"/>
     <tr>
-      <td colspan="2" class="login">
+      <td colspan="2">
         <h3 class="login">Welcome to <wiki:Variable var="applicationname"/></h3>
-        <p style="color:red"><wiki:Variable var="msg" /></p>
       </td>
     </tr>
     <tr>
+      <td colspan="2" class="error"><wiki:Variable var="msg" /></td>
+    </tr>
+    <tr>
       <td class="loginmsg">Login:</td>
-      <td class="logininput"><input type="text" name="uid" value="<wiki:Variable var="uid" default="" />" /></td>
+      <td class="login"><input type="text" size="20" name="uid" value="<wiki:Variable var="uid" default="" />" /></td>
     </tr>
     <tr>
       <td class="loginmsg">Password:</td>
-      <td class="logininput"><input type="password" name="passwd" /></td>
+      <td class="login"><input type="password" size="20" name="passwd" /></td>
     </tr>
     <tr>
-      <td colspan="2" class="logininput">
+      <td colspan="2" class="login">
         <input type="submit" name="action" value="login" />
       </td>
     </tr>
