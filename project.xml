@@ -3,7 +3,7 @@
   <pomVersion>3</pomVersion>
   <id>jspwiki</id>
   <name>JSPWiki</name>
-  <currentVersion>2.1.159-dev</currentVersion>
+  <currentVersion>2.1.164-dev</currentVersion>
   <organization>
     <name>jspwiki.org</name>
     <url>http://www.jspwiki.org</url>
@@ -157,6 +157,28 @@
       <artifactId>multipartrequest</artifactId>
       <version>1.30-rc1</version>
       <url>http://multpartrequest.sourceforge.net/</url>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+
+    <dependency>
+      <groupId>picocontainer</groupId>
+      <artifactId>picocontainer</artifactId>
+      <version>1.1</version>
+      <url>http://www.picocontainer.org/</url>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+
+    <dependency>
+      <groupId>nanocontainer</groupId>
+      <artifactId>nanocontainer</artifactId>
+      <version>1.0-beta-4</version>
+      <url>http://www.nanocontainer.org/</url>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
