@@ -590,7 +590,7 @@ public class WikiEngine
         {
             // RuntimeExceptions may occur here, even if they shouldn't.
             log.fatal("Failed to start component container.", e);
-            throw new WikiException("Failed to component container: " + e.getMessage());
+            throw new WikiException("Failed to start component container: " + e.getMessage());
         }
 
 
@@ -2401,7 +2401,15 @@ public class WikiEngine
         
         try
         {
-            configStream = context.getResourceAsStream(confFile);
+            if (context != null)
+            {
+                configStream = context.getResourceAsStream(confFile);
+            }
+            else
+            {
+                File configFile = new File(confFile);
+                configStream = new FileInputStream(configFile);
+            }
 
             if (configStream != null)
             {
