@@ -4,7 +4,7 @@
 
 <div class="searchbox">
   <form action="<wiki:Variable var="baseURL"/>Search.jsp" accept-charset="<wiki:ContentEncoding />">
-    <wiki:LinkTo page="FindPage">Search Wiki:</wiki:LinkTo>
+    <wiki:LinkTo page="FindPage">Search</wiki:LinkTo>
     <input type="text" name="query" size="15" />
     <input type="submit" name="ok" value="Find!" />
   </form>
