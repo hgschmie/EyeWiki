@@ -76,11 +76,22 @@ public class RSSImageLinkTag
 
         if (rssURL != null)
         {
+            StringBuffer sb = new StringBuffer("<div class=\"")
+                    .append(WikiConstants.CSS_RSS)
+                    .append("\"><a class=\"")
+                    .append(WikiConstants.CSS_RSS)
+                    .append("\" href=\"")
+                    .append(rssURL)
+                    .append("\"><img class=\"")
+                    .append(WikiConstants.CSS_RSS)
+                    .append("\" src=\"")
+                    .append(engine.getBaseURL())
+                    .append("images/xml.png\" alt=\"[RSS]\" title=\"")
+                    .append(getTitle())
+                    .append("\"/></a></div>");
+
             JspWriter out = pageContext.getOut();
-            out.print("<a class=\"" + WikiConstants.CSS_RSS + "\" href=\"" + rssURL + "\">");
-            out.print("<img class=\"" + WikiConstants.CSS_RSS + "\" src=\"" + engine.getBaseURL() + "images/xml.png\"");
-            out.print(" alt=\"[RSS]\" border=\"0\" title=\"" + getTitle() + "\"/>");
-            out.print("</a>");
+            out.print(sb.toString());
         }
 
         return SKIP_BODY;
