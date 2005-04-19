@@ -19,7 +19,6 @@
 */
 package com.ecyrd.jspwiki.manager;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -31,18 +30,19 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.providers.CachingProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.RepositoryModifiedException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
-import com.ecyrd.jspwiki.util.ClassUtil;
 
 
 /**
@@ -59,7 +59,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
 //        complicating things.  We need to move more provider-specific functionality
 //        from WikiEngine (which is too big now) into this class.
 public final class PageManager
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(PageManager.class);
@@ -91,67 +91,29 @@ public final class PageManager
 
         m_engine = engine;
 
-        boolean useCache = conf.getBoolean(PROP_USECACHE, PROP_USECACHE_DEFAULT);
-
         m_expiryTime = conf.getInt(PROP_LOCKEXPIRY, PROP_LOCKEXPIRY_DEFAULT);
 
-        //
-        //  If user wants to use a cache, then we'll use the CachingProvider.
-        //
-        if (useCache)
+        PicoContainer container = m_engine.getComponentContainer();
+        m_provider = (WikiPageProvider) container.getComponentInstance(WikiConstants.PAGE_PROVIDER);
+
+        if (log.isDebugEnabled())
         {
-            classname = CachingProvider.class.getName();
-        }
-        else
-        {
-            classname = conf.getString(PROP_CLASS_PAGEPROVIDER, PROP_CLASS_PAGEPROVIDER_DEFAULT);
+            log.debug("Initializing page provider class " + m_provider);
         }
 
-        try
-        {
-            Class providerclass = ClassUtil.findClass(DEFAULT_PROVIDER_CLASS_PREFIX, classname);
+    }
 
-            m_provider = (WikiPageProvider) providerclass.newInstance();
-
-            if (log.isDebugEnabled())
-            {
-                log.debug("Initializing page provider class " + m_provider);
-            }
-
-            m_provider.initialize(m_engine, conf);
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("Unable to locate provider class " + classname, e);
-            throw new WikiException("no provider class");
-        }
-        catch (InstantiationException e)
-        {
-            log.error("Unable to create provider class " + classname, e);
-            throw new WikiException("faulty provider class");
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("Illegal access to provider class " + classname, e);
-            throw new WikiException("illegal provider class");
-        }
-        catch (NoRequiredPropertyException e)
-        {
-            log.error("Provider did not found a property it was looking for: " + e.getMessage(), e);
-            throw e; // Same exception works.
-        }
-        catch (IOException e)
-        {
-            log.error(
-                "An I/O exception occurred while trying to create a new page provider: "
-                + classname, e);
-            throw new WikiException("Unable to start page provider: " + e.getMessage());
-        }
-
+    public synchronized void start()
+    {
         //
         //  Start the lock reaper.
         //
         new LockReaper().start();
+    }
+
+    public synchronized void stop()
+    {
+        // GNDN
     }
 
     /**

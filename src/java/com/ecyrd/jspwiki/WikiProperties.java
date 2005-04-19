@@ -23,8 +23,6 @@ import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
 import com.ecyrd.jspwiki.diff.RssTraditionalDiffProvider;
 import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
-import com.ecyrd.jspwiki.providers.BasicAttachmentProvider;
-import com.ecyrd.jspwiki.providers.FileSystemProvider;
 
 
 /**
@@ -185,12 +183,6 @@ public interface WikiProperties
     String PROP_FRONTPAGE_DEFAULT = "Main";
 
     /** DOCUMENT ME! */
-    String PROP_USECACHE = "jspwiki.usePageCache";
-
-    /** DOCUMENT ME! */
-    boolean PROP_USECACHE_DEFAULT = false;
-
-    /** DOCUMENT ME! */
     String PROP_LOCKEXPIRY = "jspwiki.lockExpiryTime";
 
     /** DOCUMENT ME! */
@@ -275,6 +267,15 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     int PROP_CACHECAPACITY_DEFAULT = 1000; // Good most wikis
 
+    /** Shall we use Lucene with this Wiki? */
+    String PROP_USE_LUCENE = "jspwiki.useLucene";
+
+    /** DOCUMENT ME! */
+    boolean PROP_USE_LUCENE_DEFAULT = true;
+
+    /** Prefix for the Wiki Special pages */
+    String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";
+
     /*
      * ========================================================================
      *
@@ -340,15 +341,6 @@ public interface WikiProperties
      * @value 3600
      */
     int PROP_RSS_INTERVAL_DEFAULT = 3600;
-
-    /** Shall we use Lucene with this Wiki? */
-    String PROP_USE_LUCENE = "jspwiki.useLucene";
-
-    /** DOCUMENT ME! */
-    boolean PROP_USE_LUCENE_DEFAULT = true;
-
-    /** Prefix for the Wiki Special pages */
-    String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";
 
     /** Do we want the page specific ATOM feeds? */
     String PROP_ATOM_FEEDS = "jspwiki.enableAtomFeeds";
@@ -485,18 +477,6 @@ public interface WikiProperties
 
     /** The property name defining which packages will be searched for properties. */
     String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_PAGEPROVIDER = "jspwiki.pageProvider";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_PAGEPROVIDER_DEFAULT = FileSystemProvider.class.getName();
-
-    /** The property name for defining the attachment provider class name. */
-    String PROP_CLASS_ATTACHMENTPROVIDER = "jspwiki.attachmentProvider";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT = BasicAttachmentProvider.class.getName();
 
     /** DOCUMENT ME! */
     String PROP_CLASS_DIFF_PROVIDER = "jspwiki.diffProvider";

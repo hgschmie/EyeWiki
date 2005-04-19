@@ -27,9 +27,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 
 
@@ -52,6 +54,12 @@ public class FileSystemProvider
     /** All metadata is stored in a file with this extension. */
     public static final String EXTENSION_PROPS = ".properties";
 
+    public FileSystemProvider(WikiEngine engine, Configuration conf)
+    	throws Exception
+    {
+        super(engine, conf);
+    }
+    
     /**
      * DOCUMENT ME!
      *

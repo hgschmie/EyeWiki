@@ -110,7 +110,7 @@ public class BasicAttachmentProvider
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public BasicAttachmentProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
         m_storageDir = engine.getStorageDir();

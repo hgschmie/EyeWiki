@@ -47,17 +47,19 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.QueryItem;
 import com.ecyrd.jspwiki.SearchMatcher;
 import com.ecyrd.jspwiki.SearchResult;
 import com.ecyrd.jspwiki.SearchResultComparator;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.manager.PageManager;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
@@ -102,7 +104,7 @@ import com.opensymphony.oscache.base.events.CachewideEvent;
 // FIXME: A part of the stuff is now redundant, since we could easily use the text cache
 //        for a lot of things.  RefactorMe.
 public class CachingProvider
-        implements WikiPageProvider, WikiProperties
+        implements WikiPageProvider, WikiProperties, Startable
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(CachingProvider.class);
@@ -182,6 +184,9 @@ public class CachingProvider
     /** DOCUMENT ME! */
     private CacheItemCollector m_allCollector = new CacheItemCollector();
 
+    /** The Wiki Engine */
+    private final WikiEngine m_engine;
+
     /**
      * DOCUMENT ME!
      *
@@ -192,10 +197,12 @@ public class CachingProvider
      * @throws IOException DOCUMENT ME!
      * @throws IllegalArgumentException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public CachingProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingProvider");
+
+        this.m_engine = engine;
 
         //
         //  Cache consistency checks
@@ -226,146 +233,28 @@ public class CachingProvider
 
         m_historyCache = new Cache(true, false, false, false, OSCACHE_ALGORITHM, capacity);
 
-        //
-        //  Find and initialize real provider.
-        //
-        String classname = conf.getString(PageManager.PROP_CLASS_PAGEPROVIDER);
-
-        try
-        {
-            Class providerclass =
-                ClassUtil.findClass(WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX, classname);
-
-            m_provider = (WikiPageProvider) providerclass.newInstance();
-
-            if (log.isDebugEnabled())
-            {
-                log.debug("Initializing real provider class " + m_provider);
-            }
-
-            m_provider.initialize(engine, conf);
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("Unable to locate provider class " + classname, e);
-            throw new IllegalArgumentException("no provider class");
-        }
-        catch (InstantiationException e)
-        {
-            log.error("Unable to create provider class " + classname, e);
-            throw new IllegalArgumentException("faulty provider class");
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("Illegal access to provider class " + classname, e);
-            throw new IllegalArgumentException("illegal provider class");
-        }
+        PicoContainer container = m_engine.getComponentContainer();
+        m_provider = (WikiPageProvider) container.getComponentInstance(WikiConstants.REAL_PAGE_PROVIDER);
 
         //
         // See if we're using Lucene, and if so, ensure that its
         // index directory is up to date.
         //
         m_useLucene = conf.getBoolean(PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT);
+    }
 
+    public synchronized void start()
+    {
         if (m_useLucene)
         {
-            m_luceneDirectory = engine.getWorkDir() + File.separator + LUCENE_DIR;
-
-            // FIXME: Just to be simple for now, we will do full reindex
-            // only if no files are in lucene directory.
-            File dir = new File(m_luceneDirectory);
-
-            if (log.isInfoEnabled())
-            {
-                log.info("Lucene enabled, cache will be in: " + dir.getAbsolutePath());
-            }
-
-            try
-            {
-                if (!dir.exists())
-                {
-                    dir.mkdirs();
-                }
-
-                if (dir.list().length == 0)
-                {
-                    //
-                    //  No files? Reindex!
-                    //
-                    Date start = new Date();
-                    IndexWriter writer = null;
-
-                    log.info("Starting Lucene reindexing, this can take a couple minutes...");
-
-                    try
-                    {
-                        // FIXME: Should smartly use a different analyzer
-                        //        in case the language is something else
-                        //        than English.
-                        writer = new IndexWriter(m_luceneDirectory, new StandardAnalyzer(), true);
-
-                        Collection allPages = getAllPages();
-
-                        for (Iterator iterator = allPages.iterator(); iterator.hasNext();)
-                        {
-                            WikiPage page = (WikiPage) iterator.next();
-                            String text = getPageText(page.getName(), WikiProvider.LATEST_VERSION);
-                            luceneIndexPage(page, text, writer);
-                        }
-
-                        writer.optimize();
-                    }
-                    finally
-                    {
-                        if (writer != null)
-                        {
-                            writer.close();
-                        }
-                    }
-
-                    Date end = new Date();
-
-                    if (log.isInfoEnabled())
-                    {
-                        log.info(
-                            "Full Lucene index finished in " + (end.getTime() - start.getTime())
-                            + " milliseconds.");
-                    }
-                }
-                else
-                {
-                    log.info("Files found in Lucene directory, not reindexing.");
-                }
-            }
-            catch (NoClassDefFoundError e)
-            {
-                log.info("Lucene libraries do not exist - not using Lucene");
-                m_useLucene = false;
-            }
-            catch (IOException e)
-            {
-                log.error("Problem while creating Lucene index.", e);
-                m_useLucene = false;
-            }
-            catch (ProviderException e)
-            {
-                log.error("Problem reading pages while creating Lucene index.", e);
-                throw new IllegalArgumentException("unable to create Lucene index");
-            }
-
-            startLuceneUpdateThread();
+            initLucene();
         }
     }
 
-    /*
-      public void finalize()
-      {
-      if( m_luceneUpdateThread != null )
-      {
-      m_luceneUpdateThread.
-      }
-      }
-    */
+    public synchronized void stop()
+    {
+        // GNDN
+    }
 
     /**
      * Waits first for a little while before starting to go through the Lucene "pages that need
@@ -1311,6 +1200,96 @@ public class CachingProvider
     {
         return m_provider;
     }
+
+    private void initLucene()
+    {
+        m_luceneDirectory = m_engine.getWorkDir() + File.separator + LUCENE_DIR;
+
+        // FIXME: Just to be simple for now, we will do full reindex
+        // only if no files are in lucene directory.
+        File dir = new File(m_luceneDirectory);
+
+        if (log.isInfoEnabled())
+        {
+            log.info("Lucene enabled, cache will be in: " + dir.getAbsolutePath());
+        }
+        
+        try
+        {
+            if (!dir.exists())
+            {
+                dir.mkdirs();
+            }
+            
+            if (dir.list().length == 0)
+            {
+                //
+                //  No files? Reindex!
+                //
+                Date start = new Date();
+                IndexWriter writer = null;
+                
+                log.info("Starting Lucene reindexing, this can take a couple minutes...");
+                
+                try
+                {
+                    // FIXME: Should smartly use a different analyzer
+                    //        in case the language is something else
+                    //        than English.
+                    writer = new IndexWriter(m_luceneDirectory, new StandardAnalyzer(), true);
+                    
+                    Collection allPages = getAllPages();
+                    
+                    for (Iterator iterator = allPages.iterator(); iterator.hasNext();)
+                    {
+                        WikiPage page = (WikiPage) iterator.next();
+                        String text = getPageText(page.getName(), WikiProvider.LATEST_VERSION);
+                        luceneIndexPage(page, text, writer);
+                    }
+                    
+                    writer.optimize();
+                }
+                finally
+                {
+                    if (writer != null)
+                    {
+                        writer.close();
+                    }
+                }
+                
+                Date end = new Date();
+                
+                if (log.isInfoEnabled())
+                {
+                    log.info(
+                            "Full Lucene index finished in " + (end.getTime() - start.getTime())
+                            + " milliseconds.");
+                }
+            }
+            else
+            {
+                log.info("Files found in Lucene directory, not reindexing.");
+            }
+        }
+        catch (NoClassDefFoundError e)
+        {
+            log.info("Lucene libraries do not exist - not using Lucene");
+            m_useLucene = false;
+        }
+        catch (IOException e)
+        {
+            log.error("Problem while creating Lucene index.", e);
+            m_useLucene = false;
+        }
+        catch (ProviderException e)
+        {
+            log.error("Problem reading pages while creating Lucene index.", e);
+            throw new IllegalArgumentException("unable to create Lucene index");
+        }
+        
+        startLuceneUpdateThread();
+    }
+
 
     /**
      * This is a simple class that keeps a list of all WikiPages that we have in memory.  Because

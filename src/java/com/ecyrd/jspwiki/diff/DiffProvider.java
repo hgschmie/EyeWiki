@@ -16,6 +16,18 @@ public interface DiffProvider
         extends WikiProvider
 {
     /**
+     * Initializes the page provider.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws NoRequiredPropertyException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
+     */
+    void initialize(WikiEngine engine, Configuration conf)
+            throws NoRequiredPropertyException, IOException;
+
+    /**
      * The return string is to be XHTML compliant ready to display html.  No further processing of
      * this text will be done by the wiki engine.
      *

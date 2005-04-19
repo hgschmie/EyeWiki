@@ -33,16 +33,16 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.PicoContainer;
+
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.providers.CachingAttachmentProvider;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;
-import com.ecyrd.jspwiki.util.ClassUtil;
 
 
 /**
@@ -87,70 +87,11 @@ public class AttachmentManager
     // FIXME: Perhaps this should fail somehow.
     public AttachmentManager(WikiEngine engine, Configuration conf)
     {
-        String classname;
-
         m_engine = engine;
 
-        //
-        //  If user wants to use a cache, then we'll use the CachingProvider.
-        //
-        boolean useCache = conf.getBoolean(PROP_USECACHE, PROP_USECACHE_DEFAULT);
+        PicoContainer container = m_engine.getComponentContainer();
 
-        if (useCache)
-        {
-            classname = CachingAttachmentProvider.class.getName();
-        }
-        else
-        {
-            classname =
-                conf.getString(
-                    PROP_CLASS_ATTACHMENTPROVIDER, PROP_CLASS_ATTACHMENTPROVIDER_DEFAULT);
-        }
-
-        //
-        //  If no class defined, then will just simply fail.
-        //
-        if (classname == null)
-        {
-            log.info("No attachment provider defined - disabling attachment support.");
-
-            return;
-        }
-
-        //
-        //  Create and initialize the provider.
-        //
-        try
-        {
-            Class providerclass = ClassUtil.findClass(DEFAULT_PROVIDER_CLASS_PREFIX, classname);
-
-            m_provider = (WikiAttachmentProvider) providerclass.newInstance();
-
-            m_provider.initialize(m_engine, conf);
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("Attachment provider class not found", e);
-        }
-        catch (InstantiationException e)
-        {
-            log.error("Attachment provider could not be created", e);
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("You may not access the attachment provider class", e);
-        }
-        catch (NoRequiredPropertyException e)
-        {
-            log.error(
-                "Attachment provider did not find a property that it needed: " + e.getMessage(), e);
-            m_provider = null; // No, it did not work.
-        }
-        catch (IOException e)
-        {
-            log.error("Attachment provider reports IO error", e);
-            m_provider = null;
-        }
+        m_provider = (WikiAttachmentProvider) container.getComponentInstance(WikiConstants.ATTACHMENT_PROVIDER);
     }
 
     /**

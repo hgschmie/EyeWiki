@@ -19,11 +19,6 @@
  */
 package com.ecyrd.jspwiki;
 
-import java.io.IOException;
-
-import org.apache.commons.configuration.Configuration;
-
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**
@@ -37,18 +32,6 @@ public interface WikiProvider
 {
     /** Passing this to any method should get the latest version */
     int LATEST_VERSION = -1;
-
-    /**
-     * Initializes the page provider.
-     *
-     * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
-     *
-     * @throws NoRequiredPropertyException DOCUMENT ME!
-     * @throws IOException DOCUMENT ME!
-     */
-    void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException;
 
     /**
      * Return a valid HTML string for information.  May be anything.

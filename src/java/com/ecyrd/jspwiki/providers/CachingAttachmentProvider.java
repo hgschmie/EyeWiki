@@ -30,14 +30,15 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.PicoContainer;
+
 import com.ecyrd.jspwiki.QueryItem;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 
@@ -90,7 +91,7 @@ public class CachingAttachmentProvider
      * @throws IOException DOCUMENT ME!
      * @throws IllegalArgumentException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public CachingAttachmentProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingAttachmentProvider");
@@ -100,40 +101,8 @@ public class CachingAttachmentProvider
         //
         m_cache = new Cache(true, false, false);
 
-        //
-        //  Find and initialize real provider.
-        //
-        String classname = conf.getString(WikiProperties.PROP_CLASS_ATTACHMENTPROVIDER);
-
-        try
-        {
-            Class providerclass =
-                ClassUtil.findClass(WikiProperties.DEFAULT_PROVIDER_CLASS_PREFIX, classname);
-
-            m_provider = (WikiAttachmentProvider) providerclass.newInstance();
-
-            if (log.isDebugEnabled())
-            {
-                log.debug("Initializing real provider class " + m_provider);
-            }
-
-            m_provider.initialize(engine, conf);
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("Unable to locate provider class " + classname, e);
-            throw new IllegalArgumentException("no provider class");
-        }
-        catch (InstantiationException e)
-        {
-            log.error("Unable to create provider class " + classname, e);
-            throw new IllegalArgumentException("faulty provider class");
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("Illegal access to provider class " + classname, e);
-            throw new IllegalArgumentException("illegal provider class");
-        }
+        PicoContainer container = engine.getComponentContainer();
+        m_provider = (WikiAttachmentProvider) container.getComponentInstance(WikiConstants.REAL_ATTACHMENT_PROVIDER);
     }
 
     /**

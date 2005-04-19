@@ -96,7 +96,7 @@ public abstract class AbstractFileProvider
      * @throws NoRequiredPropertyException If the specified page directory does not exist.
      * @throws IOException In case the specified page directory is a file, not a directory.
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    protected AbstractFileProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing FileSystemProvider");

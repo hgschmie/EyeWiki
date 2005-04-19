@@ -95,10 +95,10 @@ public class VersioningFileProvider
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public VersioningFileProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
-        super.initialize(engine, conf);
+        super(engine, conf);
     }
 
     /**

@@ -129,11 +129,11 @@ public class RCSFileProvider
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public RCSFileProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
     {
+        super(engine, conf);
         log.debug("Initing RCS");
-        super.initialize(engine, conf);
 
         m_checkinCommand = conf.getString(PROP_RCS_CHECKIN, PROP_RCS_CHECKIN_DEFAULT);
         m_checkoutCommand = conf.getString(PROP_RCS_CHECKOUT, PROP_RCS_CHECKOUT_DEFAULT);

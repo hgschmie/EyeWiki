@@ -62,6 +62,18 @@ public interface WikiConstants
 
     String RSS_GENERATOR = "RSSGenerator";
 
+    /** The Page Provider */
+    String PAGE_PROVIDER = "PageProvider";
+
+    /** The real Page Provider for the Caching Provider */
+    String REAL_PAGE_PROVIDER = "RealPageProvider";
+
+    /** The Attachment Provider */
+    String ATTACHMENT_PROVIDER = "AttachmentProvider";
+
+    /** The real Attachment Provider for the Caching Provider */
+    String REAL_ATTACHMENT_PROVIDER = "RealAttachmentProvider";
+
     /*
      * ========================================================================
      * 
