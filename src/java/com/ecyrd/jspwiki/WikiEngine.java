@@ -134,12 +134,12 @@ public class WikiEngine
 
     /** Contains the default properties for JSPWiki. */
     private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
-        {
-            "Login", "Login.jsp",
-            "UserPreferences", "UserPreferences.jsp",
-            "Search", "Search.jsp",
-            "FindPage", "FindPage.jsp"
-        };
+    {
+        "Login", "Login.jsp",
+        "UserPreferences", "UserPreferences.jsp",
+        "Search", "Search.jsp",
+        "FindPage", "FindPage.jsp"
+    };
 
     /** The name of the cookie that gets stored to the user browser. */
     public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
@@ -313,7 +313,7 @@ public class WikiEngine
      * @throws InternalWikiException DOCUMENT ME!
      */
     public static synchronized WikiEngine getInstance(
-        final ServletContext context, final Configuration conf)
+            final ServletContext context, final Configuration conf)
             throws InternalWikiException
     {
         Configuration wikiConf = conf;
@@ -372,8 +372,8 @@ public class WikiEngine
             if (configFile == null)
             {
                 context.log(
-                    "No " + PARAM_CONFIGFILE + " defined for this context, "
-                    + "using default from " + PARAM_CONFIGFILE_DEFAULT);
+                        "No " + PARAM_CONFIGFILE + " defined for this context, "
+                        + "using default from " + PARAM_CONFIGFILE_DEFAULT);
 
                 //  Use the default config file.
                 configStream = context.getResourceAsStream(PARAM_CONFIGFILE_DEFAULT);
@@ -390,7 +390,7 @@ public class WikiEngine
             }
 
             InputStreamReader isr =
-                new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+                    new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
             PropertiesConfiguration conf = new PropertiesConfiguration();
             conf.setThrowExceptionOnMissing(true);
             conf.load(isr);
@@ -415,8 +415,8 @@ public class WikiEngine
         catch (Exception e)
         {
             context.log(
-                Release.APPNAME
-                + ": Unable to load and setup configuration from jspwiki.properties", e);
+                    Release.APPNAME
+                    + ": Unable to load and setup configuration from jspwiki.properties", e);
         }
         finally
         {
@@ -439,11 +439,11 @@ public class WikiEngine
         m_startTime = new Date();
 
         wikiRelativePathes =
-            conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
+                conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
 
         conf.setProperty(PROP_ROOTDIR, wikiRelativePathes
-            ? getRootPath()
-            : "");
+                ? getRootPath()
+                : "");
 
         this.conf = conf;
 
@@ -513,7 +513,7 @@ public class WikiEngine
         else
         {
             log.info(
-                "No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
+                    "No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
         }
 
         //
@@ -534,7 +534,7 @@ public class WikiEngine
         else
         {
             log.info(
-                "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
+                    "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
         // NOT YET USED m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
@@ -562,7 +562,7 @@ public class WikiEngine
             setupMainContainer();
 
             String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
-            componentContainer = getComponentContainer(m_servletContext, wikiComponentsFile);
+            componentContainer = setupComponentContainer(m_servletContext, wikiComponentsFile);
         }
         catch (Exception e)
         {
@@ -598,7 +598,7 @@ public class WikiEngine
                 else if (!d.isDirectory())
                 {
                     throw new IOException(
-                        "Requested Directory " + dir + " exists, but is no directory!");
+                            "Requested Directory " + dir + " exists, but is no directory!");
                 }
             }
             catch (Exception e)
@@ -1167,8 +1167,8 @@ public class WikiEngine
         }
 
         return isThere
-        ? page
-        : null;
+                ? page
+                : null;
     }
 
     /**
@@ -1204,8 +1204,8 @@ public class WikiEngine
     public String encodeName(String pagename)
     {
         return TextUtil.urlEncode(pagename, (m_useUTF8
-            ? "UTF-8"
-            : "ISO-8859-1"));
+                        ? "UTF-8"
+                        : "ISO-8859-1"));
     }
 
     /**
@@ -1222,13 +1222,13 @@ public class WikiEngine
         try
         {
             return TextUtil.urlDecode(pagerequest, (m_useUTF8
-                ? "UTF-8"
-                : "ISO-8859-1"));
+                            ? "UTF-8"
+                            : "ISO-8859-1"));
         }
         catch (UnsupportedEncodingException e)
         {
             throw new InternalWikiException(
-                "ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
+                    "ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
         }
     }
 
@@ -1446,7 +1446,7 @@ public class WikiEngine
         LinkCollector localCollector = new LinkCollector();
 
         textToHTML(
-            new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
+                new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
 
         return localCollector.getLinks();
     }
@@ -1462,8 +1462,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     public String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
-        StringTransmutator extLinkHook)
+            WikiContext context, String pagedata, StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, null, true);
     }
@@ -1480,8 +1480,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     public String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
-        StringTransmutator extLinkHook, StringTransmutator attLinkHook)
+            WikiContext context, String pagedata, StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook, StringTransmutator attLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, attLinkHook, true);
     }
@@ -1499,8 +1499,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     private String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
-        StringTransmutator extLinkHook, StringTransmutator attLinkHook, boolean parseAccessRules)
+            WikiContext context, String pagedata, StringTransmutator localLinkHook,
+            StringTransmutator extLinkHook, StringTransmutator attLinkHook, boolean parseAccessRules)
     {
         String result = "";
 
@@ -2066,7 +2066,7 @@ public class WikiEngine
         if (!m_isConfigured)
         {
             throw new InternalWikiException(
-                "WikiEngine has not been properly started.  It is likely that the configuration is faulty.  Please check all logs for the possible reason.");
+                    "WikiEngine has not been properly started.  It is likely that the configuration is faulty.  Please check all logs for the possible reason.");
         }
 
         try
@@ -2304,13 +2304,13 @@ public class WikiEngine
         }
 
         throw new WikiException(
-            "The path name " + pathName + " is invalid in the current Wiki configuration!");
+                "The path name " + pathName + " is invalid in the current Wiki configuration!");
     }
 
     /**
      * Starts the PicoContainer which contains all the pluggable elements of the Wiki
      */
-    public PicoContainer getComponentContainer(ServletContext context, String confFile)
+    public PicoContainer setupComponentContainer(ServletContext context, String confFile)
             throws Exception
     {
         PicoContainer container = null;
@@ -2370,7 +2370,7 @@ public class WikiEngine
         mainContainerRef.set(mainContainer);
     }
     
-    private PicoContainer getComponentContainer()
+    public PicoContainer getComponentContainer()
     {
         return (PicoContainer) componentContainerRef.get();
     }
