@@ -15,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.FileUtil;
 
 
@@ -68,10 +69,8 @@ public class CachingProviderTest
             throws Exception
     {
         Configuration conf2 = TestEngine.getConfiguration();
-
-        conf2.setProperty("jspwiki.usePageCache", "true");
-        conf2.setProperty("jspwiki.pageProvider", CounterProvider.class.getName());
-        conf2.setProperty("jspwiki.cachingProvider.capacity", "100");
+        conf2.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/counterComponents.xml");
+        conf2.setProperty(WikiProperties.PROP_CACHECAPACITY, "100");
 
         TestEngine engine = new TestEngine(conf2);
 
@@ -102,7 +101,7 @@ public class CachingProviderTest
             throws Exception
     {
         Configuration conf2 = TestEngine.getConfiguration();
-        conf2.setProperty("jspwiki.cachingProvider.cacheCheckInterval", "2");
+        conf2.setProperty(WikiProperties.PROP_CACHECHECKINTERVAL, "2");
 
         TestEngine engine = new TestEngine(conf2);
 

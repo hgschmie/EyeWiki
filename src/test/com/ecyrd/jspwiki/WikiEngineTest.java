@@ -419,8 +419,8 @@ public class WikiEngineTest
     public void testLatestGet()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
-        conf.setProperty("jspwiki.usePageCache", "false");
+
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/vspComponents.xml");
 
         WikiEngine engine = new TestEngine(conf);
 
@@ -440,8 +440,7 @@ public class WikiEngineTest
     public void testLatestGet2()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
-        conf.setProperty("jspwiki.usePageCache", "false");
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/vspComponents.xml");
 
         WikiEngine engine = new TestEngine(conf);
 
@@ -461,8 +460,7 @@ public class WikiEngineTest
     public void testLatestGet3()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
-        conf.setProperty("jspwiki.usePageCache", "false");
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/vspComponents.xml");
 
         WikiEngine engine = new TestEngine(conf);
         VerySimpleProvider vsp = (VerySimpleProvider) engine.getPageManager().getProvider();
@@ -487,8 +485,7 @@ public class WikiEngineTest
     public void testLatestGet4()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", VerySimpleProvider.class.getName());
-        conf.setProperty("jspwiki.usePageCache", "true");
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/vspCacheComponents.xml");
 
         WikiEngine engine = new TestEngine(conf);
 
@@ -719,7 +716,7 @@ public class WikiEngineTest
     public void testDeleteVersion()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "VersioningFileProvider");
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/versComponents.xml");
 
         TestEngine engine = new TestEngine(conf);
         engine.saveText(NAME1, "Test1");
@@ -745,7 +742,7 @@ public class WikiEngineTest
     public void testDeleteVersion2()
             throws Exception
     {
-        conf.setProperty("jspwiki.pageProvider", "VersioningFileProvider");
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/versComponents.xml");
 
         TestEngine engine = new TestEngine(conf);
         engine.saveText(NAME1, "Test1");

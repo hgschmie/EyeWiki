@@ -17,7 +17,6 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.manager.PageManager;
 import com.ecyrd.jspwiki.util.FileUtil;
 
 
@@ -61,18 +60,15 @@ public class FileSystemProviderTest
             throws Exception
     {
         conf = TestEngine.getConfiguration();
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/fspComponents.xml");
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
-        conf.setProperty(PageManager.PROP_CLASS_PAGEPROVIDER, "FileSystemProvider");
 
         m_engine = new TestEngine(conf);
 
-        m_provider = new FileSystemProvider();
-
-        m_provider.initialize(m_engine, conf);
-
+        m_provider = new FileSystemProvider(m_engine, conf);
         conf.setProperty(WikiEngine.PROP_ENCODING, "UTF-8");
-        m_providerUTF8 = new FileSystemProvider();
-        m_providerUTF8.initialize(m_engine, conf);
+
+        m_providerUTF8 = new FileSystemProvider(m_engine, conf);
     }
 
     /**
@@ -203,13 +199,10 @@ public class FileSystemProviderTest
 
         conf2.setProperty(WikiProperties.PROP_PAGEDIR, newDir.getAbsolutePath());
         conf2.setThrowExceptionOnMissing(true);
-        conf2.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "etc/wikiComponents.xml");
-
-        FileSystemProvider test = new FileSystemProvider();
+        conf2.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/fspComponents.xml");
 
         TestEngine m_engine2 = new TestEngine(conf2);
-
-        test.initialize(m_engine2, conf2);
+        FileSystemProvider test = new FileSystemProvider(m_engine2, conf);
 
         assertTrue("didn't create it", newDir.exists());
         assertTrue("isn't a dir", newDir.isDirectory());
@@ -231,12 +224,12 @@ public class FileSystemProviderTest
 
         conf.setProperty(WikiProperties.PROP_PAGEDIR, tmpFile.getAbsolutePath());
 
-        FileSystemProvider test = new FileSystemProvider();
+        FileSystemProvider test = null;
 
         try
         {
             TestEngine m_engine2 = new TestEngine(conf);
-            test.initialize(m_engine2, conf);
+            test = new FileSystemProvider(m_engine2, conf);
             
             fail("Wiki did not warn about wrong property.");
         }

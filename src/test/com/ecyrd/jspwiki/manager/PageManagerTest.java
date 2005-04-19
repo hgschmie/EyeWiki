@@ -9,6 +9,8 @@ import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.ecyrd.jspwiki.TestEngine;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.providers.CachingProvider;
 
 
@@ -66,8 +68,6 @@ public class PageManagerTest
     public void testPageCacheExists()
             throws Exception
     {
-        conf.setProperty("jspwiki.usePageCache", Boolean.TRUE);
-
         PageManager m = new PageManager(engine, conf);
 
         assertTrue(m.getProvider() instanceof CachingProvider);
@@ -81,9 +81,10 @@ public class PageManagerTest
     public void testPageCacheNotInUse()
             throws Exception
     {
-        conf.setProperty("jspwiki.usePageCache", Boolean.FALSE);
+        conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/versComponents.xml");
+        WikiEngine engine2 = new TestEngine(conf);
 
-        PageManager m = new PageManager(engine, conf);
+        PageManager m = new PageManager(engine2, conf);
 
         assertTrue(!(m.getProvider() instanceof CachingProvider));
     }

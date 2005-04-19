@@ -55,7 +55,7 @@ public class CounterProvider
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public CounterProvider(WikiEngine engine, Configuration conf)
     {
         m_initCalls++;
 

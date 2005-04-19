@@ -47,7 +47,7 @@ public class WikiDatabaseTest
     {
         Configuration conf = TestEngine.getConfiguration();
 
-        // props.setProperty("jspwiki.userDatabase", "WikiDatabase");
+        // props.setProperty(WikiProperties.PROP_CLASS_USERDATABASE, "WikiDatabase");
         m_engine = new TestEngine(conf);
 
         String text1 = "Foobar.\n\n[{SET members=Alice, Bob, Charlie}]\n\nBlood.";

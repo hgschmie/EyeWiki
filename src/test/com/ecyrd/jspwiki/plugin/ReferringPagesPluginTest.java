@@ -9,6 +9,7 @@ import org.apache.commons.configuration.Configuration;
 import com.ecyrd.jspwiki.TestEngine;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 
 
 /**
@@ -52,7 +53,7 @@ public class ReferringPagesPluginTest
     {
         conf = TestEngine.getConfiguration();
 
-        conf.setProperty("jspwiki.breakTitleWithSpaces", "false");
+        conf.setProperty(WikiProperties.PROP_BEAUTIFYTITLE, "false");
         engine = new TestEngine(conf);
 
         engine.saveText("TestPage", "Reference to [Foobar].");

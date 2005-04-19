@@ -1,0 +1,18 @@
+<container>
+  <!-- Configures the type of URL Constructor that is used for the Wiki -->
+  <component-implementation key="URLConstructor"    class="com.ecyrd.jspwiki.url.DefaultURLConstructor" />
+
+  <component-implementation key="PageManager"       class="com.ecyrd.jspwiki.manager.PageManager" />
+  <component-implementation key="PluginManager"     class="com.ecyrd.jspwiki.plugin.PluginManager" />
+  <component-implementation key="DifferenceManager" class="com.ecyrd.jspwiki.diff.DifferenceManager" />
+  <component-implementation key="AttachmentManager" class="com.ecyrd.jspwiki.attachment.AttachmentManager" />
+  <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
+  <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
+  <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
+  <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
+  <component-implementation key="UserManager"       class="com.ecyrd.jspwiki.auth.UserManager" />
+  <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
+
+  <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.CachingProvider" />
+  <component-implementation key="RealPageProvider"   class="com.ecyrd.jspwiki.providers.VerySimpleProvider" />
+</container>

@@ -87,7 +87,7 @@ public class TranslatorReaderTest
     {
         conf = TestEngine.getConfiguration();
 
-        conf.setProperty("jspwiki.translatorReader.matchEnglishPlurals", "true");
+        conf.setProperty(WikiProperties.PROP_MATCHPLURALS, "true");
         testEngine = new TestEngine(conf);
     }
 
@@ -142,7 +142,7 @@ public class TranslatorReaderTest
     {
         conf = TestEngine.getConfiguration();
 
-        conf.setProperty("jspwiki.translatorReader.useRelNofollow", "true");
+        conf.setProperty(WikiProperties.PROP_USERRELNOFOLLOW, "true");
 
         TestEngine testEngine2 = new TestEngine(conf);
 
@@ -1330,7 +1330,7 @@ public class TranslatorReaderTest
     {
         String src = "<p>";
 
-        conf.setProperty("jspwiki.translatorReader.allowHTML", "true");
+        conf.setProperty(WikiProperties.PROP_ALLOWHTML, "true");
         testEngine = new TestEngine(conf);
 
         WikiContext context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));

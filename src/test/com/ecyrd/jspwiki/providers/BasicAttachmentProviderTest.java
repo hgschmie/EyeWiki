@@ -68,8 +68,7 @@ public class BasicAttachmentProviderTest
 
         m_engine = new TestEngine(conf);
 
-        m_provider = new BasicAttachmentProvider();
-        m_provider.initialize(m_engine, conf);
+        m_provider = new BasicAttachmentProvider(m_engine, conf);
 
         m_engine.saveText(NAME1, "Foobar");
         m_engine.saveText(NAME2, "Foobar2");

@@ -37,7 +37,7 @@ public class VerySimpleProvider
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public VerySimpleProvider(WikiEngine engine, Configuration conf)
     {
     }
 
