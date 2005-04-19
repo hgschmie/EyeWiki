@@ -27,6 +27,8 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
@@ -50,7 +52,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @see UserManager
  */
 public class AuthorizationManager
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(AuthorizationManager.class);
@@ -69,6 +71,9 @@ public class AuthorizationManager
 
     /** DOCUMENT ME! */
     private WikiEngine m_engine;
+
+    /** The internal configuration object */
+    private final Configuration m_conf;
 
     /**
      * Creates a new AuthorizationManager, owned by engine and initialized according to the
@@ -90,13 +95,25 @@ public class AuthorizationManager
 
         m_strictLogins = conf.getBoolean(PROP_AUTH_STRICTLOGINS, PROP_AUTH_STRICTLOGINS_DEFAULT);
 
+        m_conf = conf;
+    }
+
+    public synchronized void start()
+    {
         if (!m_useOldAuth)
         {
             return;
         }
 
-        m_authorizer = getAuthorizerImplementation(conf);
-        m_authorizer.initialize(engine, conf);
+        try
+        {
+            m_authorizer = getAuthorizerImplementation(m_conf);
+            m_authorizer.initialize(m_engine, m_conf);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
 
         AclEntryImpl ae = new AclEntryImpl();
 
@@ -126,6 +143,11 @@ public class AuthorizationManager
         {
             throw new InternalWikiException("Nobody told me that owners were in use");
         }
+    }
+
+    public synchronized void stop()
+    {
+        // GNDN
     }
 
     /**

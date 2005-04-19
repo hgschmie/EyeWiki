@@ -34,6 +34,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
@@ -49,7 +51,7 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  * @author Erik Bunn
  */
 public class UserManager
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(UserManager.class);
@@ -89,6 +91,8 @@ public class UserManager
 
     /** DOCUMENT ME! */
     private boolean m_useOldAuth = false;
+    
+    private final Configuration m_conf;
 
     /**
      * Creates an UserManager instance for the given WikiEngine and the specified set of
@@ -111,6 +115,11 @@ public class UserManager
 
         m_useOldAuth = engine.getAuthorizationManager().isOldAuth();
 
+        m_conf = conf;
+    }
+
+    public synchronized void start()
+    {
         if (!m_useOldAuth)
         {
             return;
@@ -124,7 +133,7 @@ public class UserManager
         m_groups.put(GROUP_NAMEDGUEST, new NamedGroup());
         m_groups.put(GROUP_KNOWNPERSON, new KnownGroup());
 
-        String authClassName = conf.getString(PROP_CLASS_AUTHENTICATOR, null);
+        String authClassName = m_conf.getString(PROP_CLASS_AUTHENTICATOR, null);
 
         if (authClassName != null)
         {
@@ -134,7 +143,7 @@ public class UserManager
                     ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName);
 
                 m_authenticator = (WikiAuthenticator) authenticatorClass.newInstance();
-                m_authenticator.initialize(engine, conf);
+                m_authenticator.initialize(m_engine, m_conf);
 
                 if (log.isInfoEnabled())
                 {
@@ -144,44 +153,57 @@ public class UserManager
             catch (ClassNotFoundException e)
             {
                 log.fatal("Authenticator " + authClassName + " cannot be found", e);
-                throw new WikiException("Authenticator cannot be found");
+                throw new RuntimeException("Authenticator cannot be found");
             }
             catch (InstantiationException e)
             {
                 log.fatal("Authenticator " + authClassName + " cannot be created", e);
-                throw new WikiException("Authenticator cannot be created");
+                throw new RuntimeException("Authenticator cannot be created");
             }
             catch (IllegalAccessException e)
             {
                 log.fatal("You are not allowed to access this authenticator class", e);
-                throw new WikiException("You are not allowed to access this authenticator class");
+                throw new RuntimeException("You are not allowed to access this authenticator class");
+            }
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
             }
         }
 
         String dbClassName =
-            conf.getString(PROP_CLASS_USERDATABASE, PROP_CLASS_USERDATABASE_DEFAULT);
+            m_conf.getString(PROP_CLASS_USERDATABASE, PROP_CLASS_USERDATABASE_DEFAULT);
 
         try
         {
             Class dbClass = ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, dbClassName);
             m_database = (UserDatabase) dbClass.newInstance();
-            m_database.initialize(m_engine, conf);
+            m_database.initialize(m_engine, m_conf);
         }
         catch (ClassNotFoundException e)
         {
             log.fatal("UserDatabase " + dbClassName + " cannot be found", e);
-            throw new WikiException("UserDatabase cannot be found");
+            throw new RuntimeException("UserDatabase cannot be found");
         }
         catch (InstantiationException e)
         {
             log.fatal("UserDatabase " + dbClassName + " cannot be created", e);
-            throw new WikiException("UserDatabase cannot be created");
+            throw new RuntimeException("UserDatabase cannot be created");
         }
         catch (IllegalAccessException e)
         {
             log.fatal("You are not allowed to access this user database class", e);
-            throw new WikiException("You are not allowed to access this user database class");
+            throw new RuntimeException("You are not allowed to access this user database class");
         }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public synchronized void stop()
+    {
+        // GNDN
     }
 
     /**

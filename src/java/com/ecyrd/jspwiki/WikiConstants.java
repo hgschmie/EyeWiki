@@ -52,6 +52,16 @@ public interface WikiConstants
 
     String FILTER_MANAGER = "FilterManager";
 
+    String REFERENCE_MANAGER = "ReferenceManager";
+
+    String USER_MANAGER = "UserManager";
+
+    String AUTHORIZATION_MANAGER = "AuthorizationManager";
+
+    String TEMPLATE_MANAGER = "TemplateManager";
+
+    String RSS_GENERATOR = "RSSGenerator";
+
     /*
      * ========================================================================
      * 

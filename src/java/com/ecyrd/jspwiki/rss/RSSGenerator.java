@@ -19,15 +19,26 @@
  */
 package com.ecyrd.jspwiki.rss;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.Writer;
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import org.picocontainer.Startable;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -35,6 +46,7 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.util.FileUtil;
 
 
 /**
@@ -53,8 +65,11 @@ import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 // FIXME: Merge with rss.jsp
 // FIXME: Limit diff and page content size.
 public class RSSGenerator
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
+    /** DOCUMENT ME! */
+    private static final Logger log = Logger.getLogger(RSSGenerator.class);
+
     /** DOCUMENT ME! */
     private WikiEngine m_engine;
 
@@ -63,6 +78,12 @@ public class RSSGenerator
 
     /** DOCUMENT ME! */
     private String m_channelLanguage = "en-us";
+
+    /** Stores the relative URL to the global RSS feed. */
+    private String m_rssURL;
+
+    /** The Generator Configuration */
+    private final Configuration m_conf;
 
     /**
      * Initialize the RSS generator.
@@ -76,6 +97,7 @@ public class RSSGenerator
             throws NoRequiredPropertyException
     {
         m_engine = engine;
+        m_conf = conf;
 
         // FIXME: This assumes a bit too much.
         if (StringUtils.isEmpty(engine.getBaseURL()))
@@ -90,6 +112,28 @@ public class RSSGenerator
         m_channelLanguage =
             conf.getString(PROP_RSS_CHANNEL_LANGUAGE, PROP_RSS_CHANNEL_LANGUAGE_DEFAULT);
     }
+
+    public synchronized void start()
+    {
+        new RSSThread().start();
+    }
+
+
+    public synchronized void stop()
+    {
+        
+    }
+
+    public synchronized String getGlobalRSSURL()
+    {
+        return m_rssURL;
+    }
+
+    private synchronized void setGlobalRSSURL(final String rssURL)
+    {
+        this.m_rssURL = rssURL;
+    }
+
 
     /**
      * Does the required formatting and entity replacement for XML.
@@ -515,5 +559,90 @@ public class RSSGenerator
         result.append("</rdf:RDF>");
 
         return result.toString();
+    }
+
+
+    /**
+     * Runs the RSS generation thread. FIXME: MUST be somewhere else, this is not a good place.
+     */
+    private class RSSThread
+            extends Thread
+    {
+        /**
+         * DOCUMENT ME!
+         */
+        public void run()
+        {
+            String rootPath = m_engine.getRootPath();
+
+            if (rootPath == null)
+            {
+                log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
+            }
+
+            try
+            {
+                String fileName = m_conf.getString(PROP_RSS_FILE, PROP_RSS_FILE_DEFAULT);
+
+                int rssInterval = m_conf.getInt(PROP_RSS_INTERVAL, PROP_RSS_INTERVAL_DEFAULT);
+
+                if (log.isDebugEnabled())
+                {
+                    log.debug("RSS file will be at " + fileName);
+                    log.debug("RSS refresh interval (seconds): " + rssInterval);
+                }
+
+                while (true)
+                {
+                    Writer out = null;
+                    Reader in = null;
+
+                    try
+                    {
+                        //
+                        //  Generate RSS file, output it to
+                        //  default "rss.rdf".
+                        //
+                        if (log.isDebugEnabled())
+                        {
+                            log.debug("Regenerating RSS feed to " + fileName);
+                        }
+
+                        String feed = generate();
+
+                        File file = new File(rootPath, fileName);
+
+                        in = new StringReader(feed);
+                        out = new BufferedWriter(
+                                new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+
+                        FileUtil.copyContents(in, out);
+
+                        setGlobalRSSURL(fileName);
+                    }
+                    catch (IOException e)
+                    {
+                        log.error("Cannot generate RSS feed to " + fileName, e);
+                        setGlobalRSSURL(null);
+                    }
+                    finally
+                    {
+                        IOUtils.closeQuietly(in);
+                        IOUtils.closeQuietly(out);
+                    }
+
+                    Thread.sleep(rssInterval * 1000L);
+                } // while
+            }
+            catch (InterruptedException e)
+            {
+                log.error("RSS thread interrupted, no more RSS feeds", e);
+            }
+
+            //
+            // Signal: no more RSS feeds.
+            //
+            setGlobalRSSURL(null);
+        }
     }
 }

@@ -19,18 +19,14 @@
 */
 package com.ecyrd.jspwiki;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -172,24 +168,6 @@ public class WikiEngine
      */
     private String m_rootPath = System.getProperty("user.dir");
 
-    /** Stores references between wikipages. */
-    private ReferenceManager m_referenceManager = null;
-
-    /** Stores the authorization manager */
-    private AuthorizationManager m_authorizationManager = null;
-
-    /** Stores the user manager. */
-    private UserManager m_userManager = null;
-
-    /** DOCUMENT ME! */
-    private TemplateManager m_templateManager = null;
-
-    /** Generates RSS feed when requested. */
-    private RSSGenerator m_rssGenerator;
-
-    /** Stores the relative URL to the global RSS feed. */
-    private String m_rssURL;
-
     /**
      * Store the ServletContext that we're in.  This may be null if WikiEngine is not running
      * inside a servlet container (i.e. when testing).
@@ -230,10 +208,10 @@ public class WikiEngine
     private boolean wikiRelativePathes = PROP_WIKIRELATIVE_PATHES_DEFAULT;
 
     /** The main container reference */
-    private ObjectReference mainContainerRef = null;
+    private final ObjectReference mainContainerRef = new SimpleReference();
 
     /** The component container reference */
-    private ObjectReference componentContainerRef = null;
+    private final ObjectReference componentContainerRef = new SimpleReference();
 
     /**
      * Instantiate the WikiEngine using a given set of properties. Use this constructor for testing
@@ -593,54 +571,6 @@ public class WikiEngine
             throw new WikiException("Failed to start component container: " + e.getMessage());
         }
 
-
-        //
-        //  Initialize the important modules.  Any exception thrown by the
-        //  managers means that we will not start up.
-        //
-        try
-        {
-            //
-            //  ReferenceManager has the side effect of loading all
-            //  pages.  Therefore after this point, all page attributes
-            //  are available.
-            //
-            initReferenceManager();
-
-            m_templateManager = new TemplateManager(this, conf);
-            m_authorizationManager = new AuthorizationManager(this, conf);
-            m_userManager = new UserManager(this, conf);
-        }
-        catch (Exception e)
-        {
-            // RuntimeExceptions may occur here, even if they shouldn't.
-            log.fatal("Failed to start managers.", e);
-            throw new WikiException("Failed to start managers: " + e.getMessage());
-        }
-
-        //
-        //  Initialize the good-to-have-but-not-fatal modules.
-        //
-        try
-        {
-            if (conf.getBoolean(PROP_RSS_GENERATE, PROP_RSS_GENERATE_DEFAULT))
-            {
-                m_rssGenerator = new RSSGenerator(this, conf);
-            }
-        }
-        catch (Exception e)
-        {
-            log.error(
-                "Unable to start RSS generator - JSPWiki will still work, "
-                + "but there will be no RSS feed.", e);
-        }
-
-        // FIXME: I wonder if this should be somewhere else.
-        if (m_rssGenerator != null)
-        {
-            new RSSThread().start();
-        }
-
         log.info("WikiEngine configured.");
         m_isConfigured = true;
     }
@@ -678,36 +608,6 @@ public class WikiEngine
                 throw new WikiException(err);
             }
         }
-    }
-
-    /**
-     * Initializes the reference manager. Scans all existing WikiPages for internal links and adds
-     * them to the ReferenceManager object.
-     */
-    private void initReferenceManager()
-    {
-        getPluginManager().setInitStage(true);
-
-        try
-        {
-            Collection pages = getPageManager().getAllPages();
-            pages.addAll(getAttachmentManager().getAllAttachments());
-
-            // Build a new manager with default key lists.
-            if (m_referenceManager == null)
-            {
-                m_referenceManager = new ReferenceManager(this);
-                m_referenceManager.initialize(pages);
-            }
-        }
-        catch (ProviderException e)
-        {
-            log.fatal("PageProvider is unable to list pages: ", e);
-        }
-
-        getPluginManager().setInitStage(false);
-
-        getFilterManager().addPageFilter(m_referenceManager, -1000); // FIXME: Magic number.
     }
 
     /**
@@ -811,9 +711,19 @@ public class WikiEngine
      *
      * @return DOCUMENT ME!
      */
+    public RSSGenerator getRSSGenerator()
+    {
+        return (RSSGenerator) getComponentContainer().getComponentInstance(WikiConstants.RSS_GENERATOR);
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public TemplateManager getTemplateManager()
     {
-        return m_templateManager;
+        return (TemplateManager) getComponentContainer().getComponentInstance(WikiConstants.TEMPLATE_MANAGER);
     }
 
     /**
@@ -1648,7 +1558,7 @@ public class WikiEngine
     {
         String pageData = getPureText(page.getName(), WikiProvider.LATEST_VERSION);
 
-        m_referenceManager.updateReferences(page.getName(), scanWikiLinks(page, pageData));
+        getReferenceManager().updateReferences(page.getName(), scanWikiLinks(page, pageData));
     }
 
     /**
@@ -1963,7 +1873,7 @@ public class WikiEngine
     // (FIXME: We may want to protect this, though...)
     public ReferenceManager getReferenceManager()
     {
-        return m_referenceManager;
+        return (ReferenceManager) getComponentContainer().getComponentInstance(WikiConstants.REFERENCE_MANAGER);
     }
 
     /**
@@ -2040,7 +1950,7 @@ public class WikiEngine
      */
     public AuthorizationManager getAuthorizationManager()
     {
-        return m_authorizationManager;
+        return (AuthorizationManager) getComponentContainer().getComponentInstance(WikiConstants.AUTHORIZATION_MANAGER);
     }
 
     /**
@@ -2050,7 +1960,7 @@ public class WikiEngine
      */
     public UserManager getUserManager()
     {
-        return m_userManager;
+        return (UserManager) getComponentContainer().getComponentInstance(WikiConstants.USER_MANAGER);
     }
 
     /**
@@ -2321,12 +2231,21 @@ public class WikiEngine
      */
     public String getGlobalRSSURL()
     {
-        if (m_rssURL != null)
+        RSSGenerator rssGenerator = getRSSGenerator();
+
+        if (rssGenerator == null)
         {
-            return getBaseURL() + m_rssURL;
+            return null;
         }
 
-        return null;
+        String rssURL = rssGenerator.getGlobalRSSURL();
+
+        if (rssURL == null)
+        {
+            return null;
+        }
+
+        return getBaseURL() + rssURL;
     }
 
     /**
@@ -2415,12 +2334,13 @@ public class WikiEngine
             {
                 isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                ContainerBuilder builder = new XMLContainerBuilder(isr, classLoader);
-                
-                componentContainerRef = new SimpleReference();
+                ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
                 
                 builder.buildContainer(componentContainerRef, mainContainerRef, "wiki", true);
                 container = (PicoContainer) componentContainerRef.get();
+
+                // Do lifecycle start after the ref object has been initialized.
+                container.start();
             }
         }
         finally
@@ -2446,8 +2366,7 @@ public class WikiEngine
 
         // Register our configuration with the Container
         mainContainer.registerComponentInstance("Configuration", this.getWikiConfiguration());
-                
-        mainContainerRef = new SimpleReference();
+
         mainContainerRef.set(mainContainer);
     }
     
@@ -2456,87 +2375,18 @@ public class WikiEngine
         return (PicoContainer) componentContainerRef.get();
     }
 
-    /**
-     * Runs the RSS generation thread. FIXME: MUST be somewhere else, this is not a good place.
-     */
-    private class RSSThread
-            extends Thread
+    private static class WikiContainerBuilder
+            extends XMLContainerBuilder
+            implements ContainerBuilder
     {
-        /**
-         * DOCUMENT ME!
-         */
-        public void run()
+        private WikiContainerBuilder(Reader reader, ClassLoader classLoader)
         {
-            String rootPath = getRootPath();
+            super(reader, classLoader);
+        }
 
-            if (rootPath == null)
-            {
-                log.error("Could not determine root path of the Wiki, cannot write RSS Feeds");
-            }
-
-            try
-            {
-                String fileName = conf.getString(PROP_RSS_FILE, PROP_RSS_FILE_DEFAULT);
-
-                int rssInterval = conf.getInt(PROP_RSS_INTERVAL, PROP_RSS_INTERVAL_DEFAULT);
-
-                if (log.isDebugEnabled())
-                {
-                    log.debug("RSS file will be at " + fileName);
-                    log.debug("RSS refresh interval (seconds): " + rssInterval);
-                }
-
-                while (true)
-                {
-                    Writer out = null;
-                    Reader in = null;
-
-                    try
-                    {
-                        //
-                        //  Generate RSS file, output it to
-                        //  default "rss.rdf".
-                        //
-                        if (log.isDebugEnabled())
-                        {
-                            log.debug("Regenerating RSS feed to " + fileName);
-                        }
-
-                        String feed = m_rssGenerator.generate();
-
-                        File file = new File(rootPath, fileName);
-
-                        in = new StringReader(feed);
-                        out = new BufferedWriter(
-                                new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
-
-                        FileUtil.copyContents(in, out);
-
-                        m_rssURL = fileName;
-                    }
-                    catch (IOException e)
-                    {
-                        log.error("Cannot generate RSS feed to " + fileName, e);
-                        m_rssURL = null;
-                    }
-                    finally
-                    {
-                        IOUtils.closeQuietly(in);
-                        IOUtils.closeQuietly(out);
-                    }
-
-                    Thread.sleep(rssInterval * 1000L);
-                } // while
-            }
-            catch (InterruptedException e)
-            {
-                log.error("RSS thread interrupted, no more RSS feeds", e);
-            }
-
-            //
-            // Signal: no more RSS feeds.
-            //
-            m_rssURL = null;
+        protected void autoStart(PicoContainer container)
+        {
+            // don't start container automatically
         }
     }
 }

@@ -7,4 +7,18 @@
   <component-implementation key="AttachmentManager" class="com.ecyrd.jspwiki.attachment.AttachmentManager" />
   <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
   <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
+  <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
+  <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
+  <component-implementation key="UserManager"       class="com.ecyrd.jspwiki.auth.UserManager" />
+  <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
+
+<!--   Enables the RSS (Rich Site Summary) file generation                    -->
+<!--   RSS is a standard pioneered by Netscape, which allows you to join your -->
+<!--   Wiki with a huge number of different news services around the world.   -->
+<!--   Try a Google search on RSS and see what you can do with it.            -->
+<!--                                                                          -->
+<!--   Note that jspwiki.baseURL MUST BE DEFINED if you want to enable RSS!   -->
+<!--                                                                          -->
+<!--   If you uncomment this line, then the RSS Site feed is generated        -->
+  <component-implementation key="RSSGenerator"      class="com.ecyrd.jspwiki.rss.RSSGenerator" />
 </container>

@@ -394,19 +394,8 @@ jspwiki.interWikiRef.Doc = http://doc.jspwiki.org/2.2/Wiki.jsp?page=%s
 
 ###########################################################################
 #
-#  Determine how the RSS (Rich Site Summary) file generation should work.
-#  RSS is a standard pioneered by Netscape, which allows you to join your
-#  Wiki with a huge number of different news services around the world.
-#  Try a Google search on RSS and see what you can do with it.
-#
-#  All of these settings were added in JSPWiki 1.7.6.
-#
-#  Note that jspwiki.baseURL MUST BE DEFINED if you want to enable RSS!
-#
-#  Determine if the RSS file should be generated at all.  Allowed values
-#  are "true" and "false".  Default is "false".
-#
-jspwiki.rss.generate = false
+# Enables the generation of per-page ATOM feeds. Default is false.
+jspwiki.enableAtomFeeds = false
 
 #
 #  Determine the name of the RSS file. This path is relative to your
@@ -417,10 +406,10 @@ jspwiki.rss.fileName = rss.rdf
 #
 #  Determine the refresh interval (ie. how often the RSS file is regenerated.
 #  It is not recommended to make this too often, or you'll choke your server.
-#  Anything above five minutes is probably okay.  The default value is one hour.
+#  Anything above five minutes is probably okay.  The default value is ten minutes.
 #  The value should be in seconds.
 #
-jspwiki.rss.interval = 3600
+jspwiki.rss.interval = 600
 
 #
 #  The text you want to be shown as your "channel description" when someone

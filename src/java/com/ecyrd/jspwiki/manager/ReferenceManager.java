@@ -40,12 +40,15 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.Startable;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
+import com.ecyrd.jspwiki.plugin.PluginManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
@@ -131,6 +134,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  */
 public class ReferenceManager
         extends BasicPageFilter
+        implements Startable
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ReferenceManager.class);
@@ -157,21 +161,71 @@ public class ReferenceManager
     /** DOCUMENT ME! */
     private boolean m_matchEnglishPlurals = WikiProperties.PROP_MATCHPLURALS_DEFAULT;
 
+    /** Is the Manager started? */
+    private boolean started = false;
+
     /**
      * Builds a new ReferenceManager.
      *
      * @param engine The WikiEngine to which this is meeting.
      */
-    public ReferenceManager(WikiEngine engine)
+    public ReferenceManager(final WikiEngine engine, final Configuration conf)
     {
         m_refersTo = new HashMap();
         m_referredBy = new HashMap();
         m_engine = engine;
 
-        Configuration conf = engine.getWikiConfiguration();
         m_matchEnglishPlurals =
             conf.getBoolean(
                 WikiProperties.PROP_MATCHPLURALS, WikiProperties.PROP_MATCHPLURALS_DEFAULT);
+    }
+
+    /**
+     * Initializes the reference manager. Scans all existing WikiPages for internal links and adds
+     * them to the ReferenceManager object.
+     */
+    public synchronized void start()
+    {
+        PluginManager pluginManager = m_engine.getPluginManager(); 
+        
+        try
+        {
+            pluginManager.setInitStage(true);
+
+            Collection pages = new ArrayList();
+
+            pages.addAll(m_engine.getPageManager().getAllPages());
+            pages.addAll(m_engine.getAttachmentManager().getAllAttachments());
+
+            initialize(pages);
+        }
+        catch (ProviderException e)
+        {
+            log.fatal("Page or Attachment Provider is unable to list its pages", e);
+        }
+        finally
+        {
+            pluginManager.setInitStage(false);
+        }
+
+        m_engine.getFilterManager().addPageFilter(this, -1000); // FIXME: Magic number.
+
+        setStarted(true);
+    }
+    
+    public void stop()
+    {
+        // GNDN
+    }
+
+    protected void setStarted(final boolean started)
+    {
+        this.started = started;
+    }
+
+    public boolean isStarted()
+    {
+        return started;
     }
 
     /**
@@ -206,7 +260,7 @@ public class ReferenceManager
      *
      * @since 2.2
      */
-    public void initialize(Collection pages)
+    private void initialize(Collection pages)
             throws ProviderException
     {
         if (log.isDebugEnabled())
@@ -376,6 +430,11 @@ public class ReferenceManager
      */
     public void postSave(WikiContext context, String content)
     {
+        if (!isStarted())
+        {
+            throw new IllegalArgumentException("Called postSave() before start()!");
+        }
+
         WikiPage page = context.getPage();
 
         updateReferences(page.getName(), context.getEngine().scanWikiLinks(page, content));
@@ -586,6 +645,11 @@ public class ReferenceManager
      */
     public synchronized Collection findUnreferenced()
     {
+        if (!isStarted())
+        {
+            throw new IllegalArgumentException("Called findUnreferenced() before start()!");
+        }
+
         ArrayList unref = new ArrayList();
 
         Set keys = m_referredBy.keySet();
@@ -621,6 +685,12 @@ public class ReferenceManager
      */
     public synchronized Collection findUncreated()
     {
+        if (!isStarted())
+        {
+            throw new IllegalArgumentException("Called findUncreated() before start()!");
+        }
+
+
         TreeSet uncreated = new TreeSet();
 
         // Go through m_refersTo values and check that m_refersTo has the corresponding keys.
@@ -689,6 +759,11 @@ public class ReferenceManager
      */
     public synchronized Collection findReferrers(String pagename)
     {
+        if (!isStarted())
+        {
+            throw new IllegalArgumentException("Called findReferrers() before start()!");
+        }
+
         Set refs = getReferenceList(m_referredBy, pagename);
 
         if ((refs == null) || refs.isEmpty())
