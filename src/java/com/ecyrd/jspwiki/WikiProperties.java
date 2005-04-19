@@ -314,20 +314,6 @@ public interface WikiProperties
     String PROP_RSS_CHANNEL_LANGUAGE_DEFAULT = "en-us";
 
     /**
-     * Defines the property name for the RSS generator main switch.
-     *
-     * @since 1.7.6.
-     */
-    String PROP_RSS_GENERATE = "jspwiki.rss.generate";
-
-    /**
-     * Whether an RSS Feed should be generated or not.
-     *
-     * @value false
-     */
-    boolean PROP_RSS_GENERATE_DEFAULT = false;
-
-    /**
      * Defines the property name for the RSS file that the wiki should generate.
      *
      * @since 1.7.6.
@@ -364,6 +350,11 @@ public interface WikiProperties
     /** Prefix for the Wiki Special pages */
     String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";
 
+    /** Do we want the page specific ATOM feeds? */
+    String PROP_ATOM_FEEDS = "jspwiki.enableAtomFeeds";
+
+    /** Default for ATOM Feeds: no */
+    boolean PROP_ATOM_FEEDS_DEFAULT = false;
 
 
     /*

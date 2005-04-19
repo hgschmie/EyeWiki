@@ -21,8 +21,11 @@ package com.ecyrd.jspwiki.tags;
 
 import java.io.IOException;
 
+import org.apache.commons.configuration.Configuration;
+
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.BlogUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 
@@ -53,14 +56,21 @@ public class FeedDiscoveryTag
         String encodedName = engine.encodeName(page.getName());
 
         String rssURL = engine.getGlobalRSSURL();
-        String atomFeedURL = engine.getBaseURL() + "atom.jsp?page=" + encodedName;
-        String atomPostURL = engine.getBaseURL() + "atom/" + encodedName;
 
         if (rssURL != null)
         {
             pageContext.getOut().print(
                 "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS feed for the entire site.\" href=\""
                 + rssURL + "\" />\n");
+        }
+
+        Configuration conf = engine.getWikiConfiguration();
+
+        if (conf.getBoolean(WikiProperties.PROP_ATOM_FEEDS, WikiProperties.PROP_ATOM_FEEDS_DEFAULT))
+        {
+            String atomFeedURL = engine.getBaseURL() + "atom.jsp?page=" + encodedName;
+            String atomPostURL = engine.getBaseURL() + "atom/" + encodedName;
+
             pageContext.getOut().print(
                 "<link rel=\"service.feed\" type=\"application/atom+xml\" title=\""
                 + TextUtil.replaceEntities(BlogUtil.getSiteName(m_wikiContext)) + "\" href=\""
