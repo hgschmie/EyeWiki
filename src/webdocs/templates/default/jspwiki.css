@@ -584,8 +584,17 @@ A.external:active {
 /*
  * RSS
  *
- * rss		a, img
+ * rss		div, img
  */
+
+div.rss {
+	text-align: center;
+	padding: 20px;
+}
+
+img.rss {
+	border: none;
+}
 
 /*
  * diff

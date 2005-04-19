@@ -1,3 +1,4 @@
+<%@ page import="com.ecyrd.jspwiki.Release" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
 <!DOCTYPE html 
@@ -22,6 +23,7 @@
       <wiki:Include page="LeftMenu.jsp"/>
       <wiki:Include page="LeftMenuFooter.jsp"/>
       <wiki:RSSImageLink title="Aggregate the RSS feed" />
+      <div class="release"><%=Release.APPNAME%> v<%=Release.getVersionString()%></div>
     </td>
 
     <td class="wiki">
