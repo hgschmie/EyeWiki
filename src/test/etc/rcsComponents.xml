@@ -12,6 +12,7 @@
   <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
   <component-implementation key="UserManager"       class="com.ecyrd.jspwiki.auth.UserManager" />
   <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
+  <component-implementation key="Authorizer"           class="com.ecyrd.jspwiki.auth.modules.PageAuthorizer" />
 
   <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.RCSFileProvider" />
 </container>

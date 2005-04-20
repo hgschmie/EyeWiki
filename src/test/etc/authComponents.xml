@@ -9,8 +9,19 @@
   <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
   <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
   <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
+
   <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
 
   <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.CachingProvider" />
-  <component-implementation key="RealPageProvider"   class="com.ecyrd.jspwiki.providers.CounterProvider" />
+  <component-implementation key="AttachmentProvider" class="com.ecyrd.jspwiki.providers.BasicAttachmentProvider" />
+
+<!-- If you use the CachingProviders, you must supply the real page provider used -->
+  <component-implementation key="RealPageProvider"   class="com.ecyrd.jspwiki.providers.VersioningFileProvider" />
+
+  <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
+  <component-implementation key="UserManager"          class="com.ecyrd.jspwiki.auth.UserManager" />
+  <component-implementation key="Authorizer"           class="com.ecyrd.jspwiki.auth.modules.PageAuthorizer" />
+  <component-implementation key="Authenticator"        class="com.ecyrd.jspwiki.auth.modules.FileAuthenticator" />
+  <component-implementation key="UserDatabase"         class="com.ecyrd.jspwiki.auth.modules.WikiDatabase" />
+
 </container>

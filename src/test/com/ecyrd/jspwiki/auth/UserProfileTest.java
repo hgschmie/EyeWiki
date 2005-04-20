@@ -32,7 +32,7 @@ public class UserProfileTest
     {
         super(s);
 
-        Configuration conf = TestEngine.getConfiguration();
+        Configuration conf = TestEngine.getConfiguration("/jspwiki_auth.properties");
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
     }
 

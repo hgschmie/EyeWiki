@@ -40,15 +40,17 @@
     <ant:copy file="src/test/etc/TextFormattingRules.txt" tofile="${maven.build.dir}/test-classes/TextFormattingRules.txt" />
     <ant:copy file="src/test/etc/TestPlugins.txt" tofile="${maven.build.dir}/test-classes/TestPlugins.txt" />
 
-    <ant:copy file="src/test/etc/jspwiki.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki.properties" />
-    <ant:copy file="src/test/etc/jspwiki_rcs.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki_rcs.properties" />
-    <ant:copy file="src/test/etc/jspwiki_vers.properties.tmpl" tofile="${maven.build.dir}/test-classes/jspwiki_vers.properties" />
-    <ant:replace file="${maven.build.dir}/test-classes/jspwiki.properties"
-               replacefilterfile="build.properties"/>
-    <ant:replace file="${maven.build.dir}/test-classes/jspwiki_rcs.properties"
-               replacefilterfile="build.properties"/>
-    <ant:replace file="${maven.build.dir}/test-classes/jspwiki_vers.properties"
-               replacefilterfile="build.properties"/>
+    <ant:copy todir="${maven.build.dir}/test-classes/">
+      <ant:mapper type="glob" from="*.properties.tmpl" to="*.properties"/>
+      <ant:fileset dir="src/test/etc">
+        <ant:include name="*.properties.tmpl" />
+      </ant:fileset>
+    </ant:copy>
+
+
+    <ant:replace replacefilterfile="build.properties" dir="${maven.build.dir}/test-classes" >
+      <ant:include name="jspwiki*properties" />
+    </ant:replace>
 
   </preGoal>
 

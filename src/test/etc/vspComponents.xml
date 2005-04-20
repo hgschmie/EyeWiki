@@ -9,8 +9,6 @@
   <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
   <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
   <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
-  <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
-  <component-implementation key="UserManager"       class="com.ecyrd.jspwiki.auth.UserManager" />
   <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
 
   <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.VerySimpleProvider" />
