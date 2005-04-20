@@ -19,8 +19,6 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import java.io.IOException;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.jrcs.diff.AddDelta;
 import org.apache.commons.jrcs.diff.ChangeDelta;
@@ -35,7 +33,6 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 
@@ -72,26 +69,18 @@ public class TraditionalDiffProvider
     protected String diffPostfix = "</table>\n";
 
     /**
-     * Creates a new TraditionalDiffProvider object.
-     */
-    public TraditionalDiffProvider()
-    {
-    }
-
-    /**
      * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
      */
     public String getProviderInfo()
     {
-        return "TraditionalDiffProvider";
+        return this.getClass().getName();
     }
 
     /**
      * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
      *      java.util.Properties)
      */
-    public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
+    public TraditionalDiffProvider(WikiEngine engine, Configuration conf)
     {
     }
 

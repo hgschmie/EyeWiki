@@ -19,7 +19,6 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -39,7 +38,6 @@ import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.TextUtil;
 
 
@@ -110,7 +108,7 @@ public class ContextualDiffProvider
     /**
      * Creates a new ContextualDiffProvider object.
      */
-    public ContextualDiffProvider()
+    public ContextualDiffProvider(WikiEngine engine, Configuration conf)
     {
     }
 
@@ -119,16 +117,7 @@ public class ContextualDiffProvider
      */
     public String getProviderInfo()
     {
-        return "ContextualDiffProvider";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
-     *      java.util.Properties)
-     */
-    public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
-    {
+        return this.getClass().getName();
     }
 
     /**

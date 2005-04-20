@@ -19,12 +19,9 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import java.io.IOException;
-
 import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**
@@ -41,9 +38,9 @@ public class RssTraditionalDiffProvider
     /**
      * Creates a new RssTraditionalDiffProvider object.
      */
-    public RssTraditionalDiffProvider()
+    public RssTraditionalDiffProvider(WikiEngine engine, Configuration conf)
     {
-        super();
+        super(engine, conf);
         diffAdd = "<font color=\"#99FF99\">";
         diffRem = "<font color=\"#FF9933\">";
         diffComment = "<font color=\"white\">";
@@ -51,23 +48,5 @@ public class RssTraditionalDiffProvider
 
         diffPrefix = "";
         diffPostfix = "\n";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
-     */
-    public String getProviderInfo()
-    {
-        return "RssTraditionalDiffProvider";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
-     *      java.util.Properties)
-     */
-    public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
-    {
-        super.initialize(engine, conf);
     }
 }

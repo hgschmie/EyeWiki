@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.auth.modules;
 
 import java.security.Principal;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +29,8 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
+
+import org.picocontainer.Startable;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -76,7 +77,7 @@ import com.ecyrd.jspwiki.providers.ProviderException;
  * </p>
  */
 public class WikiDatabase
-        implements UserDatabase
+        implements UserDatabase, Startable
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(WikiDatabase.class);
@@ -102,13 +103,20 @@ public class WikiDatabase
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public WikiDatabase(WikiEngine engine, Configuration conf)
     {
         m_engine = engine;
-
         m_engine.getFilterManager().addPageFilter(new SaveFilter(), 1000000);
+    }
 
+    public synchronized void start()
+    {
         initUserDatabase();
+    }
+
+    public synchronized void stop()
+    {
+        // GNDN
     }
 
     // This class must contain a large cache for user databases.

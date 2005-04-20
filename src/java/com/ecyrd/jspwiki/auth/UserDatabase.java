@@ -22,11 +22,6 @@ package com.ecyrd.jspwiki.auth;
 import java.security.Principal;
 import java.util.List;
 
-import org.apache.commons.configuration.Configuration;
-
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-
 
 /**
  * Defines an interface for grouping users to groups, etc.
@@ -37,17 +32,6 @@ import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
  */
 public interface UserDatabase
 {
-    /**
-     * Initializes the WikiPrincipalist based on values from a Properties object.
-     *
-     * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
-     *
-     * @throws NoRequiredPropertyException DOCUMENT ME!
-     */
-    void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException;
-
     /**
      * Returns a list of WikiGroup objects for the given Principal.
      *

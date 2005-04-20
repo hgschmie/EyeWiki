@@ -19,15 +19,14 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import java.io.IOException;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.PicoContainer;
+
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.util.ClassUtil;
 
 
 /**
@@ -55,89 +54,33 @@ public class DifferenceManager
      */
     public DifferenceManager(WikiEngine engine, Configuration conf)
     {
-        loadProvider(conf);
+        PicoContainer container = engine.getComponentContainer();
 
-        initializeProvider(engine, conf);
+        m_provider = (DiffProvider) container.getComponentInstance(WikiConstants.DIFF_PROVIDER);
+
+        if (m_provider == null)
+        {
+            m_provider = new NullDiffProvider();
+        }
+
+        m_rssProvider = (DiffProvider) container.getComponentInstance(WikiConstants.RSS_DIFF_PROVIDER);
+
+        if (m_rssProvider == null)
+        {
+            m_rssProvider = new NullDiffProvider();
+        }
 
         if (log.isInfoEnabled())
         {
-            log.info("Using difference provider: " + m_provider.getProviderInfo());
-        }
-    }
+            if (m_provider != null)
+            {
+                log.info("Using difference provider " + m_provider.getProviderInfo());
+            }
 
-    private void loadProvider(Configuration conf)
-    {
-        String providerClassName =
-            conf.getString(PROP_CLASS_DIFF_PROVIDER, PROP_CLASS_DIFF_PROVIDER_DEFAULT);
-
-        m_provider = getProvider(providerClassName, new DiffProvider.NullDiffProvider());
-
-        providerClassName =
-            conf.getString(PROP_CLASS_DIFF_RSS_PROVIDER, PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT);
-
-        m_rssProvider = getProvider(providerClassName, m_provider);
-    }
-
-    private DiffProvider getProvider(String className, DiffProvider defaultProvider)
-    {
-        try
-        {
-            Class providerClass = ClassUtil.findClass(DEFAULT_DIFF_CLASS_PREFIX, className);
-
-            return (DiffProvider) providerClass.newInstance();
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.warn(
-                "Failed loading " + className + ", will use Default: "
-                + defaultProvider.getClass().getName(), e);
-        }
-        catch (InstantiationException e)
-        {
-            log.warn(
-                "Failed loading " + className + ", will use Default: "
-                + defaultProvider.getClass().getName(), e);
-        }
-        catch (IllegalAccessException e)
-        {
-            log.warn(
-                "Failed loading " + className + ", will use Default: "
-                + defaultProvider.getClass().getName(), e);
-        }
-
-        return defaultProvider;
-    }
-
-    private void initializeProvider(WikiEngine engine, Configuration conf)
-    {
-        try
-        {
-            m_provider.initialize(engine, conf);
-        }
-        catch (NoRequiredPropertyException e1)
-        {
-            log.warn("Failed initializing DiffProvider, will use NullDiffProvider.", e1);
-            m_provider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
-        }
-        catch (IOException e1)
-        {
-            log.warn("Failed initializing DiffProvider, will use NullDiffProvider.", e1);
-            m_provider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
-        }
-
-        try
-        {
-            m_rssProvider.initialize(engine, conf);
-        }
-        catch (NoRequiredPropertyException e1)
-        {
-            log.warn("Failed initializing RssDiffProvider, will use NullDiffProvider.", e1);
-            m_rssProvider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
-        }
-        catch (IOException e1)
-        {
-            log.warn("Failed initializing RssDiffProvider, will use NullDiffProvider.", e1);
-            m_rssProvider = new DiffProvider.NullDiffProvider(); //doesn't need init'd
+            if (m_rssProvider != null)
+            {
+                log.info("Using difference provider " + m_rssProvider.getProviderInfo() + " for RSS Feeds");
+            }
         }
     }
 
@@ -157,8 +100,40 @@ public class DifferenceManager
             ? m_provider.makeDiff(firstWikiText, secondWikiText)
             : m_rssProvider.makeDiff(firstWikiText, secondWikiText);
 
-        return (diff != null)
-        ? diff
-        : "";
+        return (diff != null) ? diff : "";
     }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
+    private static class NullDiffProvider
+            implements DiffProvider
+    {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param oldWikiText DOCUMENT ME!
+         * @param newWikiText DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
+        public String makeDiff(String oldWikiText, String newWikiText)
+        {
+            return "You are using the NullDiffProvider, check your properties file.";
+        }
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
+        public String getProviderInfo()
+        {
+            return "NullDiffProvider";
+        }
+    }
+
 }

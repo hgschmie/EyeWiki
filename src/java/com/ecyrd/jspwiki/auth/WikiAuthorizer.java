@@ -1,8 +1,5 @@
 package com.ecyrd.jspwiki.auth;
 
-import org.apache.commons.configuration.Configuration;
-
-import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.acl.AccessControlList;
 
@@ -15,14 +12,6 @@ import com.ecyrd.jspwiki.acl.AccessControlList;
  */
 public interface WikiAuthorizer
 {
-    /**
-     * Initializes a WikiAuthorizer.
-     *
-     * @param engine The WikiEngine that owns this authorizer.
-     * @param conf A bunch of properties.
-     */
-    void initialize(WikiEngine engine, Configuration conf);
-
     /**
      * Returns the permissions for this page.
      *

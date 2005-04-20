@@ -103,55 +103,11 @@ jspwiki.attachmentProvider = BasicAttachmentProvider
 #jspwiki.attachment.maxsize=100000
 
 #
-#  page Diff Representation
-#
-#  To show differences between page versions, you can define a 
-# difference provider. 
-#  The following choices are available:
-#
-#    * TraditionalDiffProvider - Uses internal (java) diff
-#        to create a list of changes and shows it line by
-#        line. This is the default for the diffProvider
-#
-#    * ContextualDiffProvider - Uses internal (java) diff
-#        to create changes inline and shows it on a word by
-#        word basis using CSS. This is much superior to the
-#        traditional diff provider, however, it is still quite
-#        new and not much tested. YMMV.
-#
-#    * ExternalDiffProvider - uses a system diff program (which
-#        can be configured using "jspwiki.diffCommand") to 
-#        create an unified (!) diff.
-#
-#        Example for a diff command:
-#        jspwiki.diffCommand = /usr/bin/diff -u %s1 %s2
-#
-jspwiki.diffProvider = ContextualDiffProvider
-
-#  
-# For the RSS feeds, a different provider can be used because inside
-# the xml files you might need a diffent kind of formatting.
-#
-#    * RssTraditionalDiffProvider - Uses internal (java) diff
-#        to create a list of changes and shows it line by
-#        line colored. This is the default for the diffRssProvider
-#
-#    * RssContextualDiffProvider - Uses internal (java) diff
-#        to create changes inline and shows it on a word by
-#        word basis using font tags. This is much superior to the
-#        traditional diff provider, however, it is still quite
-#        new and not much tested. YMMV.
-#
-
-jspwiki.diffRssProvider = RssTraditionalDiffProvider
-
-#
 # For building user profiles you need an authenticator which keeps 
 # the user profiles somewhere.
 #
 jspwiki.auth.useOldAuth = true
 jspwiki.auth.administrator = KnownPerson
-jspwiki.authenticator = FileAuthenticator
 
 #
 # define the users file for the FileAuthenticator

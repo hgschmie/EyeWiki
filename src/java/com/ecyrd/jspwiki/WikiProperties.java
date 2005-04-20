@@ -19,10 +19,7 @@
 */
 package com.ecyrd.jspwiki;
 
-import com.ecyrd.jspwiki.auth.modules.PageAuthorizer;
 import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
-import com.ecyrd.jspwiki.diff.RssTraditionalDiffProvider;
-import com.ecyrd.jspwiki.diff.TraditionalDiffProvider;
 
 
 /**
@@ -477,24 +474,6 @@ public interface WikiProperties
 
     /** The property name defining which packages will be searched for properties. */
     String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_DIFF_PROVIDER = "jspwiki.diffProvider";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_DIFF_PROVIDER_DEFAULT = TraditionalDiffProvider.class.getName();
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_DIFF_RSS_PROVIDER = "jspwiki.diffRssProvider";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_DIFF_RSS_PROVIDER_DEFAULT = RssTraditionalDiffProvider.class.getName();
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_AUTHORIZER = "jspwiki.authorizer";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_AUTHORIZER_DEFAULT = PageAuthorizer.class.getName();
 
     /** DOCUMENT ME! */
     String PROP_CLASS_USERDATABASE = "jspwiki.userdatabase";

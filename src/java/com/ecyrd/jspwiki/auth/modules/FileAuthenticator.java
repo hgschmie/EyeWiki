@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
@@ -64,7 +63,7 @@ public class FileAuthenticator
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws WikiException DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public FileAuthenticator(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, WikiException
     {
         // No default, you _must_ configure this

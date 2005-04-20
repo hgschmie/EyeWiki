@@ -34,13 +34,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.Startable;
+import org.picocontainer.PicoContainer;
 
 import com.ecyrd.jspwiki.TranslatorReader;
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.util.ClassUtil;
+import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.HttpUtil;
 
 
@@ -51,7 +52,7 @@ import com.ecyrd.jspwiki.util.HttpUtil;
  * @author Erik Bunn
  */
 public class UserManager
-        implements WikiProperties, Startable
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(UserManager.class);
@@ -107,19 +108,13 @@ public class UserManager
             throws WikiException
     {
         m_engine = engine;
+        m_conf = conf;
 
         m_storeIPAddress =
             conf.getBoolean(PROP_AUTH_STOREIPADDRESS, PROP_AUTH_STOREIPADDRESS_DEFAULT);
-
         m_administrator = conf.getString(PROP_AUTH_ADMINISTRATOR, PROP_AUTH_ADMINISTRATOR_DEFAULT);
-
         m_useOldAuth = engine.getAuthorizationManager().isOldAuth();
 
-        m_conf = conf;
-    }
-
-    public synchronized void start()
-    {
         if (!m_useOldAuth)
         {
             return;
@@ -133,71 +128,25 @@ public class UserManager
         m_groups.put(GROUP_NAMEDGUEST, new NamedGroup());
         m_groups.put(GROUP_KNOWNPERSON, new KnownGroup());
 
-        String authClassName = m_conf.getString(PROP_CLASS_AUTHENTICATOR, null);
+        PicoContainer container = engine.getComponentContainer();
 
-        if (authClassName != null)
+        m_authenticator = (WikiAuthenticator) container.getComponentInstance(WikiConstants.AUTHENTICATOR);
+        m_database = (UserDatabase)  container.getComponentInstance(WikiConstants.USER_DATABASE);
+
+        if (m_authenticator == null)
         {
-            try
-            {
-                Class authenticatorClass =
-                    ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName);
-
-                m_authenticator = (WikiAuthenticator) authenticatorClass.newInstance();
-                m_authenticator.initialize(m_engine, m_conf);
-
-                if (log.isInfoEnabled())
-                {
-                    log.info("Initialized " + authClassName + " for authentication.");
-                }
-            }
-            catch (ClassNotFoundException e)
-            {
-                log.fatal("Authenticator " + authClassName + " cannot be found", e);
-                throw new RuntimeException("Authenticator cannot be found");
-            }
-            catch (InstantiationException e)
-            {
-                log.fatal("Authenticator " + authClassName + " cannot be created", e);
-                throw new RuntimeException("Authenticator cannot be created");
-            }
-            catch (IllegalAccessException e)
-            {
-                log.fatal("You are not allowed to access this authenticator class", e);
-                throw new RuntimeException("You are not allowed to access this authenticator class");
-            }
-            catch (Exception e)
-            {
-                throw new RuntimeException(e);
-            }
+            throw new NoRequiredPropertyException("Unable to find an Authenticator entry in the component configuration!", WikiConstants.AUTHENTICATOR);
         }
 
-        String dbClassName =
-            m_conf.getString(PROP_CLASS_USERDATABASE, PROP_CLASS_USERDATABASE_DEFAULT);
+        if (m_database == null)
+        {
+            throw new NoRequiredPropertyException("Unable to find an Database entry in the component configuration!", WikiConstants.USER_DATABASE);
+        }
 
-        try
+        if (log.isInfoEnabled())
         {
-            Class dbClass = ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, dbClassName);
-            m_database = (UserDatabase) dbClass.newInstance();
-            m_database.initialize(m_engine, m_conf);
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.fatal("UserDatabase " + dbClassName + " cannot be found", e);
-            throw new RuntimeException("UserDatabase cannot be found");
-        }
-        catch (InstantiationException e)
-        {
-            log.fatal("UserDatabase " + dbClassName + " cannot be created", e);
-            throw new RuntimeException("UserDatabase cannot be created");
-        }
-        catch (IllegalAccessException e)
-        {
-            log.fatal("You are not allowed to access this user database class", e);
-            throw new RuntimeException("You are not allowed to access this user database class");
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
+            log.info("Initialized " + m_authenticator.getClass().getName() + " for authentication.");
+            log.info("Initialized " + m_database.getClass().getName() + " as user database.");
         }
     }
 

@@ -27,8 +27,9 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.Startable;
+import org.picocontainer.PicoContainer;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
@@ -43,7 +44,6 @@ import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.util.ClassUtil;
 
 
 /**
@@ -52,7 +52,7 @@ import com.ecyrd.jspwiki.util.ClassUtil;
  * @see UserManager
  */
 public class AuthorizationManager
-        implements WikiProperties, Startable
+        implements WikiProperties
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(AuthorizationManager.class);
@@ -90,29 +90,23 @@ public class AuthorizationManager
             throws WikiException
     {
         m_engine = engine;
+        m_conf = conf;
 
         m_useOldAuth = conf.getBoolean(PROP_AUTH_USEOLDAUTH, PROP_AUTH_USEOLDAUTH_DEFAULT);
-
         m_strictLogins = conf.getBoolean(PROP_AUTH_STRICTLOGINS, PROP_AUTH_STRICTLOGINS_DEFAULT);
 
-        m_conf = conf;
-    }
-
-    public synchronized void start()
-    {
         if (!m_useOldAuth)
         {
             return;
         }
 
-        try
+        PicoContainer container = engine.getComponentContainer();
+
+        m_authorizer = (WikiAuthorizer) container.getComponentInstance(WikiConstants.AUTHORIZER);
+
+        if (m_authorizer == null)
         {
-            m_authorizer = getAuthorizerImplementation(m_conf);
-            m_authorizer.initialize(m_engine, m_conf);
-        }
-        catch (Exception e)
-        {
-            throw new RuntimeException(e);
+            throw new NoRequiredPropertyException("Unable to find an Authorizer entry in the component configuration!", WikiConstants.AUTHORIZER);
         }
 
         AclEntryImpl ae = new AclEntryImpl();
@@ -143,11 +137,6 @@ public class AuthorizationManager
         {
             throw new InternalWikiException("Nobody told me that owners were in use");
         }
-    }
-
-    public synchronized void stop()
-    {
-        // GNDN
     }
 
     /**
@@ -196,46 +185,10 @@ public class AuthorizationManager
      * @throws WikiException
      * @throws NoRequiredPropertyException DOCUMENT ME!
      */
-    private WikiAuthorizer getAuthorizerImplementation(Configuration conf)
+    private WikiAuthorizer getAuthorizerImplementation(WikiEngine engine)
             throws WikiException
     {
-        WikiAuthorizer impl = null;
-
-        String authClassName = conf.getString(PROP_CLASS_AUTHORIZER, PROP_CLASS_AUTHORIZER_DEFAULT);
-
-        if (authClassName != null)
-        {
-            try
-            {
-                // TODO: this should probably look in package ...modules
-                Class authClass =
-                    ClassUtil.findClass(DEFAULT_AUTH_MODULES_CLASS_PREFIX, authClassName);
-                impl = (WikiAuthorizer) authClass.newInstance();
-
-                return (impl);
-            }
-            catch (ClassNotFoundException e)
-            {
-                log.fatal("WikiAuthorizer " + authClassName + " cannot be found", e);
-                throw new WikiException("WikiAuthorizer " + authClassName + " cannot be found");
-            }
-            catch (InstantiationException e)
-            {
-                log.fatal("Authorizer " + authClassName + " cannot be created", e);
-                throw new WikiException("Authorizer " + authClassName + " cannot be created");
-            }
-            catch (IllegalAccessException e)
-            {
-                log.fatal("You are not allowed to access this authorizer class", e);
-                throw new WikiException("You are not allowed to access this authorizer class");
-            }
-        }
-        else
-        {
-            throw new NoRequiredPropertyException(
-                "Unable to find a " + PROP_CLASS_AUTHORIZER + " entry in the properties.",
-                PROP_CLASS_AUTHORIZER);
-        }
+        return m_authorizer;
     }
 
     /**

@@ -19,12 +19,9 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import java.io.IOException;
-
 import org.apache.commons.configuration.Configuration;
 
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**
@@ -41,9 +38,9 @@ public class RssContextualDiffProvider
     /**
      * Creates a new RssContextualDiffProvider object.
      */
-    public RssContextualDiffProvider()
+    public RssContextualDiffProvider(WikiEngine engine, Configuration conf)
     {
-        super();
+        super(engine, conf);
         m_emitChangeNextPreviousHyperlinks = false;
 
         m_changeStartHtml = ""; //This could be a image '>' for a start marker
@@ -57,23 +54,5 @@ public class RssContextualDiffProvider
 
         m_deletionStartHtml = "<font color=\"red\">";
         m_deletionEndHtml = "</font>";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#getProviderInfo()
-     */
-    public String getProviderInfo()
-    {
-        return "RssContextualDiffProvider";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
-     *      java.util.Properties)
-     */
-    public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
-    {
-        super.initialize(engine, conf);
     }
 }

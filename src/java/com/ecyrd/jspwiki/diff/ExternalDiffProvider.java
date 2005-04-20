@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 
@@ -80,8 +79,10 @@ public class ExternalDiffProvider
     /**
      * Creates a new ExternalDiffProvider object.
      */
-    public ExternalDiffProvider()
+    public ExternalDiffProvider(WikiEngine engine, Configuration conf)
     {
+        m_diffCommand = conf.getString(WikiProperties.PROP_DIFFCOMMAND);
+        m_encoding = engine.getContentEncoding();
     }
 
     /**
@@ -89,18 +90,7 @@ public class ExternalDiffProvider
      */
     public String getProviderInfo()
     {
-        return "ExternalDiffProvider";
-    }
-
-    /**
-     * @see com.ecyrd.jspwiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
-     *      java.util.Properties)
-     */
-    public void initialize(WikiEngine engine, Configuration conf)
-            throws NoRequiredPropertyException, IOException
-    {
-        m_diffCommand = conf.getString(WikiProperties.PROP_DIFFCOMMAND);
-        m_encoding = engine.getContentEncoding();
+        return this.getClass().getName();
     }
 
     /**

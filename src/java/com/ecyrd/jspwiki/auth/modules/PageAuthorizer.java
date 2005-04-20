@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki.auth.modules;
 import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.NotOwnerException;
-
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -74,7 +73,7 @@ public class PageAuthorizer
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public void initialize(WikiEngine engine, Configuration conf)
+    public PageAuthorizer(WikiEngine engine, Configuration conf)
     {
         m_engine = engine;
     }

@@ -74,6 +74,22 @@ public interface WikiConstants
     /** The real Attachment Provider for the Caching Provider */
     String REAL_ATTACHMENT_PROVIDER = "RealAttachmentProvider";
 
+    /** The Provider used for diff generation */
+    String DIFF_PROVIDER = "DiffProvider";
+
+    /** The Provider used for diff generation in RSS feeds */
+    String RSS_DIFF_PROVIDER = "RssDiffProvider";
+
+    /** The Authorizer to use */
+    String AUTHORIZER = "Authorizer";
+
+    /** The Authenticator to use */
+    String AUTHENTICATOR = "Authenticator";
+
+    /** The User database to use */
+    String USER_DATABASE = "UserDatabase";
+
+
     /*
      * ========================================================================
      * 
