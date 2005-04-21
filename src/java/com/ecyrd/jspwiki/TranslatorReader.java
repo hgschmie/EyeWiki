@@ -2644,12 +2644,15 @@ public class TranslatorReader
                         .append(style)
                         .append("\"");
             }
+            else
+            {
+                sb.append(" class=\"");
+                sb.append((clazz != null)
+                        ? clazz : WikiConstants.CSS_WIKICONTENT);
+                sb.append("\"");
+            }
 
-            sb.append(" class=\"");
-            sb.append((clazz != null)
-                    ? clazz : WikiConstants.CSS_WIKICONTENT);
-            sb.append("\"");
-
+            sb.append(">");
             return sb.toString();
         }
 
