@@ -288,14 +288,6 @@ public class VariableManager
 
             res = sb.toString();
         }
-        else if (name.equals("pluginpath"))
-        {
-            res = engine.getPluginSearchPath();
-
-            res = (res == null)
-                ? "-"
-                : res;
-        }
         else if (name.equals("baseurl"))
         {
             res = engine.getBaseURL();

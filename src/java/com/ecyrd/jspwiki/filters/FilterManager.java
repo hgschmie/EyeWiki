@@ -229,7 +229,6 @@ public class FilterManager
     /**
      * Initializes the filters from an XML file.
      *
-     * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      *
      * @throws WikiException DOCUMENT ME!

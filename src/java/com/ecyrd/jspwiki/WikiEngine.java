@@ -681,19 +681,6 @@ public class WikiEngine
     }
 
     /**
-     * Don't use.
-     *
-     * @return DOCUMENT ME!
-     *
-     * @since 1.8.0
-     */
-    public String getPluginSearchPath()
-    {
-        // FIXME: This method should not be here, probably.
-        return conf.getString(PROP_CLASS_PLUGIN_SEARCHPATH, null);
-    }
-
-    /**
      * Returns the current template directory.
      *
      * @return DOCUMENT ME!

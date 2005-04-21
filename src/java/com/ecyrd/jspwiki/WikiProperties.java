@@ -19,7 +19,6 @@
 */
 package com.ecyrd.jspwiki;
 
-import com.ecyrd.jspwiki.auth.modules.WikiDatabase;
 
 
 /**
@@ -457,33 +456,6 @@ public interface WikiProperties
      */
     String DEFAULT_CLASS_PREFIX = "com.ecyrd.jspwiki";
 
-    /** DOCUMENT ME! */
-    String DEFAULT_PROVIDER_CLASS_PREFIX = "com.ecyrd.jspwiki.providers";
-
-    /** DOCUMENT ME! */
-    String DEFAULT_AUTH_MODULES_CLASS_PREFIX = "com.ecyrd.jspwiki.auth.modules";
-
-    /** DOCUMENT ME! */
-    String DEFAULT_DIFF_CLASS_PREFIX = "com.ecyrd.jspwiki.diff";
-
-    /** DOCUMENT ME! */
-    String DEFAULT_PLUGIN_CLASS_PREFIX = "com.ecyrd.jspwiki.plugin";
-
-    /** DOCUMENT ME! */
-    String DEFAULT_FORM_CLASS_PREFIX = "com.ecyrd.jspwiki.forms";
-
     /** The default package for filter classes */
     String DEFAULT_FILTER_CLASS_PREFIX = "com.ecyrd.jspwiki.filters";
-
-    /** The property name defining which packages will be searched for properties. */
-    String PROP_CLASS_PLUGIN_SEARCHPATH = "jspwiki.plugin.searchPath";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_USERDATABASE = "jspwiki.userdatabase";
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_USERDATABASE_DEFAULT = WikiDatabase.class.getName();
-
-    /** DOCUMENT ME! */
-    String PROP_CLASS_AUTHENTICATOR = "jspwiki.authenticator";
 }
