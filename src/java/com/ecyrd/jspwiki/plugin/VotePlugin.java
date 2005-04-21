@@ -57,9 +57,12 @@ public class VotePlugin
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
-    public VotePlugin(WikiEngine engine)
+    protected final AttachmentManager attachmentManager;
+
+    public VotePlugin(final WikiEngine engine, final AttachmentManager attachmentManager)
     {
         this.engine = engine;
+        this.attachmentManager = attachmentManager;
     }
 
     /**
@@ -114,13 +117,11 @@ public class VotePlugin
 
             out.close();
 
-            AttachmentManager attmgr = engine.getAttachmentManager();
-
             Attachment att = findAttachment(context);
 
             InputStream in = new ByteArrayInputStream(out.toByteArray());
 
-            attmgr.storeAttachment(att, in);
+            attachmentManager.storeAttachment(att, in);
 
             in.close();
         }
@@ -134,7 +135,7 @@ public class VotePlugin
             throws ProviderException
     {
         Attachment att =
-            engine.getAttachmentManager().getAttachmentInfo(context, ATTACHMENT_NAME);
+            attachmentManager.getAttachmentInfo(context, ATTACHMENT_NAME);
 
         if (att == null)
         {
@@ -157,15 +158,13 @@ public class VotePlugin
         {
             props = new Properties();
 
-            AttachmentManager attmgr = engine.getAttachmentManager();
-
             try
             {
-                Attachment att = attmgr.getAttachmentInfo(context, ATTACHMENT_NAME);
+                Attachment att = attachmentManager.getAttachmentInfo(context, ATTACHMENT_NAME);
 
                 if (att != null)
                 {
-                    props.load(attmgr.getAttachmentStream(att));
+                    props.load(attachmentManager.getAttachmentStream(att));
                 }
             }
             catch (Exception e)

@@ -44,9 +44,12 @@ public class ListLocksPlugin
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
-    public ListLocksPlugin(WikiEngine engine)
+    protected final PageManager pageManager;
+
+    public ListLocksPlugin(WikiEngine engine, PageManager pageManager)
     {
         this.engine = engine;
+        this.pageManager = pageManager;
     }
 
     /**
@@ -64,8 +67,7 @@ public class ListLocksPlugin
     {
         StringBuffer result = new StringBuffer();
 
-        PageManager mgr = engine.getPageManager();
-        List locks = mgr.getActiveLocks();
+        List locks = pageManager.getActiveLocks();
 
         result.append("<table class=\"" + WikiConstants.CSS_WIKICONTENT + "\">\n");
         result.append("<tr class=\"" + WikiConstants.CSS_WIKICONTENT + "\">\n");
