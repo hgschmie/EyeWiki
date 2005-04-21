@@ -21,13 +21,11 @@
 package com.ecyrd.jspwiki.forms;
 
 import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 
 /**
  */
 public abstract class FormElement
-        implements WikiPlugin
 {
     /**
      * In order to make the form-to-handler parameter transfer easier, we prefix all user-specified

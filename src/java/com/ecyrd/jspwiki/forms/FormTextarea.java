@@ -28,6 +28,7 @@ import org.apache.ecs.html.TextArea;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 
 /**
@@ -37,6 +38,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  */
 public class FormTextarea
         extends FormElement
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     public static final String PARAM_ROWS = "rows";

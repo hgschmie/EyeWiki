@@ -17,4 +17,13 @@
   <component-implementation key="WeblogArchivePlugin"    class="com.ecyrd.jspwiki.plugin.WeblogArchivePlugin" />
   <component-implementation key="WeblogEntryPlugin"      class="com.ecyrd.jspwiki.plugin.WeblogEntryPlugin" />
   <component-implementation key="WeblogPlugin"           class="com.ecyrd.jspwiki.plugin.WeblogPlugin" />
+
+  <component-implementation key="FormClose"              class="com.ecyrd.jspwiki.forms.FormClose" />
+  <component-implementation key="FormInput"              class="com.ecyrd.jspwiki.forms.FormInput" />
+  <component-implementation key="FormOpen"               class="com.ecyrd.jspwiki.forms.FormOpen" />
+  <component-implementation key="FormOutput"             class="com.ecyrd.jspwiki.forms.FormOutput" />
+  <component-implementation key="FormSelect"             class="com.ecyrd.jspwiki.forms.FormSelect" />
+  <component-implementation key="FormSet"                class="com.ecyrd.jspwiki.forms.FormSet" />
+  <component-implementation key="FormTextarea"           class="com.ecyrd.jspwiki.forms.FormTextarea" />
 </container>
+

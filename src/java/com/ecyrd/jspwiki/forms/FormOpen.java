@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 
 /**
@@ -74,6 +75,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  */
 public class FormOpen
         extends FormElement
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(FormOpen.class);

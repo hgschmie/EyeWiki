@@ -27,6 +27,7 @@ import org.apache.ecs.html.Input;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 
 
 /**
@@ -34,6 +35,7 @@ import com.ecyrd.jspwiki.plugin.PluginException;
  */
 public class FormInput
         extends FormElement
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     public static final String PARAM_TYPE = "type";

@@ -28,6 +28,7 @@ import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.plugin.PluginException;
 import com.ecyrd.jspwiki.plugin.PluginManager;
+import com.ecyrd.jspwiki.plugin.WikiPlugin;
 import com.ecyrd.jspwiki.util.FormUtil;
 
 
@@ -35,7 +36,16 @@ import com.ecyrd.jspwiki.util.FormUtil;
  */
 public class FormOutput
         extends FormElement
+        implements WikiPlugin
 {
+
+    protected final PluginManager pluginManager;
+
+    public FormOutput(final PluginManager pluginManager)
+    {
+        this.pluginManager = pluginManager;
+    }
+
     /**
      * Executes the FormHandler specified in a Form 'output' plugin, using entries provided in the
      * HttpRequest as FormHandler parameters.
@@ -124,7 +134,7 @@ public class FormOutput
             // The plugin _can_ modify the parameters, so we make sure
             // they stay with us.
             handlerOutput =
-                ctx.getEngine().getPluginManager().execute(ctx, handler, info.getSubmission());
+                pluginManager.execute(ctx, handler, info.getSubmission());
             info.setResult(handlerOutput);
             info.setStatus(FormInfo.EXECUTED);
         }
