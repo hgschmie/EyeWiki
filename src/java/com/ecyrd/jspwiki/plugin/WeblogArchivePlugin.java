@@ -37,6 +37,7 @@ import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.manager.PageManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 
@@ -57,6 +58,16 @@ public class WeblogArchivePlugin
     /** DOCUMENT ME! */
     private SimpleDateFormat m_monthUrlFormat;
 
+    private final WikiEngine engine;
+    
+    private final PageManager pageManager;
+
+    public WeblogArchivePlugin(final WikiEngine engine, final PageManager pageManager)
+    {
+        this.engine = engine;
+        this.pageManager = pageManager;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -70,8 +81,6 @@ public class WeblogArchivePlugin
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        WikiEngine engine = context.getEngine();
-
         //
         //  Parameters
         //
@@ -98,7 +107,7 @@ public class WeblogArchivePlugin
         //
         try
         {
-            Collection months = collectMonths(engine, weblogName);
+            Collection months = collectMonths(weblogName);
             int year = 0;
 
             //
@@ -147,15 +156,15 @@ public class WeblogArchivePlugin
         return sb.toString();
     }
 
-    private SortedSet collectMonths(WikiEngine engine, String page)
+    private SortedSet collectMonths(String page)
             throws ProviderException
     {
         TreeSet res = new TreeSet();
 
-        WeblogPlugin pl = new WeblogPlugin();
+        WeblogPlugin pl = new WeblogPlugin(engine, pageManager);
 
         List blogEntries =
-            pl.findBlogEntries(engine.getPageManager(), page, new Date(0L), new Date());
+            pl.findBlogEntries(page, new Date(0L), new Date());
 
         Calendar urCalendar = Calendar.getInstance();
 

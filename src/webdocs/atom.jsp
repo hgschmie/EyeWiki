@@ -4,6 +4,8 @@
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.ecyrd.jspwiki.*" %>
+<%@ page import="com.ecyrd.jspwiki.plugin.PluginManager" %>
+<%@ page import="com.ecyrd.jspwiki.plugin.WeblogPlugin" %>
 <%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
 <%@ page import="com.ecyrd.jspwiki.rss.*" %>
@@ -67,29 +69,35 @@
     }
 
     //
-    //  Now, list items.
-    //
-
-    com.ecyrd.jspwiki.plugin.WeblogPlugin plug = new com.ecyrd.jspwiki.plugin.WeblogPlugin();
-    List changed = plug.findBlogEntries(wiki.getPageManager(), 
-                                        wikipage.getName(),
-                                        new Date(0L),
-                                        new Date());
-
-    Collections.sort( changed, new PageTimeComparator() );
-
-    //
     //  Check if nothing has changed, so we can just return a 304
     //
     boolean hasChanged = false;
-    Date    latest     = new Date(0);
+	Date latest = new Date(0);
+	List changed = null;
 
-    for( Iterator i = changed.iterator(); i.hasNext(); )
+
+    //
+    //  Now, list items.
+    //
+    PluginManager pluginManager = wiki.getPluginManager();
+
+    if (pluginManager != null)
     {
-        WikiPage p = (WikiPage) i.next();
+        WeblogPlugin plug = (WeblogPlugin) pluginManager.findPlugin("WeblogPlugin");
 
-        if( !HttpUtil.checkFor304( request, p ) ) hasChanged = true;
-        if( p.getLastModified().after( latest ) ) latest = p.getLastModified();
+        changed = plug.findBlogEntries(wikipage.getName(),
+                new Date(0L),
+                new Date());
+
+        Collections.sort( changed, new PageTimeComparator() );
+
+        for( Iterator i = changed.iterator(); i.hasNext(); )
+        {
+            WikiPage p = (WikiPage) i.next();
+            
+            if( !HttpUtil.checkFor304( request, p ) ) hasChanged = true;
+            if( p.getLastModified().after( latest ) ) latest = p.getLastModified();
+        }
     }
 
     if( !hasChanged )

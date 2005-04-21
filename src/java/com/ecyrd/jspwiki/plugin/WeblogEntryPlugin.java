@@ -52,6 +52,16 @@ public class WeblogEntryPlugin
     /** DOCUMENT ME! */
     public static final String PARAM_ENTRYTEXT = "entrytext";
 
+    private final WikiEngine engine;
+    
+    private final PageManager pageManager;
+
+    public WeblogEntryPlugin(final WikiEngine engine, final PageManager pageManager)
+    {
+        this.engine = engine;
+        this.pageManager = pageManager;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -62,13 +72,13 @@ public class WeblogEntryPlugin
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public String getNewEntryPage(WikiEngine engine, String blogName)
+    public String getNewEntryPage(String blogName)
             throws ProviderException
     {
         SimpleDateFormat fmt = new SimpleDateFormat(WeblogPlugin.DEFAULT_DATEFORMAT);
         String today = fmt.format(new Date());
 
-        int entryNum = findFreeEntry(engine.getPageManager(), blogName, today);
+        int entryNum = findFreeEntry(pageManager, blogName, today);
 
         return WeblogPlugin.makeEntryPage(blogName, today, "" + entryNum);
     }
@@ -87,7 +97,6 @@ public class WeblogEntryPlugin
             throws PluginException
     {
         String weblogName = context.getPage().getName();
-        WikiEngine engine = context.getEngine();
 
         StringBuffer sb = new StringBuffer();
 

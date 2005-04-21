@@ -55,6 +55,13 @@ public class TableOfContents
     /** DOCUMENT ME! */
     private StringBuffer m_buf = new StringBuffer();
 
+    private final WikiEngine engine;
+    
+    public TableOfContents(final WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -109,7 +116,6 @@ public class TableOfContents
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        WikiEngine engine = context.getEngine();
         WikiPage page = context.getPage();
 
         StringBuffer sb = new StringBuffer();

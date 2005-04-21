@@ -36,6 +36,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
+import com.ecyrd.jspwiki.plugin.PluginManager;
 import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
 import com.ecyrd.jspwiki.plugin.WeblogPlugin;
 import com.ecyrd.jspwiki.providers.ProviderException;
@@ -231,21 +232,26 @@ public class MetaWeblogHandler
 
         try
         {
-            WeblogPlugin plugin = new WeblogPlugin();
+            PluginManager pluginManager = m_engine.getPluginManager();
 
-            List changed =
-                plugin.findBlogEntries(m_engine.getPageManager(), blogid, new Date(0L), new Date());
-
-            Collections.sort(changed, new PageTimeComparator());
-
-            int items = 0;
-
-            for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
-                            items++)
+            if (pluginManager != null)
             {
-                WikiPage p = (WikiPage) i.next();
+                WeblogPlugin plugin = (WeblogPlugin) pluginManager.findPlugin("WeblogPlugin");
 
-                result.put("entry", makeEntry(p));
+                List changed =
+                        plugin.findBlogEntries(blogid, new Date(0L), new Date());
+
+                Collections.sort(changed, new PageTimeComparator());
+
+                int items = 0;
+                
+                for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
+                     items++)
+                {
+                    WikiPage p = (WikiPage) i.next();
+                    
+                    result.put("entry", makeEntry(p));
+                }
             }
         }
         catch (ProviderException e)
@@ -282,26 +288,31 @@ public class MetaWeblogHandler
 
         try
         {
-            WeblogEntryPlugin plugin = new WeblogEntryPlugin();
+            PluginManager pluginManager = m_engine.getPluginManager();
 
-            String pageName = plugin.getNewEntryPage(m_engine, blogid);
-
-            WikiPage entryPage = new WikiPage(pageName);
-            entryPage.setAuthor(username);
-
-            WikiContext context = new WikiContext(m_engine, entryPage);
-
-            StringBuffer text = new StringBuffer();
-            text.append("!" + content.get("title"));
-            text.append("\n\n");
-            text.append(content.get("description"));
-
-            if (log.isDebugEnabled())
+            if (pluginManager != null)
             {
-                log.debug("Writing entry: " + text);
-            }
+                WeblogEntryPlugin plugin = (WeblogEntryPlugin) pluginManager.findPlugin("WeblogEntryPlugin");
 
-            m_engine.saveText(context, text.toString());
+                String pageName = plugin.getNewEntryPage(blogid);
+
+                WikiPage entryPage = new WikiPage(pageName);
+                entryPage.setAuthor(username);
+
+                WikiContext context = new WikiContext(m_engine, entryPage);
+                
+                StringBuffer text = new StringBuffer();
+                text.append("!" + content.get("title"));
+                text.append("\n\n");
+                text.append(content.get("description"));
+                
+                if (log.isDebugEnabled())
+                {
+                    log.debug("Writing entry: " + text);
+                }
+                
+                m_engine.saveText(context, text.toString());
+            }
         }
         catch (Exception e)
         {

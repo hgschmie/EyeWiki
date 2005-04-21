@@ -1,21 +1,21 @@
 /*
-   JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-   Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or
-   (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-   You should have received a copy of the GNU Lesser General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 package com.ecyrd.jspwiki.plugin;
 
@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -32,6 +33,7 @@ import java.util.Vector;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ecs.xhtml.b;
 import org.apache.ecs.xhtml.div;
 import org.apache.ecs.xhtml.li;
@@ -46,11 +48,17 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
+
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.FileUtil;
 
 
@@ -119,7 +127,7 @@ import com.ecyrd.jspwiki.util.FileUtil;
  * @since 1.6.1
  */
 public class PluginManager
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(PluginManager.class);
@@ -141,6 +149,15 @@ public class PluginManager
 
     /** DOCUMENT ME! */
     private boolean m_initStage = false;
+    
+    /** Is the Manager started? */
+    private boolean started = false;
+
+    /** The Wiki Engine */
+    private final WikiEngine engine;
+    
+    /** The Container to manage the Plugins */
+    private PicoContainer pluginContainer = null;
 
     /**
      * Create a new PluginManager.
@@ -149,38 +166,84 @@ public class PluginManager
      *
      * @throws InternalWikiException DOCUMENT ME!
      */
-    public PluginManager(Configuration conf)
+    public PluginManager(WikiEngine engine, Configuration conf)
+    	throws Exception
     {
-        addPackages(conf.getStringArray(PROP_CLASS_PLUGIN_SEARCHPATH));
-
-        addPackages(new String [] {
-                    DEFAULT_PLUGIN_CLASS_PREFIX,
-                    DEFAULT_FORM_CLASS_PREFIX
-                });
-
+        this.engine = engine;
+        
         PatternCompiler compiler = new Perl5Compiler();
 
         try
         {
             m_pluginPattern =
-                compiler.compile("\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*");
+                    compiler.compile("\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*");
         }
         catch (MalformedPatternException e)
         {
             log.fatal("Internal error: someone messed with pluginmanager patterns.", e);
             throw new InternalWikiException("PluginManager patterns are broken");
         }
+
+        String wikiPluginFile = conf.getString(PROP_PLUGIN_FILE, null);
+
+        if (StringUtils.isEmpty(wikiPluginFile))
+        {
+            return;
+        }
+
+        ObjectReference parentRef = new SimpleReference();
+        parentRef.set(engine.getComponentContainer());
+        
+        ObjectReference pluginContainerRef = new SimpleReference();
+
+        engine.setupContainer(pluginContainerRef, parentRef, wikiPluginFile);
+        pluginContainer = (PicoContainer) pluginContainerRef.get();
     }
 
-    private void addPackages(String [] packageNames)
+    public synchronized void start()
     {
-        if (packageNames != null)
+        if (pluginContainer != null)
         {
-            for (int i = 0; i < packageNames.length; i++)
-            {
-                m_searchPath.add(packageNames[i]);
-            }
+        	try
+        	{
+        	    setInitStage(true);
+
+        	    // Run through all the pages, find the init plugins and fire them up.
+        	    Collection pages = engine.getPageManager().getAllPages();
+
+        	    for (Iterator it = pages.iterator(); it.hasNext();)
+        	    {
+        	        WikiPage page = (WikiPage) it.next();
+                        // content evaluation runs the plugins
+                        engine.getHTML(page);
+        	    }
+        	}
+        	catch (Exception e)
+        	{
+        	    log.fatal("While indexing the Plugins", e);
+        	}
+        	finally
+        	{
+        	    setInitStage(false);
+        	}
+
+            setStarted(true);
         }
+    }
+
+    public synchronized void stop()
+    {
+        setStarted(false);
+    }
+
+    protected void setStarted(final boolean started)
+    {
+        this.started = started;
+    }
+
+    public boolean isStarted()
+    {
+        return started;
     }
 
     /**
@@ -188,7 +251,7 @@ public class PluginManager
      *
      * @param enabled DOCUMENT ME!
      */
-    public void enablePlugins(boolean enabled)
+    public void enablePlugins(final boolean enabled)
     {
         m_pluginsEnabled = enabled;
     }
@@ -198,9 +261,14 @@ public class PluginManager
      *
      * @param value DOCUMENT ME!
      */
-    public void setInitStage(boolean value)
+    private void setInitStage(final boolean value)
     {
         m_initStage = value;
+    }
+
+    protected boolean isInitStage()
+    {
+        return m_initStage;
     }
 
     /**
@@ -211,7 +279,7 @@ public class PluginManager
      */
     public boolean pluginsEnabled()
     {
-        return (m_pluginsEnabled);
+        return m_pluginsEnabled;
     }
 
     /**
@@ -225,25 +293,9 @@ public class PluginManager
      *
      * @return True, if this link seems to be a command to insert a plugin here.
      */
-    public static boolean isPluginLink(String link)
+    public static boolean isPluginLink(final String link)
     {
         return link.startsWith("{INSERT") || (link.startsWith("{") && !link.startsWith("{$"));
-    }
-
-    /**
-     * Attempts to locate a plugin class from the class path set in the property file.
-     *
-     * @param classname Either a fully fledged class name, or just the name of the file (that is,
-     *        "com.ecyrd.jspwiki.plugin.Counter" or just plain "Counter").
-     *
-     * @return A found class.
-     *
-     * @throws ClassNotFoundException if no such class exists.
-     */
-    private Class findPluginClass(String classname)
-            throws ClassNotFoundException
-    {
-        return ClassUtil.findClass(m_searchPath, classname);
     }
 
     /**
@@ -257,28 +309,28 @@ public class PluginManager
     private String stackTrace(Map params, Throwable t)
     {
         div d = new div();
-        d.setClass(WikiConstants.CSS_DEBUG);
+        d.setClass(WikiConstants.CSS_CLASS_ERROR);
         d.addElement("Plugin execution failed, stack trace follows:");
 
         StringWriter out = new StringWriter();
         pre pre = new pre(out.toString());
-        pre.setClass(WikiConstants.CSS_DEBUG);
+        pre.setClass(WikiConstants.CSS_CLASS_ERROR);
         b b = new b("Parameters to the plugin");
-        b.setClass(WikiConstants.CSS_DEBUG);
+        b.setClass(WikiConstants.CSS_CLASS_ERROR);
 
         t.printStackTrace(new PrintWriter(out));
         d.addElement(pre);
         d.addElement(b);
 
         ul list = new ul();
-        list.setClass(WikiConstants.CSS_DEBUG);
+        list.setClass(WikiConstants.CSS_CLASS_ERROR);
 
         for (Iterator i = params.keySet().iterator(); i.hasNext();)
         {
             String key = (String) i.next();
 
             li li = new li(key + "'='" + params.get(key));
-            li.setClass(WikiConstants.CSS_DEBUG);
+            li.setClass(WikiConstants.CSS_CLASS_ERROR);
             list.addElement(li);
         }
 
@@ -308,90 +360,67 @@ public class PluginManager
     public String execute(WikiContext context, String classname, Map params)
             throws PluginException
     {
-        if (!m_pluginsEnabled)
+        if (!m_pluginsEnabled || pluginContainer == null)
         {
             return ("");
         }
 
+        WikiPlugin plugin = (WikiPlugin) findPlugin(classname);
+
+        if (plugin == null)
+        {
+            return "Plugin " + classname + " not found!";
+        }
+
+        //
+        //  ...and launch.
+        //
+        boolean debug = BooleanUtils.toBoolean((String) params.get(PARAM_DEBUG));
+
         try
         {
-            Class pluginClass;
-            WikiPlugin plugin;
 
-            boolean debug = BooleanUtils.toBoolean((String) params.get(PARAM_DEBUG));
-
-            pluginClass = findPluginClass(classname);
-
-            //
-            //   Create...
-            //
-            try
+            if (isInitStage())
             {
-                plugin = (WikiPlugin) pluginClass.newInstance();
-            }
-            catch (InstantiationException e)
-            {
-                throw new PluginException("Cannot instantiate plugin " + classname, e);
-            }
-            catch (IllegalAccessException e)
-            {
-                throw new PluginException("Not allowed to access plugin " + classname, e);
-            }
-            catch (Exception e)
-            {
-                throw new PluginException("Instantiation of plugin " + classname + " failed.", e);
-            }
-
-            //
-            //  ...and launch.
-            //
-            try
-            {
-                if (m_initStage)
+                if (plugin instanceof InitializablePlugin)
                 {
-                    if (plugin instanceof InitializablePlugin)
-                    {
-                        ((InitializablePlugin) plugin).initialize(context, params);
-                    }
-
-                    return "";
-                }
-                else
-                {
-                    return plugin.execute(context, params);
-                }
-            }
-            catch (PluginException e)
-            {
-                if (debug)
-                {
-                    return stackTrace(params, e);
+                    ((InitializablePlugin) plugin).initialize(context, params);
                 }
 
-                // Just pass this exception onward.
-                throw (PluginException) e.fillInStackTrace();
+                return "";
             }
-            catch (Throwable t)
+            else
             {
-                // But all others get captured here.
-                log.info("Plugin failed while executing:", t);
-
-                if (debug)
-                {
-                    return stackTrace(params, t);
-                }
-
-                throw new PluginException("Plugin failed", t);
+                return plugin.execute(context, params);
             }
         }
-        catch (ClassNotFoundException e)
+        catch (PluginException e)
         {
-            throw new PluginException("Could not find plugin " + classname, e);
+            if (debug)
+            {
+                return stackTrace(params, e);
+            }
+
+            // Just pass this exception onward.
+            throw (PluginException) e.fillInStackTrace();
         }
-        catch (ClassCastException e)
+        catch (Throwable t)
         {
-            throw new PluginException("Class " + classname + " is not a Wiki plugin.", e);
+            // But all others get captured here.
+            log.info("Plugin failed while executing:", t);
+
+            if (debug)
+            {
+                return stackTrace(params, t);
+            }
+
+            throw new PluginException("Plugin failed", t);
         }
+    }
+
+    public WikiPlugin findPlugin(String pluginName)
+    {
+        return (WikiPlugin) pluginContainer.getComponentInstance(pluginName);
     }
 
     /**
@@ -546,12 +575,12 @@ public class PluginManager
 
                 String plugin = res.group(2);
                 String args =
-                    commandline.substring(
-                        res.endOffset(0),
-                        commandline.length()
-                        - ((commandline.charAt(commandline.length() - 1) == '}')
-                        ? 1
-                        : 0));
+                        commandline.substring(
+                                res.endOffset(0),
+                                commandline.length()
+                                - ((commandline.charAt(commandline.length() - 1) == '}')
+                                        ? 1
+                                        : 0));
                 Map arglist = parseArgs(args);
 
                 return execute(context, plugin, arglist);
@@ -561,13 +590,13 @@ public class PluginManager
         {
             String msg = "Missing parameter in plugin definition: " + commandline;
             log.warn(msg, e);
-            throw new PluginException(msg);
+            throw new PluginException(msg, e);
         }
         catch (IOException e)
         {
-            String msg = "Zyrf.  Problems with parsing arguments: " + commandline;
+            String msg = "Problems with parsing plugin arguments: " + commandline;
             log.warn(msg, e);
-            throw new PluginException(msg);
+            throw new PluginException(msg, e);
         }
 
         // FIXME: We could either return an empty string "", or
@@ -575,25 +604,4 @@ public class PluginManager
         // to be invisible, then we should return an empty string.
         return commandline;
     }
-
-    /*
-    // FIXME: Not functioning, needs to create or fetch PageContext from somewhere.
-    public class TagPlugin implements WikiPlugin
-    {
-    private Class m_tagClass;
-
-    public TagPlugin( Class tagClass )
-    {
-    m_tagClass = tagClass;
-    }
-
-    public String execute( WikiContext context, Map params )
-    throws PluginException
-    {
-    WikiPluginTag plugin = m_tagClass.newInstance();
-
-
-    }
-    }
-    */
 }

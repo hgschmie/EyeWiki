@@ -112,6 +112,16 @@ public class IndexPlugin
     /** DOCUMENT ME! */
     private Pattern m_excludePattern;
 
+    private final WikiEngine engine;
+
+    private final PageManager pageManager;
+    
+    public IndexPlugin(final WikiEngine engine, final PageManager pageManager)
+    {
+        this.engine = engine;
+        this.pageManager = pageManager;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -222,12 +232,8 @@ public class IndexPlugin
      *
      * @return DOCUMENT ME!
      */
-    static Collection getAllPagesSortedByName(WikiContext i_context)
+    private Collection getAllPagesSortedByName(final WikiContext i_context)
     {
-        final WikiEngine engine = i_context.getEngine();
-
-        final PageManager pageManager = engine.getPageManager();
-
         if (pageManager == null)
         {
             return null;
@@ -319,7 +325,7 @@ public class IndexPlugin
         m_bodyPart.write(
                 i_linkProcessor.makeLink(
                         TranslatorReader.READ, i_curPage.getName(),
-                        context.getEngine().beautifyTitleNoBreak(i_curPage.getName())));
+                        engine.beautifyTitleNoBreak(i_curPage.getName())));
     }
 
     /**

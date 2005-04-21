@@ -60,6 +60,14 @@ public class Search
     /** DOCUMENT ME! */
     public static final String PARAM_MAX = "max";
 
+    /** DOCUMENT ME! */
+    protected final WikiEngine engine;
+
+    public Search(WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /* (non-Javadoc)
      * @see com.ecyrd.jspwiki.plugin.WikiPlugin#execute(com.ecyrd.jspwiki.WikiContext, java.util.Map)
      */
@@ -110,14 +118,13 @@ public class Search
             log.info("Searching for string " + query);
         }
 
-        Collection list = context.getEngine().findPages(query);
+        Collection list = engine.findPages(query);
 
         return list;
     }
 
     private String renderResults(Collection results, WikiContext context, int maxItems)
     {
-        WikiEngine engine = context.getEngine();
         table t = new table();
         t.setClass(WikiConstants.CSS_SEARCH);
 

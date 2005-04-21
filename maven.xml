@@ -21,6 +21,7 @@
                replacefilterfile="build.properties"/>
 
     <ant:copy file="etc/wikiComponents.xml" tofile="${maven.war.webapp.dir}/WEB-INF/wikiComponents.xml" />
+    <ant:copy file="etc/wikiPlugins.xml" tofile="${maven.war.webapp.dir}/WEB-INF/wikiPlugins.xml" />
 
     <!-- copy wiki pages -->
     <ant:copy todir="${maven.war.webapp.dir}/jspwiki/pages" >

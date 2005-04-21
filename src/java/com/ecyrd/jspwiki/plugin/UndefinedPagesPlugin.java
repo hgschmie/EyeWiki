@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.manager.ReferenceManager;
 
 
@@ -36,7 +37,16 @@ import com.ecyrd.jspwiki.manager.ReferenceManager;
  */
 public class UndefinedPagesPlugin
         extends AbstractReferralPlugin
+        implements WikiPlugin
 {
+    protected final ReferenceManager referenceManager;
+
+    public UndefinedPagesPlugin(final WikiEngine engine, final ReferenceManager referenceManager)
+    {
+        super(engine);
+        this.referenceManager = referenceManager;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -50,8 +60,7 @@ public class UndefinedPagesPlugin
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        ReferenceManager refmgr = context.getEngine().getReferenceManager();
-        Collection links = refmgr.findUncreated();
+        Collection links = referenceManager.findUncreated();
 
         super.initialize(context, params);
 

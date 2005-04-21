@@ -1,0 +1,9 @@
+<container>
+  <component-implementation key="SamplePlugin"           class="com.ecyrd.jspwiki.plugin.SamplePlugin" />
+  <component-implementation key="SamplePlugin2"          class="SamplePlugin2" />
+  <component-implementation key="SamplePlugin3"          class="com.foo.SamplePlugin3" />
+  <component-implementation key="JavaScriptPlugin"       class="com.ecyrd.jspwiki.plugin.JavaScriptPlugin" />
+  <component-implementation key="ReferringPagesPlugin"   class="com.ecyrd.jspwiki.plugin.ReferringPagesPlugin" />
+  <component-implementation key="UndefinedPagesPlugin"   class="com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin" />
+  <component-implementation key="Counter"                class="com.ecyrd.jspwiki.plugin.Counter" />
+</container>

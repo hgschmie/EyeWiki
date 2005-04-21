@@ -31,6 +31,7 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
@@ -52,6 +53,14 @@ public class VotePlugin
 
     /** DOCUMENT ME! */
     public static final String VAR_VOTES = "VotePlugin.votes";
+
+    /** DOCUMENT ME! */
+    protected final WikiEngine engine;
+
+    public VotePlugin(WikiEngine engine)
+    {
+        this.engine = engine;
+    }
 
     /**
      * +1 for yes, -1 for no.
@@ -105,7 +114,7 @@ public class VotePlugin
 
             out.close();
 
-            AttachmentManager attmgr = context.getEngine().getAttachmentManager();
+            AttachmentManager attmgr = engine.getAttachmentManager();
 
             Attachment att = findAttachment(context);
 
@@ -125,7 +134,7 @@ public class VotePlugin
             throws ProviderException
     {
         Attachment att =
-            context.getEngine().getAttachmentManager().getAttachmentInfo(context, ATTACHMENT_NAME);
+            engine.getAttachmentManager().getAttachmentInfo(context, ATTACHMENT_NAME);
 
         if (att == null)
         {
@@ -148,7 +157,7 @@ public class VotePlugin
         {
             props = new Properties();
 
-            AttachmentManager attmgr = context.getEngine().getAttachmentManager();
+            AttachmentManager attmgr = engine.getAttachmentManager();
 
             try
             {

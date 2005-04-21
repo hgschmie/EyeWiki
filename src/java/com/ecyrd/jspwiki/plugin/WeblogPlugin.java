@@ -116,6 +116,16 @@ public class WeblogPlugin
     /** DOCUMENT ME! */
     public static final String ATTR_ISWEBLOG = "weblogplugin.isweblog";
 
+    private final WikiEngine engine;
+    
+    private final PageManager pageManager;
+
+    public WeblogPlugin(final WikiEngine engine, final PageManager pageManager)
+    {
+        this.engine = engine;
+        this.pageManager = pageManager;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -182,7 +192,6 @@ public class WeblogPlugin
         Calendar startTime;
         Calendar stopTime;
         int numDays;
-        WikiEngine engine = context.getEngine();
 
         //
         //  Parse parameters.
@@ -266,8 +275,7 @@ public class WeblogPlugin
         try
         {
             List blogEntries =
-                findBlogEntries(
-                    engine.getPageManager(), weblogName, startTime.getTime(), stopTime.getTime());
+                findBlogEntries(weblogName, startTime.getTime(), stopTime.getTime());
 
             Collections.sort(blogEntries, new PageDateComparator());
 
@@ -390,10 +398,10 @@ public class WeblogPlugin
      *
      * @throws ProviderException DOCUMENT ME!
      */
-    public List findBlogEntries(PageManager mgr, String baseName, Date start, Date end)
+    public List findBlogEntries(String baseName, Date start, Date end)
             throws ProviderException
     {
-        Collection everyone = mgr.getAllPages();
+        Collection everyone = pageManager.getAllPages();
         ArrayList result = new ArrayList();
 
         baseName = makeEntryPage(baseName);
@@ -435,7 +443,7 @@ public class WeblogPlugin
                             //
                             if ((pageDay != null) && pageDay.after(start) && pageDay.before(end))
                             {
-                                WikiPage firstVersion = mgr.getPageInfo(pageName, 1);
+                                WikiPage firstVersion = pageManager.getPageInfo(pageName, 1);
                                 result.add(firstVersion);
                             }
                         }

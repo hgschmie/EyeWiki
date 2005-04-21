@@ -81,7 +81,12 @@ public abstract class AbstractReferralPlugin
     protected String m_after = "\\\\";
 
     /** DOCUMENT ME! */
-    protected WikiEngine m_engine;
+    protected final WikiEngine engine;
+
+    public AbstractReferralPlugin(WikiEngine engine)
+    {
+        this.engine = engine;
+    }
 
     /**
      * Used to initialize some things.  All plugins must call this first.
@@ -96,7 +101,6 @@ public abstract class AbstractReferralPlugin
     public void initialize(WikiContext context, Map params)
             throws PluginException
     {
-        m_engine = context.getEngine();
         m_maxwidth =
             TextUtil.parseIntParameter((String) params.get(PARAM_MAXWIDTH), Integer.MAX_VALUE);
 
@@ -171,7 +175,7 @@ public abstract class AbstractReferralPlugin
             output.append(m_before);
 
             // Make a Wiki markup link. See TranslatorReader.
-            output.append("[" + m_engine.beautifyTitle(value) + "]");
+            output.append("[" + engine.beautifyTitle(value) + "]");
             count++;
         }
 

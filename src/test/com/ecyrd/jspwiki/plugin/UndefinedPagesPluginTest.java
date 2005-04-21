@@ -58,7 +58,7 @@ public class UndefinedPagesPluginTest
         engine.saveText("Foobar", "Reference to [Foobar2], [Foobars]");
 
         context = new WikiContext(engine, new WikiPage("TestPage"));
-        manager = new PluginManager(conf);
+        manager = new PluginManager(engine, conf);
     }
 
     /**
@@ -89,7 +89,7 @@ public class UndefinedPagesPluginTest
         WikiContext context2 = new WikiContext(engine, new WikiPage("Foobar"));
 
         String res =
-            manager.execute(context2, "{INSERT com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin");
+            manager.execute(context2, "{INSERT UndefinedPagesPlugin");
 
         String exp = "[Foobar 2]\\\\";
 

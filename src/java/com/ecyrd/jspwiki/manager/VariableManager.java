@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.Release;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
@@ -55,13 +56,19 @@ public class VariableManager
     /** DOCUMENT ME! */
     public static final String VAR_MSG = "msg";
 
+    protected final WikiEngine engine;
+
+    protected final Configuration conf; 
+
     /**
      * Creates a new VariableManager object.
      *
      * @param conf DOCUMENT ME!
      */
-    public VariableManager(Configuration conf)
+    public VariableManager(final WikiEngine engine, final Configuration conf)
     {
+        this.engine = engine;
+        this.conf = conf;
     }
 
     /**
@@ -216,7 +223,7 @@ public class VariableManager
         }
         else if (name.equals("applicationname"))
         {
-            res = context.getEngine().getApplicationName();
+            res = engine.getApplicationName();
         }
         else if (name.equals("jspwikiversion"))
         {
@@ -224,30 +231,30 @@ public class VariableManager
         }
         else if (name.equals("encoding"))
         {
-            res = context.getEngine().getContentEncoding();
+            res = engine.getContentEncoding();
         }
         else if (name.equals("totalpages"))
         {
-            res = Integer.toString(context.getEngine().getPageCount());
+            res = Integer.toString(engine.getPageCount());
         }
         else if (name.equals("pageprovider"))
         {
-            res = context.getEngine().getCurrentProvider();
+            res = engine.getCurrentProvider();
         }
         else if (name.equals("pageproviderdescription"))
         {
-            res = context.getEngine().getCurrentProviderInfo();
+            res = engine.getCurrentProviderInfo();
         }
         else if (name.equals("attachmentprovider"))
         {
-            WikiProvider p = context.getEngine().getAttachmentManager().getCurrentProvider();
+            WikiProvider p = engine.getAttachmentManager().getCurrentProvider();
             res = (p != null)
                 ? p.getClass().getName()
                 : "-";
         }
         else if (name.equals("attachmentproviderdescription"))
         {
-            WikiProvider p = context.getEngine().getAttachmentManager().getCurrentProvider();
+            WikiProvider p = engine.getAttachmentManager().getCurrentProvider();
 
             res = (p != null)
                 ? p.getProviderInfo()
@@ -256,12 +263,12 @@ public class VariableManager
         else if (name.equals("interwikilinks"))
         {
             StringBuffer sb = new StringBuffer();
-            for (Iterator i = context.getEngine().getAllInterWikiLinks().iterator(); i.hasNext();)
+            for (Iterator i = engine.getAllInterWikiLinks().iterator(); i.hasNext();)
             {
                 String link = (String) i.next();
                 sb.append(link)
                         .append(" --&gt; ")
-                        .append(context.getEngine().getInterWikiURL(link))
+                        .append(engine.getInterWikiURL(link))
                         .append("<br />\n");
             }
 
@@ -271,7 +278,7 @@ public class VariableManager
         {
             StringBuffer sb = new StringBuffer();
             for (
-                Iterator i = context.getEngine().getAllInlinedImagePatterns().iterator();
+                Iterator i = engine.getAllInlinedImagePatterns().iterator();
                             i.hasNext();)
             {
                 String ptrn = (String) i.next();
@@ -283,7 +290,7 @@ public class VariableManager
         }
         else if (name.equals("pluginpath"))
         {
-            res = context.getEngine().getPluginSearchPath();
+            res = engine.getPluginSearchPath();
 
             res = (res == null)
                 ? "-"
@@ -291,13 +298,13 @@ public class VariableManager
         }
         else if (name.equals("baseurl"))
         {
-            res = context.getEngine().getBaseURL();
+            res = engine.getBaseURL();
         }
         else if (name.equals("uptime"))
         {
             Date now = new Date();
             long secondsRunning =
-                (now.getTime() - context.getEngine().getStartTime().getTime()) / 1000L;
+                (now.getTime() - engine.getStartTime().getTime()) / 1000L;
 
             long seconds = secondsRunning % 60;
             long minutes = (secondsRunning /= 60) % 60;
@@ -346,7 +353,7 @@ public class VariableManager
         }
         else if (name.equals("pagefilters"))
         {
-            List filters = context.getEngine().getFilterManager().getFilterList();
+            List filters = engine.getFilterManager().getFilterList();
             StringBuffer sb = new StringBuffer();
 
             for (Iterator i = filters.iterator(); i.hasNext();)
@@ -389,8 +396,6 @@ public class VariableManager
             // in other people's code... :-)
             if (varName.startsWith(WikiProperties.PROP_PREFIX))
             {
-                Configuration conf = context.getEngine().getWikiConfiguration();
-
                 try
                 {
                     return conf.getString(varName);

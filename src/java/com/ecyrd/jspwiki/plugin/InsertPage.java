@@ -60,6 +60,13 @@ public class InsertPage
     /** DOCUMENT ME! */
     private static final String DEFAULT_STYLE = "";
 
+    private final WikiEngine engine;
+    
+    public InsertPage(final WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -73,8 +80,6 @@ public class InsertPage
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        WikiEngine engine = context.getEngine();
-
         StringBuffer res = new StringBuffer();
 
         String clazz = (String) params.get(PARAM_CLASS);

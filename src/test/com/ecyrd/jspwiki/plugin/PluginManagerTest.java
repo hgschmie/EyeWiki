@@ -57,7 +57,7 @@ public class PluginManagerTest
 
         engine = new TestEngine(conf);
         context = new WikiContext(engine, new WikiPage("testpage"));
-        manager = new PluginManager(conf);
+        manager = new PluginManager(engine, conf);
     }
 
     /**
@@ -78,7 +78,7 @@ public class PluginManagerTest
     {
         String res =
             manager.execute(
-                context, "{INSERT com.ecyrd.jspwiki.plugin.SamplePlugin WHERE text=foobar}");
+                context, "{INSERT SamplePlugin WHERE text=foobar}");
 
         assertEquals("foobar", res);
     }
@@ -106,7 +106,7 @@ public class PluginManagerTest
     {
         conf.setProperty(PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo");
 
-        PluginManager m = new PluginManager(conf);
+        PluginManager m = new PluginManager(engine, conf);
         String res = m.execute(context, "{INSERT SamplePlugin2 WHERE text=foobar}");
 
         assertEquals("foobar", res);
@@ -122,7 +122,7 @@ public class PluginManagerTest
     {
         conf.setProperty(PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo");
 
-        PluginManager m = new PluginManager(conf);
+        PluginManager m = new PluginManager(engine, conf);
         String res = m.execute(context, "{INSERT SamplePlugin3 WHERE text=foobar}");
 
         assertEquals("foobar", res);
@@ -138,7 +138,7 @@ public class PluginManagerTest
     {
         conf.setProperty(PluginManager.PROP_CLASS_PLUGIN_SEARCHPATH, "com.foo,blat.blaa");
 
-        PluginManager m = new PluginManager(conf);
+        PluginManager m = new PluginManager(engine, conf);
         String res = m.execute(context, "{INSERT SamplePlugin WHERE text=foobar}");
 
         assertEquals("foobar", res);
@@ -155,7 +155,7 @@ public class PluginManagerTest
         String res =
             manager.execute(
                 context,
-                "{INSERT   com.ecyrd.jspwiki.plugin.SamplePlugin  WHERE   text = foobar2, moo=blat}");
+                "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat}");
 
         assertEquals("foobar2", res);
     }
@@ -171,7 +171,7 @@ public class PluginManagerTest
         String res =
             manager.execute(
                 context,
-                "{INSERT   com.ecyrd.jspwiki.plugin.SamplePlugin  WHERE   text = foobar2, moo=blat");
+                "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat");
 
         assertEquals("foobar2", res);
     }

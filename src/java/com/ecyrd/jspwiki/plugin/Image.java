@@ -74,6 +74,13 @@ public class Image
     /** DOCUMENT ME! */
     public static final String PARAM_BORDER = "border";
 
+    private final WikiEngine engine;
+    
+    public Image(final WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /**
      * This method is used to clean away things like quotation marks which a malicious user could
      * use to stop processing and insert javascript.
@@ -101,7 +108,6 @@ public class Image
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        WikiEngine engine = context.getEngine();
         String src = getCleanParameter(params, PARAM_SRC);
         String align = getCleanParameter(params, PARAM_ALIGN);
         String ht = getCleanParameter(params, PARAM_HEIGHT);

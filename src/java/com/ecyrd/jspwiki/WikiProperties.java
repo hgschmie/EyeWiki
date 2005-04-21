@@ -58,6 +58,9 @@ public interface WikiProperties
     /** Default value for the components configuration file */
     String PROP_COMPONENTS_FILE_DEFAULT = "/WEB-INF/wikiComponents.xml";
 
+    /** Property for the plugin configuration file. This has no default, if this value is empty or missing, no plugins are started. */
+    String PROP_PLUGIN_FILE = "jspwiki.pluginFile";
+
     /**
      * Name of the property that defines a directory where the pages are. Must be defined if you
      * use a file based PageProvider.

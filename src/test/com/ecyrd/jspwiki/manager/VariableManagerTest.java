@@ -58,9 +58,9 @@ public class VariableManagerTest
         conf = TestEngine.getConfiguration();
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
 
-        m_variableManager = new VariableManager(conf);
-
         testEngine = new TestEngine(conf);
+        m_variableManager = testEngine.getVariableManager();
+
         m_context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
     }
 

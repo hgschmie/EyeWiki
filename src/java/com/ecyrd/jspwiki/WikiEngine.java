@@ -561,7 +561,7 @@ public class WikiEngine
             setupMainContainer();
 
             String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
-            setupComponentContainer(m_servletContext, wikiComponentsFile);
+            setupContainer(componentContainerRef, mainContainerRef, wikiComponentsFile);
         }
         catch (Exception e)
         {
@@ -1395,7 +1395,11 @@ public class WikiEngine
      */
     public String getHTML(String pagename)
     {
-        WikiPage page = getPage(pagename);
+        return getHTML(getPage(pagename));
+    }
+
+    public String getHTML(WikiPage page)
+    {
         WikiContext context = new WikiContext(this, page);
         context.setRequestContext( WikiContext.NONE );
         return getHTML(context, page);
@@ -2307,9 +2311,9 @@ public class WikiEngine
     }
 
     /**
-     * Starts the PicoContainer which contains all the pluggable elements of the Wiki
+     * builds and starts a PicoContainer which contains a set of Elements.
      */
-    public void setupComponentContainer(ServletContext context, String confFile)
+    public void setupContainer(ObjectReference containerRef, ObjectReference parentRef, String confFile)
             throws Exception
     {
         InputStream configStream = null;
@@ -2317,6 +2321,7 @@ public class WikiEngine
         
         try
         {
+            ServletContext context = getServletContext();
             if (context != null)
             {
                 configStream = context.getResourceAsStream(confFile);
@@ -2327,18 +2332,18 @@ public class WikiEngine
                 configStream = new FileInputStream(configFile);
             }
 
-            if (configStream != null)
+            if (configStream == null)
             {
-                isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
-                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
-                
-                builder.buildContainer(componentContainerRef, mainContainerRef, "wiki", true);
-
-                // Do lifecycle start after the ref object has been initialized.
-                PicoContainer container = (PicoContainer) componentContainerRef.get();
-                container.start();
+                throw new IllegalArgumentException("Could not open configuration " + confFile);
             }
+
+            isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
+            
+            builder.buildContainer(containerRef, parentRef, "wiki", false);
+
+            ((PicoContainer) containerRef.get()).start();
         }
         finally
         {
@@ -2351,7 +2356,7 @@ public class WikiEngine
      * Prepares the 'root' container which all other containers use as their
      * base to get configuration and Wiki reference
      */
-    public void setupMainContainer()
+    private void setupMainContainer()
             throws Exception
     {
         MutablePicoContainer mainContainer = new DefaultPicoContainer();

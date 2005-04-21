@@ -1,0 +1,20 @@
+<container>
+  <component-implementation key="BugReportHandler"       class="com.ecyrd.jspwiki.plugin.BugReportHandler" />
+  <component-implementation key="Counter"                class="com.ecyrd.jspwiki.plugin.Counter" />
+  <component-implementation key="CurrentTimePlugin"      class="com.ecyrd.jspwiki.plugin.CurrentTimePlugin" />
+  <component-implementation key="Denounce"               class="com.ecyrd.jspwiki.plugin.Denounce" />
+  <component-implementation key="Image"                  class="com.ecyrd.jspwiki.plugin.Image" />
+  <component-implementation key="IndexPlugin"            class="com.ecyrd.jspwiki.plugin.IndexPlugin" />
+  <component-implementation key="InsertPage"             class="com.ecyrd.jspwiki.plugin.InsertPage" />
+  <component-implementation key="ListLocksPlugin"        class="com.ecyrd.jspwiki.plugin.ListLocksPlugin" />
+  <component-implementation key="RecentChangesPlugin"    class="com.ecyrd.jspwiki.plugin.RecentChangesPlugin" />
+  <component-implementation key="ReferringPagesPlugin"   class="com.ecyrd.jspwiki.plugin.ReferringPagesPlugin" />
+  <component-implementation key="Search"                 class="com.ecyrd.jspwiki.plugin.Search" />
+  <component-implementation key="TableOfContents"        class="com.ecyrd.jspwiki.plugin.TableOfContents" />
+  <component-implementation key="UndefinedPagesPlugin"   class="com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin" />
+  <component-implementation key="UnusedPagesPlugin"      class="com.ecyrd.jspwiki.plugin.UnusedPagesPlugin" />
+  <component-implementation key="VotePlugin"             class="com.ecyrd.jspwiki.plugin.VotePlugin" />
+  <component-implementation key="WeblogArchivePlugin"    class="com.ecyrd.jspwiki.plugin.WeblogArchivePlugin" />
+  <component-implementation key="WeblogEntryPlugin"      class="com.ecyrd.jspwiki.plugin.WeblogEntryPlugin" />
+  <component-implementation key="WeblogPlugin"           class="com.ecyrd.jspwiki.plugin.WeblogPlugin" />
+</container>

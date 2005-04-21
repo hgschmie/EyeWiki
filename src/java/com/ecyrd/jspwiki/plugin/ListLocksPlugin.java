@@ -26,6 +26,7 @@ import java.util.Map;
 import com.ecyrd.jspwiki.PageLock;
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.manager.PageManager;
 
 
@@ -40,6 +41,14 @@ import com.ecyrd.jspwiki.manager.PageManager;
 public class ListLocksPlugin
         implements WikiPlugin
 {
+    /** DOCUMENT ME! */
+    protected final WikiEngine engine;
+
+    public ListLocksPlugin(WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -55,7 +64,7 @@ public class ListLocksPlugin
     {
         StringBuffer result = new StringBuffer();
 
-        PageManager mgr = context.getEngine().getPageManager();
+        PageManager mgr = engine.getPageManager();
         List locks = mgr.getActiveLocks();
 
         result.append("<table class=\"" + WikiConstants.CSS_WIKICONTENT + "\">\n");

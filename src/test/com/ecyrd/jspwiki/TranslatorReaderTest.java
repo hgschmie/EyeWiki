@@ -1554,7 +1554,7 @@ public class TranslatorReaderTest
     public void testPluginInsert()
             throws Exception
     {
-        String src = "[{INSERT com.ecyrd.jspwiki.plugin.SamplePlugin WHERE text=test}]";
+        String src = "[{INSERT SamplePlugin WHERE text=test}]";
 
         assertEquals("test", translate(src));
     }

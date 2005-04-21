@@ -26,6 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.manager.ReferenceManager;
 import com.ecyrd.jspwiki.util.TextUtil;
@@ -41,6 +42,7 @@ import com.ecyrd.jspwiki.util.TextUtil;
  */
 public class ReferringPagesPlugin
         extends AbstractReferralPlugin
+        implements WikiPlugin
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ReferringPagesPlugin.class);
@@ -50,6 +52,14 @@ public class ReferringPagesPlugin
 
     /** DOCUMENT ME! */
     public static final String PARAM_EXTRAS = "extras";
+
+    protected final ReferenceManager referenceManager;
+
+    public ReferringPagesPlugin(final WikiEngine engine, final ReferenceManager referenceManager)
+    {
+        super(engine);
+        this.referenceManager = referenceManager;
+    }
 
     /**
      * DOCUMENT ME!
@@ -64,12 +74,11 @@ public class ReferringPagesPlugin
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        ReferenceManager refmgr = context.getEngine().getReferenceManager();
         WikiPage page = context.getPage();
 
         if (page != null)
         {
-            Collection links = refmgr.findReferrers(page.getName());
+            Collection links = referenceManager.findReferrers(page.getName());
             String wikitext;
 
             super.initialize(context, params);

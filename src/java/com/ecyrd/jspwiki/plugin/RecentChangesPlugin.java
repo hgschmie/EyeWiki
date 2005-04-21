@@ -52,6 +52,13 @@ public class RecentChangesPlugin
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(RecentChangesPlugin.class);
 
+    private final WikiEngine engine;
+    
+    public RecentChangesPlugin(final WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     private boolean isSameDay(Date a, Date b)
     {
         Calendar aa = Calendar.getInstance();
@@ -80,7 +87,6 @@ public class RecentChangesPlugin
         int since = TextUtil.parseIntParameter((String) params.get("since"), DEFAULT_DAYS);
         int spacing = 4;
         boolean showAuthor = true;
-        WikiEngine engine = context.getEngine();
 
         //
         //  Which format we want to see?

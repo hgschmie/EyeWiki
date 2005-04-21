@@ -2,6 +2,7 @@
 <%@ page import="com.ecyrd.jspwiki.*" %>
 <%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
 <%@ page import="com.ecyrd.jspwiki.plugin.VotePlugin" %>
+<%@ page import="com.ecyrd.jspwiki.plugin.PluginManager" %>
 <%@ page import="org.apache.commons.lang.BooleanUtils" %>
 
 <%@ page errorPage="/Error.jsp" %>
@@ -13,9 +14,11 @@
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
+
     Logger log = Logger.getLogger("JSPWiki"); 
     WikiEngine wiki;
 %><%
+
     WikiContext wikiContext = wiki.createContext( request, WikiContext.VIEW );
     String pagereq = wikiContext.getPage().getName();
     String vote    = request.getParameter("vote");
@@ -31,13 +34,18 @@
                               wikiContext,
                               PageContext.REQUEST_SCOPE );
 
-    VotePlugin plugin = new VotePlugin();
+    PluginManager pluginManager = wiki.getPluginManager();
 
-    plugin.vote( wikiContext, BooleanUtils.toBoolean(vote) ? 1 : -1 );
+    if (pluginManager != null)
+    {
+        VotePlugin plugin = (VotePlugin) pluginManager.findPlugin("VotePlugin");
 
-    response.sendRedirect( wiki.getBaseURL()+"Wiki.jsp?page=VoteOk" );
+        plugin.vote( wikiContext, BooleanUtils.toBoolean(vote) ? 1 : -1 );
+    }
 
     NDC.pop();
     NDC.remove();
+
+    response.sendRedirect( wiki.getBaseURL()+"Wiki.jsp?page=VoteOk" );
 %>
 

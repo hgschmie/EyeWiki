@@ -20,7 +20,6 @@
 package com.ecyrd.jspwiki.atom;
 
 import java.io.IOException;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -34,16 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiException;
-import com.ecyrd.jspwiki.WikiPage;
-import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
-import com.ecyrd.jspwiki.plugin.WeblogPlugin;
-import com.ecyrd.jspwiki.providers.ProviderException;
-import com.ecyrd.jspwiki.util.BlogUtil;
-import com.ecyrd.jspwiki.util.TextUtil;
-
 import org.intabulas.sandler.Sandler;
 import org.intabulas.sandler.SyndicationFactory;
 import org.intabulas.sandler.builders.XPPBuilder;
@@ -54,6 +43,17 @@ import org.intabulas.sandler.elements.Link;
 import org.intabulas.sandler.elements.Person;
 import org.intabulas.sandler.elements.impl.LinkImpl;
 import org.intabulas.sandler.exceptions.MarshallException;
+
+import com.ecyrd.jspwiki.WikiContext;
+import com.ecyrd.jspwiki.WikiEngine;
+import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiPage;
+import com.ecyrd.jspwiki.plugin.PluginManager;
+import com.ecyrd.jspwiki.plugin.WeblogEntryPlugin;
+import com.ecyrd.jspwiki.plugin.WeblogPlugin;
+import com.ecyrd.jspwiki.providers.ProviderException;
+import com.ecyrd.jspwiki.util.BlogUtil;
+import com.ecyrd.jspwiki.util.TextUtil;
 
 
 /**
@@ -165,27 +165,33 @@ public class AtomAPIServlet
             //
             //  Generate new blog entry.
             //
-            WeblogEntryPlugin plugin = new WeblogEntryPlugin();
 
-            String pageName = plugin.getNewEntryPage(m_engine, blogid);
-            String username = author.getName();
+            PluginManager pluginManager = m_engine.getPluginManager();
 
-            WikiPage entryPage = new WikiPage(pageName);
-            entryPage.setAuthor(username);
-
-            WikiContext context = new WikiContext(m_engine, entryPage);
-
-            StringBuffer text = new StringBuffer();
-            text.append("!" + title.getBody());
-            text.append("\n\n");
-            text.append(content.getBody());
-
-            if (log.isDebugEnabled())
+            if (pluginManager != null)
             {
-                log.debug("Writing entry: " + text);
-            }
+                WeblogEntryPlugin plugin = (WeblogEntryPlugin) pluginManager.findPlugin("WeblogEntryPlugin");
 
-            m_engine.saveText(context, text.toString());
+                String pageName = plugin.getNewEntryPage(blogid);
+                String username = author.getName();
+
+                WikiPage entryPage = new WikiPage(pageName);
+                entryPage.setAuthor(username);
+
+                WikiContext context = new WikiContext(m_engine, entryPage);
+
+                StringBuffer text = new StringBuffer();
+                text.append("!" + title.getBody());
+                text.append("\n\n");
+                text.append(content.getBody());
+                
+                if (log.isDebugEnabled())
+                {
+                    log.debug("Writing entry: " + text);
+                }
+                
+                m_engine.saveText(context, text.toString());
+            }
         }
         catch (MarshallException e)
         {

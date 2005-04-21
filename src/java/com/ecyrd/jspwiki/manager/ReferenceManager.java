@@ -48,7 +48,6 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
-import com.ecyrd.jspwiki.plugin.PluginManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
@@ -156,7 +155,7 @@ public class ReferenceManager
     private Map m_referredBy;
 
     /** The WikiEngine that owns this object. */
-    private WikiEngine m_engine;
+    private final WikiEngine engine;
 
     /** DOCUMENT ME! */
     private boolean m_matchEnglishPlurals = WikiProperties.PROP_MATCHPLURALS_DEFAULT;
@@ -173,7 +172,7 @@ public class ReferenceManager
     {
         m_refersTo = new HashMap();
         m_referredBy = new HashMap();
-        m_engine = engine;
+        this.engine = engine;
 
         m_matchEnglishPlurals =
             conf.getBoolean(
@@ -186,16 +185,12 @@ public class ReferenceManager
      */
     public synchronized void start()
     {
-        PluginManager pluginManager = m_engine.getPluginManager(); 
-        
         try
         {
-            pluginManager.setInitStage(true);
-
             Collection pages = new ArrayList();
 
-            pages.addAll(m_engine.getPageManager().getAllPages());
-            pages.addAll(m_engine.getAttachmentManager().getAllAttachments());
+            pages.addAll(engine.getPageManager().getAllPages());
+            pages.addAll(engine.getAttachmentManager().getAllAttachments());
 
             initialize(pages);
         }
@@ -203,12 +198,8 @@ public class ReferenceManager
         {
             log.fatal("Page or Attachment Provider is unable to list its pages", e);
         }
-        finally
-        {
-            pluginManager.setInitStage(false);
-        }
 
-        m_engine.getFilterManager().addPageFilter(this, -1000); // FIXME: Magic number.
+        engine.getFilterManager().addPageFilter(this, -1000); // FIXME: Magic number.
 
         setStarted(true);
     }
@@ -239,9 +230,9 @@ public class ReferenceManager
             throws ProviderException
     {
         String content =
-            m_engine.getPageManager().getPageText(page.getName(), WikiPageProvider.LATEST_VERSION);
-        Collection links = m_engine.scanWikiLinks(page, content);
-        Collection attachments = m_engine.getAttachmentManager().listAttachments(page);
+            engine.getPageManager().getPageText(page.getName(), WikiPageProvider.LATEST_VERSION);
+        Collection links = engine.scanWikiLinks(page, content);
+        Collection attachments = engine.getAttachmentManager().listAttachments(page);
 
         for (Iterator atti = attachments.iterator(); atti.hasNext();)
         {
@@ -296,7 +287,7 @@ public class ReferenceManager
                 }
 
                 // Refresh with the latest copy
-                page = m_engine.getPage(page.getName());
+                page = engine.getPage(page.getName());
 
                 if (page.getLastModified() == null)
                 {
@@ -362,7 +353,7 @@ public class ReferenceManager
         {
             long start = System.currentTimeMillis();
 
-            File f = new File(m_engine.getWorkDir(), SERIALIZATION_FILE);
+            File f = new File(engine.getWorkDir(), SERIALIZATION_FILE);
 
             in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(f)));
 
@@ -398,7 +389,7 @@ public class ReferenceManager
         {
             long start = System.currentTimeMillis();
 
-            File f = new File(m_engine.getWorkDir(), SERIALIZATION_FILE);
+            File f = new File(engine.getWorkDir(), SERIALIZATION_FILE);
 
             out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
 
@@ -437,7 +428,7 @@ public class ReferenceManager
 
         WikiPage page = context.getPage();
 
-        updateReferences(page.getName(), context.getEngine().scanWikiLinks(page, content));
+        updateReferences(page.getName(), engine.scanWikiLinks(page, content));
 
         serializeToDisk();
     }
@@ -551,7 +542,7 @@ public class ReferenceManager
             // exist, we might just as well forget about this entry.
             // It will be added again elsewhere if new references appear.
             if (((oldRefBy == null) || oldRefBy.isEmpty())
-                    && !m_engine.pageExists(referredPage))
+                    && !engine.pageExists(referredPage))
             {
                 m_referredBy.remove(referredPage);
             }
@@ -709,7 +700,7 @@ public class ReferenceManager
                 {
                     String aReference = (String) rit.next();
 
-                    if (!m_engine.pageExists(aReference))
+                    if (!engine.pageExists(aReference))
                     {
                         uncreated.add(aReference);
                     }

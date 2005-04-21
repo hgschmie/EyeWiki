@@ -197,9 +197,6 @@ public interface WikiConstants
     /** Class for the RSS related Styles. Used with A and IMG tags */
     String CSS_RSS = "rss";
 
-    /** Class for the Debugging Styles. Used with DIV, PRE, B, LI */
-    String CSS_DEBUG = "debug";
-
     /** Class for Search elements. Used with TABLE, TH, TD, A Tags */
     String CSS_SEARCH = "pagefind";
 

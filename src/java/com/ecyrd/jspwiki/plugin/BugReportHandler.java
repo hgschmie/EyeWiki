@@ -75,6 +75,14 @@ public class BugReportHandler
     /** DOCUMENT ME! */
     public static final String DEFAULT_DATEFORMAT = "dd-MMM-yyyy HH:mm:ss zzz";
 
+    /** DOCUMENT ME! */
+    protected final WikiEngine engine;
+
+    public BugReportHandler(final WikiEngine engine)
+    {
+        this.engine = engine;
+    }
+
     /**
      * DOCUMENT ME!
      *
@@ -192,7 +200,7 @@ public class BugReportHandler
             WikiContext newContext = (WikiContext) context.clone();
             newContext.setPage(newPage);
 
-            context.getEngine().saveText(newContext, str.toString());
+            engine.saveText(newContext, str.toString());
 
             return "A new bug report has been created: <a href=\"" + context.getViewURL(pageName)
             + "\">" + pageName + "</a>";
@@ -221,8 +229,6 @@ public class BugReportHandler
             ((baseName != null)
             ? baseName
             : "Bug") + TranslatorReader.cleanLink(title);
-
-        WikiEngine engine = context.getEngine();
 
         String pageName = basicPageName;
         long lastbug = 2;

@@ -66,7 +66,7 @@ public class ReferringPagesPluginTest
         engine.saveText("Foobar7", "Reference to [TestPage].");
 
         context = new WikiContext(engine, new WikiPage("TestPage"));
-        manager = new PluginManager(conf);
+        manager = new PluginManager(engine, conf);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ReferringPagesPluginTest
 
         String res =
             manager.execute(
-                context2, "{INSERT com.ecyrd.jspwiki.plugin.ReferringPagesPlugin WHERE max=5}");
+                context2, "{INSERT ReferringPagesPlugin WHERE max=5}");
 
         assertEquals(mkLink("TestPage") + "<br />", res);
     }
@@ -114,7 +114,7 @@ public class ReferringPagesPluginTest
     {
         String res =
             manager.execute(
-                context, "{INSERT com.ecyrd.jspwiki.plugin.ReferringPagesPlugin WHERE max=5}");
+                context, "{INSERT ReferringPagesPlugin WHERE max=5}");
 
         int count = 0;
         int index = -1;
@@ -145,7 +145,7 @@ public class ReferringPagesPluginTest
 
         String res =
             manager.execute(
-                context2, "{INSERT com.ecyrd.jspwiki.plugin.ReferringPagesPlugin WHERE maxwidth=5}");
+                context2, "{INSERT ReferringPagesPlugin WHERE maxwidth=5}");
 
         assertEquals(mkFullLink("TestP...", "TestPage") + "<br />", res);
     }
