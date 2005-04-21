@@ -148,7 +148,7 @@ public class FilterManager
             throws WikiException
     {
         super();
-        initialize(engine, conf);
+        initialize(conf);
     }
 
     static
@@ -234,7 +234,7 @@ public class FilterManager
      *
      * @throws WikiException DOCUMENT ME!
      */
-    private void initialize(WikiEngine engine, Configuration conf)
+    private void initialize(Configuration conf)
             throws WikiException
     {
         InputStream xmlStream = null;

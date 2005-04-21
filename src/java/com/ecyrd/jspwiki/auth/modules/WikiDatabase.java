@@ -27,7 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import org.picocontainer.Startable;
@@ -42,6 +41,7 @@ import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.auth.WikiGroup;
 import com.ecyrd.jspwiki.auth.WikiPrincipal;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
+import com.ecyrd.jspwiki.filters.FilterManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 
@@ -103,10 +103,10 @@ public class WikiDatabase
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public WikiDatabase(WikiEngine engine, Configuration conf)
+    public WikiDatabase(WikiEngine engine, FilterManager filterManager)
     {
         m_engine = engine;
-        m_engine.getFilterManager().addPageFilter(new SaveFilter(), 1000000);
+        filterManager.addPageFilter(new SaveFilter(), 1000000);
     }
 
     public synchronized void start()

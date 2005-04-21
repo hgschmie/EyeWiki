@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
-import org.picocontainer.Startable;
-
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
@@ -23,13 +21,10 @@ import com.ecyrd.jspwiki.util.TextUtil;
  * @version $Revision$
  */
 public class DefaultURLConstructor
-        implements URLConstructor, Startable
+        implements URLConstructor
 {
     /** DOCUMENT ME! */
     protected WikiEngine engine;
-
-    /** The configuration */
-    protected Configuration conf;
 
     /** DOCUMENT ME! */
     private String m_viewURLPattern = "%uWiki.jsp?page=%n";
@@ -40,24 +35,11 @@ public class DefaultURLConstructor
     public DefaultURLConstructor(final WikiEngine engine, final Configuration conf)
     {
         this.engine = engine;
-        this.conf = conf;
-    }
 
-    /**
-     * DOCUMENT ME!
-     *
-     */
-    public void start()
-    {
         m_useRelativeURLStyle =
                 "relative".equals(conf.getString(
                                           WikiProperties.PROP_REFSTYLE, 
                                           WikiProperties.PROP_REFSTYLE_DEFAULT));
-    }
-    
-    public void stop()
-    {
-        // GNDN
     }
 
     /**

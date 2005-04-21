@@ -28,7 +28,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -41,6 +40,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.WikiProvider;
+import com.ecyrd.jspwiki.manager.ReferenceManager;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiAttachmentProvider;
 
@@ -65,10 +65,13 @@ public class AttachmentManager
     private static final Logger log = Logger.getLogger(AttachmentManager.class);
 
     /** DOCUMENT ME! */
-    private WikiAttachmentProvider m_provider;
+    private final WikiAttachmentProvider m_provider;
 
     /** DOCUMENT ME! */
-    private WikiEngine m_engine;
+    private final WikiEngine m_engine;
+
+    /** The Reference Manager used for Attachments */
+    private final ReferenceManager m_referenceManager;
 
     /**
      * Creates a new AttachmentManager.  Note that creation will never fail, but it's quite likely
@@ -84,10 +87,10 @@ public class AttachmentManager
      *        configuration.  Typically this is the "jspwiki.properties".
      */
 
-    // FIXME: Perhaps this should fail somehow.
-    public AttachmentManager(WikiEngine engine, Configuration conf)
+    public AttachmentManager(final WikiEngine engine, final ReferenceManager referenceManager)
     {
         m_engine = engine;
+        m_referenceManager = referenceManager;
 
         PicoContainer container = m_engine.getComponentContainer();
 
@@ -312,7 +315,7 @@ public class AttachmentManager
 
         m_provider.putAttachmentData(att, in);
 
-        m_engine.getReferenceManager().updateReferences(att.getName(), new java.util.Vector());
+        m_referenceManager.updateReferences(att.getName(), new java.util.Vector());
 
         m_engine.updateReferences(new WikiPage(att.getParentName()));
     }

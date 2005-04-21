@@ -34,8 +34,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.PicoContainer;
-
 import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -79,13 +77,10 @@ public class UserManager
     private HashMap m_groups = new HashMap();
 
     /** DOCUMENT ME! */
-    private WikiAuthenticator m_authenticator;
+    private final WikiAuthenticator m_authenticator;
 
     /** DOCUMENT ME! */
-    private UserDatabase m_database;
-
-    /** DOCUMENT ME! */
-    private WikiEngine m_engine;
+    private final UserDatabase m_database;
 
     /** DOCUMENT ME! */
     private String m_administrator;
@@ -93,8 +88,6 @@ public class UserManager
     /** DOCUMENT ME! */
     private boolean m_useOldAuth = false;
     
-    private final Configuration m_conf;
-
     /**
      * Creates an UserManager instance for the given WikiEngine and the specified set of
      * properties.  All initialization for the modules is done here.
@@ -104,16 +97,19 @@ public class UserManager
      *
      * @throws WikiException DOCUMENT ME!
      */
-    public UserManager(WikiEngine engine, Configuration conf)
+    public UserManager(final WikiEngine engine, final Configuration conf, 
+            final AuthorizationManager authorizationManager,
+            final WikiAuthenticator authenticator,
+            final UserDatabase userDatabase)
             throws WikiException
     {
-        m_engine = engine;
-        m_conf = conf;
+        m_authenticator = authenticator;
+        m_database = userDatabase;
 
         m_storeIPAddress =
             conf.getBoolean(PROP_AUTH_STOREIPADDRESS, PROP_AUTH_STOREIPADDRESS_DEFAULT);
         m_administrator = conf.getString(PROP_AUTH_ADMINISTRATOR, PROP_AUTH_ADMINISTRATOR_DEFAULT);
-        m_useOldAuth = engine.getAuthorizationManager().isOldAuth();
+        m_useOldAuth = authorizationManager.isOldAuth();
 
         if (!m_useOldAuth)
         {
@@ -127,11 +123,6 @@ public class UserManager
         // m_groups.put( "All",             all );
         m_groups.put(GROUP_NAMEDGUEST, new NamedGroup());
         m_groups.put(GROUP_KNOWNPERSON, new KnownGroup());
-
-        PicoContainer container = engine.getComponentContainer();
-
-        m_authenticator = (WikiAuthenticator) container.getComponentInstance(WikiConstants.AUTHENTICATOR);
-        m_database = (UserDatabase)  container.getComponentInstance(WikiConstants.USER_DATABASE);
 
         if (m_authenticator == null)
         {

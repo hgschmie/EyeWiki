@@ -27,9 +27,6 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.PicoContainer;
-
-import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiPage;
@@ -43,7 +40,6 @@ import com.ecyrd.jspwiki.auth.permissions.EditPermission;
 import com.ecyrd.jspwiki.auth.permissions.ViewPermission;
 import com.ecyrd.jspwiki.auth.permissions.WikiPermission;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
-import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 
 
 /**
@@ -58,7 +54,7 @@ public class AuthorizationManager
     private static final Logger log = Logger.getLogger(AuthorizationManager.class);
 
     /** DOCUMENT ME! */
-    private WikiAuthorizer m_authorizer;
+    private final WikiAuthorizer m_authorizer;
 
     /** DOCUMENT ME! */
     private AccessControlList m_defaultPermissions;
@@ -70,10 +66,7 @@ public class AuthorizationManager
     private boolean m_useOldAuth = false;
 
     /** DOCUMENT ME! */
-    private WikiEngine m_engine;
-
-    /** The internal configuration object */
-    private final Configuration m_conf;
+    private final WikiEngine m_engine;
 
     /**
      * Creates a new AuthorizationManager, owned by engine and initialized according to the
@@ -86,11 +79,11 @@ public class AuthorizationManager
      * @throws WikiException DOCUMENT ME!
      * @throws InternalWikiException DOCUMENT ME!
      */
-    public AuthorizationManager(WikiEngine engine, Configuration conf)
+    public AuthorizationManager(final WikiEngine engine, final Configuration conf, final WikiAuthorizer authorizer)
             throws WikiException
     {
         m_engine = engine;
-        m_conf = conf;
+        m_authorizer = authorizer;
 
         m_useOldAuth = conf.getBoolean(PROP_AUTH_USEOLDAUTH, PROP_AUTH_USEOLDAUTH_DEFAULT);
         m_strictLogins = conf.getBoolean(PROP_AUTH_STRICTLOGINS, PROP_AUTH_STRICTLOGINS_DEFAULT);
@@ -98,15 +91,6 @@ public class AuthorizationManager
         if (!m_useOldAuth)
         {
             return;
-        }
-
-        PicoContainer container = engine.getComponentContainer();
-
-        m_authorizer = (WikiAuthorizer) container.getComponentInstance(WikiConstants.AUTHORIZER);
-
-        if (m_authorizer == null)
-        {
-            throw new NoRequiredPropertyException("Unable to find an Authorizer entry in the component configuration!", WikiConstants.AUTHORIZER);
         }
 
         AclEntryImpl ae = new AclEntryImpl();
@@ -172,23 +156,6 @@ public class AuthorizationManager
         }
 
         return acl;
-    }
-
-    /**
-     * Attempts to locate and initialize a WikiAuthorizer to use with this manager. Throws a
-     * WikiException if no entry is found, or if one fails to initialize.
-     *
-     * @param conf jspwiki.properties, containing a 'jpswiki.authorizer' class name
-     *
-     * @return a WikiAuthorizer used to get page authorization information
-     *
-     * @throws WikiException
-     * @throws NoRequiredPropertyException DOCUMENT ME!
-     */
-    private WikiAuthorizer getAuthorizerImplementation(WikiEngine engine)
-            throws WikiException
-    {
-        return m_authorizer;
     }
 
     /**

@@ -275,19 +275,6 @@ public class TemplateManager
     }
 
     /**
-     * Check if the property map requires refresh.
-     *
-     * @param templateName DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     */
-    private boolean checkRefresh(String templateName)
-    {
-        // CacheEntry entry = m_propertyCache.get();
-        return false;
-    }
-
-    /**
      * Always returns a valid property map.
      *
      * @param templateName DOCUMENT ME!

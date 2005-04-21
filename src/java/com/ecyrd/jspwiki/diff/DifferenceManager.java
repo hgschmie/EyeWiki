@@ -19,7 +19,6 @@
 */
 package com.ecyrd.jspwiki.diff;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import org.picocontainer.PicoContainer;
@@ -52,7 +51,7 @@ public class DifferenceManager
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      */
-    public DifferenceManager(WikiEngine engine, Configuration conf)
+    public DifferenceManager(WikiEngine engine)
     {
         PicoContainer container = engine.getComponentContainer();
 

@@ -212,10 +212,10 @@ public class ReferenceManager
 
         setStarted(true);
     }
-    
-    public void stop()
+
+    public synchronized void stop()
     {
-        // GNDN
+        setStarted(false);
     }
 
     protected void setStarted(final boolean started)
@@ -480,7 +480,7 @@ public class ReferenceManager
         //  remove that reference. (We don't want to try to figure out
         //  which particular references were removed...)
         //
-        cleanReferredBy(page, oldRefTo, references);
+        cleanReferredBy(page, oldRefTo);
 
         //
         //  Notify all referred pages of their referinesshoodicity.
@@ -520,9 +520,8 @@ public class ReferenceManager
      *
      * @param referrer DOCUMENT ME!
      * @param oldReferred DOCUMENT ME!
-     * @param newReferred DOCUMENT ME!
      */
-    private void cleanReferredBy(String referrer, Collection oldReferred, Collection newReferred)
+    private void cleanReferredBy(String referrer, Collection oldReferred)
     {
         // Two ways to go about this. One is to look up all pages previously
         // referred by referrer and remove referrer from their lists, and let

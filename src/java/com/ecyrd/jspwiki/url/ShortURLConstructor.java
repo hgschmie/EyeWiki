@@ -54,17 +54,6 @@ public class ShortURLConstructor
     public ShortURLConstructor(WikiEngine engine, Configuration conf)
     {
         super(engine, conf);
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
-     */
-    public void start()
-    {
-        super.start();
 
         m_urlPrefix = conf.getString(WikiProperties.PROP_SHORTURL_PREFIX, null);
 

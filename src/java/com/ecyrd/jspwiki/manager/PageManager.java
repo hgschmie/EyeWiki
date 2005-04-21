@@ -65,16 +65,19 @@ public final class PageManager
     private static final Logger log = Logger.getLogger(PageManager.class);
 
     /** DOCUMENT ME! */
-    private WikiPageProvider m_provider;
+    private final WikiPageProvider m_provider;
 
     /** DOCUMENT ME! */
     private HashMap m_pageLocks = new HashMap();
 
     /** DOCUMENT ME! */
-    private WikiEngine m_engine;
+    private final WikiEngine m_engine;
 
     /** The expiry time.  Default is 60 minutes. */
     private int m_expiryTime = 60;
+
+    /** Is the Manager started? */
+    private boolean started = false;
 
     /**
      * Creates a new PageManager.
@@ -87,12 +90,12 @@ public final class PageManager
     public PageManager(WikiEngine engine, Configuration conf)
             throws WikiException
     {
-        String classname;
-
         m_engine = engine;
 
         m_expiryTime = conf.getInt(PROP_LOCKEXPIRY, PROP_LOCKEXPIRY_DEFAULT);
 
+        // Don't do this over c'tor injection, because we might have more than just one WikiPageProvider
+        // instance around (PageProvider and (in case of a caching provider) RealPageProvider)
         PicoContainer container = m_engine.getComponentContainer();
         m_provider = (WikiPageProvider) container.getComponentInstance(WikiConstants.PAGE_PROVIDER);
 
@@ -109,11 +112,22 @@ public final class PageManager
         //  Start the lock reaper.
         //
         new LockReaper().start();
+        setStarted(true);
     }
 
     public synchronized void stop()
     {
-        // GNDN
+        setStarted(false);
+    }
+
+    protected void setStarted(final boolean started)
+    {
+        this.started = started;
+    }
+
+    public boolean isStarted()
+    {
+        return started;
     }
 
     /**

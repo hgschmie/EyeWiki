@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
 import org.picocontainer.PicoContainer;
@@ -85,13 +84,12 @@ public class CachingAttachmentProvider
      * DOCUMENT ME!
      *
      * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
      *
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      * @throws IllegalArgumentException DOCUMENT ME!
      */
-    public CachingAttachmentProvider(WikiEngine engine, Configuration conf)
+    public CachingAttachmentProvider(WikiEngine engine)
             throws NoRequiredPropertyException, IOException
     {
         log.debug("Initing CachingAttachmentProvider");

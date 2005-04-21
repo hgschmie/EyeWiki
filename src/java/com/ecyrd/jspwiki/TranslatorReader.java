@@ -83,34 +83,34 @@ public class TranslatorReader
     public static final int EDIT = 1;
 
     /** DOCUMENT ME! */
-    private static final int EMPTY = 2; // Empty message
+    public static final int EMPTY = 2; // Empty message
 
     /** DOCUMENT ME! */
-    private static final int LOCAL = 3;
+    public static final int LOCAL = 3;
 
     /** DOCUMENT ME! */
-    private static final int LOCALREF = 4;
+    public static final int LOCALREF = 4;
 
     /** DOCUMENT ME! */
-    private static final int IMAGE = 5;
+    public static final int IMAGE = 5;
 
     /** DOCUMENT ME! */
-    private static final int EXTERNAL = 6;
+    public static final int EXTERNAL = 6;
 
     /** DOCUMENT ME! */
-    private static final int INTERWIKI = 7;
+    public static final int INTERWIKI = 7;
 
     /** DOCUMENT ME! */
-    private static final int IMAGELINK = 8;
+    public static final int IMAGELINK = 8;
 
     /** DOCUMENT ME! */
-    private static final int IMAGEWIKILINK = 9;
+    public static final int IMAGEWIKILINK = 9;
 
     /** DOCUMENT ME! */
     public static final int ATTACHMENT = 10;
 
     /** DOCUMENT ME! */
-    private static final int ATTACHMENTIMAGE = 11;
+    public static final int ATTACHMENTIMAGE = 11;
 
     /** Lists all punctuation characters allowed in WikiMarkup. These will not be cleaned away. */
     private static final String PUNCTUATION_CHARS_ALLOWED = "._";

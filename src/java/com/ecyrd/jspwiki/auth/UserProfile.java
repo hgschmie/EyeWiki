@@ -19,7 +19,6 @@
  */
 package com.ecyrd.jspwiki.auth;
 
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import com.ecyrd.jspwiki.util.TextUtil;
@@ -116,8 +115,6 @@ public class UserProfile
      * @param res DOCUMENT ME!
      *
      * @return DOCUMENT ME!
-     *
-     * @throws NoSuchElementException DOCUMENT ME!
      */
     public static UserProfile parseStringRepresentation(String res)
     {

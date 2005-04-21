@@ -402,6 +402,7 @@ public class WikiEngine
                 String key = (String) it.next();
                 try
                 {
+                    // Do not remove!
                     String val = conf.getString(key);
                 }
                 catch (NoSuchElementException e)
@@ -555,14 +556,12 @@ public class WikiEngine
         // Start up the Picocontainer
         //
         
-        PicoContainer componentContainer = null;
-        
         try
         {
             setupMainContainer();
 
             String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
-            componentContainer = setupComponentContainer(m_servletContext, wikiComponentsFile);
+            setupComponentContainer(m_servletContext, wikiComponentsFile);
         }
         catch (Exception e)
         {
@@ -2310,11 +2309,9 @@ public class WikiEngine
     /**
      * Starts the PicoContainer which contains all the pluggable elements of the Wiki
      */
-    public PicoContainer setupComponentContainer(ServletContext context, String confFile)
+    public void setupComponentContainer(ServletContext context, String confFile)
             throws Exception
     {
-        PicoContainer container = null;
-
         InputStream configStream = null;
         InputStreamReader isr = null;
         
@@ -2337,9 +2334,9 @@ public class WikiEngine
                 ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
                 
                 builder.buildContainer(componentContainerRef, mainContainerRef, "wiki", true);
-                container = (PicoContainer) componentContainerRef.get();
 
                 // Do lifecycle start after the ref object has been initialized.
+                PicoContainer container = (PicoContainer) componentContainerRef.get();
                 container.start();
             }
         }
@@ -2348,8 +2345,6 @@ public class WikiEngine
             IOUtils.closeQuietly(configStream);
             IOUtils.closeQuietly(isr);
         }
-
-        return container;
     }
 
     /**
