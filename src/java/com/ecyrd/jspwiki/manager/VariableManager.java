@@ -19,25 +19,25 @@
  */
 package com.ecyrd.jspwiki.manager;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
-import com.ecyrd.jspwiki.Release;
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
+
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.WikiProvider;
-import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.exception.NoSuchVariableException;
+import com.ecyrd.jspwiki.util.PriorityList;
+import com.ecyrd.jspwiki.variable.WikiVariable;
 
 
 /**
@@ -49,7 +49,11 @@ import com.ecyrd.jspwiki.exception.NoSuchVariableException;
  * @since 1.9.20.
  */
 public class VariableManager
+        implements Startable
 {
+    /** DOCUMENT ME! */
+    private static final Logger log = Logger.getLogger(VariableManager.class);
+
     /** DOCUMENT ME! */
     public static final String VAR_ERROR = "error";
 
@@ -60,16 +64,69 @@ public class VariableManager
 
     protected final Configuration conf; 
 
+    /** The Container to manage the Variable Plugins */
+    protected final  PicoContainer variableContainer;
+
+    /** Priorized list of Variable evaluators (catchall) */
+    private final PriorityList evaluators = new PriorityList();
+
+    /** Hashmap of directly registered Variables */
+    private final Map variableMap = new HashMap();
+
     /**
      * Creates a new VariableManager object.
      *
      * @param conf DOCUMENT ME!
      */
     public VariableManager(final WikiEngine engine, final Configuration conf)
+    	throws Exception
     {
         this.engine = engine;
         this.conf = conf;
+
+        ObjectReference parentRef = new SimpleReference();
+        parentRef.set(engine.getComponentContainer());
+        
+        ObjectReference variableContainerRef = new SimpleReference();
+
+        String wikiVariableFile = conf.getString(WikiProperties.PROP_VARIABLE_FILE, WikiProperties.PROP_VARIABLE_FILE_DEFAULT);
+        engine.setupContainer(variableContainerRef, parentRef, wikiVariableFile);
+        variableContainer = (PicoContainer) variableContainerRef.get();
     }
+
+    public synchronized void start()
+    {
+        variableContainer.start();
+    }
+
+    public synchronized void stop()
+    {
+        variableContainer.stop();
+    }
+
+    public void registerVariable(final String variableName, final WikiVariable wikiVariable)
+    {
+        String varName = variableName.toLowerCase();
+
+        if (variableMap.get(varName) != null)
+        {
+            throw new IllegalArgumentException("Already a variable registered for " + variableName);
+        }
+
+        variableMap.put(varName, wikiVariable);
+    }
+
+    public void registerEvaluator(final WikiVariable wikiEvaluator, int priority)
+    {
+        if (evaluators.contains(wikiEvaluator))
+        {
+            throw new IllegalArgumentException(wikiEvaluator.getClass().getName() + " already as evaluator registered");
+        }
+
+        evaluators.add(wikiEvaluator, wikiEvaluator.getPriority());
+    }
+            
+
 
     /**
      * Returns true if the link is really command to insert a variable.
@@ -135,52 +192,55 @@ public class VariableManager
      * @return DOCUMENT ME!
      */
 
-    // FIXME: somewhat slow.
     public String expandVariables(WikiContext context, String source)
     {
         StringBuffer result = new StringBuffer();
 
-        for (int i = 0; i < source.length(); i++)
+        int length = source.length();
+
+        for (int i = 0; i < length; i++)
         {
-            if (source.charAt(i) == '{')
+            if (i < length - 2)
             {
-                if ((i < (source.length() - 2)) && (source.charAt(i + 1) == '$'))
+                if (source.charAt(i) == '{')
                 {
-                    int end = source.indexOf('}', i);
-
-                    if (end != -1)
+                    if (source.charAt(i + 1) == '$')
                     {
-                        String varname = source.substring(i + 2, end);
-                        String value;
-
-                        try
+                        int end = source.indexOf('}', i);
+                        
+                        if (end != -1)
                         {
-                            value = getValue(context, varname);
+                            String varname = source.substring(i + 2, end);
+                            String value;
+                            
+                            try
+                            {
+                                value = getValue(context, varname);
+                            }
+                            catch (NoSuchVariableException e)
+                            {
+                                value = e.getMessage();
+                            }
+                            catch (IllegalArgumentException e)
+                            {
+                                value = e.getMessage();
+                            }
+                            
+                            result.append(value);
+                            i = end;
+                            
+                            continue;
                         }
-                        catch (NoSuchVariableException e)
-                        {
-                            value = e.getMessage();
-                        }
-                        catch (IllegalArgumentException e)
-                        {
-                            value = e.getMessage();
-                        }
-
-                        result.append(value);
-                        i = end;
-
-                        continue;
                     }
-                }
-                else
-                {
-                    result.append('{');
+                    else
+                    {
+                        result.append('{');
+                    }
+                    continue;
                 }
             }
-            else
-            {
-                result.append(source.charAt(i));
-            }
+
+            result.append(source.charAt(i));
         }
 
         return result.toString();
@@ -197,254 +257,51 @@ public class VariableManager
      * @throws IllegalArgumentException If the name is somehow broken.
      * @throws NoSuchVariableException If a variable is not known.
      */
-
-    // FIXME: Currently a bit complicated.  Perhaps should use reflection
-    //        or something to make an easy way of doing stuff.
-    public String getValue(WikiContext context, String varName)
+    public String getValue(final WikiContext context, final String varName)
             throws NoSuchVariableException
     {
-        if (varName == null)
-        {
-            throw new IllegalArgumentException("Null variable name.");
-        }
-
         if (StringUtils.isEmpty(varName))
         {
-            throw new IllegalArgumentException("Zero length variable name.");
+            throw new IllegalArgumentException("Illegal variable name:" + varName);
         }
 
-        // Faster than doing equalsIgnoreCase()
+        if (context == null)
+        {
+            throw new IllegalArgumentException("getValue() called with null context");
+        }
+
         String name = varName.toLowerCase();
-        String res = "";
+        WikiVariable variable = (WikiVariable) variableMap.get(name);
 
-        if (name.equals("pagename"))
+        try
         {
-            res = context.getPage().getName();
-        }
-        else if (name.equals("applicationname"))
-        {
-            res = engine.getApplicationName();
-        }
-        else if (name.equals("jspwikiversion"))
-        {
-            res = Release.getVersionString();
-        }
-        else if (name.equals("encoding"))
-        {
-            res = engine.getContentEncoding();
-        }
-        else if (name.equals("totalpages"))
-        {
-            res = Integer.toString(engine.getPageCount());
-        }
-        else if (name.equals("pageprovider"))
-        {
-            res = engine.getCurrentProvider();
-        }
-        else if (name.equals("pageproviderdescription"))
-        {
-            res = engine.getCurrentProviderInfo();
-        }
-        else if (name.equals("attachmentprovider"))
-        {
-            WikiProvider p = engine.getAttachmentManager().getCurrentProvider();
-            res = (p != null)
-                ? p.getClass().getName()
-                : "-";
-        }
-        else if (name.equals("attachmentproviderdescription"))
-        {
-            WikiProvider p = engine.getAttachmentManager().getCurrentProvider();
-
-            res = (p != null)
-                ? p.getProviderInfo()
-                : "-";
-        }
-        else if (name.equals("interwikilinks"))
-        {
-            StringBuffer sb = new StringBuffer();
-            for (Iterator i = engine.getAllInterWikiLinks().iterator(); i.hasNext();)
+            if (variable != null)
             {
-                String link = (String) i.next();
-                sb.append(link)
-                        .append(" --&gt; ")
-                        .append(engine.getInterWikiURL(link))
-                        .append("<br />\n");
+                return variable.getValue(context, name);
             }
 
-            res = sb.toString();
-        }
-        else if (name.equals("inlinedimages"))
-        {
-            StringBuffer sb = new StringBuffer();
-            for (
-                Iterator i = engine.getAllInlinedImagePatterns().iterator();
-                            i.hasNext();)
+            for (Iterator it = evaluators.iterator(); it.hasNext(); )
             {
-                String ptrn = (String) i.next();
-                sb.append(ptrn)
-                        .append("<br />\n");
-            }
+                WikiVariable evaluator = (WikiVariable) it.next();
 
-            res = sb.toString();
-        }
-        else if (name.equals("baseurl"))
-        {
-            res = engine.getBaseURL();
-        }
-        else if (name.equals("uptime"))
-        {
-            Date now = new Date();
-            long secondsRunning =
-                (now.getTime() - engine.getStartTime().getTime()) / 1000L;
-
-            long seconds = secondsRunning % 60;
-            long minutes = (secondsRunning /= 60) % 60;
-            long hours = (secondsRunning /= 60) % 24;
-            long days = secondsRunning /= 24;
-
-            return days + "d, " + hours + "h " + minutes + "m " + seconds + "s";
-        }
-        else if (name.equals("loginstatus"))
-        {
-            UserProfile wup = context.getCurrentUser();
-
-            int status = (wup != null)
-                ? wup.getLoginStatus()
-                : UserProfile.NONE;
-
-            switch (status)
-            {
-            case UserProfile.NONE:
-                return "unknown (not logged in)";
-
-            case UserProfile.COOKIE:
-                return "named (cookie)";
-
-            case UserProfile.CONTAINER:
-                return "validated (container)";
-
-            case UserProfile.PASSWORD:
-                return "validated (password)";
-
-            default:
-                return "ILLEGAL STATUS!";
-            }
-        }
-        else if (name.equals("username"))
-        {
-            UserProfile wup = context.getCurrentUser();
-
-            return (wup != null)
-            ? wup.getName()
-            : "not logged in";
-        }
-        else if (name.equals("requestcontext"))
-        {
-            return context.getRequestContext();
-        }
-        else if (name.equals("pagefilters"))
-        {
-            List filters = engine.getFilterManager().getFilterList();
-            StringBuffer sb = new StringBuffer();
-
-            for (Iterator i = filters.iterator(); i.hasNext();)
-            {
-                String f = i.next().getClass().getName();
-
-                //
-                //  Skip some known internal filters.
-                //  FIXME: Quite a klugde.
-                //
-                if (f.endsWith("ReferenceManager") || f.endsWith("WikiDatabase$SaveFilter"))
-                {
-                    continue;
-                }
-
-                if (sb.length() > 0)
-                {
-                    sb.append(", ");
-                }
-
-                sb.append(f);
-            }
-
-            return sb.toString();
-        }
-        else
-        {
-            //
-            // Check if such a context variable exists,
-            // returning its string representation.
-            //
-            if ((context.getVariable(varName)) != null)
-            {
-                return context.getVariable(varName).toString();
-            }
-
-            // Next-to-final straw: attempt to fetch using property name
-            // We don't allow fetching any other properties than those starting
-            // with "jspwiki.".  I know my own code, but I can't vouch for bugs
-            // in other people's code... :-)
-            if (varName.startsWith(WikiProperties.PROP_PREFIX))
-            {
                 try
                 {
-                    return conf.getString(varName);
+                    return evaluator.getValue(context, name);
                 }
-                catch (NoSuchElementException nsee)
+                catch (NoSuchVariableException e)
                 {
-                    // Does nothing, just continue searching...
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("No match for " + name + " in Evaluator " + evaluator.getName());
+                    }
                 }
             }
-
-            // And the final straw: see if the current page has named metadata.
-            WikiPage pg = context.getPage();
-
-            if (pg != null)
-            {
-                Object metadata = pg.getAttribute(varName);
-
-                if (metadata != null)
-                {
-                    return (metadata.toString());
-                }
-            }
-
-            //
-            //  Well, I guess it wasn't a final straw.  We also allow
-            //  variables from the session and the request (in this order).
-            //
-            HttpServletRequest req = context.getHttpRequest();
-
-            if (req != null)
-            {
-                HttpSession session = req.getSession();
-
-                Object attribute = session.getAttribute(varName);
-
-                if (attribute != null)
-                {
-                    return String.valueOf(attribute);
-                }
-
-                if ((res = context.getHttpParameter(varName)) != null)
-                {
-                    return res;
-                }
-            }
-
-            //
-            //  Final defaults for some known quantities.
-            //
-            if (varName.equals(VAR_ERROR) || varName.equals(VAR_MSG))
-            {
-                return "";
-            }
-
-            throw new NoSuchVariableException("No variable " + varName + " defined.");
         }
-
-        return res;
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException("While evaluating " + varName);
+        }
+ 
+        throw new NoSuchVariableException("No variable " + varName + " defined.");
     }
 }

@@ -57,6 +57,12 @@ public interface WikiProperties
     /** Default value for the components configuration file */
     String PROP_COMPONENTS_FILE_DEFAULT = "/WEB-INF/wikiComponents.xml";
 
+    /** Property for the variable configuration file */
+    String PROP_VARIABLE_FILE = "jspwiki.variableFile";
+
+    /** Default value for the variable configuration file */
+    String PROP_VARIABLE_FILE_DEFAULT = "/WEB-INF/wikiVariables.xml";
+
     /** Property for the plugin configuration file. This has no default, if this value is empty or missing, no plugins are started. */
     String PROP_PLUGIN_FILE = "jspwiki.pluginFile";
 

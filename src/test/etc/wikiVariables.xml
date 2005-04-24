@@ -1,0 +1,17 @@
+<container>
+  <component-implementation class="com.ecyrd.jspwiki.variable.AttachmentProviderVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.ConstantVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.EngineVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.InlinedImagesVariable" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.InterWikiLinksVariable" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.PageFiltersVariable" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.PageNameVariable" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.UptimeVariable" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.VersionVariable" />
+
+  <component-implementation class="com.ecyrd.jspwiki.variable.ContextVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.ConfigurationVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.MetadataVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.ServletRequestVariables" />
+  <component-implementation class="com.ecyrd.jspwiki.variable.HttpParameterVariables" />
+</container>

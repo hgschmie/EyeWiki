@@ -200,6 +200,7 @@ public class FileSystemProviderTest
         conf2.setProperty(WikiProperties.PROP_PAGEDIR, newDir.getAbsolutePath());
         conf2.setThrowExceptionOnMissing(true);
         conf2.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/fspComponents.xml");
+        conf2.setProperty(WikiProperties.PROP_VARIABLE_FILE, "src/test/etc/wikiVariables.xml");
 
         TestEngine m_engine2 = new TestEngine(conf2);
         FileSystemProvider test = new FileSystemProvider(m_engine2, conf);
