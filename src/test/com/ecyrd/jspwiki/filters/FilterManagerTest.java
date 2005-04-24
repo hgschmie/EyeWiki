@@ -69,9 +69,9 @@ public class FilterManagerTest
     public void testInitFilters()
             throws Exception
     {
-        FilterManager m = new FilterManager(engine, conf);
+        FilterManager m = engine.getFilterManager();
 
-        List l = m.getFilterList();
+        List l = m.getVisibleFilterList();
 
         assertEquals("Wrong number of filters", 2, l.size());
 
@@ -93,9 +93,9 @@ public class FilterManagerTest
     public void testInitParams()
             throws Exception
     {
-        FilterManager m = new FilterManager(engine, conf);
+        FilterManager m = engine.getFilterManager();
 
-        List l = m.getFilterList();
+        List l = m.getVisibleFilterList();
 
         Iterator i = l.iterator();
         PageFilter f1 = (PageFilter) i.next();
