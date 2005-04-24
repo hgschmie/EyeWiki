@@ -46,7 +46,10 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.manager.VariableManager;
 import com.ecyrd.jspwiki.util.FileUtil;
+import com.ecyrd.jspwiki.variable.AbstractSimpleVariable;
+import com.ecyrd.jspwiki.variable.WikiVariable;
 
 
 /**
@@ -85,6 +88,8 @@ public class RSSGenerator
     /** The Generator Configuration */
     private final Configuration m_conf;
 
+    private final VariableManager variableManager;
+
     /**
      * Initialize the RSS generator.
      *
@@ -93,11 +98,12 @@ public class RSSGenerator
      *
      * @throws NoRequiredPropertyException DOCUMENT ME!
      */
-    public RSSGenerator(WikiEngine engine, Configuration conf)
+    public RSSGenerator(final WikiEngine engine, final Configuration conf, final VariableManager variableManager)
             throws NoRequiredPropertyException
     {
         m_engine = engine;
         m_conf = conf;
+        this.variableManager = variableManager;
 
         // FIXME: This assumes a bit too much.
         if (StringUtils.isEmpty(engine.getBaseURL()))
@@ -115,6 +121,8 @@ public class RSSGenerator
 
     public synchronized void start()
     {
+        variableManager.registerVariable("jspwiki.rss.generate", new RSSVariable());
+
         new RSSThread().start();
     }
 
@@ -571,6 +579,16 @@ public class RSSGenerator
         return result.toString();
     }
 
+    private class RSSVariable
+            extends AbstractSimpleVariable
+            implements WikiVariable
+    {
+        public String getValue(WikiContext context, String variableName)
+        {
+            // URL exists: We generate a RSS Stream. Else not.
+            return String.valueOf(getGlobalRSSURL() != null);
+        }
+    }
 
     /**
      * Runs the RSS generation thread. FIXME: MUST be somewhere else, this is not a good place.
