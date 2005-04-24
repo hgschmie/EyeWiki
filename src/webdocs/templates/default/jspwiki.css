@@ -574,6 +574,39 @@ A.external:active {
  * interwiki	a
  */
 
+A.interwiki {
+	text-decoration: none;
+        color: #005522;
+  	border-bottom: dashed #005522;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.interwiki:visited {
+	text-decoration: none;
+        color:#005522;
+  	border-bottom: dashed #005522;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.interwiki:hover {
+	text-decoration: none;
+        color:#005522;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.interwiki:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+
 /*
  * Images (IMG)
  *
