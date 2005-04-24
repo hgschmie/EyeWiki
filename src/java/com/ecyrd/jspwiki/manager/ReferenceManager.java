@@ -48,6 +48,7 @@ import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
+import com.ecyrd.jspwiki.filters.PageFilter;
 import com.ecyrd.jspwiki.providers.ProviderException;
 import com.ecyrd.jspwiki.providers.WikiPageProvider;
 
@@ -133,7 +134,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  */
 public class ReferenceManager
         extends BasicPageFilter
-        implements Startable
+        implements PageFilter, Startable
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ReferenceManager.class);
@@ -199,7 +200,7 @@ public class ReferenceManager
             log.fatal("Page or Attachment Provider is unable to list its pages", e);
         }
 
-        engine.getFilterManager().addPageFilter(this, -1000); // FIXME: Magic number.
+        engine.getFilterManager().addPageFilter(this);
 
         setStarted(true);
     }
@@ -635,11 +636,6 @@ public class ReferenceManager
      */
     public synchronized Collection findUnreferenced()
     {
-        if (!isStarted())
-        {
-            throw new IllegalArgumentException("Called findUnreferenced() before start()!");
-        }
-
         ArrayList unref = new ArrayList();
 
         Set keys = m_referredBy.keySet();
@@ -675,12 +671,6 @@ public class ReferenceManager
      */
     public synchronized Collection findUncreated()
     {
-        if (!isStarted())
-        {
-            throw new IllegalArgumentException("Called findUncreated() before start()!");
-        }
-
-
         TreeSet uncreated = new TreeSet();
 
         // Go through m_refersTo values and check that m_refersTo has the corresponding keys.
@@ -749,11 +739,6 @@ public class ReferenceManager
      */
     public synchronized Collection findReferrers(String pagename)
     {
-        if (!isStarted())
-        {
-            throw new IllegalArgumentException("Called findReferrers() before start()!");
-        }
-
         Set refs = getReferenceList(m_referredBy, pagename);
 
         if ((refs == null) || refs.isEmpty())
@@ -764,5 +749,23 @@ public class ReferenceManager
         {
             return refs;
         }
+    }
+
+    /*
+     * ========================================================================
+     *
+     * Page Filter methods
+     *
+     * ========================================================================
+     */
+
+    public boolean isVisible()
+    {
+        return false;
+    }
+
+    public int getPriority()
+    {
+        return PageFilter.MIN_PRIORITY;
     }
 }
