@@ -286,13 +286,13 @@ public class VariableManager
 
                 try
                 {
-                    return evaluator.getValue(context, name);
+                    return evaluator.getValue(context, varName);
                 }
                 catch (NoSuchVariableException e)
                 {
                     if (log.isDebugEnabled())
                     {
-                        log.debug("No match for " + name + " in Evaluator " + evaluator.getName());
+                        log.debug("No match for " + varName + " in Evaluator " + evaluator.getName());
                     }
                 }
             }
