@@ -202,39 +202,51 @@ public class PluginManager
 
     public synchronized void start()
     {
-        if (pluginContainer != null)
+        if (pluginContainer == null)
         {
-        	try
-        	{
-        	    setInitStage(true);
-
-        	    // Run through all the pages, find the init plugins and fire them up.
-        	    Collection pages = engine.getPageManager().getAllPages();
-
-        	    for (Iterator it = pages.iterator(); it.hasNext();)
-        	    {
-        	        WikiPage page = (WikiPage) it.next();
-                        // content evaluation runs the plugins
-                        engine.getHTML(page);
-        	    }
-        	}
-        	catch (Exception e)
-        	{
-        	    log.fatal("While indexing the Plugins", e);
-        	}
-        	finally
-        	{
-        	    setInitStage(false);
-        	}
-
             setStarted(true);
+            return;
         }
+
+        pluginContainer.start();
+
+        try
+        {
+            setInitStage(true);
+            
+            // Run through all the pages, find the init plugins and fire them up.
+            Collection pages = engine.getPageManager().getAllPages();
+            
+            for (Iterator it = pages.iterator(); it.hasNext();)
+            {
+                WikiPage page = (WikiPage) it.next();
+                // content evaluation runs the plugins
+                engine.getHTML(page);
+            }
+        }
+        catch (Exception e)
+        {
+            log.fatal("While indexing the Plugins", e);
+        }
+        finally
+        {
+            setInitStage(false);
+        }
+        
+        setStarted(true);
     }
 
     public synchronized void stop()
     {
+        if (pluginContainer == null)
+        {
+            setStarted(false);
+            return;
+        }
+
+        pluginContainer.stop();
         setStarted(false);
-    }
+}
 
     protected void setStarted(final boolean started)
     {

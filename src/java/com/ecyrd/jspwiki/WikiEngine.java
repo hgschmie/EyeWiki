@@ -562,6 +562,7 @@ public class WikiEngine
 
             String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
             setupContainer(componentContainerRef, mainContainerRef, wikiComponentsFile);
+            ((PicoContainer) componentContainerRef.get()).start();
         }
         catch (Exception e)
         {
@@ -2329,8 +2330,6 @@ public class WikiEngine
             ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
             
             builder.buildContainer(containerRef, parentRef, "wiki", false);
-
-            ((PicoContainer) containerRef.get()).start();
         }
         finally
         {
