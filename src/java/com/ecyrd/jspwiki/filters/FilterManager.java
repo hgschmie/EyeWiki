@@ -22,19 +22,23 @@ package com.ecyrd.jspwiki.filters;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.Parameter;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ConstantParameter;
+import org.picocontainer.defaults.DefaultPicoContainer;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -44,7 +48,6 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiProperties;
-import com.ecyrd.jspwiki.util.ClassUtil;
 import com.ecyrd.jspwiki.util.PriorityList;
 
 
@@ -99,10 +102,10 @@ import com.ecyrd.jspwiki.util.PriorityList;
  */
 public class FilterManager
         extends DefaultHandler
-        implements WikiProperties
+        implements WikiProperties, Startable
 {
     /** DOCUMENT ME! */
-    private static final Logger log = Logger.getLogger(WikiEngine.class);
+    private static final Logger log = Logger.getLogger(FilterManager.class);
 
     /** DOCUMENT ME! */
     public static final String DEFAULT_XMLFILE = "/filters.xml";
@@ -135,6 +138,19 @@ public class FilterManager
 
     /** The SAX Parser Factory */
     private static SAXParserFactory saxFactory = null;
+    
+    /** Is the manager started? */
+    private boolean started = false;
+
+    /** The Container to manage the Filters */
+    private final MutablePicoContainer filterContainer;
+
+    static
+    {
+        saxFactory = SAXParserFactory.newInstance();
+        saxFactory.setValidating(false);
+        saxFactory.setNamespaceAware(false);
+    }
 
     /**
      * Creates a new FilterManager object.
@@ -145,97 +161,11 @@ public class FilterManager
      * @throws WikiException DOCUMENT ME!
      */
     public FilterManager(WikiEngine engine, Configuration conf)
-            throws WikiException
+            throws Exception
     {
-        super();
-        initialize(conf);
-    }
 
-    static
-    {
-        saxFactory = SAXParserFactory.newInstance();
-        saxFactory.setValidating(false);
-        saxFactory.setNamespaceAware(false);
-    }
+        filterContainer = new DefaultPicoContainer(engine.getComponentContainer());
 
-    /**
-     * Adds a page filter to the queue.  The priority defines in which order the page filters are
-     * run, the highest priority filters go in the queue first.
-     *
-     * <p>
-     * In case two filters have the same priority, their execution order is the insertion order.
-     * </p>
-     *
-     * @param f PageFilter to add
-     * @param priority The priority in which position to add it in.
-     *
-     * @throws IllegalArgumentException If the PageFilter is null or invalid.
-     *
-     * @since 2.1.44.
-     */
-    public void addPageFilter(PageFilter f, int priority)
-    {
-        if (f == null)
-        {
-            throw new IllegalArgumentException(
-                    "Attempt to provide a null filter - this should never happen. "
-                    + "Please check your configuration (or if you're a developer, check your own code.)");
-        }
-
-        m_pageFilters.add(f, priority);
-    }
-
-    private void initPageFilter(String className, Properties props)
-    {
-        try
-        {
-            int priority = 0; // FIXME: Currently fixed.
-
-            Class cl = ClassUtil.findClass(WikiProperties.DEFAULT_FILTER_CLASS_PREFIX, className);
-
-            PageFilter filter = (PageFilter) cl.newInstance();
-
-            filter.initialize(props);
-
-            addPageFilter(filter, priority);
-
-            if (log.isInfoEnabled())
-            {
-                log.info("Added page filter " + cl.getName() + " with priority " + priority);
-            }
-        }
-        catch (ClassNotFoundException e)
-        {
-            log.error("Unable to find the filter class: " + className);
-        }
-        catch (InstantiationException e)
-        {
-            log.error("Cannot create filter class: " + className);
-        }
-        catch (IllegalAccessException e)
-        {
-            log.error("You are not allowed to access class: " + className);
-        }
-        catch (ClassCastException e)
-        {
-            log.error("Suggested class is not a PageFilter: " + className);
-        }
-        catch (FilterException e)
-        {
-            log.error("Filter " + className + " failed to initialize itself.", e);
-        }
-    }
-
-    /**
-     * Initializes the filters from an XML file.
-     *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws WikiException DOCUMENT ME!
-     */
-    private void initialize(Configuration conf)
-            throws WikiException
-    {
         InputStream xmlStream = null;
         String xmlFile = conf.getString(PROP_FILTERXML, PROP_FILTERXML_DEFAULT);
 
@@ -252,9 +182,8 @@ public class FilterManager
             {
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                            "Cannot find property file for filters (this is okay, expected to find it as: '"
-                            + xmlFile + "')");
+                    log.info("Could not load " 
+                            + xmlFile + ", no filters are configured.");
                 }
 
                 return;
@@ -267,94 +196,72 @@ public class FilterManager
         {
             if (log.isInfoEnabled())
             {
-                log.info("Could not open " + xmlFile + ". No filters are defined.");
-            }
-        }
-        catch (IOException e)
-        {
-            log.error("Unable to read property file", e);
-        }
-        catch (SAXException e)
-        {
-            log.error("Problem in the XML file", e);
-        }
-        catch (ParserConfigurationException pce)
-        {
-            log.error("Problem while configuring the parser", pce);
-        }
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     * @param atts DOCUMENT ME!
-     */
-    public void startElement(String namespace, String name, String qName, Attributes atts)
-            throws SAXException
-    {
-        lastReadCharacters = new StringBuffer();
-
-        if ("pagefilters".equals(qName))
-        {
-            parsingFilters = true;
-        }
-        else if (parsingFilters)
-        {
-            if ("filter".equals(qName))
-            {
-                filterName = null;
+                log.info("Could not open " + xmlFile + ". No filters are configured.");
             }
         }
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param name DOCUMENT ME!
-     */
-    public void endElement(String namespace, String name, String qName)
-            throws SAXException
+    public synchronized void start()
     {
-        if ("pagefilters".equals(qName))
+        // If our filters are good, they implement the regular life cycle...
+        filterContainer.start();
+
+        for (Iterator it = filterContainer.getComponentInstances().iterator(); it.hasNext(); )
         {
-            parsingFilters = false;
-        }
-        else if (parsingFilters)
-        {
-            if ("filter".equals(qName))
+            PageFilter pageFilter = (PageFilter) it.next();
+
+            addPageFilter(pageFilter);
+
+            if (log.isInfoEnabled())
             {
-                initPageFilter(filterName, filterProperties);
-            }
-            else if ("class".equals(qName))
-            {
-                filterName = lastReadCharacters.toString();
-            }
-            else if ("param".equals(qName))
-            {
-                filterProperties.setProperty(lastReadParamName, lastReadParamValue);
-            }
-            else if ("name".equals(qName))
-            {
-                lastReadParamName = lastReadCharacters.toString();
-            }
-            else if ("value".equals(qName))
-            {
-                lastReadParamValue = lastReadCharacters.toString();
+                log.info("Added page filter " + pageFilter.getClass().getName() + " with priority " + pageFilter.getPriority());
             }
         }
+
+        setStarted(true);
     }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param ch DOCUMENT ME!
-     * @param start DOCUMENT ME!
-     * @param length DOCUMENT ME!
-     */
-    public void characters(char [] ch, int start, int length)
+    public synchronized void stop()
     {
-        lastReadCharacters.append(ch, start, length);
+        setStarted(false);
+    }
+
+    protected void setStarted(final boolean started)
+    {
+        this.started = started;
+    }
+
+    public boolean isStarted()
+    {
+        return started;
+    }
+
+
+    /**
+     * Adds a page filter to the queue.  The priority defines in which order the page filters are
+     * run, the highest priority filters go in the queue first.
+     *
+     * <p>
+     * In case two filters have the same priority, their execution order is the insertion order.
+     * </p>
+     *
+     * @param f PageFilter to add
+     * @param priority The priority in which position to add it in.
+     *
+     * @throws IllegalArgumentException If the PageFilter is null or invalid.
+     *
+     * @since 2.1.44.
+     */
+    public void addPageFilter(PageFilter f)
+    {
+        if (f == null)
+        {
+            throw new IllegalArgumentException(
+                    "Attempt to provide a null filter - this should never happen. "
+                    + "Please check your configuration (or if you're a developer, check your own code.)");
+        }
+
+        m_pageFilters.add(f, f.getPriority());
     }
 
     /**
@@ -446,12 +353,152 @@ public class FilterManager
     }
 
     /**
-     * DOCUMENT ME!
+     * Returns all Filters from the FilterManager
      *
-     * @return DOCUMENT ME!
+     * @return All registered Filters
      */
     public List getFilterList()
     {
         return m_pageFilters;
     }
+
+    /**
+     * Returns all visible Filters from the FilterManager
+     *
+     * @return All registered and visible Filters
+     */
+    public List getVisibleFilterList()
+    {
+        List l = new ArrayList(m_pageFilters.size());
+        
+        for (Iterator it = m_pageFilters.iterator(); it.hasNext(); )
+        {
+            PageFilter filter = (PageFilter) it.next();
+
+            if (filter.isVisible())
+            {
+                l.add(filter);
+            }
+        }
+
+        return l;
+    }
+
+    /*
+     * ========================================================================
+     *
+     * The XML Parser Code
+     * 
+     * ======================================================================== 
+     */
+
+    private void registerFilter(String filterName, Properties filterProperties)
+            throws SAXException
+    {
+        try
+        {
+            Class filterClass = Class.forName(filterName);
+
+            if (filterProperties != null && filterProperties.size() > 0)
+            {
+                Parameter [] propParameter = new Parameter[] { new ConstantParameter(filterProperties) };
+                filterContainer.registerComponentImplementation(filterName, filterClass, propParameter);
+            }
+            else
+            {
+                filterContainer.registerComponentImplementation(filterName, filterClass);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new SAXException("While registering " + filterName + " with the Filter container:",  e);
+        }
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     * @param atts DOCUMENT ME!
+     */
+    public void startElement(String namespace, String name, String qName, Attributes atts)
+            throws SAXException
+    {
+        lastReadCharacters = new StringBuffer();
+
+        if ("pagefilters".equals(qName))
+        {
+            parsingFilters = true;
+        }
+        else if (parsingFilters)
+        {
+            if ("filter".equals(qName))
+            {
+                filterName = null;
+            }
+        }
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param name DOCUMENT ME!
+     */
+    public void endElement(String namespace, String name, String qName)
+            throws SAXException
+    {
+        if ("pagefilters".equals(qName))
+        {
+            parsingFilters = false;
+        }
+        else if (parsingFilters)
+        {
+            if ("filter".equals(qName))
+            {
+                registerFilter(filterName, filterProperties);
+            }
+            else if ("class".equals(qName))
+            {
+                filterName = lastReadCharacters.toString();
+            }
+            else if ("param".equals(qName))
+            {
+                filterProperties.setProperty(lastReadParamName, lastReadParamValue);
+            }
+            else if ("name".equals(qName))
+            {
+                lastReadParamName = lastReadCharacters.toString();
+            }
+            else if ("value".equals(qName))
+            {
+                lastReadParamValue = lastReadCharacters.toString();
+            }
+        }
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param ch DOCUMENT ME!
+     * @param start DOCUMENT ME!
+     * @param length DOCUMENT ME!
+     */
+    public void characters(char [] ch, int start, int length)
+    {
+        lastReadCharacters.append(ch, start, length);
+    }
+
+    /*
+    private static FilterComponentAdapter
+            extends ConstructorInjectionComponentAdapter
+    {
+        private FilterComponentAdapter(final String className, final Properties props)
+        {
+            Parameter [] propParameter = new Parameter[1];
+            propParameter[0] = new ConstantParameter(props);
+            super(className, className, propParameter);
+        }
+    }
+    */
 }
+

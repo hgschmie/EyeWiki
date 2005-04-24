@@ -44,6 +44,7 @@ import com.ecyrd.jspwiki.WikiEngine;
 // FIXME: Weblog name has been set to stone
 public class PingWeblogsComFilter
         extends BasicPageFilter
+        implements PageFilter
 {
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(PingWeblogsComFilter.class);
@@ -59,7 +60,7 @@ public class PingWeblogsComFilter
      *
      * @param props DOCUMENT ME!
      */
-    public void initialize(Properties props)
+    public PingWeblogsComFilter(Properties props)
     {
         m_pingURL = props.getProperty(PROP_PINGURL, "http://rpc.weblogs.com/RPC2");
     }
@@ -133,5 +134,15 @@ public class PingWeblogsComFilter
         {
             log.error("Malformed URL", e);
         }
+    }
+    
+    public boolean isVisible()
+    {
+        return true;
+    }
+    
+    public int getPriority()
+    {
+        return PageFilter.NORMAL_PRIORITY;
     }
 }

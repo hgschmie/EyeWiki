@@ -1,7 +1,5 @@
 package com.ecyrd.jspwiki.filters;
 
-import java.util.Properties;
-
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -11,21 +9,14 @@ import com.ecyrd.jspwiki.WikiContext;
  *
  * @author Janne Jalkanen
  */
-public class BasicPageFilter
+public abstract class BasicPageFilter
         implements PageFilter
 {
-    /**
-     * DOCUMENT ME!
-     *
-     * @param properties DOCUMENT ME!
-     *
-     * @throws FilterException DOCUMENT ME!
-     */
-    public void initialize(Properties properties)
-            throws FilterException
-    {
-    }
-
+    
+    public abstract boolean isVisible();
+    
+    public abstract int getPriority();
+    
     /**
      * DOCUMENT ME!
      *

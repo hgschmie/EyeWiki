@@ -1,7 +1,5 @@
 package com.ecyrd.jspwiki.filters;
 
-import java.util.Properties;
-
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -26,15 +24,24 @@ import com.ecyrd.jspwiki.WikiContext;
  */
 public interface PageFilter
 {
+    /** This filter should run as early as possible */
+    int MAX_PRIORITY = 1000;
+
+    /** This filter should run on normal priority */
+    int NORMAL_PRIORITY = 0;
+
+    /** This filter should run as late as possible */
+    int MIN_PRIORITY = -1000;
+
     /**
-     * Is called whenever the a new PageFilter is instantiated and reset.
-     *
-     * @param props DOCUMENT ME!
-     *
-     * @throws FilterException DOCUMENT ME!
+     * Returns the Filter priority. This is used to order the filters
      */
-    void initialize(Properties props)
-            throws FilterException;
+    int getPriority();
+
+    /**
+     * Should the filter be visible in overview lists?
+     */
+    boolean isVisible();
 
     /**
      * This method is called whenever a page has been loaded from the provider, but not yet been

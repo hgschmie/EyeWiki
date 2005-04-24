@@ -47,6 +47,7 @@ import com.ecyrd.jspwiki.WikiPage;
  */
 public class SpamFilter
         extends BasicPageFilter
+        implements PageFilter
 {
     /** DOCUMENT ME! */
     private static final String LISTVAR = "spamwords";
@@ -83,7 +84,7 @@ public class SpamFilter
      *
      * @param properties DOCUMENT ME!
      */
-    public void initialize(Properties properties)
+    public SpamFilter(Properties properties)
     {
         m_forbiddenWordsPage = properties.getProperty(PROP_WORDLIST, m_forbiddenWordsPage);
         m_errorPage = properties.getProperty(PROP_ERRORPAGE, m_errorPage);
@@ -185,4 +186,15 @@ public class SpamFilter
 
         return content;
     }
+    
+    public boolean isVisible()
+    {
+        return true;
+    }
+    
+    public int getPriority()
+    {
+        return PageFilter.NORMAL_PRIORITY;
+    }
+
 }

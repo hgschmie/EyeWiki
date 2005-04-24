@@ -42,6 +42,7 @@ import com.ecyrd.jspwiki.auth.WikiGroup;
 import com.ecyrd.jspwiki.auth.WikiPrincipal;
 import com.ecyrd.jspwiki.filters.BasicPageFilter;
 import com.ecyrd.jspwiki.filters.FilterManager;
+import com.ecyrd.jspwiki.filters.PageFilter;
 import com.ecyrd.jspwiki.providers.ProviderException;
 
 
@@ -106,7 +107,7 @@ public class WikiDatabase
     public WikiDatabase(WikiEngine engine, FilterManager filterManager)
     {
         m_engine = engine;
-        filterManager.addPageFilter(new SaveFilter(), 1000000);
+        filterManager.addPageFilter(new SaveFilter());
     }
 
     public synchronized void start()
@@ -361,9 +362,24 @@ public class WikiDatabase
 
     // FIXME: JSPWiki should really take care of itself that any metadata
     //        relevant to a page is refreshed.
-    public class SaveFilter
+    private class SaveFilter
             extends BasicPageFilter
+            implements PageFilter
     {
+        private SaveFilter()
+        {
+        }
+        
+        public int getPriority()
+        {
+            return PageFilter.MAX_PRIORITY;
+        }
+        
+        public boolean isVisible()
+        {
+            return false;
+        }
+        
         /**
          * DOCUMENT ME!
          *

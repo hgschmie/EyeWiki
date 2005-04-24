@@ -13,6 +13,7 @@ import com.ecyrd.jspwiki.WikiContext;
  */
 public class ProfanityFilter
         extends BasicPageFilter
+        implements PageFilter
 {
     /** DOCUMENT ME! */
     private String [] profanities =
@@ -41,4 +42,15 @@ public class ProfanityFilter
 
         return content;
     }
+    
+    public boolean isVisible()
+    {
+        return true;
+    }
+    
+    public int getPriority()
+    {
+        return PageFilter.NORMAL_PRIORITY;
+    }
+
 }

@@ -20,8 +20,19 @@ public class TestFilter
      *
      * @param props DOCUMENT ME!
      */
-    public void initialize(Properties props)
+    public TestFilter(Properties props)
     {
         m_properties = props;
     }
+    
+    public boolean isVisible()
+    {
+        return true;
+    }
+    
+    public int getPriority()
+    {
+        return PageFilter.NORMAL_PRIORITY;
+    }
+
 }
