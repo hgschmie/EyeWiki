@@ -247,13 +247,8 @@
   </dependencies>
 
   <build>
-
-    <nagEmailAddress>velocity-dev@jakarta.apache.org</nagEmailAddress>
     <sourceDirectory>src/java</sourceDirectory>
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-    <integrationUnitTestSourceDirectory/>
-
-    <aspectSourceDirectory></aspectSourceDirectory>
 
     <!-- Unit test classes -->
     <unitTest>
