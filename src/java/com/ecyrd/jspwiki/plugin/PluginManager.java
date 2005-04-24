@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Vector;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.BooleanUtils;
