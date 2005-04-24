@@ -42,6 +42,19 @@ public class TestEngine
         super(conf);
     }
 
+    /**
+     * Creates a new TestEngine object.
+     *
+     * @param conf DOCUMENT ME!
+     *
+     * @throws WikiException DOCUMENT ME!
+     */
+    public TestEngine()
+            throws Exception
+    {
+        super(TestEngine.getConfiguration());
+    }
+
     public void cleanup()
     {
         cleanWorkDir();

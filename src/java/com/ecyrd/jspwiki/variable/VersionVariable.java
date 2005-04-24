@@ -37,7 +37,7 @@ public class VersionVariable
 
     public synchronized void start()
     {
-        variableManager.registerVariable("version", this);
+        variableManager.registerVariable("jspwikiversion", this);
     }
 
     public String getValue(WikiContext context, String variableName)
