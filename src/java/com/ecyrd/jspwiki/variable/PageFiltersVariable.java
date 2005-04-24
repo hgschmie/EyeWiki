@@ -50,19 +50,19 @@ public class PageFiltersVariable
     {
         List filters = filterManager.getVisibleFilterList();
         StringBuffer sb = new StringBuffer();
-        
+
         for (Iterator i = filters.iterator(); i.hasNext();)
         {
             String f = i.next().getClass().getName();
-            
+
             if (sb.length() > 0)
             {
                 sb.append(", ");
             }
-            
+
             sb.append(f);
         }
-        
+
         return sb.toString();
     }
 }

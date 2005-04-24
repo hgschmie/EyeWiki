@@ -299,7 +299,7 @@ public class WikiPage
     public Object clone()
     {
         WikiPage p = null;
-        
+
         try
         {
             p = (WikiPage) super.clone();

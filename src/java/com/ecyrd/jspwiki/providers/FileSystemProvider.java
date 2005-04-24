@@ -55,11 +55,11 @@ public class FileSystemProvider
     public static final String EXTENSION_PROPS = ".properties";
 
     public FileSystemProvider(WikiEngine engine, Configuration conf)
-    	throws Exception
+            throws Exception
     {
         super(engine, conf);
     }
-    
+
     /**
      * DOCUMENT ME!
      *

@@ -62,7 +62,7 @@ public class VariableManager
 
     protected final WikiEngine engine;
 
-    protected final Configuration conf; 
+    protected final Configuration conf;
 
     /** The Container to manage the Variable Plugins */
     protected final  PicoContainer variableContainer;
@@ -86,7 +86,7 @@ public class VariableManager
 
         ObjectReference parentRef = new SimpleReference();
         parentRef.set(engine.getComponentContainer());
-        
+
         ObjectReference variableContainerRef = new SimpleReference();
 
         String wikiVariableFile = conf.getString(WikiProperties.PROP_VARIABLE_FILE, WikiProperties.PROP_VARIABLE_FILE_DEFAULT);
@@ -125,7 +125,7 @@ public class VariableManager
 
         evaluators.add(wikiEvaluator, wikiEvaluator.getPriority());
     }
-            
+
 
 
     /**
@@ -207,12 +207,12 @@ public class VariableManager
                     if (source.charAt(i + 1) == '$')
                     {
                         int end = source.indexOf('}', i);
-                        
+
                         if (end != -1)
                         {
                             String varname = source.substring(i + 2, end);
                             String value;
-                            
+
                             try
                             {
                                 value = getValue(context, varname);
@@ -225,10 +225,10 @@ public class VariableManager
                             {
                                 value = e.getMessage();
                             }
-                            
+
                             result.append(value);
                             i = end;
-                            
+
                             continue;
                         }
                     }
@@ -301,7 +301,7 @@ public class VariableManager
         {
             throw new IllegalArgumentException("While evaluating " + varName);
         }
- 
+
         throw new NoSuchVariableException("No variable " + varName + " defined.");
     }
 }

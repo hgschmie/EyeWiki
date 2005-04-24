@@ -50,12 +50,12 @@ public class UptimeVariable
         Date now = new Date();
         long secondsRunning =
                 (now.getTime() - engine.getStartTime().getTime()) / 1000L;
-        
+
         long seconds = secondsRunning % 60;
         long minutes = (secondsRunning /= 60) % 60;
         long hours = (secondsRunning /= 60) % 24;
         long days = secondsRunning /= 24;
-        
+
         return new StringBuffer()
         	    .append(days)
                 .append("d, ")

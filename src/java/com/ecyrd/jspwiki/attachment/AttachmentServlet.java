@@ -168,7 +168,7 @@ public class AttachmentServlet
         {
             OutputStream out = null;
             InputStream  in  = null;
-            
+
             try
             {
                 if (log.isDebugEnabled())

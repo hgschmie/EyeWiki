@@ -1213,14 +1213,14 @@ public class CachingProvider
         {
             log.info("Lucene enabled, cache will be in: " + dir.getAbsolutePath());
         }
-        
+
         try
         {
             if (!dir.exists())
             {
                 dir.mkdirs();
             }
-            
+
             if (dir.list().length == 0)
             {
                 //
@@ -1228,25 +1228,25 @@ public class CachingProvider
                 //
                 Date start = new Date();
                 IndexWriter writer = null;
-                
+
                 log.info("Starting Lucene reindexing, this can take a couple minutes...");
-                
+
                 try
                 {
                     // FIXME: Should smartly use a different analyzer
                     //        in case the language is something else
                     //        than English.
                     writer = new IndexWriter(m_luceneDirectory, new StandardAnalyzer(), true);
-                    
+
                     Collection allPages = getAllPages();
-                    
+
                     for (Iterator iterator = allPages.iterator(); iterator.hasNext();)
                     {
                         WikiPage page = (WikiPage) iterator.next();
                         String text = getPageText(page.getName(), WikiProvider.LATEST_VERSION);
                         luceneIndexPage(page, text, writer);
                     }
-                    
+
                     writer.optimize();
                 }
                 finally
@@ -1256,9 +1256,9 @@ public class CachingProvider
                         writer.close();
                     }
                 }
-                
+
                 Date end = new Date();
-                
+
                 if (log.isInfoEnabled())
                 {
                     log.info(
@@ -1286,7 +1286,7 @@ public class CachingProvider
             log.error("Problem reading pages while creating Lucene index.", e);
             throw new IllegalArgumentException("unable to create Lucene index");
         }
-        
+
         startLuceneUpdateThread();
     }
 

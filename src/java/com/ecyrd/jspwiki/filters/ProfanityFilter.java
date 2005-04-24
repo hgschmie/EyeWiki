@@ -42,12 +42,12 @@ public class ProfanityFilter
 
         return content;
     }
-    
+
     public boolean isVisible()
     {
         return true;
     }
-    
+
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;

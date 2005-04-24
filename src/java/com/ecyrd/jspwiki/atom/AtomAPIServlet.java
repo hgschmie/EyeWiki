@@ -184,12 +184,12 @@ public class AtomAPIServlet
                 text.append("!" + title.getBody());
                 text.append("\n\n");
                 text.append(content.getBody());
-                
+
                 if (log.isDebugEnabled())
                 {
                     log.debug("Writing entry: " + text);
                 }
-                
+
                 m_engine.saveText(context, text.toString());
             }
         }

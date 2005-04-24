@@ -168,7 +168,7 @@ public class AclEntryImpl
     public Object clone()
     {
         AclEntryImpl aei = null;
-        
+
         try
         {
             aei = (AclEntryImpl) super.clone();

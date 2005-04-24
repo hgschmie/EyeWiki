@@ -53,7 +53,7 @@ public class RecentChangesPlugin
     private static Logger log = Logger.getLogger(RecentChangesPlugin.class);
 
     private final WikiEngine engine;
-    
+
     public RecentChangesPlugin(final WikiEngine engine)
     {
         this.engine = engine;

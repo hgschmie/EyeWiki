@@ -117,7 +117,7 @@ public class WeblogPlugin
     public static final String ATTR_ISWEBLOG = "weblogplugin.isweblog";
 
     private final WikiEngine engine;
-    
+
     private final PageManager pageManager;
 
     public WeblogPlugin(final WikiEngine engine, final PageManager pageManager)

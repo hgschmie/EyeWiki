@@ -244,12 +244,12 @@ public class MetaWeblogHandler
                 Collections.sort(changed, new PageTimeComparator());
 
                 int items = 0;
-                
+
                 for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
                      items++)
                 {
                     WikiPage p = (WikiPage) i.next();
-                    
+
                     result.put("entry", makeEntry(p));
                 }
             }
@@ -300,17 +300,17 @@ public class MetaWeblogHandler
                 entryPage.setAuthor(username);
 
                 WikiContext context = new WikiContext(m_engine, entryPage);
-                
+
                 StringBuffer text = new StringBuffer();
                 text.append("!" + content.get("title"));
                 text.append("\n\n");
                 text.append(content.get("description"));
-                
+
                 if (log.isDebugEnabled())
                 {
                     log.debug("Writing entry: " + text);
                 }
-                
+
                 m_engine.saveText(context, text.toString());
             }
         }

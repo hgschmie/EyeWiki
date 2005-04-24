@@ -167,19 +167,19 @@ public final class FileUtil
             {
                 result.append(line + "\n");
             }
-            
+
             StringBuffer error = new StringBuffer();
-            
+
             while ((line = stderr.readLine()) != null)
             {
                 error.append(line + "\n");
             }
-            
+
             if (error.length() > 0)
             {
                 log.error("Command failed, error stream is: " + error);
             }
-            
+
             process.waitFor();
             return result.toString();
         }

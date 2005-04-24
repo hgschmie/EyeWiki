@@ -56,7 +56,7 @@ public class TableOfContents
     private StringBuffer m_buf = new StringBuffer();
 
     private final WikiEngine engine;
-    
+
     public TableOfContents(final WikiEngine engine)
     {
         this.engine = engine;

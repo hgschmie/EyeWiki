@@ -59,7 +59,7 @@ public class WeblogArchivePlugin
     private SimpleDateFormat m_monthUrlFormat;
 
     private final WikiEngine engine;
-    
+
     private final PageManager pageManager;
 
     public WeblogArchivePlugin(final WikiEngine engine, final PageManager pageManager)

@@ -2675,7 +2675,7 @@ public class TranslatorReader
         {
             return new StringBuffer("<p class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\">").toString();
         }
-                    
+
         /**
          * DOCUMENT ME!
          *
@@ -2699,13 +2699,13 @@ public class TranslatorReader
             {
             case BOLD:
                 return new StringBuffer("<b class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\">").toString();
-                
+
             case ITALIC:
                 return new StringBuffer("<i class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\">").toString();
 
             case TYPED:
                 return new StringBuffer("<tt class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\">").toString();
-                
+
             default:
                 return "";
             }
@@ -3034,10 +3034,10 @@ public class TranslatorReader
 
             default:
                 result = "";
-                
+
                 break;
             }
-            
+
             return result;
         }
 
@@ -3157,9 +3157,9 @@ public class TranslatorReader
                         .append("\">")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd))
                         .toString();
-                
+
                 m_closeTag = "</a></h3>";
-                
+
                 break;
 
             case Heading.HEADING_LARGE:
@@ -3168,15 +3168,15 @@ public class TranslatorReader
                         .append("\">")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd))
                         .toString();
-                
+
                 m_closeTag = "</a></h2>";
-                
+
                 break;
-                
+
             default:
                 break;
             }
-            
+
             return res;
         }
 
@@ -3667,12 +3667,12 @@ public class TranslatorReader
                         .toString();
 
                 break;
-                
+
             default:
                 break;
 
             }
-           
+
             return res;
         }
 

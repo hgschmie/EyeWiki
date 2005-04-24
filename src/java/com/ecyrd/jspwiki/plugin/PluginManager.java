@@ -139,9 +139,6 @@ public class PluginManager
     public static final String PARAM_DEBUG = "debug";
 
     /** DOCUMENT ME! */
-    private Vector m_searchPath = new Vector();
-
-    /** DOCUMENT ME! */
     private Pattern m_pluginPattern;
 
     /** DOCUMENT ME! */
@@ -149,13 +146,13 @@ public class PluginManager
 
     /** DOCUMENT ME! */
     private boolean m_initStage = false;
-    
+
     /** Is the Manager started? */
     private boolean started = false;
 
     /** The Wiki Engine */
     private final WikiEngine engine;
-    
+
     /** The Container to manage the Plugins */
     private PicoContainer pluginContainer = null;
 
@@ -170,7 +167,7 @@ public class PluginManager
     	throws Exception
     {
         this.engine = engine;
-        
+
         PatternCompiler compiler = new Perl5Compiler();
 
         try
@@ -193,7 +190,7 @@ public class PluginManager
 
         ObjectReference parentRef = new SimpleReference();
         parentRef.set(engine.getComponentContainer());
-        
+
         ObjectReference pluginContainerRef = new SimpleReference();
 
         engine.setupContainer(pluginContainerRef, parentRef, wikiPluginFile);
@@ -213,10 +210,10 @@ public class PluginManager
         try
         {
             setInitStage(true);
-            
+
             // Run through all the pages, find the init plugins and fire them up.
             Collection pages = engine.getPageManager().getAllPages();
-            
+
             for (Iterator it = pages.iterator(); it.hasNext();)
             {
                 WikiPage page = (WikiPage) it.next();
@@ -232,7 +229,7 @@ public class PluginManager
         {
             setInitStage(false);
         }
-        
+
         setStarted(true);
     }
 

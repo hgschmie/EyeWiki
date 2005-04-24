@@ -48,11 +48,11 @@ public class MetadataVariables
         // And the final straw: see if the current page has named metadata.
         //
         WikiPage pg = context.getPage();
-        
+
         if (pg != null)
         {
             Object metadata = pg.getAttribute(varName);
-            
+
             if (metadata != null)
             {
                 return (metadata.toString());

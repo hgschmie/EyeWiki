@@ -301,7 +301,7 @@ public class RCSFileProvider
         {
             log.debug("Fetching specific version " + version + " of page " + page);
         }
-        
+
         Process process = null;
 
         try

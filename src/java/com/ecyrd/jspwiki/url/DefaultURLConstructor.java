@@ -38,7 +38,7 @@ public class DefaultURLConstructor
 
         m_useRelativeURLStyle =
                 "relative".equals(conf.getString(
-                                          WikiProperties.PROP_REFSTYLE, 
+                                          WikiProperties.PROP_REFSTYLE,
                                           WikiProperties.PROP_REFSTYLE_DEFAULT));
     }
 
@@ -209,7 +209,7 @@ public class DefaultURLConstructor
         //  This is required, because by default all URLs are handled
         //  as Latin1, even if they are really UTF-8.
         //
-        
-        return TextUtil.urlDecode( name, encoding );
+
+        return TextUtil.urlDecode(name, encoding);
     }
 }

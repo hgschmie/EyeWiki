@@ -194,7 +194,7 @@ public class BugReportHandler
             //
             //  Now create a new page for this bug report
             //
-            String pageName = findNextPage(context, title, (String) params.get(PAGE));
+            String pageName = findNextPage(title, (String) params.get(PAGE));
 
             WikiPage newPage = new WikiPage(pageName);
             WikiContext newContext = (WikiContext) context.clone();
@@ -223,7 +223,7 @@ public class BugReportHandler
      *
      * @return DOCUMENT ME!
      */
-    private synchronized String findNextPage(WikiContext context, String title, String baseName)
+    private synchronized String findNextPage(String title, String baseName)
     {
         String basicPageName =
             ((baseName != null)

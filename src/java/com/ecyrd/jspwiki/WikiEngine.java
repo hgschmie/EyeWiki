@@ -302,7 +302,7 @@ public class WikiEngine
     }
 
     /**
-     * Gets a WikiEngine related to the servlet. Works just like getInstance( ServletConfig )
+     * Gets a WikiEngine related to the servlet. Works just like getInstance( ServletConfig)
      *
      * @param context The ServletContext of the webapp servlet/JSP calling this method.
      * @param conf A set of properties, or null, if we are to load JSPWiki's default
@@ -555,7 +555,7 @@ public class WikiEngine
         //
         // Start up the Picocontainer
         //
-        
+
         try
         {
             setupMainContainer();
@@ -884,7 +884,7 @@ public class WikiEngine
     public String getInterWikiURL(String wikiName)
     {
         Configuration iwConf = conf.subset(PROP_INTERWIKIREF);
-        
+
         try
         {
             return iwConf.getString(wikiName);
@@ -1271,7 +1271,7 @@ public class WikiEngine
         //  get replaced as well with &quot; etc.
         //
         /*
-          result = TextUtil.replaceString( result, "&", "&amp;" );
+          result = TextUtil.replaceString( result, "&", "&amp;");
         */
         result = TextUtil.replaceEntities(result);
 
@@ -1389,7 +1389,7 @@ public class WikiEngine
     public String getHTML(WikiPage page)
     {
         WikiContext context = new WikiContext(this, page);
-        context.setRequestContext( WikiContext.NONE );
+        context.setRequestContext(WikiContext.NONE);
         return getHTML(context, page);
     }
 
@@ -1406,7 +1406,7 @@ public class WikiEngine
     {
         WikiPage page = getPage(pagename, version);
         WikiContext context = new WikiContext(this, page);
-        context.setRequestContext( WikiContext.NONE );
+        context.setRequestContext(WikiContext.NONE);
         return getHTML(context, page);
     }
 
@@ -1852,7 +1852,7 @@ public class WikiEngine
     {
         return (DifferenceManager) getComponentContainer().getComponentInstance(WikiConstants.DIFFERENCE_MANAGER);
     }
-    
+
     /**
      * Returns this object's ReferenceManager.
      *
@@ -1886,7 +1886,7 @@ public class WikiEngine
      */
     public VariableManager getVariableManager()
     {
-        return (VariableManager) getComponentContainer().getComponentInstance(WikiConstants.VARIABLE_MANAGER); 
+        return (VariableManager) getComponentContainer().getComponentInstance(WikiConstants.VARIABLE_MANAGER);
     }
 
     /**
@@ -1963,7 +1963,7 @@ public class WikiEngine
      */
     public FilterManager getFilterManager()
     {
-        return (FilterManager) getComponentContainer().getComponentInstance(WikiConstants.FILTER_MANAGER); 
+        return (FilterManager) getComponentContainer().getComponentInstance(WikiConstants.FILTER_MANAGER);
     }
 
     /**
@@ -2182,33 +2182,33 @@ public class WikiEngine
             throws ProviderException
     {
         WikiPage p = getPage(pageName);
-        
-        if( p instanceof Attachment )
+
+        if (p instanceof Attachment)
         {
-            getAttachmentManager().deleteAttachment( (Attachment) p );
+            getAttachmentManager().deleteAttachment((Attachment) p);
         }
         else
         {
-            getPageManager().deletePage( p );
+            getPageManager().deletePage(p);
         }
     }
 
     /**
      *  Deletes a specific version of a page or an attachment.
-     * 
+     *
      * @param page
      * @throws ProviderException
      */
     public void deleteVersion(WikiPage page)
             throws ProviderException
     {
-        if( page instanceof Attachment )
+        if (page instanceof Attachment)
         {
-            getAttachmentManager().deleteVersion( (Attachment) page );
+            getAttachmentManager().deleteVersion((Attachment) page);
         }
         else
         {
-            getPageManager().deleteVersion( page );
+            getPageManager().deleteVersion(page);
         }
     }
 
@@ -2306,7 +2306,7 @@ public class WikiEngine
     {
         InputStream configStream = null;
         InputStreamReader isr = null;
-        
+
         try
         {
             ServletContext context = getServletContext();
@@ -2328,7 +2328,7 @@ public class WikiEngine
             isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
-            
+
             builder.buildContainer(containerRef, parentRef, "wiki", false);
         }
         finally
@@ -2346,7 +2346,7 @@ public class WikiEngine
             throws Exception
     {
         MutablePicoContainer mainContainer = new DefaultPicoContainer();
-        
+
         // Register ourselves with the Container
         mainContainer.registerComponentInstance("WikiEngine", this);
 
@@ -2355,7 +2355,7 @@ public class WikiEngine
 
         mainContainerRef.set(mainContainer);
     }
-    
+
     public PicoContainer getComponentContainer()
     {
         return (PicoContainer) componentContainerRef.get();

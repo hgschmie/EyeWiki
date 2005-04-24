@@ -121,7 +121,7 @@ public class RSSGenerator
 
     public synchronized void stop()
     {
-        
+
     }
 
     public synchronized String getGlobalRSSURL()
@@ -262,8 +262,8 @@ public class RSSGenerator
         //
         //  Channel.
         //
-        result.append(" <channel rdf:about=\"") 
-                .append(baseURL) 
+        result.append(" <channel rdf:about=\"")
+                .append(baseURL)
                 .append("\">\n");
 
         result.append("  <title>").append(m_engine.getApplicationName()).append("</title>\n");
@@ -308,12 +308,12 @@ public class RSSGenerator
                 url = m_engine.getURL(WikiContext.VIEW, page.getName(), null, true);
             }
 
-            result.append("    <rdf:li rdf:resource=\"") 
-                    .append(url) 
+            result.append("    <rdf:li rdf:resource=\"")
+                    .append(url)
                     .append("\" />\n");
 
-            itemBuffer.append(" <item rdf:about=\"") 
-                    .append(url) 
+            itemBuffer.append(" <item rdf:about=\"")
+                    .append(url)
                     .append("\">\n")
                     .append("  <title>")
                     .append(getEntryTitle(page))
@@ -327,15 +327,15 @@ public class RSSGenerator
 
             if (page.getVersion() != -1)
             {
-                itemBuffer.append("  <wiki:version>") 
-                        .append(page.getVersion()) 
+                itemBuffer.append("  <wiki:version>")
+                        .append(page.getVersion())
                         .append("</wiki:version>\n");
             }
 
             if (page.getVersion() > 1)
             {
-                itemBuffer.append("  <wiki:diff>") 
-                        .append(m_engine.getURL(WikiContext.DIFF, page.getName(), "r1=-1", true)) 
+                itemBuffer.append("  <wiki:diff>")
+                        .append(m_engine.getURL(WikiContext.DIFF, page.getName(), "r1=-1", true))
                         .append("</wiki:diff>\n");
             }
 
@@ -361,18 +361,18 @@ public class RSSGenerator
             String author = getAuthor(page);
             itemBuffer.append("  <dc:contributor>\n")
                     .append("   <rdf:Description");
-            
+
             if (m_engine.pageExists(author))
             {
                 itemBuffer.append(
-                        " link=\"") 
-                        .append(m_engine.getURL(WikiContext.VIEW, author, null, true)) 
+                        " link=\"")
+                        .append(m_engine.getURL(WikiContext.VIEW, author, null, true))
                         .append("\"");
             }
 
             itemBuffer.append(">\n")
-                    .append("    <rdf:value>") 
-                    .append(author) 
+                    .append("    <rdf:value>")
+                    .append(author)
                     .append("</rdf:value>\n")
                     .append("   </rdf:Description>\n")
                     .append("  </dc:contributor>\n");
@@ -381,7 +381,7 @@ public class RSSGenerator
             itemBuffer.append("  <wiki:history>")
                     .append(m_engine.getURL(WikiContext.INFO, page.getName(), null, true))
                     .append("</wiki:history>\n");
-            
+
             //  Close up.
             itemBuffer.append(" </item>\n");
         }
@@ -395,14 +395,14 @@ public class RSSGenerator
         //
         String searchURL = baseURL + "Search.jsp";
 
-        result.append(" <textinput rdf:about=\"") 
-                .append(searchURL) 
+        result.append(" <textinput rdf:about=\"")
+                .append(searchURL)
                 .append("\">\n")
                 .append("  <title>Search</title>\n")
                 .append("  <description>Search this Wiki</description>\n")
                 .append("  <name>query</name>\n")
                 .append("  <link>")
-                .append(searchURL) 
+                .append(searchURL)
                 .append("</link>\n")
                 .append(" </textinput>\n");
 
@@ -410,7 +410,7 @@ public class RSSGenerator
         //  Be a fine boy and close things.
         //
         result.append("</rdf:RDF>");
-        
+
         return result.toString();
     }
 
@@ -443,8 +443,8 @@ public class RSSGenerator
         //
         //  Channel.
         //
-        result.append(" <channel rdf:about=\"") 
-                .append(m_engine.getBaseURL()) 
+        result.append(" <channel rdf:about=\"")
+                .append(m_engine.getBaseURL())
                 .append("\">\n")
                 .append("  <title>").append(m_engine.getApplicationName()).append("</title>\n");
 
@@ -458,7 +458,7 @@ public class RSSGenerator
         result.append("  <language>")
                 .append(m_channelLanguage)
                 .append("</language>\n");
-        
+
         //  We need two lists, which is why we gotta make a separate list if
         //  we want to do just a single pass.
         StringBuffer itemBuffer = new StringBuffer();
@@ -546,20 +546,20 @@ public class RSSGenerator
         result.append("   </rdf:Seq>\n  </items>\n")
                 .append(" </channel>\n")
                 .append(itemBuffer.toString());
-        
+
         //
         //  In the end, add a search box for JSPWiki
         //
         String searchURL = m_engine.getBaseURL() + "Search.jsp";
-    
-        result.append(" <textinput rdf:about=\"") 
-                .append(searchURL) 
+
+        result.append(" <textinput rdf:about=\"")
+                .append(searchURL)
                 .append("\">\n")
                 .append("  <title>Search</title>\n")
                 .append("  <description>Search this Wiki</description>\n")
                 .append("  <name>query</name>\n")
-                .append("  <link>") 
-                .append(searchURL) 
+                .append("  <link>")
+                .append(searchURL)
                 .append("</link>\n")
                 .append(" </textinput>\n");
 

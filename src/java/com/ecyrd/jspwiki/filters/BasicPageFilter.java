@@ -12,11 +12,11 @@ import com.ecyrd.jspwiki.WikiContext;
 public abstract class BasicPageFilter
         implements PageFilter
 {
-    
+
     public abstract boolean isVisible();
-    
+
     public abstract int getPriority();
-    
+
     /**
      * DOCUMENT ME!
      *

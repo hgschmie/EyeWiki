@@ -92,7 +92,7 @@ public interface WikiConstants
 
     /*
      * ========================================================================
-     * 
+     *
      * Used Styles
      *
      * ========================================================================
@@ -100,7 +100,7 @@ public interface WikiConstants
 
     /** Class for the internal wiki content rendering */
     String CSS_WIKICONTENT = "wikicontent";
-    
+
     /** Class for an internal wiki page. Used with A HREF tags. */
     String CSS_LINK_WIKIPAGE = "wikipage";
 
@@ -114,7 +114,7 @@ public interface WikiConstants
     String CSS_LINK_FOOTNOTE_ANCHOR = "footnote";
 
     /** Class for an external link. Used with A HREF tags. */
-    String CSS_LINK_EXTERNAL = "external"; 
+    String CSS_LINK_EXTERNAL = "external";
 
     /** Class for an interwiki link. Used with A HREF tags. */
     String CSS_LINK_INTERWIKI = "interwiki";

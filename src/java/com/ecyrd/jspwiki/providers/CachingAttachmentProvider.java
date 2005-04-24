@@ -383,7 +383,7 @@ public class CachingAttachmentProvider
             throws ProviderException
     {
         // This isn't strictly speaking correct, but it does not really matter
-        m_cache.putInCache( att.getParentName(), null );
+        m_cache.putInCache(att.getParentName(), null);
         m_provider.deleteVersion(att);
     }
 
@@ -397,7 +397,7 @@ public class CachingAttachmentProvider
     public void deleteAttachment(Attachment att)
             throws ProviderException
     {
-        m_cache.putInCache( att.getParentName(), null );
+        m_cache.putInCache(att.getParentName(), null);
         m_provider.deleteAttachment(att);
     }
 

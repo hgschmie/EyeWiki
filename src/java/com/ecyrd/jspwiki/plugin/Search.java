@@ -97,7 +97,7 @@ public class Search
         }
         else
         {
-            results = doBasicQuery(context, queryString);
+            results = doBasicQuery(queryString);
             context.setVariable(set, results);
         }
 
@@ -111,7 +111,7 @@ public class Search
         return res;
     }
 
-    private Collection doBasicQuery(WikiContext context, String query)
+    private Collection doBasicQuery(String query)
     {
         if (log.isInfoEnabled())
         {
@@ -135,7 +135,7 @@ public class Search
         searchHeader.setClass(WikiConstants.CSS_SEARCH);
         searchHeader.addElement("Page");
         row.addElement(searchHeader);
-        
+
         th scoreHeader = new th();
         scoreHeader.setClass(WikiConstants.CSS_SEARCHSCORE);
         scoreHeader.addElement("Score");

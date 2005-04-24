@@ -135,12 +135,12 @@ public class PingWeblogsComFilter
             log.error("Malformed URL", e);
         }
     }
-    
+
     public boolean isVisible()
     {
         return true;
     }
-    
+
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;

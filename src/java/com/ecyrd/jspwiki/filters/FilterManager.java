@@ -46,7 +46,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.WikiException;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.util.PriorityList;
 
@@ -138,7 +137,7 @@ public class FilterManager
 
     /** The SAX Parser Factory */
     private static SAXParserFactory saxFactory = null;
-    
+
     /** Is the manager started? */
     private boolean started = false;
 
@@ -158,7 +157,7 @@ public class FilterManager
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
      *
-     * @throws WikiException DOCUMENT ME!
+     * @throws Exception DOCUMENT ME!
      */
     public FilterManager(WikiEngine engine, Configuration conf)
             throws Exception
@@ -182,7 +181,7 @@ public class FilterManager
             {
                 if (log.isInfoEnabled())
                 {
-                    log.info("Could not load " 
+                    log.info("Could not load "
                             + xmlFile + ", no filters are configured.");
                 }
 
@@ -370,7 +369,7 @@ public class FilterManager
     public List getVisibleFilterList()
     {
         List l = new ArrayList(m_pageFilters.size());
-        
+
         for (Iterator it = m_pageFilters.iterator(); it.hasNext(); )
         {
             PageFilter filter = (PageFilter) it.next();
@@ -388,8 +387,8 @@ public class FilterManager
      * ========================================================================
      *
      * The XML Parser Code
-     * 
-     * ======================================================================== 
+     *
+     * ========================================================================
      */
 
     private void registerFilter(String filterName, Properties filterProperties)

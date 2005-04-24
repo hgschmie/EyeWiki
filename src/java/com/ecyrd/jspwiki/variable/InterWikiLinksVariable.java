@@ -56,7 +56,7 @@ public class InterWikiLinksVariable
                     .append(engine.getInterWikiURL(link))
                     .append("<br />\n");
         }
-        
+
         return sb.toString();
     }
 }

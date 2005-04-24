@@ -75,7 +75,7 @@ public class Image
     public static final String PARAM_BORDER = "border";
 
     private final WikiEngine engine;
-    
+
     public Image(final WikiEngine engine)
     {
         this.engine = engine;

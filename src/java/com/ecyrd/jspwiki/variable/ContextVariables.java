@@ -77,16 +77,16 @@ public class ContextVariables
             {
             case UserProfile.NONE:
                 return "unknown (not logged in)";
-                
+
             case UserProfile.COOKIE:
                 return "named (cookie)";
 
             case UserProfile.CONTAINER:
                 return "validated (container)";
-                
+
             case UserProfile.PASSWORD:
                 return "validated (password)";
-                
+
             default:
                 return "ILLEGAL STATUS!";
             }

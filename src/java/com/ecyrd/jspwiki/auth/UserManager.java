@@ -87,7 +87,7 @@ public class UserManager
 
     /** DOCUMENT ME! */
     private boolean m_useOldAuth = false;
-    
+
     /**
      * Creates an UserManager instance for the given WikiEngine and the specified set of
      * properties.  All initialization for the modules is done here.
@@ -97,7 +97,7 @@ public class UserManager
      *
      * @throws WikiException DOCUMENT ME!
      */
-    public UserManager(final WikiEngine engine, final Configuration conf, 
+    public UserManager(final Configuration conf,
             final AuthorizationManager authorizationManager,
             final WikiAuthenticator authenticator,
             final UserDatabase userDatabase)
@@ -155,17 +155,17 @@ public class UserManager
      */
     public UserProfile getUserProfile(String name)
     {
-        if (m_database == null) 
+        if (m_database == null)
         {
             // No user database, so return a dummy profile
             UserProfile wup = new UserProfile();
             wup.setName(name);
             wup.setLoginName(name);
             wup.setLoginStatus(UserProfile.COOKIE);
-            
+
             return wup;
         }
-        
+
         WikiPrincipal up = m_database.getPrincipal(name);
 
         if (!(up instanceof UserProfile))

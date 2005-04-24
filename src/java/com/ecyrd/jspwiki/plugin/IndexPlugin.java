@@ -115,7 +115,7 @@ public class IndexPlugin
     private final WikiEngine engine;
 
     private final PageManager pageManager;
-    
+
     public IndexPlugin(final WikiEngine engine, final PageManager pageManager)
     {
         this.engine = engine;
@@ -171,7 +171,7 @@ public class IndexPlugin
         //
         //  Get pages, then sort.
         //
-        final Collection allPages = getAllPagesSortedByName(i_context);
+        final Collection allPages = getAllPagesSortedByName();
         final TranslatorReader linkProcessor =
                 new TranslatorReader(i_context, new java.io.StringReader(""));
 
@@ -232,7 +232,7 @@ public class IndexPlugin
      *
      * @return DOCUMENT ME!
      */
-    private Collection getAllPagesSortedByName(final WikiContext i_context)
+    private Collection getAllPagesSortedByName()
     {
         if (pageManager == null)
         {

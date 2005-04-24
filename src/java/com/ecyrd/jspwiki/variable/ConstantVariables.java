@@ -46,7 +46,7 @@ public class ConstantVariables
         // GNDN
     }
 
-    private class ConstantVariable
+    private static class ConstantVariable
             extends AbstractSimpleVariable
             implements WikiVariable
     {

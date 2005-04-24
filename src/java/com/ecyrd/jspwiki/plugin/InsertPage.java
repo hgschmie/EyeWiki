@@ -61,7 +61,7 @@ public class InsertPage
     private static final String DEFAULT_STYLE = "";
 
     private final WikiEngine engine;
-    
+
     public InsertPage(final WikiEngine engine)
     {
         this.engine = engine;

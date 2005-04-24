@@ -370,7 +370,7 @@ public class WikiContext
     public Object clone()
     {
         WikiContext copy = null;
-        
+
         try
         {
             copy = (WikiContext) super.clone();

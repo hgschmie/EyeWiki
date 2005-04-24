@@ -71,7 +71,7 @@ public class AttachmentProviderVariables
         public String getValue(WikiContext context, String variableName)
         {
             WikiProvider p = attachmentManager.getCurrentProvider();
-            
+
             return (p != null)
                     ? p.getProviderInfo()
                     : "-";

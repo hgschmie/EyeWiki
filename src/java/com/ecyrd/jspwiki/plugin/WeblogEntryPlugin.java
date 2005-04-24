@@ -53,7 +53,7 @@ public class WeblogEntryPlugin
     public static final String PARAM_ENTRYTEXT = "entrytext";
 
     private final WikiEngine engine;
-    
+
     private final PageManager pageManager;
 
     public WeblogEntryPlugin(final WikiEngine engine, final PageManager pageManager)
