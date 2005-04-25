@@ -1,22 +1,22 @@
 /*
-    WikiForms - a WikiPage FORM handler for JSPWiki.
+  WikiForms - a WikiPage FORM handler for JSPWiki.
 
-    Copyright (C) 2003 BaseN.
+  Copyright (C) 2003 BaseN.
 
-    JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published
+  by the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
 */
 package com.ecyrd.jspwiki.util;
 
@@ -176,34 +176,37 @@ public final class FormUtil
     public static Map requestToMap(HttpServletRequest req, String filterPrefix)
     {
         HashMap params = new HashMap();
-
-        Enumeration en = req.getParameterNames();
-
-        while (en.hasMoreElements())
+        
+        if (req != null)
         {
-            String param = (String) en.nextElement();
-
-            if ((filterPrefix == null) || param.startsWith(filterPrefix))
+            Enumeration en = req.getParameterNames();
+            
+            while (en.hasMoreElements())
             {
-                String realName = (filterPrefix == null)
-                        ? param
-                        : param.substring(filterPrefix.length());
-
-                String [] values = req.getParameterValues(param);
-
-                if (values != null)
+                String param = (String) en.nextElement();
+                
+                if ((filterPrefix == null) || param.startsWith(filterPrefix))
                 {
-                    if (values.length == 1)
+                    String realName = (filterPrefix == null)
+                            ? param
+                            : param.substring(filterPrefix.length());
+                    
+                    String [] values = req.getParameterValues(param);
+                    
+                    if (values != null)
                     {
-                        params.put(realName, values[0]);
-                    }
-                    else
-                    {
-                        for (int i = 0; i < values.length; i++)
+                        if (values.length == 1)
                         {
-                            if ((values[i] != null) && (values[i].length() > 0))
+                            params.put(realName, values[0]);
+                        }
+                        else
+                        {
+                            for (int i = 0; i < values.length; i++)
                             {
-                                params.put(realName + "." + i, values[i]);
+                                if ((values[i] != null) && (values[i].length() > 0))
+                                {
+                                    params.put(realName + "." + i, values[i]);
+                                }
                             }
                         }
                     }
@@ -211,6 +214,6 @@ public final class FormUtil
             }
         }
 
-        return (params);
+        return params;
     }
 }
