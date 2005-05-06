@@ -1,22 +1,22 @@
 /*
-    WikiForms - a WikiPage FORM handler for JSPWiki.
+  WikiForms - a WikiPage FORM handler for JSPWiki.
 
-    Copyright (C) 2003 BaseN.
+  Copyright (C) 2003 BaseN.
 
-    JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published
+  by the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
 */
 package com.ecyrd.jspwiki.forms;
 
@@ -74,7 +74,7 @@ public class FormOutput
         String submitForm = ctx.getHttpParameter(PARAM_FORMNAMEHIDDEN);
         String populator = (String) params.get(PARAM_POPULATE);
 
-        if ((submitForm == null) || (formName == null) || !formName.equals(submitForm))
+        if (submitForm == null || formName == null || !formName.equals(submitForm))
         {
             // No submitForm -> this was not a submission from the
             // generated form.  If populate is specified, we'll go
@@ -82,7 +82,7 @@ public class FormOutput
             // the context, otherwise we'll just hide.
             if ((populator == null) || !PARAM_HANDLER.equals(populator))
             {
-                return ("");
+                return "";
             }
 
             // If population was allowed, we should first
@@ -93,8 +93,8 @@ public class FormOutput
         if (StringUtils.isEmpty(handler))
         {
             // Need to print out an error here as this form is misconfigured
-            return ("<p class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">Argument '" + PARAM_HANDLER
-            + "' required for Form plugin</p>");
+            return "<p class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">Argument '" + PARAM_HANDLER
+                    + "' required for Form plugin</p>";
         }
 
         String sourcePage = ctx.getPage().getName();
@@ -134,7 +134,7 @@ public class FormOutput
             // The plugin _can_ modify the parameters, so we make sure
             // they stay with us.
             handlerOutput =
-                pluginManager.execute(ctx, handler, info.getSubmission());
+                    pluginManager.execute(ctx, handler, info.getSubmission());
             info.setResult(handlerOutput);
             info.setStatus(FormInfo.EXECUTED);
         }
@@ -151,13 +151,13 @@ public class FormOutput
 
         if (error != null)
         {
-            return (error);
+            return error;
         }
         else
         {
-            return ((handlerOutput != null)
-            ? handlerOutput
-            : "");
+            return (handlerOutput != null)
+                    ? handlerOutput
+                    : "";
         }
     }
 }

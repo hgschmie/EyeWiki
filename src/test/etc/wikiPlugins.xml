@@ -6,4 +6,7 @@
   <component-implementation key="ReferringPagesPlugin"   class="com.ecyrd.jspwiki.plugin.ReferringPagesPlugin" />
   <component-implementation key="UndefinedPagesPlugin"   class="com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin" />
   <component-implementation key="Counter"                class="com.ecyrd.jspwiki.plugin.Counter" />
+  <component-implementation key="TableOfContents"        class="com.ecyrd.jspwiki.plugin.TableOfContents" />
+  <component-implementation key="WeblogEntryPlugin"      class="com.ecyrd.jspwiki.plugin.WeblogEntryPlugin" />
+  <component-implementation key="WeblogPlugin"           class="com.ecyrd.jspwiki.plugin.WeblogPlugin" />
 </container>

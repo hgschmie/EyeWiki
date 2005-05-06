@@ -31,6 +31,7 @@
 <wiki:HasAttachments>
   <h1 class="attachment">Currently existing attachments:</h1>
 
+  <div class="zebra-table">
   <table class="attachment">
     <wiki:AttachmentsIterator id="att">
       <tr>
@@ -40,6 +41,7 @@
       </tr>
     </wiki:AttachmentsIterator>
   </table>
+  </div>
 
   <hr />
 </wiki:HasAttachments>

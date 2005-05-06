@@ -68,61 +68,73 @@ public class DefaultURLConstructor
     }
 
     /**
-     * Constructs the actual URL based on the context.
-     *
-     * @param context DOCUMENT ME!
-     * @param name DOCUMENT ME!
-     * @param absolute DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws InternalWikiException DOCUMENT ME!
+     *   Returns the pattern used for each URL style.
+     * 
+     * @param context
+     * @param name
+     * @return A pattern for replacement.
      */
-    private String makeURL(String context, String name, boolean absolute)
+    public static String getURLPattern(String context, String name)
     {
         if (context.equals(WikiContext.VIEW))
         {
             if (name == null)
             {
-                return makeURL("%uWiki.jsp", "", absolute); // FIXME
+                return "%uWiki.jsp"; // FIXME
             }
 
-            return doReplacement(m_viewURLPattern, name, absolute);
+            return "%uWiki.jsp?page=%n";
         }
         else if (context.equals(WikiContext.EDIT))
         {
-            return doReplacement("%uEdit.jsp?page=%n", name, absolute);
+            return "%uEdit.jsp?page=%n";
         }
         else if (context.equals(WikiContext.ATTACH))
         {
-            return doReplacement("%uattach/%n", name, absolute);
+            return "%uattach/%n";
         }
         else if (context.equals(WikiContext.INFO))
         {
-            return doReplacement("%uPageInfo.jsp?page=%n", name, absolute);
+            return "%uPageInfo.jsp?page=%n";
         }
         else if (context.equals(WikiContext.DIFF))
         {
-            return doReplacement("%uDiff.jsp?page=%n", name, absolute);
+            return "%uDiff.jsp?page=%n";
         }
         else if (context.equals(WikiContext.NONE))
         {
-            return doReplacement("%u%n", name, absolute);
+            return "%u%n";
         }
         else if (context.equals(WikiContext.UPLOAD))
         {
-            return doReplacement("%uUpload.jsp?page=%n", name, absolute);
+            return "%uUpload.jsp?page=%n";
         }
         else if (context.equals(WikiContext.COMMENT))
         {
-            return doReplacement("%uComment.jsp?page=%n", name, absolute);
+            return "%uComment.jsp?page=%n";
         }
         else if (context.equals(WikiContext.ERROR))
         {
-            return doReplacement("%uError.jsp", name, absolute);
+            return "%uError.jsp";
         }
 
         throw new InternalWikiException("Requested unsupported context " + context);
+    }
+
+    /**
+     *  Constructs the actual URL based on the context.
+     */
+    private String makeURL(String context, String name, boolean absolute)
+    {
+        if( context.equals(WikiContext.VIEW))
+        {
+            if(name == null)
+            {
+                return makeURL("%uWiki.jsp", "", absolute); // FIXME
+            }
+        }
+        
+        return doReplacement(getURLPattern(context, name), name, absolute);
     }
 
     /**
@@ -211,5 +223,18 @@ public class DefaultURLConstructor
         //
 
         return TextUtil.urlDecode(name, encoding);
+    }
+
+    
+    /**
+     *  This method is not needed for the DefaultURLConstructor.
+     *  
+     *  @author jalkanen
+     *
+     *  @since
+     */
+    public String getForwardPage(HttpServletRequest request)
+    {
+        return request.getPathInfo();
     }
 }

@@ -5,7 +5,7 @@
 <h1 class="comment">Please enter your comments below:</h1>
 
 <wiki:Editor name="commentForm">
-  <textarea class="comment" wrap="virtual" name="text" rows="15" cols="60"></textarea>
+  <wiki:EditorArea/>
 
   <h2 class="comment">
     <table class="comment">
@@ -16,6 +16,10 @@
       <tr>
         <td class="commentmsg"><label for="rememberme">Remember me?</label></td>
         <td class="comment"><input type="checkbox" name="remember" id="rememberme" /></td>
+      </tr>
+      <tr>
+        <td class="commentmsg"><label for="link">Homepage or email</label></td>
+        <td class="comment"><input type="text" name="link" id="link" value="<%=pageContext.getAttribute("link",PageContext.REQUEST_SCOPE)%>" /></td>
       </tr>
       <tr>
         <td class="comment" colspan="2">

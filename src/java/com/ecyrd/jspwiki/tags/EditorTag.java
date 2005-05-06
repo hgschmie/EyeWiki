@@ -35,7 +35,6 @@ import org.apache.ecs.xhtml.input;
 import org.apache.ecs.xhtml.p;
 import org.apache.ecs.xhtml.table;
 import org.apache.ecs.xhtml.td;
-import org.apache.ecs.xhtml.textarea;
 
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
@@ -196,21 +195,7 @@ public class EditorTag
 
     private ConcreteElement getEditorArea()
     {
-        textarea area = new textarea();
-
-        area.setClass(WikiConstants.CSS_EDITOR);
-        area.setWrap("virtual");
-        area.setName("text");
-        area.setRows(25);
-        area.setCols(80);
-
-        if (m_wikiContext.getRequestContext().equals("edit"))
-        {
-            area.addElement(
-                m_wikiContext.getEngine().getText(m_wikiContext, m_wikiContext.getPage()));
-        }
-
-        return area;
+        return EditorAreaTag.getEditorArea(m_wikiContext);
     }
 
     /**

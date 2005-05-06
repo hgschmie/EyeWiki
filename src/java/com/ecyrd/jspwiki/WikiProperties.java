@@ -19,6 +19,8 @@
 */
 package com.ecyrd.jspwiki;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+
 
 
 /**
@@ -277,6 +279,10 @@ public interface WikiProperties
 
     /** DOCUMENT ME! */
     boolean PROP_USE_LUCENE_DEFAULT = true;
+
+    String PROP_LUCENE_ANALYZER = "jspwiki.lucene.analyzer";
+
+    String PROP_LUCENE_ANALYZER_DEFAULT = StandardAnalyzer.class.getName();
 
     /** Prefix for the Wiki Special pages */
     String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";

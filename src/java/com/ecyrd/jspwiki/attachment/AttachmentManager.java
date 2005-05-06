@@ -34,6 +34,7 @@ import org.apache.log4j.Logger;
 
 import org.picocontainer.PicoContainer;
 
+import com.ecyrd.jspwiki.TranslatorReader;
 import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
@@ -185,12 +186,19 @@ public class AttachmentManager
             currentPage = context.getPage();
         }
 
+        //
+        //  Figure out the parent page of this attachment.  If we can't find it,
+        //  we'll assume this refers directly to the attachment.
+        //
         int cutpt = attachmentname.lastIndexOf('/');
 
         if (cutpt != -1)
         {
-            currentPage = new WikiPage(attachmentname.substring(0, cutpt));
+            String parentPage = attachmentname.substring(0, cutpt);
+            parentPage = TranslatorReader.cleanLink(parentPage);
             attachmentname = attachmentname.substring(cutpt + 1);
+
+            currentPage = m_engine.getPage(parentPage);
         }
 
         //

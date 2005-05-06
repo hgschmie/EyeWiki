@@ -13,5 +13,6 @@
 <link rel="start"  href="<wiki:LinkTo format="url" page="Main"/>"                title="Front page" />
 
 <script src="<wiki:BaseURL/>scripts/search_highlight.js" type="text/javascript"></script>
+<script src="<wiki:BaseURL/>scripts/jspwiki-common.js" type="text/javascript"></script>
 <wiki:FeedDiscovery />
 

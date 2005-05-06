@@ -99,17 +99,14 @@ public class WikiServlet
             pageName = m_engine.getFrontPage(); // FIXME: Add special pages as well
         }
 
-        String jspPage = req.getParameter("do");
+        String jspPage = m_engine.getURLConstructor().getForwardPage(req);
 
-        if (jspPage == null)
-        {
-            jspPage = "Wiki";
-        }
-
-        StringBuffer sb =
-            new StringBuffer("/").append(jspPage).append(".jsp?page=")
-                                 .append(m_engine.encodeName(pageName)).append("&").append(
-                req.getQueryString());
+        StringBuffer sb = new StringBuffer("/")
+                .append(jspPage)
+                .append("?page=")
+                .append(m_engine.encodeName(pageName))
+                .append("&")
+                .append(req.getQueryString());
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(sb.toString());
 

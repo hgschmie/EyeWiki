@@ -36,8 +36,13 @@ function confirmDelete() {
      </tr>
 
      <tr>
+           <td class="pageinfomsg">Page feed</td>
+           <td><a class="pageinfo" href="<wiki:BaseURL/>rss.jsp?page=<wiki:Variable var="pagename" />&amp;mode=wiki"><img src="<wiki:BaseURL/>images/xml.png" border="0" alt="[RSS]"></a></td>
+       </tr>
+
+       <tr>
        <td class="pageinfomsg">Page revision history</td>
-       <td>
+       <td><div class="zebra-table">
          <table class="pagerev">
          <tr>
            <th class="pagerev">Version</th>                        
@@ -74,7 +79,7 @@ function confirmDelete() {
              </wiki:Permission>
            </tr>
          </wiki:HistoryIterator>
-         </table>
+         </table></div>
        </td>
      </tr>
      <wiki:Permission permission="delete">

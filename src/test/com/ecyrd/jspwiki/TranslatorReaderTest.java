@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +18,10 @@ import org.apache.commons.lang.StringUtils;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
 import com.ecyrd.jspwiki.util.FileUtil;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 
 /**
@@ -108,23 +109,25 @@ public class TranslatorReaderTest
     private String translate(String src)
             throws IOException, NoRequiredPropertyException, ServletException
     {
-        WikiContext context = new WikiContext(testEngine, new WikiPage(PAGE_NAME));
-        Reader r = new TranslatorReader(context, new BufferedReader(new StringReader(src)));
-        StringWriter out = new StringWriter();
-        int c;
+        return translate(new WikiPage(PAGE_NAME), src);
+    }
 
-        while ((c = r.read()) != -1)
-        {
-            out.write(c);
-        }
-
-        return out.toString();
+    private String translate(WikiEngine e, String src)
+            throws IOException, NoRequiredPropertyException, ServletException
+    {
+        return translate(e, new WikiPage(PAGE_NAME), src);
     }
 
     private String translate(WikiPage p, String src)
             throws IOException, NoRequiredPropertyException, ServletException
     {
-        WikiContext context = new WikiContext(testEngine, p);
+        return translate(testEngine, p, src);
+    }
+
+    private String translate(WikiEngine e, WikiPage p, String src)
+            throws IOException, NoRequiredPropertyException, ServletException
+    {
+        WikiContext context = new WikiContext(e, p);
         Reader r = new TranslatorReader(context, new BufferedReader(new StringReader(src)));
         StringWriter out = new StringWriter();
         int c;
@@ -421,7 +424,7 @@ public class TranslatorReaderTest
     {
         String src = "http://www.foo.bar/ANewHope/";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "<a class=\"external\" href=\"http://www.foo.bar/ANewHope/\">http://www.foo.bar/ANewHope/</a>",
             translate(src));
@@ -437,7 +440,7 @@ public class TranslatorReaderTest
     {
         String src = "mailto:foo@bar.com";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "<a class=\"external\" href=\"mailto:foo@bar.com\">mailto:foo@bar.com</a>",
             translate(src));
@@ -453,7 +456,7 @@ public class TranslatorReaderTest
     {
         String src = "This should be a link: http://www.foo.bar/ANewHope/.  Is it?";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "This should be a link: <a class=\"external\" href=\"http://www.foo.bar/ANewHope/\">http://www.foo.bar/ANewHope/</a>.  Is it?",
             translate(src));
@@ -469,7 +472,7 @@ public class TranslatorReaderTest
     {
         String src = "This should be a link: (http://www.foo.bar/ANewHope/)  Is it?";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "This should be a link: (<a class=\"external\" href=\"http://www.foo.bar/ANewHope/\">http://www.foo.bar/ANewHope/</a>)  Is it?",
             translate(src));
@@ -485,7 +488,7 @@ public class TranslatorReaderTest
     {
         String src = "This should be a link: http://www.foo.bar/ANewHope/\nIs it?";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "This should be a link: <a class=\"external\" href=\"http://www.foo.bar/ANewHope/\">http://www.foo.bar/ANewHope/</a>\nIs it?",
             translate(src));
@@ -501,7 +504,7 @@ public class TranslatorReaderTest
     {
         String src = "This should not be a link: http://''some.server''/wiki/Wiki.jsp\nIs it?";
 
-        // System.out.println( "EX:"+translate(src) );
+        // System.out.println("EX:"+translate(src));
         assertEquals(
             "This should not be a link: http://<i class=\"wikicontent\">some.server</i>/wiki/Wiki.jsp\nIs it?",
             translate(src));
@@ -803,6 +806,87 @@ public class TranslatorReaderTest
      *
      * @throws Exception DOCUMENT ME!
      */
+    public void testAttachmentLink2()
+            throws Exception
+    {
+        Configuration conf = TestEngine.getConfiguration();
+        conf.setProperty("jspwiki.encoding", "ISO-8859-1");
+
+        //TODO
+        TestEngine testEngine2 = new TestEngine(conf);
+
+        testEngine2.saveText("Test", "foo ");
+
+        Attachment att = new Attachment("Test", "TestAtt.txt");
+        att.setAuthor("FirstPost");
+
+        testEngine2.getAttachmentManager().storeAttachment(att, testEngine.makeAttachmentFile());
+
+        String src = "This should be an [attachment link|Test/TestAtt.txt]";
+
+        assertEquals(
+            "This should be an <a class=\"attachment\" href=\"attach/Test/TestAtt.txt\">attachment link</a>"
+            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=Test/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            translate(testEngine2, src));
+    }
+
+    /**
+     * Are attachments parsed correctly also when using gappy text?
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testAttachmentLink3()
+            throws Exception
+    {
+        Configuration conf = TestEngine.getConfiguration();
+        TestEngine testEngine2 = new TestEngine(conf);
+
+        testEngine2.saveText("TestPage", "foo ");
+
+        Attachment att = new Attachment("TestPage", "TestAtt.txt");
+        att.setAuthor("FirstPost");
+
+        testEngine2.getAttachmentManager().storeAttachment(att, testEngine.makeAttachmentFile());
+
+        String src = "[Test page/TestAtt.txt]";
+
+        assertEquals(
+            "<a class=\"attachment\" href=\"attach/TestPage/TestAtt.txt\">Test page/TestAtt.txt</a>"
+            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            translate(testEngine2, src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testAttachmentLink4()
+            throws Exception
+    {
+        Configuration conf = TestEngine.getConfiguration();
+        TestEngine testEngine2 = new TestEngine(conf);
+
+        testEngine2.saveText("TestPage", "foo ");
+
+        Attachment att = new Attachment("TestPage", "TestAtt.txt");
+        att.setAuthor("FirstPost");
+
+        testEngine2.getAttachmentManager().storeAttachment(att, testEngine.makeAttachmentFile());
+
+        String src = "[" + testEngine2.beautifyTitle("TestPage/TestAtt.txt") + "]";
+
+        assertEquals(
+            "<a class=\"attachment\" href=\"attach/TestPage/TestAtt.txt\">TestPage/TestAtt.txt</a>"
+            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            translate(testEngine2, src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testNoHyperlink()
             throws Exception
     {
@@ -1058,7 +1142,8 @@ public class TranslatorReaderTest
     {
         String src = "1\n\n2\n\n3";
 
-        assertEquals("1\n<p class=\"wikicontent\">2\n</p>\n<p class=\"wikicontent\">3</p>\n", translate(src));
+        assertEquals(
+            "1\n<p class=\"wikicontent\">2\n</p>\n<p class=\"wikicontent\">3</p>\n", translate(src));
     }
 
     /**
@@ -1137,6 +1222,19 @@ public class TranslatorReaderTest
      *
      * @throws Exception DOCUMENT ME!
      */
+    public void testLinebreakEscape()
+            throws Exception
+    {
+        String src = "1~\\\\2";
+
+        assertEquals("1\\\\2", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testLinebreakClear()
             throws Exception
     {
@@ -1200,6 +1298,19 @@ public class TranslatorReaderTest
 
         assertEquals(
             "1<span style=\"font-family:monospace; whitespace:pre;\">2345</span>6", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testPreEscape()
+            throws Exception
+    {
+        String src = "1~{{{2345}}}6";
+
+        assertEquals("1{{{2345}}}6", translate(src));
     }
 
     /**
@@ -1396,7 +1507,9 @@ public class TranslatorReaderTest
     {
         String src = "__This ''is'' a test.__";
 
-        assertEquals("<b class=\"wikicontent\">This <i class=\"wikicontent\">is</i> a test.</b>", translate(src));
+        assertEquals(
+            "<b class=\"wikicontent\">This <i class=\"wikicontent\">is</i> a test.</b>",
+            translate(src));
     }
 
     /**
@@ -1440,7 +1553,8 @@ public class TranslatorReaderTest
 
         // System.out.println(translate(src));
         assertEquals(
-            "A\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"><ul class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ul>\n</li>\n</ul>\n<p class=\"wikicontent\">B</p>\n", translate(src));
+            "A\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"><ul class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ul>\n</li>\n</ul>\n<p class=\"wikicontent\">B</p>\n",
+            translate(src));
     }
 
     /**
@@ -1455,7 +1569,8 @@ public class TranslatorReaderTest
 
         // System.out.println(translate(src));
         assertEquals(
-            "A\n<ol class=\"wikicontent\">\n<li class=\"wikicontent\"><ol class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ol>\n</li>\n</ol>\n<p class=\"wikicontent\">B</p>\n", translate(src));
+            "A\n<ol class=\"wikicontent\">\n<li class=\"wikicontent\"><ol class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ol>\n</li>\n</ol>\n<p class=\"wikicontent\">B</p>\n",
+            translate(src));
     }
 
     /**
@@ -1481,7 +1596,9 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A" + "<ol class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>" + "<li class=\"wikicontent\">Numbered 2</li>" + "</ol></li>"
+            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
+            + "<ol class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
+            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ol></li>"
             + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
     }
 
@@ -1501,7 +1618,9 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ol class=\"wikicontent\"><li class=\"wikicontent\">Item A" + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>" + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
+            "<ol class=\"wikicontent\"><li class=\"wikicontent\">Item A"
+            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
+            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
             + "<li class=\"wikicontent\">Item B</li>" + "</ol>", result);
     }
 
@@ -1521,7 +1640,9 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A" + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>" + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
+            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
+            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
+            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
             + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
     }
 
@@ -1541,9 +1662,11 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A" + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>" + "<li class=\"wikicontent\">Numbered 2"
-            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered3</li>" + "</ul></li>" + "</ul></li>" + "<li class=\"wikicontent\">Item B</li>" + "</ul>",
-            result);
+            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
+            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
+            + "<li class=\"wikicontent\">Numbered 2"
+            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered3</li>" + "</ul></li>"
+            + "</ul></li>" + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
     }
 
     /**
@@ -1860,8 +1983,8 @@ public class TranslatorReaderTest
             "<table class=\"wikicontent\">\n"
             + "<tr class=\"wikicontent\"><th class=\"wikicontent\"> heading </th><th class=\"wikicontent\"> heading2 </th></tr>\n"
             + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 1 </td><td class=\"wikicontent\"> Cell 2 </td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\"> Cell 4</td></tr>\n" + "</table>\n<p class=\"wikicontent\"></p>\n", translate(
-                src));
+            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\"> Cell 4</td></tr>\n"
+            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
     }
 
     /**
@@ -1878,7 +2001,8 @@ public class TranslatorReaderTest
             "<table class=\"wikicontent\">\n"
             + "<tr class=\"wikicontent\"><th class=\"wikicontent\">heading</th><th class=\"wikicontent\">heading2</th></tr>\n"
             + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n" + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n"
+            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
     }
 
     /**
@@ -1894,7 +2018,8 @@ public class TranslatorReaderTest
         assertEquals(
             "<table class=\"wikicontent\">\n"
             + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n" + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n"
+            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
     }
 
     /**
@@ -1945,7 +2070,9 @@ public class TranslatorReaderTest
     {
         String src = ";:Foo";
 
-        assertEquals("<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\">Foo</dd>\n</dl>", translate(src));
+        assertEquals(
+            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\">Foo</dd>\n</dl>",
+            translate(src));
     }
 
     /**
@@ -1958,7 +2085,9 @@ public class TranslatorReaderTest
     {
         String src = ";Bar:Foo";
 
-        assertEquals("<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo</dd>\n</dl>", translate(src));
+        assertEquals(
+            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo</dd>\n</dl>",
+            translate(src));
     }
 
     /**
@@ -1971,7 +2100,9 @@ public class TranslatorReaderTest
     {
         String src = ";:";
 
-        assertEquals("<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\"></dd>\n</dl>", translate(src));
+        assertEquals(
+            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\"></dd>\n</dl>",
+            translate(src));
     }
 
     /**
@@ -1984,7 +2115,9 @@ public class TranslatorReaderTest
     {
         String src = ";Bar:Foo :-)";
 
-        assertEquals("<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo :-)</dd>\n</dl>", translate(src));
+        assertEquals(
+            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo :-)</dd>\n</dl>",
+            translate(src));
     }
 
     /**
@@ -2076,7 +2209,8 @@ public class TranslatorReaderTest
         String src = "!Hello\nThis is a test";
 
         assertEquals(
-            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\">Hello</a></h4>\nThis is a test", translate(src));
+            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\">Hello</a></h4>\nThis is a test",
+            translate(src));
     }
 
     /**
@@ -2199,9 +2333,9 @@ public class TranslatorReaderTest
     {
         String src = "Foobar.[{ALLOW view JanneJalkanen}]";
 
-        WikiPage p = new WikiPage( PAGE_NAME );
+        WikiPage p = new WikiPage(PAGE_NAME);
 
-        String res = translate( p, src );
+        String res = translate(p, src);
 
         assertEquals("Page text", "Foobar.", res);
 
@@ -2210,8 +2344,8 @@ public class TranslatorReaderTest
         UserProfile prof = new UserProfile();
         prof.setName("JanneJalkanen");
 
-        assertTrue(  "no read", acl.checkPermission( prof, new ViewPermission() ) );
-        assertFalse( "has edit", acl.checkPermission( prof, new EditPermission() ) );
+        assertTrue( "no read", acl.checkPermission(prof, new ViewPermission()));
+        assertFalse("has edit", acl.checkPermission(prof, new EditPermission()));
     }
 
     public void testSimpleACL2()
@@ -2221,9 +2355,9 @@ public class TranslatorReaderTest
                      "[{DENY view ErikBunn, SuloVilen}]\n"+
                      "[{ALLOW edit JanneJalkanen, SuloVilen}]";
 
-        WikiPage p = new WikiPage( PAGE_NAME );
+        WikiPage p = new WikiPage(PAGE_NAME);
 
-        String res = translate( p, src );
+        String res = translate(p, src);
 
         assertEquals("Page text", "Foobar.\n\n", res);
 
@@ -2232,18 +2366,18 @@ public class TranslatorReaderTest
         UserProfile prof = new UserProfile();
         prof.setName("JanneJalkanen");
 
-        assertTrue( "no read for JJ", acl.checkPermission( prof, new ViewPermission() ) );
-        assertTrue( "no edit for JJ", acl.checkPermission( prof, new EditPermission() ) );
+        assertTrue("no read for JJ", acl.checkPermission(prof, new ViewPermission()));
+        assertTrue("no edit for JJ", acl.checkPermission(prof, new EditPermission()));
 
         prof.setName("ErikBunn");
 
-        assertFalse(  "read for EB", acl.checkPermission( prof, new ViewPermission() ) );
-        assertFalse( "has edit for EB", acl.checkPermission( prof, new EditPermission() ) );
+        assertFalse( "read for EB", acl.checkPermission(prof, new ViewPermission()));
+        assertFalse("has edit for EB", acl.checkPermission(prof, new EditPermission()));
 
         prof.setName("SuloVilen");
 
-        assertFalse("read for SV", acl.checkPermission( prof, new ViewPermission() ) );
-        assertTrue( "no edit for SV", acl.checkPermission( prof, new EditPermission() ) );
+        assertFalse("read for SV", acl.checkPermission(prof, new ViewPermission()));
+        assertTrue("no edit for SV", acl.checkPermission(prof, new EditPermission()));
     }
     */
 
@@ -2428,16 +2562,109 @@ public class TranslatorReaderTest
         r.addExternalLinkHook(coll_others);
         r.addAttachmentLinkHook(coll);
 
-    	StringWriter out = new StringWriter();
+        StringWriter out = new StringWriter();
 
-    	FileUtil.copyContents(r, out);
+        FileUtil.copyContents(r, out);
 
-    	Collection links = coll.getLinks();
+        Collection links = coll.getLinks();
 
-    	assertEquals("no links found", 1, links.size());
-    	assertEquals("wrong link", PAGE_NAME + "/TestAtt.txt", links.iterator().next());
+        assertEquals("no links found", 1, links.size());
+        assertEquals("wrong link", PAGE_NAME + "/TestAtt.txt", links.iterator().next());
 
-    	assertEquals("wrong links found", 0, coll_others.getLinks().size());
+        assertEquals("wrong links found", 0, coll_others.getLinks().size());
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testDivStyle1()
+            throws Exception
+    {
+        String src = "%%foo\ntest\n%%\n";
+
+        assertEquals("<div class=\"foo\">\ntest\n</div>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testDivStyle2()
+            throws Exception
+    {
+        String src = "%%(foo:bar;)\ntest\n%%\n";
+
+        assertEquals("<div style=\"foo:bar;\">\ntest\n</div>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testSpanStyle1()
+            throws Exception
+    {
+        String src = "%%foo test%%\n";
+
+        assertEquals("<span class=\"foo\">test</span>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testSpanStyle2()
+            throws Exception
+    {
+        String src = "%%(foo:bar;)test%%\n";
+
+        assertEquals("<span style=\"foo:bar;\">test</span>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testSpanStyle3()
+            throws Exception
+    {
+        String src = "Johan %%(foo:bar;)test%%\n";
+
+        assertEquals("Johan <span style=\"foo:bar;\">test</span>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testSpanNested()
+            throws Exception
+    {
+        String src = "Johan %%(color: rgb(1,2,3);)test%%\n";
+
+        assertEquals("Johan <span style=\"color: rgb(1,2,3);\">test</span>\n", translate(src));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
+    public void testSpanStyleTable()
+            throws Exception
+    {
+        String src = "|%%(foo:bar;)test%%|no test\n";
+
+        assertEquals(
+            "<table class=\"wikicontent\">\n<tr class=\"wikicontent\"><td class=\"wikicontent\"><span style=\"foo:bar;\">test</span></td><td class=\"wikicontent\">no test</td></tr>\n</table>\n",
+            translate(src));
     }
 
     /**

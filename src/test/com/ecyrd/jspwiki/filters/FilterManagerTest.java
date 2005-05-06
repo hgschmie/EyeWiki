@@ -2,7 +2,6 @@ package com.ecyrd.jspwiki.filters;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -101,11 +100,11 @@ public class FilterManagerTest
         PageFilter f1 = (PageFilter) i.next();
         TestFilter f2 = (TestFilter) i.next();
 
-        Properties p = f2.m_properties;
+        Configuration conf = f2.getConfiguration();
 
-        assertEquals("no foobar", "Zippadippadai", p.getProperty("foobar"));
+        assertEquals("no foobar", "Zippadippadai", conf.getString("foobar"));
 
-        assertEquals("no blatblaa", "5", p.getProperty("blatblaa"));
+        assertEquals("no blatblaa", "5", conf.getString("blatblaa"));
     }
 
     /**

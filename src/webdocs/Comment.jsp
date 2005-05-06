@@ -25,7 +25,9 @@
     String ok      = request.getParameter("ok");
     String preview = request.getParameter("preview");
     String cancel  = request.getParameter("cancel");
+    String edit    = request.getParameter("edit");
     String author  = wiki.safeGetParameter( request, "author" );
+    String link    = wiki.safeGetParameter( request, "link" );
     String remember = request.getParameter("remember");
 
     WikiContext wikiContext = wiki.createContext( request, 
@@ -61,6 +63,11 @@
     pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT,
                               wikiContext,
                               PageContext.REQUEST_SCOPE );
+
+    String storedlink = HttpUtil.retrieveCookieValue( request, "link" );
+    if( storedlink == null ) storedlink = "";
+    
+    pageContext.setAttribute( "link", storedlink, PageContext.REQUEST_SCOPE );
 
     //
     //  Set the response type before we branch.
@@ -137,10 +144,19 @@
 
         if( author != null && author.length() > 0 )
         {
+            String signature = author;
+            
+            if( link != null )
+            {
+                link = HttpUtil.guessValidURI( link );
+                
+                signature = "["+author+"|"+link+"]";
+            }
+            
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
 
-            pageText.append("\n\n--"+author+", "+fmt.format(cal.getTime()));
+            pageText.append("\n\n--"+signature+", "+fmt.format(cal.getTime()));
         }
 
         wiki.saveText( wikiContext, pageText.toString() );
@@ -148,6 +164,12 @@
         if( remember != null )
         {
             wiki.getUserManager().setUserCookie( response, author );            
+            if( link != null )
+            {
+                Cookie linkcookie = new Cookie("link", link);
+                linkcookie.setMaxAge(1001*24*60*60);
+                response.addCookie( linkcookie );
+            }
         }
 
         response.sendRedirect(wikiContext.getViewURL(pagereq));

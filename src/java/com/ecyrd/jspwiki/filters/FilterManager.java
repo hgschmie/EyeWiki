@@ -26,12 +26,13 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import org.picocontainer.MutablePicoContainer;
@@ -121,7 +122,7 @@ public class FilterManager
     private String filterName = null;
 
     /** DOCUMENT ME! */
-    private Properties filterProperties = new Properties();
+    private Configuration filterConf = null;
 
     /** DOCUMENT ME! */
     private boolean parsingFilters = false;
@@ -391,22 +392,15 @@ public class FilterManager
      * ========================================================================
      */
 
-    private void registerFilter(String filterName, Properties filterProperties)
+    private void registerFilter(String filterName, Configuration filterConf)
             throws SAXException
     {
         try
         {
             Class filterClass = Class.forName(filterName);
 
-            if (filterProperties != null && filterProperties.size() > 0)
-            {
-                Parameter [] propParameter = new Parameter[] { new ConstantParameter(filterProperties) };
-                filterContainer.registerComponentImplementation(filterName, filterClass, propParameter);
-            }
-            else
-            {
-                filterContainer.registerComponentImplementation(filterName, filterClass);
-            }
+            Parameter [] confParameter = new Parameter[] { new ConstantParameter(filterConf) };
+            filterContainer.registerComponentImplementation(filterName, filterClass, confParameter);
         }
         catch (Exception e)
         {
@@ -434,6 +428,7 @@ public class FilterManager
             if ("filter".equals(qName))
             {
                 filterName = null;
+                filterConf = new PropertiesConfiguration();
             }
         }
     }
@@ -454,7 +449,7 @@ public class FilterManager
         {
             if ("filter".equals(qName))
             {
-                registerFilter(filterName, filterProperties);
+                registerFilter(filterName, filterConf);
             }
             else if ("class".equals(qName))
             {
@@ -462,7 +457,10 @@ public class FilterManager
             }
             else if ("param".equals(qName))
             {
-                filterProperties.setProperty(lastReadParamName, lastReadParamValue);
+                if (StringUtils.isNotEmpty(lastReadParamName))
+                {
+                    filterConf.setProperty(lastReadParamName, lastReadParamValue);
+                }
             }
             else if ("name".equals(qName))
             {
@@ -470,6 +468,10 @@ public class FilterManager
             }
             else if ("value".equals(qName))
             {
+                if (StringUtils.isEmpty(lastReadParamName))
+                {
+                    throw new IllegalArgumentException("Found Parameter Value before Parameter name!");
+                }
                 lastReadParamValue = lastReadCharacters.toString();
             }
         }
@@ -486,18 +488,5 @@ public class FilterManager
     {
         lastReadCharacters.append(ch, start, length);
     }
-
-    /*
-    private static FilterComponentAdapter
-            extends ConstructorInjectionComponentAdapter
-    {
-        private FilterComponentAdapter(final String className, final Properties props)
-        {
-            Parameter [] propParameter = new Parameter[1];
-            propParameter[0] = new ConstantParameter(props);
-            super(className, className, propParameter);
-        }
-    }
-    */
 }
 

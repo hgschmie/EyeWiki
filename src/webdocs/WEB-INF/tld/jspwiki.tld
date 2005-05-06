@@ -233,6 +233,12 @@
   </tag>
 
   <tag>
+     <name>EditorArea</name>
+     <tagclass>com.ecyrd.jspwiki.tags.EditorAreaTag</tagclass>
+     <bodycontent>empty</bodycontent>
+  </tag>
+  
+  <tag>
     <name>FeedDiscovery</name>
     <tagclass>com.ecyrd.jspwiki.tags.FeedDiscoveryTag</tagclass>
     <bodycontent>empty</bodycontent>
@@ -376,6 +382,10 @@
     <name>PageDate</name>
     <tagclass>com.ecyrd.jspwiki.tags.PageDateTag</tagclass>
     <bodycontent>empty</bodycontent>
+    <attribute>
+        <name>format</name>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
   </tag>
   
   <tag>

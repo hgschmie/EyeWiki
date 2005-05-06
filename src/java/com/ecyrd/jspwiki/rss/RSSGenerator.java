@@ -27,9 +27,9 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.security.ProviderException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,12 +40,14 @@ import org.apache.log4j.Logger;
 
 import org.picocontainer.Startable;
 
+import com.ecyrd.jspwiki.PageTimeComparator;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
+import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 import com.ecyrd.jspwiki.manager.VariableManager;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.variable.AbstractSimpleVariable;
@@ -90,6 +92,8 @@ public class RSSGenerator
 
     private final VariableManager variableManager;
 
+    private static final int MAX_CHARACTERS = Integer.MAX_VALUE;
+    
     /**
      * Initialize the RSS generator.
      *
@@ -205,18 +209,23 @@ public class RSSGenerator
 
         if (page.getVersion() > 1)
         {
+            // FIXME: Will fail when non-contiguous versions
             String diff =
                     m_engine.getDiff(page.getName(), page.getVersion() - 1, page.getVersion(), false);
 
-            buf.append(
-                    author + " changed this page on " + page.getLastModified() + ":<br /><hr /><br />");
-            buf.append(diff);
+            buf.append(author)
+                    .append(" changed this page on ")
+                    .append(page.getLastModified())
+                    .append(":<br /><hr /><br />")
+                    .append(diff);
         }
         else
         {
-            buf.append(
-                    author + " created this page on " + page.getLastModified() + ":<br /><hr /><br />");
-            buf.append(m_engine.getHTML(page.getName()));
+            buf.append(author)
+                    .append(" created this page on ")
+                    .append(page.getLastModified())
+                    .append(":<br /><hr /><br />")
+                    .append(m_engine.getHTML(page.getName()));
         }
 
         return buf.toString();
@@ -251,6 +260,18 @@ public class RSSGenerator
      */
     public String generate()
     {
+        WikiContext context = new WikiContext(m_engine, new WikiPage("__DUMMY"));
+        context.setRequestContext(WikiContext.RSS);
+        
+        String result = generateWikiRSS(context);
+        
+        result = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + result;
+        
+        return result;
+    }
+/*
+    public String generate()
+    {
         StringBuffer result = new StringBuffer();
         SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -266,7 +287,6 @@ public class RSSGenerator
                 + "   xmlns:wiki=\"http://purl.org/rss/1.0/modules/wiki/\">\n");
 
         String baseURL = m_engine.getBaseURL();
-
         //
         //  Channel.
         //
@@ -301,9 +321,11 @@ public class RSSGenerator
 
         int items = 0;
 
-        for (Iterator i = changed.iterator(); i.hasNext() && (items < 15); items++)
+        for (Iterator i = changed.iterator(); i.hasNext() && items < 15; items++)
         {
             WikiPage page = (WikiPage) i.next();
+
+            String encodedName = m_engine.encodeName(page.getName());
 
             String url;
 
@@ -421,162 +443,225 @@ public class RSSGenerator
 
         return result.toString();
     }
+*/
 
     /**
-     * Generates an RSS/RDF 1.0 feed.  Each item should be an instance of the RSSItem class.
-     *
-     * @param wikiContext DOCUMENT ME!
-     * @param items DOCUMENT ME!
-     * @param limit DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
+     *  Generates an RSS/RDF 1.0 feed for the entire wiki.  Each item should be an instance of the RSSItem class.
      */
-
-    // FIXME: Does not work.
-    public String generateRSS(WikiContext wikiContext, List items, int limit)
+    public String generateWikiRSS(WikiContext wikiContext)
     {
-        StringBuffer result = new StringBuffer();
+        RSS10Feed feed = new RSS10Feed(wikiContext);
+        
+        feed.setChannelTitle(m_engine.getApplicationName());
+        feed.setFeedURL(m_engine.getBaseURL());
+        feed.setChannelLanguage(m_channelLanguage);
+        feed.setChannelDescription(m_channelDescription);
 
-        //
-        //  Preamble
-        //
-        result.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        Collection changed = m_engine.getRecentChanges();
 
-        result.append(
-                "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n"
-                + "   xmlns=\"http://purl.org/rss/1.0/\"\n"
-                + "   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-                + "   xmlns:wiki=\"http://purl.org/rss/1.0/modules/wiki/\">\n");
+        int items = 0;
+        for (Iterator i = changed.iterator(); i.hasNext() && items < 15; items++)
+        {
+            WikiPage page = (WikiPage) i.next();
+            
+            Entry e = new Entry();
+            
+            e.setPage(page);
 
-        //
-        //  Channel.
-        //
-        result.append(" <channel rdf:about=\"")
-                .append(m_engine.getBaseURL())
-                .append("\">\n")
-                .append("  <title>").append(m_engine.getApplicationName()).append("</title>\n");
+            String url;
 
-        // FIXME: This might fail in case the base url is not defined.
-        result.append("  <link>").append(m_engine.getBaseURL()).append("</link>\n")
-                .append("  <description>")
-                .append(format(m_channelDescription))
-                .append("</description>\n");
+            if (page instanceof Attachment)
+            {
+                url = m_engine.getURL(WikiContext.ATTACH, 
+                                       page.getName(),
+                                       null,
+                                       true);
+            }
+            else
+            {
+                url = m_engine.getURL(WikiContext.VIEW, 
+                                       page.getName(),
+                                       null,
+                                       true);
+            }
+            
+            e.setURL(url);
+            e.setTitle(getEntryTitle(page));
+            e.setContent(getEntryDescription(page));
+            e.setAuthor(getAuthor(page));
+            
+            feed.addEntry(e);
+        }
+        
+        return feed.getString();
+    }
 
-        // According to feedvalidator.org, this element is not defined for RSS 1.0!
-        result.append("  <language>")
-                .append(m_channelLanguage)
-                .append("</language>\n");
+    public String generatePageRSS(WikiContext wikiContext, List changed)
+    {
+        RSS10Feed feed = new RSS10Feed(wikiContext);
+        
+        feed.setChannelTitle(m_engine.getApplicationName());
+        feed.setFeedURL(m_engine.getBaseURL());
+        feed.setChannelLanguage(m_channelLanguage);
+        feed.setChannelDescription(m_channelDescription);
 
-        //  We need two lists, which is why we gotta make a separate list if
-        //  we want to do just a single pass.
-        StringBuffer itemBuffer = new StringBuffer();
+        Collections.sort(changed, new PageTimeComparator());
+                
+        int items = 0;
+        for (Iterator i = changed.iterator(); i.hasNext() && items < 15; items++)
+        {
+            WikiPage page = (WikiPage) i.next();
+            
+            Entry e = new Entry();
+            
+            e.setPage(page);
 
-        result.append("  <items>\n   <rdf:Seq>\n");
+            String url;
 
-        /*
-          SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-          int numItems = 0;
-          for( Iterator i = items.iterator(); i.hasNext() && numItems < limit; numItems++ )
-          {
-          RSSItem item = (RSSItem) i.next();
+            if (page instanceof Attachment)
+            {
+                url = m_engine.getURL(WikiContext.ATTACH, 
+                                       page.getName(),
+                                       "version=" + page.getVersion(),
+                                       true);
+            }
+            else
+            {
+                url = m_engine.getURL(WikiContext.VIEW, 
+                                       page.getName(),
+                                       "version=" + page.getVersion(),
+                                       true);
+            }
+            
+            e.setURL(url);
+            e.setTitle(getEntryTitle(page));
+            e.setContent(getEntryDescription(page));
+            e.setAuthor(getAuthor(page));
+            
+            feed.addEntry(e);
+        }
+        
+        return feed.getString();
+    }
 
-          result.append("    <rdf:li rdf:resource=\""+item.getURL(wikiContext)+"\" />\n");
+    
+    public String generateBlogRSS(WikiContext wikiContext, List changed)
+        throws ProviderException
+    {
+        RSS10Feed feed = new RSS10Feed(wikiContext);
+        
+        log.debug("Generating RSS for blog, size=" + changed.size());
+        
+        feed.setChannelTitle(m_engine.getApplicationName() + ":" + wikiContext.getPage().getName());
+        feed.setFeedURL(wikiContext.getViewURL(wikiContext.getPage().getName()));
+        feed.setChannelLanguage(m_channelLanguage);
+        
+        String channelDescription;
+        
+        try
+        {
+            channelDescription = m_engine.getVariableManager().getValue(wikiContext, WikiProperties.PROP_RSS_CHANNEL_DESCRIPTION);
+            feed.setChannelDescription(channelDescription);
+        }
+        catch(NoSuchVariableException e) {}
 
-          itemBuffer.append(" <item rdf:about=\""+item.getURL(wikiContext)+"\">\n");
+        Collections.sort(changed, new PageTimeComparator());
 
-          itemBuffer.append("  <title>");
-          itemBuffer.append( item.getTitle() );
-          itemBuffer.append("</title>\n");
+        int items = 0;
+        for (Iterator i = changed.iterator(); i.hasNext() && items < 15; items++)
+        {
+            WikiPage page = (WikiPage) i.next();
+            
+            Entry e = new Entry();
+            
+            e.setPage(page);
 
-          itemBuffer.append("  <link>");
-          itemBuffer.append( item.getURL(wikiContext) );
-          itemBuffer.append("</link>\n");
+            String url;
 
-          itemBuffer.append("  <description>");
+            if (page instanceof Attachment)
+            {
+                url = m_engine.getURL(WikiContext.ATTACH, 
+                                       page.getName(),
+                                       null,
+                                       true);
+            }
+            else
+            {
+                url = m_engine.getURL(WikiContext.VIEW, 
+                                       page.getName(),
+                                       null,
+                                       true);
+            }
+            
+            e.setURL(url);
+            
+            //
+            //  Title
+            //
+            
+            String pageText = m_engine.getText(page.getName());
+            String title = "";
+            int firstLine = pageText.indexOf('\n');
 
-          itemBuffer.append( format( item.getDescription() ) );
+            if (firstLine > 0)
+            {
+                title = pageText.substring(0, firstLine);
+            }
+            
+            if (title.trim().length() == 0)
+            {
+                title = page.getName();
+            }
 
-          itemBuffer.append("</description>\n");
+            // Remove wiki formatting
+            while (title.startsWith("!"))
+            {
+                title = title.substring(1);
+            }
+            
+            e.setTitle(title);
+            
+            //
+            //  Description
+            //
+            
+            if (firstLine > 0)
+            {
+                int maxlen = pageText.length();
+                if (maxlen > MAX_CHARACTERS)
+                {
+                    maxlen = MAX_CHARACTERS;
+                }
 
-          if( page.getVersion() != -1 )
-          {
-          itemBuffer.append("  <wiki:version>"+page.getVersion()+"</wiki:version>\n");
-          }
+                if (maxlen > 0)
+                {
+                    pageText = m_engine.textToHTML(wikiContext, 
+                                                    pageText.substring(firstLine+1,
+                                                                        maxlen).trim());
+                    
+                    if (maxlen == MAX_CHARACTERS)
+                    {
+                        pageText += "...";
+                    }
+                    
+                    e.setContent(pageText);
+                }
+                else
+                {
+                    e.setContent(title);
+                }
+            }
+            else
+            {
+                e.setContent(title);
+            }
 
-          if( page.getVersion() > 1 )
-          {
-          itemBuffer.append("  <wiki:diff>"+
-          m_engine.getBaseURL()+"Diff.jsp?page="+
-          encodedName+
-          "&amp;r1=-1"+
-          "</wiki:diff>\n");
-          }
-
-          //
-          //  Modification date.
-          //
-          itemBuffer.append("  <dc:date>");
-          Calendar cal = Calendar.getInstance();
-          cal.setTime( page.getLastModified() );
-          cal.add( Calendar.MILLISECOND,
-          - (cal.get( Calendar.ZONE_OFFSET ) +
-          (cal.getTimeZone().inDaylightTime( page.getLastModified() ) ? cal.get( Calendar.DST_OFFSET ) : 0 )) );
-          itemBuffer.append( iso8601fmt.format( cal.getTime() ) );
-          itemBuffer.append("</dc:date>\n");
-
-          //
-          //  Author.
-          //
-          String author = getAuthor(page);
-          itemBuffer.append("  <dc:contributor>\n");
-          itemBuffer.append("   <rdf:Description");
-          if( m_engine.pageExists(author) )
-          {
-          itemBuffer.append(" link=\""+m_engine.getViewURL(author)+"\"");
-          }
-          itemBuffer.append(">\n");
-          itemBuffer.append("    <rdf:value>"+author+"</rdf:value>\n");
-          itemBuffer.append("   </rdf:Description>\n");
-          itemBuffer.append("  </dc:contributor>\n");
-
-
-          //  PageHistory
-
-          itemBuffer.append("  <wiki:history>");
-          itemBuffer.append( m_engine.getBaseURL()+"PageInfo.jsp?page="+
-          encodedName );
-          itemBuffer.append("</wiki:history>\n");
-
-          //  Close up.
-          itemBuffer.append(" </item>\n");
-          }
-        */
-        result.append("   </rdf:Seq>\n  </items>\n")
-                .append(" </channel>\n")
-                .append(itemBuffer.toString());
-
-        //
-        //  In the end, add a search box for JSPWiki
-        //
-        String searchURL = m_engine.getBaseURL() + "Search.jsp";
-
-        result.append(" <textinput rdf:about=\"")
-                .append(searchURL)
-                .append("\">\n")
-                .append("  <title>Search</title>\n")
-                .append("  <description>Search this Wiki</description>\n")
-                .append("  <name>query</name>\n")
-                .append("  <link>")
-                .append(searchURL)
-                .append("</link>\n")
-                .append(" </textinput>\n");
-
-        //
-        //  Be a fine boy and close things.
-        //
-        result.append("</rdf:RDF>");
-
-        return result.toString();
+            e.setAuthor(getAuthor(page));
+            
+            feed.addEntry(e);
+        }
+        
+        return feed.getString();
     }
 
     private class RSSVariable

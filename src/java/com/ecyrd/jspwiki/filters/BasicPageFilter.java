@@ -1,5 +1,7 @@
 package com.ecyrd.jspwiki.filters;
 
+import org.apache.commons.configuration.Configuration;
+
 import com.ecyrd.jspwiki.WikiContext;
 
 
@@ -12,6 +14,13 @@ import com.ecyrd.jspwiki.WikiContext;
 public abstract class BasicPageFilter
         implements PageFilter
 {
+
+    /**
+     * Force subclasses to implement a c'tor with a properties object
+     */
+    public BasicPageFilter(final Configuration conf)
+    {
+    }
 
     public abstract boolean isVisible();
 

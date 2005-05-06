@@ -759,3 +759,15 @@ A.index:active {
  * calendarmonth	td
  * calendarothermonth	td
  */
+
+/*
+ * Zebra Table
+ */
+.zebra-table TH {
+	background:  #e0e0e0;
+}
+    
+.zebra-table TR.odd TD {
+	background:  #f0f0f0;
+}
+

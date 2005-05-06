@@ -1,5 +1,6 @@
 package com.ecyrd.jspwiki.filters;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
 import com.ecyrd.jspwiki.WikiContext;
@@ -21,6 +22,11 @@ public class ProfanityFilter
         "fuck",
         "shit"
     };
+
+    public ProfanityFilter(final Configuration conf)
+    {
+        super(conf);
+    }
 
     /**
      * DOCUMENT ME!

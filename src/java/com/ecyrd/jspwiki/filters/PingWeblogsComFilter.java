@@ -22,9 +22,9 @@ package com.ecyrd.jspwiki.filters;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Hashtable;
-import java.util.Properties;
 import java.util.Vector;
 
+import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.AsyncCallback;
 import org.apache.xmlrpc.XmlRpcClient;
@@ -52,6 +52,8 @@ public class PingWeblogsComFilter
     /** DOCUMENT ME! */
     public static final String PROP_PINGURL = "pingurl";
 
+    public static final String PROP_PINGURL_DEFAULT = "http://rpc.weblogs.com/RPC2";
+
     /** DOCUMENT ME! */
     private String m_pingURL;
 
@@ -60,9 +62,10 @@ public class PingWeblogsComFilter
      *
      * @param props DOCUMENT ME!
      */
-    public PingWeblogsComFilter(Properties props)
+    public PingWeblogsComFilter(Configuration conf)
     {
-        m_pingURL = props.getProperty(PROP_PINGURL, "http://rpc.weblogs.com/RPC2");
+        super(conf);
+        m_pingURL = conf.getString(PROP_PINGURL, PROP_PINGURL_DEFAULT);
     }
 
     /**

@@ -595,13 +595,21 @@ public class WikiEngine
                 {
                     d.mkdirs();
                 }
-                else if (!d.isDirectory())
+
+                if (!d.isDirectory())
                 {
-                    throw new IOException(
-                            "Requested Directory " + dir + " exists, but is no directory!");
+                    throw new WikiException("Requested Directory " + dir + " exists, but is no directory!");
+                }
+                if(!d.canRead())
+                {
+                    throw new WikiException("No permission to read directory " + dir);
+                }
+                if(!d.canWrite())
+                {
+                    throw new WikiException("No permission to write to directory " + dir);
                 }
             }
-            catch (Exception e)
+            catch (SecurityException e)
             {
                 String err = "Unable to find or create the requested directory: " + dir;
                 log.fatal(err, e);
@@ -970,7 +978,10 @@ public class WikiEngine
     }
 
     /**
-     * Beautifies the title of the page by appending spaces in suitable places.
+     * Beautifies the title of the page by appending spaces in suitable
+     * places, if the user has so decreed in the properties when constructing
+     * this WikiEngine.  However, attachment names are not beautified, no
+     * matter what.
      *
      * @param title DOCUMENT ME!
      *
@@ -982,7 +993,17 @@ public class WikiEngine
     {
         if (m_beautifyTitle)
         {
-            return TextUtil.beautifyString(title);
+            try
+            {
+                if(getAttachmentManager().getAttachmentInfo(title) == null)
+                {
+                    return TextUtil.beautifyString( title );
+                }
+            }
+            catch( ProviderException e )
+            {
+                return title;
+            }
         }
 
         return title;

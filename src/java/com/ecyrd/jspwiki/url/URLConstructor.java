@@ -35,4 +35,14 @@ public interface URLConstructor
      */
     String parsePage(String context, HttpServletRequest request, String encoding)
             throws IOException;
+
+    /**
+     *  Returns information which JSP page should continue handling
+     *  this type of request.
+     *  
+     * @param context
+     * @return "Wiki.jsp", "PageInfo.jsp", etc.  Just return the name,
+     *         JSPWiki will figure out the page.
+     */
+    String getForwardPage(HttpServletRequest request);
 }

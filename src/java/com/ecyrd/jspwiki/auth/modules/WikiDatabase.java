@@ -368,6 +368,7 @@ public class WikiDatabase
     {
         private SaveFilter()
         {
+            super(null);
         }
         
         public int getPriority()

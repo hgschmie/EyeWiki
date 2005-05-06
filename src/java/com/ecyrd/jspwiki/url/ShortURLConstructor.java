@@ -49,9 +49,9 @@ public class ShortURLConstructor
     private static Logger log = Logger.getLogger(ShortURLConstructor.class);
 
     /** DOCUMENT ME! */
-    private String m_urlPrefix = "";
+    protected String m_urlPrefix = "";
 
-    public ShortURLConstructor(WikiEngine engine, Configuration conf)
+    public ShortURLConstructor(final WikiEngine engine, final Configuration conf)
     {
         super(engine, conf);
 
@@ -201,5 +201,12 @@ public class ShortURLConstructor
         }
 
         return pagereq;
+    }
+
+    public String getForwardPage(HttpServletRequest req)
+    {
+        String jspPage = req.getParameter("do");
+
+        return (jspPage == null) ? "Wiki.jsp" : jspPage + ".jsp";
     }
 }

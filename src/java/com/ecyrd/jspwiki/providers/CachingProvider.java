@@ -35,7 +35,7 @@ import java.util.Vector;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -46,6 +46,8 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 import org.picocontainer.PicoContainer;
 import org.picocontainer.Startable;
@@ -169,6 +171,8 @@ public class CachingProvider
     /** DOCUMENT ME! */
     private boolean m_useLucene = false;
 
+    private String m_analyzerClass = null;
+
     /** DOCUMENT ME! */
     private String m_luceneDirectory = null;
 
@@ -241,6 +245,8 @@ public class CachingProvider
         // index directory is up to date.
         //
         m_useLucene = conf.getBoolean(PROP_USE_LUCENE, PROP_USE_LUCENE_DEFAULT);
+
+        m_analyzerClass = conf.getString(PROP_LUCENE_ANALYZER, PROP_LUCENE_ANALYZER_DEFAULT);
     }
 
     public synchronized void start()
@@ -256,6 +262,15 @@ public class CachingProvider
         // GNDN
     }
 
+    private Analyzer getLuceneAnalyzer()
+            throws ClassNotFoundException,
+                   InstantiationException,
+                   IllegalAccessException
+    {
+        Analyzer analyzer = (Analyzer) Class.forName(m_analyzerClass).newInstance();
+        return analyzer;
+    }
+    
     /**
      * Waits first for a little while before starting to go through the Lucene "pages that need
      * updating".
@@ -263,41 +278,41 @@ public class CachingProvider
     private void startLuceneUpdateThread()
     {
         m_luceneUpdateThread =
-            new Thread(
-                new Runnable()
-                {
-                    public void run()
-                    {
-                        // FIXME: This is a kludge - JSPWiki should somehow report
-                        //        that init phase is complete.
-                        try
+                new Thread(
+                        new Runnable()
                         {
-                            Thread.sleep(60000L);
-                        }
-                        catch (InterruptedException e)
-                        {
-                        }
+                            public void run()
+                            {
+                                // FIXME: This is a kludge - JSPWiki should somehow report
+                                //        that init phase is complete.
+                                try
+                                {
+                                    Thread.sleep(60000L);
+                                }
+                                catch (InterruptedException e)
+                                {
+                                }
 
-                        while (true)
-                        {
-                            while (m_updates.size() > 0)
-                            {
-                                Object [] pair = (Object []) m_updates.remove(0);
-                                WikiPage page = (WikiPage) pair[0];
-                                String text = (String) pair[1];
-                                updateLuceneIndex(page, text);
-                            }
+                                while (true)
+                                {
+                                    while (m_updates.size() > 0)
+                                    {
+                                        Object [] pair = (Object []) m_updates.remove(0);
+                                        WikiPage page = (WikiPage) pair[0];
+                                        String text = (String) pair[1];
+                                        updateLuceneIndex(page, text);
+                                    }
 
-                            try
-                            {
-                                Thread.sleep(500);
+                                    try
+                                    {
+                                        Thread.sleep(500);
+                                    }
+                                    catch (InterruptedException e)
+                                    {
+                                    }
+                                }
                             }
-                            catch (InterruptedException e)
-                            {
-                            }
-                        }
-                    }
-                });
+                        });
         m_luceneUpdateThread.start();
     }
 
@@ -313,9 +328,9 @@ public class CachingProvider
         // Body text is indexed, but not stored in doc. We add in the
         // title text as well to make sure it gets considered.
         doc.add(
-            Field.Text(
-                LUCENE_PAGE_CONTENTS,
-                new StringReader(text + " " + TextUtil.beautifyString(page.getName()))));
+                Field.Text(
+                        LUCENE_PAGE_CONTENTS,
+                        new StringReader(text + " " + TextUtil.beautifyString(page.getName()))));
         writer.addDocument(doc);
     }
 
@@ -415,9 +430,9 @@ public class CachingProvider
                 return refreshed;
             }
             else if (
-                Math.abs(
-                                refreshed.getLastModified().getTime()
-                                - cached.getLastModified().getTime()) > 1000L)
+                    Math.abs(
+                            refreshed.getLastModified().getTime()
+                            - cached.getLastModified().getTime()) > 1000L)
             {
                 //  Yes, the page has been modified externally and nobody told us
                 if (log.isInfoEnabled())
@@ -692,10 +707,20 @@ public class CachingProvider
             page.setLastModified(new Date());
 
             // Refresh caches properly
+
             m_cache.flushEntry(page.getName());
             m_textCache.flushEntry(page.getName());
             m_historyCache.flushEntry(page.getName());
             m_negCache.flushEntry(page.getName());
+            
+            // Refresh caches
+            try
+            {
+                getPageInfoFromCache(page.getName());
+            }
+            catch(RepositoryModifiedException e)
+            {
+            } // Expected
         }
     }
 
@@ -713,7 +738,7 @@ public class CachingProvider
             deleteFromLucene(page);
 
             // Now add back the new version.
-            writer = new IndexWriter(m_luceneDirectory, new StandardAnalyzer(), false);
+            writer = new IndexWriter(m_luceneDirectory, getLuceneAnalyzer(), false);
             luceneIndexPage(page, text, writer);
             m_updateCount++;
 
@@ -726,6 +751,10 @@ public class CachingProvider
         catch (IOException e)
         {
             log.error("Unable to update page '" + page.getName() + "' from Lucene index", e);
+        }
+        catch(Exception e)
+        {
+            log.error("Unexpected Lucene exception - please check configuration!", e);
         }
         finally
         {
@@ -948,9 +977,9 @@ public class CachingProvider
                         // Just find pages with the words, so that included stop words don't mess up search.
                         String word = tok.nextToken();
                         query.add(
-                            new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)),
-                            queryTerm.getType() == QueryItem.REQUIRED,
-                            queryTerm.getType() == QueryItem.FORBIDDEN);
+                                new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)),
+                                queryTerm.getType() == QueryItem.REQUIRED,
+                                queryTerm.getType() == QueryItem.FORBIDDEN);
                     }
 
                     /* Since we're not using Lucene to score, no reason to use PhraseQuery, which removes stop words.
@@ -968,8 +997,8 @@ public class CachingProvider
                 else
                 { // single word query
                     query.add(
-                        new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.getWord())),
-                        queryTerm.getType() == QueryItem.REQUIRED, queryTerm.getType() == QueryItem.FORBIDDEN);
+                            new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.getWord())),
+                            queryTerm.getType() == QueryItem.REQUIRED, queryTerm.getType() == QueryItem.FORBIDDEN);
                 }
             }
 
@@ -990,8 +1019,8 @@ public class CachingProvider
                 else
                 {
                     log.error(
-                        "Lucene found a result page '" + pageName
-                        + "' that could not be loaded, removing from Lucene cache");
+                            "Lucene found a result page '" + pageName
+                            + "' that could not be loaded, removing from Lucene cache");
                     deleteFromLucene(new WikiPage(pageName));
                 }
             }
@@ -1037,8 +1066,8 @@ public class CachingProvider
         WikiPage cached = getPageInfoFromCache(pageName);
 
         int latestcached = (cached != null)
-            ? cached.getVersion()
-            : Integer.MIN_VALUE;
+                ? cached.getVersion()
+                : Integer.MIN_VALUE;
 
         if ((version == WikiPageProvider.LATEST_VERSION) || (version == latestcached))
         {
@@ -1116,12 +1145,12 @@ public class CachingProvider
     public synchronized String getProviderInfo()
     {
         return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
-        + m_cacheMisses + "<br />Cache hits: " + m_cacheHits + "<br />History cache hits: "
-        + m_historyCacheHits + "<br />History cache misses: " + m_historyCacheMisses
-        + "<br />Cache consistency checks: " + m_expiryPeriod + "s" + "<br />Lucene enabled: "
-        + (m_useLucene
-        ? "yes"
-        : "no"));
+                + m_cacheMisses + "<br />Cache hits: " + m_cacheHits + "<br />History cache hits: "
+                + m_historyCacheHits + "<br />History cache misses: " + m_historyCacheMisses
+                + "<br />Cache consistency checks: " + m_expiryPeriod + "s" + "<br />Lucene enabled: "
+                + (m_useLucene
+                        ? "yes"
+                        : "no"));
     }
 
     /**
@@ -1144,8 +1173,8 @@ public class CachingProvider
             WikiPage cached = getPageInfoFromCache(pageName);
 
             int latestcached = (cached != null)
-                ? cached.getVersion()
-                : Integer.MIN_VALUE;
+                    ? cached.getVersion()
+                    : Integer.MIN_VALUE;
 
             //
             //  If we have this version cached, remove from cache.
@@ -1221,7 +1250,20 @@ public class CachingProvider
                 dir.mkdirs();
             }
 
-            if (dir.list().length == 0)
+            if (!dir.exists() || !dir.canWrite() || !dir.canRead())
+            {
+                log.error("Cannot write to Lucene directory, disabling Lucene: " + dir.getAbsolutePath());
+                throw new IOException("Invalid Lucene directory.");
+            }
+                
+            String[] filelist = dir.list();
+                
+            if (filelist == null)
+            {
+                throw new IOException("Invalid Lucene directory: cannot produce listing: "+dir.getAbsolutePath());
+            }
+                
+            if (filelist.length == 0)
             {
                 //
                 //  No files? Reindex!
@@ -1231,12 +1273,20 @@ public class CachingProvider
 
                 log.info("Starting Lucene reindexing, this can take a couple minutes...");
 
+                //
+                //  Do lock recovery, in case JSPWiki was shut down forcibly
+                //
+                Directory luceneDir = FSDirectory.getDirectory(dir, false);
+                    
+                if (IndexReader.isLocked(luceneDir))
+                {
+                    log.info("JSPWiki was shut down while Lucene was indexing - unlocking now.");
+                    IndexReader.unlock(luceneDir);
+                }
+                    
                 try
                 {
-                    // FIXME: Should smartly use a different analyzer
-                    //        in case the language is something else
-                    //        than English.
-                    writer = new IndexWriter(m_luceneDirectory, new StandardAnalyzer(), true);
+                    writer = new IndexWriter(m_luceneDirectory, getLuceneAnalyzer(), true);
 
                     Collection allPages = getAllPages();
 
@@ -1273,18 +1323,28 @@ public class CachingProvider
         }
         catch (NoClassDefFoundError e)
         {
-            log.info("Lucene libraries do not exist - not using Lucene");
+            log.info("Lucene libraries do not exist - not using Lucene.");
             m_useLucene = false;
         }
         catch (IOException e)
         {
-            log.error("Problem while creating Lucene index.", e);
+            log.error("Problem while creating Lucene index - not using Lucene.", e);
             m_useLucene = false;
         }
         catch (ProviderException e)
         {
-            log.error("Problem reading pages while creating Lucene index.", e);
+            log.error("Problem reading pages while creating Lucene index (JSPWiki won't start.)", e);
             throw new IllegalArgumentException("unable to create Lucene index");
+        }
+        catch(ClassNotFoundException e)
+        {
+            log.error("Illegal Analyzer specified:", e);
+            m_useLucene = false;
+        }
+        catch(Exception e)
+        {
+            log.error("Unable to start lucene", e);
+            m_useLucene = false;
         }
 
         startLuceneUpdateThread();
@@ -1327,6 +1387,7 @@ public class CachingProvider
 
             if (item != null)
             {
+                // Item added or replaced.
                 m_allItems.add(item);
             }
         }
@@ -1338,11 +1399,24 @@ public class CachingProvider
          */
         public void cacheEntryRemoved(CacheEntryEvent arg0)
         {
-            WikiPage item = (WikiPage) arg0.getEntry().getContent();
-
-            if (item != null)
+            // Removed item
+            // FIXME: If the page system is changed during this time, we'll just fail gracefully
+                
+            try
             {
-                m_allItems.remove(item);
+                for(Iterator i = m_allItems.iterator(); i.hasNext();)
+                {
+                    WikiPage p = (WikiPage)i.next();
+                    
+                    if (p.getName().equals(arg0.getKey()))
+                    {
+                        i.remove();
+                        break;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
             }
         }
 
@@ -1363,7 +1437,16 @@ public class CachingProvider
          */
         public void cacheEntryUpdated(CacheEntryEvent arg0)
         {
-            cacheEntryAdded(arg0);
+            WikiPage item = (WikiPage) arg0.getEntry().getContent();
+
+            if (item != null)
+            {
+                cacheEntryAdded(arg0);
+            }
+            else
+            {
+                cacheEntryRemoved(arg0);
+            }
         }
 
         /**

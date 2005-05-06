@@ -1,6 +1,6 @@
 package com.ecyrd.jspwiki.filters;
 
-import java.util.Properties;
+import org.apache.commons.configuration.Configuration;
 
 
 /**
@@ -13,16 +13,22 @@ public class TestFilter
         extends BasicPageFilter
 {
     /** DOCUMENT ME! */
-    public Properties m_properties;
+    private final Configuration conf;
 
     /**
      * DOCUMENT ME!
      *
      * @param props DOCUMENT ME!
      */
-    public TestFilter(Properties props)
+    public TestFilter(final Configuration conf)
     {
-        m_properties = props;
+        super(conf);
+        this.conf = conf;
+    }
+    
+    public Configuration getConfiguration()
+    {
+        return conf;
     }
     
     public boolean isVisible()

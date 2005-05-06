@@ -1,22 +1,22 @@
 /*
-    WikiForms - a WikiPage FORM handler for JSPWiki.
+  WikiForms - a WikiPage FORM handler for JSPWiki.
 
-    Copyright (C) 2003 BaseN.
+  Copyright (C) 2003 BaseN.
 
-    JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published
+  by the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
 */
 package com.ecyrd.jspwiki.forms;
 
@@ -61,16 +61,20 @@ public class FormTextarea
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
-        Map previousValues = new HashMap();
 
         if (info != null)
         {
             if (info.hide())
             {
-                return ("<p>(no need to show textarea field now)</p>");
+                return "<p>(no need to show textarea field now)</p>";
             }
+        }
 
-            previousValues = info.getSubmission();
+        Map previousValues = info.getSubmission();
+
+        if (previousValues == null)
+        {
+            previousValues = new HashMap();
         }
 
         ConcreteElement field = null;
@@ -118,6 +122,6 @@ public class FormTextarea
             }
         }
 
-        return (field);
+        return field;
     }
 }

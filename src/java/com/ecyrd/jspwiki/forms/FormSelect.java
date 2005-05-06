@@ -55,16 +55,19 @@ public class FormSelect
     {
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
-        Map previousValues = new HashMap();
 
         if (info != null)
         {
             if (info.hide())
             {
-                return ("<p>(no need to show input field now)</p>");
+                return "<p>(no need to show input field now)</p>";
             }
+        }
 
-            previousValues = info.getSubmission();
+        Map previousValues = info.getSubmission();
+        if( previousValues == null )
+        {
+            previousValues = new HashMap();
         }
 
         ConcreteElement field = null;
@@ -74,11 +77,11 @@ public class FormSelect
         // We should look for extra params, e.g. width, ..., here.
         if (field != null)
         {
-            return (field.toString());
+            return field.toString();
         }
         else
         {
-            return ("");
+            return "";
         }
     }
 
@@ -212,6 +215,6 @@ public class FormSelect
             field.selectOption(previouslySelected);
         }
 
-        return (field);
+        return field;
     }
 }

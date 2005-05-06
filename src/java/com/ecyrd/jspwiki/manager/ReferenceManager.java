@@ -133,8 +133,7 @@ import com.ecyrd.jspwiki.providers.WikiPageProvider;
  * @since 1.6.1
  */
 public class ReferenceManager
-        extends BasicPageFilter
-        implements PageFilter, Startable
+        implements Startable
 {
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(ReferenceManager.class);
@@ -200,7 +199,7 @@ public class ReferenceManager
             log.fatal("Page or Attachment Provider is unable to list its pages", e);
         }
 
-        engine.getFilterManager().addPageFilter(this);
+        engine.getFilterManager().addPageFilter(new ReferenceManagerFilter());
 
         setStarted(true);
     }
@@ -412,26 +411,6 @@ public class ReferenceManager
             log.error("Unable to serialize!");
             IOUtils.closeQuietly(out);
         }
-    }
-
-    /**
-     * After the page has been saved, updates the reference lists.
-     *
-     * @param context DOCUMENT ME!
-     * @param content DOCUMENT ME!
-     */
-    public void postSave(WikiContext context, String content)
-    {
-        if (!isStarted())
-        {
-            throw new IllegalArgumentException("Called postSave() before start()!");
-        }
-
-        WikiPage page = context.getPage();
-
-        updateReferences(page.getName(), engine.scanWikiLinks(page, content));
-
-        serializeToDisk();
     }
 
     /**
@@ -759,13 +738,44 @@ public class ReferenceManager
      * ========================================================================
      */
 
-    public boolean isVisible()
+    public class ReferenceManagerFilter
+            extends BasicPageFilter
+            implements PageFilter
     {
-        return false;
-    }
 
-    public int getPriority()
-    {
-        return PageFilter.MIN_PRIORITY;
+        private ReferenceManagerFilter()
+        {
+            super(null);
+        }
+
+        /**
+         * After the page has been saved, updates the reference lists.
+         *
+         * @param context DOCUMENT ME!
+         * @param content DOCUMENT ME!
+         */
+        public void postSave(WikiContext context, String content)
+        {
+            if (!isStarted())
+            {
+                throw new IllegalArgumentException("Called postSave() before start()!");
+            }
+            
+            WikiPage page = context.getPage();
+            
+            updateReferences(page.getName(), engine.scanWikiLinks(page, content));
+            
+            serializeToDisk();
+        }
+        
+        public boolean isVisible()
+        {
+            return false;
+        }
+        
+        public int getPriority()
+        {
+            return PageFilter.MIN_PRIORITY;
+        }
     }
 }

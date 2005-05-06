@@ -29,7 +29,7 @@
   <h2 id="previewsavebutton" class="editor">
     <table class="editor">
       <tr>
-        <td class="editor"><input type="button" name="edit" value="Keep editing" onClick="javascript:history.back();"/></td>
+        <td class="editor"><input type="submit" name="edit" value="Keep editing"/></td>
         <td class="editor"><input type="submit" name="ok" value="Save" /></td>
         <td class="editor"><input type="submit" name="cancel" value="Cancel" /></td>
       </tr>
