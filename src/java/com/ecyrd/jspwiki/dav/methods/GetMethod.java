@@ -4,6 +4,9 @@
  */
 package com.ecyrd.jspwiki.dav.methods;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 import java.util.Collection;
 
@@ -28,6 +31,11 @@ import com.ecyrd.jspwiki.providers.ProviderException;
 public class GetMethod
         extends DavMethod
 {
+    /**
+     * Logger for this class
+     */
+    private static final Log log = LogFactory.getLog(GetMethod.class);
+
     /**
          *
          */
@@ -129,7 +137,10 @@ public class GetMethod
                         {
                             String result = m_engine.getHTML(wc, wc.getPage());
 
-                            System.out.println("RESULT=" + result);
+                            if (log.isDebugEnabled())
+                            {
+                                log.debug("RESULT=" + result);
+                            }
                             res.setContentLength(result.length());
                             res.setContentType("text/html; charset=\"UTF-8\"");
                             res.getWriter().print(result);
@@ -149,7 +160,7 @@ public class GetMethod
         }
         catch (ProviderException e)
         {
-            e.printStackTrace(System.out);
+            log.error("Caught Provider Exception:", e);
             res.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }

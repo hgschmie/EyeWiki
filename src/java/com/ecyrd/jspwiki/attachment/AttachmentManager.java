@@ -210,7 +210,6 @@ public class AttachmentManager
             return null;
         }
 
-        // System.out.println("Seeking info on "+currentPage+"::"+attachmentname);
         return m_provider.getAttachmentInfo(currentPage, attachmentname, version);
     }
 

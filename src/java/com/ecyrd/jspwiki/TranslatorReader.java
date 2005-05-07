@@ -954,7 +954,6 @@ public class TranslatorReader
         }
         else if (((matchedLink = linkExists(possiblePage)) != null) && hasLinkText)
         {
-            // System.out.println("Orig="+link+", Matched: "+matchedLink);
             callMutatorChain(m_localLinkMutatorChain, possiblePage);
 
             res = makeLink(IMAGEWIKILINK, reallink, link);
@@ -2329,19 +2328,13 @@ public class TranslatorReader
 
                         if (camelCase != null)
                         {
-                            // System.out.println("Buffer is "+buf);
-                            // System.out.println("  Replacing "+camelCase+" with proper link.");
                             start = buf.toString().lastIndexOf(camelCase);
                             buf.replace(start, start + camelCase.length(), makeCamelCaseLink(camelCase));
-
-                            // System.out.println("  Resulting with "+buf);
                         }
                         else
                         {
-                            // System.out.println("Checking for potential URI: "+potentialLink);
                             if (isExternalLink(potentialLink))
                             {
-                                // System.out.println("buf="+buf);
                                 start = buf.toString().lastIndexOf(potentialLink);
 
                                 if (start >= 0)
@@ -2350,11 +2343,9 @@ public class TranslatorReader
 
                                     link = potentialLink + (char) ch + link; // Do not forget the start.
 
-                                    // System.out.println("start="+start+", pl="+potentialLink);
                                     buf.replace(start, start + potentialLink.length(),
                                             makeDirectURILink(link));
 
-                                    // System.out.println("Resulting with "+buf);
                                     ch = nextToken();
                                 }
                             }

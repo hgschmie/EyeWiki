@@ -356,7 +356,10 @@ public class RCSFileProvider
             {
                 if (version == 1)
                 {
-                    System.out.println("Migrating, fetching super.");
+                    if (log.isDebugEnabled())
+                    {
+                        log.debug("Migrating, fetching super.");
+                    }
                     result = super.getPageText(page, WikiProvider.LATEST_VERSION);
                 }
                 else

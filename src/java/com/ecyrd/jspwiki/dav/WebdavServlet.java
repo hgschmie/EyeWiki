@@ -4,6 +4,9 @@
  */
 package com.ecyrd.jspwiki.dav;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -22,6 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 public class WebdavServlet
         extends HttpServlet
 {
+    /**
+     * Logger for this class
+     */
+    private static final Log log = LogFactory.getLog(WebdavServlet.class);
+
     /**
      * DOCUMENT ME!
      */
@@ -223,7 +231,10 @@ public class WebdavServlet
     {
         String method = request.getMethod();
 
-        System.out.println("METHOD=" + method + "; request=" + request.getPathInfo());
+        if (log.isDebugEnabled())
+        {
+            log.debug("METHOD=" + method + "; request=" + request.getPathInfo());
+        }
 
         try
         {
@@ -266,8 +277,6 @@ public class WebdavServlet
         }
         catch (Throwable t)
         {
-            t.printStackTrace(System.out);
-
             throw new ServletException(t);
         }
     }

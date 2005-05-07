@@ -354,7 +354,6 @@ public class BasicAttachmentProvider
 
         int latestVersion = findLatestVersion(att);
 
-        // System.out.println("Latest version is "+latestVersion);
         try
         {
             int versionNumber = latestVersion + 1;
@@ -631,7 +630,6 @@ public class BasicAttachmentProvider
 
         att.setVersion(version);
 
-        // System.out.println("Fetching info on version "+version);
         try
         {
             Properties props = getPageProperties(att);
