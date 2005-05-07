@@ -27,17 +27,17 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.PicoContainer;
-import org.picocontainer.Startable;
-import org.picocontainer.defaults.ObjectReference;
-import org.picocontainer.defaults.SimpleReference;
-
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiProperties;
 import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 import com.ecyrd.jspwiki.util.PriorityList;
 import com.ecyrd.jspwiki.variable.WikiVariable;
+
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
 
 
 /**
@@ -60,12 +60,18 @@ public class VariableManager
     /** DOCUMENT ME! */
     public static final String VAR_MSG = "msg";
 
+    /**
+     * DOCUMENT ME!
+     */
     protected final WikiEngine engine;
 
+    /**
+     * DOCUMENT ME!
+     */
     protected final Configuration conf;
 
     /** The Container to manage the Variable Plugins */
-    protected final  PicoContainer variableContainer;
+    protected final PicoContainer variableContainer;
 
     /** Priorized list of Variable evaluators (catchall) */
     private final PriorityList evaluators = new PriorityList();
@@ -76,10 +82,13 @@ public class VariableManager
     /**
      * Creates a new VariableManager object.
      *
+     * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public VariableManager(final WikiEngine engine, final Configuration conf)
-    	throws Exception
+            throws Exception
     {
         this.engine = engine;
         this.conf = conf;
@@ -89,21 +98,35 @@ public class VariableManager
 
         ObjectReference variableContainerRef = new SimpleReference();
 
-        String wikiVariableFile = conf.getString(WikiProperties.PROP_VARIABLE_FILE, WikiProperties.PROP_VARIABLE_FILE_DEFAULT);
+        String wikiVariableFile =
+            conf.getString(
+                WikiProperties.PROP_VARIABLE_FILE, WikiProperties.PROP_VARIABLE_FILE_DEFAULT);
         engine.setupContainer(variableContainerRef, parentRef, wikiVariableFile);
         variableContainer = (PicoContainer) variableContainerRef.get();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         variableContainer.start();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         variableContainer.stop();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param variableName DOCUMENT ME!
+     * @param wikiVariable DOCUMENT ME!
+     */
     public void registerVariable(final String variableName, final WikiVariable wikiVariable)
     {
         String varName = variableName.toLowerCase();
@@ -116,21 +139,26 @@ public class VariableManager
         variableMap.put(varName, wikiVariable);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param wikiEvaluator DOCUMENT ME!
+     * @param priority DOCUMENT ME!
+     */
     public void registerEvaluator(final WikiVariable wikiEvaluator, int priority)
     {
         if (evaluators.contains(wikiEvaluator))
         {
-            throw new IllegalArgumentException(wikiEvaluator.getClass().getName() + " already as evaluator registered");
+            throw new IllegalArgumentException(
+                wikiEvaluator.getClass().getName() + " already as evaluator registered");
         }
 
         evaluators.add(wikiEvaluator, wikiEvaluator.getPriority());
     }
 
-
-
     /**
      * Returns true if the link is really command to insert a variable.
-     *
+     * 
      * <P>
      * Currently we just check if the link starts with "{$".
      * </p>
@@ -146,7 +174,7 @@ public class VariableManager
 
     /**
      * Parses the link and finds a value.
-     *
+     * 
      * <P>
      * A variable is inserted using the notation [{$variablename}].
      * </p>
@@ -156,9 +184,9 @@ public class VariableManager
      *
      * @return DOCUMENT ME!
      *
+     * @throws NoSuchVariableException If a variable is not known.
      * @throws IllegalArgumentException If the format is not valid (does not start with {$, is zero
      *         length, etc.)
-     * @throws NoSuchVariableException If a variable is not known.
      */
     public String parseAndGetValue(WikiContext context, String link)
             throws NoSuchVariableException
@@ -181,7 +209,7 @@ public class VariableManager
     /**
      * This method does in-place expansion of any variables.  However, the expansion is not done
      * twice, that is, a variable containing text $variable will not be expanded.
-     *
+     * 
      * <P>
      * The variables should be in the same format ({$variablename} as in the web pages.
      * </p>
@@ -191,7 +219,6 @@ public class VariableManager
      *
      * @return DOCUMENT ME!
      */
-
     public String expandVariables(WikiContext context, String source)
     {
         StringBuffer result = new StringBuffer();
@@ -200,7 +227,7 @@ public class VariableManager
 
         for (int i = 0; i < length; i++)
         {
-            if (i < length - 2)
+            if (i < (length - 2))
             {
                 if (source.charAt(i) == '{')
                 {
@@ -236,6 +263,7 @@ public class VariableManager
                     {
                         result.append('{');
                     }
+
                     continue;
                 }
             }
@@ -254,8 +282,8 @@ public class VariableManager
      *
      * @return DOCUMENT ME!
      *
-     * @throws IllegalArgumentException If the name is somehow broken.
      * @throws NoSuchVariableException If a variable is not known.
+     * @throws IllegalArgumentException If the name is somehow broken.
      */
     public String getValue(final WikiContext context, final String varName)
             throws NoSuchVariableException
@@ -280,7 +308,7 @@ public class VariableManager
                 return variable.getValue(context, name);
             }
 
-            for (Iterator it = evaluators.iterator(); it.hasNext(); )
+            for (Iterator it = evaluators.iterator(); it.hasNext();)
             {
                 WikiVariable evaluator = (WikiVariable) it.next();
 
@@ -292,7 +320,8 @@ public class VariableManager
                 {
                     if (log.isDebugEnabled())
                     {
-                        log.debug("No match for " + varName + " in Evaluator " + evaluator.getName());
+                        log.debug(
+                            "No match for " + varName + " in Evaluator " + evaluator.getName());
                     }
                 }
             }
@@ -303,5 +332,27 @@ public class VariableManager
         }
 
         throw new NoSuchVariableException("No variable " + varName + " defined.");
+    }
+
+    /**
+     * Returns a value of the named variable or a default value
+     *
+     * @param context DOCUMENT ME!
+     * @param varName Name of the variable.
+     * @param defaultValue DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getValue(
+        final WikiContext context, final String varName, final String defaultValue)
+    {
+        try
+        {
+            return getValue(context, varName);
+        }
+        catch (NoSuchVariableException e)
+        {
+            return defaultValue;
+        }
     }
 }

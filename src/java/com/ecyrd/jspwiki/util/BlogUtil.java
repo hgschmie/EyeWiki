@@ -21,7 +21,6 @@ package com.ecyrd.jspwiki.util;
 
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 
 
 /**
@@ -36,6 +35,9 @@ public final class BlogUtil
     /** DOCUMENT ME! */
     public static final String VAR_BLOGNAME = "blogname";
 
+    /**
+     * Creates a new BlogUtil object.
+     */
     private BlogUtil()
     {
     }
@@ -53,14 +55,7 @@ public final class BlogUtil
 
         String blogname = null;
 
-        try
-        {
-            blogname = engine.getVariableManager().getValue(context, VAR_BLOGNAME);
-        }
-        catch (NoSuchVariableException e)
-        {
-            // IGNORE
-        }
+        blogname = engine.getVariableManager().getValue(context, VAR_BLOGNAME, null);
 
         if (blogname == null)
         {
