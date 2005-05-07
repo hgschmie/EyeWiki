@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,14 +53,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import org.nanocontainer.integrationkit.ContainerBuilder;
-import org.nanocontainer.script.xml.XMLContainerBuilder;
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.PicoContainer;
-import org.picocontainer.defaults.DefaultPicoContainer;
-import org.picocontainer.defaults.ObjectReference;
-import org.picocontainer.defaults.SimpleReference;
-
 import com.ecyrd.jspwiki.attachment.Attachment;
 import com.ecyrd.jspwiki.attachment.AttachmentManager;
 import com.ecyrd.jspwiki.auth.AuthorizationManager;
@@ -68,7 +61,6 @@ import com.ecyrd.jspwiki.auth.UserProfile;
 import com.ecyrd.jspwiki.diff.DifferenceManager;
 import com.ecyrd.jspwiki.exception.InternalWikiException;
 import com.ecyrd.jspwiki.exception.NoRequiredPropertyException;
-import com.ecyrd.jspwiki.exception.NoSuchVariableException;
 import com.ecyrd.jspwiki.filters.FilterException;
 import com.ecyrd.jspwiki.filters.FilterManager;
 import com.ecyrd.jspwiki.manager.PageManager;
@@ -83,20 +75,29 @@ import com.ecyrd.jspwiki.url.URLConstructor;
 import com.ecyrd.jspwiki.util.FileUtil;
 import com.ecyrd.jspwiki.util.TextUtil;
 
+import org.nanocontainer.integrationkit.ContainerBuilder;
+import org.nanocontainer.script.xml.XMLContainerBuilder;
+
+import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.PicoContainer;
+import org.picocontainer.defaults.DefaultPicoContainer;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
+
 
 /**
  * Provides Wiki services to the JSP page.
- *
+ * 
  * <P>
  * This is the main interface through which everything should go.
  * </p>
- *
+ * 
  * <P>
  * Using this class:  Always get yourself an instance from JSP page by using the
  * WikiEngine.getInstance() method.  Never create a new WikiEngine() from scratch, unless you're
  * writing tests.
  * </p>
- *
+ * 
  * <p>
  * There's basically only a single WikiEngine for each web application, and you should always get
  * it using the WikiEngine.getInstance() method.
@@ -131,15 +132,18 @@ public class WikiEngine
      */
     public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
 
-
     /** Contains the default properties for JSPWiki. */
     private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
-    {
-        "Login", "Login.jsp",
-        "UserPreferences", "UserPreferences.jsp",
-        "Search", "Search.jsp",
-        "FindPage", "FindPage.jsp"
-    };
+        {
+            "Login",
+            "Login.jsp",
+            "UserPreferences",
+            "UserPreferences.jsp",
+            "Search",
+            "Search.jsp",
+            "FindPage",
+            "FindPage.jsp"
+        };
 
     /** The name of the cookie that gets stored to the user browser. */
     public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
@@ -151,6 +155,7 @@ public class WikiEngine
     private Configuration conf = null;
 
     /** Should the user info be saved with the page data as well? */
+
     // NOT YET USED private boolean m_saveUserInfo = true;
 
     /** If true, uses UTF8 encoding for all data */
@@ -313,7 +318,7 @@ public class WikiEngine
      * @throws InternalWikiException DOCUMENT ME!
      */
     public static synchronized WikiEngine getInstance(
-            final ServletContext context, final Configuration conf)
+        final ServletContext context, final Configuration conf)
             throws InternalWikiException
     {
         Configuration wikiConf = conf;
@@ -372,8 +377,8 @@ public class WikiEngine
             if (configFile == null)
             {
                 context.log(
-                        "No " + PARAM_CONFIGFILE + " defined for this context, "
-                        + "using default from " + PARAM_CONFIGFILE_DEFAULT);
+                    "No " + PARAM_CONFIGFILE + " defined for this context, "
+                    + "using default from " + PARAM_CONFIGFILE_DEFAULT);
 
                 //  Use the default config file.
                 configStream = context.getResourceAsStream(PARAM_CONFIGFILE_DEFAULT);
@@ -390,7 +395,7 @@ public class WikiEngine
             }
 
             InputStreamReader isr =
-                    new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+                new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
             PropertiesConfiguration conf = new PropertiesConfiguration();
             conf.setThrowExceptionOnMissing(true);
             conf.load(isr);
@@ -400,6 +405,7 @@ public class WikiEngine
             for (Iterator it = pageMap.keySet().iterator(); it.hasNext();)
             {
                 String key = (String) it.next();
+
                 try
                 {
                     // Do not remove!
@@ -416,8 +422,8 @@ public class WikiEngine
         catch (Exception e)
         {
             context.log(
-                    Release.APPNAME
-                    + ": Unable to load and setup configuration from jspwiki.properties", e);
+                Release.APPNAME
+                + ": Unable to load and setup configuration from jspwiki.properties", e);
         }
         finally
         {
@@ -440,11 +446,11 @@ public class WikiEngine
         m_startTime = new Date();
 
         wikiRelativePathes =
-                conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
+            conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
 
         conf.setProperty(PROP_ROOTDIR, wikiRelativePathes
-                ? getRootPath()
-                : "");
+            ? getRootPath()
+            : "");
 
         this.conf = conf;
 
@@ -514,7 +520,7 @@ public class WikiEngine
         else
         {
             log.info(
-                    "No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
+                "No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
         }
 
         //
@@ -535,11 +541,10 @@ public class WikiEngine
         else
         {
             log.info(
-                    "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
+                "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
         // NOT YET USED m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
-
         m_useUTF8 = "UTF-8".equals(conf.getString(PROP_ENCODING, PROP_ENCODING_DEFAULT));
 
         m_baseURL = conf.getString(PROP_BASEURL, PROP_BASEURL_DEFAULT);
@@ -555,12 +560,12 @@ public class WikiEngine
         //
         // Start up the Picocontainer
         //
-
         try
         {
             setupMainContainer();
 
-            String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
+            String wikiComponentsFile =
+                conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
             setupContainer(componentContainerRef, mainContainerRef, wikiComponentsFile);
             ((PicoContainer) componentContainerRef.get()).start();
         }
@@ -598,13 +603,16 @@ public class WikiEngine
 
                 if (!d.isDirectory())
                 {
-                    throw new WikiException("Requested Directory " + dir + " exists, but is no directory!");
+                    throw new WikiException(
+                        "Requested Directory " + dir + " exists, but is no directory!");
                 }
-                if(!d.canRead())
+
+                if (!d.canRead())
                 {
                     throw new WikiException("No permission to read directory " + dir);
                 }
-                if(!d.canWrite())
+
+                if (!d.canWrite())
                 {
                     throw new WikiException("No permission to write to directory " + dir);
                 }
@@ -708,7 +716,8 @@ public class WikiEngine
      */
     public RSSGenerator getRSSGenerator()
     {
-        return (RSSGenerator) getComponentContainer().getComponentInstance(WikiConstants.RSS_GENERATOR);
+        return (RSSGenerator) getComponentContainer().getComponentInstance(
+            WikiConstants.RSS_GENERATOR);
     }
 
     /**
@@ -718,7 +727,8 @@ public class WikiEngine
      */
     public TemplateManager getTemplateManager()
     {
-        return (TemplateManager) getComponentContainer().getComponentInstance(WikiConstants.TEMPLATE_MANAGER);
+        return (TemplateManager) getComponentContainer().getComponentInstance(
+            WikiConstants.TEMPLATE_MANAGER);
     }
 
     /**
@@ -742,7 +752,9 @@ public class WikiEngine
      */
     public Date getStartTime()
     {
-        return new Date((m_startTime != null) ? m_startTime.getTime() : 0);
+        return new Date((m_startTime != null)
+            ? m_startTime.getTime()
+            : 0);
     }
 
     /**
@@ -788,12 +800,12 @@ public class WikiEngine
      * default version always assumes that the incoming character set is ISO-8859-1, even though
      * it was something else. This means that we need to make a new string using the correct
      * encoding.
-     *
+     * 
      * <P>
      * For more information, see: <A HREF="http://www.jguru.com/faq/view.jsp?EID=137049">JGuru
      * FAQ</A>.
      * </p>
-     *
+     * 
      * <P>
      * Incidentally, this is almost the same as encodeName(), below. I am not yet entirely sure if
      * it's safe to merge the code.
@@ -936,7 +948,7 @@ public class WikiEngine
     /**
      * If the page is a special page, then returns a direct URL to that page.  Otherwise returns
      * null.
-     *
+     * 
      * <P>
      * Special pages are non-existant references to other pages. For example, you could define a
      * special page reference "RecentChanges" which would always be redirected to
@@ -978,10 +990,9 @@ public class WikiEngine
     }
 
     /**
-     * Beautifies the title of the page by appending spaces in suitable
-     * places, if the user has so decreed in the properties when constructing
-     * this WikiEngine.  However, attachment names are not beautified, no
-     * matter what.
+     * Beautifies the title of the page by appending spaces in suitable places, if the user has so
+     * decreed in the properties when constructing this WikiEngine.  However, attachment names are
+     * not beautified, no matter what.
      *
      * @param title DOCUMENT ME!
      *
@@ -995,12 +1006,12 @@ public class WikiEngine
         {
             try
             {
-                if(getAttachmentManager().getAttachmentInfo(title) == null)
+                if (getAttachmentManager().getAttachmentInfo(title) == null)
                 {
-                    return TextUtil.beautifyString( title );
+                    return TextUtil.beautifyString(title);
                 }
             }
-            catch( ProviderException e )
+            catch (ProviderException e)
             {
                 return title;
             }
@@ -1134,14 +1145,14 @@ public class WikiEngine
     /**
      * Returns the correct page name, or null, if no such page can be found.  Aliases are
      * considered.
-     *
+     * 
      * <P>
      * In some cases, page names can refer to other pages.  For example, when you have
      * matchEnglishPlurals set, then a page name "Foobars" will be transformed into "Foobar",
      * should a page "Foobars" not exist, but the page "Foobar" would.  This method gives you the
      * correct page name to refer to.
      * </p>
-     *
+     * 
      * <P>
      * This facility can also be used to rewrite any page name, for example, by using aliases.  It
      * can also be used to check the existence of any page.
@@ -1175,8 +1186,8 @@ public class WikiEngine
         }
 
         return isThere
-                ? page
-                : null;
+        ? page
+        : null;
     }
 
     /**
@@ -1212,8 +1223,8 @@ public class WikiEngine
     public String encodeName(String pagename)
     {
         return TextUtil.urlEncode(pagename, (m_useUTF8
-                        ? "UTF-8"
-                        : "ISO-8859-1"));
+            ? "UTF-8"
+            : "ISO-8859-1"));
     }
 
     /**
@@ -1230,13 +1241,13 @@ public class WikiEngine
         try
         {
             return TextUtil.urlDecode(pagerequest, (m_useUTF8
-                            ? "UTF-8"
-                            : "ISO-8859-1"));
+                ? "UTF-8"
+                : "ISO-8859-1"));
         }
         catch (UnsupportedEncodingException e)
         {
             throw new InternalWikiException(
-                    "ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
+                "ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
         }
     }
 
@@ -1302,7 +1313,7 @@ public class WikiEngine
     /**
      * Returns the un-HTMLized text of the given version of a page in the given context.  USE THIS
      * METHOD if you don't know what doing.
-     *
+     * 
      * <p>
      * This method also replaces the &lt; and &amp; -characters with their respective HTML
      * entities, thus making it suitable for inclusion on an HTML page.  If you want to have the
@@ -1407,10 +1418,18 @@ public class WikiEngine
         return getHTML(getPage(pagename));
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param page DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getHTML(WikiPage page)
     {
         WikiContext context = new WikiContext(this, page);
         context.setRequestContext(WikiContext.NONE);
+
         return getHTML(context, page);
     }
 
@@ -1428,6 +1447,7 @@ public class WikiEngine
         WikiPage page = getPage(pagename, version);
         WikiContext context = new WikiContext(this, page);
         context.setRequestContext(WikiContext.NONE);
+
         return getHTML(context, page);
     }
 
@@ -1458,7 +1478,7 @@ public class WikiEngine
         LinkCollector localCollector = new LinkCollector();
 
         textToHTML(
-                new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
+            new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
 
         return localCollector.getLinks();
     }
@@ -1474,8 +1494,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     public String textToHTML(
-            WikiContext context, String pagedata, StringTransmutator localLinkHook,
-            StringTransmutator extLinkHook)
+        WikiContext context, String pagedata, StringTransmutator localLinkHook,
+        StringTransmutator extLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, null, true);
     }
@@ -1492,8 +1512,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     public String textToHTML(
-            WikiContext context, String pagedata, StringTransmutator localLinkHook,
-            StringTransmutator extLinkHook, StringTransmutator attLinkHook)
+        WikiContext context, String pagedata, StringTransmutator localLinkHook,
+        StringTransmutator extLinkHook, StringTransmutator attLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, attLinkHook, true);
     }
@@ -1511,8 +1531,8 @@ public class WikiEngine
      * @return DOCUMENT ME!
      */
     private String textToHTML(
-            WikiContext context, String pagedata, StringTransmutator localLinkHook,
-            StringTransmutator extLinkHook, StringTransmutator attLinkHook, boolean parseAccessRules)
+        WikiContext context, String pagedata, StringTransmutator localLinkHook,
+        StringTransmutator extLinkHook, StringTransmutator attLinkHook, boolean parseAccessRules)
     {
         String result = "";
 
@@ -1525,10 +1545,18 @@ public class WikiEngine
 
         TranslatorReader in = null;
 
+        boolean runFilters =
+            "true".equals(
+                getVariableManager().getValue(context, PROP_RUNFILTERS, PROP_RUNFILTERS_DEFAULT));
+
         try
         {
             FilterManager filterManager = getFilterManager();
-            pagedata = filterManager.doPreTranslateFiltering(context, pagedata);
+
+            if (runFilters)
+            {
+                pagedata = filterManager.doPreTranslateFiltering(context, pagedata);
+            }
 
             in = new TranslatorReader(context, new StringReader(pagedata));
 
@@ -1543,7 +1571,10 @@ public class WikiEngine
 
             result = FileUtil.readContents(in);
 
-            result = filterManager.doPostTranslateFiltering(context, result);
+            if (runFilters)
+            {
+                result = filterManager.doPostTranslateFiltering(context, result);
+            }
         }
         catch (IOException e)
         {
@@ -1673,7 +1704,7 @@ public class WikiEngine
 
     /**
      * Parses an incoming search request, then does a search.
-     *
+     * 
      * <P>
      * Search language is simple: prepend a word with a + to force a word to be included (all files
      * not containing that word are automatically rejected), '-' to cause the rejection of all
@@ -1860,18 +1891,24 @@ public class WikiEngine
 
     /**
      * Returns the current URL constructor
+     *
+     * @return DOCUMENT ME!
      */
     protected URLConstructor getURLConstructor()
     {
-        return (URLConstructor) getComponentContainer().getComponentInstance(WikiConstants.URL_CONSTRUCTOR);
+        return (URLConstructor) getComponentContainer().getComponentInstance(
+            WikiConstants.URL_CONSTRUCTOR);
     }
 
     /**
      * Returns the current Difference Manager
+     *
+     * @return DOCUMENT ME!
      */
     public DifferenceManager getDifferenceManager()
     {
-        return (DifferenceManager) getComponentContainer().getComponentInstance(WikiConstants.DIFFERENCE_MANAGER);
+        return (DifferenceManager) getComponentContainer().getComponentInstance(
+            WikiConstants.DIFFERENCE_MANAGER);
     }
 
     /**
@@ -1885,7 +1922,8 @@ public class WikiEngine
     // (FIXME: We may want to protect this, though...)
     public ReferenceManager getReferenceManager()
     {
-        return (ReferenceManager) getComponentContainer().getComponentInstance(WikiConstants.REFERENCE_MANAGER);
+        return (ReferenceManager) getComponentContainer().getComponentInstance(
+            WikiConstants.REFERENCE_MANAGER);
     }
 
     /**
@@ -1897,7 +1935,8 @@ public class WikiEngine
      */
     public PluginManager getPluginManager()
     {
-        return (PluginManager)  getComponentContainer().getComponentInstance(WikiConstants.PLUGIN_MANAGER);
+        return (PluginManager) getComponentContainer().getComponentInstance(
+            WikiConstants.PLUGIN_MANAGER);
     }
 
     /**
@@ -1907,7 +1946,8 @@ public class WikiEngine
      */
     public VariableManager getVariableManager()
     {
-        return (VariableManager) getComponentContainer().getComponentInstance(WikiConstants.VARIABLE_MANAGER);
+        return (VariableManager) getComponentContainer().getComponentInstance(
+            WikiConstants.VARIABLE_MANAGER);
     }
 
     /**
@@ -1923,14 +1963,7 @@ public class WikiEngine
      */
     public String getVariable(WikiContext context, String name)
     {
-        try
-        {
-            return getVariableManager().getValue(context, name);
-        }
-        catch (NoSuchVariableException e)
-        {
-            return null;
-        }
+        return getVariableManager().getValue(context, name, null);
     }
 
     /**
@@ -1940,7 +1973,8 @@ public class WikiEngine
      */
     public PageManager getPageManager()
     {
-        return (PageManager) getComponentContainer().getComponentInstance(WikiConstants.PAGE_MANAGER);
+        return (PageManager) getComponentContainer().getComponentInstance(
+            WikiConstants.PAGE_MANAGER);
     }
 
     /**
@@ -1952,7 +1986,8 @@ public class WikiEngine
      */
     public AttachmentManager getAttachmentManager()
     {
-        return (AttachmentManager) getComponentContainer().getComponentInstance(WikiConstants.ATTACHMENT_MANAGER);
+        return (AttachmentManager) getComponentContainer().getComponentInstance(
+            WikiConstants.ATTACHMENT_MANAGER);
     }
 
     /**
@@ -1962,7 +1997,8 @@ public class WikiEngine
      */
     public AuthorizationManager getAuthorizationManager()
     {
-        return (AuthorizationManager) getComponentContainer().getComponentInstance(WikiConstants.AUTHORIZATION_MANAGER);
+        return (AuthorizationManager) getComponentContainer().getComponentInstance(
+            WikiConstants.AUTHORIZATION_MANAGER);
     }
 
     /**
@@ -1972,7 +2008,8 @@ public class WikiEngine
      */
     public UserManager getUserManager()
     {
-        return (UserManager) getComponentContainer().getComponentInstance(WikiConstants.USER_MANAGER);
+        return (UserManager) getComponentContainer().getComponentInstance(
+            WikiConstants.USER_MANAGER);
     }
 
     /**
@@ -1984,7 +2021,8 @@ public class WikiEngine
      */
     public FilterManager getFilterManager()
     {
-        return (FilterManager) getComponentContainer().getComponentInstance(WikiConstants.FILTER_MANAGER);
+        return (FilterManager) getComponentContainer().getComponentInstance(
+            WikiConstants.FILTER_MANAGER);
     }
 
     /**
@@ -2078,7 +2116,7 @@ public class WikiEngine
         if (!m_isConfigured)
         {
             throw new InternalWikiException(
-                    "WikiEngine has not been properly started.  It is likely that the configuration is faulty.  Please check all logs for the possible reason.");
+                "WikiEngine has not been properly started.  It is likely that the configuration is faulty.  Please check all logs for the possible reason.");
         }
 
         try
@@ -2193,7 +2231,7 @@ public class WikiEngine
     }
 
     /**
-     *  Deletes a page or an attachment completely, including all versions.
+     * Deletes a page or an attachment completely, including all versions.
      *
      * @param pageName
      *
@@ -2215,9 +2253,10 @@ public class WikiEngine
     }
 
     /**
-     *  Deletes a specific version of a page or an attachment.
+     * Deletes a specific version of a page or an attachment.
      *
      * @param page
+     *
      * @throws ProviderException
      */
     public void deleteVersion(WikiPage page)
@@ -2316,13 +2355,21 @@ public class WikiEngine
         }
 
         throw new WikiException(
-                "The path name " + pathName + " is invalid in the current Wiki configuration!");
+            "The path name " + pathName + " is invalid in the current Wiki configuration!");
     }
 
     /**
      * builds and starts a PicoContainer which contains a set of Elements.
+     *
+     * @param containerRef DOCUMENT ME!
+     * @param parentRef DOCUMENT ME!
+     * @param confFile DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     * @throws IllegalArgumentException DOCUMENT ME!
      */
-    public void setupContainer(ObjectReference containerRef, ObjectReference parentRef, String confFile)
+    public void setupContainer(
+        ObjectReference containerRef, ObjectReference parentRef, String confFile)
             throws Exception
     {
         InputStream configStream = null;
@@ -2331,6 +2378,7 @@ public class WikiEngine
         try
         {
             ServletContext context = getServletContext();
+
             if (context != null)
             {
                 configStream = context.getResourceAsStream(confFile);
@@ -2347,6 +2395,7 @@ public class WikiEngine
             }
 
             isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             ContainerBuilder builder = new WikiContainerBuilder(isr, classLoader);
 
@@ -2360,8 +2409,10 @@ public class WikiEngine
     }
 
     /**
-     * Prepares the 'root' container which all other containers use as their
-     * base to get configuration and Wiki reference
+     * Prepares the 'root' container which all other containers use as their base to get
+     * configuration and Wiki reference
+     *
+     * @throws Exception DOCUMENT ME!
      */
     private void setupMainContainer()
             throws Exception
@@ -2377,20 +2428,42 @@ public class WikiEngine
         mainContainerRef.set(mainContainer);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public PicoContainer getComponentContainer()
     {
         return (PicoContainer) componentContainerRef.get();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Revision$
+     */
     private static class WikiContainerBuilder
             extends XMLContainerBuilder
             implements ContainerBuilder
     {
+        /**
+         * Creates a new WikiContainerBuilder object.
+         *
+         * @param reader DOCUMENT ME!
+         * @param classLoader DOCUMENT ME!
+         */
         private WikiContainerBuilder(Reader reader, ClassLoader classLoader)
         {
             super(reader, classLoader);
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param container DOCUMENT ME!
+         */
         protected void autoStart(PicoContainer container)
         {
             // don't start container automatically

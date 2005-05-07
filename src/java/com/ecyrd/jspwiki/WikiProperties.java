@@ -22,7 +22,6 @@ package com.ecyrd.jspwiki;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 
-
 /**
  * This interface holds all the constant names for the properties available in jspwiki.properties
  *
@@ -30,9 +29,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  */
 public interface WikiProperties
 {
-    /**
-     * The main prefix for all the jspwiki properties. Note the trailing dot.
-     */
+    /** The main prefix for all the jspwiki properties. Note the trailing dot. */
     String PROP_PREFIX = "jspwiki.";
 
     /*
@@ -65,7 +62,10 @@ public interface WikiProperties
     /** Default value for the variable configuration file */
     String PROP_VARIABLE_FILE_DEFAULT = "/WEB-INF/wikiVariables.xml";
 
-    /** Property for the plugin configuration file. This has no default, if this value is empty or missing, no plugins are started. */
+    /**
+     * Property for the plugin configuration file. This has no default, if this value is empty or
+     * missing, no plugins are started.
+     */
     String PROP_PLUGIN_FILE = "jspwiki.pluginFile";
 
     /**
@@ -247,6 +247,12 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     boolean PROP_RUNPLUGINS_DEFAULT = true;
 
+    /** If set to "true", enables filters during parsing */
+    String PROP_RUNFILTERS = "jspwiki.translatorReader.runFilters";
+
+    /** gets evaluated with getValue(). A String, not a boolean! */
+    String PROP_RUNFILTERS_DEFAULT = "true";
+
     /**
      * Determines the command to be used for 'diff'.  This program must be able to output diffs in
      * the unified format. It defaults to 'diff -u %s1 %s2'.
@@ -280,8 +286,14 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     boolean PROP_USE_LUCENE_DEFAULT = true;
 
+    /**
+     * DOCUMENT ME!
+     */
     String PROP_LUCENE_ANALYZER = "jspwiki.lucene.analyzer";
 
+    /**
+     * DOCUMENT ME!
+     */
     String PROP_LUCENE_ANALYZER_DEFAULT = StandardAnalyzer.class.getName();
 
     /** Prefix for the Wiki Special pages */
@@ -358,7 +370,6 @@ public interface WikiProperties
 
     /** Default for ATOM Feeds: no */
     boolean PROP_ATOM_FEEDS_DEFAULT = false;
-
 
     /*
      * ========================================================================

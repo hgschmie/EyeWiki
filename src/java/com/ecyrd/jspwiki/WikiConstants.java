@@ -40,26 +40,59 @@ public interface WikiConstants
     /** The key used to determine the URL Constructor */
     String URL_CONSTRUCTOR = "URLConstructor";
 
+    /**
+     * DOCUMENT ME!
+     */
     String PAGE_MANAGER = "PageManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String PLUGIN_MANAGER = "PluginManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String DIFFERENCE_MANAGER = "DifferenceManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String ATTACHMENT_MANAGER = "AttachmentManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String VARIABLE_MANAGER = "VariableManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String FILTER_MANAGER = "FilterManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String REFERENCE_MANAGER = "ReferenceManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String USER_MANAGER = "UserManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String AUTHORIZATION_MANAGER = "AuthorizationManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String TEMPLATE_MANAGER = "TemplateManager";
 
+    /**
+     * DOCUMENT ME!
+     */
     String RSS_GENERATOR = "RSSGenerator";
 
     /** The Page Provider */
@@ -88,7 +121,6 @@ public interface WikiConstants
 
     /** The User database to use */
     String USER_DATABASE = "UserDatabase";
-
 
     /*
      * ========================================================================
@@ -205,4 +237,7 @@ public interface WikiConstants
 
     /** Class for Editor. Used with TEXTAREA tags */
     String CSS_EDITOR = "editor";
+
+    /** Class for Preview Text Used with H3 tags */
+    String CSS_PREVIEW = "preview";
 }
