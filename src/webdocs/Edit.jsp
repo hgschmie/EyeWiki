@@ -8,6 +8,7 @@
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.WikiPermission" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.EditPermission" %>
 <%@ page import="com.ecyrd.jspwiki.auth.permissions.CreatePermission" %>
+<%@ page import="com.ecyrd.jspwiki.htmltowiki.HtmlStringToWikiTranslator" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 
@@ -32,11 +33,23 @@
     String author  = wiki.safeGetParameter( request, "author" );
     String text    = wiki.safeGetParameter( request, "text" );
 
+    //
+    //  Create context and continue
+    //
     WikiContext wikiContext = wiki.createContext( request, 
                                                   WikiContext.EDIT );
     String pagereq = wikiContext.getPage().getName();
 
     NDC.push( wiki.getApplicationName()+":"+pagereq );    
+
+    //
+    //  WYSIWYG editor sends us its greetings
+    //
+    String htmlText = wiki.safeGetParameter( request, "htmlPageText" );
+    if( htmlText != null && cancel == null ) 
+    {
+        text = new HtmlStringToWikiTranslator().translate(htmlText,wikiContext);
+    }
 
     WikiPage wikipage = wikiContext.getPage();
     WikiPermission requiredPermission = null;
