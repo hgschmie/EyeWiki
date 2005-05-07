@@ -71,5 +71,3 @@ function googleSearchHighlight()
         }
     }
 }
-
-window.onload = googleSearchHighlight;
