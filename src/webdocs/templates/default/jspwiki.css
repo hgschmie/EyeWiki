@@ -263,6 +263,10 @@ h1.preview {
 	color: red;
 }
 
+h3.preview {
+	color: red;
+}
+
 div.preview {
 	background: #ffcccc;
 }
