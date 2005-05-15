@@ -55,11 +55,6 @@ public class WikiDavServlet
         m_engine = WikiEngine.getInstance(config);
     }
 
-    private String parsePage(HttpServletRequest req)
-    {
-        return req.getContextPath();
-    }
-
     /**
      * DOCUMENT ME!
      *

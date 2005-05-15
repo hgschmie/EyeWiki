@@ -26,9 +26,6 @@ public class DefaultURLConstructor
     /** DOCUMENT ME! */
     protected WikiEngine engine;
 
-    /** DOCUMENT ME! */
-    private String m_viewURLPattern = "%uWiki.jsp?page=%n";
-
     /** Are URL styles relative or absolute? */
     protected boolean m_useRelativeURLStyle = true;
 

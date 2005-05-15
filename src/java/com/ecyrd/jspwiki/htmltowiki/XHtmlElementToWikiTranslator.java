@@ -569,7 +569,7 @@ public class XHtmlElementToWikiTranslator
     }
 
     // FIXME: These should probably be better used with java.util.Stack
-    class LiStack
+    public static class LiStack
     {
         /**
          * DOCUMENT ME!

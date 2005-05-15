@@ -17,26 +17,6 @@ public class PropertiesUtils
     /**
      * DOCUMENT ME!
      */
-    private static final String keyValueSeparators = "=: \t\r\n\014";
-
-    /**
-     * DOCUMENT ME!
-     */
-    private static final String strictKeyValueSeparators = "=:";
-
-    /**
-     * DOCUMENT ME!
-     */
-    private static final String specialSaveChars = "\t\r\n\014";
-
-    /**
-     * DOCUMENT ME!
-     */
-    private static final String whiteSpaceChars = " \t\r\n\014";
-
-    /**
-     * DOCUMENT ME!
-     */
     private static final char [] hexDigit =
         {
             '0',
@@ -69,20 +49,22 @@ public class PropertiesUtils
     public static String toSortedString(Properties properties)
     {
         TreeMap treemap = new TreeMap(properties);
-        String string = "";
-        Iterator iterator = treemap.entrySet().iterator();
+        StringBuffer buf = new StringBuffer();
 
-        while (iterator.hasNext())
+        for (Iterator it = treemap.entrySet().iterator(); it.hasNext(); )
         {
-            Map.Entry entry = (Map.Entry) iterator.next();
+            Map.Entry entry = (Map.Entry) it.next();
+
             String string_0_ = (String) entry.getKey();
             String string_1_ = (entry.getValue() == null)
                 ? null
                 : entry.getValue().toString();
-            string += (toLine(string_0_, string_1_) + "\n");
+
+            buf.append(toLine(string_0_, string_1_))
+                    .append("\n");
         }
 
-        return string;
+        return buf.toString();
     }
 
     /**

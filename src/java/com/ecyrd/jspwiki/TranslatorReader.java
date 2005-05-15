@@ -581,6 +581,11 @@ public class TranslatorReader
      */
     private String linkExists(String page)
     {
+        if (StringUtils.isEmpty(page))
+        {
+            return null;
+        }
+
         try
         {
             return m_engine.getFinalPageName(page);
@@ -886,12 +891,13 @@ public class TranslatorReader
      */
     private String makeCamelCaseLink(String wikiname)
     {
-        String matchedLink;
         String link;
 
         callMutatorChain(m_localLinkMutatorChain, wikiname);
 
-        if ((matchedLink = linkExists(wikiname)) != null)
+        String matchedLink = linkExists(wikiname);
+
+        if (matchedLink != null)
         {
             link = makeLink(READ, matchedLink, wikiname);
         }
@@ -945,14 +951,14 @@ public class TranslatorReader
     private String handleImageLink(String reallink, String link, boolean hasLinkText)
     {
         String possiblePage = cleanLink(link);
-        String matchedLink;
+        String matchedLink = linkExists(possiblePage);
         String res = "";
 
         if (isExternalLink(link) && hasLinkText)
         {
             res = makeLink(IMAGELINK, reallink, link);
         }
-        else if (((matchedLink = linkExists(possiblePage)) != null) && hasLinkText)
+        else if (matchedLink != null && hasLinkText)
         {
             callMutatorChain(m_localLinkMutatorChain, possiblePage);
 
@@ -2086,8 +2092,6 @@ public class TranslatorReader
 
             ch = nextToken();
 
-            boolean isspan = false;
-
             //
             //  Style or class?
             //
@@ -3053,15 +3057,17 @@ public class TranslatorReader
 
             case EDIT:
                 result =
-                        new StringBuffer("<u class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
+                        new StringBuffer("<a class=\"")
+                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append("\" title=\"")
+                        .append("Create '")
+                        .append(link)
+                        .append("'\" href=\"")
+                        .append(getURL(WikiContext.EDIT, link))
                         .append("\">")
                         .append(text)
-                        .append("</u><a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
-                        .append("\" href=\"")
-                        .append(getURL(WikiContext.EDIT, link))
-                        .append("\">?</a>").toString();
+                        .append("</a>")
+                        .toString();
 
                 break;
 
@@ -3284,7 +3290,8 @@ public class TranslatorReader
                     .append(WikiConstants.CSS_ANCHOR)
                     .append("\" name=\"")
                     .append(hd.getTitleAnchor())
-                    .append("\">").toString();
+                    .append("\" />")
+                    .toString();
         }
 
         /**
@@ -3330,7 +3337,7 @@ public class TranslatorReader
                         .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\">")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
-                m_closeTag = "</a></h4>";
+                m_closeTag = "</h4>";
 
                 break;
 
@@ -3339,7 +3346,7 @@ public class TranslatorReader
                         .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\">")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
-                m_closeTag = "</a></h3>";
+                m_closeTag = "</h3>";
 
                 break;
 
@@ -3348,7 +3355,7 @@ public class TranslatorReader
                         .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\">")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
-                m_closeTag = "</a></h2>";
+                m_closeTag = "</h2>";
 
                 break;
 

@@ -56,12 +56,14 @@ public class FormSelect
         // Don't render if no error and error-only-rendering is on.
         FormInfo info = getFormInfo(ctx);
 
-        if (info != null)
+        if (info == null)
         {
-            if (info.hide())
-            {
-                return "<p>(no need to show input field now)</p>";
-            }
+            return "";
+        }
+
+        if (info.hide())
+        {
+            return "<p>(no need to show input field now)</p>";
         }
 
         Map previousValues = info.getSubmission();

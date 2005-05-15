@@ -118,7 +118,7 @@ public class TableOfContents
         return sb.toString();
     }
 
-    public class ToCListener
+    public static class ToCListener
             implements HeadingListener
     {
         /** DOCUMENT ME! */

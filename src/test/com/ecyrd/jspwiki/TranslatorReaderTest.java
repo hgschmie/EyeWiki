@@ -308,7 +308,7 @@ public class TranslatorReaderTest
         String src = "This should be a HyperLink.";
 
         assertEquals(
-            "This should be a <u class=\"wikicontent\">HyperLink</u><a class=\"wikipage\" href=\"Edit.jsp?page=HyperLink\">?</a>.",
+            "This should be a <a class=\"wikipage\" title=\"Create 'HyperLink'\" href=\"Edit.jsp?page=HyperLink\">HyperLink</a>.",
             translate(src));
     }
 
@@ -727,7 +727,7 @@ public class TranslatorReaderTest
         String src = "This should be a [HyperLinks]";
 
         assertEquals(
-            "This should be a <u class=\"wikicontent\">HyperLinks</u><a class=\"wikipage\" href=\"Edit.jsp?page=HyperLinks\">?</a>",
+            "This should be a <a class=\"wikipage\" title=\"Create 'HyperLinks'\" href=\"Edit.jsp?page=HyperLinks\">HyperLinks</a>",
             translate(src));
     }
 
@@ -1176,7 +1176,7 @@ public class TranslatorReaderTest
         String src = "\r\n\r\n!Testi\r\n\r\nFoo.";
 
         assertEquals(
-            "<p class=\"wikicontent\"></p>\n<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Testi\">Testi</a></h4>\n<p class=\"wikicontent\">Foo.</p>\n",
+            "<p class=\"wikicontent\"></p>\n<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Testi\" />Testi</h4>\n<p class=\"wikicontent\">Foo.</p>\n",
             translate(src));
     }
 
@@ -2209,7 +2209,7 @@ public class TranslatorReaderTest
         String src = "!Hello\nThis is a test";
 
         assertEquals(
-            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\">Hello</a></h4>\nThis is a test",
+            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" />Hello</h4>\nThis is a test",
             translate(src));
     }
 
@@ -2224,7 +2224,7 @@ public class TranslatorReaderTest
         String src = "!!Hello, testing 1, 2, 3";
 
         assertEquals(
-            "<h3 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloTesting123\">Hello, testing 1, 2, 3</a></h3>",
+            "<h3 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloTesting123\" />Hello, testing 1, 2, 3</h3>",
             translate(src));
     }
 
@@ -2239,7 +2239,7 @@ public class TranslatorReaderTest
         String src = "!!!Hello there, how are you doing?";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloThereHowAreYouDoing\">Hello there, how are you doing?</a></h2>",
+            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloThereHowAreYouDoing\" />Hello there, how are you doing?</h2>",
             translate(src));
     }
 
@@ -2254,7 +2254,7 @@ public class TranslatorReaderTest
         String src = "!!![Hello]";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\"><u class=\"wikicontent\">Hello</u><a class=\"wikipage\" href=\"Edit.jsp?page=Hello\">?</a></a></h2>",
+            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"wikipage\" title=\"Create 'Hello'\" href=\"Edit.jsp?page=Hello\">Hello</a></h2>",
             translate(src));
     }
 
@@ -2269,7 +2269,7 @@ public class TranslatorReaderTest
         String src = "!!![Hello|http://www.google.com/]";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\"><a class=\"external\" href=\"http://www.google.com/\">Hello</a></a></h2>",
+            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/\">Hello</a></h2>",
             translate(src));
     }
 
@@ -2284,7 +2284,7 @@ public class TranslatorReaderTest
         String src = "![Hello|http://www.google.com/?p=a&c=d]";
 
         assertEquals(
-            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\"><a class=\"external\" href=\"http://www.google.com/?p=a&amp;c=d\">Hello</a></a></h4>",
+            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/?p=a&amp;c=d\">Hello</a></h4>",
             translate(src));
     }
 
