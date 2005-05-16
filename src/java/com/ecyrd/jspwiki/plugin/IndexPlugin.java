@@ -101,10 +101,10 @@ public class IndexPlugin
     protected String m_previousPageFirstLetter = "";
 
     /** DOCUMENT ME! */
-    protected StringWriter m_bodyPart = new StringWriter();
+    protected StringWriter m_bodyPart = null;
 
     /** DOCUMENT ME! */
-    protected StringWriter m_headerPart = new StringWriter();
+    protected StringWriter m_headerPart = null;
 
     /** DOCUMENT ME! */
     private Pattern m_includePattern;
@@ -135,13 +135,17 @@ public class IndexPlugin
     public String execute(WikiContext i_context, Map i_params)
             throws PluginException
     {
+
+        m_bodyPart = new StringWriter();
+        m_headerPart = new StringWriter();
+        m_currentNofPagesOnLine = 0;
+        m_previousPageFirstLetter = "";
+
         //
         //  Parse arguments and create patterns.
         //
         PatternCompiler compiler = new GlobCompiler();
-        m_itemsPerLine =
-                TextUtil.parseIntParameter(
-                        (String) i_params.get(PARAM_ITEMS_PER_LINE), DEFAULT_ITEMS_PER_LINE);
+        m_itemsPerLine = TextUtil.parseIntParameter((String) i_params.get(PARAM_ITEMS_PER_LINE), DEFAULT_ITEMS_PER_LINE);
 
         try
         {
@@ -312,8 +316,9 @@ public class IndexPlugin
      * @param i_curPage DOCUMENT ME!
      * @param i_linkProcessor DOCUMENT ME!
      */
-    protected void addPageToIndex(
-            WikiContext context, WikiPage i_curPage, final TranslatorReader i_linkProcessor)
+    protected void addPageToIndex(final WikiContext context, 
+            final WikiPage i_curPage, 
+            final TranslatorReader i_linkProcessor)
     {
         final boolean notFirstPageOnLine = 2 <= m_currentNofPagesOnLine;
 
@@ -322,10 +327,9 @@ public class IndexPlugin
             m_bodyPart.write(",&nbsp; ");
         }
 
-        m_bodyPart.write(
-                i_linkProcessor.makeLink(
-                        TranslatorReader.READ, i_curPage.getName(),
-                        engine.beautifyTitleNoBreak(i_curPage.getName())));
+        m_bodyPart.write(i_linkProcessor.makeLink(
+                                 TranslatorReader.READ, i_curPage.getName(),
+                                 engine.beautifyTitleNoBreak(i_curPage.getName())));
     }
 
     /**
