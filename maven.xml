@@ -27,7 +27,7 @@
     <!-- copy wiki pages -->
     <ant:copy todir="${maven.war.webapp.dir}/jspwiki/pages" >
       <ant:fileset dir="src/wikipages">
-        <include name="**/*"/>
+        <include name="*.txt"/>
       </ant:fileset>
     </ant:copy>
 
