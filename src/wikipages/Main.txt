@@ -1,0 +1,4 @@
+!!!Congratulations!
+
+You have successfully installed [iWiki|About].
+

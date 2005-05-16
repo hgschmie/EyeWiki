@@ -1,0 +1,11 @@
+iWiki is a branch of the [JSPWiki|http://www.jspwiki.org/] code base.
+
+[Janne Jalkanen|http://www.ecyrd.com/ButtUgly/] deserves full credit
+for the original JSP Wiki code and the hard work that he put into it.
+
+We still sync with his original code base from time to time.
+
+The code for this Wiki is placed under the [GNU Lesser General Public
+License|http://www.gnu.org/copyleft/lesser.html], just like the
+original JSPWiki itself.
+
