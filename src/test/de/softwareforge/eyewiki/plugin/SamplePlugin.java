@@ -1,5 +1,6 @@
-import java.util.Map;
+package de.softwareforge.eyewiki.plugin;
 
+import java.util.Map;
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -11,12 +12,12 @@ import de.softwareforge.eyewiki.plugin.WikiPlugin;
  * Implements a simple plugin that just returns its text.
  *
  * <P>
- * Parameters: text - text to return.
+ * Parameters: text - text to return. Any _body content gets appended between brackets.
  * </p>
  *
  * @author Janne Jalkanen
  */
-public class SamplePlugin2
+public class SamplePlugin
         implements WikiPlugin
 {
     /**
@@ -44,6 +45,22 @@ public class SamplePlugin2
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        return (String) params.get("text");
+        StringBuffer sb = new StringBuffer();
+
+        String text = (String) params.get("text");
+
+        if (text != null)
+        {
+            sb.append(text);
+        }
+
+        String body = (String) params.get("_body");
+
+        if (body != null)
+        {
+            sb.append(" (" + body.replace('\n', '+') + ")");
+        }
+
+        return sb.toString();
     }
 }

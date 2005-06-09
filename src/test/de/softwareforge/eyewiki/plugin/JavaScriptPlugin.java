@@ -1,5 +1,6 @@
-import java.util.Map;
+package de.softwareforge.eyewiki.plugin;
 
+import java.util.Map;
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -8,7 +9,7 @@ import de.softwareforge.eyewiki.plugin.WikiPlugin;
 
 
 /**
- * Implements a simple plugin that just returns its text.
+ * Implements a simple plugin that just returns a piece of Javascript
  *
  * <P>
  * Parameters: text - text to return.
@@ -16,7 +17,7 @@ import de.softwareforge.eyewiki.plugin.WikiPlugin;
  *
  * @author Janne Jalkanen
  */
-public class SamplePlugin2
+public class JavaScriptPlugin
         implements WikiPlugin
 {
     /**
@@ -44,6 +45,6 @@ public class SamplePlugin2
     public String execute(WikiContext context, Map params)
             throws PluginException
     {
-        return (String) params.get("text");
+        return "<script language=\"JavaScript\"><!--\nfoo='';\n--></script>\n";
     }
 }

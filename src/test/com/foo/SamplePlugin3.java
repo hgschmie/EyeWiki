@@ -2,10 +2,11 @@ package com.foo;
 
 import java.util.Map;
 
-import com.ecyrd.jspwiki.WikiContext;
-import com.ecyrd.jspwiki.WikiEngine;
-import com.ecyrd.jspwiki.plugin.PluginException;
-import com.ecyrd.jspwiki.plugin.WikiPlugin;
+
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.plugin.PluginException;
+import de.softwareforge.eyewiki.plugin.WikiPlugin;
 
 
 /**
