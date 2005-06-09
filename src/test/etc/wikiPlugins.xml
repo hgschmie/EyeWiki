@@ -1,12 +1,12 @@
 <container>
-  <component-implementation key="SamplePlugin"           class="com.ecyrd.jspwiki.plugin.SamplePlugin" />
+  <component-implementation key="SamplePlugin"           class="de.softwareforge.eyewiki.plugin.SamplePlugin" />
   <component-implementation key="SamplePlugin2"          class="SamplePlugin2" />
   <component-implementation key="SamplePlugin3"          class="com.foo.SamplePlugin3" />
-  <component-implementation key="JavaScriptPlugin"       class="com.ecyrd.jspwiki.plugin.JavaScriptPlugin" />
-  <component-implementation key="ReferringPagesPlugin"   class="com.ecyrd.jspwiki.plugin.ReferringPagesPlugin" />
-  <component-implementation key="UndefinedPagesPlugin"   class="com.ecyrd.jspwiki.plugin.UndefinedPagesPlugin" />
-  <component-implementation key="Counter"                class="com.ecyrd.jspwiki.plugin.Counter" />
-  <component-implementation key="TableOfContents"        class="com.ecyrd.jspwiki.plugin.TableOfContents" />
-  <component-implementation key="WeblogEntryPlugin"      class="com.ecyrd.jspwiki.plugin.WeblogEntryPlugin" />
-  <component-implementation key="WeblogPlugin"           class="com.ecyrd.jspwiki.plugin.WeblogPlugin" />
+  <component-implementation key="JavaScriptPlugin"       class="de.softwareforge.eyewiki.plugin.JavaScriptPlugin" />
+  <component-implementation key="ReferringPagesPlugin"   class="de.softwareforge.eyewiki.plugin.ReferringPagesPlugin" />
+  <component-implementation key="UndefinedPagesPlugin"   class="de.softwareforge.eyewiki.plugin.UndefinedPagesPlugin" />
+  <component-implementation key="Counter"                class="de.softwareforge.eyewiki.plugin.Counter" />
+  <component-implementation key="TableOfContents"        class="de.softwareforge.eyewiki.plugin.TableOfContents" />
+  <component-implementation key="WeblogEntryPlugin"      class="de.softwareforge.eyewiki.plugin.WeblogEntryPlugin" />
+  <component-implementation key="WeblogPlugin"           class="de.softwareforge.eyewiki.plugin.WeblogPlugin" />
 </container>

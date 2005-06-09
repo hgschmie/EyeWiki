@@ -83,12 +83,12 @@ import de.softwareforge.eyewiki.util.FileUtil;
  *
  * For example, in the following line of code:
  * <pre>
- *  [{INSERT com.ecyrd.jspwiki.plugin.FunnyPlugin  foo='bar'
+ *  [{INSERT de.softwareforge.eyewiki.plugin.FunnyPlugin  foo='bar'
  *  blob='goo'
  *   abcdefghijklmnopqrstuvw
  *  01234567890}]
  *  </pre>
- * The plugin class is "com.ecyrd.jspwiki.plugin.FunnyPlugin", the parameters are "foo" and "blob"
+ * The plugin class is "de.softwareforge.eyewiki.plugin.FunnyPlugin", the parameters are "foo" and "blob"
  * (having values "bar" and "goo", respectively), and the plugin body is then
  * "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is accessible via a special parameter
  * called "_body".
@@ -101,7 +101,7 @@ import de.softwareforge.eyewiki.util.FileUtil;
  *
  * <P>
  * The class name can be shortened, and marked without the package. For example, "FunnyPlugin"
- * would be expanded to "com.ecyrd.jspwiki.plugin.FunnyPlugin" automatically.  It is also possible
+ * would be expanded to "de.softwareforge.eyewiki.plugin.FunnyPlugin" automatically.  It is also possible
  * to defined other packages, by setting the "jspwiki.plugin.searchPath" property.  See the
  * included jspwiki.properties file for examples.
  * </p>
@@ -114,7 +114,7 @@ import de.softwareforge.eyewiki.util.FileUtil;
  * it is possible to shorten this quite a lot, by skipping the INSERT, and WHERE words, and
  * dropping the package name.  For example:
  * <pre>
- *  [{INSERT com.ecyrd.jspwiki.plugin.Counter WHERE name='foo'}]
+ *  [{INSERT de.softwareforge.eyewiki.plugin.Counter WHERE name='foo'}]
  *  </pre>
  * is the same as
  * <pre>

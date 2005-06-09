@@ -1,4 +1,4 @@
-<%@ page import="com.ecyrd.jspwiki.Release" %>
+<%@ page import="de.softwareforge.eyewiki.Release" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 <!-- LeftMenuFooter is automatically generated from a Wiki page called "LeftMenuFooter" -->
 

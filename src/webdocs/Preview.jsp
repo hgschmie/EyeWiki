@@ -1,7 +1,7 @@
 <%@ page import="org.apache.log4j.*" %>
-<%@ page import="com.ecyrd.jspwiki.*" %>
+<%@ page import="de.softwareforge.eyewiki.*" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
+<%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 <%! 

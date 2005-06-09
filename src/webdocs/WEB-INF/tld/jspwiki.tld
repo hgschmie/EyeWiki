@@ -15,8 +15,8 @@
 
   <tag>
     <name>AttachmentsIterator</name>
-    <tagclass>com.ecyrd.jspwiki.tags.AttachmentsIteratorTag</tagclass>
-    <teiclass>com.ecyrd.jspwiki.tags.AttachmentsIteratorInfo</teiclass>
+    <tagclass>de.softwareforge.eyewiki.tags.AttachmentsIteratorTag</tagclass>
+    <teiclass>de.softwareforge.eyewiki.tags.AttachmentsIteratorInfo</teiclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>id</name>
@@ -25,19 +25,19 @@
 
   <tag>
     <name>Author</name>
-    <tagclass>com.ecyrd.jspwiki.tags.AuthorTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.AuthorTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>  
   
   <tag>
     <name>BaseURL</name>
-    <tagclass>com.ecyrd.jspwiki.tags.BaseURLTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.BaseURLTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>Breadcrumbs</name>
-    <tagclass>com.ecyrd.jspwiki.tags.BreadcrumbsTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.BreadcrumbsTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>maxpages</name>
@@ -51,7 +51,7 @@
 
   <tag>
     <name>Calendar</name>
-    <tagclass>com.ecyrd.jspwiki.tags.CalendarTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.CalendarTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>pageformat</name>
@@ -69,8 +69,8 @@
 
   <tag>
     <name>CheckLock</name>
-    <tagclass>com.ecyrd.jspwiki.tags.CheckLockTag</tagclass>
-    <teiclass>com.ecyrd.jspwiki.tags.CheckLockInfo</teiclass>
+    <tagclass>de.softwareforge.eyewiki.tags.CheckLockTag</tagclass>
+    <teiclass>de.softwareforge.eyewiki.tags.CheckLockInfo</teiclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>mode</name>
@@ -82,7 +82,7 @@
 
   <tag>
     <name>CheckRequestContext</name>
-    <tagclass>com.ecyrd.jspwiki.tags.CheckRequestContextTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.CheckRequestContextTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>context</name>
@@ -92,7 +92,7 @@
 
   <tag>
     <name>CheckVersion</name>
-    <tagclass>com.ecyrd.jspwiki.tags.CheckVersionTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.CheckVersionTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>mode</name>
@@ -101,7 +101,7 @@
 
   <tag>
     <name>CommentLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.CommentLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.CommentLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -114,7 +114,7 @@
 
   <tag>
     <name>Content</name>
-    <tagclass>com.ecyrd.jspwiki.tags.ContentTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.ContentTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>view</name>
@@ -164,13 +164,13 @@
 
   <tag>
     <name>ContentEncoding</name>
-    <tagclass>com.ecyrd.jspwiki.tags.ContentEncodingTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.ContentEncodingTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>DiffLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.DiffLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.DiffLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -191,7 +191,7 @@
 
   <tag>
     <name>EditLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.EditLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.EditLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -208,7 +208,7 @@
 
   <tag>
     <name>Editor</name>
-    <tagclass>com.ecyrd.jspwiki.tags.EditorTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.EditorTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>submit</name>
@@ -234,26 +234,26 @@
 
   <tag>
      <name>EditorArea</name>
-     <tagclass>com.ecyrd.jspwiki.tags.EditorAreaTag</tagclass>
+     <tagclass>de.softwareforge.eyewiki.tags.EditorAreaTag</tagclass>
      <bodycontent>empty</bodycontent>
   </tag>
   
   <tag>
     <name>FeedDiscovery</name>
-    <tagclass>com.ecyrd.jspwiki.tags.FeedDiscoveryTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.FeedDiscoveryTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>HasAttachments</name>
-    <tagclass>com.ecyrd.jspwiki.tags.HasAttachmentsTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.HasAttachmentsTag</tagclass>
     <bodycontent>JSP</bodycontent>
   </tag>  
 
   <tag>
     <name>HistoryIterator</name>
-    <tagclass>com.ecyrd.jspwiki.tags.HistoryIteratorTag</tagclass>
-    <teiclass>com.ecyrd.jspwiki.tags.HistoryIteratorInfo</teiclass>
+    <tagclass>de.softwareforge.eyewiki.tags.HistoryIteratorTag</tagclass>
+    <teiclass>de.softwareforge.eyewiki.tags.HistoryIteratorInfo</teiclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>id</name>
@@ -262,13 +262,13 @@
 
   <tag>
     <name>IfNoSearchResults</name>
-    <tagclass>com.ecyrd.jspwiki.tags.IfNoSearchResultsTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.IfNoSearchResultsTag</tagclass>
     <bodycontent>JSP</bodycontent>
   </tag>  
 
   <tag>
     <name>Include</name>
-    <tagclass>com.ecyrd.jspwiki.tags.IncludeTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.IncludeTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>page</name>
@@ -278,7 +278,7 @@
 
   <tag>
     <name>InsertDiff</name>
-    <tagclass>com.ecyrd.jspwiki.tags.InsertDiffTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.InsertDiffTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -288,7 +288,7 @@
 
   <tag>
     <name>InsertPage</name>
-    <tagclass>com.ecyrd.jspwiki.tags.InsertPageTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.InsertPageTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>page</name>
@@ -302,7 +302,7 @@
 
   <tag>
     <name>LinkTo</name>
-    <tagclass>com.ecyrd.jspwiki.tags.LinkToTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.LinkToTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -323,7 +323,7 @@
 
   <tag>
     <name>LinkToParent</name>
-    <tagclass>com.ecyrd.jspwiki.tags.LinkToParentTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.LinkToParentTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -340,13 +340,13 @@
 
   <tag>
     <name>NextVersion</name>
-    <tagclass>com.ecyrd.jspwiki.tags.NextVersionTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.NextVersionTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>NoSuchPage</name>
-    <tagclass>com.ecyrd.jspwiki.tags.NoSuchPageTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.NoSuchPageTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -356,7 +356,7 @@
 
   <tag>
     <name>PageExists</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageExistsTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageExistsTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -366,7 +366,7 @@
 
   <tag>
     <name>PageInfoLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageInfoLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageInfoLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -380,7 +380,7 @@
   
   <tag>
     <name>PageDate</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageDateTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageDateTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
         <name>format</name>
@@ -390,19 +390,19 @@
   
   <tag>
     <name>PageName</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageNameTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageNameTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>PageSize</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageSizeTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageSizeTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>PageType</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageTypeTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageTypeTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>type</name>
@@ -412,19 +412,19 @@
 
   <tag>
     <name>PageVersion</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PageVersionTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PageVersionTag</tagclass>
     <bodycontent>JSP</bodycontent>
   </tag>
 
   <tag>
     <name>ParentPageName</name>
-    <tagclass>com.ecyrd.jspwiki.tags.ParentPageNameTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.ParentPageNameTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>Permission</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PermissionTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PermissionTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>permission</name>
@@ -434,13 +434,13 @@
 
   <tag>
     <name>PreviousVersion</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PreviousVersionTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PreviousVersionTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>Plugin</name>
-    <tagclass>com.ecyrd.jspwiki.tags.PluginTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.PluginTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>plugin</name>
@@ -456,7 +456,7 @@
 
   <tag>
     <name>RSSImageLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.RSSImageLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.RSSImageLinkTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>title</name>
@@ -466,7 +466,7 @@
 
   <tag>
     <name>RSSUserlandLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.RSSCoffeeCupLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.RSSCoffeeCupLinkTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>title</name>
@@ -476,8 +476,8 @@
 
   <tag>
     <name>SearchResultIterator</name>
-    <tagclass>com.ecyrd.jspwiki.tags.SearchResultIteratorTag</tagclass>
-    <teiclass>com.ecyrd.jspwiki.tags.SearchResultIteratorInfo</teiclass>
+    <tagclass>de.softwareforge.eyewiki.tags.SearchResultIteratorTag</tagclass>
+    <teiclass>de.softwareforge.eyewiki.tags.SearchResultIteratorInfo</teiclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>id</name>
@@ -496,31 +496,31 @@
 
   <tag>
     <name>SearchResults</name>
-    <tagclass>com.ecyrd.jspwiki.tags.SearchResultsTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.SearchResultsTag</tagclass>
     <bodycontent>JSP</bodycontent>
   </tag>  
 
   <tag>
     <name>SearchResultsSize</name>
-    <tagclass>com.ecyrd.jspwiki.tags.SearchResultsSizeTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.SearchResultsSizeTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>  
 
   <tag>
     <name>TemplateDir</name>
-    <tagclass>com.ecyrd.jspwiki.tags.TemplateDirTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.TemplateDirTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>Translate</name>
-    <tagclass>com.ecyrd.jspwiki.tags.TranslateTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.TranslateTag</tagclass>
     <bodycontent>JSP</bodycontent>
   </tag>
 
   <tag>
     <name>UploadLink</name>
-    <tagclass>com.ecyrd.jspwiki.tags.UploadLinkTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.UploadLinkTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>page</name>
@@ -533,13 +533,13 @@
 
   <tag>
     <name>UserName</name>
-    <tagclass>com.ecyrd.jspwiki.tags.UserNameTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.UserNameTag</tagclass>
     <bodycontent>empty</bodycontent>
   </tag>
 
   <tag>
     <name>UserCheck</name>
-    <tagclass>com.ecyrd.jspwiki.tags.UserCheckTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.UserCheckTag</tagclass>
     <bodycontent>JSP</bodycontent>
     <attribute>
        <name>status</name>
@@ -553,7 +553,7 @@
 
   <tag>
     <name>Variable</name>
-    <tagclass>com.ecyrd.jspwiki.tags.VariableTag</tagclass>
+    <tagclass>de.softwareforge.eyewiki.tags.VariableTag</tagclass>
     <bodycontent>empty</bodycontent>
     <attribute>
        <name>var</name>

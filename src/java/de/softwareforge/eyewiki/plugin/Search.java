@@ -69,7 +69,7 @@ public class Search
     }
 
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.plugin.WikiPlugin#execute(com.ecyrd.jspwiki.WikiContext, java.util.Map)
+     * @see de.softwareforge.eyewiki.plugin.WikiPlugin#execute(de.softwareforge.eyewiki.WikiContext, java.util.Map)
      */
     public String execute(WikiContext context, Map params)
             throws PluginException

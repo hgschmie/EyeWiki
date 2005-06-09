@@ -3,13 +3,13 @@
 
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="com.ecyrd.jspwiki.plugin.PluginManager" %>
-<%@ page import="com.ecyrd.jspwiki.plugin.WeblogPlugin" %>
+<%@ page import="de.softwareforge.eyewiki.*" %>
+<%@ page import="de.softwareforge.eyewiki.plugin.PluginManager" %>
+<%@ page import="de.softwareforge.eyewiki.plugin.WeblogPlugin" %>
 <%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
-<%@ page import="com.ecyrd.jspwiki.rss.*" %>
-<%@ page import="com.ecyrd.jspwiki.util.*" %>
+<%@ page import="de.softwareforge.eyewiki.rss.*" %>
+<%@ page import="de.softwareforge.eyewiki.util.*" %>
 <%!
     public void jspInit()
     {

@@ -12,7 +12,7 @@ import de.softwareforge.eyewiki.WikiPage;
 
 
 /**
- * Does com.ecyrd.jspwiki.stress testing on the RCSProvider.
+ * Does de.softwareforge.eyewiki.stress testing on the RCSProvider.
  */
 public class RCSProviderTest
         extends TestCase

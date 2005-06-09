@@ -3,11 +3,11 @@
 <pagefilters>
 
    <filter>
-      <class>com.ecyrd.jspwiki.filters.ProfanityFilter</class>
+      <class>de.softwareforge.eyewiki.filters.ProfanityFilter</class>
    </filter>
    
    <filter>
-      <class>com.ecyrd.jspwiki.filters.TestFilter</class>
+      <class>de.softwareforge.eyewiki.filters.TestFilter</class>
 
       <param>
          <name>foobar</name>

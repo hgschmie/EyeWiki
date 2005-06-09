@@ -1,4 +1,4 @@
-<%@ page import="com.ecyrd.jspwiki.tags.InsertDiffTag" %>
+<%@ page import="de.softwareforge.eyewiki.tags.InsertDiffTag" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 <%!
     String getVersionText( Integer ver )

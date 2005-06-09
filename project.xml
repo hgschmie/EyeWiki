@@ -1,30 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <pomVersion>3</pomVersion>
-  <id>jspwiki</id>
-  <name>JSPWiki</name>
-  <currentVersion>2.2.12-dev</currentVersion>
+  <id>eyewiki</id>
+  <name>eyeWiki</name>
+  <currentVersion>1.0-dev</currentVersion>
   <organization>
-    <name>jspwiki.org</name>
-    <url>http://www.jspwiki.org</url>
+    <name>softwareforge.de</name>
+    <url>http://www.softwareforge.de</url>
   </organization>
-  <inceptionYear>2001</inceptionYear>
-  <package>com.ecyrd.jspwiki</package>
-  <logo>/images/jspwiki_logo_s.png</logo>
+  <inceptionYear>2005</inceptionYear>
+  <package>de.softwareforge.eyewiki</package>
 
   <description>
-    Wiki based on Java and JSP technology
+    A Wiki based on JSPWiki.
   </description>
 
   <shortDescription>A Wiki engine written in Java</shortDescription>
 
-  <url>http://www.jspwiki.org/</url>
-  <issueTrackingUrl>http://www.jspwiki.org/Wiki.jsp?page=SubmitBugReport</issueTrackingUrl>
-
   <repository>
-    <connection>scm:svn:http:svn.intermeta.de:/svn/opensource/jspwiki/trunk</connection>
-    <developerConnection>scm:svn:https:svn.intermeta.de:/svn/opensource/jspwiki/trunk</developerConnection>
-    <url>https://intra.intermeta.de/viewcvs/viewcvs.cgi/jspwiki/trunk?root=opensource</url>
+    <connection>scm:svn:http:svn.intermeta.de:/svn/opensource/eyewiki/trunk</connection>
+    <developerConnection>scm:svn:https:svn.intermeta.de:/svn/opensource/eyewiki/trunk</developerConnection>
+    <url>https://intra.intermeta.de/viewcvs/viewcvs.cgi/eyewiki/trunk?root=opensource</url>
   </repository>
 
   <versions/>

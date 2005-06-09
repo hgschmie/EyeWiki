@@ -1,22 +1,22 @@
 <container>
   <!-- Configures the type of URL Constructor that is used for the Wiki -->
-  <component-implementation key="URLConstructor"    class="com.ecyrd.jspwiki.url.DefaultURLConstructor" />
+  <component-implementation key="URLConstructor"    class="de.softwareforge.eyewiki.url.DefaultURLConstructor" />
 
-  <component-implementation key="PageManager"       class="com.ecyrd.jspwiki.manager.PageManager" />
-  <component-implementation key="PluginManager"     class="com.ecyrd.jspwiki.plugin.PluginManager" />
-  <component-implementation key="DifferenceManager" class="com.ecyrd.jspwiki.diff.DifferenceManager" />
-  <component-implementation key="AttachmentManager" class="com.ecyrd.jspwiki.attachment.AttachmentManager" />
-  <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
-  <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
-  <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
+  <component-implementation key="PageManager"       class="de.softwareforge.eyewiki.manager.PageManager" />
+  <component-implementation key="PluginManager"     class="de.softwareforge.eyewiki.plugin.PluginManager" />
+  <component-implementation key="DifferenceManager" class="de.softwareforge.eyewiki.diff.DifferenceManager" />
+  <component-implementation key="AttachmentManager" class="de.softwareforge.eyewiki.attachment.AttachmentManager" />
+  <component-implementation key="VariableManager"   class="de.softwareforge.eyewiki.manager.VariableManager" />
+  <component-implementation key="FilterManager"     class="de.softwareforge.eyewiki.filters.FilterManager" />
+  <component-implementation key="TemplateManager"   class="de.softwareforge.eyewiki.manager.TemplateManager" />
 
-  <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
+  <component-implementation key="ReferenceManager"  class="de.softwareforge.eyewiki.manager.ReferenceManager" />
 
-  <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.CachingProvider" />
-  <component-implementation key="AttachmentProvider" class="com.ecyrd.jspwiki.providers.BasicAttachmentProvider" />
+  <component-implementation key="PageProvider"       class="de.softwareforge.eyewiki.providers.CachingProvider" />
+  <component-implementation key="AttachmentProvider" class="de.softwareforge.eyewiki.providers.BasicAttachmentProvider" />
 
 <!-- If you use the CachingProviders, you must supply the real page provider used -->
-  <component-implementation key="RealPageProvider"   class="com.ecyrd.jspwiki.providers.VersioningFileProvider" />
+  <component-implementation key="RealPageProvider"   class="de.softwareforge.eyewiki.providers.VersioningFileProvider" />
 
-  <component-implementation key="RSSGenerator"      class="com.ecyrd.jspwiki.rss.RSSGenerator" />
+  <component-implementation key="RSSGenerator"      class="de.softwareforge.eyewiki.rss.RSSGenerator" />
 </container>

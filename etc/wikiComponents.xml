@@ -1,24 +1,24 @@
 <container>
   <!-- Configures the type of URL Constructor that is used for the Wiki -->
-  <component-implementation key="URLConstructor"    class="com.ecyrd.jspwiki.url.DefaultURLConstructor" />
+  <component-implementation key="URLConstructor"    class="de.softwareforge.eyewiki.url.DefaultURLConstructor" />
 
-  <component-implementation key="PageManager"       class="com.ecyrd.jspwiki.manager.PageManager" />
-  <component-implementation key="PluginManager"     class="com.ecyrd.jspwiki.plugin.PluginManager" />
-  <component-implementation key="DifferenceManager" class="com.ecyrd.jspwiki.diff.DifferenceManager" />
-  <component-implementation key="AttachmentManager" class="com.ecyrd.jspwiki.attachment.AttachmentManager" />
-  <component-implementation key="VariableManager"   class="com.ecyrd.jspwiki.manager.VariableManager" />
-  <component-implementation key="FilterManager"     class="com.ecyrd.jspwiki.filters.FilterManager" />
-  <component-implementation key="TemplateManager"   class="com.ecyrd.jspwiki.manager.TemplateManager" />
-  <component-implementation key="AuthorizationManager" class="com.ecyrd.jspwiki.auth.AuthorizationManager" />
-  <component-implementation key="UserManager"       class="com.ecyrd.jspwiki.auth.UserManager" />
-  <component-implementation key="ReferenceManager"  class="com.ecyrd.jspwiki.manager.ReferenceManager" />
+  <component-implementation key="PageManager"       class="de.softwareforge.eyewiki.manager.PageManager" />
+  <component-implementation key="PluginManager"     class="de.softwareforge.eyewiki.plugin.PluginManager" />
+  <component-implementation key="DifferenceManager" class="de.softwareforge.eyewiki.diff.DifferenceManager" />
+  <component-implementation key="AttachmentManager" class="de.softwareforge.eyewiki.attachment.AttachmentManager" />
+  <component-implementation key="VariableManager"   class="de.softwareforge.eyewiki.manager.VariableManager" />
+  <component-implementation key="FilterManager"     class="de.softwareforge.eyewiki.filters.FilterManager" />
+  <component-implementation key="TemplateManager"   class="de.softwareforge.eyewiki.manager.TemplateManager" />
+  <component-implementation key="AuthorizationManager" class="de.softwareforge.eyewiki.auth.AuthorizationManager" />
+  <component-implementation key="UserManager"       class="de.softwareforge.eyewiki.auth.UserManager" />
+  <component-implementation key="ReferenceManager"  class="de.softwareforge.eyewiki.manager.ReferenceManager" />
 
-  <component-implementation key="PageProvider"       class="com.ecyrd.jspwiki.providers.CachingProvider" />
-  <component-implementation key="AttachmentProvider" class="com.ecyrd.jspwiki.providers.CachingAttachmentProvider" />
+  <component-implementation key="PageProvider"       class="de.softwareforge.eyewiki.providers.CachingProvider" />
+  <component-implementation key="AttachmentProvider" class="de.softwareforge.eyewiki.providers.CachingAttachmentProvider" />
 
 <!-- If you use the CachingProviders, you must supply the real page provider used -->
-  <component-implementation key="RealPageProvider"   class="com.ecyrd.jspwiki.providers.VersioningFileProvider" />
-  <component-implementation key="RealAttachmentProvider"   class="com.ecyrd.jspwiki.providers.BasicAttachmentProvider" />
+  <component-implementation key="RealPageProvider"   class="de.softwareforge.eyewiki.providers.VersioningFileProvider" />
+  <component-implementation key="RealAttachmentProvider"   class="de.softwareforge.eyewiki.providers.BasicAttachmentProvider" />
 
 
 <!--   Enables the RSS (Rich Site Summary) file generation                    -->
@@ -29,7 +29,7 @@
 <!--   Note that jspwiki.baseURL MUST BE DEFINED if you want to enable RSS!   -->
 <!--                                                                          -->
 <!--   If you uncomment this line, then the RSS Site feed is generated        -->
-  <component-implementation key="RSSGenerator"      class="com.ecyrd.jspwiki.rss.RSSGenerator" />
+  <component-implementation key="RSSGenerator"      class="de.softwareforge.eyewiki.rss.RSSGenerator" />
 
 <!-- page Diff Representation -->
 
@@ -54,7 +54,7 @@
 <!--       Example for a diff command: -->
 <!--       jspwiki.diffCommand = /usr/bin/diff -u %s1 %s2 -->
 
-  <component-implementation key="DiffProvider"      class="com.ecyrd.jspwiki.diff.ContextualDiffProvider" />
+  <component-implementation key="DiffProvider"      class="de.softwareforge.eyewiki.diff.ContextualDiffProvider" />
 
   
 <!-- For the RSS feeds, a different provider can be used because inside -->
@@ -71,12 +71,12 @@
 <!--        new and not much tested. YMMV. -->
 
 
-  <component-implementation key="RssDiffProvider"      class="com.ecyrd.jspwiki.diff.RssContextualDiffProvider" />
+  <component-implementation key="RssDiffProvider"      class="de.softwareforge.eyewiki.diff.RssContextualDiffProvider" />
 
 <!--- Authorization and Authentication -->
 
-  <component-implementation key="Authorizer"           class="com.ecyrd.jspwiki.auth.modules.PageAuthorizer" />
-  <component-implementation key="Authenticator"        class="com.ecyrd.jspwiki.auth.modules.FileAuthenticator" />
-  <component-implementation key="UserDatabase"         class="com.ecyrd.jspwiki.auth.modules.WikiDatabase" />
+  <component-implementation key="Authorizer"           class="de.softwareforge.eyewiki.auth.modules.PageAuthorizer" />
+  <component-implementation key="Authenticator"        class="de.softwareforge.eyewiki.auth.modules.FileAuthenticator" />
+  <component-implementation key="UserDatabase"         class="de.softwareforge.eyewiki.auth.modules.WikiDatabase" />
 
 </container>

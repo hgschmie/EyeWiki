@@ -475,10 +475,10 @@ public interface WikiProperties
     /**
      * Default Prefix for searching classes
      *
-     * @value com.ecyrd.jspwiki
+     * @value de.softwareforge.eyewiki
      */
-    String DEFAULT_CLASS_PREFIX = "com.ecyrd.jspwiki";
+    String DEFAULT_CLASS_PREFIX = "de.softwareforge.eyewiki";
 
     /** The default package for filter classes */
-    String DEFAULT_FILTER_CLASS_PREFIX = "com.ecyrd.jspwiki.filters";
+    String DEFAULT_FILTER_CLASS_PREFIX = "de.softwareforge.eyewiki.filters";
 }

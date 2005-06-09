@@ -127,7 +127,7 @@ public class PluginManagerTest
     }
 
     /**
-     * Check that in all cases com.ecyrd.jspwiki.plugin is searched.
+     * Check that in all cases de.softwareforge.eyewiki.plugin is searched.
      *
      * @throws Exception DOCUMENT ME!
      */

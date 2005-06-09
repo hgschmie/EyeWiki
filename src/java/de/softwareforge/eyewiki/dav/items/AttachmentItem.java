@@ -46,7 +46,7 @@ public class AttachmentItem
     }
 
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.dav.items.PageDavItem#getHref()
+     * @see de.softwareforge.eyewiki.dav.items.PageDavItem#getHref()
      */
     public String getHref()
     {

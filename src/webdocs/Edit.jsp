@@ -1,14 +1,14 @@
 <%@ page import="org.apache.log4j.*" %>
-<%@ page import="com.ecyrd.jspwiki.*" %>
-<%@ page import="com.ecyrd.jspwiki.filters.*" %>
+<%@ page import="de.softwareforge.eyewiki.*" %>
+<%@ page import="de.softwareforge.eyewiki.filters.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="com.ecyrd.jspwiki.tags.WikiTagBase" %>
-<%@ page import="com.ecyrd.jspwiki.auth.AuthorizationManager" %>
-<%@ page import="com.ecyrd.jspwiki.auth.UserProfile" %>
-<%@ page import="com.ecyrd.jspwiki.auth.permissions.WikiPermission" %>
-<%@ page import="com.ecyrd.jspwiki.auth.permissions.EditPermission" %>
-<%@ page import="com.ecyrd.jspwiki.auth.permissions.CreatePermission" %>
-<%@ page import="com.ecyrd.jspwiki.htmltowiki.HtmlStringToWikiTranslator" %>
+<%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
+<%@ page import="de.softwareforge.eyewiki.auth.AuthorizationManager" %>
+<%@ page import="de.softwareforge.eyewiki.auth.UserProfile" %>
+<%@ page import="de.softwareforge.eyewiki.auth.permissions.WikiPermission" %>
+<%@ page import="de.softwareforge.eyewiki.auth.permissions.EditPermission" %>
+<%@ page import="de.softwareforge.eyewiki.auth.permissions.CreatePermission" %>
+<%@ page import="de.softwareforge.eyewiki.htmltowiki.HtmlStringToWikiTranslator" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
 

@@ -25,10 +25,10 @@
      -->
    <servlet>
        <servlet-name>XMLRPC</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.xmlrpc.RPCServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>       
        <init-param>
            <param-name>handler</param-name>
-           <param-value>com.ecyrd.jspwiki.xmlrpc.RPCHandler</param-value>
+           <param-value>de.softwareforge.eyewiki.xmlrpc.RPCHandler</param-value>
        </init-param>
 
        <init-param>
@@ -43,10 +43,10 @@
 
    <servlet>
        <servlet-name>XMLRPC-UTF8</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.xmlrpc.RPCServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>       
        <init-param>
            <param-name>handler</param-name>
-           <param-value>com.ecyrd.jspwiki.xmlrpc.RPCHandlerUTF8</param-value>
+           <param-value>de.softwareforge.eyewiki.xmlrpc.RPCHandlerUTF8</param-value>
        </init-param>
 
        <init-param>
@@ -57,17 +57,17 @@
 
    <servlet>
        <servlet-name>ATOM</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.atom.AtomAPIServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.atom.AtomAPIServlet</servlet-class>       
    </servlet>
 
    <servlet>
        <servlet-name>WikiServlet</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.WikiServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.WikiServlet</servlet-class>       
    </servlet>
 
    <servlet>
        <servlet-name>DAVServlet</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.dav.WikiDavServlet</servlet-class>
+       <servlet-class>de.softwareforge.eyewiki.dav.WikiDavServlet</servlet-class>
    </servlet>
  
 
@@ -77,7 +77,7 @@
 
    <servlet>
        <servlet-name>AttachmentServlet</servlet-name>
-       <servlet-class>com.ecyrd.jspwiki.attachment.AttachmentServlet</servlet-class>
+       <servlet-class>de.softwareforge.eyewiki.attachment.AttachmentServlet</servlet-class>
    </servlet>
 
 

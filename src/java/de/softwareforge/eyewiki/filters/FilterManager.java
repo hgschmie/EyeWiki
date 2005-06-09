@@ -80,10 +80,10 @@ import de.softwareforge.eyewiki.util.PriorityList;
  *  <?xml version="1.0"?>
  *   <pagefilters>
  *     <filter>
- *      <class>com.ecyrd.jspwiki.filters.ProfanityFilter</class>
+ *      <class>de.softwareforge.eyewiki.filters.ProfanityFilter</class>
  *    </filter>
  *     <filter>
- *      <class>com.ecyrd.jspwiki.filters.TestFilter</class>
+ *      <class>de.softwareforge.eyewiki.filters.TestFilter</class>
  *       <param>
  *        <name>foobar</name>
  *        <value>Zippadippadai</value>

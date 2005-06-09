@@ -37,7 +37,7 @@ public class HTMLPageDavItem
     }
 
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.dav.DavItem#getHref()
+     * @see de.softwareforge.eyewiki.dav.DavItem#getHref()
      */
     public String getHref()
     {
@@ -46,7 +46,7 @@ public class HTMLPageDavItem
     }
 
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.dav.DavItem#getPropertySet()
+     * @see de.softwareforge.eyewiki.dav.DavItem#getPropertySet()
      */
     public Collection getPropertySet()
     {

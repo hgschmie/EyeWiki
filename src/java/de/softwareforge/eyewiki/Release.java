@@ -81,7 +81,7 @@ public final class Release
      * <P>
      * Example:
      * <PRE>
-     *  % java com.ecyrd.jspwiki.Release
+     *  % java de.softwareforge.eyewiki.Release
      *  1.9.26-cvs
      *  </PRE>
      * </p>

@@ -1,17 +1,17 @@
 <container>
-  <component-implementation class="com.ecyrd.jspwiki.variable.AttachmentProviderVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.ConstantVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.EngineVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.InlinedImagesVariable" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.InterWikiLinksVariable" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.PageFiltersVariable" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.PageNameVariable" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.UptimeVariable" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.VersionVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.AttachmentProviderVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.ConstantVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.EngineVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.InlinedImagesVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.InterWikiLinksVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.PageFiltersVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.PageNameVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.UptimeVariable" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.VersionVariable" />
 
-  <component-implementation class="com.ecyrd.jspwiki.variable.ContextVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.ConfigurationVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.MetadataVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.ServletRequestVariables" />
-  <component-implementation class="com.ecyrd.jspwiki.variable.HttpParameterVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.ContextVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.ConfigurationVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.MetadataVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.ServletRequestVariables" />
+  <component-implementation class="de.softwareforge.eyewiki.variable.HttpParameterVariables" />
 </container>

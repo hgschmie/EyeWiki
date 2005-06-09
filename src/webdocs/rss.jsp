@@ -2,13 +2,12 @@
 
 <%@ page import="org.apache.log4j.*" %>
 <%@ page import="java.util.*"%>
-<%@ page import="com.ecyrd.jspwiki.*" %>
+<%@ page import="de.softwareforge.eyewiki.*" %>
 <%@ page import="org.apache.commons.configuration.*" %>
 <%@ page import="java.text.*" %>
-<%@ page import="com.ecyrd.jspwiki.rss.*" %>
-<%@ page import="com.ecyrd.jspwiki.util.*" %>
-<%@ page import="com.ecyrd.jspwiki.plugin.PluginManager" %>
-<%@ page import="com.ecyrd.jspwiki.plugin.WeblogPlugin" %>
+<%@ page import="de.softwareforge.eyewiki.util.*" %>
+<%@ page import="de.softwareforge.eyewiki.plugin.PluginManager" %>
+<%@ page import="de.softwareforge.eyewiki.plugin.WeblogPlugin" %>
 <%@ taglib uri="/WEB-INF/tld/oscache.tld" prefix="oscache" %>
 
 <%!
@@ -76,8 +75,6 @@
 
     if (pluginManager != null)
     {
-        List changed;
-    
         if( mode.equals("blog") )
         {
             WeblogPlugin plug = (WeblogPlugin) pluginManager.findPlugin("WeblogPlugin");

@@ -78,7 +78,7 @@ public class TraditionalDiffProvider
     }
 
     /**
-     * @see de.softwareforge.eyewiki.WikiProvider#initialize(com.ecyrd.jspwiki.WikiEngine,
+     * @see de.softwareforge.eyewiki.WikiProvider#initialize(de.softwareforge.eyewiki.WikiEngine,
      *      java.util.Properties)
      */
     public TraditionalDiffProvider(WikiEngine engine, Configuration conf)

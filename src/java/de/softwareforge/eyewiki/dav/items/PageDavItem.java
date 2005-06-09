@@ -72,7 +72,7 @@ public class PageDavItem
     }
 
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.dav.DavItem#getPropertySet(int)
+     * @see de.softwareforge.eyewiki.dav.DavItem#getPropertySet(int)
      */
     public Collection getPropertySet()
     {

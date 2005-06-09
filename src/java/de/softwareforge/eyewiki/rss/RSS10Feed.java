@@ -175,7 +175,7 @@ public class RSS10Feed extends Feed
     }
     
     /* (non-Javadoc)
-     * @see com.ecyrd.jspwiki.rss.Feed#getString()
+     * @see de.softwareforge.eyewiki.rss.Feed#getString()
      */
     public String getString()
     {
