@@ -34,15 +34,15 @@
 
 <table class="pageaction">
   <tr>
-    <td class="pageaction"><a href="#Top">Go to top</a></td>
-    <td class="pageaction">
+    <td><a class="wikicontent" href="#Top">Go to top</a></td>
+    <td>
       <wiki:CheckVersion mode="latest">
         <wiki:Permission permission="edit">
           <wiki:EditLink>Edit this page</wiki:EditLink>
         </wiki:Permission>
       </wiki:CheckVersion>
     </td>
-    <td class="pageaction">
+    <td>
       <wiki:PageInfoLink>More info...</wiki:PageInfoLink>
     </td>
   </tr>

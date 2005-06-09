@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiPage;
 
@@ -95,8 +96,13 @@ public class CommentLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a href=\"" + getCommentURL(pageName) + "\">");
+            StringBuffer sb = new StringBuffer("<a class=\"")
+                    .append(WikiConstants.CSS_WIKICONTENT)
+                    .append("\" href=\"")
+                    .append(getCommentURL(pageName))
+                    .append("\">");
 
+            out.print(sb.toString());
             break;
 
         case URL:

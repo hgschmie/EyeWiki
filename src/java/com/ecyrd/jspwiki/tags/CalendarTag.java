@@ -145,30 +145,30 @@ public class CalendarTag
                     String url = m_urlFormat.format(day.getTime());
 
                     result =
-                        "<td><a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">" + day.get(Calendar.DATE)
+                        "<td><a href=\"" + url + "\">" + day.get(Calendar.DATE)
                         + "</a></td>";
                 }
                 else
                 {
                     result =
-                        "<td><a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + m_wikiContext.getViewURL(pagename)
+                        "<td><a href=\"" + m_wikiContext.getViewURL(pagename)
                         + "\">" + day.get(Calendar.DATE) + "</a></td>";
                 }
             }
             else
             {
-                result = "<td class=\"" + WikiConstants.CSS_CALENDAR_DAY + "\">" + day.get(Calendar.DATE) + "</td>";
+                result = "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">" + day.get(Calendar.DATE) + "</td>";
             }
         }
         else if (m_urlFormat != null)
         {
             String url = m_urlFormat.format(day.getTime());
 
-            result = "<td><a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">" + day.get(Calendar.DATE) + "</a></td>";
+            result = "<td><a href=\"" + url + "\">" + day.get(Calendar.DATE) + "</a></td>";
         }
         else
         {
-            result = "<td class=\"" + WikiConstants.CSS_CALENDAR_DAY + "\">" + day.get(Calendar.DATE) + "</td>";
+            result = "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">" + day.get(Calendar.DATE) + "</td>";
         }
 
         return format(result);
@@ -195,7 +195,7 @@ public class CalendarTag
 
             url = StringUtils.replace(url, "%d", Integer.toString(lastDay - firstDay + 1));
 
-            result = "<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">" + monthfmt.format(cal.getTime()) + "</a>";
+            result = "<a href=\"" + url + "\">" + monthfmt.format(cal.getTime()) + "</a>";
         }
 
         return format(result);
@@ -251,7 +251,7 @@ public class CalendarTag
                 }
             }
 
-            result = "<td><a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">" + txt + "</a></td>";
+            result = "<td><a href=\"" + url + "\">" + txt + "</a></td>";
         }
         else
         {
@@ -316,17 +316,17 @@ public class CalendarTag
         String queryString = engine.safeGetQueryString(httpServletRequest);
         out.write(
             "<tr>" + getMonthNaviLink(prevCal, "&lt;&lt;", queryString)
-            + "<td colspan=5 class=\"" + WikiConstants.CSS_CALENDAR_MONTH + "\">" + getMonthLink(cal) + "</td>"
+            + "<td colspan=5 class=\"" + WikiConstants.CSS_CALENDAR + "\">" + getMonthLink(cal) + "</td>"
             + getMonthNaviLink(nextCal, "&gt;&gt;", queryString) + "</tr>\n");
 
         int month = cal.get(Calendar.MONTH);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Then, find the first day of the week.
 
         out.write(
-            "<tr><td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Mon</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Tue</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Wed</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Thu</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Fri</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Sat</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR_WEEKDAY + "\">Sun</td></tr>\n");
+            "<tr><td class=\"" + WikiConstants.CSS_CALENDAR + "\">Mon</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Tue</td>"
+            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Wed</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Thu</td>"
+            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Fri</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Sat</td>"
+            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Sun</td></tr>\n");
 
         boolean noMoreDates = false;
 
@@ -340,7 +340,7 @@ public class CalendarTag
 
                 if (mth != month)
                 {
-                    out.write("<td class=\"" + WikiConstants.CSS_CALENDAR_OTHERMONTH + "\">" + cal.get(Calendar.DATE) + "</td>");
+                    out.write("<td class=\"" + WikiConstants.CSS_CALENDAR + "\">" + cal.get(Calendar.DATE) + "</td>");
                 }
                 else
                 {

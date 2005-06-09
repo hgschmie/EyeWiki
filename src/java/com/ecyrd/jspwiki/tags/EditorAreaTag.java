@@ -180,7 +180,6 @@ public class EditorAreaTag
     {
         textarea area = new textarea();
 
-        area.setClass(WikiConstants.CSS_EDITOR);
         area.setWrap("virtual");
         area.setName("text");
         area.setRows(25);

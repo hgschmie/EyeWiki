@@ -36,7 +36,7 @@
             <td colspan="2" class="breadcrumbs">Your trail: <wiki:Breadcrumbs /></td>
          </tr>
          <tr><td colspan="2"><hr /></td></tr>
-         <tr><td colspan="2" class="wikiview"><wiki:Content/></td></tr>
+         <tr><td colspan="2" class="wikicontent"><wiki:Content/></td></tr>
       </table> 
     </td>
   </tr>

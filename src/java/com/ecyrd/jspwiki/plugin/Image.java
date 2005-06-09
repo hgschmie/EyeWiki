@@ -1,26 +1,27 @@
 /*
-    JSPWiki - a JSP-based WikiWiki clone.
+  JSPWiki - a JSP-based WikiWiki clone.
 
-    Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+  Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
 
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 package com.ecyrd.jspwiki.plugin;
 
 import java.util.Map;
 
+import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.attachment.Attachment;
@@ -165,36 +166,50 @@ public class Image
         if (caption != null)
         {
             result.append(
-                "<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
+                    "<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
         }
 
         result.append("<tr><td>");
 
         if (link != null)
         {
-            result.append("<a href=\"" + link + "\">");
+            result.append("<a class=\"")
+                    .append(WikiConstants.CSS_WIKICONTENT)
+                    .append("\" href=\"")
+                    .append(link)
+                    .append("\">");
         }
 
-        result.append("<img src=\"" + src + "\"");
+        result.append("<img src=\"")
+                .append(src)
+                .append("\"");
 
         if (ht != null)
         {
-            result.append(" height=\"" + ht + "\"");
+            result.append(" height=\"")
+                    .append(ht)
+                    .append("\"");
         }
 
         if (wt != null)
         {
-            result.append(" width=\"" + wt + "\"");
+            result.append(" width=\"")
+                    .append(wt)
+                    .append("\"");
         }
 
         if (alt != null)
         {
-            result.append(" alt=\"" + alt + "\"");
+            result.append(" alt=\"")
+                    .append(alt)
+                    .append("\"");
         }
 
         if (border != null)
         {
-            result.append(" border=\"" + border + "\"");
+            result.append(" border=\"")
+                    .append(border)
+                    .append("\"");
         }
 
         // if( map != null )    result.append(" map=\""+map+"\"");

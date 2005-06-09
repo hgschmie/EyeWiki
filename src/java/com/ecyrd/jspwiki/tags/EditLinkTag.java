@@ -141,10 +141,13 @@ public class EditLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print(
-                "<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString)
-                + "\">");
+            StringBuffer sb = new StringBuffer("<a class=\"")
+                    .append(WikiConstants.CSS_WIKICONTENT)
+                    .append("\" href=\"")
+                    .append(m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString))
+                    .append("\">");
 
+            out.print(sb.toString());
             break;
 
         case URL:

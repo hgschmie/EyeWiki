@@ -150,14 +150,22 @@ public class InsertPage
                         + "\">More...</a></p>";
                 }
 
-                res.append(
-                    "<div style=\"" + style + "\""
-                    + ((clazz != null)
-                    ? (" class=\"" + clazz + "\"")
-                    : "") + ">");
-                res.append(engine.textToHTML(includedContext, pageData));
-                res.append(moreLink);
-                res.append("</div>");
+                res.append("<div ");
+
+                if (style != null)
+                {
+                    res.append("style=\"").append(style).append("\"");
+                }
+
+                if (clazz != null)
+                {
+                    res.append(" class=\"").append(clazz).append("\"");
+                }
+
+                res.append(">")
+                        .append(engine.textToHTML(includedContext, pageData))
+                        .append(moreLink)
+                        .append("</div>");
             }
             else
             {

@@ -81,7 +81,7 @@ public class RSSGeneratorTest
         String blog = gen.generateBlogRSS( context, entries );
         
         assertTrue( "has Foo", blog.indexOf("<description>Foo</description>") != -1 );
-        assertTrue( "has proper Bar", blog.indexOf("&lt;b class=\"wikicontent\"&gt;Bar&lt;/b&gt;") != -1 );
+        assertTrue( "has proper Bar", blog.indexOf("&lt;b&gt;Bar&lt;/b&gt;") != -1 );
     }
     
     public static Test suite()

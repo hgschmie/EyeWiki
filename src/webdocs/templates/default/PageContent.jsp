@@ -50,18 +50,18 @@
 
 <table class="pageaction">
   <tr>
-    <td class="pageaction"><a class="wikipage" href="#Top">Go to top</a></td>
-    <td class="pageaction">
+    <td><a class="wikicontent" href="#Top">Go to top</a></td>
+    <td>
       <wiki:CheckVersion mode="latest">
         <wiki:Permission permission="edit">
           <wiki:EditLink>Edit this page</wiki:EditLink>
         </wiki:Permission>
       </wiki:CheckVersion>
     </td>
-    <td class="pageaction">
+    <td>
       <wiki:PageInfoLink>More info...</wiki:PageInfoLink>
     </td>
-    <td class="pageaction">
+    <td>
       <wiki:PageExists>
         <wiki:Permission permission="upload">
           <a class="pageinfo" href="#" onclick="javascript:window.open('<wiki:UploadLink format="url" />','Upload','width=640,height=480,toolbar=1,menubar=1,scrollbars=1,resizable=1,').focus()">Attach file...</a>

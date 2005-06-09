@@ -316,7 +316,7 @@ public class WikiEngineTest
 
         String data = m_engine.getHTML(name);
 
-        assertEquals("<i class=\"wikicontent\">Foobar.</i>\n", data);
+        assertEquals("<i>Foobar.</i>\n", data);
     }
 
     /**

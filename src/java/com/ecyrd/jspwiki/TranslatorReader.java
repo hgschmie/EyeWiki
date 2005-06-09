@@ -2774,11 +2774,12 @@ public class TranslatorReader
             }
             else
             {
-                sb.append(" class=\"");
-                sb.append((clazz != null)
-                        ? clazz
-                        : WikiConstants.CSS_WIKICONTENT);
-                sb.append("\"");
+                if (clazz != null)
+                {
+                    sb.append(" class=\"")
+                            .append(clazz)
+                            .append("\"");
+                }
             }
 
             sb.append(">");
@@ -2808,11 +2809,12 @@ public class TranslatorReader
             }
             else
             {
-                sb.append(" class=\"");
-                sb.append((clazz != null)
-                        ? clazz
-                        : WikiConstants.CSS_WIKICONTENT);
-                sb.append("\"");
+                if (clazz != null)
+                {
+                    sb.append(" class=\"")
+                            .append(clazz)
+                            .append("\"");
+                }
             }
 
             sb.append(">");
@@ -2847,9 +2849,7 @@ public class TranslatorReader
          */
         public String openParagraph()
         {
-            return new StringBuffer("<p class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<p>";
         }
 
         /**
@@ -2874,19 +2874,13 @@ public class TranslatorReader
             switch (effect)
             {
             case BOLD:
-                return new StringBuffer("<b class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">").toString();
+                return "<b>";
 
             case ITALIC:
-                return new StringBuffer("<i class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">").toString();
+                return "<i>";
 
             case TYPED:
-                return new StringBuffer("<tt class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">").toString();
+                return "<tt>";
 
             default:
                 return "";
@@ -2925,9 +2919,7 @@ public class TranslatorReader
          */
         public String openDefinitionItem()
         {
-            return new StringBuffer("<dd class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<dd>";
         }
 
         /**
@@ -2947,9 +2939,7 @@ public class TranslatorReader
          */
         public String openDefinitionTitle()
         {
-            return new StringBuffer("<dt class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<dt>";
         }
 
         /**
@@ -2969,9 +2959,7 @@ public class TranslatorReader
          */
         public String openDefinitionList()
         {
-            return new StringBuffer("<dl class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">\n").toString();
+            return "<dl>\n";
         }
 
         /**
@@ -3045,7 +3033,7 @@ public class TranslatorReader
             case READ:
                 result =
                         new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\" href=\"")
                         .append(getURL(WikiContext.VIEW, link))
                         .append(section)
@@ -3058,7 +3046,7 @@ public class TranslatorReader
             case EDIT:
                 result =
                         new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\" title=\"")
                         .append("Create '")
                         .append(link)
@@ -3073,9 +3061,7 @@ public class TranslatorReader
 
             case EMPTY:
                 result =
-                        new StringBuffer("<u class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">")
+                        new StringBuffer("<u>")
                         .append(text)
                         .append("</u>")
                         .toString();
@@ -3126,9 +3112,7 @@ public class TranslatorReader
                 //
             case IMAGE:
                 result =
-                        new StringBuffer("<img class=\"")
-                        .append(WikiConstants.CSS_IMG_INLINE)
-                        .append("\" src=\"")
+                        new StringBuffer("<img src=\"")
                         .append(link)
                         .append("\" alt=\"")
                         .append(text)
@@ -3139,12 +3123,10 @@ public class TranslatorReader
             case IMAGELINK:
                 result =
                         new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\" href=\"")
                         .append(text)
-                        .append("\"><img class=\"")
-                        .append(WikiConstants.CSS_IMG_INLINE)
-                        .append("\" src=\"")
+                        .append("\"><img src=\"")
                         .append(link)
                         .append("\" alt=\"")
                         .append(text)
@@ -3157,12 +3139,10 @@ public class TranslatorReader
                 String pagelink = getURL(WikiContext.VIEW, text);
                 result =
                         new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\" href=\"")
                         .append(pagelink)
-                        .append("\"><img class=\"")
-                        .append(WikiConstants.CSS_IMG_INLINE)
-                        .append("\" src=\"")
+                        .append("\"><img src=\"")
                         .append(link)
                         .append("\" alt=\"")
                         .append(text)
@@ -3215,7 +3195,7 @@ public class TranslatorReader
                         .append(text)
                         .append("</a>")
                         .append("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_WIKIPAGE)
+                        .append(WikiConstants.CSS_WIKICONTENT)
                         .append("\" href=\"")
                         .append(infolink)
                         .append("\"><img src=\"")
@@ -3258,9 +3238,7 @@ public class TranslatorReader
          */
         public String makeRuler()
         {
-            return new StringBuffer("<hr class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" />").toString();
+            return "<hr />";
         }
 
         /**
@@ -3333,27 +3311,21 @@ public class TranslatorReader
             switch (level)
             {
             case Heading.HEADING_SMALL:
-                res = new StringBuffer("<h4 class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">")
+                res = new StringBuffer("<h4>")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h4>";
 
                 break;
 
             case Heading.HEADING_MEDIUM:
-                res = new StringBuffer("<h3 class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">")
+                res = new StringBuffer("<h3>")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h3>";
 
                 break;
 
             case Heading.HEADING_LARGE:
-                res = new StringBuffer("<h2 class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">")
+                res = new StringBuffer("<h2>")
                         .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h2>";
 
@@ -3380,15 +3352,11 @@ public class TranslatorReader
 
             if (bullet == '#')
             {
-                res = new StringBuffer("<ol class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">\n").toString();
+                res = "<ol>\n";
             }
             else if (bullet == '*')
             {
-                res = new StringBuffer("<ul class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">\n").toString();
+                res = "<ul>\n";
             }
             else
             {
@@ -3408,9 +3376,7 @@ public class TranslatorReader
          */
         public String openListItem()
         {
-            return new StringBuffer("<li class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<li>";
         }
 
         /**
@@ -3462,9 +3428,7 @@ public class TranslatorReader
          */
         public String openTable()
         {
-            return new StringBuffer("<table class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">\n").toString();
+            return "<table>\n";
         }
 
         /**
@@ -3484,9 +3448,7 @@ public class TranslatorReader
          */
         public String openTableRow()
         {
-            return new StringBuffer("<tr class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<tr>";
         }
 
         /**
@@ -3506,9 +3468,7 @@ public class TranslatorReader
          */
         public String openTableItem()
         {
-            return new StringBuffer("<td class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<td>";
         }
 
         /**
@@ -3528,9 +3488,7 @@ public class TranslatorReader
          */
         public String openTableHeading()
         {
-            return new StringBuffer("<th class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\">").toString();
+            return "<th>";
         }
 
         /**
@@ -3556,9 +3514,7 @@ public class TranslatorReader
 
             if (isBlock)
             {
-                return new StringBuffer("<pre class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\">").toString();
+                return "<pre>";
             }
 
             return "<span style=\"font-family:monospace; whitespace:pre;\">";
@@ -3588,9 +3544,7 @@ public class TranslatorReader
         {
             if (m_useOutlinkImage)
             {
-                return new StringBuffer("<img class=\"")
-                        .append(WikiConstants.CSS_IMG_OUTLINK)
-                        .append("\" src=\"")
+                return new StringBuffer("<img src=\"")
                         .append(getURL(WikiContext.NONE, "images/out.png"))
                         .append("\" alt=\"\" />").toString();
             }

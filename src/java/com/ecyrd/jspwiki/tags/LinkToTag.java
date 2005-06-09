@@ -139,13 +139,20 @@ public class LinkToTag
             }
 
             url = m_wikiContext.getURL(WikiContext.VIEW, pageName, params.toString());
-            linkclass = WikiConstants.CSS_LINK_WIKIPAGE;
+            linkclass = WikiConstants.CSS_WIKICONTENT;
         }
 
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a class=\"" + linkclass + "\" href=\"" + url + "\">");
+            StringBuffer sb = new StringBuffer("<a ");
+            if (linkclass != null)
+            {
+                sb.append("class=\"" + linkclass + "\"");
+            }
+            sb.append("href=\"" + url + "\">");
+            
+            out.print(sb.toString());
 
             break;
 

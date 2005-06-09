@@ -83,7 +83,13 @@ public class UploadLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a target=\"_new\" class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">");
+            StringBuffer sb = new StringBuffer("<a class=\"")
+                    .append(WikiConstants.CSS_WIKICONTENT)
+                    .append("\" target=\"_new\" href=\"")
+                    .append(url)
+                    .append("\">");
+
+            out.print(sb.toString());
 
             break;
 

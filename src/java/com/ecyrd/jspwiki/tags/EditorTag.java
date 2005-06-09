@@ -36,7 +36,6 @@ import org.apache.ecs.xhtml.p;
 import org.apache.ecs.xhtml.table;
 import org.apache.ecs.xhtml.td;
 
-import com.ecyrd.jspwiki.WikiConstants;
 import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiPage;
@@ -206,10 +205,8 @@ public class EditorTag
     private ConcreteElement getButtons()
     {
         h2 h2 = new h2();
-        h2.setClass(WikiConstants.CSS_EDITOR);
 
         table t = new table();
-        t.setClass(WikiConstants.CSS_EDITOR);
 
         h2.addElement(t);
 
@@ -219,17 +216,14 @@ public class EditorTag
         td td = null;
 
         td = new td();
-        td.setClass(WikiConstants.CSS_EDITOR);
         td.addElement(createSubmit("ok", m_submit));
         tr.addElement(td);
 
         td = new td();
-        td.setClass(WikiConstants.CSS_EDITOR);
         td.addElement(createSubmit("preview", m_preview));
         tr.addElement(td);
 
         td = new td();
-        td.setClass(WikiConstants.CSS_EDITOR);
         td.addElement(createSubmit("cancel", m_cancel));
         tr.addElement(td);
 

@@ -186,9 +186,7 @@ public class IndexPlugin
 
         StringBuffer res = new StringBuffer();
 
-        return res.append("<h3 class=\"")
-                .append(WikiConstants.CSS_WIKICONTENT)
-                .append("\">\n")
+        return res.append("<h3>\n")
                 .append(m_headerPart.toString())
                 .append("</h3>\n")
                 .append(m_bodyPart.toString())
@@ -296,9 +294,7 @@ public class IndexPlugin
 
     private void addLetterHeader(final String i_firstLetter)
     {
-        StringBuffer sb = new StringBuffer("<h4 class=\"")
-                .append(WikiConstants.CSS_WIKICONTENT)
-                .append("\"><a class=\"")
+        StringBuffer sb = new StringBuffer("<h4><a class=\"")
                 .append(WikiConstants.CSS_ANCHOR)
                 .append("\" name=\"")
                 .append(i_firstLetter)

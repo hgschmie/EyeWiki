@@ -101,13 +101,13 @@ function confirmDelete() {
   <wiki:PageType type="page">
     <table class="pageaction">
       <tr>
-        <td class="pageaction"><wiki:LinkTo>Back to <wiki:PageName/></wiki:LinkTo></td>
+        <td><wiki:LinkTo>Back to <wiki:PageName/></wiki:LinkTo></td>
       </tr>
     </table>
   </wiki:PageType>
 
   <wiki:PageType type="attachment">
-    <table class="pageaction">
+    <table>
     <tr>
       <td>
         <form action="<wiki:BaseURL/>attach" method="post" enctype="multipart/form-data" accept-charset="UTF-8">

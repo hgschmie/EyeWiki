@@ -35,7 +35,7 @@
             <td class="wikisearch"><wiki:Include page="SearchBox.jsp"/></td>
          </tr>
          <tr><td colspan="2"><hr /></td></tr>
-         <tr><td colspan="2" class="wikiedit"><wiki:Content/></td></tr>
+         <tr><td colspan="2" class="wikicontent"><wiki:Content/></td></tr>
       </table> 
     </td>
   </tr>

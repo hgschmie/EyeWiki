@@ -60,12 +60,12 @@ public class TableOfContentsTest
         
         // FIXME: There's an extra space before the <a>...  Where does it come from?
         // FIXME: The <p> should not be here.
-        assertEquals( "\n<p class=\"wikicontent\"><div class=\"toc\">\n"+
+        assertEquals( "\n<p><div class=\"toc\">\n"+
                 "<h1 class=\"toc\">Table of Contents</h1>\n"+
-                "<ul class=\"wikicontent\">\n"+
-                "<li class=\"wikicontent\"> <a class=\"wikipage\" href=\"Wiki.jsp?page=Test#section-Test-HeadingBar\">Heading bar</a>\n</li>\n"+
+                "<ul>\n"+
+                "<li> <a class=\"wikicontent\" href=\"Wiki.jsp?page=Test#section-Test-HeadingBar\">Heading bar</a>\n</li>\n"+
                 "</ul>\n</div>\n\n</p>"+
-                "\n<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-Test-HeadingBar\" />Heading bar</h2>\n",
+                "\n<h2><a class=\"wikianchor\" name=\"section-Test-HeadingBar\" />Heading bar</h2>\n",
                 res );
     }
 

@@ -203,8 +203,15 @@ public class DiffLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            out.print("<a class=\"" + WikiConstants.CSS_LINK_WIKIPAGE + "\" href=\"" + url + "\">");
 
+            StringBuffer sb = new StringBuffer("<a class=\"")
+                    .append(WikiConstants.CSS_WIKICONTENT)
+                    .append("\" href=\"")
+                    .append(url)
+                    .append("\">");
+                    
+            out.print(sb.toString());
+            
             break;
 
         case URL:

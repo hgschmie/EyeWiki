@@ -25,7 +25,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 /**
  * This interface holds all the constant names for the properties available in jspwiki.properties
  *
- * @author <a href="hps@intermeta.de">Henning P. Schmiedehausen</a>
+ * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public interface WikiProperties
 {

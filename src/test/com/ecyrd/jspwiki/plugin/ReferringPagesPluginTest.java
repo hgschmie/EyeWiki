@@ -84,7 +84,7 @@ public class ReferringPagesPluginTest
 
     private String mkFullLink(String page, String link)
     {
-        return "<a class=\"wikipage\" href=\"Wiki.jsp?page=" + link + "\">" + page + "</a>";
+        return "<a class=\"wikicontent\" href=\"Wiki.jsp?page=" + link + "\">" + page + "</a>";
     }
 
     /**

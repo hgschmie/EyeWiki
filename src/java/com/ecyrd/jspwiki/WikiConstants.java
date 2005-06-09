@@ -130,14 +130,11 @@ public interface WikiConstants
      * ========================================================================
      */
 
-    /** Class for the internal wiki content rendering */
-    String CSS_WIKICONTENT = "wikicontent";
-
-    /** Class for an internal wiki page. Used with A HREF tags. */
-    String CSS_LINK_WIKIPAGE = "wikipage";
-
     /** Class for an internal link target. Used with A tags */
     String CSS_ANCHOR = "wikianchor";
+
+    /** Content Tag */
+    String CSS_WIKICONTENT = "wikicontent";
 
     /** Class for referencing a footnote. Used with A HREF tags. */
     String CSS_LINK_FOOTNOTE_REF = "footnoteref";
@@ -166,17 +163,8 @@ public interface WikiConstants
     /** Class for building the index page. Used with A  tags */
     String CSS_LINK_INDEX = "index";
 
-    /** Image class for an inline image. Used with IMG tags. */
-    String CSS_IMG_INLINE = "inline";
-
-    /** Image class for an external image. Used with IMG tags. */
-    String CSS_IMG_OUTLINK = "outlink";
-
     /** Generic Error CSS. Used with SPAN, P tags. */
     String CSS_CLASS_ERROR = "error";
-
-    /** Class for a Wiki internal form */
-    String CSS_FORM_WIKIFORM = "wikiform";
 
     /** String for a diff anchor target. Used with A tags */
     String CSS_DIFF_ANCHOR = "diffanchor";
@@ -214,18 +202,6 @@ public interface WikiConstants
     /** Class to wrap around a calendar. Used with TABLE */
     String CSS_CALENDAR = "calendar";
 
-    /** Class to wrap around a calendar day element. Used with TD */
-    String CSS_CALENDAR_DAY = "calendarday";
-
-    /** Class to wrap around a calendar week day element. Used with TD */
-    String CSS_CALENDAR_WEEKDAY = "calendarweekday";
-
-    /** Class to wrap around a calendar month element. Used with TD */
-    String CSS_CALENDAR_MONTH = "calendarmonth";
-
-    /** Class to wrap around an alternative  calendar month element. Used with TD */
-    String CSS_CALENDAR_OTHERMONTH = "calendarothermonth";
-
     /** Class for the RSS related Styles. Used with A and IMG tags */
     String CSS_RSS = "rss";
 
@@ -234,9 +210,6 @@ public interface WikiConstants
 
     /** Class for Search Score elements. Used with TD, TH Tags */
     String CSS_SEARCHSCORE = "pagefindscore";
-
-    /** Class for Editor. Used with TEXTAREA tags */
-    String CSS_EDITOR = "editor";
 
     /** Class for Preview Text Used with H3 tags */
     String CSS_PREVIEW = "preview";

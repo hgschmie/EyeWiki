@@ -24,8 +24,8 @@
 
 <table class="pageaction">
   <tr>
-    <td class="pageaction"><wiki:LinkTo>Back to <wiki:PageName/></wiki:LinkTo></td>
-    <td class="pageaction">
+    <td><wiki:LinkTo>Back to <wiki:PageName/></wiki:LinkTo></td>
+    <td>
       <wiki:PageInfoLink>More info...</wiki:PageInfoLink>
     </td>
   </tr>

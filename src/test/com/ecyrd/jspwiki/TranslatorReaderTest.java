@@ -175,7 +175,7 @@ public class TranslatorReaderTest
         String src = "This should be a [hyperlink]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=Hyperlink\">hyperlink</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=Hyperlink\">hyperlink</a>",
             translate(src));
     }
 
@@ -192,7 +192,7 @@ public class TranslatorReaderTest
         String src = "This should be a [hyperlink too]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperlinkToo\">hyperlink too</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperlinkToo\">hyperlink too</a>",
             translate(src));
     }
 
@@ -209,7 +209,7 @@ public class TranslatorReaderTest
         String src = "This should be a [HyperLink]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>",
             translate(src));
     }
 
@@ -226,7 +226,7 @@ public class TranslatorReaderTest
         String src = "This should be a [here|HyperLink]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">here</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">here</a>",
             translate(src));
     }
 
@@ -243,7 +243,7 @@ public class TranslatorReaderTest
         String src = "This should be a [here|HyperLink#heading]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink#section-HyperLink-heading\">here</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink#section-HyperLink-heading\">here</a>",
             translate(src));
     }
 
@@ -260,7 +260,7 @@ public class TranslatorReaderTest
         String src = "This should be a [HyperLink#heading]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink#section-HyperLink-heading\">HyperLink#heading</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink#section-HyperLink-heading\">HyperLink#heading</a>",
             translate(src));
     }
 
@@ -276,7 +276,7 @@ public class TranslatorReaderTest
         String src = "[DiscussionAboutWiki] [WikiMarkupDevelopment].";
 
         assertEquals(
-            "<a class=\"wikipage\" href=\"Wiki.jsp?page=DiscussionAboutWiki\">DiscussionAboutWiki</a> <a class=\"wikipage\" href=\"Wiki.jsp?page=WikiMarkupDevelopment\">WikiMarkupDevelopment</a>.",
+            "<a class=\"wikicontent\" href=\"Wiki.jsp?page=DiscussionAboutWiki\">DiscussionAboutWiki</a> <a class=\"wikicontent\" href=\"Wiki.jsp?page=WikiMarkupDevelopment\">WikiMarkupDevelopment</a>.",
             translate(src));
     }
 
@@ -293,7 +293,7 @@ public class TranslatorReaderTest
         String src = "This should be a HyperLink.";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>.",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>.",
             translate(src));
     }
 
@@ -308,7 +308,7 @@ public class TranslatorReaderTest
         String src = "This should be a HyperLink.";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" title=\"Create 'HyperLink'\" href=\"Edit.jsp?page=HyperLink\">HyperLink</a>.",
+            "This should be a <a class=\"wikicontent\" title=\"Create 'HyperLink'\" href=\"Edit.jsp?page=HyperLink\">HyperLink</a>.",
             translate(src));
     }
 
@@ -325,7 +325,7 @@ public class TranslatorReaderTest
         String src = "This should be a [  HyperLink  ].";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">  HyperLink  </a>.",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">  HyperLink  </a>.",
             translate(src));
     }
 
@@ -356,7 +356,7 @@ public class TranslatorReaderTest
         String src = "This should be a HyperLink, and ThisToo.";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikipage\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikicontent\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
             translate(src));
     }
 
@@ -374,7 +374,7 @@ public class TranslatorReaderTest
         String src = "This should be a [HyperLink], and ThisToo.";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikipage\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikicontent\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
             translate(src));
     }
 
@@ -392,7 +392,7 @@ public class TranslatorReaderTest
         String src = "] This ] should be a HyperLink], and ThisToo.";
 
         assertEquals(
-            "] This ] should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>], and <a class=\"wikipage\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
+            "] This ] should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>], and <a class=\"wikicontent\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
             translate(src));
     }
 
@@ -410,7 +410,7 @@ public class TranslatorReaderTest
         String src = "HyperLink, and ThisToo";
 
         assertEquals(
-            "<a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikipage\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>",
+            "<a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>, and <a class=\"wikicontent\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>",
             translate(src));
     }
 
@@ -506,7 +506,7 @@ public class TranslatorReaderTest
 
         // System.out.println("EX:"+translate(src));
         assertEquals(
-            "This should not be a link: http://<i class=\"wikicontent\">some.server</i>/wiki/Wiki.jsp\nIs it?",
+            "This should not be a link: http://<i>some.server</i>/wiki/Wiki.jsp\nIs it?",
             translate(src));
     }
 
@@ -549,7 +549,7 @@ public class TranslatorReaderTest
         String src = "*HyperLink";
 
         assertEquals(
-            "<ul class=\"wikicontent\">\n<li class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a></li>\n</ul>\n",
+            "<ul>\n<li><a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a></li>\n</ul>\n",
             translate(src));
     }
 
@@ -566,7 +566,7 @@ public class TranslatorReaderTest
         String src = "__BoldHyperLink__";
 
         assertEquals(
-            "<b class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=BoldHyperLink\">BoldHyperLink</a></b>",
+            "<b><a class=\"wikicontent\" href=\"Wiki.jsp?page=BoldHyperLink\">BoldHyperLink</a></b>",
             translate(src));
     }
 
@@ -583,7 +583,7 @@ public class TranslatorReaderTest
         String src = "Let's see, if a bold __HyperLink__ is correct?";
 
         assertEquals(
-            "Let's see, if a bold <b class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a></b> is correct?",
+            "Let's see, if a bold <b><a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a></b> is correct?",
             translate(src));
     }
 
@@ -600,7 +600,7 @@ public class TranslatorReaderTest
         String src = "''ItalicHyperLink''";
 
         assertEquals(
-            "<i class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=ItalicHyperLink\">ItalicHyperLink</a></i>",
+            "<i><a class=\"wikicontent\" href=\"Wiki.jsp?page=ItalicHyperLink\">ItalicHyperLink</a></i>",
             translate(src));
     }
 
@@ -617,7 +617,7 @@ public class TranslatorReaderTest
         String src = "Test. Punctuation. HyperLink.";
 
         assertEquals(
-            "Test. Punctuation. <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>.",
+            "Test. Punctuation. <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>.",
             translate(src));
     }
 
@@ -635,7 +635,7 @@ public class TranslatorReaderTest
         String src = "Punctuations: HyperLink,ThisToo.";
 
         assertEquals(
-            "Punctuations: <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>,<a class=\"wikipage\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
+            "Punctuations: <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLink</a>,<a class=\"wikicontent\" href=\"Wiki.jsp?page=ThisToo\">ThisToo</a>.",
             translate(src));
     }
 
@@ -652,7 +652,7 @@ public class TranslatorReaderTest
         String src = "Onko t\u00e4m\u00e4 hyperlinkki: \u00c4itiSy\u00f6\u00d6ljy\u00e4?";
 
         assertEquals(
-            "Onko t\u00e4m\u00e4 hyperlinkki: <a class=\"wikipage\" href=\"Wiki.jsp?page=%C4itiSy%F6%D6ljy%E4\">\u00c4itiSy\u00f6\u00d6ljy\u00e4</a>?",
+            "Onko t\u00e4m\u00e4 hyperlinkki: <a class=\"wikicontent\" href=\"Wiki.jsp?page=%C4itiSy%F6%D6ljy%E4\">\u00c4itiSy\u00f6\u00d6ljy\u00e4</a>?",
             translate(src));
     }
 
@@ -712,7 +712,7 @@ public class TranslatorReaderTest
         newPage("HyperLink");
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLink\">HyperLinks</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLink\">HyperLinks</a>",
             translate(src));
     }
 
@@ -727,7 +727,7 @@ public class TranslatorReaderTest
         String src = "This should be a [HyperLinks]";
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" title=\"Create 'HyperLinks'\" href=\"Edit.jsp?page=HyperLinks\">HyperLinks</a>",
+            "This should be a <a class=\"wikicontent\" title=\"Create 'HyperLinks'\" href=\"Edit.jsp?page=HyperLinks\">HyperLinks</a>",
             translate(src));
     }
 
@@ -744,7 +744,7 @@ public class TranslatorReaderTest
         newPage("HyperLinks");
 
         assertEquals(
-            "This should be a <a class=\"wikipage\" href=\"Wiki.jsp?page=HyperLinks\">HyperLink</a>",
+            "This should be a <a class=\"wikicontent\" href=\"Wiki.jsp?page=HyperLinks\">HyperLink</a>",
             translate(src));
     }
 
@@ -797,7 +797,7 @@ public class TranslatorReaderTest
 
         assertEquals(
             "This should be an <a class=\"attachment\" href=\"attach/Test/TestAtt.txt\">attachment link</a>"
-            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=Test/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            + "<a class=\"wikicontent\" href=\"PageInfo.jsp?page=Test/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
             translate(src));
     }
 
@@ -826,7 +826,7 @@ public class TranslatorReaderTest
 
         assertEquals(
             "This should be an <a class=\"attachment\" href=\"attach/Test/TestAtt.txt\">attachment link</a>"
-            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=Test/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            + "<a class=\"wikicontent\" href=\"PageInfo.jsp?page=Test/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
             translate(testEngine2, src));
     }
 
@@ -852,7 +852,7 @@ public class TranslatorReaderTest
 
         assertEquals(
             "<a class=\"attachment\" href=\"attach/TestPage/TestAtt.txt\">Test page/TestAtt.txt</a>"
-            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            + "<a class=\"wikicontent\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
             translate(testEngine2, src));
     }
 
@@ -878,7 +878,7 @@ public class TranslatorReaderTest
 
         assertEquals(
             "<a class=\"attachment\" href=\"attach/TestPage/TestAtt.txt\">TestPage/TestAtt.txt</a>"
-            + "<a class=\"wikipage\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
+            + "<a class=\"wikicontent\" href=\"PageInfo.jsp?page=TestPage/TestAtt.txt\"><img src=\"images/attachment_small.png\" border=\"0\" alt=\"(info)\"/></a>",
             translate(testEngine2, src));
     }
 
@@ -975,7 +975,7 @@ public class TranslatorReaderTest
         newPage("Test_page");
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=Test_page\">test_page</a>",
+            "Link <a class=\"wikicontent\" href=\"Wiki.jsp?page=Test_page\">test_page</a>",
             translate(src));
     }
 
@@ -992,7 +992,7 @@ public class TranslatorReaderTest
         newPage("Test.page");
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=Test.page\">test.page</a>",
+            "Link <a class=\"wikicontent\" href=\"Wiki.jsp?page=Test.page\">test.page</a>",
             translate(src));
     }
 
@@ -1009,7 +1009,7 @@ public class TranslatorReaderTest
         newPage(".testpage_");
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=.testpage_\">.testpage_</a>",
+            "Link <a class=\"wikicontent\" href=\"Wiki.jsp?page=.testpage_\">.testpage_</a>",
             translate(src));
     }
 
@@ -1024,7 +1024,7 @@ public class TranslatorReaderTest
         String src = "Link [test|http://www.ecyrd.com/test.png]";
 
         assertEquals(
-            "Link <img class=\"inline\" src=\"http://www.ecyrd.com/test.png\" alt=\"test\" />",
+            "Link <img src=\"http://www.ecyrd.com/test.png\" alt=\"test\" />",
             translate(src));
     }
 
@@ -1054,7 +1054,7 @@ public class TranslatorReaderTest
         String src = "Link [test|http://images.com/testi]";
 
         assertEquals(
-            "Link <img class=\"inline\" src=\"http://images.com/testi\" alt=\"test\" />",
+            "Link <img src=\"http://images.com/testi\" alt=\"test\" />",
             translate(src));
     }
 
@@ -1069,7 +1069,7 @@ public class TranslatorReaderTest
         String src = "Link [test|http://foobar.jpg]";
 
         assertEquals(
-            "Link <img class=\"inline\" src=\"http://foobar.jpg\" alt=\"test\" />", translate(src));
+            "Link <img src=\"http://foobar.jpg\" alt=\"test\" />", translate(src));
     }
 
     // No link text should be just embedded link.
@@ -1079,7 +1079,7 @@ public class TranslatorReaderTest
         String src = "Link [http://foobar.jpg]";
 
         assertEquals(
-            "Link <img class=\"inline\" src=\"http://foobar.jpg\" alt=\"http://foobar.jpg\" />",
+            "Link <img src=\"http://foobar.jpg\" alt=\"http://foobar.jpg\" />",
             translate(src));
     }
 
@@ -1094,7 +1094,7 @@ public class TranslatorReaderTest
         String src = "Link [http://link.to/|http://foobar.jpg]";
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"http://link.to/\"><img class=\"inline\" src=\"http://foobar.jpg\" alt=\"http://link.to/\"/></a>",
+            "Link <a class=\"wikicontent\" href=\"http://link.to/\"><img src=\"http://foobar.jpg\" alt=\"http://link.to/\"/></a>",
             translate(src));
     }
 
@@ -1111,7 +1111,7 @@ public class TranslatorReaderTest
         newPage("SandBox");
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=SandBox\"><img class=\"inline\" src=\"http://foobar.jpg\" alt=\"SandBox\" /></a>",
+            "Link <a class=\"wikicontent\" href=\"Wiki.jsp?page=SandBox\"><img src=\"http://foobar.jpg\" alt=\"SandBox\" /></a>",
             translate(src));
     }
 
@@ -1128,7 +1128,7 @@ public class TranslatorReaderTest
         newPage("\u00C5\u00E4Test"); // FIXME: Should be capital
 
         assertEquals(
-            "Link <a class=\"wikipage\" href=\"Wiki.jsp?page=%C5%E4Test\">\u00c5\u00e4Test</a>",
+            "Link <a class=\"wikicontent\" href=\"Wiki.jsp?page=%C5%E4Test\">\u00c5\u00e4Test</a>",
             translate(src));
     }
 
@@ -1143,7 +1143,7 @@ public class TranslatorReaderTest
         String src = "1\n\n2\n\n3";
 
         assertEquals(
-            "1\n<p class=\"wikicontent\">2\n</p>\n<p class=\"wikicontent\">3</p>\n", translate(src));
+            "1\n<p>2\n</p>\n<p>3</p>\n", translate(src));
     }
 
     /**
@@ -1160,8 +1160,8 @@ public class TranslatorReaderTest
         newPage("FindPage");
 
         assertEquals(
-            "<a class=\"wikipage\" href=\"Wiki.jsp?page=WikiEtiquette\">WikiEtiquette</a>\n"
-            + "<p class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=FindPage\">Find page</a></p>\n",
+            "<a class=\"wikicontent\" href=\"Wiki.jsp?page=WikiEtiquette\">WikiEtiquette</a>\n"
+            + "<p><a class=\"wikicontent\" href=\"Wiki.jsp?page=FindPage\">Find page</a></p>\n",
             translate(src));
     }
 
@@ -1176,7 +1176,7 @@ public class TranslatorReaderTest
         String src = "\r\n\r\n!Testi\r\n\r\nFoo.";
 
         assertEquals(
-            "<p class=\"wikicontent\"></p>\n<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Testi\" />Testi</h4>\n<p class=\"wikicontent\">Foo.</p>\n",
+            "<p></p>\n<h4><a class=\"wikianchor\" name=\"section-testpage-Testi\" />Testi</h4>\n<p>Foo.</p>\n",
             translate(src));
     }
 
@@ -1197,10 +1197,10 @@ public class TranslatorReaderTest
         newPage("UnusedPages");
 
         assertEquals(
-            "<p class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=RecentChanges\">Recent Changes</a><br />\n"
-            + "<a class=\"wikipage\" href=\"Wiki.jsp?page=WikiEtiquette\">WikiEtiquette</a>\n</p>\n"
-            + "<p class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=FindPage\">Find pages</a><br />\n"
-            + "<a class=\"wikipage\" href=\"Wiki.jsp?page=UnusedPages\">Unused pages</a></p>\n",
+            "<p><a class=\"wikicontent\" href=\"Wiki.jsp?page=RecentChanges\">Recent Changes</a><br />\n"
+            + "<a class=\"wikicontent\" href=\"Wiki.jsp?page=WikiEtiquette\">WikiEtiquette</a>\n</p>\n"
+            + "<p><a class=\"wikicontent\" href=\"Wiki.jsp?page=FindPage\">Find pages</a><br />\n"
+            + "<a class=\"wikicontent\" href=\"Wiki.jsp?page=UnusedPages\">Unused pages</a></p>\n",
             translate(src));
     }
 
@@ -1253,7 +1253,7 @@ public class TranslatorReaderTest
     {
         String src = "1{{2345}}6";
 
-        assertEquals("1<tt class=\"wikicontent\">2345</tt>6", translate(src));
+        assertEquals("1<tt>2345</tt>6", translate(src));
     }
 
     /**
@@ -1266,7 +1266,7 @@ public class TranslatorReaderTest
     {
         String src = "1{{\n2345\n}}6";
 
-        assertEquals("1<tt class=\"wikicontent\">\n2345\n</tt>6", translate(src));
+        assertEquals("1<tt>\n2345\n</tt>6", translate(src));
     }
 
     /**
@@ -1282,7 +1282,7 @@ public class TranslatorReaderTest
         newPage("ALink");
 
         assertEquals(
-            "1<tt class=\"wikicontent\">\n2345\n<a class=\"wikipage\" href=\"Wiki.jsp?page=ALink\">a link</a>\n</tt>6",
+            "1<tt>\n2345\n<a class=\"wikicontent\" href=\"Wiki.jsp?page=ALink\">a link</a>\n</tt>6",
             translate(src));
     }
 
@@ -1338,7 +1338,7 @@ public class TranslatorReaderTest
     {
         String src = "1\n{{{ <b> }}}";
 
-        assertEquals("1\n<pre class=\"wikicontent\"> &lt;b&gt; </pre>\n", translate(src));
+        assertEquals("1\n<pre> &lt;b&gt; </pre>\n", translate(src));
     }
 
     /**
@@ -1351,7 +1351,7 @@ public class TranslatorReaderTest
     {
         String src = "1\n{{{ CamelCase }}}";
 
-        assertEquals("1\n<pre class=\"wikicontent\"> CamelCase </pre>\n", translate(src));
+        assertEquals("1\n<pre> CamelCase </pre>\n", translate(src));
     }
 
     /**
@@ -1365,7 +1365,7 @@ public class TranslatorReaderTest
         String src = "A list:\n* One\n* Two\n* Three\n";
 
         assertEquals(
-            "A list:\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"> One\n</li>\n<li class=\"wikicontent\"> Two\n</li>\n<li class=\"wikicontent\"> Three\n</li>\n</ul>\n",
+            "A list:\n<ul>\n<li> One\n</li>\n<li> Two\n</li>\n<li> Three\n</li>\n</ul>\n",
             translate(src));
     }
 
@@ -1386,7 +1386,7 @@ public class TranslatorReaderTest
         String src = "A list:\n* One\n continuing.\n* Two\n* Three\n";
 
         assertEquals(
-            "A list:\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"> One\n continuing.\n</li>\n<li class=\"wikicontent\"> Two\n</li>\n<li class=\"wikicontent\"> Three\n</li>\n</ul>\n",
+            "A list:\n<ul>\n<li> One\n continuing.\n</li>\n<li> Two\n</li>\n<li> Three\n</li>\n</ul>\n",
             translate(src));
     }
 
@@ -1401,7 +1401,7 @@ public class TranslatorReaderTest
         String src = "A list:\n* One\n continuing.\n* Two\n* Three\nShould be normal.";
 
         assertEquals(
-            "A list:\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"> One\n continuing.\n</li>\n<li class=\"wikicontent\"> Two\n</li>\n<li class=\"wikicontent\"> Three\n</li>\n</ul>\nShould be normal.",
+            "A list:\n<ul>\n<li> One\n continuing.\n</li>\n<li> Two\n</li>\n<li> Three\n</li>\n</ul>\nShould be normal.",
             translate(src));
     }
 
@@ -1481,7 +1481,7 @@ public class TranslatorReaderTest
     {
         String src = "''This is a\ntest.''";
 
-        assertEquals("<i class=\"wikicontent\">This is a\ntest.</i>", translate(src));
+        assertEquals("<i>This is a\ntest.</i>", translate(src));
     }
 
     /**
@@ -1494,7 +1494,7 @@ public class TranslatorReaderTest
     {
         String src = "__This is a\ntest.__";
 
-        assertEquals("<b class=\"wikicontent\">This is a\ntest.</b>", translate(src));
+        assertEquals("<b>This is a\ntest.</b>", translate(src));
     }
 
     /**
@@ -1508,7 +1508,7 @@ public class TranslatorReaderTest
         String src = "__This ''is'' a test.__";
 
         assertEquals(
-            "<b class=\"wikicontent\">This <i class=\"wikicontent\">is</i> a test.</b>",
+            "<b>This <i>is</i> a test.</b>",
             translate(src));
     }
 
@@ -1553,7 +1553,7 @@ public class TranslatorReaderTest
 
         // System.out.println(translate(src));
         assertEquals(
-            "A\n<ul class=\"wikicontent\">\n<li class=\"wikicontent\"><ul class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ul>\n</li>\n</ul>\n<p class=\"wikicontent\">B</p>\n",
+            "A\n<ul>\n<li><ul>\n<li>\n</li>\n</ul>\n</li>\n</ul>\n<p>B</p>\n",
             translate(src));
     }
 
@@ -1569,7 +1569,7 @@ public class TranslatorReaderTest
 
         // System.out.println(translate(src));
         assertEquals(
-            "A\n<ol class=\"wikicontent\">\n<li class=\"wikicontent\"><ol class=\"wikicontent\">\n<li class=\"wikicontent\">\n</li>\n</ol>\n</li>\n</ol>\n<p class=\"wikicontent\">B</p>\n",
+            "A\n<ol>\n<li><ol>\n<li>\n</li>\n</ol>\n</li>\n</ol>\n<p>B</p>\n",
             translate(src));
     }
 
@@ -1596,10 +1596,10 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
-            + "<ol class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
-            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ol></li>"
-            + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
+            "<ul><li>Item A"
+            + "<ol><li>Numbered 1</li>"
+            + "<li>Numbered 2</li>" + "</ol></li>"
+            + "<li>Item B</li>" + "</ul>", result);
     }
 
     /**
@@ -1618,10 +1618,10 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ol class=\"wikicontent\"><li class=\"wikicontent\">Item A"
-            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
-            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
-            + "<li class=\"wikicontent\">Item B</li>" + "</ol>", result);
+            "<ol><li>Item A"
+            + "<ul><li>Numbered 1</li>"
+            + "<li>Numbered 2</li>" + "</ul></li>"
+            + "<li>Item B</li>" + "</ol>", result);
     }
 
     /**
@@ -1640,10 +1640,10 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
-            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
-            + "<li class=\"wikicontent\">Numbered 2</li>" + "</ul></li>"
-            + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
+            "<ul><li>Item A"
+            + "<ul><li>Numbered 1</li>"
+            + "<li>Numbered 2</li>" + "</ul></li>"
+            + "<li>Item B</li>" + "</ul>", result);
     }
 
     /**
@@ -1662,11 +1662,11 @@ public class TranslatorReaderTest
         result = StringUtils.replace(result, "\n", "");
 
         assertEquals(
-            "<ul class=\"wikicontent\"><li class=\"wikicontent\">Item A"
-            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered 1</li>"
-            + "<li class=\"wikicontent\">Numbered 2"
-            + "<ul class=\"wikicontent\"><li class=\"wikicontent\">Numbered3</li>" + "</ul></li>"
-            + "</ul></li>" + "<li class=\"wikicontent\">Item B</li>" + "</ul>", result);
+            "<ul><li>Item A"
+            + "<ul><li>Numbered 1</li>"
+            + "<li>Numbered 2"
+            + "<ul><li>Numbered3</li>" + "</ul></li>"
+            + "</ul></li>" + "<li>Item B</li>" + "</ul>", result);
     }
 
     /**
@@ -1706,7 +1706,7 @@ public class TranslatorReaderTest
         String src = "Today: [{INSERT JavaScriptPlugin}] ''day''.";
 
         assertEquals(
-            "Today: <script language=\"JavaScript\"><!--\nfoo='';\n--></script>\n <i class=\"wikicontent\">day</i>.",
+            "Today: <script language=\"JavaScript\"><!--\nfoo='';\n--></script>\n <i>day</i>.",
             translate(src));
     }
 
@@ -1980,11 +1980,11 @@ public class TranslatorReaderTest
         String src = "|| heading || heading2 \n| Cell 1 | Cell 2 \n| Cell 3 | Cell 4\n\n";
 
         assertEquals(
-            "<table class=\"wikicontent\">\n"
-            + "<tr class=\"wikicontent\"><th class=\"wikicontent\"> heading </th><th class=\"wikicontent\"> heading2 </th></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 1 </td><td class=\"wikicontent\"> Cell 2 </td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\"> Cell 4</td></tr>\n"
-            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            "<table>\n"
+            + "<tr><th> heading </th><th> heading2 </th></tr>\n"
+            + "<tr><td> Cell 1 </td><td> Cell 2 </td></tr>\n"
+            + "<tr><td> Cell 3 </td><td> Cell 4</td></tr>\n"
+            + "</table>\n<p></p>\n", translate(src));
     }
 
     /**
@@ -1998,11 +1998,11 @@ public class TranslatorReaderTest
         String src = "||heading||heading2\n|Cell 1| Cell 2\n| Cell 3 |Cell 4\n\n";
 
         assertEquals(
-            "<table class=\"wikicontent\">\n"
-            + "<tr class=\"wikicontent\"><th class=\"wikicontent\">heading</th><th class=\"wikicontent\">heading2</th></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n"
-            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            "<table>\n"
+            + "<tr><th>heading</th><th>heading2</th></tr>\n"
+            + "<tr><td>Cell 1</td><td> Cell 2</td></tr>\n"
+            + "<tr><td> Cell 3 </td><td>Cell 4</td></tr>\n"
+            + "</table>\n<p></p>\n", translate(src));
     }
 
     /**
@@ -2016,10 +2016,10 @@ public class TranslatorReaderTest
         String src = "|Cell 1| Cell 2\n| Cell 3 |Cell 4\n\n";
 
         assertEquals(
-            "<table class=\"wikicontent\">\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"> Cell 3 </td><td class=\"wikicontent\">Cell 4</td></tr>\n"
-            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            "<table>\n"
+            + "<tr><td>Cell 1</td><td> Cell 2</td></tr>\n"
+            + "<tr><td> Cell 3 </td><td>Cell 4</td></tr>\n"
+            + "</table>\n<p></p>\n", translate(src));
     }
 
     /**
@@ -2035,10 +2035,10 @@ public class TranslatorReaderTest
         newPage("ReallyALink");
 
         assertEquals(
-            "<table class=\"wikicontent\">\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=ReallyALink\">Cell 3</a></td><td class=\"wikicontent\">Cell 4</td></tr>\n"
-            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            "<table>\n"
+            + "<tr><td>Cell 1</td><td> Cell 2</td></tr>\n"
+            + "<tr><td><a class=\"wikicontent\" href=\"Wiki.jsp?page=ReallyALink\">Cell 3</a></td><td>Cell 4</td></tr>\n"
+            + "</table>\n<p></p>\n", translate(src));
     }
 
     /**
@@ -2054,10 +2054,10 @@ public class TranslatorReaderTest
         newPage("ReallyALink");
 
         assertEquals(
-            "<table class=\"wikicontent\">\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\">Cell 1</td><td class=\"wikicontent\"> Cell| 2</td></tr>\n"
-            + "<tr class=\"wikicontent\"><td class=\"wikicontent\"><a class=\"wikipage\" href=\"Wiki.jsp?page=ReallyALink\">Cell 3</a></td><td class=\"wikicontent\">Cell 4</td></tr>\n"
-            + "</table>\n<p class=\"wikicontent\"></p>\n", translate(src));
+            "<table>\n"
+            + "<tr><td>Cell 1</td><td> Cell| 2</td></tr>\n"
+            + "<tr><td><a class=\"wikicontent\" href=\"Wiki.jsp?page=ReallyALink\">Cell 3</a></td><td>Cell 4</td></tr>\n"
+            + "</table>\n<p></p>\n", translate(src));
     }
 
     /**
@@ -2071,7 +2071,7 @@ public class TranslatorReaderTest
         String src = ";:Foo";
 
         assertEquals(
-            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\">Foo</dd>\n</dl>",
+            "<dl>\n<dt></dt><dd>Foo</dd>\n</dl>",
             translate(src));
     }
 
@@ -2086,7 +2086,7 @@ public class TranslatorReaderTest
         String src = ";Bar:Foo";
 
         assertEquals(
-            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo</dd>\n</dl>",
+            "<dl>\n<dt>Bar</dt><dd>Foo</dd>\n</dl>",
             translate(src));
     }
 
@@ -2101,7 +2101,7 @@ public class TranslatorReaderTest
         String src = ";:";
 
         assertEquals(
-            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\"></dt><dd class=\"wikicontent\"></dd>\n</dl>",
+            "<dl>\n<dt></dt><dd></dd>\n</dl>",
             translate(src));
     }
 
@@ -2116,7 +2116,7 @@ public class TranslatorReaderTest
         String src = ";Bar:Foo :-)";
 
         assertEquals(
-            "<dl class=\"wikicontent\">\n<dt class=\"wikicontent\">Bar</dt><dd class=\"wikicontent\">Foo :-)</dd>\n</dl>",
+            "<dl>\n<dt>Bar</dt><dd>Foo :-)</dd>\n</dl>",
             translate(src));
     }
 
@@ -2130,7 +2130,7 @@ public class TranslatorReaderTest
     {
         String src = "----";
 
-        assertEquals("<hr class=\"wikicontent\" />", translate(src));
+        assertEquals("<hr />", translate(src));
     }
 
     /**
@@ -2143,7 +2143,7 @@ public class TranslatorReaderTest
     {
         String src = "----Foo";
 
-        assertEquals("<hr class=\"wikicontent\" />Foo", translate(src));
+        assertEquals("<hr />Foo", translate(src));
     }
 
     /**
@@ -2195,7 +2195,7 @@ public class TranslatorReaderTest
     {
         String src = "------";
 
-        assertEquals("<hr class=\"wikicontent\" />", translate(src));
+        assertEquals("<hr />", translate(src));
     }
 
     /**
@@ -2209,7 +2209,7 @@ public class TranslatorReaderTest
         String src = "!Hello\nThis is a test";
 
         assertEquals(
-            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" />Hello</h4>\nThis is a test",
+            "<h4><a class=\"wikianchor\" name=\"section-testpage-Hello\" />Hello</h4>\nThis is a test",
             translate(src));
     }
 
@@ -2224,7 +2224,7 @@ public class TranslatorReaderTest
         String src = "!!Hello, testing 1, 2, 3";
 
         assertEquals(
-            "<h3 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloTesting123\" />Hello, testing 1, 2, 3</h3>",
+            "<h3><a class=\"wikianchor\" name=\"section-testpage-HelloTesting123\" />Hello, testing 1, 2, 3</h3>",
             translate(src));
     }
 
@@ -2239,7 +2239,7 @@ public class TranslatorReaderTest
         String src = "!!!Hello there, how are you doing?";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-HelloThereHowAreYouDoing\" />Hello there, how are you doing?</h2>",
+            "<h2><a class=\"wikianchor\" name=\"section-testpage-HelloThereHowAreYouDoing\" />Hello there, how are you doing?</h2>",
             translate(src));
     }
 
@@ -2254,7 +2254,7 @@ public class TranslatorReaderTest
         String src = "!!![Hello]";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"wikipage\" title=\"Create 'Hello'\" href=\"Edit.jsp?page=Hello\">Hello</a></h2>",
+            "<h2><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"wikicontent\" title=\"Create 'Hello'\" href=\"Edit.jsp?page=Hello\">Hello</a></h2>",
             translate(src));
     }
 
@@ -2269,7 +2269,7 @@ public class TranslatorReaderTest
         String src = "!!![Hello|http://www.google.com/]";
 
         assertEquals(
-            "<h2 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/\">Hello</a></h2>",
+            "<h2><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/\">Hello</a></h2>",
             translate(src));
     }
 
@@ -2284,7 +2284,7 @@ public class TranslatorReaderTest
         String src = "![Hello|http://www.google.com/?p=a&c=d]";
 
         assertEquals(
-            "<h4 class=\"wikicontent\"><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/?p=a&amp;c=d\">Hello</a></h4>",
+            "<h4><a class=\"wikianchor\" name=\"section-testpage-Hello\" /><a class=\"external\" href=\"http://www.google.com/?p=a&amp;c=d\">Hello</a></h4>",
             translate(src));
     }
 
@@ -2311,7 +2311,7 @@ public class TranslatorReaderTest
     {
         String src = "{{{\ncode.}}\n";
 
-        assertEquals("<pre class=\"wikicontent\">\ncode.}}\n</pre>\n", translate(src));
+        assertEquals("<pre>\ncode.}}\n</pre>\n", translate(src));
     }
 
     /**
@@ -2324,7 +2324,7 @@ public class TranslatorReaderTest
     {
         String src = "{{{\ncode.}\n";
 
-        assertEquals("<pre class=\"wikicontent\">\ncode.}\n</pre>\n", translate(src));
+        assertEquals("<pre>\ncode.}\n</pre>\n", translate(src));
     }
 
     /*
@@ -2663,7 +2663,7 @@ public class TranslatorReaderTest
         String src = "|%%(foo:bar;)test%%|no test\n";
 
         assertEquals(
-            "<table class=\"wikicontent\">\n<tr class=\"wikicontent\"><td class=\"wikicontent\"><span style=\"foo:bar;\">test</span></td><td class=\"wikicontent\">no test</td></tr>\n</table>\n",
+            "<table>\n<tr><td><span style=\"foo:bar;\">test</span></td><td>no test</td></tr>\n</table>\n",
             translate(src));
     }
 

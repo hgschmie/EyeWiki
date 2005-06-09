@@ -24,52 +24,98 @@ h4,h5,h6 { font-size: 12px; }
  * table,td, th, tr, div, p, b, i, tt, u, dd, dt, dl, hr, h2, h3, h4, ol, ul, li, pre
  */
 
-table.wikicontent {
+/*
+ * Links
+ *
+ * wikicontent
+ */
+
+A.wikicontent  {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikicontent :visited {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed black;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikicontent :hover {
+	text-decoration: none;
+        color:black;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+A.wikicontent :active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+.wikicontent table {
 	border: 1px solid black;
         border-collapse: collapse;
 }
 
-td.wikicontent {
+.wikicontent td {
 	border: 1px solid black;
         padding: 2px;
         text-align: left;
 }
 
 
-th.wikicontent {
+.wikicontent th {
 	border: 1px solid black;
         padding: 2px;
         text-align: center;
         font-weight: bold;
 }
 
-b.wikicontent {
+.wikicontent b {
 	font-weight: bold;
 }
 
-i.wikicontent {
+.wikicontent i {
   font-style: italic;
 }
 
-tt.wikicontent {
+.wikicontent tt {
   font-family: monospace;
 }
 
-u.wikicontent {
+.wikicontent u {
 	text-decoration: none;
   	border-bottom: dashed blue;
   	border-width: 1px;
   	padding-bottom: 2px;
 }
 
-h2.wikicontent, h3.wikicontent {
+.wikicontent h2  {
 	color: #ff0000;
         background: #eeeeee;
         padding: 10px;
         border: solid black 1px;
 }
 
-h4.wikicontent {
+.wikicontent h3 {
+	color: #ff0000;
+        background: #eeeeee;
+        padding: 10px;
+        border: solid black 1px;
+}
+
+
+.wikicontent h4 {
 	color: #ff0000;
         background: #eeeeee;
         padding-top: 5px;
@@ -101,8 +147,6 @@ td.wiki {
 }
 
 /*
- * wikiform: 	form, div
- *
  * wikimenu:	td
  */
 
@@ -123,7 +167,7 @@ h1.wikihead {
 }
 
 /*
- * wikiview:    table, td
+ * wikiview:    table
  */
 
 table.wikiview {
@@ -131,11 +175,12 @@ table.wikiview {
 }
 
 /*
- * wikiedit:    table, td, div
+ * wikiedit:    table
  */
 
 table.wikiedit {
-   background: #ccffff;
+ 	width: 100%;
+   	background: #ccffff;
 }
 
 /*
@@ -326,10 +371,12 @@ table.pageaction {
   text-align: left;
   margin-left: 0px;
   margin-right: auto;
+  border: none;
 }
 
-td.pageaction {
+.pageaction td {
   font-size: 9px;
+  border: none;
 }
   
 
@@ -338,14 +385,16 @@ td.pageaction {
  * logo:	div, a, img
  */
 
-img.logo {
-	border: none;
-}
-
 div.logo {
 	text-align: center;
 	margin-bottom: 30px;
 }
+
+.logo img {
+	border: none;
+}
+
+
 
 /*
  * username:	div
@@ -458,7 +507,7 @@ td.loginmsg {
  * loginbox:	div, table, td
  */
 
-table.loginbox {
+.loginbox table {
   background: #eeeeee;
   border: solid black 1px;
   margin-top: 10px;
@@ -467,12 +516,13 @@ table.loginbox {
   margin-right: auto;
 }
 
-td.loginbox {
+.loginbox td {
   text-align: center;
   padding: 5px;
+  border: none;
 }
 
-td.loginbox input {
+.loginbox input {
   font-size: 10px;
 }
 
@@ -498,44 +548,7 @@ td.loginboxmsg {
 }
 
 /*
- * Links
- *
- * wikipage	a
- */
-
-A.wikipage {
-	text-decoration: none;
-        color:black;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.wikipage:visited {
-	text-decoration: none;
-        color:black;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.wikipage:hover {
-	text-decoration: none;
-        color:black;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.wikipage:active {
-	text-decoration: none;
-        color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-/*
+ * wikianchor   a
  * footnoteref	a
  * footnote 	a
  * external	a
@@ -610,13 +623,6 @@ A.interwiki:active {
   	padding-bottom: 2px;
 }
 
-
-/*
- * Images (IMG)
- *
- * inline	img
- * outline	img
- */
 
 /*
  * RSS
