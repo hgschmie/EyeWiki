@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

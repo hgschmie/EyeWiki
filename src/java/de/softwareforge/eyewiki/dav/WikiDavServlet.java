@@ -1,7 +1,3 @@
-/*
- * (C) Janne Jalkanen 2005
- *
- */
 package de.softwareforge.eyewiki.dav;
 
 import java.io.IOException;
@@ -105,7 +101,7 @@ public class WikiDavServlet
         }
         else
         {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
         }
     }
 
@@ -138,7 +134,7 @@ public class WikiDavServlet
     public void doCopy(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
     }
 
     /**
@@ -153,7 +149,7 @@ public class WikiDavServlet
     public void doMove(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
     }
 
     /**
@@ -168,7 +164,7 @@ public class WikiDavServlet
     protected void doDelete(HttpServletRequest arg0, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
     }
 
     /**
@@ -183,7 +179,7 @@ public class WikiDavServlet
     protected void doPost(HttpServletRequest arg0, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
     }
 
     /**
@@ -198,7 +194,7 @@ public class WikiDavServlet
     protected void doPut(HttpServletRequest arg0, HttpServletResponse response)
             throws ServletException, IOException
     {
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only.");
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only.");
     }
 
     /*

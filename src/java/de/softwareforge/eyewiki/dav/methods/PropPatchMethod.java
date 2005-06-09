@@ -1,7 +1,3 @@
-/*
- * (C) Janne Jalkanen 2005
- *
- */
 package de.softwareforge.eyewiki.dav.methods;
 
 import java.io.IOException;
@@ -45,6 +41,6 @@ public class PropPatchMethod
     public void execute(HttpServletRequest req, HttpServletResponse res)
             throws ServletException, IOException
     {
-        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JSPWiki is read-only");
+        res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "eyeWiki is read-only");
     }
 }

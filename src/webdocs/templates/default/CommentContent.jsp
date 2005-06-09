@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <wiki:InsertPage/>
 

@@ -4,7 +4,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <%! 
     public void jspInit()
@@ -12,7 +12,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Logger log = Logger.getLogger("JSPWikiSearch");
+    Logger log = Logger.getLogger("eyeWikiSearch");
     WikiEngine wiki;
 %>
 

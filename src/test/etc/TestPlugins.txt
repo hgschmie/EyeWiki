@@ -9,7 +9,7 @@ The form is:
 
   [[{INSERT <plugin class> WHERE <param1=value1>,<param2=value2>,...}]
 
-You can also use a shortcut: instead of using {{[[{INSERT de.softwareforge.eyewiki.plugin.RecentChangesPlugin}} you can also use {{[[{INSERT RecentChangesPlugin}]}}.  This works only with the plugins that come with JSPWiki, though.
+You can also use a shortcut: instead of using {{[[{INSERT de.softwareforge.eyewiki.plugin.RecentChangesPlugin}} you can also use {{[[{INSERT RecentChangesPlugin}]}}.  This works only with the plugins that come with eyeWiki, though.
 
 In addition, you can now (since 1.9.30) omit even the "INSERT", so the shortest possible version for plugins becomes:
 

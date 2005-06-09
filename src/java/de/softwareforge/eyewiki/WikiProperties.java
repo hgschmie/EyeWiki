@@ -1,36 +1,17 @@
-/*
-   JSPWiki - a JSP-based WikiWiki clone.
-
-   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 
 /**
- * This interface holds all the constant names for the properties available in jspwiki.properties
+ * This interface holds all the constant names for the properties available in eyewiki.properties
  *
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public interface WikiProperties
 {
-    /** The main prefix for all the jspwiki properties. Note the trailing dot. */
-    String PROP_PREFIX = "jspwiki.";
+    /** The main prefix for all the eyewiki properties. Note the trailing dot. */
+    String PROP_PREFIX = "eyewiki.";
 
     /*
      * ========================================================================
@@ -41,7 +22,7 @@ public interface WikiProperties
      */
 
     /** Property for application name */
-    String PROP_APPNAME = "jspwiki.applicationName";
+    String PROP_APPNAME = "eyewiki.applicationName";
 
     /**
      * Default value of the Application name
@@ -51,13 +32,13 @@ public interface WikiProperties
     String PROP_APPNAME_DEFAULT = Release.APPNAME;
 
     /** Property for the components configuration file */
-    String PROP_COMPONENTS_FILE = "jspwiki.componentsFile";
+    String PROP_COMPONENTS_FILE = "eyewiki.componentsFile";
 
     /** Default value for the components configuration file */
     String PROP_COMPONENTS_FILE_DEFAULT = "/WEB-INF/wikiComponents.xml";
 
     /** Property for the variable configuration file */
-    String PROP_VARIABLE_FILE = "jspwiki.variableFile";
+    String PROP_VARIABLE_FILE = "eyewiki.variableFile";
 
     /** Default value for the variable configuration file */
     String PROP_VARIABLE_FILE_DEFAULT = "/WEB-INF/wikiVariables.xml";
@@ -66,39 +47,39 @@ public interface WikiProperties
      * Property for the plugin configuration file. This has no default, if this value is empty or
      * missing, no plugins are started.
      */
-    String PROP_PLUGIN_FILE = "jspwiki.pluginFile";
+    String PROP_PLUGIN_FILE = "eyewiki.pluginFile";
 
     /**
      * Name of the property that defines a directory where the pages are. Must be defined if you
      * use a file based PageProvider.
      */
-    String PROP_PAGEDIR = "jspwiki.pageDir";
+    String PROP_PAGEDIR = "eyewiki.pageDir";
 
     /**
-     * Property name for where the jspwiki work directory should be. If not specified, reverts to
+     * Property name for where the eyewiki work directory should be. If not specified, reverts to
      * ${java.tmpdir}.
      */
-    String PROP_WORKDIR = "jspwiki.workDir";
+    String PROP_WORKDIR = "eyewiki.workDir";
 
     /**
      * Name of the property that defines a directory where the attachments are. Must be defined if
      * you use a file based AttachmentProvider.
      */
-    String PROP_STORAGEDIR = "jspwiki.storageDir";
+    String PROP_STORAGEDIR = "eyewiki.storageDir";
 
     /**
      * This property is used internally to provide the root of the web application to the logging
      * configuration when the Wiki has been configured to use relative pathes with
-     * jspwiki.relativePathes = true You can reference it as ${jspwiki.rootDir} but you should
-     * never add it directly to the jspwiki.properties file
+     * eyewiki.relativePathes = true You can reference it as ${eyewiki.rootDir} but you should
+     * never add it directly to the eyewiki.properties file
      */
-    String PROP_ROOTDIR = "jspwiki.rootDir";
+    String PROP_ROOTDIR = "eyewiki.rootDir";
 
     /**
      * If this parameter is true, then all the page and string references are relative to the web
      * application root. This allows a wiki to be deployed "as is" as a single war file.
      */
-    String PROP_WIKIRELATIVE_PATHES = "jspwiki.relativePathes";
+    String PROP_WIKIRELATIVE_PATHES = "eyewiki.relativePathes";
 
     /**
      * The default is to have absolute pathes for backwards compatibility
@@ -108,10 +89,10 @@ public interface WikiProperties
     boolean PROP_WIKIRELATIVE_PATHES_DEFAULT = false;
 
     /** Property start for any interwiki reference. */
-    String PROP_INTERWIKIREF = "jspwiki.interWikiRef";
+    String PROP_INTERWIKIREF = "eyewiki.interWikiRef";
 
     /** If true, then the user name will be stored with the page data. */
-    String PROP_STOREUSERNAME = "jspwiki.storeUserName";
+    String PROP_STOREUSERNAME = "eyewiki.storeUserName";
 
     /**
      * Default for storing the username with the page data
@@ -121,7 +102,7 @@ public interface WikiProperties
     boolean PROP_STOREUSERNAME_DEFAULT = true;
 
     /** Define the used encoding.  Currently supported are ISO-8859-1 and UTF-8 */
-    String PROP_ENCODING = "jspwiki.encoding";
+    String PROP_ENCODING = "eyewiki.encoding";
 
     /**
      * Default Encoding Value
@@ -131,7 +112,7 @@ public interface WikiProperties
     String PROP_ENCODING_DEFAULT = "ISO-8859-1";
 
     /** The name for the base URL to use in all references. */
-    String PROP_BASEURL = "jspwiki.baseURL";
+    String PROP_BASEURL = "eyewiki.baseURL";
 
     /**
      * Default BaseURL Value
@@ -141,16 +122,16 @@ public interface WikiProperties
     String PROP_BASEURL_DEFAULT = "";
 
     /** DOCUMENT ME! */
-    String PROP_SHORTURL_PREFIX = "jspwiki.shortURLConstructor.prefix";
+    String PROP_SHORTURL_PREFIX = "eyewiki.shortURLConstructor.prefix";
 
     /** DOCUMENT ME! */
-    String PROP_REFSTYLE = "jspwiki.referenceStyle";
+    String PROP_REFSTYLE = "eyewiki.referenceStyle";
 
     /** DOCUMENT ME! */
     String PROP_REFSTYLE_DEFAULT = "absolute";
 
     /** Property name for the "spaces in titles" -hack. */
-    String PROP_BEAUTIFYTITLE = "jspwiki.breakTitleWithSpaces";
+    String PROP_BEAUTIFYTITLE = "eyewiki.breakTitleWithSpaces";
 
     /**
      * Default value for the "spaces in titles" - hack.
@@ -160,7 +141,7 @@ public interface WikiProperties
     boolean PROP_BEAUTIFYTITLE_DEFAULT = false;
 
     /** Property name for the "match english plurals" -hack. */
-    String PROP_MATCHPLURALS = "jspwiki.translatorReader.matchEnglishPlurals";
+    String PROP_MATCHPLURALS = "eyewiki.translatorReader.matchEnglishPlurals";
 
     /**
      * Default value for the "match english plurals" - hack
@@ -170,7 +151,7 @@ public interface WikiProperties
     boolean PROP_MATCHPLURALS_DEFAULT = false;
 
     /** Property name for the template that is used. */
-    String PROP_TEMPLATEDIR = "jspwiki.templateDir";
+    String PROP_TEMPLATEDIR = "eyewiki.templateDir";
 
     /**
      * Default values for the template that is used
@@ -180,7 +161,7 @@ public interface WikiProperties
     String PROP_TEMPLATEDIR_DEFAULT = "default";
 
     /** Property name for the default front page. */
-    String PROP_FRONTPAGE = "jspwiki.frontPage";
+    String PROP_FRONTPAGE = "eyewiki.frontPage";
 
     /**
      * Default value for the front page.
@@ -190,22 +171,22 @@ public interface WikiProperties
     String PROP_FRONTPAGE_DEFAULT = "Main";
 
     /** DOCUMENT ME! */
-    String PROP_LOCKEXPIRY = "jspwiki.lockExpiryTime";
+    String PROP_LOCKEXPIRY = "eyewiki.lockExpiryTime";
 
     /** DOCUMENT ME! */
     int PROP_LOCKEXPIRY_DEFAULT = 60;
 
     /**
      * This property defines the inline image pattern.  It's current value is
-     * jspwiki.translatorReader.inlinePattern
+     * eyewiki.translatorReader.inlinePattern
      */
-    String PROP_INLINEIMAGEPTRN = "jspwiki.translatorReader.inlinePattern";
+    String PROP_INLINEIMAGEPTRN = "eyewiki.translatorReader.inlinePattern";
 
     /** The default inlining pattern.  Currently ".png" */
     String PROP_INLINEIMAGEPTRN_DEFAULT = "*.png";
 
     /** If true, consider CamelCase hyperlinks as well. */
-    String PROP_CAMELCASELINKS = "jspwiki.translatorReader.camelCaseLinks";
+    String PROP_CAMELCASELINKS = "eyewiki.translatorReader.camelCaseLinks";
 
     /** DOCUMENT ME! */
     boolean PROP_CAMELCASELINKS_DEFAULT = false;
@@ -214,13 +195,13 @@ public interface WikiProperties
      * If true, all hyperlinks are translated as well, regardless whether they are surrounded by
      * brackets.
      */
-    String PROP_PLAINURIS = "jspwiki.translatorReader.plainUris";
+    String PROP_PLAINURIS = "eyewiki.translatorReader.plainUris";
 
     /** DOCUMENT ME! */
     boolean PROP_PLAINURIS_DEFAULT = false;
 
     /** If true, all outward links (external links) have a small link image appended. */
-    String PROP_USEOUTLINKIMAGE = "jspwiki.translatorReader.useOutlinkImage";
+    String PROP_USEOUTLINKIMAGE = "eyewiki.translatorReader.useOutlinkImage";
 
     /** DOCUMENT ME! */
     boolean PROP_USEOUTLINKIMAGE_DEFAULT = false;
@@ -230,25 +211,25 @@ public interface WikiProperties
      * dangerous option to set - never turn this on in a publicly allowable Wiki, unless you are
      * absolutely certain of what you're doing.
      */
-    String PROP_ALLOWHTML = "jspwiki.translatorReader.allowHTML";
+    String PROP_ALLOWHTML = "eyewiki.translatorReader.allowHTML";
 
     /** DOCUMENT ME! */
     boolean PROP_ALLOWHTML_DEFAULT = false;
 
     /** If set to "true", all external links are tagged with 'rel="nofollow"' */
-    String PROP_USERRELNOFOLLOW = "jspwiki.translatorReader.useRelNofollow";
+    String PROP_USERRELNOFOLLOW = "eyewiki.translatorReader.useRelNofollow";
 
     /** DOCUMENT ME! */
     boolean PROP_USERRELNOFOLLOW_DEFAULT = false;
 
     /** If set to "true", enables plugins during parsing */
-    String PROP_RUNPLUGINS = "jspwiki.translatorReader.runPlugins";
+    String PROP_RUNPLUGINS = "eyewiki.translatorReader.runPlugins";
 
     /** DOCUMENT ME! */
     boolean PROP_RUNPLUGINS_DEFAULT = true;
 
     /** If set to "true", enables filters during parsing */
-    String PROP_RUNFILTERS = "jspwiki.translatorReader.runFilters";
+    String PROP_RUNFILTERS = "eyewiki.translatorReader.runFilters";
 
     /** gets evaluated with getValue(). A String, not a boolean! */
     String PROP_RUNFILTERS_DEFAULT = "true";
@@ -257,10 +238,10 @@ public interface WikiProperties
      * Determines the command to be used for 'diff'.  This program must be able to output diffs in
      * the unified format. It defaults to 'diff -u %s1 %s2'.
      */
-    String PROP_DIFFCOMMAND = "jspwiki.diffCommand";
+    String PROP_DIFFCOMMAND = "eyewiki.diffCommand";
 
     /** The maximum size of attachments that can be uploaded. */
-    String PROP_MAXSIZE = "jspwiki.attachment.maxsize";
+    String PROP_MAXSIZE = "eyewiki.attachment.maxsize";
 
     /** DOCUMENT ME! */
     int PROP_MAXSIZE_DEFAULT = 100000;
@@ -269,19 +250,19 @@ public interface WikiProperties
      * Defines, in seconds, the amount of time a text will live in the cache at most before
      * requiring a refresh.
      */
-    String PROP_CACHECHECKINTERVAL = "jspwiki.cachingProvider.cacheCheckInterval";
+    String PROP_CACHECHECKINTERVAL = "eyewiki.cachingProvider.cacheCheckInterval";
 
     /** DOCUMENT ME! */
     int PROP_CACHECHECKINTERVAL_DEFAULT = 30;
 
     /** DOCUMENT ME! */
-    String PROP_CACHECAPACITY = "jspwiki.cachingProvider.capacity";
+    String PROP_CACHECAPACITY = "eyewiki.cachingProvider.capacity";
 
     /** DOCUMENT ME! */
     int PROP_CACHECAPACITY_DEFAULT = 1000; // Good most wikis
 
     /** Shall we use Lucene with this Wiki? */
-    String PROP_USE_LUCENE = "jspwiki.useLucene";
+    String PROP_USE_LUCENE = "eyewiki.useLucene";
 
     /** DOCUMENT ME! */
     boolean PROP_USE_LUCENE_DEFAULT = true;
@@ -289,7 +270,7 @@ public interface WikiProperties
     /**
      * DOCUMENT ME!
      */
-    String PROP_LUCENE_ANALYZER = "jspwiki.lucene.analyzer";
+    String PROP_LUCENE_ANALYZER = "eyewiki.lucene.analyzer";
 
     /**
      * DOCUMENT ME!
@@ -297,7 +278,7 @@ public interface WikiProperties
     String PROP_LUCENE_ANALYZER_DEFAULT = StandardAnalyzer.class.getName();
 
     /** Prefix for the Wiki Special pages */
-    String PROP_SPECIAL_PAGES_PREFIX = "jspwiki.specialPage";
+    String PROP_SPECIAL_PAGES_PREFIX = "eyewiki.specialPage";
 
     /*
      * ========================================================================
@@ -313,7 +294,7 @@ public interface WikiProperties
      *
      * @since 1.7.6.
      */
-    String PROP_RSS_CHANNEL_DESCRIPTION = "jspwiki.rss.channelDescription";
+    String PROP_RSS_CHANNEL_DESCRIPTION = "eyewiki.rss.channelDescription";
 
     /**
      * Default channel description
@@ -328,7 +309,7 @@ public interface WikiProperties
      *
      * @since 1.7.6.
      */
-    String PROP_RSS_CHANNEL_LANGUAGE = "jspwiki.rss.channelLanguage";
+    String PROP_RSS_CHANNEL_LANGUAGE = "eyewiki.rss.channelLanguage";
 
     /**
      * Default channel language
@@ -342,7 +323,7 @@ public interface WikiProperties
      *
      * @since 1.7.6.
      */
-    String PROP_RSS_FILE = "jspwiki.rss.fileName";
+    String PROP_RSS_FILE = "eyewiki.rss.fileName";
 
     /**
      * Default value of the RSS File
@@ -356,7 +337,7 @@ public interface WikiProperties
      *
      * @since 1.7.6.
      */
-    String PROP_RSS_INTERVAL = "jspwiki.rss.interval";
+    String PROP_RSS_INTERVAL = "eyewiki.rss.interval";
 
     /**
      * Default value of the RSS generation interval.
@@ -366,7 +347,7 @@ public interface WikiProperties
     int PROP_RSS_INTERVAL_DEFAULT = 3600;
 
     /** Do we want the page specific ATOM feeds? */
-    String PROP_ATOM_FEEDS = "jspwiki.enableAtomFeeds";
+    String PROP_ATOM_FEEDS = "eyewiki.enableAtomFeeds";
 
     /** Default for ATOM Feeds: no */
     boolean PROP_ATOM_FEEDS_DEFAULT = false;
@@ -380,37 +361,37 @@ public interface WikiProperties
      */
 
     /** DOCUMENT ME! */
-    String PROP_RCS_CHECKIN = "jspwiki.rcsFileProvider.checkinCommand";
+    String PROP_RCS_CHECKIN = "eyewiki.rcsFileProvider.checkinCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_CHECKIN_DEFAULT = "ci -q -m\"author=%u\" -l -t-none %s";
 
     /** DOCUMENT ME! */
-    String PROP_RCS_CHECKOUT = "jspwiki.rcsFileProvider.checkoutCommand";
+    String PROP_RCS_CHECKOUT = "eyewiki.rcsFileProvider.checkoutCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_CHECKOUT_DEFAULT = "co -l %s";
 
     /** DOCUMENT ME! */
-    String PROP_RCS_LOG = "jspwiki.rcsFileProvider.logCommand";
+    String PROP_RCS_LOG = "eyewiki.rcsFileProvider.logCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_LOG_DEFAULT = "rlog -zLT -r %s";
 
     /** DOCUMENT ME! */
-    String PROP_RCS_FULLLOG = "jspwiki.rcsFileProvider.fullLogCommand";
+    String PROP_RCS_FULLLOG = "eyewiki.rcsFileProvider.fullLogCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_FULLLOG_DEFAULT = "rlog -zLT %s";
 
     /** DOCUMENT ME! */
-    String PROP_RCS_CHECKOUTVERSION = "jspwiki.rcsFileProvider.checkoutVersionCommand";
+    String PROP_RCS_CHECKOUTVERSION = "eyewiki.rcsFileProvider.checkoutVersionCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_CHECKOUTVERSION_DEFAULT = "co -p -r1.%v %s";
 
     /** DOCUMENT ME! */
-    String PROP_RCS_DELETEVERSION = "jspwiki.rcsFileProvider.deleteVersionCommand";
+    String PROP_RCS_DELETEVERSION = "eyewiki.rcsFileProvider.deleteVersionCommand";
 
     /** DOCUMENT ME! */
     String PROP_RCS_DELETEVERSION_DEFAULT = "rcs -o1.%v %s";
@@ -424,7 +405,7 @@ public interface WikiProperties
      */
 
     /** DOCUMENT ME! */
-    String PROP_FILTERXML = "jspwiki.filterConfig";
+    String PROP_FILTERXML = "eyewiki.filterConfig";
 
     /** DOCUMENT ME! */
     String PROP_FILTERXML_DEFAULT = "WEB-INF/filters.xml";
@@ -438,31 +419,31 @@ public interface WikiProperties
      */
 
     /** DOCUMENT ME! */
-    String PROP_AUTH_STRICTLOGINS = "jspwiki.policy.strictLogins";
+    String PROP_AUTH_STRICTLOGINS = "eyewiki.policy.strictLogins";
 
     /** DOCUMENT ME! */
     boolean PROP_AUTH_STRICTLOGINS_DEFAULT = false;
 
     /** DOCUMENT ME! */
-    String PROP_AUTH_USEOLDAUTH = "jspwiki.auth.useOldAuth";
+    String PROP_AUTH_USEOLDAUTH = "eyewiki.auth.useOldAuth";
 
     /** DOCUMENT ME! */
     boolean PROP_AUTH_USEOLDAUTH_DEFAULT = false;
 
     /** If true, logs the IP address of the editor on saving. */
-    String PROP_AUTH_STOREIPADDRESS = "jspwiki.storeIPAddress";
+    String PROP_AUTH_STOREIPADDRESS = "eyewiki.storeIPAddress";
 
     /** DOCUMENT ME! */
     boolean PROP_AUTH_STOREIPADDRESS_DEFAULT = true;
 
     /** DOCUMENT ME! */
-    String PROP_AUTH_ADMINISTRATOR = "jspwiki.auth.administrator";
+    String PROP_AUTH_ADMINISTRATOR = "eyewiki.auth.administrator";
 
     /** The default administrator group is called "AdminGroup" */
     String PROP_AUTH_ADMINISTRATOR_DEFAULT = "AdminGroup";
 
     /** DOCUMENT ME! */
-    String PROP_AUTH_FILENAME = "jspwiki.fileAuthenticator.fileName";
+    String PROP_AUTH_FILENAME = "eyewiki.fileAuthenticator.fileName";
 
     /*
      * ========================================================================

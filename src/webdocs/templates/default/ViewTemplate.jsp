@@ -1,5 +1,5 @@
 <%@ page import="de.softwareforge.eyewiki.Release" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"

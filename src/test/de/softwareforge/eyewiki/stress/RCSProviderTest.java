@@ -44,7 +44,7 @@ public class RCSProviderTest
     public void setUp()
             throws Exception
     {
-        conf = TestEngine.getConfiguration("/jspwiki_rcs.properties");
+        conf = TestEngine.getConfiguration("/eyewiki_rcs.properties");
 
         engine = new TestEngine(conf);
     }

@@ -3,7 +3,7 @@
                         "http://java.sun.com/dtd/web-jsptaglibrary_1_1.dtd">
 
 <!--
-     JSPWiki tag libraries are defined here.
+     eyeWiki tag libraries are defined here.
 
      Note that we support only the 1.1 spec for now,
      simply because there is no reason to break compatibility.
@@ -11,7 +11,7 @@
 <taglib>
   <tlibversion>1.0</tlibversion>
   <jspversion>1.1</jspversion>
-  <shortname>jspwiki</shortname>
+  <shortname>eyewiki</shortname>
 
   <tag>
     <name>AttachmentsIterator</name>

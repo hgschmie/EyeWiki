@@ -34,7 +34,7 @@ public class UserProfileTest
     {
         super(s);
 
-        Configuration conf = TestEngine.getConfiguration("/jspwiki_auth.properties");
+        Configuration conf = TestEngine.getConfiguration("/eyewiki_auth.properties");
         PropertyConfigurator.configure(ConfigurationConverter.getProperties(conf));
     }
 

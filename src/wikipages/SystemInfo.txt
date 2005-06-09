@@ -2,28 +2,28 @@ Here are some strategical figures and other interesting things about this partic
 
 | __Application name__               | [{$applicationname}]
 | __Base address__                   | [{$baseurl}]
-| __JSPWiki Engine Version__         | [{$jspwikiversion}] 
+| __eyeWiki Engine Version__         | [{$eyewikiversion}] 
 | __Character Encoding__             | [{$encoding}]
 | __Total Number of Pages__          | [{$totalpages}]
 | __Current Uptime__                 | [{$uptime}]
 | __Current Page Provider__          | [{$pageprovider}]\\ \\[{$pageproviderdescription}]
-| __Current Attachment Provider__    | [{$jspwiki.attachmentProvider}]
+| __Current Attachment Provider__    | [{$eyewiki.attachmentProvider}]
 | __Available InterWiki links__      | [{$interwikilinks}]
 | __Inlined images are__             | [{$inlinedimages}]
 | __Installed PageFilters__          | [{$pagefilters}]
 
 !Usability
 
-| __Do we beautify titles?__ | [{$jspwiki.breakTitleWithSpaces}]
-| __Do we match english plural forms?__ | [{$jspwiki.translatorReader.matchEnglishPlurals}]
-| __Are CamelCase links used?__ | [{$jspwiki.translatorReader.camelCaseLinks}]
-| __Is HTML allowed on pages?__ | [{$jspwiki.translatorReader.allowHTML}]
+| __Do we beautify titles?__ | [{$eyewiki.breakTitleWithSpaces}]
+| __Do we match english plural forms?__ | [{$eyewiki.translatorReader.matchEnglishPlurals}]
+| __Are CamelCase links used?__ | [{$eyewiki.translatorReader.camelCaseLinks}]
+| __Is HTML allowed on pages?__ | [{$eyewiki.translatorReader.allowHTML}]
 
 !RichSiteSummary
 
-| __Do we generate RSS files?__ | [{$jspwiki.rss.generate}]
-| __If we do, what's the file name?__ | [{$jspwiki.rss.fileName}]
-| __How often is the RSS updated?__ |  [{$jspwiki.rss.interval}]
+| __Do we generate RSS files?__ | [{$eyewiki.rss.generate}]
+| __If we do, what's the file name?__ | [{$eyewiki.rss.fileName}]
+| __How often is the RSS updated?__ |  [{$eyewiki.rss.interval}]
 
 !Personal information
 
@@ -36,4 +36,4 @@ Here is what I know about you currently:
 
 [{ListLocksPlugin}]
 
-JSPWiki home page is at [http://www.jspwiki.org/]. Welcome!
+eyeWiki home page is at [http://www.softwareforge.de/eyewiki/]. Welcome!

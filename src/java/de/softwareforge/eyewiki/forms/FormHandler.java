@@ -1,27 +1,7 @@
-/*
-    WikiForms - a WikiPage FORM handler for JSPWiki.
-
-    Copyright (C) 2003 BaseN.
-
-    JSPWiki Copyright (C) 2002 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published
-    by the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-*/
 package de.softwareforge.eyewiki.forms;
 
 /**
- * A FormHandler performs logic based on input from an HTTP FORM, transmitted through a JSPWiki
+ * A FormHandler performs logic based on input from an HTTP FORM, transmitted through a eyeWiki
  * WikiPlugin (see Form.java).
  *
  * <P>

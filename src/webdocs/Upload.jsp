@@ -2,7 +2,7 @@
 <%@ page import="de.softwareforge.eyewiki.*" %>
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 
 <%! 

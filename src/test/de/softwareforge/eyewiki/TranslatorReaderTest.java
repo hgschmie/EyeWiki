@@ -780,10 +780,10 @@ public class TranslatorReaderTest
     public void testHyperlinksInterWiki1()
             throws Exception
     {
-        String src = "This should be a [link|JSPWiki:HyperLink]";
+        String src = "This should be a [link|eyeWiki:HyperLink]";
 
         assertEquals(
-            "This should be a <a class=\"interwiki\" href=\"http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=HyperLink\">link</a>",
+            "This should be a <a class=\"interwiki\" href=\"http://jspwiki.org/wiki/HyperLink\">link</a>",
             translate(src));
     }
 
@@ -818,7 +818,7 @@ public class TranslatorReaderTest
             throws Exception
     {
         Configuration conf = TestEngine.getConfiguration();
-        conf.setProperty("jspwiki.encoding", "ISO-8859-1");
+        conf.setProperty("eyewiki.encoding", "ISO-8859-1");
 
         //TODO
         TestEngine testEngine2 = new TestEngine(conf);

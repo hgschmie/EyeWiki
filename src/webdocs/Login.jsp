@@ -3,7 +3,7 @@
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ page import="de.softwareforge.eyewiki.auth.*" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <!--
     This is a sample login page, in case you prefer a clear

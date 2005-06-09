@@ -55,7 +55,7 @@ You can also make a named footnote, just as if you were doing a normal hyperlink
 
 !InterWiki links
 
-You can also do links between different Wikis without knowing the URL.  Just use a link in the form [[Wiki:WikiPage] and JSPWiki will create a link for you.  For example, this link points to the [JSPWiki TextFormatting rules|JSPWiki:TextFormattingRules]. Check the [SystemInfo] page for more information on which Wiki links are available.
+You can also do links between different Wikis without knowing the URL.  Just use a link in the form [[Wiki:WikiPage] and eyeWiki will create a link for you.  For example, this link points to the [eyeWiki TextFormatting rules|eyeWiki:TextFormattingRules]. Check the [SystemInfo] page for more information on which Wiki links are available.
 
 If an InterWiki link is not supported, you'll get a notification of it on the page when
 you save your page.
@@ -122,7 +122,7 @@ If you want to add preformatted text (like code) just use three consecutive brac
 
 !Conflicts
 
-If someone happens to edit the same page as you at the same time, JSPWiki will prevent you from doing changes and show a conflict page instead. Sorry to say, but the first one to make changes wins...
+If someone happens to edit the same page as you at the same time, eyeWiki will prevent you from doing changes and show a conflict page instead. Sorry to say, but the first one to make changes wins...
 
 __A word of warning:__ If you use the Back button of your browser to go into the Edit page, you will almost certainly get a conflict. This is because the browser thinks its still editing an earlier copy of the page.
 

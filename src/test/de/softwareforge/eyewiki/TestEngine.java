@@ -92,7 +92,7 @@ public class TestEngine
     public static final Configuration getConfiguration()
             throws Exception
     {
-        return getConfiguration("/jspwiki.properties");
+        return getConfiguration("/eyewiki.properties");
     }
 
     /**

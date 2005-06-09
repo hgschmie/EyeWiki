@@ -1,7 +1,3 @@
-/*
- * (C) Janne Jalkanen 2005
- * 
- */
 package de.softwareforge.eyewiki.plugin;
 
 import junit.framework.Test;

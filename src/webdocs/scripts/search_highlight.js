@@ -58,7 +58,7 @@ function googleSearchHighlight()
         if (qsip.length == 1) continue;
 
         // q= for Google, p= for Yahoo
-        // query= for JSPWiki
+        // query= for eyeWiki
 
         if (qsip[0] == 'query' || qsip[0] == 'q') 
         {

@@ -1,6 +1,6 @@
 /* You may add anything you like to this file to configure the FCKEditor. */
 
-FCKConfig.ToolbarSets["JSPWiki"] = [
+FCKConfig.ToolbarSets["eyeWiki"] = [
         ['Source'],
         ['Cut','Copy','Paste','PasteText','PasteWord'],
         ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],

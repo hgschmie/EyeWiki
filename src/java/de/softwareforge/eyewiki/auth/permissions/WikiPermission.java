@@ -4,7 +4,7 @@ import java.security.acl.Permission;
 
 
 /**
- * Superclass for all JSPWiki permissions.
+ * Superclass for all eyeWiki permissions.
  *
  * @author Janne Jalkanen
  */

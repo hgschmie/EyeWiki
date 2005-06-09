@@ -1,22 +1,3 @@
-/*
-    JSPWiki - a JSP-based WikiWiki clone.
-
-    Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as published by
-    the Free Software Foundation; either version 2.1 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-
-    You should have received a copy of the GNU Lesser General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
 package de.softwareforge.eyewiki;
 
 import java.util.HashMap;
@@ -29,7 +10,7 @@ import de.softwareforge.eyewiki.auth.UserProfile;
 
 /**
  * Provides state information throughout the processing of a page.  A WikiContext is born when the
- * JSP pages that are the main entry points, are invoked.  The JSPWiki engine creates the new
+ * JSP pages that are the main entry points, are invoked.  The eyeWiki engine creates the new
  * WikiContext, which basically holds information about the page, the handling engine, and in
  * which context (view, edit, etc) the call was done.
  *
@@ -96,7 +77,7 @@ public class WikiContext
     public static final String RSS = "rss";
 
     /** DOCUMENT ME! */
-    public static final String NONE = ""; // This is not a JSPWiki context, use it to access static files
+    public static final String NONE = ""; // This is not a eyeWiki context, use it to access static files
 
     /** DOCUMENT ME! */
     protected WikiPage m_page;

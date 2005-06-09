@@ -1,22 +1,3 @@
-/*
-  JSPWiki - a JSP-based WikiWiki clone.
-
-  Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation; either version 2.1 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki.providers;
 
 import java.io.File;
@@ -80,7 +61,7 @@ import de.softwareforge.eyewiki.util.TextUtil;
  * from the provider.
  *
  * <p>
- * This class also detects if someone has modified the page externally, not through JSPWiki
+ * This class also detects if someone has modified the page externally, not through eyeWiki
  * routines, and throws the proper RepositoryModifiedException.
  * </p>
  *
@@ -284,7 +265,7 @@ public class CachingProvider
                         {
                             public void run()
                             {
-                                // FIXME: This is a kludge - JSPWiki should somehow report
+                                // FIXME: This is a kludge - eyeWiki should somehow report
                                 //        that init phase is complete.
                                 try
                                 {
@@ -539,7 +520,7 @@ public class CachingProvider
         //  not in the cache must be non-existent.
         //
         //  FIXME: There's a problem here; if someone modifies the
-        //         repository by adding a page outside JSPWiki,
+        //         repository by adding a page outside eyeWiki,
         //         we won't notice it.
         if (m_gotall)
         {
@@ -550,7 +531,7 @@ public class CachingProvider
         //  We could add the page to the cache here as well,
         //  but in order to understand whether that is a
         //  good thing or not we would need to analyze
-        //  the JSPWiki calling patterns extensively.  Presumably
+        //  the eyeWiki calling patterns extensively.  Presumably
         //  it would be a good thing if pageExists() is called
         //  many times before the first getPageText() is called,
         //  and the whole page is cached.
@@ -1275,13 +1256,13 @@ public class CachingProvider
                 log.info("Starting Lucene reindexing, this can take a couple minutes...");
 
                 //
-                //  Do lock recovery, in case JSPWiki was shut down forcibly
+                //  Do lock recovery, in case eyeWiki was shut down forcibly
                 //
                 Directory luceneDir = FSDirectory.getDirectory(dir, false);
                     
                 if (IndexReader.isLocked(luceneDir))
                 {
-                    log.info("JSPWiki was shut down while Lucene was indexing - unlocking now.");
+                    log.info("eyeWiki was shut down while Lucene was indexing - unlocking now.");
                     IndexReader.unlock(luceneDir);
                 }
                     
@@ -1334,7 +1315,7 @@ public class CachingProvider
         }
         catch (ProviderException e)
         {
-            log.error("Problem reading pages while creating Lucene index (JSPWiki won't start.)", e);
+            log.error("Problem reading pages while creating Lucene index (eyeWiki won't start.)", e);
             throw new IllegalArgumentException("unable to create Lucene index");
         }
         catch(ClassNotFoundException e)

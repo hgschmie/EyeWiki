@@ -37,7 +37,7 @@
     
     if( wiki.getBaseURL().length() == 0 )
     {
-        response.sendError( 500, "The jspwiki.baseURL property has not been defined for this wiki - cannot generate Atom feed" );
+        response.sendError( 500, "The eyewiki.baseURL property has not been defined for this wiki - cannot generate Atom feed" );
         return;
     }
 
@@ -216,7 +216,7 @@
 
 
             //
-            //  Issued date.  JSPWiki does not support drafts, so we essentially output
+            //  Issued date.  eyeWiki does not support drafts, so we essentially output
             //  the same date.
             //
 

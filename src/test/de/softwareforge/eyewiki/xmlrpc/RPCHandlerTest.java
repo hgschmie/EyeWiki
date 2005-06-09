@@ -55,7 +55,7 @@ public class RPCHandlerTest
     public void setUp()
             throws Exception
     {
-        Configuration conf = TestEngine.getConfiguration("/jspwiki_auth.properties");
+        Configuration conf = TestEngine.getConfiguration("/eyewiki_auth.properties");
 
         m_engine = new TestEngine(conf);
 

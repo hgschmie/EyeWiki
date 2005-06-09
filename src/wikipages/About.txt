@@ -1,4 +1,4 @@
-iWiki is a branch of the [JSPWiki|http://www.jspwiki.org/] code base.
+eyeWiki is a branch of the [JSPWiki|http://www.jspwiki.org/] code base.
 
 [Janne Jalkanen|http://www.ecyrd.com/ButtUgly/] deserves full credit
 for the original JSP Wiki code and the hard work that he put into it.

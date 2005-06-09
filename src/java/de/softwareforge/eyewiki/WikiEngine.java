@@ -1,22 +1,3 @@
-/*
-  JSPWiki - a JSP-based WikiWiki clone.
-
-  Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation; either version 2.1 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki;
 
 import java.io.File;
@@ -122,18 +103,18 @@ public class WikiEngine
      * The web.xml parameter that defines where the config file is to be found. If it is not
      * defined, uses the default as defined by PARAM_PROPERTYFILE_DEFAULT.
      *
-     * @value jspwiki.propertyfile
+     * @value eyewiki.propertyfile
      */
-    public static final String PARAM_CONFIGFILE = "jspwiki.propertyfile";
+    public static final String PARAM_CONFIGFILE = "eyewiki.propertyfile";
 
     /**
      * Path to the default property file.
      *
-     * @value /WEB_INF/jspwiki.properties
+     * @value /WEB_INF/eyewiki.properties
      */
-    public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/jspwiki.properties";
+    public static final String PARAM_CONFIGFILE_DEFAULT = "/WEB-INF/eyewiki.properties";
 
-    /** Contains the default properties for JSPWiki. */
+    /** Contains the default properties for eyeWiki. */
     private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
         {
             "Login",
@@ -147,7 +128,7 @@ public class WikiEngine
         };
 
     /** The name of the cookie that gets stored to the user browser. */
-    public static final String PREFS_COOKIE_NAME = "JSPWikiUserProfile";
+    public static final String PREFS_COOKIE_NAME = "eyeWikiUserProfile";
 
     /** Stores an internal list of engines per each ServletContext */
     private static Hashtable c_engines = new Hashtable();
@@ -254,7 +235,7 @@ public class WikiEngine
         try
         {
             //
-            //  Note: May be null, if JSPWiki has been deployed in a WAR file.
+            //  Note: May be null, if eyeWiki has been deployed in a WAR file.
             //
             setRootPath(context.getRealPath("/"));
             initialize(conf);
@@ -293,12 +274,12 @@ public class WikiEngine
     /**
      * Gets a WikiEngine related to the servlet. Works like getInstance(ServletConfig), but does
      * not force the Properties object. This method is just an optional way of initializing a
-     * WikiEngine for embedded JSPWiki applications; normally, you should use
+     * WikiEngine for embedded eyeWiki applications; normally, you should use
      * getInstance(ServletConfig).
      *
      * @param config The ServletConfig of the webapp servlet/JSP calling this method.
-     * @param props A set of properties, or null, if we are to load JSPWiki's default
-     *        jspwiki.properties (this is the usual case).
+     * @param props A set of properties, or null, if we are to load eyeWiki's default
+     *        eyewiki.properties (this is the usual case).
      *
      * @return DOCUMENT ME!
      */
@@ -311,8 +292,8 @@ public class WikiEngine
      * Gets a WikiEngine related to the servlet. Works just like getInstance( ServletConfig)
      *
      * @param context The ServletContext of the webapp servlet/JSP calling this method.
-     * @param conf A set of properties, or null, if we are to load JSPWiki's default
-     *        jspwiki.properties (this is the usual case).
+     * @param conf A set of properties, or null, if we are to load eyeWiki's default
+     *        eyewiki.properties (this is the usual case).
      *
      * @return DOCUMENT ME!
      *
@@ -358,7 +339,7 @@ public class WikiEngine
     /**
      * Loads the webapp properties based on servlet context information. Returns a Properties
      * object containing the settings, or null if unable to load it. (The default file is
-     * WEB-INF/jspwiki.properties, and can be overridden by setting PARAM_PROPERTYFILE in the
+     * WEB-INF/eyewiki.properties, and can be overridden by setting PARAM_PROPERTYFILE in the
      * server or webapp configuration.)
      *
      * @param context DOCUMENT ME!
@@ -424,7 +405,7 @@ public class WikiEngine
         {
             context.log(
                 Release.APPNAME
-                + ": Unable to load and setup configuration from jspwiki.properties", e);
+                + ": Unable to load and setup configuration from eyewiki.properties", e);
         }
         finally
         {
@@ -476,7 +457,7 @@ public class WikiEngine
         if (log.isInfoEnabled())
         {
             log.info("*******************************************");
-            log.info("JSPWiki " + Release.VERSTR + " starting. Whee!");
+            log.info("eyeWiki " + Release.VERSTR + " starting. Whee!");
         }
 
         log.debug("Configuring WikiEngine...");
@@ -500,7 +481,7 @@ public class WikiEngine
 
         if (log.isInfoEnabled())
         {
-            log.info("JSPWiki working directory is '" + m_workDir + "'");
+            log.info("eyeWiki working directory is '" + m_workDir + "'");
         }
 
         //
@@ -515,13 +496,13 @@ public class WikiEngine
 
             if (log.isInfoEnabled())
             {
-                log.info("JSPWiki pages directory is '" + m_pageDir + "'");
+                log.info("eyeWiki pages directory is '" + m_pageDir + "'");
             }
         }
         else
         {
             log.info(
-                "No JSPWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
+                "No eyeWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
         }
 
         //
@@ -536,13 +517,13 @@ public class WikiEngine
 
             if (log.isInfoEnabled())
             {
-                log.info("JSPWiki storage directory is '" + m_storageDir + "'");
+                log.info("eyeWiki storage directory is '" + m_storageDir + "'");
             }
         }
         else
         {
             log.info(
-                "No JSPWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
+                "No eyeWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
         // NOT YET USED m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
@@ -663,7 +644,7 @@ public class WikiEngine
     }
 
     /**
-     * Returns the JSPWiki working directory.
+     * Returns the eyeWiki working directory.
      *
      * @return DOCUMENT ME!
      *
@@ -1193,7 +1174,7 @@ public class WikiEngine
 
     /**
      * Just queries the existing pages directly from the page manager. We also check overridden
-     * pages from jspwiki.properties
+     * pages from eyewiki.properties
      *
      * @param page DOCUMENT ME!
      *
@@ -2063,7 +2044,7 @@ public class WikiEngine
 
     /**
      * Figure out to which page we are really going to.  Considers special page names from the
-     * jspwiki.properties, and possible aliases.
+     * eyewiki.properties, and possible aliases.
      *
      * @param context The Wiki Context in which the request is being made.
      *
@@ -2326,8 +2307,8 @@ public class WikiEngine
 
     /**
      * Checks whether a supplied directory path is valid for the current Wiki configuration. A path
-     * is valid if - The Wiki is in "jspwiki.relativePathes = false" mode and the path is absolute
-     * - The Wiki is in "jspwiki.relativePathes = true" mode and the path is relative and the
+     * is valid if - The Wiki is in "eyewiki.relativePathes = false" mode and the path is absolute
+     * - The Wiki is in "eyewiki.relativePathes = true" mode and the path is relative and the
      * rootDirectory is not null.
      *
      * @param pathName The Directory path to check

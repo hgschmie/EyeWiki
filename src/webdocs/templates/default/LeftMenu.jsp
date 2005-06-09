@@ -1,8 +1,8 @@
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <div class="logo">
     <a href="<wiki:LinkTo page="SystemInfo" format="url"/>"
-       onmouseover="document.jspwiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo.png'"
-       onmouseout="document.jspwiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo_s.png'">
+       onmouseover="document.eyewiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo.png'"
+       onmouseout="document.eyewiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo_s.png'">
       <img src="<wiki:BaseURL/>images/jspwiki_logo_s.png" name="jspwiki_logo" alt="JSPWiki logo"/>
     </a>
 </div>

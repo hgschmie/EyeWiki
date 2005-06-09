@@ -1,22 +1,3 @@
-/*
-  JSPWiki - a JSP-based WikiWiki clone.
-
-  Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation; either version 2.1 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki;
 
 import java.io.BufferedReader;
@@ -142,7 +123,7 @@ public class TranslatorReader
 
     /**
      * This list contains all IANA registered URI protocol types as of September 2004 + a few
-     * well-known extra types. JSPWiki recognises all of them as external links.
+     * well-known extra types. eyeWiki recognises all of them as external links.
      */
     private static final String [] EXTERNAL_LINKS =
     {
@@ -534,7 +515,7 @@ public class TranslatorReader
     /**
      * Use this to turn on or off image inlining.
      *
-     * @param toggle If true, images are inlined (as per set in jspwiki.properties) If false, then
+     * @param toggle If true, images are inlined (as per set in eyewiki.properties) If false, then
      *        images won't be inlined; instead, they will be treated as standard hyperlinks.
      *
      * @since 2.2.9

@@ -10,7 +10,7 @@
 <%@ page import="de.softwareforge.eyewiki.auth.permissions.CreatePermission" %>
 <%@ page import="de.softwareforge.eyewiki.htmltowiki.HtmlStringToWikiTranslator" %>
 <%@ page errorPage="/Error.jsp" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <%! 
     public void jspInit()
@@ -18,7 +18,7 @@
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Logger log = Logger.getLogger("JSPWiki");
+    Logger log = Logger.getLogger("eyeWiki");
     WikiEngine wiki;
 %>
 

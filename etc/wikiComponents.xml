@@ -26,7 +26,7 @@
 <!--   Wiki with a huge number of different news services around the world.   -->
 <!--   Try a Google search on RSS and see what you can do with it.            -->
 <!--                                                                          -->
-<!--   Note that jspwiki.baseURL MUST BE DEFINED if you want to enable RSS!   -->
+<!--   Note that eyewiki.baseURL MUST BE DEFINED if you want to enable RSS!   -->
 <!--                                                                          -->
 <!--   If you uncomment this line, then the RSS Site feed is generated        -->
   <component-implementation key="RSSGenerator"      class="de.softwareforge.eyewiki.rss.RSSGenerator" />
@@ -48,11 +48,11 @@
 <!--       new and not much tested. YMMV. -->
 
 <!--   * ExternalDiffProvider - uses a system diff program (which -->
-<!--       can be configured using "jspwiki.diffCommand") to  -->
+<!--       can be configured using "eyewiki.diffCommand") to  -->
 <!--       create an unified (!) diff. -->
 
 <!--       Example for a diff command: -->
-<!--       jspwiki.diffCommand = /usr/bin/diff -u %s1 %s2 -->
+<!--       eyewiki.diffCommand = /usr/bin/diff -u %s1 %s2 -->
 
   <component-implementation key="DiffProvider"      class="de.softwareforge.eyewiki.diff.ContextualDiffProvider" />
 

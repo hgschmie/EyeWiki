@@ -8,14 +8,32 @@
 #    FileSystemProvider for simple pure file storage with no version information
 #
 
-jspwiki.relativePathes = false
-jspwiki.pageDir = @tests.pagedir@
-jspwiki.workDir = @tests.workdir@
-jspwiki.storageDir = @tests.pagedir@
-jspwiki.componentsFile = src/test/etc/versComponents.xml
-jspwiki.variableFile   = @tests.variables@
+#
+#  Determines where wiki files are kept.
+#
+eyewiki.relativePathes = false
+eyewiki.pageDir = @tests.pagedir@
+eyewiki.workDir = @tests.workdir@
+eyewiki.storageDir = @tests.pagedir@
 
-jspwiki.encoding = UTF-8
+eyewiki.componentsFile = src/test/etc/rssComponents.xml
+eyewiki.pluginFile = @tests.plugins@
+eyewiki.variableFile   = @tests.variables@
+
+eyewiki.translatorReader.camelCaseLinks = true
+
+eyewiki.breakTitleWithSpaces = true
+
+eyewiki.translatorReader.matchEnglishPlurals = true
+eyewiki.translatorReader.useOutlinkImage = false
+
+eyewiki.encoding = ISO-8859-1
+
+eyewiki.auth.useOldAuth = true
+eyewiki.authenticator = FileAuthenticator
+eyewiki.fileAuthenticator.fileName = @tests.auth.filename@
+
+eyewiki.filterConfig = @tests.filter@
 
 #
 #  Special page references.
@@ -26,16 +44,18 @@ jspwiki.encoding = UTF-8
 # Example to redirect all requests to a page called 'OriginalWiki'
 # to the original wikiwiki at http://c2.com/cgi/wiki
 #
-# jspwiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
+# eyewiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
 #
-jspwiki.specialPage.RecentChanges = RecentChanges.jsp
-jspwiki.specialPage.FindPage = Search.jsp
+eyewiki.specialPage.RecentChanges = RecentChanges.jsp
+eyewiki.specialPage.FindPage = Search.jsp
 
 # InterWiki links The %s is replaced with the page reference (specify
 # multiple times to get multiple references).  Page references should
 # appear in format : [wiki:wikipage].  
 
-jspwiki.interWikiRef.JSPWiki = http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=%s
+eyewiki.interWikiRef.eyeWiki = http://jspwiki.org/wiki/%s
+
+eyewiki.rss.fileName = target/tests/rss.rdf
 
 #
 # Define which image types are inlined.
@@ -43,14 +63,14 @@ jspwiki.interWikiRef.JSPWiki = http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=%s
 # Windows or UNIX shells).
 #
 
-jspwiki.translatorReader.inlinePattern.1 = *.jpg
-jspwiki.translatorReader.inlinePattern.2 = *.png
-jspwiki.translatorReader.inlinePattern.3 = http://images.com/*
+eyewiki.translatorReader.inlinePattern.1 = *.jpg
+eyewiki.translatorReader.inlinePattern.2 = *.png
+eyewiki.translatorReader.inlinePattern.3 = http://images.com/*
 
 #
 # Use PageAuthorizer for tests.
 #
-jspwiki.authorizer = PageAuthorizer
+eyewiki.authorizer = PageAuthorizer
 
 #
 #  Configure logs.

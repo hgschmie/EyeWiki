@@ -47,7 +47,7 @@ public class VersioningProviderTest
     public void setUp()
             throws Exception
     {
-        conf = TestEngine.getConfiguration("/jspwiki_vers.properties");
+        conf = TestEngine.getConfiguration("/eyewiki_vers.properties");
 
         engine = new TestEngine(conf);
     }

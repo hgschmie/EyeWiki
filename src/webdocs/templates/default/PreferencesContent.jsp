@@ -1,4 +1,4 @@
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 <h2 class="wikihead">Setting your preferences</h2>
 

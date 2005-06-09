@@ -14,15 +14,15 @@
 
     if( NS4 )
     {
-        sheet = "jspwiki_ns.css";
+        sheet = "eyewiki_ns.css";
     }
     else if( Mac )
     {
-        sheet = "jspwiki_mac.css";
+        sheet = "eyewiki_mac.css";
     }
     else if( IE )
     {
-        sheet = "jspwiki_ie.css";
+        sheet = "eyewiki_ie.css";
     }
 
     if( sheet != "" )

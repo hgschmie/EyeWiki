@@ -16,8 +16,8 @@
 
   <postGoal name="war:webapp">
     <!-- Copy Properties File -->
-    <ant:copy file="etc/jspwiki.properties.tmpl" tofile="${maven.war.webapp.dir}/WEB-INF/jspwiki.properties" />
-    <ant:replace file="${maven.war.webapp.dir}/WEB-INF/jspwiki.properties"
+    <ant:copy file="etc/eyewiki.properties.tmpl" tofile="${maven.war.webapp.dir}/WEB-INF/eyewiki.properties" />
+    <ant:replace file="${maven.war.webapp.dir}/WEB-INF/eyewiki.properties"
                replacefilterfile="build.properties"/>
 
     <ant:copy file="etc/wikiComponents.xml" tofile="${maven.war.webapp.dir}/WEB-INF/wikiComponents.xml" />
@@ -25,14 +25,14 @@
     <ant:copy file="etc/wikiVariables.xml" tofile="${maven.war.webapp.dir}/WEB-INF/wikiVariables.xml" />
 
     <!-- copy wiki pages -->
-    <ant:copy todir="${maven.war.webapp.dir}/jspwiki/pages" >
+    <ant:copy todir="${maven.war.webapp.dir}/eyewiki/pages" >
       <ant:fileset dir="src/wikipages">
         <include name="*.txt"/>
       </ant:fileset>
     </ant:copy>
 
-    <ant:mkdir dir="${maven.war.webapp.dir}/jspwiki/work" />
-    <ant:mkdir dir="${maven.war.webapp.dir}/jspwiki/logs" />
+    <ant:mkdir dir="${maven.war.webapp.dir}/eyewiki/work" />
+    <ant:mkdir dir="${maven.war.webapp.dir}/eyewiki/logs" />
 
   </postGoal>
 
@@ -51,7 +51,7 @@
 
 
     <ant:replace replacefilterfile="build.properties" dir="${maven.build.dir}/test-classes" >
-      <ant:include name="jspwiki*properties" />
+      <ant:include name="eyewiki*properties" />
     </ant:replace>
 
   </preGoal>

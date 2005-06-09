@@ -6,16 +6,11 @@
 
 <web-app>
 
-   <display-name>JSPWiki</display-name>
+   <display-name>eyeWiki</display-name>
    <description>
-       JSPWiki is a free JSP-based WikiClone.  It is licenced
-       under the Lesser GNU General Public License.
-
-       JSPWiki is maintained by Janne Jalkanen (+others),
-       jalkanen+jspwiki@ecyrd.com
+       eyeWiki - JSPWiki based Wiki
+       released under the Lesser GNU General Public License.
    </description>
-
-
 
    <!--
        Now, let's define the XML-RPC interfaces.  You probably don't have to
@@ -138,7 +133,7 @@
    <security-constraint>
        <web-resource-collection>
            <web-resource-name>Protected Area</web-resource-name>
-           <url-pattern>/jspwiki/*</url-pattern>
+           <url-pattern>/eyewiki/*</url-pattern>
            <url-pattern>/Install.jsp</url-pattern>
        </web-resource-collection>
        <auth-constraint>
@@ -163,7 +158,7 @@
    -->
       
    <!--
-       Here we define the users which are allowed to access JSPWiki
+       Here we define the users which are allowed to access eyeWiki
        editor.
 
        I'll provide here an example case where you can set up a Wiki
@@ -212,7 +207,7 @@
 
    <login-config>
       <auth-method>BASIC</auth-method>
-      <realm-name>JSPWiki Editor</realm-name>
+      <realm-name>eyeWiki Editor</realm-name>
    </login-config>
 
 </web-app>

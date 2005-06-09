@@ -3,7 +3,56 @@ Emacs, this is -*- Text -*- for you.
 			   eyeWiki Overview
 			   ================
 
-			       $Id$
-			     $Date$
-			   $Author$
+$Id$
+
+
+eyeWiki is a branch off the JSPWiki development happening at
+http://www.jspwiki.org/. If is not only based on the code developed
+there but borrows heavily from the development efforts of the JSPWiki
+team. 
+
+JSPWiki has the following copyright notice:
+
+--------------------------------------------------------------------------------
+  JSPWiki - a JSP-based WikiWiki clone.
+
+  Copyright (C) 2001-2005 Janne Jalkanen (Janne.Jalkanen@iki.fi)
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU Lesser General Public License as published by
+  the Free Software Foundation; either version 2.1 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+--------------------------------------------------------------------------------
+
+Why a branch?
+=============
+
+Basically, because I needed some features that JSPWiki didn't provide
+and because I like to tinker. The branch was not intended, it just
+happened when my local code base diverged from JSPWiki and trying to
+keep up and send patches to Janne started biting into my development
+time. So I decided that I keep this as a branch and put the result on
+the net to allow interested parties some backporting if wanted.
+
+There should be no doubt that most of the code development happened
+inside JSPWiki. I still sync with JSPWiki from time to time and port
+changes that happen there into eyeWiki. However, as the base structure
+is now significantly different, I do this less and less frequently. If
+you spot a bug in eyeWiki, please verify that it is not really a
+JSPWiki bug. If it gets fixed there, it will also (sooner or later)
+get fixed inside the eyeWiki.
+
+Where did you branch off?
+=========================
+
+Around 2.1.89 which frequent syncs up to 2.2.14. Roughly, we are at that level.
 

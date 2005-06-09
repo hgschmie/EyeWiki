@@ -42,7 +42,7 @@ public interface URLConstructor
      *  
      * @param context
      * @return "Wiki.jsp", "PageInfo.jsp", etc.  Just return the name,
-     *         JSPWiki will figure out the page.
+     *         eyeWiki will figure out the page.
      */
     String getForwardPage(HttpServletRequest request);
 }

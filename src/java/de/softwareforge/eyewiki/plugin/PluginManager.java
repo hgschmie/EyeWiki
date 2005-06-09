@@ -1,22 +1,3 @@
-/*
-  JSPWiki - a JSP-based WikiWiki clone.
-
-  Copyright (C) 2001 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU Lesser General Public License as published by
-  the Free Software Foundation; either version 2.1 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki.plugin;
 
 import java.io.IOException;
@@ -64,7 +45,7 @@ import de.softwareforge.eyewiki.util.FileUtil;
 
 /**
  * Manages plugin classes.  There exists a single instance of PluginManager per each instance of
- * WikiEngine, that is, each JSPWiki instance.
+ * WikiEngine, that is, each eyeWiki instance.
  *
  * <P>
  * A plugin is defined to have three parts:
@@ -95,15 +76,15 @@ import de.softwareforge.eyewiki.util.FileUtil;
  * </p>
  *
  * <p>
- * If the parameter "debug" is set to "true" for the plugin, JSPWiki will output debugging
+ * If the parameter "debug" is set to "true" for the plugin, eyeWiki will output debugging
  * information directly to the page if there is an exception.
  * </p>
  *
  * <P>
  * The class name can be shortened, and marked without the package. For example, "FunnyPlugin"
  * would be expanded to "de.softwareforge.eyewiki.plugin.FunnyPlugin" automatically.  It is also possible
- * to defined other packages, by setting the "jspwiki.plugin.searchPath" property.  See the
- * included jspwiki.properties file for examples.
+ * to defined other packages, by setting the "eyewiki.plugin.searchPath" property.  See the
+ * included eyewiki.properties file for examples.
  * </p>
  *
  * <P>
@@ -159,7 +140,7 @@ public class PluginManager
     /**
      * Create a new PluginManager.
      *
-     * @param conf Contents of a "jspwiki.properties" file.
+     * @param conf Contents of a "eyewiki.properties" file.
      *
      * @throws InternalWikiException DOCUMENT ME!
      */

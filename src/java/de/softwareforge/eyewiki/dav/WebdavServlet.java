@@ -1,7 +1,3 @@
-/*
- * (C) Janne Jalkanen 2005
- *
- */
 package de.softwareforge.eyewiki.dav;
 
 import org.apache.commons.logging.Log;

@@ -8,32 +8,14 @@
 #    FileSystemProvider for simple pure file storage with no version information
 #
 
-#
-#  Determines where wiki files are kept.
-#
-jspwiki.relativePathes = false
-jspwiki.pageDir = @tests.pagedir@
-jspwiki.workDir = @tests.workdir@
-jspwiki.storageDir = @tests.pagedir@
+eyewiki.relativePathes = false
+eyewiki.pageDir = @tests.pagedir@
+eyewiki.workDir = @tests.workdir@
+eyewiki.storageDir = @tests.pagedir@
+eyewiki.componentsFile = src/test/etc/versComponents.xml
+eyewiki.variableFile   = @tests.variables@
 
-jspwiki.componentsFile = @tests.components@
-jspwiki.pluginFile = @tests.plugins@
-jspwiki.variableFile   = @tests.variables@
-
-jspwiki.translatorReader.camelCaseLinks = true
-
-jspwiki.breakTitleWithSpaces = true
-
-jspwiki.translatorReader.matchEnglishPlurals = true
-jspwiki.translatorReader.useOutlinkImage = false
-
-jspwiki.encoding = ISO-8859-1
-
-jspwiki.auth.useOldAuth = true
-jspwiki.authenticator = FileAuthenticator
-jspwiki.fileAuthenticator.fileName = @tests.auth.filename@
-
-jspwiki.filterConfig = @tests.filter@
+eyewiki.encoding = UTF-8
 
 #
 #  Special page references.
@@ -44,18 +26,16 @@ jspwiki.filterConfig = @tests.filter@
 # Example to redirect all requests to a page called 'OriginalWiki'
 # to the original wikiwiki at http://c2.com/cgi/wiki
 #
-# jspwiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
+# eyewiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
 #
-jspwiki.specialPage.RecentChanges = RecentChanges.jsp
-jspwiki.specialPage.FindPage = Search.jsp
+eyewiki.specialPage.RecentChanges = RecentChanges.jsp
+eyewiki.specialPage.FindPage = Search.jsp
 
 # InterWiki links The %s is replaced with the page reference (specify
 # multiple times to get multiple references).  Page references should
 # appear in format : [wiki:wikipage].  
 
-jspwiki.interWikiRef.JSPWiki = http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=%s
-
-jspwiki.rss.generate = false
+eyewiki.interWikiRef.eyeWiki = http://jspwiki.org/wiki/%s
 
 #
 # Define which image types are inlined.
@@ -63,14 +43,14 @@ jspwiki.rss.generate = false
 # Windows or UNIX shells).
 #
 
-jspwiki.translatorReader.inlinePattern.1 = *.jpg
-jspwiki.translatorReader.inlinePattern.2 = *.png
-jspwiki.translatorReader.inlinePattern.3 = http://images.com/*
+eyewiki.translatorReader.inlinePattern.1 = *.jpg
+eyewiki.translatorReader.inlinePattern.2 = *.png
+eyewiki.translatorReader.inlinePattern.3 = http://images.com/*
 
 #
 # Use PageAuthorizer for tests.
 #
-jspwiki.authorizer = PageAuthorizer
+eyewiki.authorizer = PageAuthorizer
 
 #
 #  Configure logs.

@@ -51,7 +51,7 @@ function skinSelect(skin)
   {
     if ( skin[i].selected )
     {
-      document.cookie = "JspWikiSkin=" + skin[i].value + "#skin#" ;
+      document.cookie = "eyeWikiSkin=" + skin[i].value + "#skin#" ;
     }
   }
   location.reload(); /* reload page */

@@ -46,7 +46,7 @@ public class WikiDatabaseTest
     public void setUp()
             throws Exception
     {
-        Configuration conf = TestEngine.getConfiguration("/jspwiki_auth.properties");
+        Configuration conf = TestEngine.getConfiguration("/eyewiki_auth.properties");
 
         // props.setProperty(WikiProperties.PROP_CLASS_USERDATABASE, "WikiDatabase");
         m_engine = new TestEngine(conf);

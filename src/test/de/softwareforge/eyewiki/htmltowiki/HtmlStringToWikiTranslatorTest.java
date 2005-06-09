@@ -226,9 +226,9 @@ public class HtmlStringToWikiTranslatorTest
                 "<u>ThisPageDoesNotExist</u><a href=\"Edit.jsp?page=ThisPageDoesNotExist\">?</a>"));
 
         assertEquals(
-            "[/JSPWiki/wysiwyg/FCKeditor/editor/images/smiley/msn/sad_smile.gif] ",
+            "[/eyeWiki/wysiwyg/FCKeditor/editor/images/smiley/msn/sad_smile.gif] ",
             html2wiki.translate(
-                "<img src=\"/JSPWiki/wysiwyg/FCKeditor/editor/images/smiley/msn/sad_smile.gif\" alt=\"\"/>"));
+                "<img src=\"/eyeWiki/wysiwyg/FCKeditor/editor/images/smiley/msn/sad_smile.gif\" alt=\"\"/>"));
 
         assertEquals("\\\\\\", html2wiki.translate("\\\\\\"));
 

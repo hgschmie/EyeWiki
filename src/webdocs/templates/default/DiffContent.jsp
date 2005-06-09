@@ -1,5 +1,5 @@
 <%@ page import="de.softwareforge.eyewiki.tags.InsertDiffTag" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <%!
     String getVersionText( Integer ver )
     {

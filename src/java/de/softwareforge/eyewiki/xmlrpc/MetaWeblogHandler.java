@@ -1,22 +1,3 @@
-/*
-   JSPWiki - a JSP-based WikiWiki clone.
-
-   Copyright (C) 2001-2004 Janne Jalkanen (Janne.Jalkanen@iki.fi)
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU Lesser General Public License as published by
-   the Free Software Foundation; either version 2.1 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-*/
 package de.softwareforge.eyewiki.xmlrpc;
 
 import java.io.ByteArrayInputStream;
@@ -47,9 +28,9 @@ import de.softwareforge.eyewiki.providers.ProviderException;
  * Provides handlers for all RPC routines of the MetaWeblog API.
  *
  * <P>
- * JSPWiki does not support categories, and therefore we always return an empty list for
+ * eyeWiki does not support categories, and therefore we always return an empty list for
  * getCategories().  Note also that this API is not suitable for general Wiki editing, since
- * JSPWiki formats the entries in a wiki-compatible manner.  And you cannot choose your page names
+ * eyeWiki formats the entries in a wiki-compatible manner.  And you cannot choose your page names
  * either.  Since 2.1.94 the entire MetaWeblog API is supported.
  * </p>
  *
@@ -131,7 +112,7 @@ public class MetaWeblogHandler
     }
 
     /**
-     * JSPWiki does not support categories, therefore JSPWiki always returns an empty list for
+     * eyeWiki does not support categories, therefore eyeWiki always returns an empty list for
      * categories.
      *
      * @param blogid DOCUMENT ME!
@@ -272,7 +253,7 @@ public class MetaWeblogHandler
      * @param username DOCUMENT ME!
      * @param password DOCUMENT ME!
      * @param content DOCUMENT ME!
-     * @param publish This parameter is ignored for JSPWiki.
+     * @param publish This parameter is ignored for eyeWiki.
      *
      * @return DOCUMENT ME!
      *

@@ -1,6 +1,6 @@
 ###########################################################################
 #
-#  This is the JSPWiki configuration file.  You'll need to edit this
+#  This is the eyeWiki configuration file.  You'll need to edit this
 #  a bit.  The first few lines are the most important ones.
 #
 #  Wherever it is said that an option can be "true" or "false", you can
@@ -11,7 +11,7 @@
 # Will the Wiki keep all its pages, workdir and logs inside the webapp.
 # Don't use this if you run on a container that does not unpack your war!
 #
-jspwiki.relativePathes = true
+eyewiki.relativePathes = true
 
 #
 #  You can use this to override the default application name.  It affects
@@ -19,15 +19,15 @@ jspwiki.relativePathes = true
 #  the actual web name (http://my.com/mywiki) of the application, but usually
 #  it is the same.
 #
-jspwiki.applicationName = @appname@
+eyewiki.applicationName = @appname@
 
 #
 # Where is the component file from which the Wiki will configure its
 # components
 #
-jspwiki.componentsFile = /WEB-INF/wikiComponents.xml
-jspwiki.pluginFile     = /WEB-INF/wikiPlugins.xml
-jspwiki.variableFile   = /WEB-INF/wikiVariables.xml
+eyewiki.componentsFile = /WEB-INF/wikiComponents.xml
+eyewiki.pluginFile     = /WEB-INF/wikiPlugins.xml
+eyewiki.variableFile   = /WEB-INF/wikiVariables.xml
 
 #
 #  Determines where wiki files are kept for FileSystemProvider
@@ -36,9 +36,9 @@ jspwiki.variableFile   = /WEB-INF/wikiVariables.xml
 #  If you're using Windows, then you must duplicate the backslashes.
 #  For example, use:
 #  
-#  jspwiki.pageDir = C:\\Data\\jspwiki
+#  eyewiki.pageDir = C:\\Data\\eyewiki
 #
-jspwiki.pageDir = @pagedir@
+eyewiki.pageDir = @pagedir@
 
 #
 #  The BasicAttachmentProvider needs to know where to store the files
@@ -48,18 +48,18 @@ jspwiki.pageDir = @pagedir@
 #  If you're using Windows, then you must duplicate the backslashes.
 #  For example, use:
 #  
-#  jspwiki.storageDir = C:\\Data\\jspwiki
+#  eyewiki.storageDir = C:\\Data\\eyewiki
 #
-jspwiki.storageDir = @pagedir@
+eyewiki.storageDir = @pagedir@
 
 #
-#  The JSPWiki working directory.  If not set, a temporary path will
+#  The eyeWiki working directory.  If not set, a temporary path will
 #  be used.  You can see the location of the workdir in the logs.
 #
 #  The working directory is used to cache things like Lucene search
 #  results.
 #
-jspwiki.workDir = @workdir@
+eyewiki.workDir = @workdir@
 
 #
 #  Which page provider class to use.  Possibilities are:
@@ -68,10 +68,10 @@ jspwiki.workDir = @workdir@
 #    FileSystemProvider     - for simple pure file storage with no version information
 #    VersioningFileProvider - for simple, non-RCS based versioning storage.
 #
-#  Note that if you're upgrading from JSPWiki 1.x, then you need to remove the
+#  Note that if you're upgrading from eyeWiki 1.x, then you need to remove the
 #  "de.softwareforge.eyewiki." part from the beginning of the path.
 #
-jspwiki.pageProvider = VersioningFileProvider
+eyewiki.pageProvider = VersioningFileProvider
 
 #
 #  Set to true, if you want to cache page data into memory.  This is
@@ -79,10 +79,10 @@ jspwiki.pageProvider = VersioningFileProvider
 #
 #  Default is false (no cache).
 #
-#  NB: This replaces the JSPWiki 1.x "CachingProvider" setting, since it
+#  NB: This replaces the eyeWiki 1.x "CachingProvider" setting, since it
 #      probably was too confusing.
 #
-jspwiki.usePageCache = true
+eyewiki.usePageCache = true
 
 #
 #  ATTACHMENTS:
@@ -94,7 +94,7 @@ jspwiki.usePageCache = true
 #    * Leave the value empty (or just comment the line out) 
 #      the attachment functionality is disabled
 #
-jspwiki.attachmentProvider = BasicAttachmentProvider
+eyewiki.attachmentProvider = BasicAttachmentProvider
 
 #
 #  You can limit the maximum size of an attachment by setting this
@@ -102,22 +102,22 @@ jspwiki.attachmentProvider = BasicAttachmentProvider
 #  are accepted.
 #
 #  The following line would limit the attachment size to 100,000 bytes
-#jspwiki.attachment.maxsize=100000
+#eyewiki.attachment.maxsize=100000
 
 #
 # For building user profiles you need an authenticator which keeps 
 # the user profiles somewhere.
 #
-jspwiki.auth.useOldAuth = true
-jspwiki.auth.administrator = KnownPerson
+eyewiki.auth.useOldAuth = true
+eyewiki.auth.administrator = KnownPerson
 
 #
 # define the users file for the FileAuthenticator
 #
-jspwiki.fileAuthenticator.fileName = @passwdfile@
+eyewiki.fileAuthenticator.fileName = @passwdfile@
 
 #
-#  BaseURL can be used to rewrite all of JSPWiki's internal references.
+#  BaseURL can be used to rewrite all of eyeWiki's internal references.
 #  Sometimes, especially if you're behind a address-rewriting firewall,
 #  relative URLs don't work since the servlet container has no idea
 #  where it's actually located.
@@ -130,9 +130,9 @@ jspwiki.fileAuthenticator.fileName = @passwdfile@
 #  trailing slash.
 #
 #  Example:
-#  jspwiki.baseURL = http://www.jspwiki.org/
+#  eyewiki.baseURL = http://www.softwareforge.de/eyewiki/
 #
-jspwiki.baseURL = http://localhost:8080/jspwiki/
+eyewiki.baseURL = http://localhost:8080/eyewiki/
 
 #  Determines if you need to have relative urls or not.  If the baseURL
 #  is not set, then this has no effect, but if you set the baseURL (which
@@ -140,12 +140,12 @@ jspwiki.baseURL = http://localhost:8080/jspwiki/
 #
 #  Possible values are "absolute" and "relative".
 #
-#jspwiki.referenceStyle=relative
+#eyewiki.referenceStyle=relative
 
 #
-#  Determines which character encoding JSPWiki should use.  If you want
+#  Determines which character encoding eyeWiki should use.  If you want
 #  to support all languages in your Wiki, you probably want to enable
-#  this.  From JSPWiki 2.2, it is strongly suggested that you use UTF-8.
+#  this.  From eyeWiki 2.2, it is strongly suggested that you use UTF-8.
 #  
 #  Note that you can't switch these in the mean time, since the way the
 #  files are encoded on disk is incompatible between ISO-Latin1 and UTF-8.
@@ -154,7 +154,7 @@ jspwiki.baseURL = http://localhost:8080/jspwiki/
 #  Possible values are 'ISO-8859-1' (default, if none has been specified) 
 #  and 'UTF-8'.
 
-jspwiki.encoding = UTF-8
+eyewiki.encoding = UTF-8
 
 #
 #  Determines whether raw HTML is allowed as Wiki input.
@@ -176,7 +176,7 @@ jspwiki.encoding = UTF-8
 #
 #  The default for this option is "false".
 #
-jspwiki.translatorReader.allowHTML = false
+eyewiki.translatorReader.allowHTML = false
 
 ############################################################################
 #
@@ -188,7 +188,7 @@ jspwiki.translatorReader.allowHTML = false
 #  page titles readable on some occasions, but it does have the
 #  drawback of making the titles look a bit funny at times.
 #
-jspwiki.breakTitleWithSpaces = true
+eyewiki.breakTitleWithSpaces = true
 
 #
 #  If set to true, this property means that "WikiName" and "WikiNames"
@@ -198,7 +198,7 @@ jspwiki.breakTitleWithSpaces = true
 #
 #  For any other language, you'll probably want to turn this off.
 #
-jspwiki.translatorReader.matchEnglishPlurals = true
+eyewiki.translatorReader.matchEnglishPlurals = true
 
 #
 #  If you set this to true, the Wiki translator will then also consider
@@ -211,51 +211,51 @@ jspwiki.translatorReader.matchEnglishPlurals = true
 #
 #  This option can be overridden on a per-page basis using the SET directive.
 #
-jspwiki.translatorReader.camelCaseLinks = false
+eyewiki.translatorReader.camelCaseLinks = false
 
 #
 #  This sets the default template used by the Wiki engine.  The templates
-#  live in templates/<template name>.  JSPWiki will attempt to find two
+#  live in templates/<template name>.  eyeWiki will attempt to find two
 #  basic templates from that directory: "ViewTemplate" and "EditTemplate".
 #
 #  By default this is called "default".
 #
 #  This option can be overridden on a per-page basis using the SET directive.
 #
-jspwiki.templateDir = default
+eyewiki.templateDir = default
 
 #
 #  The name of the front page.  This is the page that gets loaded if no
-#  other page is loaded.  Up until JSPWiki 1.9.28, it was always called
+#  other page is loaded.  Up until eyeWiki 1.9.28, it was always called
 #  "Main", but now you can easily change the default front page here.  If not
 #  defined, uses "Main".
 #
-#jspwiki.frontPage = Main
+#eyewiki.frontPage = Main
 
 #
 #  If set to true, all outward links have a small icon attached.  The icon
 #  can be found from images/out.png.  Default is true.
 #
-jspwiki.translatorReader.useOutlinkImage = true
+eyewiki.translatorReader.useOutlinkImage = true
 
 #
 #  Set this to the number of minutes a person can "lock" a page
 #  for while he is editing it.
 #
-jspwiki.lockExpiryTime = 60
+eyewiki.lockExpiryTime = 60
 
 #
 #  Apache Lucene will be used to speed up search, unless you explicitly
 #  turn it off here.
 #
-#jspwiki.useLucene = true
+#eyewiki.useLucene = true
 
 #
 #  If your wiki's language is something else than English, you might
 #  want to visit jakarta.apache.org/lucene and download a proper Analyzer
 #  for your language.  Default is to use StandardAnalyzer.
 #
-#jspwiki.lucene.analyzer = org.apache.lucene.analysis.standard.StandardAnalyzer
+#eyewiki.lucene.analyzer = org.apache.lucene.analysis.standard.StandardAnalyzer
 
 ############################################################################
 #
@@ -267,13 +267,13 @@ jspwiki.lockExpiryTime = 60
 # Example to redirect all requests to a page called 'OriginalWiki'
 # to the original wikiwiki at http://c2.com/cgi/wiki
 #
-# jspwiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
+# eyewiki.specialPage.OriginalWiki = http://c2.com/cgi/wiki
 #
 #  Note that it is entirely possible to override any Wiki page, even
 #  an existing one by redefining it here.
 #
-jspwiki.specialPage.FindPage = Search.jsp
-jspwiki.specialPage.UserPreferences = UserPreferences.jsp
+eyewiki.specialPage.FindPage = Search.jsp
+eyewiki.specialPage.UserPreferences = UserPreferences.jsp
 
 #############################################################################
 #
@@ -281,17 +281,17 @@ jspwiki.specialPage.UserPreferences = UserPreferences.jsp
 #
 #  Define here the packages you want to use for searching plugins, 
 #  separated with commas.
-#  For example, use the following command to add "org.myorganisation.jspwiki.myplugins"
+#  For example, use the following command to add "org.myorganisation.eyewiki.myplugins"
 #  and "com.foobar.myplugins" to the search path.
 #
 #  The default path is "de.softwareforge.eyewiki.plugins", and it will be always
-#  the last item on the path.  This allows you to override JSPWiki default
+#  the last item on the path.  This allows you to override eyeWiki default
 #  plugins.  Note that you are only adding to the path, not replacing it (ie.
 #  the default path is never removed.)
 #
-#  jspwiki.plugin.searchPath = org.myorganisation.jspwiki.myplugins,com.foobar.myplugins
+#  eyewiki.plugin.searchPath = org.myorganisation.eyewiki.myplugins,com.foobar.myplugins
 #
-jspwiki.plugin.searchPath = 
+eyewiki.plugin.searchPath = 
 
 #############################################################################
 #
@@ -301,7 +301,7 @@ jspwiki.plugin.searchPath =
 #  do not need to go and specify this.  However, if your filters.xml live somewhere
 #  else, you'll have to specify it here.
 #
-#jspwiki.filterConfig = /some/path/to/your/filters.xml
+#eyewiki.filterConfig = /some/path/to/your/filters.xml
 
 
 #############################################################################
@@ -312,32 +312,32 @@ jspwiki.plugin.searchPath =
 # multiple times to get multiple references).  Page references should
 # appear in format : [wiki:wikipage].  
 #
-# This is the JSPWiki home.  In future, JSPWiki will probably rely on this
+# This is the eyeWiki home.  In future, eyeWiki will probably rely on this
 # for error messages, so I don't recommend that you change it.
-jspwiki.interWikiRef.JSPWiki = http://www.jspwiki.org/Wiki.jsp?page=%s
+eyewiki.interWikiRef.eyeWiki = http://www.eyewiki.org/Wiki.jsp?page=%s
 
-# Here's how you can have directly links to the JSPWiki editor.
+# Here's how you can have directly links to the eyeWiki editor.
 # Now you can put a hyperlink for editing "MainPage" by making 
 # a link [Edit:MainPage].
-jspwiki.interWikiRef.Edit = Edit.jsp?page=%s
+eyewiki.interWikiRef.Edit = Edit.jsp?page=%s
 
 #  This is the original WikiWikiWeb
-jspwiki.interWikiRef.WikiWikiWeb = http://c2.com/cgi/wiki?%s
+eyewiki.interWikiRef.WikiWikiWeb = http://c2.com/cgi/wiki?%s
 
 #  TWiki, a very nice WikiClone.
-jspwiki.interWikiRef.TWiki = http://twiki.org/cgi-bin/view/TWiki/%s
+eyewiki.interWikiRef.TWiki = http://twiki.org/cgi-bin/view/TWiki/%s
 
 #  MeatballWiki, which seems to be quite popular.
-jspwiki.interWikiRef.MeatballWiki = http://usemod.com/cgi-bin/mb.pl?%s
+eyewiki.interWikiRef.MeatballWiki = http://usemod.com/cgi-bin/mb.pl?%s
 
 #  Wikipedia, a Wiki encyclopedia!
-jspwiki.interWikiRef.Wikipedia = http://www.wikipedia.com/wiki/%s
+eyewiki.interWikiRef.Wikipedia = http://www.wikipedia.com/wiki/%s
 
 #  Google, the ubiquitous search engine.
-jspwiki.interWikiRef.Google = http://www.google.com/search?q=%s
+eyewiki.interWikiRef.Google = http://www.google.com/search?q=%s
 
-#  JSPWiki documentation (for this release)
-jspwiki.interWikiRef.Doc = http://doc.jspwiki.org/2.2/Wiki.jsp?page=%s
+#  eyeWiki documentation (for this release)
+eyewiki.interWikiRef.Doc = http://doc.eyewiki.org/2.2/Wiki.jsp?page=%s
 
 ############################################################################
 #
@@ -352,21 +352,21 @@ jspwiki.interWikiRef.Doc = http://doc.jspwiki.org/2.2/Wiki.jsp?page=%s
 # For example:
 #   Inline all JPG files, PNG files and all files from images.com:
 #
-#      jspwiki.translatorReader.inlinePattern.1 = *.jpg
-#      jspwiki.translatorReader.inlinePattern.2 = *.png
-#      jspwiki.translatorReader.inlinePattern.3 = http://images.com/*
+#      eyewiki.translatorReader.inlinePattern.1 = *.jpg
+#      eyewiki.translatorReader.inlinePattern.2 = *.png
+#      eyewiki.translatorReader.inlinePattern.3 = http://images.com/*
 
 
 ###########################################################################
 #
 # Enables the generation of per-page ATOM feeds. Default is false.
-jspwiki.enableAtomFeeds = false
+eyewiki.enableAtomFeeds = false
 
 #
 #  Determine the name of the RSS file. This path is relative to your
 #  Wiki root.  Default is "rss.rdf"
 #
-jspwiki.rss.fileName = rss.rdf
+eyewiki.rss.fileName = rss.rdf
 
 #
 #  Determine the refresh interval (ie. how often the RSS file is regenerated.
@@ -374,7 +374,7 @@ jspwiki.rss.fileName = rss.rdf
 #  Anything above five minutes is probably okay.  The default value is ten minutes.
 #  The value should be in seconds.
 #
-jspwiki.rss.interval = 600
+eyewiki.rss.interval = 600
 
 #
 #  The text you want to be shown as your "channel description" when someone
@@ -382,7 +382,7 @@ jspwiki.rss.interval = 600
 #  so.  You can continue to a new line by adding a backslash to the end of the
 #  line.  Default is to have no description.
 #
-jspwiki.rss.channelDescription = Oh poor me, my owner has not set \
+eyewiki.rss.channelDescription = Oh poor me, my owner has not set \
                                  a channel description at all. \
                                  Pity me.
 
@@ -391,7 +391,7 @@ jspwiki.rss.channelDescription = Oh poor me, my owner has not set \
 #  code, or in case of some languages, two letters for the country,
 #  a dash, and two letters for the dialect.
 #
-jspwiki.rss.channelLanguage = en-us
+eyewiki.rss.channelLanguage = en-us
 
 ###########################################################################
 #
@@ -404,24 +404,24 @@ jspwiki.rss.channelLanguage = en-us
 #     NOTE! If you do not specify this, an internal "diff" routine is used.
 #           In most cases, you really should not touch this.
 #
-#jspwiki.diffCommand = diff -u %s1 %s2
+#eyewiki.diffCommand = diff -u %s1 %s2
 
 #  The command for RCS checkin
-#jspwiki.rcsFileProvider.checkinCommand = ci -q -mx -l -t-none %s
+#eyewiki.rcsFileProvider.checkinCommand = ci -q -mx -l -t-none %s
 
 #  The command for RCS checkout of the newest version
-#jspwiki.rcsFileProvider.checkoutCommand = co -l %s
+#eyewiki.rcsFileProvider.checkoutCommand = co -l %s
 
 #  The command for checking out a specific version (%v = version number)
-#jspwiki.rcsFileProvider.checkoutVersionCommand = co -p -r1.%v %s
+#eyewiki.rcsFileProvider.checkoutVersionCommand = co -p -r1.%v %s
 
 #  The command for RCS log headers
 #  If you have a version of RCS that does not support the "-z" flag, then
 #  you can try this one out without it.  It should work.
-#jspwiki.rcsFileProvider.logCommand = rlog -zLT -h %s
+#eyewiki.rcsFileProvider.logCommand = rlog -zLT -h %s
 
 #  The command for getting the entire modification history
-#jspwiki.rcsFileProvider.fullLogCommand = rlog -zLT %s
+#eyewiki.rcsFileProvider.fullLogCommand = rlog -zLT %s
 
 
 ###########################################################################
@@ -436,8 +436,8 @@ jspwiki.rss.channelLanguage = en-us
 #log4j.appender.mail = org.apache.log4j.net.SMTPAppender
 #log4j.appender.mail.Threshold = WARN
 #log4j.appender.mail.To = root@localhost
-#log4j.appender.mail.From = JSPWiki@localhost
-#log4j.appender.mail.Subject = Problem with JSPWiki!
+#log4j.appender.mail.From = eyeWiki@localhost
+#log4j.appender.mail.Subject = Problem with eyeWiki!
 #log4j.appender.mail.SMTPHost = mail
 
 #log4j.appender.mail.layout = org.apache.log4j.PatternLayout

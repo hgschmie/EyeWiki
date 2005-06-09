@@ -1,7 +1,3 @@
-/*
- * (C) Janne Jalkanen 2005
- * 
- */
 package de.softwareforge.eyewiki.rss;
 
 import java.util.Date;
@@ -41,7 +37,7 @@ public class RSSGeneratorTest
 
     protected void setUp() throws Exception
     {
-        conf = TestEngine.getConfiguration("/jspwiki_rss.properties");
+        conf = TestEngine.getConfiguration("/eyewiki_rss.properties");
 
         conf.setProperty( WikiEngine.PROP_BASEURL, "http://localhost/" );
         m_testEngine = new TestEngine(conf);

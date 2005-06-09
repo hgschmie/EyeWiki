@@ -3,13 +3,13 @@
 <%@ page import="de.softwareforge.eyewiki.*" %>
 <%@ page import="de.softwareforge.eyewiki.util.*" %>
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
-<%@ taglib uri="/WEB-INF/tld/jspwiki.tld" prefix="wiki" %>
+<%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <%! 
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Logger log = Logger.getLogger("JSPWiki"); 
+    Logger log = Logger.getLogger("eyeWiki"); 
     WikiEngine wiki;
 %>
 <%
@@ -68,7 +68,7 @@
     pageContext.setAttribute( "message", msg, PageContext.REQUEST_SCOPE );
 %>
 
-   <h3 class="errorpage">JSPWiki has detected an error</h3>
+   <h3 class="errorpage">eyeWiki has detected an error</h3>
 
    <dl>
       <dt class="errorpage">Error Message</dt>
