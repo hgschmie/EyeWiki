@@ -1,4 +1,4 @@
 !!!Congratulations!
 
-You have successfully installed [iWiki|About].
+You have successfully installed [eyeWiki|About].
 
