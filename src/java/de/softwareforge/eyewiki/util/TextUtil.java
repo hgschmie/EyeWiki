@@ -52,16 +52,16 @@ public final class TextUtil
         // it does not eat byte[]s.
         for (int i = 0; i < rs.length; i++)
         {
-            char c = (char) rs[i];
+            char ch = (char) rs[i];
 
-            switch (c)
+            switch (ch)
             {
             case '_':
             case '.':
             case '*':
             case '-':
             case '/':
-                result.append(c);
+                result.append(ch);
 
                 break;
 
@@ -73,16 +73,16 @@ public final class TextUtil
             default:
 
                 if (
-                    ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z'))
-                                || ((c >= '0') && (c <= '9')))
+                    ((ch >= 'a') && (ch <= 'z')) || ((ch >= 'A') && (ch <= 'Z'))
+                                || ((ch >= '0') && (ch <= '9')))
                 {
-                    result.append(c);
+                    result.append(ch);
                 }
                 else
                 {
                     result.append('%');
-                    result.append(HEX_DIGITS.charAt((c & 0xF0) >> 4));
-                    result.append(HEX_DIGITS.charAt(c & 0x0F));
+                    result.append(HEX_DIGITS.charAt((ch & 0xF0) >> 4));
+                    result.append(HEX_DIGITS.charAt(ch & 0x0F));
                 }
             }
         } // for
