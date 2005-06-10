@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <container>
   <component-implementation key="SamplePlugin"           class="de.softwareforge.eyewiki.plugin.SamplePlugin" />
   <component-implementation key="SamplePlugin2"          class="SamplePlugin2" />

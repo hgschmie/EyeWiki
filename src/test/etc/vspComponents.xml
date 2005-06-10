@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <container>
   <!-- Configures the type of URL Constructor that is used for the Wiki -->
   <component-implementation key="URLConstructor"    class="de.softwareforge.eyewiki.url.DefaultURLConstructor" />

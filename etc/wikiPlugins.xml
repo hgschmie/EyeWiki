@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <container>
   <component-implementation key="BugReportHandler"       class="de.softwareforge.eyewiki.plugin.BugReportHandler" />
   <component-implementation key="Counter"                class="de.softwareforge.eyewiki.plugin.Counter" />
