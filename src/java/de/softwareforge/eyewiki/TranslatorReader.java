@@ -1010,10 +1010,7 @@ public class TranslatorReader
 
         if (log.isDebugEnabled())
         {
-            if (log.isDebugEnabled())
-            {
-                log.debug("page=" + page.getName() + ", ACL = " + ruleLine);
-            }
+            log.debug("page=" + page.getName() + ", ACL = " + ruleLine);
         }
 
         try
