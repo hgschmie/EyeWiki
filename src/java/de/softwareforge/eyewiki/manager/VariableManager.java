@@ -41,17 +41,18 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
+
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.util.PriorityList;
+import de.softwareforge.eyewiki.variable.AbstractSimpleVariable;
 import de.softwareforge.eyewiki.variable.WikiVariable;
-
-import org.picocontainer.PicoContainer;
-import org.picocontainer.Startable;
-import org.picocontainer.defaults.ObjectReference;
-import org.picocontainer.defaults.SimpleReference;
 
 /**
  * Manages variables.  Variables are case-insensitive.  A list of all available variables is on a Wiki page called "WikiVariables".
@@ -117,6 +118,10 @@ public class VariableManager
     public synchronized void start()
     {
         variableContainer.start();
+
+        // Internal variables are evaluated here.
+        InternalVariables internal = new InternalVariables();
+        internal.start();
     }
 
     /**
@@ -307,15 +312,9 @@ public class VariableManager
         }
 
         String name = varName.toLowerCase();
-        WikiVariable variable = (WikiVariable) variableMap.get(name);
 
         try
         {
-            if (variable != null)
-            {
-                return variable.getValue(context, name);
-            }
-
             for (Iterator it = evaluators.iterator(); it.hasNext();)
             {
                 WikiVariable evaluator = (WikiVariable) it.next();
@@ -359,6 +358,49 @@ public class VariableManager
         catch (NoSuchVariableException e)
         {
             return defaultValue;
+        }
+    }
+
+    private class InternalVariables
+    		extends AbstractSimpleVariable
+            implements WikiVariable
+    {
+        private InternalVariables()
+        {
+        }
+
+        public synchronized void start()
+        {
+            // Hardcoded sequence of the evaluators
+            registerEvaluator(this, MAX_PRIORITY);
+        }
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param varName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         *
+         * @throws Exception DOCUMENT ME!
+         * @throws NoSuchVariableException DOCUMENT ME!
+         */
+        public String getValue(final WikiContext context, final String varName)
+                throws Exception
+        {
+            if (varName != null)
+            {
+                String name = varName.toLowerCase();
+                WikiVariable variable = (WikiVariable) variableMap.get(name);
+        
+                if (variable != null)
+                {
+                    return variable.getValue(context, name);
+                }
+            }
+
+            throw new NoSuchVariableException("");
         }
     }
 }
