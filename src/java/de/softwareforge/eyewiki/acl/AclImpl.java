@@ -300,6 +300,11 @@ public class AclImpl
         {
             return ALLOW;
         }
+        
+        if (principal instanceof Group)
+        {
+            return NONE;
+        }
 
         //
         //  Now, if the individual permissions did not match, we'll go through
@@ -320,12 +325,7 @@ public class AclImpl
             }
         }
 
-        if (posEntry)
-        {
-            return ALLOW;
-        }
-
-        return NONE;
+        return posEntry ? ALLOW : NONE;
     }
 
     /**
