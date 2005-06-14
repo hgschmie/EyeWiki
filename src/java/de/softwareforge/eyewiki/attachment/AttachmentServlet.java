@@ -389,13 +389,12 @@ public class AttachmentServlet
             //
             //  Go through all files being uploaded.
             //
-            Enumeration files = multi.getFileParameterNames();
+            AttachmentManager mgr = m_engine.getAttachmentManager();
 
-            while (files.hasMoreElements())
+            for (Enumeration files = multi.getFileParameterNames(); files.hasMoreElements(); )
             {
                 String part = (String) files.nextElement();
                 File f = multi.getFile(part);
-                AttachmentManager mgr = m_engine.getAttachmentManager();
                 InputStream in;
 
                 try
@@ -472,7 +471,7 @@ public class AttachmentServlet
                             att.setAuthor(user.getName());
                         }
 
-                        m_engine.getAttachmentManager().storeAttachment(att, in);
+                        mgr.storeAttachment(att, in);
 
                         if (log.isInfoEnabled())
                         {
