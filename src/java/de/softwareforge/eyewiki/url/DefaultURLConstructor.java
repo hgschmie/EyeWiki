@@ -149,6 +149,11 @@ public class DefaultURLConstructor
         {
             return "%uComment.jsp?page=%n";
         }
+        else if (context.equals(WikiContext.LOGIN))
+        {
+            return "%uLogin.jsp?page=%n";
+        }
+
         else if (context.equals(WikiContext.ERROR))
         {
             return "%uError.jsp";

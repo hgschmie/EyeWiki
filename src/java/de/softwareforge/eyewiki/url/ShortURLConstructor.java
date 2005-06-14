@@ -159,6 +159,10 @@ public class ShortURLConstructor
         {
             return doReplacement(viewurl + "?do=Comment", name, absolute);
         }
+        else if (context.equals(WikiContext.LOGIN))
+        {
+            return doReplacement(viewurl + "?do=Login", name, absolute);
+        }
         else if (context.equals(WikiContext.ERROR))
         {
             return doReplacement("%UError.jsp", name, absolute);
