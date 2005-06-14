@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
@@ -43,29 +43,27 @@ import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.WikiProvider;
 
-
 /**
  * Writes a diff link.  Body of the link becomes the link text.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * <li>
- * version - The older of these versions.  May be an integer to signify a version number, or the
- * text "latest" to signify the latest version. If not specified, will default to "latest".  May
- * also be "previous" to signify a version prior to this particular version.
+ * version - The older of these versions.  May be an integer to signify a version number, or the text "latest" to signify the
+ * latest version. If not specified, will default to "latest".  May also be "previous" to signify a version prior to this
+ * particular version.
  * </li>
  * <li>
- * newVersion - The newer of these versions.  Can also be "latest", or "previous".  Defaults to
- * "latest".
+ * newVersion - The newer of these versions.  Can also be "latest", or "previous".  Defaults to "latest".
  * </li>
  * </ul>
- *
+ * 
  * If the page does not exist, this tag will fail silently, and not evaluate its body contents.
  *
  * @author Janne Jalkanen
@@ -177,9 +175,7 @@ public class DiffLinkTag
         else if (VER_PREVIOUS.equals(getVersion()))
         {
             r1 = m_wikiContext.getPage().getVersion() - 1;
-            r1 = (r1 < 1)
-                ? 1
-                : r1;
+            r1 = (r1 < 1) ? 1 : r1;
         }
         else if (VER_CURRENT.equals(getVersion()))
         {
@@ -199,9 +195,7 @@ public class DiffLinkTag
         else if (VER_PREVIOUS.equals(getNewVersion()))
         {
             r2 = m_wikiContext.getPage().getVersion() - 1;
-            r2 = (r2 < 1)
-                ? 1
-                : r2;
+            r2 = (r2 < 1) ? 1 : r2;
         }
         else if (VER_CURRENT.equals(getNewVersion()))
         {
@@ -218,14 +212,10 @@ public class DiffLinkTag
         {
         case ANCHOR:
 
-            StringBuffer sb = new StringBuffer("<a class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" href=\"")
-                    .append(url)
-                    .append("\">");
-                    
+            StringBuffer sb =
+                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(url).append("\">");
             out.print(sb.toString());
-            
+
             break;
 
         case URL:

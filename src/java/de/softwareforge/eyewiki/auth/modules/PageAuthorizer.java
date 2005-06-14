@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.modules;
 
+
 /*
  * ========================================================================
  *
@@ -32,16 +33,15 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.NotOwnerException;
+
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiContext;
@@ -55,7 +55,6 @@ import de.softwareforge.eyewiki.auth.WikiAuthorizer;
 import de.softwareforge.eyewiki.auth.WikiSecurityException;
 import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
-
 
 /**
  * This is a simple authorizer that just simply takes the permissions from a page.
@@ -127,9 +126,7 @@ public class PageAuthorizer
                 }
                 catch (WikiSecurityException wse)
                 {
-                    log.error(
-                        "Error on the default permissions page '" + DEFAULT_PERMISSIONPAGE + "':"
-                        + wse.getMessage());
+                    log.error("Error on the default permissions page '" + DEFAULT_PERMISSIONPAGE + "':" + wse.getMessage());
 
                     // FIXME: SHould do something else as well?  This msg only goes to the logs, and is thus not visible to users...
                 }
@@ -140,11 +137,11 @@ public class PageAuthorizer
     }
 
     /**
-     * A helper method for parsing textual AccessControlLists.  The line is in form "(ALLOW|DENY)
-     * &lt;permission&gt; &lt;principal&gt;,&lt;principal&gt;,&lt;principal&gt;
+     * A helper method for parsing textual AccessControlLists.  The line is in form "(ALLOW|DENY) &lt;permission&gt;
+     * &lt;principal&gt;,&lt;principal&gt;,&lt;principal&gt;
      *
-     * @param page The current wiki page.  If the page already has an ACL, it will be used as a
-     *        basis for this ACL in order to avoid the creation of a new one.
+     * @param page The current wiki page.  If the page already has an ACL, it will be used as a basis for this ACL in order to
+     *        avoid the creation of a new one.
      * @param mgr The UserManager, which is used to query things like the Principal.
      * @param ruleLine The rule line, as described above.
      *
@@ -227,8 +224,7 @@ public class PageAuthorizer
         }
         catch (NotOwnerException noe)
         {
-            throw new InternalWikiException(
-                "Someone has implemented access control on access control lists without telling me.");
+            throw new InternalWikiException("Someone has implemented access control on access control lists without telling me.");
         }
         catch (IllegalArgumentException iae)
         {

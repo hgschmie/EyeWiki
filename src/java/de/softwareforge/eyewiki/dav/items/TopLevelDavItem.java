@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.items;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * DOCUMENT ME!

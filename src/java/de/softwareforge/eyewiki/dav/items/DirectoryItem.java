@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.items;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,17 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
 import org.apache.commons.lang.time.DateFormatUtils;
 
-import org.jdom.Element;
-import org.jdom.Namespace;
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 
+import org.jdom.Element;
+import org.jdom.Namespace;
 
 /**
  * DOCUMENT ME!
@@ -56,9 +55,7 @@ import de.softwareforge.eyewiki.WikiEngine;
 public class DirectoryItem
         extends DavItem
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String m_name;
 
     /**
@@ -90,9 +87,7 @@ public class DirectoryItem
         ts.add(txt);
 
         ts.add(new Element("getcontentlength", davns).setText("0"));
-        ts.add(
-            new Element("getlastmodified", davns).setText(
-                DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(new Date())));
+        ts.add(new Element("getlastmodified", davns).setText(DateFormatUtils.ISO_DATETIME_TIME_ZONE_FORMAT.format(new Date())));
 
         return ts;
     }
@@ -104,9 +99,7 @@ public class DirectoryItem
      */
     public String getHref()
     {
-        String davurl = "dav" + (m_name.equals("/")
-            ? ""
-            : "/") + m_name; //FIXME: Fixed, should determine from elsewhere
+        String davurl = "dav" + (m_name.equals("/") ? "" : "/") + m_name; //FIXME: Fixed, should determine from elsewhere
 
         if (!davurl.endsWith("/"))
         {

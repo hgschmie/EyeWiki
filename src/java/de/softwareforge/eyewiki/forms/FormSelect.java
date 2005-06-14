@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,15 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.Select;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
-
 
 /**
  * DOCUMENT ME!
@@ -81,7 +79,8 @@ public class FormSelect
         }
 
         Map previousValues = info.getSubmission();
-        if( previousValues == null )
+
+        if (previousValues == null)
         {
             previousValues = new HashMap();
         }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -67,7 +67,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-
 import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
 import de.softwareforge.eyewiki.auth.AuthorizationManager;
@@ -99,7 +98,6 @@ import org.picocontainer.defaults.DefaultPicoContainer;
 import org.picocontainer.defaults.ObjectReference;
 import org.picocontainer.defaults.SimpleReference;
 
-
 /**
  * Provides Wiki services to the JSP page.
  * 
@@ -108,14 +106,13 @@ import org.picocontainer.defaults.SimpleReference;
  * </p>
  * 
  * <P>
- * Using this class:  Always get yourself an instance from JSP page by using the
- * WikiEngine.getInstance() method.  Never create a new WikiEngine() from scratch, unless you're
- * writing tests.
+ * Using this class:  Always get yourself an instance from JSP page by using the WikiEngine.getInstance() method.  Never create a
+ * new WikiEngine() from scratch, unless you're writing tests.
  * </p>
  * 
  * <p>
- * There's basically only a single WikiEngine for each web application, and you should always get
- * it using the WikiEngine.getInstance() method.
+ * There's basically only a single WikiEngine for each web application, and you should always get it using the
+ * WikiEngine.getInstance() method.
  * </p>
  *
  * @author Janne Jalkanen
@@ -133,8 +130,8 @@ public class WikiEngine
     private static boolean c_configured = false;
 
     /**
-     * The web.xml parameter that defines where the config file is to be found. If it is not
-     * defined, uses the default as defined by PARAM_PROPERTYFILE_DEFAULT.
+     * The web.xml parameter that defines where the config file is to be found. If it is not defined, uses the default as defined
+     * by PARAM_PROPERTYFILE_DEFAULT.
      *
      * @value eyewiki.propertyfile
      */
@@ -149,16 +146,7 @@ public class WikiEngine
 
     /** Contains the default properties for eyeWiki. */
     private static final String [] PROP_SPECIAL_PAGES_DEFAULT =
-        {
-            "Login",
-            "Login.jsp",
-            "UserPreferences",
-            "UserPreferences.jsp",
-            "Search",
-            "Search.jsp",
-            "FindPage",
-            "FindPage.jsp"
-        };
+        { "Login", "Login.jsp", "UserPreferences", "UserPreferences.jsp", "Search", "Search.jsp", "FindPage", "FindPage.jsp" };
 
     /** The name of the cookie that gets stored to the user browser. */
     public static final String PREFS_COOKIE_NAME = "eyeWikiUserProfile";
@@ -182,15 +170,12 @@ public class WikiEngine
     /** Stores the base URL. */
     private String m_baseURL;
 
-    /**
-     * Store the file path to the basic URL.  When we're not running as a servlet, it defaults to
-     * the user's current directory.
-     */
+    /** Store the file path to the basic URL.  When we're not running as a servlet, it defaults to the user's current directory. */
     private String m_rootPath = System.getProperty("user.dir");
 
     /**
-     * Store the ServletContext that we're in.  This may be null if WikiEngine is not running
-     * inside a servlet container (i.e. when testing).
+     * Store the ServletContext that we're in.  This may be null if WikiEngine is not running inside a servlet container (i.e. when
+     * testing).
      */
     private ServletContext m_servletContext = null;
 
@@ -221,10 +206,7 @@ public class WikiEngine
     /** DOCUMENT ME! */
     private boolean m_isConfigured = false; // Flag.
 
-    /**
-     * If true, all the pathes from the various file providers are relative to the root of the web
-     * application
-     */
+    /** If true, all the pathes from the various file providers are relative to the root of the web application */
     private boolean wikiRelativePathes = PROP_WIKIRELATIVE_PATHES_DEFAULT;
 
     /** The main container reference */
@@ -234,8 +216,7 @@ public class WikiEngine
     private final ObjectReference componentContainerRef = new SimpleReference();
 
     /**
-     * Instantiate the WikiEngine using a given set of properties. Use this constructor for testing
-     * purposes only.
+     * Instantiate the WikiEngine using a given set of properties. Use this constructor for testing purposes only.
      *
      * @param conf DOCUMENT ME!
      *
@@ -249,9 +230,8 @@ public class WikiEngine
     }
 
     /**
-     * Instantiate using this method when you're running as a servlet and WikiEngine will figure
-     * out where to look for the configuration file. Do not use this method - use
-     * WikiEngine.getInstance() instead.
+     * Instantiate using this method when you're running as a servlet and WikiEngine will figure out where to look for the
+     * configuration file. Do not use this method - use WikiEngine.getInstance() instead.
      *
      * @param context DOCUMENT ME!
      * @param appid DOCUMENT ME!
@@ -285,15 +265,14 @@ public class WikiEngine
     }
 
     /**
-     * Gets a WikiEngine related to this servlet.  Since this method is only called from JSP pages
-     * (and JspInit()) to be specific, we throw a RuntimeException if things don't work.
+     * Gets a WikiEngine related to this servlet.  Since this method is only called from JSP pages (and JspInit()) to be specific,
+     * we throw a RuntimeException if things don't work.
      *
      * @param config The ServletConfig object for this servlet.
      *
      * @return A WikiEngine instance.
      *
-     * @throws InternalWikiException in case something fails.  This is a RuntimeException, so be
-     *         prepared for it.
+     * @throws InternalWikiException in case something fails.  This is a RuntimeException, so be prepared for it.
      */
 
     // FIXME: It seems that this does not work too well, jspInit()
@@ -305,14 +284,12 @@ public class WikiEngine
     }
 
     /**
-     * Gets a WikiEngine related to the servlet. Works like getInstance(ServletConfig), but does
-     * not force the Properties object. This method is just an optional way of initializing a
-     * WikiEngine for embedded eyeWiki applications; normally, you should use
-     * getInstance(ServletConfig).
+     * Gets a WikiEngine related to the servlet. Works like getInstance(ServletConfig), but does not force the Properties object.
+     * This method is just an optional way of initializing a WikiEngine for embedded eyeWiki applications; normally, you should
+     * use getInstance(ServletConfig).
      *
      * @param config The ServletConfig of the webapp servlet/JSP calling this method.
-     * @param props A set of properties, or null, if we are to load eyeWiki's default
-     *        eyewiki.properties (this is the usual case).
+     * @param props A set of properties, or null, if we are to load eyeWiki's default eyewiki.properties (this is the usual case).
      *
      * @return DOCUMENT ME!
      */
@@ -325,15 +302,13 @@ public class WikiEngine
      * Gets a WikiEngine related to the servlet. Works just like getInstance( ServletConfig)
      *
      * @param context The ServletContext of the webapp servlet/JSP calling this method.
-     * @param conf A set of properties, or null, if we are to load eyeWiki's default
-     *        eyewiki.properties (this is the usual case).
+     * @param conf A set of properties, or null, if we are to load eyeWiki's default eyewiki.properties (this is the usual case).
      *
      * @return DOCUMENT ME!
      *
      * @throws InternalWikiException DOCUMENT ME!
      */
-    public static synchronized WikiEngine getInstance(
-        final ServletContext context, final Configuration conf)
+    public static synchronized WikiEngine getInstance(final ServletContext context, final Configuration conf)
             throws InternalWikiException
     {
         Configuration wikiConf = conf;
@@ -370,10 +345,9 @@ public class WikiEngine
     }
 
     /**
-     * Loads the webapp properties based on servlet context information. Returns a Properties
-     * object containing the settings, or null if unable to load it. (The default file is
-     * WEB-INF/eyewiki.properties, and can be overridden by setting PARAM_PROPERTYFILE in the
-     * server or webapp configuration.)
+     * Loads the webapp properties based on servlet context information. Returns a Properties object containing the settings, or
+     * null if unable to load it. (The default file is WEB-INF/eyewiki.properties, and can be overridden by setting
+     * PARAM_PROPERTYFILE in the server or webapp configuration.)
      *
      * @param context DOCUMENT ME!
      *
@@ -391,9 +365,8 @@ public class WikiEngine
             //
             if (configFile == null)
             {
-                context.log(
-                    "No " + PARAM_CONFIGFILE + " defined for this context, "
-                    + "using default from " + PARAM_CONFIGFILE_DEFAULT);
+                context.log("No " + PARAM_CONFIGFILE + " defined for this context, " + "using default from "
+                    + PARAM_CONFIGFILE_DEFAULT);
 
                 //  Use the default config file.
                 configStream = context.getResourceAsStream(PARAM_CONFIGFILE_DEFAULT);
@@ -409,8 +382,7 @@ public class WikiEngine
                 throw new WikiException("Config file cannot be found!" + configFile);
             }
 
-            InputStreamReader isr =
-                new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
+            InputStreamReader isr = new InputStreamReader(configStream, WikiConstants.DEFAULT_ENCODING);
             PropertiesConfiguration conf = new PropertiesConfiguration();
             conf.setThrowExceptionOnMissing(true);
             conf.load(isr);
@@ -436,9 +408,7 @@ public class WikiEngine
         }
         catch (Exception e)
         {
-            context.log(
-                Release.APPNAME
-                + ": Unable to load and setup configuration from eyewiki.properties", e);
+            context.log(Release.APPNAME + ": Unable to load and setup configuration from eyewiki.properties", e);
         }
         finally
         {
@@ -460,12 +430,9 @@ public class WikiEngine
     {
         m_startTime = new Date();
 
-        wikiRelativePathes =
-            conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
+        wikiRelativePathes = conf.getBoolean(PROP_WIKIRELATIVE_PATHES, PROP_WIKIRELATIVE_PATHES_DEFAULT);
 
-        conf.setProperty(PROP_ROOTDIR, wikiRelativePathes
-            ? getRootPath()
-            : "");
+        conf.setProperty(PROP_ROOTDIR, wikiRelativePathes ? getRootPath() : "");
 
         this.conf = conf;
 
@@ -534,8 +501,7 @@ public class WikiEngine
         }
         else
         {
-            log.info(
-                "No eyeWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
+            log.info("No eyeWiki pages directory defined, be sure to use a non-filesystem Page Provider.");
         }
 
         //
@@ -555,8 +521,7 @@ public class WikiEngine
         }
         else
         {
-            log.info(
-                "No eyeWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
+            log.info("No eyeWiki storage directory defined, be sure to use a non-filesystem AttachmentProvider.");
         }
 
         // NOT YET USED m_saveUserInfo = conf.getBoolean(PROP_STOREUSERNAME, PROP_STOREUSERNAME_DEFAULT);
@@ -579,8 +544,7 @@ public class WikiEngine
         {
             setupMainContainer();
 
-            String wikiComponentsFile =
-                conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
+            String wikiComponentsFile = conf.getString(PROP_COMPONENTS_FILE, PROP_COMPONENTS_FILE_DEFAULT);
             setupContainer(componentContainerRef, mainContainerRef, wikiComponentsFile);
             ((PicoContainer) componentContainerRef.get()).start();
         }
@@ -618,8 +582,7 @@ public class WikiEngine
 
                 if (!d.isDirectory())
                 {
-                    throw new WikiException(
-                        "Requested Directory " + dir + " exists, but is no directory!");
+                    throw new WikiException("Requested Directory " + dir + " exists, but is no directory!");
                 }
 
                 if (!d.canRead())
@@ -731,8 +694,7 @@ public class WikiEngine
      */
     public RSSGenerator getRSSGenerator()
     {
-        return (RSSGenerator) getComponentContainer().getComponentInstance(
-            WikiConstants.RSS_GENERATOR);
+        return (RSSGenerator) getComponentContainer().getComponentInstance(WikiConstants.RSS_GENERATOR);
     }
 
     /**
@@ -742,8 +704,7 @@ public class WikiEngine
      */
     public TemplateManager getTemplateManager()
     {
-        return (TemplateManager) getComponentContainer().getComponentInstance(
-            WikiConstants.TEMPLATE_MANAGER);
+        return (TemplateManager) getComponentContainer().getComponentInstance(WikiConstants.TEMPLATE_MANAGER);
     }
 
     /**
@@ -767,9 +728,7 @@ public class WikiEngine
      */
     public Date getStartTime()
     {
-        return new Date((m_startTime != null)
-            ? m_startTime.getTime()
-            : 0);
+        return new Date((m_startTime != null) ? m_startTime.getTime() : 0);
     }
 
     /**
@@ -798,8 +757,8 @@ public class WikiEngine
     }
 
     /**
-     * Returns the ServletContext that this particular WikiEngine was initialized with.  <B>It may
-     * return null</B>, if the WikiEngine is not running inside a servlet container!
+     * Returns the ServletContext that this particular WikiEngine was initialized with.  <B>It may return null</B>, if the
+     * WikiEngine is not running inside a servlet container!
      *
      * @return ServletContext of the WikiEngine, or null.
      *
@@ -811,19 +770,16 @@ public class WikiEngine
     }
 
     /**
-     * This is a safe version of the Servlet.Request.getParameter() routine. Unfortunately, the
-     * default version always assumes that the incoming character set is ISO-8859-1, even though
-     * it was something else. This means that we need to make a new string using the correct
-     * encoding.
+     * This is a safe version of the Servlet.Request.getParameter() routine. Unfortunately, the default version always assumes that
+     * the incoming character set is ISO-8859-1, even though it was something else. This means that we need to make a new string
+     * using the correct encoding.
      * 
      * <P>
-     * For more information, see: <A HREF="http://www.jguru.com/faq/view.jsp?EID=137049">JGuru
-     * FAQ</A>.
+     * For more information, see: <A HREF="http://www.jguru.com/faq/view.jsp?EID=137049">JGuru FAQ</A>.
      * </p>
      * 
      * <P>
-     * Incidentally, this is almost the same as encodeName(), below. I am not yet entirely sure if
-     * it's safe to merge the code.
+     * Incidentally, this is almost the same as encodeName(), below. I am not yet entirely sure if it's safe to merge the code.
      * </p>
      *
      * @param request DOCUMENT ME!
@@ -961,13 +917,12 @@ public class WikiEngine
     }
 
     /**
-     * If the page is a special page, then returns a direct URL to that page.  Otherwise returns
-     * null.
+     * If the page is a special page, then returns a direct URL to that page.  Otherwise returns null.
      * 
      * <P>
-     * Special pages are non-existant references to other pages. For example, you could define a
-     * special page reference "RecentChanges" which would always be redirected to
-     * "RecentChanges.jsp" instead of trying to find a Wiki page called "RecentChanges".
+     * Special pages are non-existant references to other pages. For example, you could define a special page reference
+     * "RecentChanges" which would always be redirected to "RecentChanges.jsp" instead of trying to find a Wiki page called
+     * "RecentChanges".
      * </p>
      *
      * @param original DOCUMENT ME!
@@ -1005,9 +960,8 @@ public class WikiEngine
     }
 
     /**
-     * Beautifies the title of the page by appending spaces in suitable places, if the user has so
-     * decreed in the properties when constructing this WikiEngine.  However, attachment names are
-     * not beautified, no matter what.
+     * Beautifies the title of the page by appending spaces in suitable places, if the user has so decreed in the properties when
+     * constructing this WikiEngine.  However, attachment names are not beautified, no matter what.
      *
      * @param title DOCUMENT ME!
      *
@@ -1036,8 +990,8 @@ public class WikiEngine
     }
 
     /**
-     * Beautifies the title of the page by appending non-breaking spaces in suitable places.  This
-     * is really suitable only for HTML output, as it uses the &amp;nbsp; -character.
+     * Beautifies the title of the page by appending non-breaking spaces in suitable places.  This is really suitable only for HTML
+     * output, as it uses the &amp;nbsp; -character.
      *
      * @param title DOCUMENT ME!
      *
@@ -1056,8 +1010,8 @@ public class WikiEngine
     }
 
     /**
-     * Returns true, if the requested page (or an alias) exists.  Will consider any version as
-     * existing.  Will also consider attachments.
+     * Returns true, if the requested page (or an alias) exists.  Will consider any version as existing.  Will also consider
+     * attachments.
      *
      * @param page WikiName of the page.
      *
@@ -1135,8 +1089,7 @@ public class WikiEngine
     }
 
     /**
-     * Returns true, if the requested page (or an alias) exists, with the specified version in the
-     * WikiPage.
+     * Returns true, if the requested page (or an alias) exists, with the specified version in the WikiPage.
      *
      * @param page DOCUMENT ME!
      *
@@ -1158,19 +1111,17 @@ public class WikiEngine
     }
 
     /**
-     * Returns the correct page name, or null, if no such page can be found.  Aliases are
-     * considered.
+     * Returns the correct page name, or null, if no such page can be found.  Aliases are considered.
      * 
      * <P>
-     * In some cases, page names can refer to other pages.  For example, when you have
-     * matchEnglishPlurals set, then a page name "Foobars" will be transformed into "Foobar",
-     * should a page "Foobars" not exist, but the page "Foobar" would.  This method gives you the
-     * correct page name to refer to.
+     * In some cases, page names can refer to other pages.  For example, when you have matchEnglishPlurals set, then a page name
+     * "Foobars" will be transformed into "Foobar", should a page "Foobars" not exist, but the page "Foobar" would.  This method
+     * gives you the correct page name to refer to.
      * </p>
      * 
      * <P>
-     * This facility can also be used to rewrite any page name, for example, by using aliases.  It
-     * can also be used to check the existence of any page.
+     * This facility can also be used to rewrite any page name, for example, by using aliases.  It can also be used to check the
+     * existence of any page.
      * </p>
      *
      * @param page Page name.
@@ -1200,14 +1151,11 @@ public class WikiEngine
             isThere = simplePageExists(page);
         }
 
-        return isThere
-        ? page
-        : null;
+        return isThere ? page : null;
     }
 
     /**
-     * Just queries the existing pages directly from the page manager. We also check overridden
-     * pages from eyewiki.properties
+     * Just queries the existing pages directly from the page manager. We also check overridden pages from eyewiki.properties
      *
      * @param page DOCUMENT ME!
      *
@@ -1237,9 +1185,7 @@ public class WikiEngine
      */
     public String encodeName(String pagename)
     {
-        return TextUtil.urlEncode(pagename, (m_useUTF8
-            ? "UTF-8"
-            : "ISO-8859-1"));
+        return TextUtil.urlEncode(pagename, (m_useUTF8 ? "UTF-8" : "ISO-8859-1"));
     }
 
     /**
@@ -1255,14 +1201,11 @@ public class WikiEngine
     {
         try
         {
-            return TextUtil.urlDecode(pagerequest, (m_useUTF8
-                ? "UTF-8"
-                : "ISO-8859-1"));
+            return TextUtil.urlDecode(pagerequest, (m_useUTF8 ? "UTF-8" : "ISO-8859-1"));
         }
         catch (UnsupportedEncodingException e)
         {
-            throw new InternalWikiException(
-                "ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
+            throw new InternalWikiException("ISO-8859-1 not a supported encoding!?!  Your platform is borked.");
         }
     }
 
@@ -1284,10 +1227,9 @@ public class WikiEngine
     }
 
     /**
-     * Returns the un-HTMLized text of the latest version of a page. This method also replaces the
-     * &lt; and &amp; -characters with their respective HTML entities, thus making it suitable for
-     * inclusion on an HTML page.  If you want to have the page text without any conversions, use
-     * getPureText().
+     * Returns the un-HTMLized text of the latest version of a page. This method also replaces the &lt; and &amp; -characters with
+     * their respective HTML entities, thus making it suitable for inclusion on an HTML page.  If you want to have the page text
+     * without any conversions, use getPureText().
      *
      * @param page WikiName of the page to fetch.
      *
@@ -1299,10 +1241,9 @@ public class WikiEngine
     }
 
     /**
-     * Returns the un-HTMLized text of the given version of a page. This method also replaces the
-     * &lt; and &amp; -characters with their respective HTML entities, thus making it suitable for
-     * inclusion on an HTML page.  If you want to have the page text without any conversions, use
-     * getPureText().
+     * Returns the un-HTMLized text of the given version of a page. This method also replaces the &lt; and &amp; -characters with
+     * their respective HTML entities, thus making it suitable for inclusion on an HTML page.  If you want to have the page text
+     * without any conversions, use getPureText().
      *
      * @param page WikiName of the page to fetch
      * @param version Version of the page to fetch
@@ -1326,13 +1267,12 @@ public class WikiEngine
     }
 
     /**
-     * Returns the un-HTMLized text of the given version of a page in the given context.  USE THIS
-     * METHOD if you don't know what doing.
+     * Returns the un-HTMLized text of the given version of a page in the given context.  USE THIS METHOD if you don't know what
+     * doing.
      * 
      * <p>
-     * This method also replaces the &lt; and &amp; -characters with their respective HTML
-     * entities, thus making it suitable for inclusion on an HTML page.  If you want to have the
-     * page text without any conversions, use getPureText().
+     * This method also replaces the &lt; and &amp; -characters with their respective HTML entities, thus making it suitable for
+     * inclusion on an HTML page.  If you want to have the page text without any conversions, use getPureText().
      * </p>
      *
      * @param context DOCUMENT ME!
@@ -1348,9 +1288,9 @@ public class WikiEngine
     }
 
     /**
-     * Returns the pure text of a page, no conversions.  Use this if you are writing something that
-     * depends on the parsing of the page.  Note that you should always check for page existence
-     * through pageExists() before attempting to fetch the page contents.
+     * Returns the pure text of a page, no conversions.  Use this if you are writing something that depends on the parsing of the
+     * page.  Note that you should always check for page existence through pageExists() before attempting to fetch the page
+     * contents.
      *
      * @param page The name of the page to fetch.
      * @param version If WikiPageProvider.LATEST_VERSION, then uses the latest version.
@@ -1383,9 +1323,9 @@ public class WikiEngine
     }
 
     /**
-     * Returns the pure text of a page, no conversions.  Use this if you are writing something that
-     * depends on the parsing the page. Note that you should always check for page existence
-     * through pageExists() before attempting to fetch the page contents.
+     * Returns the pure text of a page, no conversions.  Use this if you are writing something that depends on the parsing the
+     * page. Note that you should always check for page existence through pageExists() before attempting to fetch the page
+     * contents.
      *
      * @param page A handle to the WikiPage
      *
@@ -1449,8 +1389,8 @@ public class WikiEngine
     }
 
     /**
-     * Returns the converted HTML of the page's specific version. The version must be a positive
-     * integer, otherwise the current version is returned.
+     * Returns the converted HTML of the page's specific version. The version must be a positive integer, otherwise the current
+     * version is returned.
      *
      * @param pagename WikiName of the page to convert.
      * @param version Version number to fetch
@@ -1480,8 +1420,7 @@ public class WikiEngine
     }
 
     /**
-     * Reads a WikiPageful of data from a String and returns all links internal to this Wiki in a
-     * Collection.
+     * Reads a WikiPageful of data from a String and returns all links internal to this Wiki in a Collection.
      *
      * @param page DOCUMENT ME!
      * @param pagedata DOCUMENT ME!
@@ -1492,8 +1431,7 @@ public class WikiEngine
     {
         LinkCollector localCollector = new LinkCollector();
 
-        textToHTML(
-            new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
+        textToHTML(new WikiContext(this, page), pagedata, localCollector, null, localCollector, false);
 
         return localCollector.getLinks();
     }
@@ -1508,9 +1446,7 @@ public class WikiEngine
      *
      * @return DOCUMENT ME!
      */
-    public String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
-        StringTransmutator extLinkHook)
+    public String textToHTML(WikiContext context, String pagedata, StringTransmutator localLinkHook, StringTransmutator extLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, null, true);
     }
@@ -1526,8 +1462,7 @@ public class WikiEngine
      *
      * @return DOCUMENT ME!
      */
-    public String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
+    public String textToHTML(WikiContext context, String pagedata, StringTransmutator localLinkHook,
         StringTransmutator extLinkHook, StringTransmutator attLinkHook)
     {
         return textToHTML(context, pagedata, localLinkHook, extLinkHook, attLinkHook, true);
@@ -1545,8 +1480,7 @@ public class WikiEngine
      *
      * @return DOCUMENT ME!
      */
-    private String textToHTML(
-        WikiContext context, String pagedata, StringTransmutator localLinkHook,
+    private String textToHTML(WikiContext context, String pagedata, StringTransmutator localLinkHook,
         StringTransmutator extLinkHook, StringTransmutator attLinkHook, boolean parseAccessRules)
     {
         String result = "";
@@ -1560,9 +1494,7 @@ public class WikiEngine
 
         TranslatorReader in = null;
 
-        boolean runFilters =
-            "true".equals(
-                getVariableManager().getValue(context, PROP_RUNFILTERS, PROP_RUNFILTERS_DEFAULT));
+        boolean runFilters = "true".equals(getVariableManager().getValue(context, PROP_RUNFILTERS, PROP_RUNFILTERS_DEFAULT));
 
         try
         {
@@ -1721,9 +1653,8 @@ public class WikiEngine
      * Parses an incoming search request, then does a search.
      * 
      * <P>
-     * Search language is simple: prepend a word with a + to force a word to be included (all files
-     * not containing that word are automatically rejected), '-' to cause the rejection of all
-     * those files that contain that word.
+     * Search language is simple: prepend a word with a + to force a word to be included (all files not containing that word are
+     * automatically rejected), '-' to cause the rejection of all those files that contain that word.
      * </p>
      *
      * @param query DOCUMENT ME!
@@ -1881,14 +1812,11 @@ public class WikiEngine
      * Returns a diff of two versions of a page.
      *
      * @param page Page to return
-     * @param version1 Version number of the old page.  If WikiPageProvider.LATEST_VERSION (-1),
-     *        then uses current page.
-     * @param version2 Version number of the new page.  If WikiPageProvider.LATEST_VERSION (-1),
-     *        then uses current page.
+     * @param version1 Version number of the old page.  If WikiPageProvider.LATEST_VERSION (-1), then uses current page.
+     * @param version2 Version number of the new page.  If WikiPageProvider.LATEST_VERSION (-1), then uses current page.
      * @param wantHtml DOCUMENT ME!
      *
-     * @return A HTML-ized difference between two pages.  If there is no difference, returns an
-     *         empty string.
+     * @return A HTML-ized difference between two pages.  If there is no difference, returns an empty string.
      */
     public String getDiff(String page, int version1, int version2, boolean wantHtml)
     {
@@ -1911,8 +1839,7 @@ public class WikiEngine
      */
     protected URLConstructor getURLConstructor()
     {
-        return (URLConstructor) getComponentContainer().getComponentInstance(
-            WikiConstants.URL_CONSTRUCTOR);
+        return (URLConstructor) getComponentContainer().getComponentInstance(WikiConstants.URL_CONSTRUCTOR);
     }
 
     /**
@@ -1922,8 +1849,7 @@ public class WikiEngine
      */
     public DifferenceManager getDifferenceManager()
     {
-        return (DifferenceManager) getComponentContainer().getComponentInstance(
-            WikiConstants.DIFFERENCE_MANAGER);
+        return (DifferenceManager) getComponentContainer().getComponentInstance(WikiConstants.DIFFERENCE_MANAGER);
     }
 
     /**
@@ -1937,8 +1863,7 @@ public class WikiEngine
     // (FIXME: We may want to protect this, though...)
     public ReferenceManager getReferenceManager()
     {
-        return (ReferenceManager) getComponentContainer().getComponentInstance(
-            WikiConstants.REFERENCE_MANAGER);
+        return (ReferenceManager) getComponentContainer().getComponentInstance(WikiConstants.REFERENCE_MANAGER);
     }
 
     /**
@@ -1950,8 +1875,7 @@ public class WikiEngine
      */
     public PluginManager getPluginManager()
     {
-        return (PluginManager) getComponentContainer().getComponentInstance(
-            WikiConstants.PLUGIN_MANAGER);
+        return (PluginManager) getComponentContainer().getComponentInstance(WikiConstants.PLUGIN_MANAGER);
     }
 
     /**
@@ -1961,13 +1885,12 @@ public class WikiEngine
      */
     public VariableManager getVariableManager()
     {
-        return (VariableManager) getComponentContainer().getComponentInstance(
-            WikiConstants.VARIABLE_MANAGER);
+        return (VariableManager) getComponentContainer().getComponentInstance(WikiConstants.VARIABLE_MANAGER);
     }
 
     /**
-     * Shortcut to getVariableManager().getValue(). However, this method does not throw a
-     * NoSuchVariableException, but returns null in case the variable does not exist.
+     * Shortcut to getVariableManager().getValue(). However, this method does not throw a NoSuchVariableException, but returns null
+     * in case the variable does not exist.
      *
      * @param context DOCUMENT ME!
      * @param name DOCUMENT ME!
@@ -1988,8 +1911,7 @@ public class WikiEngine
      */
     public PageManager getPageManager()
     {
-        return (PageManager) getComponentContainer().getComponentInstance(
-            WikiConstants.PAGE_MANAGER);
+        return (PageManager) getComponentContainer().getComponentInstance(WikiConstants.PAGE_MANAGER);
     }
 
     /**
@@ -2001,8 +1923,7 @@ public class WikiEngine
      */
     public AttachmentManager getAttachmentManager()
     {
-        return (AttachmentManager) getComponentContainer().getComponentInstance(
-            WikiConstants.ATTACHMENT_MANAGER);
+        return (AttachmentManager) getComponentContainer().getComponentInstance(WikiConstants.ATTACHMENT_MANAGER);
     }
 
     /**
@@ -2012,8 +1933,7 @@ public class WikiEngine
      */
     public AuthorizationManager getAuthorizationManager()
     {
-        return (AuthorizationManager) getComponentContainer().getComponentInstance(
-            WikiConstants.AUTHORIZATION_MANAGER);
+        return (AuthorizationManager) getComponentContainer().getComponentInstance(WikiConstants.AUTHORIZATION_MANAGER);
     }
 
     /**
@@ -2023,8 +1943,7 @@ public class WikiEngine
      */
     public UserManager getUserManager()
     {
-        return (UserManager) getComponentContainer().getComponentInstance(
-            WikiConstants.USER_MANAGER);
+        return (UserManager) getComponentContainer().getComponentInstance(WikiConstants.USER_MANAGER);
     }
 
     /**
@@ -2036,14 +1955,12 @@ public class WikiEngine
      */
     public FilterManager getFilterManager()
     {
-        return (FilterManager) getComponentContainer().getComponentInstance(
-            WikiConstants.FILTER_MANAGER);
+        return (FilterManager) getComponentContainer().getComponentInstance(WikiConstants.FILTER_MANAGER);
     }
 
     /**
-     * Parses the given path and attempts to match it against the list of specialpages to see if
-     * this path exists.  It is used to map things like "UserPreferences.jsp" to page "User
-     * Preferences".
+     * Parses the given path and attempts to match it against the list of specialpages to see if this path exists.  It is used to
+     * map things like "UserPreferences.jsp" to page "User Preferences".
      *
      * @param path DOCUMENT ME!
      *
@@ -2076,8 +1993,8 @@ public class WikiEngine
     }
 
     /**
-     * Figure out to which page we are really going to.  Considers special page names from the
-     * eyewiki.properties, and possible aliases.
+     * Figure out to which page we are really going to.  Considers special page names from the eyewiki.properties, and possible
+     * aliases.
      *
      * @param context The Wiki Context in which the request is being made.
      *
@@ -2288,8 +2205,7 @@ public class WikiEngine
     }
 
     /**
-     * Returns the URL of the global RSS file.  May be null, if the RSS file generation is not
-     * operational.
+     * Returns the URL of the global RSS file.  May be null, if the RSS file generation is not operational.
      *
      * @return DOCUMENT ME!
      *
@@ -2339,10 +2255,9 @@ public class WikiEngine
     }
 
     /**
-     * Checks whether a supplied directory path is valid for the current Wiki configuration. A path
-     * is valid if - The Wiki is in "eyewiki.relativePathes = false" mode and the path is absolute
-     * - The Wiki is in "eyewiki.relativePathes = true" mode and the path is relative and the
-     * rootDirectory is not null.
+     * Checks whether a supplied directory path is valid for the current Wiki configuration. A path is valid if - The Wiki is in
+     * "eyewiki.relativePathes = false" mode and the path is absolute - The Wiki is in "eyewiki.relativePathes = true" mode and
+     * the path is relative and the rootDirectory is not null.
      *
      * @param pathName The Directory path to check
      *
@@ -2369,8 +2284,7 @@ public class WikiEngine
             return pathName;
         }
 
-        throw new WikiException(
-            "The path name " + pathName + " is invalid in the current Wiki configuration!");
+        throw new WikiException("The path name " + pathName + " is invalid in the current Wiki configuration!");
     }
 
     /**
@@ -2383,8 +2297,7 @@ public class WikiEngine
      * @throws Exception DOCUMENT ME!
      * @throws IllegalArgumentException DOCUMENT ME!
      */
-    public void setupContainer(
-        ObjectReference containerRef, ObjectReference parentRef, String confFile)
+    public void setupContainer(ObjectReference containerRef, ObjectReference parentRef, String confFile)
             throws Exception
     {
         InputStream configStream = null;
@@ -2424,8 +2337,7 @@ public class WikiEngine
     }
 
     /**
-     * Prepares the 'root' container which all other containers use as their base to get
-     * configuration and Wiki reference
+     * Prepares the 'root' container which all other containers use as their base to get configuration and Wiki reference
      *
      * @throws Exception DOCUMENT ME!
      */

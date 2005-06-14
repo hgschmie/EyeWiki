@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,8 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * Contains useful utilities for eyeWiki blogging functionality.

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -41,7 +41,6 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.WikiContext;
-
 
 /**
  * Converts the body text into HTML content.
@@ -68,9 +67,7 @@ public class TranslateTag
     {
         try
         {
-            WikiContext context =
-                (WikiContext) pageContext.getAttribute(
-                    WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+            WikiContext context = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
             BodyContent bc = getBodyContent();
             String wikiText = bc.getString();
             bc.clearBody();

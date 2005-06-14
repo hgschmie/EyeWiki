@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -45,7 +45,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.url.DefaultURLConstructor;
-
 
 /**
  */
@@ -100,8 +99,7 @@ public class WikiServlet
     public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException
     {
-        String pageName =
-            DefaultURLConstructor.parsePageFromURL(req, m_engine.getContentEncoding());
+        String pageName = DefaultURLConstructor.parsePageFromURL(req, m_engine.getContentEncoding());
 
         if (log.isInfoEnabled())
         {
@@ -115,12 +113,9 @@ public class WikiServlet
 
         String jspPage = m_engine.getURLConstructor().getForwardPage(req);
 
-        StringBuffer sb = new StringBuffer("/")
-                .append(jspPage)
-                .append("?page=")
-                .append(m_engine.encodeName(pageName))
-                .append("&")
-                .append(req.getQueryString());
+        StringBuffer sb =
+            new StringBuffer("/").append(jspPage).append("?page=").append(m_engine.encodeName(pageName)).append("&").append(req
+                .getQueryString());
 
         RequestDispatcher dispatcher = req.getRequestDispatcher(sb.toString());
 

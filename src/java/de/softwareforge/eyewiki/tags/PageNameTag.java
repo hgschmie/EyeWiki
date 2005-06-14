@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,14 +33,11 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
-
 
 /**
  * Returns the currently requested page name.

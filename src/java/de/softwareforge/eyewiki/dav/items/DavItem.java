@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.items;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,11 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * DOCUMENT ME!
@@ -49,14 +48,10 @@ import de.softwareforge.eyewiki.WikiEngine;
  */
 public abstract class DavItem
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     protected WikiEngine m_engine;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     protected ArrayList m_items = new ArrayList();
 
     /**

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.stress;
 
+
 /*
  * ========================================================================
  *
@@ -32,22 +33,19 @@ package de.softwareforge.eyewiki.stress;
  *
  * ========================================================================
  */
-
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -89,7 +87,7 @@ public class SpeedTest
             throws Exception
     {
         conf = TestEngine.getConfiguration("/eyewiki_rcs.properties");
-        
+
         engine = new TestEngine(conf);
     }
 
@@ -131,9 +129,8 @@ public class SpeedTest
 
         mark.stop();
 
-        System.out.println(
-            ITERATIONS + " pages took " + mark.getDurationMs() + " ms (="
-            + (mark.getDurationMs() / ITERATIONS) + " ms/page)");
+        System.out.println(ITERATIONS + " pages took " + mark.getDurationMs() + " ms (=" + (mark.getDurationMs() / ITERATIONS)
+            + " ms/page)");
     }
 
     /**
@@ -163,8 +160,7 @@ public class SpeedTest
 
         mark.stop();
 
-        System.out.println(
-            ITERATIONS + " plugin pages took " + mark.getDurationMs() + " ms (="
+        System.out.println(ITERATIONS + " plugin pages took " + mark.getDurationMs() + " ms (="
             + (mark.getDurationMs() / ITERATIONS) + " ms/page)");
     }
 

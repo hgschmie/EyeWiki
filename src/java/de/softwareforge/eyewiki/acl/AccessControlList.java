@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.acl;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,10 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.Acl;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
-
 
 /**
  * Defines the eyeWiki-specific helper methods for accessing the Acl.

@@ -1,5 +1,34 @@
 package de.softwareforge.eyewiki.attachment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.util.Enumeration;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.WikiProperties;
+import de.softwareforge.eyewiki.WikiProvider;
+import de.softwareforge.eyewiki.auth.AuthorizationManager;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.filters.RedirectException;
+import de.softwareforge.eyewiki.providers.ProviderException;
+import de.softwareforge.eyewiki.util.HttpUtil;
+
 /*
  * ========================================================================
  *
@@ -32,47 +61,14 @@ package de.softwareforge.eyewiki.attachment;
  *
  * ========================================================================
  */
-
 import http.utils.multipartrequest.MultipartRequest;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Enumeration;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiEngine;
-import de.softwareforge.eyewiki.WikiProperties;
-import de.softwareforge.eyewiki.WikiProvider;
-import de.softwareforge.eyewiki.auth.AuthorizationManager;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.filters.RedirectException;
-import de.softwareforge.eyewiki.providers.ProviderException;
-import de.softwareforge.eyewiki.util.HttpUtil;
-
-
 /**
- * This is a simple file upload servlet customized for eyeWiki. It receives a mime/multipart POST
- * message, as sent by an Attachment page, stores it temporarily, figures out what WikiName to use
- * to store it, checks for previously existing versions.
- *
+ * This is a simple file upload servlet customized for eyeWiki. It receives a mime/multipart POST message, as sent by an Attachment
+ * page, stores it temporarily, figures out what WikiName to use to store it, checks for previously existing versions.
+ * 
  * <p>
- * This servlet does not worry about authentication; we leave that to the container, or a previous
- * servlet that chains to us.
+ * This servlet does not worry about authentication; we leave that to the container, or a previous servlet that chains to us.
  * </p>
  *
  * @author Erik Bunn
@@ -132,9 +128,7 @@ public class AttachmentServlet
         }
         else if (!f.isDirectory())
         {
-            log.fatal(
-                "A file already exists where the temporary dir is supposed to be: " + m_tmpDir
-                + ".  Please remove it.");
+            log.fatal("A file already exists where the temporary dir is supposed to be: " + m_tmpDir + ".  Please remove it.");
         }
 
         if (log.isDebugEnabled())
@@ -144,8 +138,8 @@ public class AttachmentServlet
     }
 
     /**
-     * Serves a GET with two parameters: 'wikiname' specifying the wikiname of the attachment,
-     * 'version' specifying the version indicator.
+     * Serves a GET with two parameters: 'wikiname' specifying the wikiname of the attachment, 'version' specifying the version
+     * indicator.
      *
      * @param req DOCUMENT ME!
      * @param res DOCUMENT ME!
@@ -182,7 +176,7 @@ public class AttachmentServlet
         else
         {
             OutputStream out = null;
-            InputStream  in  = null;
+            InputStream in = null;
 
             try
             {
@@ -226,9 +220,7 @@ public class AttachmentServlet
                         return;
                     }
 
-                    String mimetype =
-                        getServletConfig().getServletContext().getMimeType(
-                            att.getFileName().toLowerCase());
+                    String mimetype = getServletConfig().getServletContext().getMimeType(att.getFileName().toLowerCase());
 
                     if (mimetype == null)
                     {
@@ -241,8 +233,7 @@ public class AttachmentServlet
                     //  We use 'inline' instead of 'attachment' so that user agents
                     //  can try to automatically open the file.
                     //
-                    res.addHeader(
-                        "Content-Disposition", "inline; filename=\"" + att.getFileName() + "\";");
+                    res.addHeader("Content-Disposition", "inline; filename=\"" + att.getFileName() + "\";");
 
                     // long expires = new Date().getTime() + DEFAULT_EXPIRY;
                     // res.addDateHeader("Expires", expires);
@@ -268,9 +259,8 @@ public class AttachmentServlet
 
                     if (log.isDebugEnabled())
                     {
-                        log.debug(
-                            "Attachment " + att.getFileName() + " sent to " + req.getRemoteUser()
-                            + " on " + req.getRemoteAddr());
+                        log.debug("Attachment " + att.getFileName() + " sent to " + req.getRemoteUser() + " on "
+                            + req.getRemoteAddr());
                     }
 
                     if (nextPage != null)
@@ -320,13 +310,11 @@ public class AttachmentServlet
     }
 
     /**
-     * Grabs mime/multipart data and stores it into the temporary area. Uses other parameters to
-     * determine which name to store as.
-     *
+     * Grabs mime/multipart data and stores it into the temporary area. Uses other parameters to determine which name to store as.
+     * 
      * <p>
-     * The input to this servlet is generated by an HTML FORM with two parts. The first, named
-     * 'page', is the WikiName identifier for the parent file. The second, named 'content', is the
-     * binary content of the file.
+     * The input to this servlet is generated by an HTML FORM with two parts. The first, named 'page', is the WikiName identifier
+     * for the parent file. The second, named 'content', is the binary content of the file.
      * </p>
      *
      * @param req DOCUMENT ME!
@@ -374,10 +362,9 @@ public class AttachmentServlet
             MultipartRequest multi;
 
             multi =
-                new MultipartRequest(
-                    null, // no debugging
-                    req.getContentType(), req.getContentLength(), req.getInputStream(), m_tmpDir,
-                    Integer.MAX_VALUE, m_engine.getContentEncoding());
+                new MultipartRequest(null, // no debugging
+                    req.getContentType(), req.getContentLength(), req.getInputStream(), m_tmpDir, Integer.MAX_VALUE,
+                    m_engine.getContentEncoding());
 
             nextPage = multi.getURLParameter("nextpage");
 
@@ -394,8 +381,7 @@ public class AttachmentServlet
             if (req.getContentLength() > m_maxSize)
             {
                 // FIXME: Does not delete the received files.
-                throw new RedirectException(
-                    "File exceeds maximum size (" + m_maxSize + " bytes)", errorPage);
+                throw new RedirectException("File exceeds maximum size (" + m_maxSize + " bytes)", errorPage);
             }
 
             UserProfile user = context.getCurrentUser();
@@ -490,9 +476,8 @@ public class AttachmentServlet
 
                         if (log.isInfoEnabled())
                         {
-                            log.info(
-                                "User " + user + " uploaded attachment to " + wikipage + " called "
-                                + filename + ", size " + multi.getFileSize(part));
+                            log.info("User " + user + " uploaded attachment to " + wikipage + " called " + filename + ", size "
+                                + multi.getFileSize(part));
                         }
                     }
                     else

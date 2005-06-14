@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,17 +33,12 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
+
 import java.util.Enumeration;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -56,6 +52,9 @@ import de.softwareforge.eyewiki.auth.permissions.EditPermission;
 import de.softwareforge.eyewiki.auth.permissions.UploadPermission;
 import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests the AuthorizationManager class.
@@ -234,8 +233,7 @@ public class AuthorizationManagerTest
     }
 
     /**
-     * An user should not be allowed to simply set their name in the cookie and be allowed access
-     * (this time with group data).
+     * An user should not be allowed to simply set their name in the cookie and be allowed access (this time with group data).
      *
      * @throws Exception DOCUMENT ME!
      */

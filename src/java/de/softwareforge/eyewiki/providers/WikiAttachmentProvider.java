@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,28 +33,25 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
 
 import de.softwareforge.eyewiki.QueryItem;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.WikiProvider;
 import de.softwareforge.eyewiki.attachment.Attachment;
 
-
 /**
  * Defines an attachment provider - a class which is capable of saving binary data as attachments.
- *
+ * 
  * <P>
- * The difference between this class and WikiPageProvider is that there PageProviders handle
- * Unicode text, whereas we handle binary data. While there are quite a lot of similarities in how
- * we handle things, many providers can really use just one.  In addition, since binary files can
- * be really large, we rely on Input/OutputStreams.
+ * The difference between this class and WikiPageProvider is that there PageProviders handle Unicode text, whereas we handle binary
+ * data. While there are quite a lot of similarities in how we handle things, many providers can really use just one.  In
+ * addition, since binary files can be really large, we rely on Input/OutputStreams.
  * </p>
  *
  * @author Erik Bunn
@@ -110,14 +108,13 @@ public interface WikiAttachmentProvider
 
     /**
      * Lists changed attachments since given date.  Can also be used to fetch a list of all pages.
-     *
+     * 
      * <P>
-     * This is different from WikiPageProvider, where you basically get a list of all pages, then
-     * sort them locally.  However, since some providers can be more efficient in locating
-     * recently changed files (like any database) than our non-optimized Java code, it makes more
-     * sense to fetch the whole list this way.
+     * This is different from WikiPageProvider, where you basically get a list of all pages, then sort them locally.  However,
+     * since some providers can be more efficient in locating recently changed files (like any database) than our non-optimized
+     * Java code, it makes more sense to fetch the whole list this way.
      * </p>
-     *
+     * 
      * <P>
      * To get all files, call this with Date(0L);
      * </p>
@@ -155,12 +152,10 @@ public interface WikiAttachmentProvider
     List getVersionHistory(Attachment att);
 
     /**
-     * Removes a specific version from the repository.  The implementations should really do no
-     * more security checks, since that is the domain of the AttachmentManager.  Just delete it as
-     * efficiently as you can.
+     * Removes a specific version from the repository.  The implementations should really do no more security checks, since that is
+     * the domain of the AttachmentManager.  Just delete it as efficiently as you can.
      *
-     * @param att Attachment to be removed.  The version field is checked, and thus only that
-     *        version is removed.
+     * @param att Attachment to be removed.  The version field is checked, and thus only that version is removed.
      *
      * @throws ProviderException If the attachment cannot be removed for some reason.
      *
@@ -170,10 +165,9 @@ public interface WikiAttachmentProvider
             throws ProviderException;
 
     /**
-     * Removes an entire page from the repository.  The implementations should really do no more
-     * security checks, since that is the domain of the AttachmentManager.  Just delete it as
-     * efficiently as you can.  You should also delete any auxiliary files and directories that
-     * belong to this attachment, IF they were created by this provider.
+     * Removes an entire page from the repository.  The implementations should really do no more security checks, since that is the
+     * domain of the AttachmentManager.  Just delete it as efficiently as you can.  You should also delete any auxiliary files and
+     * directories that belong to this attachment, IF they were created by this provider.
      *
      * @param att Attachment to delete.
      *

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.util.Map;
-
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
@@ -43,7 +42,6 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Provides an image plugin for better control than is possible with a simple image inclusion.
@@ -90,16 +88,22 @@ public class Image
     /** DOCUMENT ME! */
     public static final String PARAM_BORDER = "border";
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /**
+     * Creates a new Image object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public Image(final WikiEngine engine)
     {
         this.engine = engine;
     }
 
     /**
-     * This method is used to clean away things like quotation marks which a malicious user could
-     * use to stop processing and insert javascript.
+     * This method is used to clean away things like quotation marks which a malicious user could use to stop processing and insert
+     * javascript.
      *
      * @param params DOCUMENT ME!
      * @param paramId DOCUMENT ME!
@@ -180,51 +184,36 @@ public class Image
 
         if (caption != null)
         {
-            result.append(
-                    "<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
+            result.append("<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
         }
 
         result.append("<tr><td>");
 
         if (link != null)
         {
-            result.append("<a class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" href=\"")
-                    .append(link)
-                    .append("\">");
+            result.append("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(link).append("\">");
         }
 
-        result.append("<img src=\"")
-                .append(src)
-                .append("\"");
+        result.append("<img src=\"").append(src).append("\"");
 
         if (ht != null)
         {
-            result.append(" height=\"")
-                    .append(ht)
-                    .append("\"");
+            result.append(" height=\"").append(ht).append("\"");
         }
 
         if (wt != null)
         {
-            result.append(" width=\"")
-                    .append(wt)
-                    .append("\"");
+            result.append(" width=\"").append(wt).append("\"");
         }
 
         if (alt != null)
         {
-            result.append(" alt=\"")
-                    .append(alt)
-                    .append("\"");
+            result.append(" alt=\"").append(alt).append("\"");
         }
 
         if (border != null)
         {
-            result.append(" border=\"")
-                    .append(border)
-                    .append("\"");
+            result.append(" border=\"").append(border).append("\"");
         }
 
         // if( map != null )    result.append(" map=\""+map+"\"");

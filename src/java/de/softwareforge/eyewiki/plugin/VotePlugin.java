@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,10 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+
 import java.util.Map;
 import java.util.Properties;
 
@@ -44,7 +45,6 @@ import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -52,10 +52,8 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
-
 /**
- * Implements a simple voting system.  WARNING: The storage method is still experimental; I will
- * probably change it at some point.
+ * Implements a simple voting system.  WARNING: The storage method is still experimental; I will probably change it at some point.
  */
 public class VotePlugin
         implements WikiPlugin
@@ -72,8 +70,15 @@ public class VotePlugin
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     protected final AttachmentManager attachmentManager;
 
+    /**
+     * Creates a new VotePlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param attachmentManager DOCUMENT ME!
+     */
     public VotePlugin(final WikiEngine engine, final AttachmentManager attachmentManager)
     {
         this.engine = engine;
@@ -149,8 +154,7 @@ public class VotePlugin
     private Attachment findAttachment(WikiContext context)
             throws ProviderException
     {
-        Attachment att =
-            attachmentManager.getAttachmentInfo(context, ATTACHMENT_NAME);
+        Attachment att = attachmentManager.getAttachmentInfo(context, ATTACHMENT_NAME);
 
         if (att == null)
         {

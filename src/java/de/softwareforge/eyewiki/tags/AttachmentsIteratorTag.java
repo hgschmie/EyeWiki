@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,14 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -49,20 +49,19 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
-
 /**
  * Iterates through the list of attachments one has.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -83,9 +82,7 @@ public class AttachmentsIteratorTag
      */
     public final int doStartTag()
     {
-        m_wikiContext =
-            (WikiContext) pageContext.getAttribute(
-                WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+        m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
         WikiEngine engine = m_wikiContext.getEngine();
         AttachmentManager mgr = engine.getAttachmentManager();
@@ -120,8 +117,7 @@ public class AttachmentsIteratorTag
 
                     WikiContext context = (WikiContext) m_wikiContext.clone();
                     context.setPage(att);
-                    pageContext.setAttribute(
-                        WikiTagBase.ATTR_CONTEXT, context, PageContext.REQUEST_SCOPE);
+                    pageContext.setAttribute(WikiTagBase.ATTR_CONTEXT, context, PageContext.REQUEST_SCOPE);
 
                     pageContext.setAttribute(getId(), att);
                 }

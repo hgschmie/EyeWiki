@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,10 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
 import de.softwareforge.eyewiki.WikiContext;
-
 
 /**
  * DOCUMENT ME!
@@ -50,12 +49,13 @@ public class ProfanityFilter
         implements PageFilter
 {
     /** DOCUMENT ME! */
-    private String [] profanities =
-    {
-        "fuck",
-        "shit"
-    };
+    private String [] profanities = { "fuck", "shit" };
 
+    /**
+     * Creates a new ProfanityFilter object.
+     *
+     * @param conf DOCUMENT ME!
+     */
     public ProfanityFilter(final Configuration conf)
     {
         super(conf);
@@ -82,14 +82,23 @@ public class ProfanityFilter
         return content;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isVisible()
     {
         return true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;
     }
-
 }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,44 +33,39 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import de.softwareforge.eyewiki.auth.UserProfile;
 
-
 /**
- * Includes the content if an user check validates.  This has been considerably enhanced for 2.2.
- * The possibilities for the "status"-argument are:
- *
+ * Includes the content if an user check validates.  This has been considerably enhanced for 2.2. The possibilities for the
+ * "status"-argument are:
+ * 
  * <ul>
  * <li>
- * "unknown"     - the body of the tag is included if the user is completely unknown (no cookie, no
- * password)
+ * "unknown"     - the body of the tag is included if the user is completely unknown (no cookie, no password)
  * </li>
  * <li>
- * "known"       - the body of the tag is included if the user is not unknown (i.e has a cookie, or
- * has been authenticated.
+ * "known"       - the body of the tag is included if the user is not unknown (i.e has a cookie, or has been authenticated.
  * </li>
  * <li>
- * "named"       - the body of the tag is included if the user has either been named by a cookie,
- * but not been authenticated.
+ * "named"       - the body of the tag is included if the user has either been named by a cookie, but not been authenticated.
  * </li>
  * <li>
- * "validated"   - the body of the tag is included if the user is validated either through the
- * container, or by our own authentication.
+ * "validated"   - the body of the tag is included if the user is validated either through the container, or by our own
+ * authentication.
  * </li>
  * <li>
- * "unvalidated" - the body of the tag is included if the user is not validated (i.e. he could have
- * a cookie, but has not been authenticated.)
+ * "unvalidated" - the body of the tag is included if the user is not validated (i.e. he could have a cookie, but has not been
+ * authenticated.)
  * </li>
  * </ul>
- *
+ * 
  * If the old "exists" -argument is used, it corresponds as follows:
- *
+ * 
  * <p>
- * <tt>exists="true" ==> status="known"</tt><tt>exists="false" ==> status="unknown"</tt> It is NOT
- * a good idea to use BOTH of the arguments.
+ * <tt>exists="true" ==> status="known"</tt><tt>exists="false" ==> status="unknown"</tt> It is NOT a good idea to use BOTH of the
+ * arguments.
  * </p>
  *
  * @author Janne Jalkanen
@@ -139,8 +135,7 @@ public class UserCheckTag
             {
                 return EVAL_BODY_INCLUDE;
             }
-            else if (
-                "unvalidated".equals(m_status) && (wup.getLoginStatus() < UserProfile.CONTAINER))
+            else if ("unvalidated".equals(m_status) && (wup.getLoginStatus() < UserProfile.CONTAINER))
             {
                 return EVAL_BODY_INCLUDE;
             }

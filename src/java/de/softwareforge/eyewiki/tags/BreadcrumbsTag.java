@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpSession;
@@ -43,21 +44,19 @@ import javax.servlet.jsp.JspWriter;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Implement a "breadcrumb" (most recently visited) trail.  This tag can be added to any view jsp
- * page. Separate breadcrumb trails are not tracked across multiple browser windows.<br>
+ * Implement a "breadcrumb" (most recently visited) trail.  This tag can be added to any view jsp page. Separate breadcrumb trails
+ * are not tracked across multiple browser windows.<br>
  * The optional attributes are:
- *
+ * 
  * <p>
  * <b>maxpages</b>, the number of pages to store, 10 by default<br>
  * <b>separator</b>, the separator string to use between pages, " | " by default<br>
  * </p>
- *
+ * 
  * <p>
- * This class is implemented by storing a breadcrumb trail, which is a fixed size queue, into a
- * session variable "breadCrumbTrail". This queue is displayed as a series of links separated by a
- * separator character.
+ * This class is implemented by storing a breadcrumb trail, which is a fixed size queue, into a session variable "breadCrumbTrail".
+ * This queue is displayed as a series of links separated by a separator character.
  * </p>
  *
  * @author <a href="mailto:ken@kenliu.net">Ken Liu</a>
@@ -177,9 +176,7 @@ public class BreadcrumbsTag
 
             //FIXME: I can't figure out how to detect the appropriate jsp page to put here, so I hard coded Wiki.jsp
             //This breaks when you view an attachment metadata page
-            out.print(
-                "<a class=\"" + linkclass + "\" href=\"" + m_wikiContext.getViewURL(curPage)
-                + "\">" + curPage + "</a>");
+            out.print("<a class=\"" + linkclass + "\" href=\"" + m_wikiContext.getViewURL(curPage) + "\">" + curPage + "</a>");
 
             if (i < (queueSize - 2))
             {

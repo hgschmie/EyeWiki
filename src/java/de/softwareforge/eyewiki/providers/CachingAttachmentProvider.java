@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -42,8 +43,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-
-import org.picocontainer.PicoContainer;
 
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
@@ -56,11 +55,11 @@ import de.softwareforge.eyewiki.WikiProvider;
 import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 
+import org.picocontainer.PicoContainer;
 
 /**
- * Provides a caching attachment provider.  This class rests on top of a real provider class and
- * provides a cache to speed things up.  Only the Attachment objects are cached; the actual
- * attachment contents are fetched always from the provider.
+ * Provides a caching attachment provider.  This class rests on top of a real provider class and provides a cache to speed things
+ * up.  Only the Attachment objects are cached; the actual attachment contents are fetched always from the provider.
  *
  * @author Janne Jalkanen
  *
@@ -80,10 +79,7 @@ public class CachingAttachmentProvider
     /** DOCUMENT ME! */
     private WikiAttachmentProvider m_provider;
 
-    /**
-     * The cache contains Collection objects which contain Attachment objects. The key is the
-     * parent wiki page name (String).
-     */
+    /** The cache contains Collection objects which contain Attachment objects. The key is the parent wiki page name (String). */
     private Cache m_cache;
 
     /** DOCUMENT ME! */
@@ -102,7 +98,6 @@ public class CachingAttachmentProvider
      *
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
-     * @throws IllegalArgumentException DOCUMENT ME!
      */
     public CachingAttachmentProvider(WikiEngine engine)
             throws NoRequiredPropertyException, IOException
@@ -299,8 +294,7 @@ public class CachingAttachmentProvider
     {
         if (log.isDebugEnabled())
         {
-            log.debug(
-                "Getting attachments for " + page + ", name=" + name + ", version=" + version);
+            log.debug("Getting attachments for " + page + ", name=" + name + ", version=" + version);
         }
 
         //
@@ -423,8 +417,8 @@ public class CachingAttachmentProvider
      */
     public synchronized String getProviderInfo()
     {
-        return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
-        + m_cacheMisses + "<br />Cache hits: " + m_cacheHits);
+        return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: " + m_cacheMisses + "<br />Cache hits: "
+        + m_cacheHits);
     }
 
     /**

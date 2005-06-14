@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.ServletConfig;
@@ -42,13 +42,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.dav.methods.DavMethod;
 import de.softwareforge.eyewiki.dav.methods.GetMethod;
 import de.softwareforge.eyewiki.dav.methods.PropFindMethod;
 import de.softwareforge.eyewiki.dav.methods.PropPatchMethod;
-
 
 /**
  * DOCUMENT ME!
@@ -60,14 +58,10 @@ import de.softwareforge.eyewiki.dav.methods.PropPatchMethod;
 public class WikiDavServlet
         extends WebdavServlet
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private WikiEngine m_engine;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     Logger log = Logger.getLogger(this.getClass().getName());
 
     /**
@@ -129,8 +123,7 @@ public class WikiDavServlet
     {
         if (request.getContentLength() > 0)
         {
-            response.sendError(
-                HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Message may contain no body");
+            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Message may contain no body");
         }
         else
         {

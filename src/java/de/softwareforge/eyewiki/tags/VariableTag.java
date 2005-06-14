@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,35 +33,31 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 
-
 /**
  * Returns the value of an Wiki variable.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * var - Name of the variable.  Required.
  * </li>
  * <li>
- * default - Revert to this value, if the value of "var" is null. If left out, this tag will
- * produce a concise error message if the named variable is not found. Set to empty (default="")
- * to hide the message.
+ * default - Revert to this value, if the value of "var" is null. If left out, this tag will produce a concise error message if the
+ * named variable is not found. Set to empty (default="") to hide the message.
  * </li>
  * </ul>
- *
+ * 
  * <P>
  * A default value implies <I>failmode='quiet'</I>.
  * </p>

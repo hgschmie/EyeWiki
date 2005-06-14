@@ -1,5 +1,10 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiProvider;
+import de.softwareforge.eyewiki.attachment.AttachmentManager;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,64 +37,101 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import org.picocontainer.Startable;
 
-
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiProvider;
-import de.softwareforge.eyewiki.attachment.AttachmentManager;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class AttachmentProviderVariables
         implements Startable
 {
+    /** DOCUMENT ME! */
     private final AttachmentManager attachmentManager;
+
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new AttachmentProviderVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     * @param attachmentManager DOCUMENT ME!
+     */
     public AttachmentProviderVariables(final VariableManager variableManager, final AttachmentManager attachmentManager)
     {
         this.attachmentManager = attachmentManager;
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         variableManager.registerVariable("attachmentprovider", new AttachmentProvider());
         variableManager.registerVariable("attachmentproviderdescription", new AttachmentProviderDescription());
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class AttachmentProvider
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             WikiProvider p = attachmentManager.getCurrentProvider();
 
-            return (p != null)
-                    ? p.getClass().getName()
-                    : "-";
+            return (p != null) ? p.getClass().getName() : "-";
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class AttachmentProviderDescription
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             WikiProvider p = attachmentManager.getCurrentProvider();
 
-            return (p != null)
-                    ? p.getProviderInfo()
-                    : "-";
+            return (p != null) ? p.getProviderInfo() : "-";
         }
     }
 }
-

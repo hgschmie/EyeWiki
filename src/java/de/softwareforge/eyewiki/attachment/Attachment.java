@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.attachment;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,10 @@ package de.softwareforge.eyewiki.attachment;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
- * Describes an attachment.  Attachments are actually derivatives of a WikiPage, since they do
- * actually have a WikiName as well.
+ * Describes an attachment.  Attachments are actually derivatives of a WikiPage, since they do actually have a WikiName as well.
  *
  * @author Erik Bunn
  * @author Janne Jalkanen
@@ -85,8 +83,7 @@ public class Attachment
      */
     public String toString()
     {
-        return "Attachment [" + getName() + ";mod=" + getLastModified() + ";status=" + m_status
-        + "]";
+        return "Attachment [" + getName() + ";mod=" + getLastModified() + ";status=" + m_status + "]";
     }
 
     /**

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.attachment;
 
+
 /*
  * ========================================================================
  *
@@ -32,21 +33,16 @@ package de.softwareforge.eyewiki.attachment;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import java.util.Collection;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiContext;
@@ -55,6 +51,9 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -158,9 +157,7 @@ public class AttachmentManagerTest
 
         m_manager.storeAttachment(att, makeAttachmentFile());
 
-        Attachment att2 =
-            m_manager.getAttachmentInfo(
-                new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt");
+        Attachment att2 = m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt");
 
         assertNotNull("attachment disappeared", att2);
         assertEquals("name", att.getName(), att2.getName());
@@ -194,9 +191,7 @@ public class AttachmentManagerTest
 
         m_manager.storeAttachment(att, makeAttachmentFile());
 
-        Attachment att2 =
-            m_manager.getAttachmentInfo(
-                new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt", 1);
+        Attachment att2 = m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt", 1);
 
         assertNotNull("attachment disappeared", att2);
         assertEquals("version", 1, att2.getVersion());
@@ -234,9 +229,7 @@ public class AttachmentManagerTest
         att.setAuthor("FooBar");
         m_manager.storeAttachment(att, makeAttachmentFile());
 
-        Attachment att2 =
-            m_manager.getAttachmentInfo(
-                new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt");
+        Attachment att2 = m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt");
 
         assertNotNull("attachment disappeared", att2);
         assertEquals("name", att.getName(), att2.getName());
@@ -258,9 +251,7 @@ public class AttachmentManagerTest
         //
         // Check that first author did not disappear
         //
-        Attachment att3 =
-            m_manager.getAttachmentInfo(
-                new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt", 1);
+        Attachment att3 = m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1.txt", 1);
         assertEquals("version of v1", 1, att3.getVersion());
         assertEquals("name of v1", "FirstPost", att3.getAuthor());
     }
@@ -303,8 +294,7 @@ public class AttachmentManagerTest
 
         m_manager.storeAttachment(att, makeAttachmentFile());
 
-        Attachment att2 =
-            m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1");
+        Attachment att2 = m_manager.getAttachmentInfo(new WikiContext(m_engine, new WikiPage(NAME1)), "test1");
 
         assertNotNull("attachment disappeared", att2);
         assertEquals("name", att.getName(), att2.getName());

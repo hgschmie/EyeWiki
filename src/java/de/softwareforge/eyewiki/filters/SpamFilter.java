@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -54,20 +54,15 @@ import org.apache.oro.text.regex.Perl5Matcher;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
- *  A regular expression-based spamfilter that can also do choke modifications.
+ * A regular expression-based spamfilter that can also do choke modifications.
  *
- * @author Janne Jalkanen
+ * @author Janne Jalkanen Parameters: <ul><li>wordlist - Page name where the regexps are found.  Use [{SET spamwords='regexp list
+ *         separated with spaces'}] on that page.  Default is "SpamFilterWordList".   <li>errorpage - The page to which the user
+ *         is redirected.  Has a special variable $msg which states the reason. Default is "RejectedMessage".
+ *         <li>pagechangesinminute - How many page changes are allowed/minute.  Default is 5.   <li>bantime - How long an IP
+ *         address stays on the temporary ban list (default is 60 for 60 minutes).   </ul>
  *
- *  Parameters:
- *  <ul>
- *    <li>wordlist - Page name where the regexps are found.  Use [{SET spamwords='regexp list separated with spaces'}] on
- *     that page.  Default is "SpamFilterWordList".
- *    <li>errorpage - The page to which the user is redirected.  Has a special variable $msg which states the reason. Default is "RejectedMessage".
- *    <li>pagechangesinminute - How many page changes are allowed/minute.  Default is 5.
- *    <li>bantime - How long an IP address stays on the temporary ban list (default is 60 for 60 minutes).
- *  </ul>
  * @since 2.1.112
  */
 public class SpamFilter
@@ -86,10 +81,12 @@ public class SpamFilter
     /** DOCUMENT ME! */
     public static final String PROP_ERRORPAGE = "errorpage";
 
+    /** DOCUMENT ME! */
     public static final String PROP_PAGECHANGES = "pagechangesinminute";
 
-    public static final String PROP_BANTIME   = "bantime";
-    
+    /** DOCUMENT ME! */
+    public static final String PROP_BANTIME = "bantime";
+
     /** DOCUMENT ME! */
     private String m_forbiddenWordsPage = "SpamFilterWordList";
 
@@ -108,21 +105,22 @@ public class SpamFilter
     /** DOCUMENT ME! */
     private Date m_lastRebuild = new Date(0L);
 
+    /** DOCUMENT ME! */
     private List m_temporaryBanList = new ArrayList();
-    
+
+    /** DOCUMENT ME! */
     private int m_banTime = 60; // minutes
-    
+
+    /** DOCUMENT ME! */
     private List m_lastModifications = new ArrayList();
-    
-    /**
-     *  How many times a single IP address can change a page per minute?
-     */
+
+    /** How many times a single IP address can change a page per minute? */
     private int m_limitSinglePageChanges = 5;
-    
+
     /**
      * DOCUMENT ME!
      *
-     * @param properties DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public SpamFilter(Configuration conf)
     {
@@ -130,13 +128,12 @@ public class SpamFilter
         m_forbiddenWordsPage = conf.getString(PROP_WORDLIST, m_forbiddenWordsPage);
         m_errorPage = conf.getString(PROP_ERRORPAGE, m_errorPage);
         m_limitSinglePageChanges = conf.getInt(PROP_PAGECHANGES, m_limitSinglePageChanges);
-        m_banTime = conf.getInt(PROP_BANTIME,m_banTime);
+        m_banTime = conf.getInt(PROP_BANTIME, m_banTime);
 
         if (log.isInfoEnabled())
         {
-            log.info("Spam filter initialized.  Temporary ban time "
-                    + m_banTime + " mins, max page changes/minute: "
-                    + m_limitSinglePageChanges);
+            log.info("Spam filter initialized.  Temporary ban time " + m_banTime + " mins, max page changes/minute: "
+                + m_limitSinglePageChanges);
         }
     }
 
@@ -172,21 +169,21 @@ public class SpamFilter
     }
 
     private synchronized void checkSinglePageChange(WikiContext context)
-        throws RedirectException
+            throws RedirectException
     {
         HttpServletRequest req = context.getHttpRequest();
-        
+
         if (req != null)
         {
             String addr = req.getRemoteAddr();
             int counter = 0;
-                
-            long time = System.currentTimeMillis()-60*1000L; // 1 minute
-            
-            for(Iterator i = m_lastModifications.iterator(); i.hasNext();)
+
+            long time = System.currentTimeMillis() - (60 * 1000L); // 1 minute
+
+            for (Iterator i = m_lastModifications.iterator(); i.hasNext();)
             {
                 Host host = (Host) i.next();
-                
+
                 //
                 //  Check if this item is invalid
                 //
@@ -194,35 +191,34 @@ public class SpamFilter
                 {
                     if (log.isDebugEnabled())
                     {
-                        log.debug("Removed host " + host.getAddress()
-                                + " from modification queue (expired)");
+                        log.debug("Removed host " + host.getAddress() + " from modification queue (expired)");
                     }
 
                     i.remove();
+
                     continue;
                 }
-                
+
                 if (host.getAddress().equals(addr))
                 {
                     counter++;
                 }
             }
-            
+
             if (counter >= m_limitSinglePageChanges)
             {
                 Host host = new Host(addr);
-                
+
                 m_temporaryBanList.add(host);
-                
+
                 if (log.isInfoEnabled())
                 {
-                    log.info("Added host "+addr+" to temporary ban list for doing too many modifications/minute");
+                    log.info("Added host " + addr + " to temporary ban list for doing too many modifications/minute");
                 }
 
-                throw new RedirectException("Too many modifications/minute",
-                                             context.getViewURL(m_errorPage));
+                throw new RedirectException("Too many modifications/minute", context.getViewURL(m_errorPage));
             }
-            
+
             m_lastModifications.add(new Host(addr));
         }
     }
@@ -230,11 +226,11 @@ public class SpamFilter
     private synchronized void cleanBanList()
     {
         long now = System.currentTimeMillis();
-        
-        for(Iterator i = m_temporaryBanList.iterator(); i.hasNext();)
+
+        for (Iterator i = m_temporaryBanList.iterator(); i.hasNext();)
         {
-            Host host = (Host)i.next();
-            
+            Host host = (Host) i.next();
+
             if (host.getReleaseTime() < now)
             {
                 if (log.isDebugEnabled())
@@ -246,32 +242,30 @@ public class SpamFilter
             }
         }
     }
-    
-    
+
     private void checkBanList(WikiContext context)
-        throws RedirectException
+            throws RedirectException
     {
         HttpServletRequest req = context.getHttpRequest();
-        
+
         if (req != null)
         {
             String remote = req.getRemoteAddr();
-            
+
             long now = System.currentTimeMillis();
-            
-            for(Iterator i = m_temporaryBanList.iterator(); i.hasNext();)
+
+            for (Iterator i = m_temporaryBanList.iterator(); i.hasNext();)
             {
-                Host host = (Host)i.next();
-                
+                Host host = (Host) i.next();
+
                 if (host.getAddress().equals(remote))
                 {
                     long timeleft = (host.getReleaseTime() - now) / 1000L;
-                    throw new RedirectException("You have been temporarily banned from modifying this wiki. ("+timeleft+" seconds of ban left)",
-                                                 context.getViewURL(m_errorPage));
+                    throw new RedirectException("You have been temporarily banned from modifying this wiki. (" + timeleft
+                        + " seconds of ban left)", context.getViewURL(m_errorPage));
                 }
             }
         }
-        
     }
 
     /**
@@ -290,14 +284,12 @@ public class SpamFilter
         cleanBanList();
         checkBanList(context);
         checkSinglePageChange(context);
-        
+
         WikiPage source = context.getEngine().getPage(m_forbiddenWordsPage);
 
         if (source != null)
         {
-            if (
-                    (m_spamPatterns == null) || m_spamPatterns.isEmpty()
-                    || source.getLastModified().after(m_lastRebuild))
+            if ((m_spamPatterns == null) || m_spamPatterns.isEmpty() || source.getLastModified().after(m_lastRebuild))
             {
                 m_lastRebuild = source.getLastModified();
 
@@ -305,9 +297,8 @@ public class SpamFilter
 
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                            "Spam filter reloaded - recognizing " + m_spamPatterns.size()
-                            + " patterns from page " + m_forbiddenWordsPage);
+                    log.info("Spam filter reloaded - recognizing " + m_spamPatterns.size() + " patterns from page "
+                        + m_forbiddenWordsPage);
                 }
             }
         }
@@ -335,56 +326,89 @@ public class SpamFilter
                 //
                 //  Spam filter has a match.
                 //
-                throw new RedirectException(
-                        "Content matches the spam filter '" + p.getPattern() + "'",
-                        context.getURL(WikiContext.VIEW, m_errorPage));
+                throw new RedirectException("Content matches the spam filter '" + p.getPattern() + "'",
+                    context.getURL(WikiContext.VIEW, m_errorPage));
             }
         }
 
         return content;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isVisible()
     {
         return true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;
     }
 
-    
     /**
-     *  A local class for storing host information.
-     * 
-     *  @author jalkanen
+     * A local class for storing host information.
      *
-     *  @since
+     * @author jalkanen
+     *
+     * @since
      */
     public class Host
     {
-        private  long m_addedTime = System.currentTimeMillis();
-        private  long m_releaseTime;
-        private  String m_address;
-        
+        /** DOCUMENT ME! */
+        private long m_addedTime = System.currentTimeMillis();
+
+        /** DOCUMENT ME! */
+        private long m_releaseTime;
+
+        /** DOCUMENT ME! */
+        private String m_address;
+
+        /**
+         * Creates a new Host object.
+         *
+         * @param ipaddress DOCUMENT ME!
+         */
         public Host(String ipaddress)
         {
             m_address = ipaddress;
-            
-            m_releaseTime = System.currentTimeMillis() + m_banTime * 60 * 1000L;
+
+            m_releaseTime = System.currentTimeMillis() + (m_banTime * 60 * 1000L);
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getAddress()
         {
             return m_address;
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public long getReleaseTime()
         {
             return m_releaseTime;
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public long getAddedTime()
         {
             return m_addedTime;

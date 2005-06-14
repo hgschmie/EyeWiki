@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,24 +33,37 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.auth.UserProfile;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class ContextVariables
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new ContextVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public ContextVariables(VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // Hardcoded sequence of the evaluators
@@ -60,6 +74,17 @@ public class ContextVariables
         variableManager.registerVariable("requestcontext", new RequestContext());
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param varName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     * @throws NoSuchVariableException DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String varName)
             throws Exception
     {
@@ -71,21 +96,36 @@ public class ContextVariables
         {
             return context.getVariable(varName).toString();
         }
+
         throw new NoSuchVariableException("");
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private static class LoginStatus
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param varName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         *
+         * @throws Exception DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String varName)
                 throws Exception
         {
             UserProfile wup = context.getCurrentUser();
 
-            int status = (wup != null)
-                    ? wup.getLoginStatus()
-                    : UserProfile.NONE;
+            int status = (wup != null) ? wup.getLoginStatus() : UserProfile.NONE;
 
             switch (status)
             {
@@ -107,25 +147,55 @@ public class ContextVariables
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private static class UserName
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param varName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         *
+         * @throws Exception DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String varName)
                 throws Exception
         {
             UserProfile wup = context.getCurrentUser();
 
-            return (wup != null)
-                    ? wup.getName()
-                    : "not logged in";
+            return (wup != null) ? wup.getName() : "not logged in";
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private static class RequestContext
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param varName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         *
+         * @throws Exception DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String varName)
                 throws Exception
         {

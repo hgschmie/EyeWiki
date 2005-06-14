@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,25 +33,55 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public abstract class AbstractSimpleVariable
         implements WikiVariable
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public abstract String getValue(WikiContext context, String variableName)
             throws Exception;
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPriority()
     {
         return NORMAL_PRIORITY;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isVisible()
     {
         return true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getName()
     {
         return this.getClass().getName();

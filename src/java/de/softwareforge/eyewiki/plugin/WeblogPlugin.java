@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -49,7 +50,6 @@ import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -59,13 +59,12 @@ import de.softwareforge.eyewiki.manager.PageManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
  * Builds a simple weblog.
- *
+ * 
  * <P>
  * The pageformat can use the following params:<br> %p - Page name<br><B>Parameters</B>
- *
+ * 
  * <UL>
  * <li>
  * page - which page is used to do the blog; default is the current page.
@@ -83,14 +82,14 @@ import de.softwareforge.eyewiki.util.TextUtil;
  * maxEntries - How many entries to show at most.
  * </li>
  * </ul>
- *
- * The "days" and "startDate" can also be sent in HTTP parameters, and the names are "weblog.days"
- * and "weblog.startDate", respectively.
+ * 
+ * The "days" and "startDate" can also be sent in HTTP parameters, and the names are "weblog.days" and "weblog.startDate",
+ * respectively.
  * </p>
- *
+ * 
  * <p>
- * The weblog plugin also adds an attribute to each page it is on: "weblogplugin.isweblog" is set
- * to "true".  This can be used to quickly peruse pages which have weblogs.
+ * The weblog plugin also adds an attribute to each page it is on: "weblogplugin.isweblog" is set to "true".  This can be used to
+ * quickly peruse pages which have weblogs.
  * </p>
  *
  * @since 1.9.21
@@ -131,10 +130,18 @@ public class WeblogPlugin
     /** DOCUMENT ME! */
     public static final String ATTR_ISWEBLOG = "weblogplugin.isweblog";
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     private final PageManager pageManager;
 
+    /**
+     * Creates a new WeblogPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param pageManager DOCUMENT ME!
+     */
     public WeblogPlugin(final WikiEngine engine, final PageManager pageManager)
     {
         this.engine = engine;
@@ -243,8 +250,7 @@ public class WeblogPlugin
 
         hasComments = BooleanUtils.toBoolean((String) params.get(PARAM_ALLOWCOMMENTS));
 
-        maxEntries =
-            TextUtil.parseIntParameter((String) params.get(PARAM_MAXENTRIES), Integer.MAX_VALUE);
+        maxEntries = TextUtil.parseIntParameter((String) params.get(PARAM_MAXENTRIES), Integer.MAX_VALUE);
 
         //
         //  Determine the date range which to include.
@@ -289,8 +295,7 @@ public class WeblogPlugin
 
         try
         {
-            List blogEntries =
-                findBlogEntries(weblogName, startTime.getTime(), stopTime.getTime());
+            List blogEntries = findBlogEntries(weblogName, startTime.getTime(), stopTime.getTime());
 
             Collections.sort(blogEntries, new PageDateComparator());
 
@@ -339,8 +344,8 @@ public class WeblogPlugin
                     if (engine.pageExists(author))
                     {
                         author =
-                            "<a href=\"" + entryCtx.getURL(WikiContext.VIEW, author) + "\">"
-                            + engine.beautifyTitle(author) + "</a>";
+                            "<a href=\"" + entryCtx.getURL(WikiContext.VIEW, author) + "\">" + engine.beautifyTitle(author)
+                            + "</a>";
                     }
                 }
                 else
@@ -349,9 +354,7 @@ public class WeblogPlugin
                 }
 
                 sb.append("By " + author + "&nbsp;&nbsp;");
-                sb.append(
-                    "<a href=\"" + entryCtx.getURL(WikiContext.VIEW, p.getName())
-                    + "\">Permalink</a>");
+                sb.append("<a href=\"" + entryCtx.getURL(WikiContext.VIEW, p.getName()) + "\">Permalink</a>");
 
                 String commentPageName = StringUtils.replace(p.getName(), "blogentry", "comments");
 
@@ -365,11 +368,9 @@ public class WeblogPlugin
                     //  has changed.
                     //
                     sb.append("&nbsp;&nbsp;");
-                    sb.append(
-                        "<a target=\"_blank\" href=\""
-                        + entryCtx.getURL(
-                            WikiContext.COMMENT, commentPageName, "nc=" + numComments)
-                        + "\">Comments? (" + numComments + ")</a>");
+                    sb.append("<a target=\"_blank\" href=\""
+                        + entryCtx.getURL(WikiContext.COMMENT, commentPageName, "nc=" + numComments) + "\">Comments? ("
+                        + numComments + ")</a>");
                 }
 
                 sb.append("</div>\n");
@@ -400,11 +401,9 @@ public class WeblogPlugin
     }
 
     /**
-     * Attempts to locate all pages that correspond to the blog entry pattern.  Will only consider
-     * the days on the dates; not the hours and minutes. Returns a list of pages with their FIRST
-     * revisions.
+     * Attempts to locate all pages that correspond to the blog entry pattern.  Will only consider the days on the dates; not the
+     * hours and minutes. Returns a list of pages with their FIRST revisions.
      *
-     * @param mgr DOCUMENT ME!
      * @param baseName DOCUMENT ME!
      * @param start DOCUMENT ME!
      * @param end DOCUMENT ME!
@@ -468,10 +467,8 @@ public class WeblogPlugin
                 {
                     if (log.isDebugEnabled())
                     {
-                        log.debug(
-                            "Page name :" + pageName
-                            + " was suspected as a blog entry but it isn't because of parsing errors",
-                            e);
+                        log.debug("Page name :" + pageName
+                            + " was suspected as a blog entry but it isn't because of parsing errors", e);
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,43 +33,67 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class InterWikiLinksVariable
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
+
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new InterWikiLinksVariable object.
+     *
+     * @param variableManager DOCUMENT ME!
+     * @param engine DOCUMENT ME!
+     */
     public InterWikiLinksVariable(final VariableManager variableManager, final WikiEngine engine)
     {
         this.engine = engine;
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         variableManager.registerVariable("interwikilinks", this);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String variableName)
             throws Exception
     {
         StringBuffer sb = new StringBuffer();
+
         for (Iterator i = engine.getAllInterWikiLinks().iterator(); i.hasNext();)
         {
             String link = (String) i.next();
-            sb.append(link)
-                    .append(" --&gt; ")
-                    .append(engine.getInterWikiURL(link))
-                    .append("<br />\n");
+            sb.append(link).append(" --&gt; ").append(engine.getInterWikiURL(link)).append("<br />\n");
         }
 
         return sb.toString();

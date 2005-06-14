@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,20 +33,15 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.StringReader;
+
 import java.util.Date;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiProperties;
@@ -53,6 +49,9 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.providers.BasicAttachmentProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -270,8 +269,7 @@ public class BasicAttachmentProviderTest
     {
         File in = makeAttachmentFile();
 
-        File sDir =
-            new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
+        File sDir = new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
         File extrafile = makeExtraFile(sDir, "foobar.blob");
 
         try
@@ -312,8 +310,7 @@ public class BasicAttachmentProviderTest
     {
         File in = makeAttachmentFile();
 
-        File sDir =
-            new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
+        File sDir = new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
         File attDir = new File(sDir, NAME1 + "-att");
 
         Attachment att = new Attachment(NAME1, "test1.txt");
@@ -356,8 +353,7 @@ public class BasicAttachmentProviderTest
     {
         File in = makeAttachmentFile();
 
-        File sDir =
-            new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
+        File sDir = new File(m_engine.getWikiConfiguration().getString(WikiProperties.PROP_STORAGEDIR));
         File attDir = new File(sDir, NAME1 + "-att");
 
         Attachment att = new Attachment(NAME1, "test1.txt");

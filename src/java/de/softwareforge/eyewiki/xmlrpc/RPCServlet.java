@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -50,13 +50,12 @@ import org.apache.xmlrpc.XmlRpcServer;
 
 import de.softwareforge.eyewiki.WikiEngine;
 
-
 /**
  * Handles all incoming servlet requests for XML-RPC calls.
- *
+ * 
  * <P>
  * Uses two initialization parameters:
- *
+ * 
  * <UL>
  * <li>
  * <B>handler</B> : the class which is used to handle the RPC calls.
@@ -149,8 +148,7 @@ public class RPCServlet
     }
 
     /**
-     * Handle HTTP POST.  This is an XML-RPC call, and we'll just forward the query to an
-     * XmlRpcServer.
+     * Handle HTTP POST.  This is an XML-RPC call, and we'll just forward the query to an XmlRpcServer.
      *
      * @param request DOCUMENT ME!
      * @param response DOCUMENT ME!
@@ -189,8 +187,7 @@ public class RPCServlet
     }
 
     /**
-     * Handles HTTP GET.  However, we do not respond to GET requests, other than to show an
-     * explanatory text.
+     * Handles HTTP GET.  However, we do not respond to GET requests, other than to show an explanatory text.
      *
      * @param request DOCUMENT ME!
      * @param response DOCUMENT ME!

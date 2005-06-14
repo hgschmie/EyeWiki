@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,23 +33,20 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
-
 
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
 
-
 /**
  * Includes the body, if the current page is of proper type. <B>Attributes</B>
- *
+ * 
  * <UL>
  * <li>
  * type - either "page", "attachment" or "weblogentry"
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -94,9 +92,7 @@ public class PageTypeTag
                 return EVAL_BODY_INCLUDE;
             }
 
-            if (
-                m_type.equals("weblogentry") && !(page instanceof Attachment)
-                            && (page.getName().indexOf("_blogentry_") != -1))
+            if (m_type.equals("weblogentry") && !(page instanceof Attachment) && (page.getName().indexOf("_blogentry_") != -1))
             {
                 return EVAL_BODY_INCLUDE;
             }

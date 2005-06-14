@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-
 
 /**
  * This interface holds all the constant names for the properties available in eyewiki.properties
@@ -77,40 +76,32 @@ public interface WikiProperties
     String PROP_VARIABLE_FILE_DEFAULT = "/WEB-INF/wikiVariables.xml";
 
     /**
-     * Property for the plugin configuration file. This has no default, if this value is empty or
-     * missing, no plugins are started.
+     * Property for the plugin configuration file. This has no default, if this value is empty or missing, no plugins are started.
      */
     String PROP_PLUGIN_FILE = "eyewiki.pluginFile";
 
-    /**
-     * Name of the property that defines a directory where the pages are. Must be defined if you
-     * use a file based PageProvider.
-     */
+    /** Name of the property that defines a directory where the pages are. Must be defined if you use a file based PageProvider. */
     String PROP_PAGEDIR = "eyewiki.pageDir";
 
-    /**
-     * Property name for where the eyewiki work directory should be. If not specified, reverts to
-     * ${java.tmpdir}.
-     */
+    /** Property name for where the eyewiki work directory should be. If not specified, reverts to ${java.tmpdir}. */
     String PROP_WORKDIR = "eyewiki.workDir";
 
     /**
-     * Name of the property that defines a directory where the attachments are. Must be defined if
-     * you use a file based AttachmentProvider.
+     * Name of the property that defines a directory where the attachments are. Must be defined if you use a file based
+     * AttachmentProvider.
      */
     String PROP_STORAGEDIR = "eyewiki.storageDir";
 
     /**
-     * This property is used internally to provide the root of the web application to the logging
-     * configuration when the Wiki has been configured to use relative pathes with
-     * eyewiki.relativePathes = true You can reference it as ${eyewiki.rootDir} but you should
-     * never add it directly to the eyewiki.properties file
+     * This property is used internally to provide the root of the web application to the logging configuration when the Wiki has
+     * been configured to use relative pathes with eyewiki.relativePathes = true You can reference it as ${eyewiki.rootDir} but
+     * you should never add it directly to the eyewiki.properties file
      */
     String PROP_ROOTDIR = "eyewiki.rootDir";
 
     /**
-     * If this parameter is true, then all the page and string references are relative to the web
-     * application root. This allows a wiki to be deployed "as is" as a single war file.
+     * If this parameter is true, then all the page and string references are relative to the web application root. This allows a
+     * wiki to be deployed "as is" as a single war file.
      */
     String PROP_WIKIRELATIVE_PATHES = "eyewiki.relativePathes";
 
@@ -209,10 +200,7 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     int PROP_LOCKEXPIRY_DEFAULT = 60;
 
-    /**
-     * This property defines the inline image pattern.  It's current value is
-     * eyewiki.translatorReader.inlinePattern
-     */
+    /** This property defines the inline image pattern.  It's current value is eyewiki.translatorReader.inlinePattern */
     String PROP_INLINEIMAGEPTRN = "eyewiki.translatorReader.inlinePattern";
 
     /** The default inlining pattern.  Currently ".png" */
@@ -224,10 +212,7 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     boolean PROP_CAMELCASELINKS_DEFAULT = false;
 
-    /**
-     * If true, all hyperlinks are translated as well, regardless whether they are surrounded by
-     * brackets.
-     */
+    /** If true, all hyperlinks are translated as well, regardless whether they are surrounded by brackets. */
     String PROP_PLAINURIS = "eyewiki.translatorReader.plainUris";
 
     /** DOCUMENT ME! */
@@ -240,9 +225,8 @@ public interface WikiProperties
     boolean PROP_USEOUTLINKIMAGE_DEFAULT = false;
 
     /**
-     * If set to "true", allows using raw HTML within Wiki text.  Be warned, this is a VERY
-     * dangerous option to set - never turn this on in a publicly allowable Wiki, unless you are
-     * absolutely certain of what you're doing.
+     * If set to "true", allows using raw HTML within Wiki text.  Be warned, this is a VERY dangerous option to set - never turn
+     * this on in a publicly allowable Wiki, unless you are absolutely certain of what you're doing.
      */
     String PROP_ALLOWHTML = "eyewiki.translatorReader.allowHTML";
 
@@ -268,8 +252,8 @@ public interface WikiProperties
     String PROP_RUNFILTERS_DEFAULT = "true";
 
     /**
-     * Determines the command to be used for 'diff'.  This program must be able to output diffs in
-     * the unified format. It defaults to 'diff -u %s1 %s2'.
+     * Determines the command to be used for 'diff'.  This program must be able to output diffs in the unified format. It defaults
+     * to 'diff -u %s1 %s2'.
      */
     String PROP_DIFFCOMMAND = "eyewiki.diffCommand";
 
@@ -279,10 +263,7 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     int PROP_MAXSIZE_DEFAULT = 100000;
 
-    /**
-     * Defines, in seconds, the amount of time a text will live in the cache at most before
-     * requiring a refresh.
-     */
+    /** Defines, in seconds, the amount of time a text will live in the cache at most before requiring a refresh. */
     String PROP_CACHECHECKINTERVAL = "eyewiki.cachingProvider.cacheCheckInterval";
 
     /** DOCUMENT ME! */
@@ -300,14 +281,10 @@ public interface WikiProperties
     /** DOCUMENT ME! */
     boolean PROP_USE_LUCENE_DEFAULT = true;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String PROP_LUCENE_ANALYZER = "eyewiki.lucene.analyzer";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String PROP_LUCENE_ANALYZER_DEFAULT = StandardAnalyzer.class.getName();
 
     /** Prefix for the Wiki Special pages */
@@ -322,8 +299,7 @@ public interface WikiProperties
      */
 
     /**
-     * Defines the property name for the RSS channel description.  Default value for the channel
-     * description is an empty string.
+     * Defines the property name for the RSS channel description.  Default value for the channel description is an empty string.
      *
      * @since 1.7.6.
      */
@@ -337,8 +313,7 @@ public interface WikiProperties
     String PROP_RSS_CHANNEL_DESCRIPTION_DEFAULT = "";
 
     /**
-     * Defines the property name for the RSS channel language.  Default value for the language is
-     * "en-us".
+     * Defines the property name for the RSS channel language.  Default value for the language is "en-us".
      *
      * @since 1.7.6.
      */

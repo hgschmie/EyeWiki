@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,12 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.auth.UserProfile;
 import de.softwareforge.eyewiki.auth.WikiGroup;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 
 /**
  * DOCUMENT ME!

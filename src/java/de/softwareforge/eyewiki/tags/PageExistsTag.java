@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * Includes the body in case the set page does exist.
@@ -62,8 +61,6 @@ public class PageExistsTag
     public final int doWikiStartTag()
             throws IOException, ProviderException
     {
-        return (super.doWikiStartTag() == SKIP_BODY)
-        ? EVAL_BODY_INCLUDE
-        : SKIP_BODY;
+        return (super.doWikiStartTag() == SKIP_BODY) ? EVAL_BODY_INCLUDE : SKIP_BODY;
     }
 }

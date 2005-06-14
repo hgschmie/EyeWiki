@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.Date;
-
 
 /**
  * DOCUMENT ME!
@@ -113,8 +112,7 @@ public class PageLock
     }
 
     /**
-     * Returns the amount of time left in minutes, rounded up to the nearest minute (so you get a
-     * zero only at the last minute).
+     * Returns the amount of time left in minutes, rounded up to the nearest minute (so you get a zero only at the last minute).
      *
      * @return DOCUMENT ME!
      */

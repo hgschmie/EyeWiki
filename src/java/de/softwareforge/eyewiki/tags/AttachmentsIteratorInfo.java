@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,11 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import javax.servlet.jsp.tagext.TagData;
 import javax.servlet.jsp.tagext.TagExtraInfo;
 import javax.servlet.jsp.tagext.VariableInfo;
 
 import de.softwareforge.eyewiki.attachment.Attachment;
-
 
 /**
  * Just provides the TEI data for AttachmentsIteratorTag.
@@ -58,11 +57,7 @@ public class AttachmentsIteratorInfo
     public VariableInfo [] getVariableInfo(TagData data)
     {
         VariableInfo [] var =
-            {
-                new VariableInfo(
-                    data.getAttributeString("id"), Attachment.class.getName(), true,
-                    VariableInfo.NESTED)
-            };
+            { new VariableInfo(data.getAttributeString("id"), Attachment.class.getName(), true, VariableInfo.NESTED) };
 
         return var;
     }

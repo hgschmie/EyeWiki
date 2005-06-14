@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.manager;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -49,7 +50,6 @@ import com.opensymphony.oscache.base.NeedsRefreshException;
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * This class takes care of managing eyeWiki templates.
@@ -91,7 +91,7 @@ public class TemplateManager
         //
         //  Uses the unlimited cache.
         //
-        m_propertyCache = new Cache( true, false, false);
+        m_propertyCache = new Cache(true, false, false);
     }
 
     /**
@@ -120,8 +120,7 @@ public class TemplateManager
     }
 
     /**
-     * An utility method for finding a JSP page.  It searches only under either current context or
-     * by the absolute name.
+     * An utility method for finding a JSP page.  It searches only under either current context or by the absolute name.
      *
      * @param pageContext DOCUMENT ME!
      * @param name DOCUMENT ME!
@@ -180,19 +179,14 @@ public class TemplateManager
 
     private String makeFullJSPName(final String template, final String name)
     {
-        StringBuffer sb = new StringBuffer("/")
-                .append(DIRECTORY)
-                .append("/")
-                .append(template)
-                .append("/")
-                .append(name);
+        StringBuffer sb = new StringBuffer("/").append(DIRECTORY).append("/").append(template).append("/").append(name);
+
         return sb.toString();
     }
 
     /**
-     * Attempts to locate a JSP page under the given template.  If that template does not exist, or
-     * the page does not exist under that template, will attempt to locate a similarly named file
-     * under the default template.
+     * Attempts to locate a JSP page under the given template.  If that template does not exist, or the page does not exist under
+     * that template, will attempt to locate a similarly named file under the default template.
      *
      * @param pageContext DOCUMENT ME!
      * @param template DOCUMENT ME!
@@ -234,8 +228,8 @@ public class TemplateManager
     }
 
     /**
-     * Returns a property, as defined in the template.  The evaluation is lazy, i.e. the properties
-     * are not loaded until the template is actually used for the first time.
+     * Returns a property, as defined in the template.  The evaluation is lazy, i.e. the properties are not loaded until the
+     * template is actually used for the first time.
      *
      * @param context DOCUMENT ME!
      * @param key DOCUMENT ME!
@@ -280,11 +274,7 @@ public class TemplateManager
 
     private static String getPath(final String template)
     {
-        StringBuffer sb =  new StringBuffer("/")
-                .append(DIRECTORY)
-                .append("/")
-                .append(template)
-                .append("/");
+        StringBuffer sb = new StringBuffer("/").append(DIRECTORY).append("/").append(template).append("/");
 
         return sb.toString();
     }
@@ -305,8 +295,7 @@ public class TemplateManager
 
         ServletContext context = m_engine.getServletContext();
 
-        InputStream propertyStream =
-            context.getResourceAsStream(getPath(templateName) + PROPERTYFILE);
+        InputStream propertyStream = context.getResourceAsStream(getPath(templateName) + PROPERTYFILE);
 
         if (propertyStream != null)
         {
@@ -318,9 +307,7 @@ public class TemplateManager
         {
             if (log.isDebugEnabled())
             {
-                log.debug(
-                    "Template '" + templateName + "' does not have a propertyfile '" + PROPERTYFILE
-                    + "'.");
+                log.debug("Template '" + templateName + "' does not have a propertyfile '" + PROPERTYFILE + "'.");
             }
         }
 

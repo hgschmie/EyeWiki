@@ -1,5 +1,6 @@
 package com.foo;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,16 @@ package com.foo;
  *
  * ========================================================================
  */
-
 import java.util.Map;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
 
-
 /**
  * Implements a simple plugin that just returns its text.
- *
+ * 
  * <P>
  * Parameters: text - text to return.
  * </p>

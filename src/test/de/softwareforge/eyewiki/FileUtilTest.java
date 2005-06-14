@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,10 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
@@ -48,6 +44,9 @@ import org.apache.log4j.PropertyConfigurator;
 
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -94,10 +93,9 @@ public class FileUtilTest
     }
 
     /**
-     * This test actually checks if your JDK is misbehaving.  On my own Debian machine, changing
-     * the system to use UTF-8 suddenly broke Java, and I put in this test to check for its
-     * brokenness.  If your tests suddenly stop running, check if this one is failing too.  If it
-     * is, your platform is broken.  If it's not, seek for the bug in your code.
+     * This test actually checks if your JDK is misbehaving.  On my own Debian machine, changing the system to use UTF-8 suddenly
+     * broke Java, and I put in this test to check for its brokenness.  If your tests suddenly stop running, check if this one is
+     * failing too.  If it is, your platform is broken.  If it's not, seek for the bug in your code.
      *
      * @throws Exception DOCUMENT ME!
      */
@@ -121,9 +119,7 @@ public class FileUtilTest
     {
         String src = "abc\u00e4\u00e5\u00a6";
 
-        String res =
-            FileUtil.readContents(
-                new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "ISO-8859-1");
+        String res = FileUtil.readContents(new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "ISO-8859-1");
 
         assertEquals(src, res);
     }
@@ -138,8 +134,7 @@ public class FileUtilTest
     {
         String src = "abc\u00e4\u00e5\u00a6def";
 
-        String res =
-            FileUtil.readContents(new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "UTF-8");
+        String res = FileUtil.readContents(new ByteArrayInputStream(src.getBytes("ISO-8859-1")), "UTF-8");
 
         assertEquals(src, res);
     }
@@ -166,8 +161,7 @@ public class FileUtilTest
 
         String [] envp = {  };
 
-        Process process =
-                Runtime.getRuntime().exec("cat " + f.getAbsolutePath(), envp, f.getParentFile());
+        Process process = Runtime.getRuntime().exec("cat " + f.getAbsolutePath(), envp, f.getParentFile());
 
         String result = FileUtil.readContents(process.getInputStream(), "UTF-8");
 

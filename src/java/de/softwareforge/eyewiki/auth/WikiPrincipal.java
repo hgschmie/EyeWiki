@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
-
 
 /**
  * This is the master class for all wiki UserProfiles and WikiGroups.

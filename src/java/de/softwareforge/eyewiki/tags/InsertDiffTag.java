@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
@@ -43,21 +43,19 @@ import org.apache.commons.lang.StringUtils;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
- * Writes difference between two pages using a HTML table.  If there is no difference, includes the
- * body.
- *
+ * Writes difference between two pages using a HTML table.  If there is no difference, includes the body.
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -117,10 +115,8 @@ public class InsertDiffTag
             page = engine.getPage(m_pageName);
         }
 
-        Integer vernew =
-            (Integer) pageContext.getAttribute(ATTR_NEWVERSION, PageContext.REQUEST_SCOPE);
-        Integer verold =
-            (Integer) pageContext.getAttribute(ATTR_OLDVERSION, PageContext.REQUEST_SCOPE);
+        Integer vernew = (Integer) pageContext.getAttribute(ATTR_NEWVERSION, PageContext.REQUEST_SCOPE);
+        Integer verold = (Integer) pageContext.getAttribute(ATTR_OLDVERSION, PageContext.REQUEST_SCOPE);
 
         if (log.isInfoEnabled())
         {
@@ -131,8 +127,7 @@ public class InsertDiffTag
         {
             JspWriter out = pageContext.getOut();
 
-            String diff =
-                engine.getDiff(page.getName(), vernew.intValue(), verold.intValue(), true);
+            String diff = engine.getDiff(page.getName(), vernew.intValue(), verold.intValue(), true);
 
             if (StringUtils.isEmpty(diff))
             {

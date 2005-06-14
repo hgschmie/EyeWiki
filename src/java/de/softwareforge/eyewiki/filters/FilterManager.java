@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,11 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,26 +50,25 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.MutablePicoContainer;
-import org.picocontainer.Parameter;
-import org.picocontainer.Startable;
-import org.picocontainer.defaults.ConstantParameter;
-import org.picocontainer.defaults.DefaultPicoContainer;
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.util.PriorityList;
 
+import org.picocontainer.MutablePicoContainer;
+import org.picocontainer.Parameter;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ConstantParameter;
+import org.picocontainer.defaults.DefaultPicoContainer;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Manages the page filters.  Page filters are components that can be executed at certain places:
- *
+ * 
  * <ul>
  * <li>
  * Before the page is translated into HTML.
@@ -83,13 +83,11 @@ import de.softwareforge.eyewiki.util.PriorityList;
  * After the page has been saved.
  * </li>
  * </ul>
- *
- * Using page filters allows you to modify the page data on-the-fly, and do things like adding your
- * own custom WikiMarkup.
- *
+ * 
+ * Using page filters allows you to modify the page data on-the-fly, and do things like adding your own custom WikiMarkup.
+ * 
  * <p>
- * The initial page filter configuration is kept in a file called "filters.xml".  The format is
- * really very simple:
+ * The initial page filter configuration is kept in a file called "filters.xml".  The format is really very simple:
  * <pre>
  *  <?xml version="1.0"?>
  *   <pagefilters>
@@ -109,8 +107,8 @@ import de.softwareforge.eyewiki.util.PriorityList;
  *     </filter>
  *  </pagefilters>
  *  </pre>
- * The &lt;filter> -sections define the filters.  For more information, please see the
- * PageFilterConfiguration page in the eyeWiki distribution.
+ * The &lt;filter> -sections define the filters.  For more information, please see the PageFilterConfiguration page in the eyeWiki
+ * distribution.
  * </p>
  *
  * @author Janne Jalkanen
@@ -178,7 +176,6 @@ public class FilterManager
     public FilterManager(WikiEngine engine, Configuration conf)
             throws Exception
     {
-
         filterContainer = new DefaultPicoContainer(engine.getComponentContainer());
 
         InputStream xmlStream = null;
@@ -197,8 +194,7 @@ public class FilterManager
             {
                 if (log.isInfoEnabled())
                 {
-                    log.info("Could not load "
-                            + xmlFile + ", no filters are configured.");
+                    log.info("Could not load " + xmlFile + ", no filters are configured.");
                 }
 
                 return;
@@ -216,12 +212,15 @@ public class FilterManager
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // If our filters are good, they implement the regular life cycle...
         filterContainer.start();
 
-        for (Iterator it = filterContainer.getComponentInstances().iterator(); it.hasNext(); )
+        for (Iterator it = filterContainer.getComponentInstances().iterator(); it.hasNext();)
         {
             PageFilter pageFilter = (PageFilter) it.next();
 
@@ -236,32 +235,43 @@ public class FilterManager
         setStarted(true);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         setStarted(false);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param started DOCUMENT ME!
+     */
     protected void setStarted(final boolean started)
     {
         this.started = started;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isStarted()
     {
         return started;
     }
 
-
     /**
-     * Adds a page filter to the queue.  The priority defines in which order the page filters are
-     * run, the highest priority filters go in the queue first.
-     *
+     * Adds a page filter to the queue.  The priority defines in which order the page filters are run, the highest priority filters
+     * go in the queue first.
+     * 
      * <p>
      * In case two filters have the same priority, their execution order is the insertion order.
      * </p>
      *
      * @param f PageFilter to add
-     * @param priority The priority in which position to add it in.
      *
      * @throws IllegalArgumentException If the PageFilter is null or invalid.
      *
@@ -271,9 +281,8 @@ public class FilterManager
     {
         if (f == null)
         {
-            throw new IllegalArgumentException(
-                    "Attempt to provide a null filter - this should never happen. "
-                    + "Please check your configuration (or if you're a developer, check your own code.)");
+            throw new IllegalArgumentException("Attempt to provide a null filter - this should never happen. "
+                + "Please check your configuration (or if you're a developer, check your own code.)");
         }
 
         m_pageFilters.add(f, f.getPriority());
@@ -386,7 +395,7 @@ public class FilterManager
     {
         List l = new ArrayList(m_pageFilters.size());
 
-        for (Iterator it = m_pageFilters.iterator(); it.hasNext(); )
+        for (Iterator it = m_pageFilters.iterator(); it.hasNext();)
         {
             PageFilter filter = (PageFilter) it.next();
 
@@ -406,7 +415,6 @@ public class FilterManager
      *
      * ========================================================================
      */
-
     private void registerFilter(String filterName, Configuration filterConf)
             throws SAXException
     {
@@ -414,20 +422,24 @@ public class FilterManager
         {
             Class filterClass = Class.forName(filterName);
 
-            Parameter [] confParameter = new Parameter[] { new ConstantParameter(filterConf) };
+            Parameter [] confParameter = new Parameter [] { new ConstantParameter(filterConf) };
             filterContainer.registerComponentImplementation(filterName, filterClass, confParameter);
         }
         catch (Exception e)
         {
-            throw new SAXException("While registering " + filterName + " with the Filter container:",  e);
+            throw new SAXException("While registering " + filterName + " with the Filter container:", e);
         }
     }
 
     /**
      * DOCUMENT ME!
      *
+     * @param namespace DOCUMENT ME!
      * @param name DOCUMENT ME!
+     * @param qName DOCUMENT ME!
      * @param atts DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
      */
     public void startElement(String namespace, String name, String qName, Attributes atts)
             throws SAXException
@@ -451,7 +463,12 @@ public class FilterManager
     /**
      * DOCUMENT ME!
      *
+     * @param namespace DOCUMENT ME!
      * @param name DOCUMENT ME!
+     * @param qName DOCUMENT ME!
+     *
+     * @throws SAXException DOCUMENT ME!
+     * @throws IllegalArgumentException DOCUMENT ME!
      */
     public void endElement(String namespace, String name, String qName)
             throws SAXException
@@ -487,6 +504,7 @@ public class FilterManager
                 {
                     throw new IllegalArgumentException("Found Parameter Value before Parameter name!");
                 }
+
                 lastReadParamValue = lastReadCharacters.toString();
             }
         }
@@ -504,4 +522,3 @@ public class FilterManager
         lastReadCharacters.append(ch, start, length);
     }
 }
-

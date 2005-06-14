@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -54,59 +55,37 @@ public interface WikiConstants
     /** The key used to determine the URL Constructor */
     String URL_CONSTRUCTOR = "URLConstructor";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String PAGE_MANAGER = "PageManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String PLUGIN_MANAGER = "PluginManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String DIFFERENCE_MANAGER = "DifferenceManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String ATTACHMENT_MANAGER = "AttachmentManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String VARIABLE_MANAGER = "VariableManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String FILTER_MANAGER = "FilterManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String REFERENCE_MANAGER = "ReferenceManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String USER_MANAGER = "UserManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String AUTHORIZATION_MANAGER = "AuthorizationManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String TEMPLATE_MANAGER = "TemplateManager";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     String RSS_GENERATOR = "RSSGenerator";
 
     /** The Page Provider */

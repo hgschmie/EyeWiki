@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
@@ -41,14 +41,13 @@ import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Writes a comment link.  Body of the link becomes the link text.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -57,7 +56,7 @@ import de.softwareforge.eyewiki.WikiPage;
  * format - Format, either "anchor" or "url".
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -110,13 +109,12 @@ public class CommentLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            StringBuffer sb = new StringBuffer("<a class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" href=\"")
-                    .append(getCommentURL(pageName))
-                    .append("\">");
 
+            StringBuffer sb =
+                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"")
+                                               .append(getCommentURL(pageName)).append("\">");
             out.print(sb.toString());
+
             break;
 
         case URL:

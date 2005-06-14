@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * Includes body, if the request context matches.

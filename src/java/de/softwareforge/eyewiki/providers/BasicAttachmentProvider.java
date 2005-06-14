@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -41,6 +41,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -53,7 +54,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.PageTimeComparator;
 import de.softwareforge.eyewiki.QueryItem;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -64,7 +64,6 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Provides basic, versioning attachments.
@@ -87,10 +86,10 @@ import de.softwareforge.eyewiki.util.TextUtil;
  *               1.png
  *   </PRE>
  * The names of the directories will be URLencoded.
- *
+ * 
  * <p>
  * "attachment.properties" consists of the following items:
- *
+ * 
  * <UL>
  * <li>
  * 1.author = author name for version 1 (etc)
@@ -132,8 +131,7 @@ public class BasicAttachmentProvider
 
         if (m_storageDir == null)
         {
-            throw new NoRequiredPropertyException(
-                "File based attachment providers need a "
+            throw new NoRequiredPropertyException("File based attachment providers need a "
                 + "storage directory but none was found. Aborting!", WikiProperties.PROP_STORAGEDIR);
         }
     }
@@ -156,8 +154,7 @@ public class BasicAttachmentProvider
 
         if (f.exists() && !f.isDirectory())
         {
-            throw new ProviderException(
-                "Storage dir '" + f.getAbsolutePath() + "' is not a directory!");
+            throw new ProviderException("Storage dir '" + f.getAbsolutePath() + "' is not a directory!");
         }
 
         return f;
@@ -187,9 +184,7 @@ public class BasicAttachmentProvider
     private File findAttachmentDir(Attachment att)
             throws ProviderException
     {
-        File f =
-            new File(
-                findPageDir(att.getParentName()), mangleName(att.getFileName() + ATTDIR_EXTENSION));
+        File f = new File(findPageDir(att.getParentName()), mangleName(att.getFileName() + ATTDIR_EXTENSION));
 
         //
         //  Migration code for earlier versions of eyeWiki.
@@ -224,8 +219,7 @@ public class BasicAttachmentProvider
      *
      * @param att DOCUMENT ME!
      *
-     * @return Latest version number in the repository, or 0, if there is no page in the
-     *         repository.
+     * @return Latest version number in the repository, or 0, if there is no page in the repository.
      *
      * @throws ProviderException DOCUMENT ME!
      */
@@ -249,9 +243,7 @@ public class BasicAttachmentProvider
         {
             // log.debug("Checking: "+pages[i]);
             int cutpoint = pages[i].indexOf('.');
-            String pageNum = (cutpoint > 0)
-                ? pages[i].substring(0, cutpoint)
-                : pages[i];
+            String pageNum = (cutpoint > 0) ? pages[i].substring(0, cutpoint) : pages[i];
 
             try
             {
@@ -273,7 +265,7 @@ public class BasicAttachmentProvider
 
     /**
      * Returns the file extension.  For example "test.png" returns "png".
-     *
+     * 
      * <p>
      * If file has no extension, will return "bin"
      * </p>
@@ -297,8 +289,7 @@ public class BasicAttachmentProvider
     }
 
     /**
-     * Writes the page properties back to the file system. Note that it WILL overwrite any previous
-     * properties.
+     * Writes the page properties back to the file system. Note that it WILL overwrite any previous properties.
      *
      * @param att DOCUMENT ME!
      * @param properties DOCUMENT ME!
@@ -373,13 +364,11 @@ public class BasicAttachmentProvider
         {
             int versionNumber = latestVersion + 1;
 
-            File newfile =
-                new File(attDir, versionNumber + "." + getFileExtension(att.getFileName()));
+            File newfile = new File(attDir, versionNumber + "." + getFileExtension(att.getFileName()));
 
             if (log.isInfoEnabled())
             {
-                log.info(
-                    "Uploading attachment " + att.getFileName() + " to page " + att.getParentName());
+                log.info("Uploading attachment " + att.getFileName() + " to page " + att.getParentName());
                 log.info("Saving attachment contents to " + newfile.getAbsolutePath());
             }
 
@@ -451,8 +440,7 @@ public class BasicAttachmentProvider
 
             if (!f.exists())
             {
-                throw new FileNotFoundException(
-                    "No such file: " + f.getAbsolutePath() + " exists.");
+                throw new FileNotFoundException("No such file: " + f.getAbsolutePath() + " exists.");
             }
         }
 
@@ -521,9 +509,7 @@ public class BasicAttachmentProvider
                         //
                         if (attachmentName.endsWith(ATTDIR_EXTENSION))
                         {
-                            attachmentName =
-                                attachmentName.substring(
-                                    0, attachmentName.length() - ATTDIR_EXTENSION.length());
+                            attachmentName = attachmentName.substring(0, attachmentName.length() - ATTDIR_EXTENSION.length());
                         }
                         else
                         {
@@ -539,8 +525,7 @@ public class BasicAttachmentProvider
                             }
                         }
 
-                        Attachment att =
-                            getAttachmentInfo(page, attachmentName, WikiProvider.LATEST_VERSION);
+                        Attachment att = getAttachmentInfo(page, attachmentName, WikiProvider.LATEST_VERSION);
 
                         //
                         //  Sanity check - shouldn't really be happening, unless
@@ -548,11 +533,9 @@ public class BasicAttachmentProvider
                         //
                         if (att == null)
                         {
-                            throw new ProviderException(
-                                "Attachment disappeared while reading information:"
-                                + " if you did not touch the repository, there is a serious bug somewhere. "
-                                + "Attachment = " + attachments[i] + ", decoded = "
-                                + attachmentName);
+                            throw new ProviderException("Attachment disappeared while reading information:"
+                                + " if you did not touch the repository, there is a serious bug somewhere. " + "Attachment = "
+                                + attachments[i] + ", decoded = " + attachmentName);
                         }
 
                         result.add(att);
@@ -584,8 +567,7 @@ public class BasicAttachmentProvider
 
         if (!attDir.exists())
         {
-            throw new ProviderException(
-                "Specified attachment directory " + m_storageDir + " does not exist!");
+            throw new ProviderException("Specified attachment directory " + m_storageDir + " does not exist!");
         }
 
         ArrayList list = new ArrayList();
@@ -683,8 +665,7 @@ public class BasicAttachmentProvider
 
             for (int i = latest; i >= 1; i--)
             {
-                Attachment a =
-                    getAttachmentInfo(new WikiPage(att.getParentName()), att.getFileName(), i);
+                Attachment a = getAttachmentInfo(new WikiPage(att.getParentName()), att.getFileName(), i);
 
                 if (a != null)
                 {

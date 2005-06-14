@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,30 +33,54 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class MetadataVariables
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new MetadataVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public MetadataVariables(VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // Hardcoded sequence of the evaluators
         variableManager.registerEvaluator(this, MIN_PRIORITY - 2);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param varName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     * @throws NoSuchVariableException DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String varName)
             throws Exception
     {

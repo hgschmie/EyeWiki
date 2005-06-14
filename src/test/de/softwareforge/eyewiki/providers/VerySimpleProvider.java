@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -46,10 +46,9 @@ import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
 
-
 /**
- * This is a simple provider that is used by some of the tests.  It has some specific behaviours,
- * like it always contains a single page.
+ * This is a simple provider that is used by some of the tests.  It has some specific behaviours, like it always contains a single
+ * page.
  */
 public class VerySimpleProvider
         implements WikiPageProvider

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,15 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.io.UnsupportedEncodingException;
+
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-
 
 /**
  * Contains a number of static utility methods.
@@ -65,13 +66,15 @@ public final class TextUtil
     /** DOCUMENT ME! */
     private static final int OTHER = 4;
 
+    /**
+     * Creates a new TextUtil object.
+     */
     private TextUtil()
     {
     }
 
     /**
-     * java.net.URLEncoder.encode() method in JDK &lt; 1.4 is buggy.  This duplicates its
-     * functionality.
+     * java.net.URLEncoder.encode() method in JDK &lt; 1.4 is buggy.  This duplicates its functionality.
      *
      * @param rs DOCUMENT ME!
      *
@@ -105,9 +108,7 @@ public final class TextUtil
 
             default:
 
-                if (
-                    ((ch >= 'a') && (ch <= 'z')) || ((ch >= 'A') && (ch <= 'Z'))
-                                || ((ch >= '0') && (ch <= '9')))
+                if (((ch >= 'a') && (ch <= 'z')) || ((ch >= 'A') && (ch <= 'Z')) || ((ch >= '0') && (ch <= '9')))
                 {
                     result.append(ch);
                 }
@@ -125,9 +126,9 @@ public final class TextUtil
 
     /**
      * URL encoder does not handle all characters correctly. See <A
-     * HREF="http://developer.java.sun.com/developer/bugParade/bugs/4257115.html">Bug parade, bug
-     * #4257115</A> for more information.
-     *
+     * HREF="http://developer.java.sun.com/developer/bugParade/bugs/4257115.html">Bug parade, bug #4257115</A> for more
+     * information.
+     * 
      * <P>
      * Thanks to CJB for this fix.
      * </p>
@@ -163,8 +164,7 @@ public final class TextUtil
 
                 case '%':
                     decodeBytes[decodedByteCount++] =
-                        (byte) ((HEX_DIGITS.indexOf(bytes[++count]) << 4)
-                        + (HEX_DIGITS.indexOf(bytes[++count])));
+                        (byte) ((HEX_DIGITS.indexOf(bytes[++count]) << 4) + (HEX_DIGITS.indexOf(bytes[++count])));
 
                     break;
 
@@ -249,9 +249,8 @@ public final class TextUtil
     }
 
     /**
-     * Provides encoded version of string depending on encoding. Encoding may be UTF-8 or
-     * ISO-8859-1 (default).
-     *
+     * Provides encoded version of string depending on encoding. Encoding may be UTF-8 or ISO-8859-1 (default).
+     * 
      * <p>
      * This implementation is the same as in FileSystemProvider.mangleName().
      * </p>
@@ -285,9 +284,8 @@ public final class TextUtil
     }
 
     /**
-     * Provides decoded version of string depending on encoding. Encoding may be UTF-8 or
-     * ISO-8859-1 (default).
-     *
+     * Provides decoded version of string depending on encoding. Encoding may be UTF-8 or ISO-8859-1 (default).
+     * 
      * <p>
      * This implementation is the same as in FileSystemProvider.unmangleName().
      * </p>
@@ -323,8 +321,7 @@ public final class TextUtil
     }
 
     /**
-     * Replaces the relevant entities inside the String. All &amp; &gt;, &lt;, and &quot; are
-     * replaced by their respective names.
+     * Replaces the relevant entities inside the String. All &amp; &gt;, &lt;, and &quot; are replaced by their respective names.
      *
      * @param src DOCUMENT ME!
      *
@@ -392,19 +389,18 @@ public final class TextUtil
 
     /**
      * Makes sure that the POSTed data is conforms to certain rules.  These rules are:
-     *
+     * 
      * <UL>
      * <li>
-     * The data always ends with a newline (some browsers, such as NS4.x series, does not send a
-     * newline at the end, which makes the diffs a bit strange sometimes.
+     * The data always ends with a newline (some browsers, such as NS4.x series, does not send a newline at the end, which makes
+     * the diffs a bit strange sometimes.
      * </li>
      * <li>
      * The CR/LF/CRLF mess is normalized to plain CRLF.
      * </li>
      * </ul>
-     *
-     * The reason why we're using CRLF is that most browser already return CRLF since that is the
-     * closest thing to a HTTP standard.
+     * 
+     * The reason why we're using CRLF is that most browser already return CRLF since that is the closest thing to a HTTP standard.
      *
      * @param postData DOCUMENT ME!
      *
@@ -477,8 +473,7 @@ public final class TextUtil
     }
 
     /**
-     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName
-     * into a more readable format.
+     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName into a more readable format.
      *
      * @param s String to be beautified.
      *
@@ -490,8 +485,7 @@ public final class TextUtil
     }
 
     /**
-     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName
-     * into a more readable format.
+     * Adds spaces in suitable locations of the input string.  This is used to transform a WikiName into a more readable format.
      *
      * @param s String to be beautified.
      * @param space Use this string for the space character.
@@ -520,9 +514,7 @@ public final class TextUtil
 
         while (curKind != EOI)
         {
-            next = (nextPos < s.length())
-                ? s.charAt(nextPos++)
-                : (-1);
+            next = (nextPos < s.length()) ? s.charAt(nextPos++) : (-1);
             nextKind = getCharKind(next);
 
             if ((prevKind == UPPER) && (curKind == UPPER) && (nextKind == LOWER))
@@ -534,12 +526,9 @@ public final class TextUtil
             {
                 result.append((char) cur);
 
-                if (
-                    ((curKind == UPPER) && (nextKind == DIGIT))
-                                || ((curKind == LOWER)
-                                && ((nextKind == DIGIT) || (nextKind == UPPER)))
-                                || ((curKind == DIGIT)
-                                && ((nextKind == UPPER) || (nextKind == LOWER))))
+                if (((curKind == UPPER) && (nextKind == DIGIT))
+                                || ((curKind == LOWER) && ((nextKind == DIGIT) || (nextKind == UPPER)))
+                                || ((curKind == DIGIT) && ((nextKind == UPPER) || (nextKind == LOWER))))
                 {
                     result.append(space);
                 }
@@ -561,6 +550,7 @@ public final class TextUtil
      *  </pre>
      * to a configuration object.
      *
+     * @param prefix DOCUMENT ME!
      * @param values The values to use.
      *
      * @return DOCUMENT ME!
@@ -587,8 +577,7 @@ public final class TextUtil
             else
             {
                 StringBuffer key = new StringBuffer(prefix);
-                key.append(".")
-                        .append(values[i]);
+                key.append(".").append(values[i]);
                 map.put(key.toString(), values[i + 1]);
             }
         }
@@ -619,15 +608,12 @@ public final class TextUtil
         //
         // The first section does not get the "----"
         //
-        return (pagedata.length() > 0)
-        ? (tags + 1)
-        : 0;
+        return (pagedata.length() > 0) ? (tags + 1) : 0;
     }
 
     /**
-     * Gets the given section (separated with "----") from the page text. Note that the first
-     * section is always #1.  If a page has no section markers, them there is only a single
-     * section, #1.
+     * Gets the given section (separated with "----") from the page text. Note that the first section is always #1.  If a page has
+     * no section markers, them there is only a single section, #1.
      *
      * @param pagedata WikiText to parse.
      * @param section Which section to get.

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,12 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.HeadingListener;
 import de.softwareforge.eyewiki.TranslatorReader;
@@ -49,7 +49,6 @@ import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Provides a table of contents.
@@ -67,8 +66,14 @@ public class TableOfContents
     /** DOCUMENT ME! */
     public static final String PARAM_TITLE = "title";
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /**
+     * Creates a new TableOfContents object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public TableOfContents(final WikiEngine engine)
     {
         this.engine = engine;
@@ -133,6 +138,12 @@ public class TableOfContents
         return sb.toString();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     public static class ToCListener
             implements HeadingListener
     {
@@ -175,11 +186,14 @@ public class TableOfContents
                 throw new InternalWikiException("Unknown depth in toc! (Please submit a bug report.)");
             }
 
-            m_buf.append(
-                    " [" + hd.getTitleText() + "|" + context.getPage().getName() + "#" + hd.getTitleSection()
-                    + "]\n");
+            m_buf.append(" [" + hd.getTitleText() + "|" + context.getPage().getName() + "#" + hd.getTitleSection() + "]\n");
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getResult()
         {
             return m_buf.toString();

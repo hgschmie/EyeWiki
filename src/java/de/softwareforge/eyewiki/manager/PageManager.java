@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.manager;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -43,10 +43,6 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import org.picocontainer.PicoContainer;
-import org.picocontainer.Startable;
-
 
 import de.softwareforge.eyewiki.PageLock;
 import de.softwareforge.eyewiki.QueryItem;
@@ -59,11 +55,12 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.providers.RepositoryModifiedException;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
 
 /**
- * Manages the WikiPages.  This class functions as an unified interface towards the page providers.
- * It handles initialization and management of the providers, and provides utility methods for
- * accessing the contents.
+ * Manages the WikiPages.  This class functions as an unified interface towards the page providers. It handles initialization and
+ * management of the providers, and provides utility methods for accessing the contents.
  *
  * @author Janne Jalkanen
  *
@@ -118,9 +115,11 @@ public final class PageManager
         {
             log.debug("Initializing page provider class " + m_provider);
         }
-
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         //
@@ -130,16 +129,29 @@ public final class PageManager
         setStarted(true);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         setStarted(false);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param started DOCUMENT ME!
+     */
     protected void setStarted(final boolean started)
     {
         this.started = started;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isStarted()
     {
         return started;
@@ -169,9 +181,8 @@ public final class PageManager
     }
 
     /**
-     * Fetches the page text from the repository.  This method also does some sanity checks, like
-     * checking for the pageName validity, etc.  Also, if the page repository has been modified
-     * externally, it is smart enough to handle such occurrences.
+     * Fetches the page text from the repository.  This method also does some sanity checks, like checking for the pageName
+     * validity, etc.  Also, if the page repository has been modified externally, it is smart enough to handle such occurrences.
      *
      * @param pageName DOCUMENT ME!
      * @param version DOCUMENT ME!
@@ -238,8 +249,8 @@ public final class PageManager
     }
 
     /**
-     * Locks page for editing.  Note, however, that the PageManager will in no way prevent you from
-     * actually editing this page; the lock is just for information.
+     * Locks page for editing.  Note, however, that the PageManager will in no way prevent you from actually editing this page; the
+     * lock is just for information.
      *
      * @param page DOCUMENT ME!
      * @param user DOCUMENT ME!
@@ -260,9 +271,7 @@ public final class PageManager
                 //  Lock is available, so make a lock.
                 //
                 Date d = new Date();
-                lock =
-                    new PageLock(
-                        page, user, d, new Date(d.getTime() + (m_expiryTime * 60 * 1000L)));
+                lock = new PageLock(page, user, d, new Date(d.getTime() + (m_expiryTime * 60 * 1000L)));
 
                 m_pageLocks.put(page.getName(), lock);
 
@@ -329,11 +338,10 @@ public final class PageManager
     }
 
     /**
-     * Returns a list of currently applicable locks.  Note that by the time you get the list, the
-     * locks may have already expired, so use this only for informational purposes.
+     * Returns a list of currently applicable locks.  Note that by the time you get the list, the locks may have already expired,
+     * so use this only for informational purposes.
      *
-     * @return List of PageLock objects, detailing the locks.  If no locks exist, returns an empty
-     *         list.
+     * @return List of PageLock objects, detailing the locks.  If no locks exist, returns an empty list.
      *
      * @since 2.0.22.
      */
@@ -395,8 +403,7 @@ public final class PageManager
             //
             if (log.isInfoEnabled())
             {
-                log.info(
-                    "Repository has been modified externally while fetching info for " + pageName);
+                log.info("Repository has been modified externally while fetching info for " + pageName);
             }
 
             WikiPage p = new WikiPage(pageName);
@@ -411,7 +418,7 @@ public final class PageManager
 
     /**
      * Gets a version history of page.  Each element in the returned List is a WikiPage.
-     *
+     * 
      * <P></p>
      *
      * @param pageName DOCUMENT ME!
@@ -511,8 +518,8 @@ public final class PageManager
     }
 
     /**
-     * This is a simple reaper thread that runs roughly every minute or so (it's not really that
-     * important, as long as it runs), and removes all locks that have expired.
+     * This is a simple reaper thread that runs roughly every minute or so (it's not really that important, as long as it runs),
+     * and removes all locks that have expired.
      */
     private class LockReaper
             extends Thread
@@ -544,10 +551,8 @@ public final class PageManager
 
                                 if (log.isDebugEnabled())
                                 {
-                                    log.debug(
-                                        "Reaped lock: " + p.getPage().getName() + " by "
-                                        + p.getLocker() + ", acquired " + p.getAcquisitionTime()
-                                        + ", and expired " + p.getExpiryTime());
+                                    log.debug("Reaped lock: " + p.getPage().getName() + " by " + p.getLocker() + ", acquired "
+                                        + p.getAcquisitionTime() + ", and expired " + p.getExpiryTime());
                                 }
                             }
                         }

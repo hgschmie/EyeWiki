@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
@@ -45,30 +44,33 @@ import de.softwareforge.eyewiki.plugin.PluginManager;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
 import de.softwareforge.eyewiki.util.FormUtil;
 
-
 /**
  */
 public class FormOutput
         extends FormElement
         implements WikiPlugin
 {
-
+    /** DOCUMENT ME! */
     protected final PluginManager pluginManager;
 
+    /**
+     * Creates a new FormOutput object.
+     *
+     * @param pluginManager DOCUMENT ME!
+     */
     public FormOutput(final PluginManager pluginManager)
     {
         this.pluginManager = pluginManager;
     }
 
     /**
-     * Executes the FormHandler specified in a Form 'output' plugin, using entries provided in the
-     * HttpRequest as FormHandler parameters.
-     *
+     * Executes the FormHandler specified in a Form 'output' plugin, using entries provided in the HttpRequest as FormHandler
+     * parameters.
+     * 
      * <p>
-     * If the parameter 'populate' was given, the WikiPlugin it names is used to get default
-     * values. (It probably makes a lot of sense for this to be the same plugin as the handler.)
-     * Information for the populator can be given with the FormSet plugin. If 'populate' is not
-     * specified, the form is not displayed.
+     * If the parameter 'populate' was given, the WikiPlugin it names is used to get default values. (It probably makes a lot of
+     * sense for this to be the same plugin as the handler.) Information for the populator can be given with the FormSet plugin.
+     * If 'populate' is not specified, the form is not displayed.
      * </p>
      *
      * @param ctx DOCUMENT ME!
@@ -88,7 +90,7 @@ public class FormOutput
         String submitForm = ctx.getHttpParameter(PARAM_FORMNAMEHIDDEN);
         String populator = (String) params.get(PARAM_POPULATE);
 
-        if (submitForm == null || formName == null || !formName.equals(submitForm))
+        if ((submitForm == null) || (formName == null) || !formName.equals(submitForm))
         {
             // No submitForm -> this was not a submission from the
             // generated form.  If populate is specified, we'll go
@@ -108,7 +110,7 @@ public class FormOutput
         {
             // Need to print out an error here as this form is misconfigured
             return "<p class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">Argument '" + PARAM_HANDLER
-                    + "' required for Form plugin</p>";
+            + "' required for Form plugin</p>";
         }
 
         String sourcePage = ctx.getPage().getName();
@@ -147,8 +149,7 @@ public class FormOutput
         {
             // The plugin _can_ modify the parameters, so we make sure
             // they stay with us.
-            handlerOutput =
-                    pluginManager.execute(ctx, handler, info.getSubmission());
+            handlerOutput = pluginManager.execute(ctx, handler, info.getSubmission());
             info.setResult(handlerOutput);
             info.setStatus(FormInfo.EXECUTED);
         }
@@ -169,9 +170,7 @@ public class FormOutput
         }
         else
         {
-            return (handlerOutput != null)
-                    ? handlerOutput
-                    : "";
+            return (handlerOutput != null) ? handlerOutput : "";
         }
     }
 }

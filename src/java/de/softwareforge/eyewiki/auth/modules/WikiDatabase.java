@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.modules;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,9 +43,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
-
-import org.picocontainer.Startable;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -60,36 +58,35 @@ import de.softwareforge.eyewiki.filters.FilterManager;
 import de.softwareforge.eyewiki.filters.PageFilter;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
+import org.picocontainer.Startable;
 
 /**
  * This default UserDatabase implementation provides user profiles and groups to eyeWiki.
- *
+ * 
  * <p>
- * UserProfiles are simply created upon request, and cached locally. More intricate providers might
- * look up profiles in a remote DB, provide an unauthenticatable object for unknown users, etc.
+ * UserProfiles are simply created upon request, and cached locally. More intricate providers might look up profiles in a remote
+ * DB, provide an unauthenticatable object for unknown users, etc.
  * </p>
- *
+ * 
  * <p>
- * The authentication of a user is done elsewhere (see WikiAuthenticator); newly created profiles
- * should have login status UserProfile.NONE.
+ * The authentication of a user is done elsewhere (see WikiAuthenticator); newly created profiles should have login status
+ * UserProfile.NONE.
  * </p>
- *
+ * 
  * <p>
- * Groups are  based on WikiPages. The name of the page determines the group name (as a convention,
- * we suggest the name of the page ends in Group, e.g. EditorGroup). By setting attribute
- * 'members' on the page, the named members are added to the group:
+ * Groups are  based on WikiPages. The name of the page determines the group name (as a convention, we suggest the name of the page
+ * ends in Group, e.g. EditorGroup). By setting attribute 'members' on the page, the named members are added to the group:
  * <pre>
  * [{SET members fee fie foe foo}]
  * </pre>
  * </p>
- *
+ * 
  * <p>
  * The list of members can be separated by commas or spaces.
  * </p>
- *
+ * 
  * <p>
- * TODO: are 'named members' supposed to be usernames, or are group names allowed? (Suggestion:
- * both)
+ * TODO: are 'named members' supposed to be usernames, or are group names allowed? (Suggestion: both)
  * </p>
  */
 public class WikiDatabase
@@ -98,10 +95,7 @@ public class WikiDatabase
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(WikiDatabase.class);
 
-    /**
-     * The attribute to set on a page - [{SET members ...}] - to define members of the group named
-     * by that page.
-     */
+    /** The attribute to set on a page - [{SET members ...}] - to define members of the group named by that page. */
     public static final String ATTR_MEMBERLIST = "members";
 
     /** DOCUMENT ME! */
@@ -117,7 +111,7 @@ public class WikiDatabase
      * DOCUMENT ME!
      *
      * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
+     * @param filterManager DOCUMENT ME!
      */
     public WikiDatabase(WikiEngine engine, FilterManager filterManager)
     {
@@ -125,11 +119,17 @@ public class WikiDatabase
         filterManager.addPageFilter(new SaveFilter());
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         initUserDatabase();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
@@ -304,8 +304,8 @@ public class WikiDatabase
     }
 
     /**
-     * Returns a principal; UserPrincipal storage is scanned first, then WikiGroup storage. If
-     * neither contains the requested principal, a new (empty) UserPrincipal is returned.
+     * Returns a principal; UserPrincipal storage is scanned first, then WikiGroup storage. If neither contains the requested
+     * principal, a new (empty) UserPrincipal is returned.
      *
      * @param name DOCUMENT ME!
      *
@@ -381,21 +381,34 @@ public class WikiDatabase
             extends BasicPageFilter
             implements PageFilter
     {
+        /**
+         * Creates a new SaveFilter object.
+         */
         private SaveFilter()
         {
             super(null);
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public int getPriority()
         {
             return PageFilter.MAX_PRIORITY;
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public boolean isVisible()
         {
             return false;
         }
-        
+
         /**
          * DOCUMENT ME!
          *
@@ -408,8 +421,7 @@ public class WikiDatabase
 
             if (log.isDebugEnabled())
             {
-                log.debug(
-                    "Skimming through page " + p.getName() + " to see if there are new users...");
+                log.debug("Skimming through page " + p.getName() + " to see if there are new users...");
             }
 
             m_engine.textToHTML(context, content);

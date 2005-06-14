@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,25 +33,22 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.xmlrpc.XmlRpcException;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.xmlrpc.RPCHandler;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -145,12 +143,8 @@ public class RPCHandlerTest
         cal.add(Calendar.HOUR, -1);
 
         // Go to UTC
-        cal.add(
-            Calendar.MILLISECOND,
-            -(cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(modDate)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            -(cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(modDate) ? cal.get(Calendar.DST_OFFSET) : 0)));
 
         Vector v = m_handler.getRecentChanges(cal.getTime());
 
@@ -183,12 +177,8 @@ public class RPCHandlerTest
         cal.add(Calendar.HOUR, -1);
 
         // Go to UTC
-        cal.add(
-            Calendar.MILLISECOND,
-            -(cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(modDate)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            -(cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(modDate) ? cal.get(Calendar.DST_OFFSET) : 0)));
 
         Vector v = m_handler.getRecentChanges(cal.getTime());
 
@@ -224,12 +214,8 @@ public class RPCHandlerTest
 
         // Offset the ZONE offset and DST offset away.  DST only
         // if we're actually in DST.
-        cal.add(
-            Calendar.MILLISECOND,
-            (cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(d)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            (cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(d) ? cal.get(Calendar.DST_OFFSET) : 0)));
         System.out.println("RPC2: " + cal.getTime());
 
         assertEquals("date", cal.getTime().getTime(), directInfo.getLastModified().getTime());

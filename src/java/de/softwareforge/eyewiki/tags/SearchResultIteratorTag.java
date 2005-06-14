@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
@@ -42,20 +43,19 @@ import javax.servlet.jsp.PageContext;
 import de.softwareforge.eyewiki.SearchResult;
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
  * Iterates through Search result results.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * max = how many search results should be shown.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -94,15 +94,12 @@ public class SearchResultIteratorTag
         //
         if (m_iterator == null)
         {
-            Collection searchresults =
-                (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
+            Collection searchresults = (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
             setList(searchresults);
         }
 
         m_count = 0;
-        m_wikiContext =
-            (WikiContext) pageContext.getAttribute(
-                WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+        m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
         return nextResult();
     }

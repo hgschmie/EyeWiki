@@ -1,5 +1,12 @@
 package de.softwareforge.eyewiki.plugin;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.plugin.PluginManager;
+
 /*
  * ========================================================================
  *
@@ -32,19 +39,9 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.plugin.PluginManager;
-
 
 /**
  * DOCUMENT ME!
@@ -111,9 +108,7 @@ public class PluginManagerTest
     public void testSimpleInsert()
             throws Exception
     {
-        String res =
-            manager.execute(
-                context, "{INSERT SamplePlugin WHERE text=foobar}");
+        String res = manager.execute(context, "{INSERT SamplePlugin WHERE text=foobar}");
 
         assertEquals("foobar", res);
     }
@@ -181,10 +176,7 @@ public class PluginManagerTest
     public void testSimpleInsert2()
             throws Exception
     {
-        String res =
-            manager.execute(
-                context,
-                "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat}");
+        String res = manager.execute(context, "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat}");
 
         assertEquals("foobar2", res);
     }
@@ -197,10 +189,7 @@ public class PluginManagerTest
     public void testSimpleInsert3()
             throws Exception
     {
-        String res =
-            manager.execute(
-                context,
-                "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat");
+        String res = manager.execute(context, "{INSERT SamplePlugin  WHERE   text = foobar2, moo=blat");
 
         assertEquals("foobar2", res);
     }
@@ -226,8 +215,7 @@ public class PluginManagerTest
     public void testQuotedArgs2()
             throws Exception
     {
-        String res =
-            manager.execute(context, "{INSERT SamplePlugin WHERE text='this \\'is a\\' space'}");
+        String res = manager.execute(context, "{INSERT SamplePlugin WHERE text='this \\'is a\\' space'}");
 
         assertEquals("this 'is a' space", res);
     }

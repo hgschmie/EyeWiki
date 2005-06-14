@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,14 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
 public interface WikiVariable
 {
     /** This evaluator should run as early as possible */
@@ -47,26 +53,37 @@ public interface WikiVariable
     int MIN_PRIORITY = -1000;
 
     /**
-     * Returns the value for this variable evaluation.
+     * Returns the value for this variable evaluation. Non-evaluating variables don't need to check the variable name, they are
+     * only called with their registered name.
      *
-     * Non-evaluating variables don't need to check the variable
-     * name, they are only called with their registered name.
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
     String getValue(WikiContext context, String variableName)
             throws Exception;
 
     /**
      * Evaluators can return a priority where they want to be evaluated.
+     *
+     * @return DOCUMENT ME!
      */
     int getPriority();
 
     /**
      * Should this variable / evaluator be visible in a possible list-out?
+     *
+     * @return DOCUMENT ME!
      */
     boolean isVisible();
 
     /**
      * The human readable name of this variable
+     *
+     * @return DOCUMENT ME!
      */
     String getName();
 }

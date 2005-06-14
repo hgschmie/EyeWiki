@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.util.Map;
 
 import javax.servlet.jsp.JspException;
@@ -42,19 +42,17 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.plugin.PluginManager;
 
-
 /**
  * Inserts any Wiki plugin.  The body of the tag becomes then the body for the plugin.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * plugin - name of the plugin you want to insert.
@@ -63,7 +61,7 @@ import de.softwareforge.eyewiki.plugin.PluginManager;
  * args   - An argument string for the tag.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -116,9 +114,7 @@ public class PluginTag
     {
         try
         {
-            m_wikiContext =
-                (WikiContext) pageContext.getAttribute(
-                    WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+            m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
             WikiEngine engine = m_wikiContext.getEngine();
 

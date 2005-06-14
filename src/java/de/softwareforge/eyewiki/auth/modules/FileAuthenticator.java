@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.modules;
 
+
 /*
  * ========================================================================
  *
@@ -32,17 +33,16 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiException;
@@ -51,10 +51,8 @@ import de.softwareforge.eyewiki.auth.UserProfile;
 import de.softwareforge.eyewiki.auth.WikiAuthenticator;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 
-
 /**
- * Provides a simple file-based authenticator.  This is really simple, as it does not even provide
- * encryption for the passwords.
+ * Provides a simple file-based authenticator.  This is really simple, as it does not even provide encryption for the passwords.
  *
  * @author Janne Jalkanen
  *

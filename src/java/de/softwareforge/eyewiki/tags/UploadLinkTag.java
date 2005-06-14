@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
@@ -40,15 +40,14 @@ import javax.servlet.jsp.JspWriter;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Writes a link to the upload page.  Body of the link becomes the actual text. The link is written
- * regardless to whether the page exists or not.
- *
+ * Writes a link to the upload page.  Body of the link becomes the actual text. The link is written regardless to whether the page
+ * exists or not.
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -57,7 +56,7 @@ import de.softwareforge.eyewiki.WikiContext;
  * format - either "anchor" or "url" to output either an &lt;A&gt;... or just the HREF part of one.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -97,12 +96,10 @@ public class UploadLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            StringBuffer sb = new StringBuffer("<a class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" target=\"_new\" href=\"")
-                    .append(url)
-                    .append("\">");
 
+            StringBuffer sb =
+                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" target=\"_new\" href=\"")
+                                               .append(url).append("\">");
             out.print(sb.toString());
 
             break;

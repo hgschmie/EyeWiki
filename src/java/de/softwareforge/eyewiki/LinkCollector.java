@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,8 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 /**
  * Just a simple class collecting all of the links that come in.

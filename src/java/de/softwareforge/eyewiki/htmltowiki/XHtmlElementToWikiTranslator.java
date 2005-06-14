@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,23 +33,22 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import de.softwareforge.eyewiki.util.TextUtil;
+
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.Text;
 import org.jdom.xpath.XPath;
-
-import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Converting XHtml to Wiki Markup
@@ -57,29 +57,19 @@ import de.softwareforge.eyewiki.util.TextUtil;
  */
 public class XHtmlElementToWikiTranslator
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private XHtmlToWikiConfig config;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private WhitespaceTrimWriter outTimmer;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private PrintWriter out;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private LiStack li = new LiStack();
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private PreStack pre = new PreStack();
 
     /**
@@ -182,9 +172,7 @@ public class XHtmlElementToWikiTranslator
 
                     italic = "oblique".equals(style) || "italic".equals(style);
                     bold = "bold".equals(weight) || "bolder".equals(weight);
-                    monospace =
-                        (font != null)
-                        && ((font.indexOf("mono") >= 0) || (font.indexOf("courier") >= 0));
+                    monospace = (font != null) && ((font.indexOf("mono") >= 0) || (font.indexOf("courier") >= 0));
 
                     if (!styleProps.isEmpty())
                     {
@@ -519,11 +507,7 @@ public class XHtmlElementToWikiTranslator
 
     private String emptyToNull(String s)
     {
-        return (s == null)
-        ? null
-        : ((s.replaceAll("\\s", "").length() == 0)
-        ? null
-        : s);
+        return (s == null) ? null : ((s.replaceAll("\\s", "").length() == 0) ? null : s);
     }
 
     private String propsToStyleString(Map styleProps)
@@ -533,8 +517,7 @@ public class XHtmlElementToWikiTranslator
         for (Iterator i = styleProps.entrySet().iterator(); i.hasNext();)
         {
             Map.Entry entry = (Map.Entry) i.next();
-            style.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append(
-                ";");
+            style.append(" ").append(entry.getKey()).append(": ").append(entry.getValue()).append(";");
         }
 
         return style.toString();
@@ -604,9 +587,7 @@ public class XHtmlElementToWikiTranslator
     // FIXME: These should probably be better used with java.util.Stack
     public static class LiStack
     {
-        /**
-         * DOCUMENT ME!
-         */
+        /** DOCUMENT ME! */
         private String li = "";
 
         /**
@@ -646,9 +627,7 @@ public class XHtmlElementToWikiTranslator
      */
     class PreStack
     {
-        /**
-         * DOCUMENT ME!
-         */
+        /** DOCUMENT ME! */
         private int pre = 0;
 
         /**

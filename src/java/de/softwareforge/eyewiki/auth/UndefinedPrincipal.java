@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -68,10 +69,14 @@ public class UndefinedPrincipal
      */
     public boolean equals(Object o)
     {
-        return (o != null) && o instanceof WikiPrincipal
-        && ((WikiPrincipal) o).getName().equals(getName());
+        return (o != null) && o instanceof WikiPrincipal && ((WikiPrincipal) o).getName().equals(getName());
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,14 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.Date;
 import java.util.HashMap;
-
 
 import de.softwareforge.eyewiki.acl.AccessControlList;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
 
-
 /**
- * Simple wrapper class for the Wiki page attributes.  The Wiki page content is moved around in
- * Strings, though.
+ * Simple wrapper class for the Wiki page attributes.  The Wiki page content is moved around in Strings, though.
  */
 
 // FIXME: We need to rethink how metadata is being used - probably the
@@ -107,6 +104,8 @@ public class WikiPage
 
     /**
      * Needed for clone()'ing
+     *
+     * @param name DOCUMENT ME!
      */
     private void setName(String name)
     {
@@ -124,10 +123,9 @@ public class WikiPage
     }
 
     /**
-     * A WikiPage may have a number of attributes, which might or might not be available. Typically
-     * attributes are things that do not need to be stored with the wiki page to the page
-     * repository, but are generated on-the-fly.  A provider is not required to save them, but
-     * they can do that if they really want.
+     * A WikiPage may have a number of attributes, which might or might not be available. Typically attributes are things that do
+     * not need to be stored with the wiki page to the page repository, but are generated on-the-fly.  A provider is not required
+     * to save them, but they can do that if they really want.
      *
      * @param key The key using which the attribute is fetched
      *
@@ -228,8 +226,8 @@ public class WikiPage
     }
 
     /**
-     * Returns the AccessControlList for this page.  May return null, in case there is no ACL
-     * defined for this page, or it has not yet been received.
+     * Returns the AccessControlList for this page.  May return null, in case there is no ACL defined for this page, or it has not
+     * yet been received.
      *
      * @return DOCUMENT ME!
      */
@@ -310,6 +308,8 @@ public class WikiPage
      * Creates a deep clone of a WikiPage.  Strings are not cloned, since they're immutable.
      *
      * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      */
     public Object clone()
     {
@@ -323,10 +323,12 @@ public class WikiPage
         {
             throw new RuntimeException("Could not clone WikiPage", cne);
         }
+
         p.setName(m_name);
         p.setAuthor(m_author);
         p.setVersion(m_version);
         p.setLastModified(m_lastModified);
+
         return p;
     }
 

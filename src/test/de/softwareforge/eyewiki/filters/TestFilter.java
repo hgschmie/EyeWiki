@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,10 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import org.apache.commons.configuration.Configuration;
 
 import de.softwareforge.eyewiki.filters.BasicPageFilter;
 import de.softwareforge.eyewiki.filters.PageFilter;
-
 
 /**
  * DOCUMENT ME!
@@ -54,27 +53,41 @@ public class TestFilter
     /**
      * DOCUMENT ME!
      *
-     * @param props DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public TestFilter(final Configuration conf)
     {
         super(conf);
         this.conf = conf;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public Configuration getConfiguration()
     {
         return conf;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isVisible()
     {
         return true;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;
     }
-
 }

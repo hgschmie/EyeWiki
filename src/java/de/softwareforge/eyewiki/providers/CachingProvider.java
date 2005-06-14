@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,10 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,9 +64,6 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import org.picocontainer.PicoContainer;
-import org.picocontainer.Startable;
-
 import com.opensymphony.oscache.base.Cache;
 import com.opensymphony.oscache.base.NeedsRefreshException;
 import com.opensymphony.oscache.base.algorithm.LRUCache;
@@ -87,25 +85,26 @@ import de.softwareforge.eyewiki.WikiProvider;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.TextUtil;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
 
 /**
- * Provides a caching page provider.  This class rests on top of a real provider class and provides
- * a cache to speed things up.  Only if the cache copy of the page text has expired, we fetch it
- * from the provider.
- *
+ * Provides a caching page provider.  This class rests on top of a real provider class and provides a cache to speed things up.
+ * Only if the cache copy of the page text has expired, we fetch it from the provider.
+ * 
  * <p>
- * This class also detects if someone has modified the page externally, not through eyeWiki
- * routines, and throws the proper RepositoryModifiedException.
+ * This class also detects if someone has modified the page externally, not through eyeWiki routines, and throws the proper
+ * RepositoryModifiedException.
  * </p>
- *
+ * 
  * <p>
  * Heavily based on ideas by Chris Brooking.
  * </p>
- *
+ * 
  * <p>
  * Since 2.1.52 uses the OSCache library from OpenSymphony.
  * </p>
- *
+ * 
  * <p>
  * Since 2.1.100 uses the Apache Lucene library to help in searching.
  * </p>
@@ -186,6 +185,7 @@ public class CachingProvider
     /** DOCUMENT ME! */
     private boolean m_useLucene = false;
 
+    /** DOCUMENT ME! */
     private String m_analyzerClass = null;
 
     /** DOCUMENT ME! */
@@ -214,7 +214,6 @@ public class CachingProvider
      *
      * @throws NoRequiredPropertyException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
-     * @throws IllegalArgumentException DOCUMENT ME!
      */
     public CachingProvider(WikiEngine engine, Configuration conf)
             throws NoRequiredPropertyException, IOException
@@ -264,6 +263,9 @@ public class CachingProvider
         m_analyzerClass = conf.getString(PROP_LUCENE_ANALYZER, PROP_LUCENE_ANALYZER_DEFAULT);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         if (m_useLucene)
@@ -272,62 +274,62 @@ public class CachingProvider
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
     }
 
     private Analyzer getLuceneAnalyzer()
-            throws ClassNotFoundException,
-                   InstantiationException,
-                   IllegalAccessException
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException
     {
         Analyzer analyzer = (Analyzer) Class.forName(m_analyzerClass).newInstance();
+
         return analyzer;
     }
-    
+
     /**
-     * Waits first for a little while before starting to go through the Lucene "pages that need
-     * updating".
+     * Waits first for a little while before starting to go through the Lucene "pages that need updating".
      */
     private void startLuceneUpdateThread()
     {
         m_luceneUpdateThread =
-                new Thread(
-                        new Runnable()
+            new Thread(new Runnable()
+                {
+                    public void run()
+                    {
+                        // FIXME: This is a kludge - eyeWiki should somehow report
+                        //        that init phase is complete.
+                        try
                         {
-                            public void run()
+                            Thread.sleep(60000L);
+                        }
+                        catch (InterruptedException e)
+                        {
+                        }
+
+                        while (true)
+                        {
+                            while (m_updates.size() > 0)
                             {
-                                // FIXME: This is a kludge - eyeWiki should somehow report
-                                //        that init phase is complete.
-                                try
-                                {
-                                    Thread.sleep(60000L);
-                                }
-                                catch (InterruptedException e)
-                                {
-                                }
-
-                                while (true)
-                                {
-                                    while (m_updates.size() > 0)
-                                    {
-                                        Object [] pair = (Object []) m_updates.remove(0);
-                                        WikiPage page = (WikiPage) pair[0];
-                                        String text = (String) pair[1];
-                                        updateLuceneIndex(page, text);
-                                    }
-
-                                    try
-                                    {
-                                        Thread.sleep(500);
-                                    }
-                                    catch (InterruptedException e)
-                                    {
-                                    }
-                                }
+                                Object [] pair = (Object []) m_updates.remove(0);
+                                WikiPage page = (WikiPage) pair[0];
+                                String text = (String) pair[1];
+                                updateLuceneIndex(page, text);
                             }
-                        });
+
+                            try
+                            {
+                                Thread.sleep(500);
+                            }
+                            catch (InterruptedException e)
+                            {
+                            }
+                        }
+                    }
+                });
         m_luceneUpdateThread.start();
     }
 
@@ -342,24 +344,19 @@ public class CachingProvider
 
         // Body text is indexed, but not stored in doc. We add in the
         // title text as well to make sure it gets considered.
-        doc.add(
-                Field.Text(
-                        LUCENE_PAGE_CONTENTS,
-                        new StringReader(text + " " + TextUtil.beautifyString(page.getName()))));
+        doc.add(Field.Text(LUCENE_PAGE_CONTENTS, new StringReader(text + " " + TextUtil.beautifyString(page.getName()))));
         writer.addDocument(doc);
     }
 
     /**
-     * Attempts to fetch the given page information from the cache.  If the page is not in there,
-     * checks the real provider.
+     * Attempts to fetch the given page information from the cache.  If the page is not in there, checks the real provider.
      *
      * @param name The page name to look for
      *
      * @return The WikiPage, or null, if the page does not exist
      *
      * @throws ProviderException If something failed
-     * @throws RepositoryModifiedException If the page exists, but has been changed in the
-     *         repository
+     * @throws RepositoryModifiedException If the page exists, but has been changed in the repository
      */
     private WikiPage getPageInfoFromCache(String name)
             throws ProviderException
@@ -444,10 +441,7 @@ public class CachingProvider
 
                 return refreshed;
             }
-            else if (
-                    Math.abs(
-                            refreshed.getLastModified().getTime()
-                            - cached.getLastModified().getTime()) > 1000L)
+            else if (Math.abs(refreshed.getLastModified().getTime() - cached.getLastModified().getTime()) > 1000L)
             {
                 //  Yes, the page has been modified externally and nobody told us
                 if (log.isInfoEnabled())
@@ -581,7 +575,6 @@ public class CachingProvider
      * @return DOCUMENT ME!
      *
      * @throws ProviderException DOCUMENT ME!
-     * @throws RepositoryModifiedException If the page has been externally modified.
      */
     public String getPageText(String pageName, int version)
             throws ProviderException
@@ -613,8 +606,7 @@ public class CachingProvider
     }
 
     /**
-     * Adds a page-text pair to the lucene update queue.  Safe to call always - if lucene is not
-     * used, does nothing.
+     * Adds a page-text pair to the lucene update queue.  Safe to call always - if lucene is not used, does nothing.
      *
      * @param page DOCUMENT ME!
      * @param text DOCUMENT ME!
@@ -644,7 +636,6 @@ public class CachingProvider
      * @return DOCUMENT ME!
      *
      * @throws ProviderException DOCUMENT ME!
-     * @throws RepositoryModifiedException If the page has been externally modified.
      */
     private String getTextFromCache(String pageName)
             throws ProviderException
@@ -722,18 +713,17 @@ public class CachingProvider
             page.setLastModified(new Date());
 
             // Refresh caches properly
-
             m_cache.flushEntry(page.getName());
             m_textCache.flushEntry(page.getName());
             m_historyCache.flushEntry(page.getName());
             m_negCache.flushEntry(page.getName());
-            
+
             // Refresh caches
             try
             {
                 getPageInfoFromCache(page.getName());
             }
-            catch(RepositoryModifiedException e)
+            catch (RepositoryModifiedException e)
             {
             } // Expected
         }
@@ -767,7 +757,7 @@ public class CachingProvider
         {
             log.error("Unable to update page '" + page.getName() + "' from Lucene index", e);
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             log.error("Unexpected Lucene exception - please check configuration!", e);
         }
@@ -853,6 +843,7 @@ public class CachingProvider
             }
 
             m_gotall = true;
+
             return all;
         }
     }
@@ -991,10 +982,8 @@ public class CachingProvider
                     {
                         // Just find pages with the words, so that included stop words don't mess up search.
                         String word = tok.nextToken();
-                        query.add(
-                                new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)),
-                                queryTerm.getType() == QueryItem.REQUIRED,
-                                queryTerm.getType() == QueryItem.FORBIDDEN);
+                        query.add(new TermQuery(new Term(LUCENE_PAGE_CONTENTS, word)), queryTerm.getType() == QueryItem.REQUIRED,
+                            queryTerm.getType() == QueryItem.FORBIDDEN);
                     }
 
                     /* Since we're not using Lucene to score, no reason to use PhraseQuery, which removes stop words.
@@ -1011,9 +1000,8 @@ public class CachingProvider
                 }
                 else
                 { // single word query
-                    query.add(
-                            new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.getWord())),
-                            queryTerm.getType() == QueryItem.REQUIRED, queryTerm.getType() == QueryItem.FORBIDDEN);
+                    query.add(new TermQuery(new Term(LUCENE_PAGE_CONTENTS, queryTerm.getWord())),
+                        queryTerm.getType() == QueryItem.REQUIRED, queryTerm.getType() == QueryItem.FORBIDDEN);
                 }
             }
 
@@ -1033,9 +1021,7 @@ public class CachingProvider
                 }
                 else
                 {
-                    log.error(
-                            "Lucene found a result page '" + pageName
-                            + "' that could not be loaded, removing from Lucene cache");
+                    log.error("Lucene found a result page '" + pageName + "' that could not be loaded, removing from Lucene cache");
                     deleteFromLucene(new WikiPage(pageName));
                 }
             }
@@ -1073,16 +1059,13 @@ public class CachingProvider
      * @return DOCUMENT ME!
      *
      * @throws ProviderException DOCUMENT ME!
-     * @throws RepositoryModifiedException DOCUMENT ME!
      */
     public WikiPage getPageInfo(String pageName, int version)
             throws ProviderException
     {
         WikiPage cached = getPageInfoFromCache(pageName);
 
-        int latestcached = (cached != null)
-                ? cached.getVersion()
-                : Integer.MIN_VALUE;
+        int latestcached = (cached != null) ? cached.getVersion() : Integer.MIN_VALUE;
 
         if ((version == WikiPageProvider.LATEST_VERSION) || (version == latestcached))
         {
@@ -1159,13 +1142,9 @@ public class CachingProvider
      */
     public synchronized String getProviderInfo()
     {
-        return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: "
-                + m_cacheMisses + "<br />Cache hits: " + m_cacheHits + "<br />History cache hits: "
-                + m_historyCacheHits + "<br />History cache misses: " + m_historyCacheMisses
-                + "<br />Cache consistency checks: " + m_expiryPeriod + "s" + "<br />Lucene enabled: "
-                + (m_useLucene
-                        ? "yes"
-                        : "no"));
+        return ("Real provider: " + m_provider.getClass().getName() + "<br />Cache misses: " + m_cacheMisses + "<br />Cache hits: "
+        + m_cacheHits + "<br />History cache hits: " + m_historyCacheHits + "<br />History cache misses: " + m_historyCacheMisses
+        + "<br />Cache consistency checks: " + m_expiryPeriod + "s" + "<br />Lucene enabled: " + (m_useLucene ? "yes" : "no"));
     }
 
     /**
@@ -1187,9 +1166,7 @@ public class CachingProvider
         {
             WikiPage cached = getPageInfoFromCache(pageName);
 
-            int latestcached = (cached != null)
-                    ? cached.getVersion()
-                    : Integer.MIN_VALUE;
+            int latestcached = (cached != null) ? cached.getVersion() : Integer.MIN_VALUE;
 
             //
             //  If we have this version cached, remove from cache.
@@ -1270,14 +1247,14 @@ public class CachingProvider
                 log.error("Cannot write to Lucene directory, disabling Lucene: " + dir.getAbsolutePath());
                 throw new IOException("Invalid Lucene directory.");
             }
-                
-            String[] filelist = dir.list();
-                
+
+            String [] filelist = dir.list();
+
             if (filelist == null)
             {
-                throw new IOException("Invalid Lucene directory: cannot produce listing: "+dir.getAbsolutePath());
+                throw new IOException("Invalid Lucene directory: cannot produce listing: " + dir.getAbsolutePath());
             }
-                
+
             if (filelist.length == 0)
             {
                 //
@@ -1292,13 +1269,13 @@ public class CachingProvider
                 //  Do lock recovery, in case eyeWiki was shut down forcibly
                 //
                 Directory luceneDir = FSDirectory.getDirectory(dir, false);
-                    
+
                 if (IndexReader.isLocked(luceneDir))
                 {
                     log.info("eyeWiki was shut down while Lucene was indexing - unlocking now.");
                     IndexReader.unlock(luceneDir);
                 }
-                    
+
                 try
                 {
                     writer = new IndexWriter(m_luceneDirectory, getLuceneAnalyzer(), true);
@@ -1326,9 +1303,7 @@ public class CachingProvider
 
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                            "Full Lucene index finished in " + (end.getTime() - start.getTime())
-                            + " milliseconds.");
+                    log.info("Full Lucene index finished in " + (end.getTime() - start.getTime()) + " milliseconds.");
                 }
             }
             else
@@ -1351,12 +1326,12 @@ public class CachingProvider
             log.error("Problem reading pages while creating Lucene index (eyeWiki won't start.)", e);
             throw new IllegalArgumentException("unable to create Lucene index");
         }
-        catch(ClassNotFoundException e)
+        catch (ClassNotFoundException e)
         {
             log.error("Illegal Analyzer specified:", e);
             m_useLucene = false;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             log.error("Unable to start lucene", e);
             m_useLucene = false;
@@ -1365,11 +1340,9 @@ public class CachingProvider
         startLuceneUpdateThread();
     }
 
-
     /**
-     * This is a simple class that keeps a list of all WikiPages that we have in memory.  Because
-     * the OSCache cannot give us a list of all pages currently in cache, we'll have to check
-     * this.
+     * This is a simple class that keeps a list of all WikiPages that we have in memory.  Because the OSCache cannot give us a list
+     * of all pages currently in cache, we'll have to check this.
      *
      * @author jalkanen
      *
@@ -1416,21 +1389,21 @@ public class CachingProvider
         {
             // Removed item
             // FIXME: If the page system is changed during this time, we'll just fail gracefully
-                
             try
             {
-                for(Iterator i = m_allItems.iterator(); i.hasNext();)
+                for (Iterator i = m_allItems.iterator(); i.hasNext();)
                 {
-                    WikiPage p = (WikiPage)i.next();
-                    
+                    WikiPage p = (WikiPage) i.next();
+
                     if (p.getName().equals(arg0.getKey()))
                     {
                         i.remove();
+
                         break;
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
             }
         }

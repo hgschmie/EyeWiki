@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.acl;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,7 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
-
 import java.security.acl.AclEntry;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 
 import de.softwareforge.eyewiki.acl.AccessControlList;
 import de.softwareforge.eyewiki.acl.AclEntryImpl;
@@ -51,6 +46,9 @@ import de.softwareforge.eyewiki.auth.permissions.CreatePermission;
 import de.softwareforge.eyewiki.auth.permissions.EditPermission;
 import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -78,9 +76,8 @@ public class AclImplTest
     }
 
     /**
-     * We setup the following rules: Alice = may view Bob   = may view, may edit Charlie = may
-     * view, may NOT edit Dave = may view, may NOT edit, may create groupAcl: FooGroup = Alice,
-     * Bob - may edit BarGroup = Bob, Charlie - may NOT edit
+     * We setup the following rules: Alice = may view Bob   = may view, may edit Charlie = may view, may NOT edit Dave = may view,
+     * may NOT edit, may create groupAcl: FooGroup = Alice, Bob - may edit BarGroup = Bob, Charlie - may NOT edit
      */
     public void setUp()
     {
@@ -186,8 +183,7 @@ public class AclImplTest
 
         assertEquals("edit none", AclImpl.NONE, m_acl.findPermission(wup, new EditPermission()));
 
-        assertEquals(
-            "comment none", AclImpl.NONE, m_acl.findPermission(wup, new CommentPermission()));
+        assertEquals("comment none", AclImpl.NONE, m_acl.findPermission(wup, new CommentPermission()));
 
         assertEquals("view allow", AclImpl.ALLOW, m_acl.findPermission(wup, new ViewPermission()));
     }
@@ -206,8 +202,7 @@ public class AclImplTest
 
         assertEquals("view allow", AclImpl.ALLOW, m_acl.findPermission(wup, new ViewPermission()));
         assertEquals("edit allow", AclImpl.ALLOW, m_acl.findPermission(wup, new EditPermission()));
-        assertEquals(
-            "comment allow", AclImpl.ALLOW, m_acl.findPermission(wup, new CommentPermission()));
+        assertEquals("comment allow", AclImpl.ALLOW, m_acl.findPermission(wup, new CommentPermission()));
     }
 
     /**
@@ -240,8 +235,7 @@ public class AclImplTest
 
         assertEquals("view allow", AclImpl.ALLOW, m_acl.findPermission(wup, new ViewPermission()));
 
-        assertEquals(
-            "create allow", AclImpl.ALLOW, m_acl.findPermission(wup, new CreatePermission()));
+        assertEquals("create allow", AclImpl.ALLOW, m_acl.findPermission(wup, new CreatePermission()));
 
         assertEquals("edit deny", AclImpl.DENY, m_acl.findPermission(wup, new EditPermission()));
     }
@@ -254,28 +248,21 @@ public class AclImplTest
         UserProfile wup = new UserProfile();
         wup.setName("Alice");
 
-        assertEquals(
-            "view allow Alice", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new ViewPermission()));
+        assertEquals("view allow Alice", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new ViewPermission()));
 
-        assertEquals(
-            "edit allow Alice", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new EditPermission()));
+        assertEquals("edit allow Alice", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new EditPermission()));
 
         wup.setName("Bob");
 
-        assertEquals(
-            "allow edit Bob", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new EditPermission()));
+        assertEquals("allow edit Bob", AclImpl.ALLOW, m_aclGroup.findPermission(wup, new EditPermission()));
 
-        assertEquals(
-            "allow view Bob", AclImpl.NONE, m_aclGroup.findPermission(wup, new ViewPermission()));
+        assertEquals("allow view Bob", AclImpl.NONE, m_aclGroup.findPermission(wup, new ViewPermission()));
 
         wup.setName("Charlie");
 
-        assertEquals(
-            "deny edit Charlie", AclImpl.DENY, m_aclGroup.findPermission(wup, new EditPermission()));
+        assertEquals("deny edit Charlie", AclImpl.DENY, m_aclGroup.findPermission(wup, new EditPermission()));
 
-        assertEquals(
-            "Default view Charlie", AclImpl.NONE,
-            m_aclGroup.findPermission(wup, new ViewPermission()));
+        assertEquals("Default view Charlie", AclImpl.NONE, m_aclGroup.findPermission(wup, new ViewPermission()));
     }
 
     /**

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,10 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
-
 
 /**
  * Container for carrying HTTP FORM information between WikiPlugin invocations in the Session.
@@ -256,9 +256,8 @@ public class FormInfo
     }
 
     /**
-     * Returns parameter name-value pairs for a Form handler WikiPlugin. The names are those of
-     * Form input fields, and the values whatever the user selected in the form. The FormSet
-     * plugin can also be used to provide initial values.
+     * Returns parameter name-value pairs for a Form handler WikiPlugin. The names are those of Form input fields, and the values
+     * whatever the user selected in the form. The FormSet plugin can also be used to provide initial values.
      *
      * @return Handler parameter name-value pairs.
      */

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,13 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.PropertyConfigurator;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -54,6 +49,9 @@ import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.providers.FileSystemProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -266,7 +264,7 @@ public class FileSystemProviderTest
         {
             TestEngine m_engine2 = new TestEngine(conf);
             test = new FileSystemProvider(m_engine2, conf);
-            
+
             fail("Wiki did not warn about wrong property.");
         }
         catch (Exception e)

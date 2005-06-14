@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,7 +50,6 @@ import java.io.Writer;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-
 /**
  * Generic utilities related to file and stream handling.
  */
@@ -65,6 +64,9 @@ public final class FileUtil
     /** DOCUMENT ME! */
     private static final int MINBUFSIZ = 32768; // bytes
 
+    /**
+     * Creates a new FileUtil object.
+     */
     private FileUtil()
     {
     }
@@ -141,8 +143,7 @@ public final class FileUtil
     }
 
     /**
-     * Runs a simple command in given directory. The environment is inherited from the parent
-     * process.
+     * Runs a simple command in given directory. The environment is inherited from the parent process.
      *
      * @param command DOCUMENT ME!
      * @param directory DOCUMENT ME!
@@ -174,7 +175,6 @@ public final class FileUtil
             stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
             stderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-
             String line;
 
             while ((line = stdout.readLine()) != null)
@@ -195,6 +195,7 @@ public final class FileUtil
             }
 
             process.waitFor();
+
             return result.toString();
         }
         finally
@@ -264,10 +265,9 @@ public final class FileUtil
 
     /**
      * Reads in file contents.
-     *
+     * 
      * <P>
-     * This method is smart and falls back to ISO-8859-1 if the input stream does not seem to be in
-     * the specified encoding.
+     * This method is smart and falls back to ISO-8859-1 if the input stream does not seem to be in the specified encoding.
      * </p>
      *
      * @param input DOCUMENT ME!
@@ -324,8 +324,7 @@ public final class FileUtil
                 // java standard, so we'd better not catch them.
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                        "Unable to read stream - odd exception.  Assuming this data is ISO-8859-1 and retrying.\n  "
+                    log.info("Unable to read stream - odd exception.  Assuming this data is ISO-8859-1 and retrying.\n  "
                         + e.getMessage());
                 }
 

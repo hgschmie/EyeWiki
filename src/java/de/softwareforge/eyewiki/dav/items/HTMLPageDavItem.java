@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.items;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,13 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
-
-import org.jdom.Element;
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 
+import org.jdom.Element;
 
 /**
  * DOCUMENT ME!
@@ -70,8 +69,7 @@ public class HTMLPageDavItem
      */
     public String getHref()
     {
-        return m_engine.getURL(
-            WikiContext.NONE, "dav/html/" + m_page.getName() + ".html", null, true);
+        return m_engine.getURL(WikiContext.NONE, "dav/html/" + m_page.getName() + ".html", null, true);
     }
 
     /* (non-Javadoc)

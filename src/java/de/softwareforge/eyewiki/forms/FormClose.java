@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,14 +33,11 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.util.Map;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
-
 
 /**
  * Closes a WikiForm.

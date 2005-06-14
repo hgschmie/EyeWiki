@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.url;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.url;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * An utility class for creating URLs for different purposes.
@@ -70,12 +69,11 @@ public interface URLConstructor
             throws IOException;
 
     /**
-     *  Returns information which JSP page should continue handling
-     *  this type of request.
-     *  
-     * @param context
-     * @return "Wiki.jsp", "PageInfo.jsp", etc.  Just return the name,
-     *         eyeWiki will figure out the page.
+     * Returns information which JSP page should continue handling this type of request.
+     *
+     * @param request
+     *
+     * @return "Wiki.jsp", "PageInfo.jsp", etc.  Just return the name, eyeWiki will figure out the page.
      */
     String getForwardPage(HttpServletRequest request);
 }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,14 +33,12 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * Writes an image link to the RSS file.
@@ -90,19 +89,12 @@ public class RSSImageLinkTag
 
         if (rssURL != null)
         {
-            StringBuffer sb = new StringBuffer("<div class=\"")
-                    .append(WikiConstants.CSS_RSS)
-                    .append("\"><a class=\"")
-                    .append(WikiConstants.CSS_RSS)
-                    .append("\" href=\"")
-                    .append(rssURL)
-                    .append("\"><img class=\"")
-                    .append(WikiConstants.CSS_RSS)
-                    .append("\" src=\"")
-                    .append(engine.getBaseURL())
-                    .append("images/xml.png\" alt=\"[RSS]\" title=\"")
-                    .append(getTitle())
-                    .append("\"/></a></div>");
+            StringBuffer sb =
+                new StringBuffer("<div class=\"").append(WikiConstants.CSS_RSS).append("\"><a class=\"")
+                                                 .append(WikiConstants.CSS_RSS).append("\" href=\"").append(rssURL)
+                                                 .append("\"><img class=\"").append(WikiConstants.CSS_RSS).append("\" src=\"")
+                                                 .append(engine.getBaseURL()).append("images/xml.png\" alt=\"[RSS]\" title=\"")
+                                                 .append(getTitle()).append("\"/></a></div>");
 
             JspWriter out = pageContext.getOut();
             out.print(sb.toString());

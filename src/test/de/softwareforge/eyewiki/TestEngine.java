@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,13 +40,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -56,7 +56,6 @@ import de.softwareforge.eyewiki.providers.BasicAttachmentProvider;
 import de.softwareforge.eyewiki.providers.FileSystemProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Simple test engine that always assumes pages are found.
@@ -83,9 +82,7 @@ public class TestEngine
     /**
      * Creates a new TestEngine object.
      *
-     * @param conf DOCUMENT ME!
-     *
-     * @throws WikiException DOCUMENT ME!
+     * @throws Exception DOCUMENT ME!
      */
     public TestEngine()
             throws Exception
@@ -93,6 +90,9 @@ public class TestEngine
         super(TestEngine.getConfiguration());
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void cleanup()
     {
         cleanWorkDir();
@@ -100,16 +100,25 @@ public class TestEngine
         cleanStorageDir();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void cleanWorkDir()
     {
         deleteAll(new File(getWorkDir()));
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void cleanPageDir()
     {
         deleteAll(new File(getPageDir()));
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void cleanStorageDir()
     {
         deleteAll(new File(getStorageDir()));
@@ -129,10 +138,10 @@ public class TestEngine
     }
 
     /**
-     *
      * Loads a configuration file
      *
      * @param properties The resource name of the properties file.
+     *
      * @return A configuration object
      *
      * @throws Exception When the configuration object cannot be opened
@@ -146,8 +155,9 @@ public class TestEngine
         PropertiesConfiguration conf = new PropertiesConfiguration();
         conf.load(isr);
         isr.close();
-        
+
         conf.setThrowExceptionOnMissing(true);
+
         return conf;
     }
 
@@ -195,8 +205,7 @@ public class TestEngine
             throws IOException
     {
         Properties properties = new Properties();
-        String m_encoding =
-            properties.getProperty(WikiEngine.PROP_ENCODING, WikiEngine.PROP_ENCODING_DEFAULT);
+        String m_encoding = properties.getProperty(WikiEngine.PROP_ENCODING, WikiEngine.PROP_ENCODING_DEFAULT);
 
         pagename = TextUtil.urlEncode(pagename, m_encoding);
         pagename = StringUtils.replace(pagename, "/", "%2F");
@@ -211,7 +220,6 @@ public class TestEngine
      */
     public void deleteTestPage(String name)
     {
-
         try
         {
             String files = getPageDir();

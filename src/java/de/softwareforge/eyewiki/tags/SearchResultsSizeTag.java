@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,16 +33,14 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.PageContext;
 
-
 /**
- * Outputs the size of the search results list, if it contains any items. Otherwise outputs an
- * empty string.
+ * Outputs the size of the search results list, if it contains any items. Otherwise outputs an empty string.
  *
  * @author Janne Jalkanen
  *
@@ -60,8 +59,7 @@ public class SearchResultsSizeTag
     public final int doWikiStartTag()
             throws IOException
     {
-        Collection list =
-            (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
+        Collection list = (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
 
         if (list != null)
         {

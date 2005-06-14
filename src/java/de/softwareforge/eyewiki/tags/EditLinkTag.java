@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
@@ -42,14 +42,13 @@ import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Writes an edit link.  Body of the link becomes the link text.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -58,12 +57,11 @@ import de.softwareforge.eyewiki.WikiPage;
  * format - Format, either "anchor" or "url".
  * </li>
  * <li>
- * version - Version number of the page to refer to.  Possible values are "this", meaning the
- * version of the current page; or a version number.  Default is always to point at the latest
- * version of the page.
+ * version - Version number of the page to refer to.  Possible values are "this", meaning the version of the current page; or a
+ * version number.  Default is always to point at the latest version of the page.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -155,13 +153,12 @@ public class EditLinkTag
         switch (m_format)
         {
         case ANCHOR:
-            StringBuffer sb = new StringBuffer("<a class=\"")
-                    .append(WikiConstants.CSS_WIKICONTENT)
-                    .append("\" href=\"")
-                    .append(m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString))
-                    .append("\">");
 
+            StringBuffer sb =
+                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"")
+                                               .append(m_wikiContext.getURL(WikiContext.EDIT, pageName, versionString)).append("\">");
             out.print(sb.toString());
+
             break;
 
         case URL:

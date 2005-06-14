@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,10 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
-
 
 /**
  * some usefull methods for properties
@@ -47,28 +46,8 @@ import java.util.TreeMap;
  */
 public class PropertiesUtils
 {
-    /**
-     * DOCUMENT ME!
-     */
-    private static final char [] hexDigit =
-        {
-            '0',
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            '6',
-            '7',
-            '8',
-            '9',
-            'A',
-            'B',
-            'C',
-            'D',
-            'E',
-            'F'
-        };
+    /** DOCUMENT ME! */
+    private static final char [] hexDigit = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
     /**
      * <p>
@@ -84,17 +63,14 @@ public class PropertiesUtils
         TreeMap treemap = new TreeMap(properties);
         StringBuffer buf = new StringBuffer();
 
-        for (Iterator it = treemap.entrySet().iterator(); it.hasNext(); )
+        for (Iterator it = treemap.entrySet().iterator(); it.hasNext();)
         {
             Map.Entry entry = (Map.Entry) it.next();
 
             String string_0_ = (String) entry.getKey();
-            String string_1_ = (entry.getValue() == null)
-                ? null
-                : entry.getValue().toString();
+            String string_1_ = (entry.getValue() == null) ? null : entry.getValue().toString();
 
-            buf.append(toLine(string_0_, string_1_))
-                    .append("\n");
+            buf.append(toLine(string_0_, string_1_)).append("\n");
         }
 
         return buf.toString();

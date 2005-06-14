@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,14 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringReader;
+
 import java.util.Collection;
 import java.util.Iterator;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiException;
@@ -59,6 +55,9 @@ import de.softwareforge.eyewiki.providers.FileSystemProvider;
 import de.softwareforge.eyewiki.providers.VerySimpleProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -108,10 +107,7 @@ public class WikiEngineTest
      */
     public static void main(String [] args)
     {
-        junit.textui.TestRunner.main(new String []
-            {
-                WikiEngineTest.class.getName()
-            });
+        junit.textui.TestRunner.main(new String [] { WikiEngineTest.class.getName() });
     }
 
     /**
@@ -128,8 +124,7 @@ public class WikiEngineTest
         // We'll need a shorter-than-default consistency check for
         // the page-changed checks. This will cause additional load
         // to the file system, though.
-        conf.setProperty(
-            WikiProperties.PROP_CACHECHECKINTERVAL, Long.toString(PAGEPROVIDER_RESCAN_PERIOD));
+        conf.setProperty(WikiProperties.PROP_CACHECHECKINTERVAL, Long.toString(PAGEPROVIDER_RESCAN_PERIOD));
 
         m_engine = new TestEngine(conf);
     }
@@ -458,7 +453,6 @@ public class WikiEngineTest
     public void testLatestGet()
             throws Exception
     {
-
         conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/vspComponents.xml");
 
         WikiEngine engine = new TestEngine(conf);
@@ -566,8 +560,7 @@ public class WikiEngineTest
             Iterator i = c.iterator();
             String first = (String) i.next();
             String second = (String) i.next();
-            assertTrue(
-                "unreferenced",
+            assertTrue("unreferenced",
                 (first.equals(NAME1) && second.equals(NAME1 + "/TestAtt.txt"))
                 || (first.equals(NAME1 + "/TestAtt.txt") && second.equals(NAME1)));
         }
@@ -609,16 +602,13 @@ public class WikiEngineTest
 
         // check a few pre-conditions
         Collection c = refMgr.findReferrers("TestAtt.txt");
-        assertTrue(
-            "normal, unexisting page", (c != null) && ((String) c.iterator().next()).equals(NAME1));
+        assertTrue("normal, unexisting page", (c != null) && ((String) c.iterator().next()).equals(NAME1));
 
         c = refMgr.findReferrers(NAME1 + "/TestAtt.txt");
         assertTrue("no attachment", (c == null) || (c.size() == 0));
 
         c = refMgr.findUncreated();
-        assertTrue(
-            "unknown attachment",
-            (c != null) && (c.size() == 1) && ((String) c.iterator().next()).equals("TestAtt.txt"));
+        assertTrue("unknown attachment", (c != null) && (c.size() == 1) && ((String) c.iterator().next()).equals("TestAtt.txt"));
 
         // now we create the attachment
         Attachment att = new Attachment(NAME1, "TestAtt.txt");
@@ -635,13 +625,10 @@ public class WikiEngineTest
             assertTrue("no normal page", (c == null) || (c.size() == 0));
 
             c = refMgr.findReferrers(NAME1 + "/TestAtt.txt");
-            assertTrue(
-                "attachment exists now", (c != null)
-                && ((String) c.iterator().next()).equals(NAME1));
+            assertTrue("attachment exists now", (c != null) && ((String) c.iterator().next()).equals(NAME1));
 
             c = refMgr.findUnreferenced();
-            assertTrue(
-                "unreferenced", (c.size() == 1) && ((String) c.iterator().next()).equals(NAME1));
+            assertTrue("unreferenced", (c.size() == 1) && ((String) c.iterator().next()).equals(NAME1));
         }
         finally
         {
@@ -815,9 +802,7 @@ public class WikiEngineTest
         m_engine.getText(NAME1); // Ensure that page is cached.
 
         Collection c = refMgr.findUncreated();
-        assertTrue(
-            "Non-existent reference not detected by ReferenceManager",
-            Util.collectionContains(c, "Foobar"));
+        assertTrue("Non-existent reference not detected by ReferenceManager", Util.collectionContains(c, "Foobar"));
 
         Thread.sleep(2000L); // Wait two seconds for filesystem granularity
 
@@ -839,9 +824,8 @@ public class WikiEngineTest
 
         c = refMgr.findUncreated();
 
-        assertTrue(
-            "Non-existent reference after external page change "
-            + "not detected by ReferenceManager", Util.collectionContains(c, "Puppaa"));
+        assertTrue("Non-existent reference after external page change " + "not detected by ReferenceManager",
+            Util.collectionContains(c, "Puppaa"));
     }
 
     /**

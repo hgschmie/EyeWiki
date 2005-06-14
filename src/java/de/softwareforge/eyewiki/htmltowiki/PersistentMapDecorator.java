@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,25 +33,20 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-
 /**
- * Adds the load / save - functionality known from the Properties - class to any Map
- * implementation.
+ * Adds the load / save - functionality known from the Properties - class to any Map implementation.
  *
  * @author <a href="mailto:sbaltes@gmx.com">Sebastian Baltes</a>
  */
 public class PersistentMapDecorator
         extends Properties
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private Map delegate;
 
     /**

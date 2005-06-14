@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.diff;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.jrcs.diff.AddDelta;
 import org.apache.commons.jrcs.diff.ChangeDelta;
@@ -45,11 +45,9 @@ import org.apache.commons.jrcs.diff.RevisionVisitor;
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * This is the eyeWiki 'traditional' diff.
@@ -77,8 +75,7 @@ public class TraditionalDiffProvider
     protected String diffClose = "</td></tr>\n";
 
     /** DOCUMENT ME! */
-    protected String diffPrefix =
-        "<table class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">\n";
+    protected String diffPrefix = "<table class=\"" + WikiConstants.CSS_DIFF_BLOCK + "\">\n";
 
     /** DOCUMENT ME! */
     protected String diffPostfix = "</table>\n";
@@ -92,16 +89,14 @@ public class TraditionalDiffProvider
     }
 
     /**
-     * @see de.softwareforge.eyewiki.WikiProvider#initialize(de.softwareforge.eyewiki.WikiEngine,
-     *      java.util.Properties)
+     * @see de.softwareforge.eyewiki.WikiProvider#initialize(de.softwareforge.eyewiki.WikiEngine, java.util.Properties)
      */
     public TraditionalDiffProvider(WikiEngine engine, Configuration conf)
     {
     }
 
     /**
-     * Makes a diff using the BMSI utility package. We use our own diff printer, which makes things
-     * easier.
+     * Makes a diff using the BMSI utility package. We use our own diff printer, which makes things easier.
      *
      * @param p1 DOCUMENT ME!
      * @param p2 DOCUMENT ME!
@@ -218,9 +213,7 @@ public class TraditionalDiffProvider
             m_result.append(type);
             m_result.append(changed.size());
             m_result.append(" line");
-            m_result.append((changed.size() == 1)
-                ? "."
-                : "s.");
+            m_result.append((changed.size() == 1) ? "." : "s.");
             m_result.append(diffClose);
         }
     }

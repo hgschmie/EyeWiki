@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.JspWriter;
@@ -41,26 +42,24 @@ import javax.servlet.jsp.PageContext;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
-
 /**
  * Iterates through tags.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -81,9 +80,7 @@ public class HistoryIteratorTag
      */
     public final int doStartTag()
     {
-        m_wikiContext =
-            (WikiContext) pageContext.getAttribute(
-                WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+        m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
         WikiEngine engine = m_wikiContext.getEngine();
         WikiPage page;
@@ -108,8 +105,7 @@ public class HistoryIteratorTag
                 {
                     WikiContext context = (WikiContext) m_wikiContext.clone();
                     context.setPage((WikiPage) m_iterator.next());
-                    pageContext.setAttribute(
-                        WikiTagBase.ATTR_CONTEXT, context, PageContext.REQUEST_SCOPE);
+                    pageContext.setAttribute(WikiTagBase.ATTR_CONTEXT, context, PageContext.REQUEST_SCOPE);
                     pageContext.setAttribute(getId(), context.getPage());
                 }
                 else

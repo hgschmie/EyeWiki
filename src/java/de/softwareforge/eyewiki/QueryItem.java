@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,7 @@ package de.softwareforge.eyewiki;
  */
 
 /**
- * This simple class just fulfils the role of a container for searches.  It tells the word and
- * whether it is requested or not.
+ * This simple class just fulfils the role of a container for searches.  It tells the word and whether it is requested or not.
  *
  * @author Janne Jalkanen
  */
@@ -56,26 +56,49 @@ public class QueryItem
     /** The type of the word.  See above for types.  The default is REQUESTED. */
     private int type;
 
+    /**
+     * Creates a new QueryItem object.
+     */
     public QueryItem()
     {
         type = REQUESTED;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getType()
     {
         return type;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param type DOCUMENT ME!
+     */
     public void setType(int type)
     {
         this.type = type;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getWord()
     {
         return word;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param word DOCUMENT ME!
+     */
     public void setWord(String word)
     {
         this.word = word;

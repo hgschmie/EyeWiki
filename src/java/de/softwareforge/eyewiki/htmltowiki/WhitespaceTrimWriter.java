@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,11 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 /**
  * Part of the XHtmlToWikiTranslator
@@ -48,29 +47,19 @@ import java.util.regex.Pattern;
 public class WhitespaceTrimWriter
         extends Writer
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private StringBuffer result = new StringBuffer();
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private StringBuffer buffer = new StringBuffer();
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private boolean trimMode = true;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private Pattern ps = Pattern.compile(".*?\\n\\s*?", Pattern.MULTILINE);
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private boolean currentlyOnLineBegin = true;
 
     /**
@@ -100,9 +89,7 @@ public class WhitespaceTrimWriter
     private String replacePluginNewlineBackslashes(String s)
     {
         Pattern p =
-            Pattern.compile(
-                "\\{\\{\\{(.*?)\\}\\}\\}|\\{\\{(.*?)\\}\\}|\\[\\{(.*?)\\}\\]",
-                Pattern.DOTALL + Pattern.MULTILINE);
+            Pattern.compile("\\{\\{\\{(.*?)\\}\\}\\}|\\{\\{(.*?)\\}\\}|\\[\\{(.*?)\\}\\]", Pattern.DOTALL + Pattern.MULTILINE);
         Matcher m = p.matcher(s);
         StringBuffer sb = new StringBuffer();
 

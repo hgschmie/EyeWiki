@@ -1,5 +1,7 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.WikiContext;
+
 /*
  * ========================================================================
  *
@@ -32,20 +34,39 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import org.picocontainer.Startable;
 
-import de.softwareforge.eyewiki.WikiContext;
-
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public abstract class AbstractVariable
         extends AbstractSimpleVariable
         implements WikiVariable, Startable
 {
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public abstract String getValue(WikiContext context, String variableName)
             throws Exception;
 
+    /**
+     * DOCUMENT ME!
+     */
     public abstract void start();
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN

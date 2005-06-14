@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
-
 import javax.servlet.http.HttpServletRequest;
-
 
 /**
  * DOCUMENT ME!
@@ -44,19 +43,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DavContext
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public String m_davcontext = "";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public String m_page = null;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public int m_depth = -1;
 
     /**
@@ -87,8 +80,8 @@ public class DavContext
                 m_davcontext = path;
             }
         }
-        
+
         String depth = req.getHeader("Depth");
-        m_depth = (depth == null) ? -1 : Integer.parseInt(depth);
+        m_depth = (depth == null) ? (-1) : Integer.parseInt(depth);
     }
 }

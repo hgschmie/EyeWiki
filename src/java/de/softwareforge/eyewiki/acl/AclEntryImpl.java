@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.acl;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.Permission;
@@ -42,7 +42,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
-
 
 /**
  * DOCUMENT ME!
@@ -197,6 +196,8 @@ public class AclEntryImpl
      * DOCUMENT ME!
      *
      * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      */
     public Object clone()
     {
@@ -230,12 +231,8 @@ public class AclEntryImpl
 
         Principal p = getPrincipal();
 
-        sb.append("AclEntry: [User=" + ((p != null)
-            ? p.getName()
-            : "null"));
-        sb.append(m_negative
-            ? " DENY "
-            : " ALLOW ");
+        sb.append("AclEntry: [User=" + ((p != null) ? p.getName() : "null"));
+        sb.append(m_negative ? " DENY " : " ALLOW ");
 
         for (Iterator i = m_permissions.iterator(); i.hasNext();)
         {

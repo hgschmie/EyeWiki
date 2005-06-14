@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,10 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.StringWriter;
+
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -44,14 +46,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Returns the Recent Changes. Parameters: since=number of days, format=(compact|full)
@@ -67,8 +67,14 @@ public class RecentChangesPlugin
     /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(RecentChangesPlugin.class);
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /**
+     * Creates a new RecentChangesPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public RecentChangesPlugin(final WikiEngine engine)
     {
         this.engine = engine;
@@ -82,8 +88,7 @@ public class RecentChangesPlugin
         Calendar bb = Calendar.getInstance();
         bb.setTime(b);
 
-        return ((aa.get(Calendar.YEAR) == bb.get(Calendar.YEAR))
-        && (aa.get(Calendar.DAY_OF_YEAR) == bb.get(Calendar.DAY_OF_YEAR)));
+        return ((aa.get(Calendar.YEAR) == bb.get(Calendar.YEAR)) && (aa.get(Calendar.DAY_OF_YEAR) == bb.get(Calendar.DAY_OF_YEAR)));
     }
 
     /**
@@ -128,8 +133,7 @@ public class RecentChangesPlugin
         //
         //  This linkProcessor is used to transform links.
         //
-        TranslatorReader linkProcessor =
-            new TranslatorReader(context, new java.io.StringReader(""));
+        TranslatorReader linkProcessor = new TranslatorReader(context, new java.io.StringReader(""));
 
         if (changes != null)
         {
@@ -160,11 +164,8 @@ public class RecentChangesPlugin
                 }
 
                 String link =
-                    linkProcessor.makeLink(
-                        (pageref instanceof Attachment)
-                        ? TranslatorReader.ATTACHMENT
-                        : TranslatorReader.READ, pageref.getName(),
-                        engine.beautifyTitle(pageref.getName()));
+                    linkProcessor.makeLink((pageref instanceof Attachment) ? TranslatorReader.ATTACHMENT : TranslatorReader.READ,
+                        pageref.getName(), engine.beautifyTitle(pageref.getName()));
 
                 out.write("<tr>\n");
 
@@ -176,9 +177,7 @@ public class RecentChangesPlugin
                 }
                 else
                 {
-                    out.write(
-                        "<td><a href=\""
-                        + context.getURL(WikiContext.DIFF, pageref.getName(), "r1=-1") + "\">"
+                    out.write("<td><a href=\"" + context.getURL(WikiContext.DIFF, pageref.getName(), "r1=-1") + "\">"
                         + tfmt.format(lastmod) + "</a></td>\n");
                 }
 

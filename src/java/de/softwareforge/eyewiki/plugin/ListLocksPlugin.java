@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,21 +33,17 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 
 import de.softwareforge.eyewiki.PageLock;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.manager.PageManager;
 
-
 /**
- * This is a plugin for the administrator: It allows him to see in a single glance who is editing
- * what.
+ * This is a plugin for the administrator: It allows him to see in a single glance who is editing what.
  *
  * @author Janne Jalkanen
  *
@@ -58,8 +55,15 @@ public class ListLocksPlugin
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     protected final PageManager pageManager;
 
+    /**
+     * Creates a new ListLocksPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param pageManager DOCUMENT ME!
+     */
     public ListLocksPlugin(WikiEngine engine, PageManager pageManager)
     {
         this.engine = engine;
@@ -95,12 +99,9 @@ public class ListLocksPlugin
             {
                 PageLock lock = (PageLock) i.next();
 
-                result.append("<tr><td>")
-                .append(lock.getPage().getName())
-                .append("</td><td>").append(lock.getLocker())
-        		.append("</td><td>").append(lock.getAcquisitionTime())
-        		.append("</td><td>").append(lock.getExpiryTime())
-        		.append("</td></tr>\n");
+                result.append("<tr><td>").append(lock.getPage().getName()).append("</td><td>").append(lock.getLocker())
+                      .append("</td><td>").append(lock.getAcquisitionTime()).append("</td><td>").append(lock.getExpiryTime())
+                      .append("</td></tr>\n");
             }
         }
 

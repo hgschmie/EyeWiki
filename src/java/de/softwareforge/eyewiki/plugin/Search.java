@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -47,7 +47,6 @@ import de.softwareforge.eyewiki.SearchResult;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * DOCUMENT ME!
@@ -77,6 +76,11 @@ public class Search
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
+    /**
+     * Creates a new Search object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public Search(WikiEngine engine)
     {
         this.engine = engine;
@@ -164,9 +168,9 @@ public class Search
 
             td name = new td();
             name.setClass(WikiConstants.CSS_SEARCH);
-            name.addElement(
-                "<a class=\"" + WikiConstants.CSS_SEARCH + "\" href=\"" + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">"
-                + engine.beautifyTitle(sr.getPage().getName()) + "</a>");
+            name.addElement("<a class=\"" + WikiConstants.CSS_SEARCH + "\" href=\""
+                + context.getURL(WikiContext.VIEW, sr.getPage().getName()) + "\">" + engine.beautifyTitle(sr.getPage().getName())
+                + "</a>");
             row.addElement(name);
 
             td score = new td();
@@ -180,6 +184,7 @@ public class Search
         if (results.isEmpty())
         {
             row = new tr();
+
             td result = new td();
             result.setColSpan(2).setClass(WikiConstants.CSS_SEARCH);
             result.addElement("No results");

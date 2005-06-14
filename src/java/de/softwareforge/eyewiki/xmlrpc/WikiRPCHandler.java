@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,10 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiEngine;
 
-
 /**
- * Any wiki RPC handler should implement this so that they can be properly initialized and
- * recognized by eyeWiki.
+ * Any wiki RPC handler should implement this so that they can be properly initialized and recognized by eyeWiki.
  *
  * @author Janne Jalkanen
  *

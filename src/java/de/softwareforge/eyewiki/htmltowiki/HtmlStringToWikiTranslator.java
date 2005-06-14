@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -44,10 +44,9 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
-
 /**
- * Converting Html to Wiki Markup with NekoHtml for converting html to xhtml and
- * Xhtml2WikiTranslator for converting xhtml to Wiki Markup.
+ * Converting Html to Wiki Markup with NekoHtml for converting html to xhtml and Xhtml2WikiTranslator for converting xhtml to Wiki
+ * Markup.
  *
  * @author <a href="mailto:sbaltes@gmx.com">Sebastian Baltes</a>
  */
@@ -108,8 +107,7 @@ public class HtmlStringToWikiTranslator
             throws JDOMException, IOException
     {
         Element element = htmlStringToElement(html);
-        XHtmlElementToWikiTranslator xhtmlTranslator =
-            new XHtmlElementToWikiTranslator(element, config);
+        XHtmlElementToWikiTranslator xhtmlTranslator = new XHtmlElementToWikiTranslator(element, config);
         String wikiMarkup = xhtmlTranslator.getWikiString();
 
         return wikiMarkup;

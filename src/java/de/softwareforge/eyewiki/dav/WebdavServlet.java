@@ -1,5 +1,12 @@
 package de.softwareforge.eyewiki.dav;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /*
  * ========================================================================
  *
@@ -32,17 +39,8 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 /**
  * DOCUMENT ME!
@@ -54,79 +52,51 @@ import javax.servlet.http.HttpServletResponse;
 public class WebdavServlet
         extends HttpServlet
 {
-    /**
-     * Logger for this class
-     */
+    /** Logger for this class */
     private static final Log log = LogFactory.getLog(WebdavServlet.class);
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_PROPPATCH = "PROPPATCH";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_PROPFIND = "PROPFIND";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_MKCOL = "MKCOL";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_COPY = "COPY";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_MOVE = "MOVE";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_LOCK = "LOCK";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static final String METHOD_UNLOCK = "UNLOCK";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_PROCESSING = 102;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_MULTISTATUS = 207;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_UNPROCESSABLE = 422;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_LOCKED = 423;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_FAILED_DEPENDENCY = 424;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final int SC_INSUFFICIENT_STORAGE = 507;
 
     /**
-         *
-         */
+                 *
+                 */
     public WebdavServlet()
     {
         super();

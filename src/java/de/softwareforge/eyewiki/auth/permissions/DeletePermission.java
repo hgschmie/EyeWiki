@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.permissions;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,7 @@ package de.softwareforge.eyewiki.auth.permissions;
  */
 
 /**
- * Represents a permission to delete a page or versions of it.  Also implies a permission to edit
- * or comment a page.
+ * Represents a permission to delete a page or versions of it.  Also implies a permission to edit or comment a page.
  */
 public class DeletePermission
         extends WikiPermission
@@ -52,6 +52,11 @@ public class DeletePermission
         return (p != null) && (p instanceof DeletePermission);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();
@@ -66,8 +71,7 @@ public class DeletePermission
      */
     public boolean implies(WikiPermission p)
     {
-        return (p instanceof EditPermission || p instanceof DeletePermission
-        || p instanceof CommentPermission);
+        return (p instanceof EditPermission || p instanceof DeletePermission || p instanceof CommentPermission);
     }
 
     /**

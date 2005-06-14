@@ -1,5 +1,13 @@
 package de.softwareforge.eyewiki.plugin;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.WikiProperties;
+import de.softwareforge.eyewiki.plugin.PluginManager;
+
 /*
  * ========================================================================
  *
@@ -32,20 +40,9 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.WikiProperties;
-import de.softwareforge.eyewiki.plugin.PluginManager;
-
 
 /**
  * DOCUMENT ME!
@@ -132,9 +129,7 @@ public class ReferringPagesPluginTest
     {
         WikiContext context2 = new WikiContext(engine, new WikiPage("Foobar"));
 
-        String res =
-            manager.execute(
-                context2, "{INSERT ReferringPagesPlugin WHERE max=5}");
+        String res = manager.execute(context2, "{INSERT ReferringPagesPlugin WHERE max=5}");
 
         assertEquals(mkLink("TestPage") + "<br />", res);
     }
@@ -147,9 +142,7 @@ public class ReferringPagesPluginTest
     public void testMaxReferences()
             throws Exception
     {
-        String res =
-            manager.execute(
-                context, "{INSERT ReferringPagesPlugin WHERE max=5}");
+        String res = manager.execute(context, "{INSERT ReferringPagesPlugin WHERE max=5}");
 
         int count = 0;
         int index = -1;
@@ -178,9 +171,7 @@ public class ReferringPagesPluginTest
     {
         WikiContext context2 = new WikiContext(engine, new WikiPage("Foobar"));
 
-        String res =
-            manager.execute(
-                context2, "{INSERT ReferringPagesPlugin WHERE maxwidth=5}");
+        String res = manager.execute(context2, "{INSERT ReferringPagesPlugin WHERE maxwidth=5}");
 
         assertEquals(mkFullLink("TestP...", "TestPage") + "<br />", res);
     }

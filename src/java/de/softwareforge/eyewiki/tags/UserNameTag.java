@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,14 +33,11 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.auth.UserManager;
 import de.softwareforge.eyewiki.auth.UserProfile;
-
 
 /**
  * Returns the current user name, or empty, if the user has not been validated.
@@ -64,8 +62,7 @@ public class UserNameTag
         WikiEngine engine = m_wikiContext.getEngine();
         UserManager mgr = engine.getUserManager();
 
-        UserProfile user =
-            mgr.getUserProfile((javax.servlet.http.HttpServletRequest) pageContext.getRequest());
+        UserProfile user = mgr.getUserProfile((javax.servlet.http.HttpServletRequest) pageContext.getRequest());
 
         if (user != null)
         {

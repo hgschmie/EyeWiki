@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.Comparator;
-
 
 /**
  * Simple class that decides which search results are more important than others.

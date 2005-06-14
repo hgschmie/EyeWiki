@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.manager;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -53,9 +54,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-import org.picocontainer.Startable;
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -66,6 +64,7 @@ import de.softwareforge.eyewiki.filters.PageFilter;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
 
+import org.picocontainer.Startable;
 
 /*
   BUGS
@@ -105,7 +104,7 @@ import de.softwareforge.eyewiki.providers.WikiPageProvider;
 
 /**
  * Keeps track of wikipage references:
- *
+ * 
  * <UL>
  * <li>
  * What pages a given page refers to
@@ -114,32 +113,27 @@ import de.softwareforge.eyewiki.providers.WikiPageProvider;
  * What pages refer to a given page
  * </li>
  * </ul>
- *
- * This is a quick'n'dirty approach without any finesse in storage and searching algorithms; we
- * trust java.util..
- *
+ * 
+ * This is a quick'n'dirty approach without any finesse in storage and searching algorithms; we trust java.util..
+ * 
  * <P>
- * This class contains two HashMaps, m_refersTo and m_referredBy. The first is indexed by WikiPage
- * names and contains a Collection of all WikiPages the page refers to. (Multiple references are
- * not counted, naturally.) The second is indexed by WikiPage names and contains a Set of all
- * pages that refer to the indexing page. (Notice - the keys of both Maps should be kept in sync.)
+ * This class contains two HashMaps, m_refersTo and m_referredBy. The first is indexed by WikiPage names and contains a Collection
+ * of all WikiPages the page refers to. (Multiple references are not counted, naturally.) The second is indexed by WikiPage names
+ * and contains a Set of all pages that refer to the indexing page. (Notice - the keys of both Maps should be kept in sync.)
  * </p>
- *
+ * 
  * <P>
- * When a page is added or edited, its references are parsed, a Collection is received, and we
- * crudely replace anything previous with this new Collection. We then check each referenced page
- * name and make sure they know they are referred to by the new page.
+ * When a page is added or edited, its references are parsed, a Collection is received, and we crudely replace anything previous
+ * with this new Collection. We then check each referenced page name and make sure they know they are referred to by the new page.
  * </p>
- *
+ * 
  * <P>
- * Based on this information, we can perform non-optimal searches for e.g. unreferenced pages, top
- * ten lists, etc.
+ * Based on this information, we can perform non-optimal searches for e.g. unreferenced pages, top ten lists, etc.
  * </p>
- *
+ * 
  * <P>
- * The owning class must take responsibility of filling in any pre-existing information, probably
- * by loading each and every WikiPage and calling this class to update the references when
- * created.
+ * The owning class must take responsibility of filling in any pre-existing information, probably by loading each and every
+ * WikiPage and calling this class to update the references when created.
  * </p>
  *
  * @author <a hef="mailto:ebu@memecry.net">ebu</a>
@@ -156,15 +150,14 @@ public class ReferenceManager
     private static final String SERIALIZATION_FILE = "refmgr.ser";
 
     /**
-     * Maps page wikiname to a Collection of pages it refers to. The Collection must contain
-     * Strings. The Collection may contain names of non-existing pages.
+     * Maps page wikiname to a Collection of pages it refers to. The Collection must contain Strings. The Collection may contain
+     * names of non-existing pages.
      */
     private Map m_refersTo;
 
     /**
-     * Maps page wikiname to a Set of referring pages. The Set must contain Strings. Non-existing
-     * pages (a reference exists, but not a file for the page contents) may have an empty Set in
-     * m_referredBy.
+     * Maps page wikiname to a Set of referring pages. The Set must contain Strings. Non-existing pages (a reference exists, but
+     * not a file for the page contents) may have an empty Set in m_referredBy.
      */
     private Map m_referredBy;
 
@@ -181,6 +174,7 @@ public class ReferenceManager
      * Builds a new ReferenceManager.
      *
      * @param engine The WikiEngine to which this is meeting.
+     * @param conf DOCUMENT ME!
      */
     public ReferenceManager(final WikiEngine engine, final Configuration conf)
     {
@@ -188,14 +182,12 @@ public class ReferenceManager
         m_referredBy = new HashMap();
         this.engine = engine;
 
-        m_matchEnglishPlurals =
-            conf.getBoolean(
-                WikiProperties.PROP_MATCHPLURALS, WikiProperties.PROP_MATCHPLURALS_DEFAULT);
+        m_matchEnglishPlurals = conf.getBoolean(WikiProperties.PROP_MATCHPLURALS, WikiProperties.PROP_MATCHPLURALS_DEFAULT);
     }
 
     /**
-     * Initializes the reference manager. Scans all existing WikiPages for internal links and adds
-     * them to the ReferenceManager object.
+     * Initializes the reference manager. Scans all existing WikiPages for internal links and adds them to the ReferenceManager
+     * object.
      */
     public synchronized void start()
     {
@@ -218,16 +210,29 @@ public class ReferenceManager
         setStarted(true);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         setStarted(false);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param started DOCUMENT ME!
+     */
     protected void setStarted(final boolean started)
     {
         this.started = started;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isStarted()
     {
         return started;
@@ -243,8 +248,7 @@ public class ReferenceManager
     private void updatePageReferences(WikiPage page)
             throws ProviderException
     {
-        String content =
-            engine.getPageManager().getPageText(page.getName(), WikiPageProvider.LATEST_VERSION);
+        String content = engine.getPageManager().getPageText(page.getName(), WikiPageProvider.LATEST_VERSION);
         Collection links = engine.scanWikiLinks(page, content);
         Collection attachments = engine.getAttachmentManager().listAttachments(page);
 
@@ -317,9 +321,7 @@ public class ReferenceManager
         {
             if (log.isInfoEnabled())
             {
-                log.info(
-                    "Unable to unserialize old refmgr information, rebuilding database: "
-                    + e.getMessage());
+                log.info("Unable to unserialize old refmgr information, rebuilding database: " + e.getMessage());
             }
 
             buildKeyLists(pages);
@@ -349,8 +351,7 @@ public class ReferenceManager
     }
 
     /**
-     * Reads the serialized data from the disk back to memory. Returns the date when the data was
-     * last written on disk
+     * Reads the serialized data from the disk back to memory. Returns the date when the data was last written on disk
      *
      * @return DOCUMENT ME!
      *
@@ -428,14 +429,12 @@ public class ReferenceManager
     }
 
     /**
-     * Updates the referred pages of a new or edited WikiPage. If a refersTo entry for this page
-     * already exists, it is removed and a new one is built from scratch. Also calls
-     * updateReferredBy() for each referenced page.
-     *
+     * Updates the referred pages of a new or edited WikiPage. If a refersTo entry for this page already exists, it is removed and
+     * a new one is built from scratch. Also calls updateReferredBy() for each referenced page.
+     * 
      * <P>
-     * This is the method to call when a new page has been created and we want to a) set up its
-     * references and b) notify the referred pages of the references. Use this method during
-     * run-time.
+     * This is the method to call when a new page has been created and we want to a) set up its references and b) notify the
+     * referred pages of the references. Use this method during run-time.
      * </p>
      *
      * @param page Name of the page to update.
@@ -500,8 +499,7 @@ public class ReferenceManager
     }
 
     /**
-     * Cleans the 'referred by' list, removing references by 'referrer' to any other page. Called
-     * after 'referrer' is removed.
+     * Cleans the 'referred by' list, removing references by 'referrer' to any other page. Called after 'referrer' is removed.
      *
      * @param referrer DOCUMENT ME!
      * @param oldReferred DOCUMENT ME!
@@ -535,8 +533,7 @@ public class ReferenceManager
             // If the page is referred to by no one AND it doesn't even
             // exist, we might just as well forget about this entry.
             // It will be added again elsewhere if new references appear.
-            if (((oldRefBy == null) || oldRefBy.isEmpty())
-                    && !engine.pageExists(referredPage))
+            if (((oldRefBy == null) || oldRefBy.isEmpty()) && !engine.pageExists(referredPage))
             {
                 m_referredBy.remove(referredPage);
             }
@@ -544,13 +541,12 @@ public class ReferenceManager
     }
 
     /**
-     * When initially building a ReferenceManager from scratch, call this method BEFORE calling
-     * updateReferences() with a full list of existing page names. It builds the refersTo and
-     * referredBy key lists, thus enabling updateReferences() to function correctly.
-     *
+     * When initially building a ReferenceManager from scratch, call this method BEFORE calling updateReferences() with a full list
+     * of existing page names. It builds the refersTo and referredBy key lists, thus enabling updateReferences() to function
+     * correctly.
+     * 
      * <P>
-     * This method should NEVER be called after initialization. It clears all mappings from the
-     * reference tables.
+     * This method should NEVER be called after initialization. It clears all mappings from the reference tables.
      * </p>
      *
      * @param pages a Collection containing WikiPage objects.
@@ -587,13 +583,12 @@ public class ReferenceManager
     }
 
     /**
-     * Marks the page as referred to by the referrer. If the page does not exist previously,
-     * nothing is done. (This means that some page, somewhere, has a link to a page that does not
-     * exist.)
-     *
+     * Marks the page as referred to by the referrer. If the page does not exist previously, nothing is done. (This means that some
+     * page, somewhere, has a link to a page that does not exist.)
+     * 
      * <P>
-     * This method is NOT synchronized. It should only be referred to from within a synchronized
-     * method, or it should be made synced if necessary.
+     * This method is NOT synchronized. It should only be referred to from within a synchronized method, or it should be made
+     * synced if necessary.
      * </p>
      *
      * @param page DOCUMENT ME!
@@ -622,8 +617,7 @@ public class ReferenceManager
     }
 
     /**
-     * Finds all unreferenced pages. This requires a linear scan through m_referredBy to locate
-     * keys with null or empty values.
+     * Finds all unreferenced pages. This requires a linear scan through m_referredBy to locate keys with null or empty values.
      *
      * @return DOCUMENT ME!
      */
@@ -651,13 +645,12 @@ public class ReferenceManager
     }
 
     /**
-     * Finds all references to non-existant pages. This requires a linear scan through m_refersTo
-     * values; each value must have a corresponding key entry in the reference Maps, otherwise
-     * such a page has never been created.
-     *
+     * Finds all references to non-existant pages. This requires a linear scan through m_refersTo values; each value must have a
+     * corresponding key entry in the reference Maps, otherwise such a page has never been created.
+     * 
      * <P>
-     * Returns a Collection containing Strings of unreferenced page names. Each non-existant page
-     * name is shown only once - we don't return information on who referred to it.
+     * Returns a Collection containing Strings of unreferenced page names. Each non-existant page name is shown only once - we
+     * don't return information on who referred to it.
      * </p>
      *
      * @return DOCUMENT ME!
@@ -722,9 +715,8 @@ public class ReferenceManager
     }
 
     /**
-     * Find all pages that refer to this page. Returns null if the page does not exist or is not
-     * referenced at all, otherwise returns a collection containing page names (String) that refer
-     * to this one.
+     * Find all pages that refer to this page. Returns null if the page does not exist or is not referenced at all, otherwise
+     * returns a collection containing page names (String) that refer to this one.
      *
      * @param pagename DOCUMENT ME!
      *
@@ -751,12 +743,13 @@ public class ReferenceManager
      *
      * ========================================================================
      */
-
     public class ReferenceManagerFilter
             extends BasicPageFilter
             implements PageFilter
     {
-
+        /**
+         * Creates a new ReferenceManagerFilter object.
+         */
         private ReferenceManagerFilter()
         {
             super(null);
@@ -767,6 +760,8 @@ public class ReferenceManager
          *
          * @param context DOCUMENT ME!
          * @param content DOCUMENT ME!
+         *
+         * @throws IllegalArgumentException DOCUMENT ME!
          */
         public void postSave(WikiContext context, String content)
         {
@@ -774,19 +769,29 @@ public class ReferenceManager
             {
                 throw new IllegalArgumentException("Called postSave() before start()!");
             }
-            
+
             WikiPage page = context.getPage();
-            
+
             updateReferences(page.getName(), engine.scanWikiLinks(page, content));
-            
+
             serializeToDisk();
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public boolean isVisible()
         {
             return false;
         }
-        
+
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public int getPriority()
         {
             return PageFilter.MIN_PRIORITY;

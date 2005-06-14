@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,15 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
-
 
 import de.softwareforge.eyewiki.PageLock;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.manager.PageManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * DOCUMENT ME!
@@ -112,8 +110,7 @@ public class CheckLockTag
 
             PageLock userLock = (PageLock) session.getAttribute("lock-" + page.getName());
 
-            if (
-                ((lock != null) && (m_mode == LOCKED) && (lock != userLock))
+            if (((lock != null) && (m_mode == LOCKED) && (lock != userLock))
                             || ((lock != null) && (m_mode == OWNED) && (lock == userLock))
                             || ((lock == null) && (m_mode == NOTLOCKED)))
             {

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.permissions;
 
+
 /*
  * ========================================================================
  *
@@ -54,6 +55,11 @@ public class ViewPermission
         return (p != null) && (p instanceof ViewPermission);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();

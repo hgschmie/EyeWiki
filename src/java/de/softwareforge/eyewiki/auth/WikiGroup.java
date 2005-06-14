@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,12 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.Group;
+
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
-
 
 /**
  * DOCUMENT ME!
@@ -196,6 +196,11 @@ public class WikiGroup
         return true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();

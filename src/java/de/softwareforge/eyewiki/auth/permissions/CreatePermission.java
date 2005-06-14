@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.permissions;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,8 @@ package de.softwareforge.eyewiki.auth.permissions;
  */
 
 /**
- * Represents the permission to edit a page.  Also implies the permission to comment on a page
- * (CommentPermission) and uploading of files.
+ * Represents the permission to edit a page.  Also implies the permission to comment on a page (CommentPermission) and uploading of
+ * files.
  */
 public class CreatePermission
         extends WikiPermission
@@ -52,6 +53,11 @@ public class CreatePermission
         return (p != null) && (p instanceof CreatePermission);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();

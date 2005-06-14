@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.util.Map;
 
 import de.softwareforge.eyewiki.util.FormUtil;
@@ -40,7 +40,6 @@ import de.softwareforge.eyewiki.util.FormUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 
 /**
  * DOCUMENT ME!
@@ -71,12 +70,14 @@ public class FormUtilTest
         return new TestSuite(FormUtilTest.class);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void testNullReq()
     {
         Map params = FormUtil.requestToMap(null, "foo");
 
         assertNotNull("No params Map returned!", params);
-        assertEquals("Found a parameter in an empty request!", 0 , params.size());
+        assertEquals("Found a parameter in an empty request!", 0, params.size());
     }
 }
-

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,16 +33,15 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.StringReader;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.StringTransmutator;
 import de.softwareforge.eyewiki.TranslatorReader;
@@ -50,10 +50,9 @@ import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
  * This is a base class for all plugins using referral things.
- *
+ * 
  * <p>
  * Parameters:<br> maxwidth: maximum width of generated links<br>
  * separator: separator between generated links (wikitext)<br>
@@ -98,6 +97,11 @@ public abstract class AbstractReferralPlugin
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
+    /**
+     * Creates a new AbstractReferralPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public AbstractReferralPlugin(WikiEngine engine)
     {
         this.engine = engine;
@@ -116,8 +120,7 @@ public abstract class AbstractReferralPlugin
     public void initialize(WikiContext context, Map params)
             throws PluginException
     {
-        m_maxwidth =
-            TextUtil.parseIntParameter((String) params.get(PARAM_MAXWIDTH), Integer.MAX_VALUE);
+        m_maxwidth = TextUtil.parseIntParameter((String) params.get(PARAM_MAXWIDTH), Integer.MAX_VALUE);
 
         if (m_maxwidth < 0)
         {
@@ -242,8 +245,7 @@ public abstract class AbstractReferralPlugin
     }
 
     /**
-     * A simple class that just cuts a String to a maximum length, adding three dots after the
-     * cutpoint.
+     * A simple class that just cuts a String to a maximum length, adding three dots after the cutpoint.
      */
     private static class CutMutator
             implements StringTransmutator

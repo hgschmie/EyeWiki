@@ -1,5 +1,10 @@
 package de.softwareforge.eyewiki.acl;
 
+import de.softwareforge.eyewiki.acl.AclEntryImpl;
+import de.softwareforge.eyewiki.auth.permissions.CommentPermission;
+import de.softwareforge.eyewiki.auth.permissions.EditPermission;
+import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
+
 /*
  * ========================================================================
  *
@@ -32,17 +37,9 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-
-import de.softwareforge.eyewiki.acl.AclEntryImpl;
-import de.softwareforge.eyewiki.auth.permissions.CommentPermission;
-import de.softwareforge.eyewiki.auth.permissions.EditPermission;
-import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
-
 
 /**
  * DOCUMENT ME!

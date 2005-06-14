@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,14 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
 
-
 /**
- * Returns the parent of the currently requested page.  Weblog entries are recognized as subpages
- * of the weblog page.
+ * Returns the parent of the currently requested page.  Weblog entries are recognized as subpages of the weblog page.
  *
  * @author Janne Jalkanen
  *
@@ -69,8 +66,7 @@ public class ParentPageNameTag
         {
             if (page instanceof Attachment)
             {
-                pageContext.getOut().print(
-                    engine.beautifyTitle(((Attachment) page).getParentName()));
+                pageContext.getOut().print(engine.beautifyTitle(((Attachment) page).getParentName()));
             }
             else
             {

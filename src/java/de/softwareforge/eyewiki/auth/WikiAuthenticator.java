@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,6 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
-
 
 /**
  * Defines the interface for connecting to different authentication services.

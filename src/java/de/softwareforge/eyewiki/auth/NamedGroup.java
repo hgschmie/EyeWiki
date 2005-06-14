@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,12 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 
 import de.softwareforge.eyewiki.exception.InternalWikiException;
 
-
 /**
- * A special kind of WikiGroup.  Anyone who has set their name in the cookie is a part of this
- * group.
+ * A special kind of WikiGroup.  Anyone who has set their name in the cookie is a part of this group.
  */
 public class NamedGroup
         extends AllGroup
@@ -77,8 +75,7 @@ public class NamedGroup
             return equals(wg);
         }
 
-        throw new InternalWikiException(
-            "Someone offered us a Principal that is not an UserProfile!");
+        throw new InternalWikiException("Someone offered us a Principal that is not an UserProfile!");
     }
 
     /**
@@ -93,6 +90,11 @@ public class NamedGroup
         return (o != null) && o instanceof NamedGroup;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();

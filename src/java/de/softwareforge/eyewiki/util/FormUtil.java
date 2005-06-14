@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -42,27 +42,28 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 
-
 /**
- * A collection of (static) utilities used by the WikiForms code. FormUtil is mainly concerned with
- * mapping HTTP parameters to WikiPlugin parameters.
+ * A collection of (static) utilities used by the WikiForms code. FormUtil is mainly concerned with mapping HTTP parameters to
+ * WikiPlugin parameters.
  *
  * @author ebu
  */
 public final class FormUtil
 {
+    /**
+     * Creates a new FormUtil object.
+     */
     private FormUtil()
     {
     }
 
     /**
-     * Looks for a named value in the Map. Returns either the value named by key, or values named
-     * by key.0, key.1, ... if the direct value is not found. The values are packed in an
-     * ArrayList.
-     *
+     * Looks for a named value in the Map. Returns either the value named by key, or values named by key.0, key.1, ... if the
+     * direct value is not found. The values are packed in an ArrayList.
+     * 
      * <p>
-     * This is a utility method, mainly used when we don't know whether there was just one value,
-     * or several, in a mapping list (e.g. an HttpRequest / FORM checkbox).
+     * This is a utility method, mainly used when we don't know whether there was just one value, or several, in a mapping list
+     * (e.g. an HttpRequest / FORM checkbox).
      * </p>
      *
      * @param params DOCUMENT ME!
@@ -91,21 +92,19 @@ public final class FormUtil
     }
 
     /**
-     * Looks up all keys starting with a given prefix and returns the values in an ArrayList. The
-     * keys must be Strings.
-     *
+     * Looks up all keys starting with a given prefix and returns the values in an ArrayList. The keys must be Strings.
+     * 
      * <p>
-     * For example, calling this method for a Map containing key-value pairs foo.1 = a, foo.2 = b,
-     * and foo.3 = c returns an ArrayList containing [a, b, c].
+     * For example, calling this method for a Map containing key-value pairs foo.1 = a, foo.2 = b, and foo.3 = c returns an
+     * ArrayList containing [a, b, c].
      * </p>
-     *
+     * 
      * <p>
      * Handles both 0- and 1-indexed names. Parsing stops at the first gap in the numeric postfix.
      * </p>
      *
      * @param params a Map of string-object pairs, presumably containing key.1, key.2,...
-     * @param keyPrefix a String prefix; values will be looked up by adding ".0", ".1", and so on,
-     *        until the first gap.
+     * @param keyPrefix a String prefix; values will be looked up by adding ".0", ".1", and so on, until the first gap.
      *
      * @return ArrayList, containing the values corresponding to the keyPrefix, in order.
      */
@@ -157,26 +156,26 @@ public final class FormUtil
     }
 
     /**
-     * Converts the parameter contents of an HTTP request into a map, modifying the keys to
-     * preserve multiple values per key. This is done by adding an ordered suffix to the key:
-     *
+     * Converts the parameter contents of an HTTP request into a map, modifying the keys to preserve multiple values per key. This
+     * is done by adding an ordered suffix to the key:
+     * 
      * <p>
      * <pre>foo=bar,baz,xyzzy</pre>
      * </p>
-     *
+     * 
      * <p>
      * becomes
      * </p>
-     *
+     * 
      * <p>
      * <pre>foo.0=bar foo.1=baz foo.2=xyzzy</pre>
      * </p>
-     *
+     * 
      * <p>
-     * If filterPrefix is specified, only keys starting with the prefix are included in the result
-     * map. If the prefix is null, all keys are checked.
+     * If filterPrefix is specified, only keys starting with the prefix are included in the result map. If the prefix is null, all
+     * keys are checked.
      * </p>
-     *
+     * 
      * <p>
      * FIX: this is not necessarily encoding-safe: see WikiContext.getHttpParameter().
      * </p>
@@ -189,23 +188,21 @@ public final class FormUtil
     public static Map requestToMap(HttpServletRequest req, String filterPrefix)
     {
         HashMap params = new HashMap();
-        
+
         if (req != null)
         {
             Enumeration en = req.getParameterNames();
-            
+
             while (en.hasMoreElements())
             {
                 String param = (String) en.nextElement();
-                
+
                 if ((filterPrefix == null) || param.startsWith(filterPrefix))
                 {
-                    String realName = (filterPrefix == null)
-                            ? param
-                            : param.substring(filterPrefix.length());
-                    
+                    String realName = (filterPrefix == null) ? param : param.substring(filterPrefix.length());
+
                     String [] values = req.getParameterValues(param);
-                    
+
                     if (values != null)
                     {
                         if (values.length == 1)

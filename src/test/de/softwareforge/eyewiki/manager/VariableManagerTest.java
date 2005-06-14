@@ -1,5 +1,15 @@
 package de.softwareforge.eyewiki.manager;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.exception.NoSuchVariableException;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,22 +42,9 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.log4j.PropertyConfigurator;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.exception.NoSuchVariableException;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
 
 /**
  * DOCUMENT ME!
@@ -66,7 +63,7 @@ public class VariableManagerTest
 
     /** DOCUMENT ME! */
     WikiContext m_context;
-    
+
     /** The internally used engine */
     private TestEngine testEngine = null;
 
@@ -272,8 +269,7 @@ public class VariableManagerTest
     public void testExpand3()
             throws Exception
     {
-        String res =
-            m_variableManager.expandVariables(m_context, "Testing {$pagename}, {$applicationname}");
+        String res = m_variableManager.expandVariables(m_context, "Testing {$pagename}, {$applicationname}");
 
         assertEquals("Testing " + PAGE_NAME + ", eyeWiki", res);
     }

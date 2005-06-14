@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,7 @@ package de.softwareforge.eyewiki.filters;
  */
 
 /**
- * This exception may be thrown if a filter wants to reject something and redirect the user
- * elsewhere.
+ * This exception may be thrown if a filter wants to reject something and redirect the user elsewhere.
  *
  * @since 2.1.112
  */

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.url;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.url;
  *
  * ========================================================================
  */
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
@@ -42,16 +42,21 @@ import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 
 /**
- *  A specific URL constructor that returns easy-to-grok URLs for
- *  VIEW and ATTACH contexts, but goes through JSP pages otherwise.
+ * A specific URL constructor that returns easy-to-grok URLs for VIEW and ATTACH contexts, but goes through JSP pages otherwise.
  *
- *  @author jalkanen
+ * @author jalkanen
  *
- *  @since
+ * @since
  */
 public class ShortViewURLConstructor
         extends ShortURLConstructor
 {
+    /**
+     * Creates a new ShortViewURLConstructor object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     */
     public ShortViewURLConstructor(final WikiEngine engine, final Configuration conf)
     {
         super(engine, conf);
@@ -59,7 +64,7 @@ public class ShortViewURLConstructor
 
     private String makeURL(String context, String name, boolean absolute)
     {
-        String viewurl = m_urlPrefix+"%n";
+        String viewurl = m_urlPrefix + "%n";
 
         if (absolute)
         {
@@ -70,40 +75,52 @@ public class ShortViewURLConstructor
         {
             if (name == null)
             {
-                return makeURL("%u","",absolute); // FIXME
+                return makeURL("%u", "", absolute); // FIXME
             }
+
             return doReplacement(viewurl, name, absolute);
         }
 
-        return doReplacement(
-                DefaultURLConstructor.getURLPattern(context,name),
-                name,
-                true);
+        return doReplacement(DefaultURLConstructor.getURLPattern(context, name), name, true);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     * @param absolute DOCUMENT ME!
+     * @param parameters DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String makeURL(String context, String name, boolean absolute, String parameters)
     {
         if (StringUtils.isNotEmpty(parameters))
         {
-            if (context.equals(WikiContext.ATTACH) || context.equals(WikiContext.VIEW) || name == null)
+            if (context.equals(WikiContext.ATTACH) || context.equals(WikiContext.VIEW) || (name == null))
             {
                 parameters = "?" + parameters;
             }
             else
             {
-                parameters = "&amp;"+parameters;
+                parameters = "&amp;" + parameters;
             }
         }
         else
         {
             parameters = "";
         }
+
         return makeURL(context, name, absolute) + parameters;
     }
 
     /**
-     *   Since we're only called from WikiServlet, where we get the VIEW requests,
-     *   we can safely return this.
+     * Since we're only called from WikiServlet, where we get the VIEW requests, we can safely return this.
+     *
+     * @param req DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     public String getForwardPage(HttpServletRequest req)
     {

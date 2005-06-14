@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.rss;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.rss;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,92 +41,145 @@ import org.apache.commons.lang.StringUtils;
 import de.softwareforge.eyewiki.WikiContext;
 
 /**
- *  @author jalkanen
+ * DOCUMENT ME!
  *
- *  @since 
+ * @author jalkanen
+ *
+ * @since
  */
 public abstract class Feed
 {
+    /** DOCUMENT ME! */
     protected List m_entries = new ArrayList();
-    
+
+    /** DOCUMENT ME! */
     protected String m_feedURL;
+
+    /** DOCUMENT ME! */
     protected String m_channelTitle;
+
+    /** DOCUMENT ME! */
     protected String m_channelDescription;
+
+    /** DOCUMENT ME! */
     protected String m_channelLanguage;
 
+    /** DOCUMENT ME! */
     protected WikiContext m_wikiContext;
-    
+
+    /**
+     * Creates a new Feed object.
+     *
+     * @param context DOCUMENT ME!
+     */
     public Feed(WikiContext context)
     {
         m_wikiContext = context;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param e DOCUMENT ME!
+     */
     public void addEntry(Entry e)
     {
         m_entries.add(e);
     }
 
-    public abstract String getString();
     /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public abstract String getString();
+
+    /**
+     * DOCUMENT ME!
+     *
      * @return Returns the m_channelDescription.
      */
     public String getChannelDescription()
     {
         return m_channelDescription;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @param description The m_channelDescription to set.
      */
     public void setChannelDescription(String description)
     {
         m_channelDescription = description;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @return Returns the m_channelLanguage.
      */
     public String getChannelLanguage()
     {
         return m_channelLanguage;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @param language The m_channelLanguage to set.
      */
     public void setChannelLanguage(String language)
     {
         m_channelLanguage = language;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @return Returns the m_channelTitle.
      */
     public String getChannelTitle()
     {
         return m_channelTitle;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @param title The m_channelTitle to set.
      */
     public void setChannelTitle(String title)
     {
         m_channelTitle = title;
     }
- 
+
     /**
+     * DOCUMENT ME!
+     *
      * @return Returns the m_feedURL.
      */
     public String getFeedURL()
     {
         return m_feedURL;
     }
+
     /**
+     * DOCUMENT ME!
+     *
      * @param m_feedurl The m_feedURL to set.
      */
     public void setFeedURL(String m_feedurl)
     {
         m_feedURL = m_feedurl;
     }
-    
+
     /**
-     *  Does the required formatting and entity replacement for XML.
+     * Does the required formatting and entity replacement for XML.
+     *
+     * @param s DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     public static String format(String s)
     {
@@ -138,6 +191,7 @@ public abstract class Feed
 
             return s.trim();
         }
+
         return null;
     }
 }

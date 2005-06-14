@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.attachment;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,11 @@ package de.softwareforge.eyewiki.attachment;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -45,9 +46,6 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import org.picocontainer.PicoContainer;
-
 
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiConstants;
@@ -60,14 +58,14 @@ import de.softwareforge.eyewiki.manager.ReferenceManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.providers.WikiAttachmentProvider;
 
+import org.picocontainer.PicoContainer;
 
 /**
  * Provides facilities for handling attachments.  All attachment handling goes through this class.
- *
+ * 
  * <p>
- * The AttachmentManager provides a facade towards the current WikiAttachmentProvider that is in
- * use.  It is created by the WikiEngine as a singleton object, and can be requested through the
- * WikiEngine.
+ * The AttachmentManager provides a facade towards the current WikiAttachmentProvider that is in use.  It is created by the
+ * WikiEngine as a singleton object, and can be requested through the WikiEngine.
  * </p>
  *
  * @author Janne Jalkanen
@@ -90,19 +88,18 @@ public class AttachmentManager
     private final ReferenceManager m_referenceManager;
 
     /**
-     * Creates a new AttachmentManager.  Note that creation will never fail, but it's quite likely
-     * that attachments do not function.
-     *
+     * Creates a new AttachmentManager.  Note that creation will never fail, but it's quite likely that attachments do not
+     * function.
+     * 
      * <p>
-     * <b>DO NOT CREATE</b> an AttachmentManager on your own, unless you really know what you're
-     * doing.  Just use WikiEngine.getAttachmentManager() if you're making a module for eyeWiki.
+     * <b>DO NOT CREATE</b> an AttachmentManager on your own, unless you really know what you're doing.  Just use
+     * WikiEngine.getAttachmentManager() if you're making a module for eyeWiki.
      * </p>
      *
      * @param engine The wikiengine that owns this attachment manager.
-     * @param conf A list of properties from which the AttachmentManager will seek its
-     *        configuration.  Typically this is the "eyewiki.properties".
+     * @param referenceManager A list of properties from which the AttachmentManager will seek its configuration.  Typically this
+     *        is the "eyewiki.properties".
      */
-
     public AttachmentManager(final WikiEngine engine, final ReferenceManager referenceManager)
     {
         m_engine = engine;
@@ -229,8 +226,7 @@ public class AttachmentManager
     }
 
     /**
-     * Returns the list of attachments associated with a given wiki page. If there are no
-     * attachments, returns an empty Collection.
+     * Returns the list of attachments associated with a given wiki page. If there are no attachments, returns an empty Collection.
      *
      * @param wikipage The wiki page from which you are seeking attachments for.
      *
@@ -292,8 +288,8 @@ public class AttachmentManager
     }
 
     /**
-     * Stores an attachment that lives in the given file. If the attachment did not exist
-     * previously, this method will create it.  If it did exist, it stores a new version.
+     * Stores an attachment that lives in the given file. If the attachment did not exist previously, this method will create it.
+     * If it did exist, it stores a new version.
      *
      * @param att Attachment to store this under.
      * @param source A file to read from.
@@ -318,8 +314,8 @@ public class AttachmentManager
     }
 
     /**
-     * Stores an attachment directly from a stream. If the attachment did not exist previously,
-     * this method will create it.  If it did exist, it stores a new version.
+     * Stores an attachment directly from a stream. If the attachment did not exist previously, this method will create it.  If it
+     * did exist, it stores a new version.
      *
      * @param att Attachment to store this under.
      * @param in InputStream from which the attachment contents will be read.
@@ -370,11 +366,9 @@ public class AttachmentManager
     }
 
     /**
-     * Returns a collection of Attachments, containing each and every attachment that is in this
-     * Wiki.
+     * Returns a collection of Attachments, containing each and every attachment that is in this Wiki.
      *
-     * @return A collection of attachments.  If attachments are disabled, will return an empty
-     *         collection.
+     * @return A collection of attachments.  If attachments are disabled, will return an empty collection.
      *
      * @throws ProviderException DOCUMENT ME!
      */

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -41,11 +41,9 @@ import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Base class for eyeWiki tags.  You do not necessarily have to derive from this class, since this
- * does some initialization.
- *
+ * Base class for eyeWiki tags.  You do not necessarily have to derive from this class, since this does some initialization.
+ * 
  * <P>
  * This tag is only useful if you're having an "empty" tag, with no body content.
  * </p>
@@ -78,8 +76,7 @@ public abstract class WikiTagBase
     {
         try
         {
-            m_wikiContext =
-                (WikiContext) pageContext.getAttribute(ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+            m_wikiContext = (WikiContext) pageContext.getAttribute(ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
             if (m_wikiContext == null)
             {

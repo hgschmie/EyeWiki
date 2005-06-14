@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -41,24 +41,21 @@ import de.softwareforge.eyewiki.QueryItem;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.WikiProvider;
 
-
 /**
  * Each Wiki page provider should implement this interface.
- *
+ * 
  * <P>
- * You can build whatever page providers based on this, just leave the unused methods do something
- * useful.
+ * You can build whatever page providers based on this, just leave the unused methods do something useful.
  * </p>
- *
+ * 
  * <P>
- * WikiPageProvider uses Strings and ints to refer to pages.  This may be a bit odd, since
- * WikiAttachmentProviders all use Attachment instead of name/version.  We will perhaps modify
- * these in the future.  In the mean time, name/version is quite sufficient.
+ * WikiPageProvider uses Strings and ints to refer to pages.  This may be a bit odd, since WikiAttachmentProviders all use
+ * Attachment instead of name/version.  We will perhaps modify these in the future.  In the mean time, name/version is quite
+ * sufficient.
  * </p>
- *
+ * 
  * <P>
- * FIXME: In reality we should have an AbstractWikiPageProvider, which would provide intelligent
- * backups for subclasses.
+ * FIXME: In reality we should have an AbstractWikiPageProvider, which would provide intelligent backups for subclasses.
  * </p>
  *
  * @author Janne Jalkanen
@@ -167,9 +164,8 @@ public interface WikiPageProvider
             throws ProviderException;
 
     /**
-     * Removes a specific version from the repository.  The implementations should really do no
-     * more security checks, since that is the domain of the PageManager.  Just delete it as
-     * efficiently as you can.
+     * Removes a specific version from the repository.  The implementations should really do no more security checks, since that is
+     * the domain of the PageManager.  Just delete it as efficiently as you can.
      *
      * @param pageName Name of the page to be removed.
      * @param version Version of the page to be removed.  May be LATEST_VERSION.
@@ -182,15 +178,14 @@ public interface WikiPageProvider
             throws ProviderException;
 
     /**
-     * Removes an entire page from the repository.  The implementations should really do no more
-     * security checks, since that is the domain of the PageManager.  Just delete it as
-     * efficiently as you can.  You should also delete any auxiliary files that belong to this
-     * page, IF they were created by this provider.
-     *
+     * Removes an entire page from the repository.  The implementations should really do no more security checks, since that is the
+     * domain of the PageManager.  Just delete it as efficiently as you can.  You should also delete any auxiliary files that
+     * belong to this page, IF they were created by this provider.
+     * 
      * <P>
-     * The reason why this is named differently from deleteVersion() (logically, this method should
-     * be an overloaded version) is that I want to be absolutely sure I don't accidentally use the
-     * wrong method.  With overloading something like that happens sometimes...
+     * The reason why this is named differently from deleteVersion() (logically, this method should be an overloaded version) is
+     * that I want to be absolutely sure I don't accidentally use the wrong method.  With overloading something like that happens
+     * sometimes...
      * </p>
      *
      * @param pageName Name of the page to be removed completely.

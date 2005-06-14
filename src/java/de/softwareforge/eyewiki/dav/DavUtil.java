@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -45,7 +46,6 @@ import org.apache.ecs.xhtml.ul;
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
-
 
 /**
  * DOCUMENT ME!

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -47,14 +48,12 @@ import java.util.TreeSet;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.manager.PageManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * Creates a list of all weblog entries on a monthly basis.
@@ -73,10 +72,18 @@ public class WeblogArchivePlugin
     /** DOCUMENT ME! */
     private SimpleDateFormat m_monthUrlFormat;
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     private final PageManager pageManager;
 
+    /**
+     * Creates a new WeblogArchivePlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param pageManager DOCUMENT ME!
+     */
     public WeblogArchivePlugin(final WikiEngine engine, final PageManager pageManager)
     {
         this.engine = engine;
@@ -107,10 +114,7 @@ public class WeblogArchivePlugin
         }
 
         m_monthUrlFormat =
-            new SimpleDateFormat(
-                "'"
-                + context.getURL(
-                    WikiContext.VIEW, weblogName, "weblog.startDate='ddMMyy'&amp;weblog.days=%d")
+            new SimpleDateFormat("'" + context.getURL(WikiContext.VIEW, weblogName, "weblog.startDate='ddMMyy'&amp;weblog.days=%d")
                 + "'");
 
         StringBuffer sb = new StringBuffer();
@@ -178,8 +182,7 @@ public class WeblogArchivePlugin
 
         WeblogPlugin pl = new WeblogPlugin(engine, pageManager);
 
-        List blogEntries =
-            pl.findBlogEntries(page, new Date(0L), new Date());
+        List blogEntries = pl.findBlogEntries(page, new Date(0L), new Date());
 
         Calendar urCalendar = Calendar.getInstance();
 
@@ -227,9 +230,8 @@ public class WeblogArchivePlugin
     }
 
     /**
-     * This is a simple calendar that extends the GregorianCalendar to provide a Comparable
-     * interface so that it can be put in a Set and sorted.  In addition, it also evaluates two
-     * objects that are in the same month to be equal.
+     * This is a simple calendar that extends the GregorianCalendar to provide a Comparable interface so that it can be put in a
+     * Set and sorted.  In addition, it also evaluates two objects that are in the same month to be equal.
      */
     private static class ArchiveCalendar
             extends GregorianCalendar
@@ -263,9 +265,7 @@ public class WeblogArchivePlugin
                     return 0;
                 }
 
-                return c.getTime().before(getTime())
-                ? 1
-                : (-1);
+                return c.getTime().before(getTime()) ? 1 : (-1);
             }
 
             return 0;
@@ -284,9 +284,7 @@ public class WeblogArchivePlugin
             {
                 Calendar c = (Calendar) o;
 
-                if (
-                    (c.get(Calendar.YEAR) == get(Calendar.YEAR))
-                                && (c.get(Calendar.MONTH) == get(Calendar.MONTH)))
+                if ((c.get(Calendar.YEAR) == get(Calendar.YEAR)) && (c.get(Calendar.MONTH) == get(Calendar.MONTH)))
                 {
                     return true;
                 }
@@ -295,6 +293,11 @@ public class WeblogArchivePlugin
             return false;
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public int hashCode()
         {
             return super.hashCode();

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,14 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.Writer;
+
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -56,10 +52,13 @@ import de.softwareforge.eyewiki.providers.NoSuchVersionException;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Tests the RCSFileProvider.  If you are getting strange errors, please check that you actually
- * <i>have</i> RCS installed and in your path...
+ * Tests the RCSFileProvider.  If you are getting strange errors, please check that you actually <i>have</i> RCS installed and in
+ * your path...
  *
  * @author jalkanen
  *
@@ -146,8 +145,8 @@ public class RCSFileProviderTest
     }
 
     /**
-     * Checks if migration from FileSystemProvider to VersioningFileProvider works by creating a
-     * dummy file without corresponding content in OLD/
+     * Checks if migration from FileSystemProvider to VersioningFileProvider works by creating a dummy file without corresponding
+     * content in OLD/
      *
      * @throws Exception DOCUMENT ME!
      */

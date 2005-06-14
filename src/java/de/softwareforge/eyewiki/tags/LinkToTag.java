@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,26 +33,23 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
-
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
 
-
 /**
- * Writes a link to a Wiki page.  Body of the link becomes the actual text. The link is written
- * regardless to whether the page exists or not.
- *
+ * Writes a link to a Wiki page.  Body of the link becomes the actual text. The link is written regardless to whether the page
+ * exists or not.
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -63,7 +61,7 @@ import de.softwareforge.eyewiki.attachment.Attachment;
  * template - Which template should we link to.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -130,11 +128,7 @@ public class LinkToTag
 
         if (isattachment)
         {
-            url = m_wikiContext.getURL(
-                    WikiContext.ATTACH, pageName,
-                    (getVersion() != null)
-                    ? ("version=" + getVersion())
-                    : null);
+            url = m_wikiContext.getURL(WikiContext.ATTACH, pageName, (getVersion() != null) ? ("version=" + getVersion()) : null);
             linkclass = WikiConstants.CSS_LINK_ATTACHMENT;
         }
         else
@@ -148,9 +142,7 @@ public class LinkToTag
 
             if (getTemplate() != null)
             {
-                params.append(((params.length() > 0)
-                    ? "&amp;"
-                    : "") + "skin=" + getTemplate());
+                params.append(((params.length() > 0) ? "&amp;" : "") + "skin=" + getTemplate());
             }
 
             url = m_wikiContext.getURL(WikiContext.VIEW, pageName, params.toString());
@@ -160,13 +152,16 @@ public class LinkToTag
         switch (m_format)
         {
         case ANCHOR:
+
             StringBuffer sb = new StringBuffer("<a ");
+
             if (linkclass != null)
             {
                 sb.append("class=\"" + linkclass + "\"");
             }
+
             sb.append("href=\"" + url + "\">");
-            
+
             out.print(sb.toString());
 
             break;

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
@@ -54,13 +54,11 @@ import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Creates an editor component with all the necessary parts to get it working.
- *
+ * 
  * <p>
- * In the future, this component should be expanded to provide a customized version of the editor
- * according to user preferences.
+ * In the future, this component should be expanded to provide a customized version of the editor according to user preferences.
  * </p>
  *
  * @author Janne Jalkanen
@@ -167,8 +165,7 @@ public class EditorTag
         {
             f.setAction(m_action);
         }
-        else if (
-            m_wikiContext.getRequestContext().equals(WikiContext.COMMENT)
+        else if (m_wikiContext.getRequestContext().equals(WikiContext.COMMENT)
                         || "comment".equals(m_wikiContext.getHttpParameter("action")))
         {
             f.setAction(m_wikiContext.getURL(WikiContext.COMMENT, page.getName()));
@@ -193,10 +190,7 @@ public class EditorTag
 
         para1.addElement(createInput("page", page.getName()));
         para1.addElement(createInput("action", "save"));
-        para1.addElement(
-            createInput(
-                "edittime",
-                (String) pageContext.getAttribute("lastchange", PageContext.REQUEST_SCOPE)));
+        para1.addElement(createInput("edittime", (String) pageContext.getAttribute("lastchange", PageContext.REQUEST_SCOPE)));
 
         if (m_wikiContext.getRequestContext().equals("comment"))
         {

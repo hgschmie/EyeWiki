@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,15 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.html.TextArea;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
-
 
 /**
  * DOCUMENT ME!
@@ -98,7 +96,6 @@ public class FormTextarea
         field = buildTextArea(params, previousValues);
 
         // We should look for extra params, e.g. width, ..., here.
-
         return (field == null) ? "" : field.toString();
     }
 

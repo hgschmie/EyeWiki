@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,15 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
-
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.auth.AuthorizationManager;
 import de.softwareforge.eyewiki.auth.UserProfile;
 
-
 /**
- * Tells if a page may be edited.  This tag takes care of all possibilities, user permissions, page
- * version, etc.
+ * Tells if a page may be edited.  This tag takes care of all possibilities, user permissions, page version, etc.
  *
  * @author Janne Jalkanen
  *
@@ -87,8 +84,6 @@ public class PermissionTag
             gotPermission = mgr.checkPermission(page, userprofile, m_permission);
         }
 
-        return gotPermission
-                ? EVAL_BODY_INCLUDE
-                : SKIP_BODY;
+        return gotPermission ? EVAL_BODY_INCLUDE : SKIP_BODY;
     }
 }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.items;
 
+
 /*
  * ========================================================================
  *
@@ -32,18 +33,15 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.dav.DavContext;
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * DOCUMENT ME!
@@ -54,14 +52,10 @@ import de.softwareforge.eyewiki.providers.ProviderException;
  */
 public class DavItemFactory
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private WikiEngine m_engine;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     Logger log = Logger.getLogger(DavItemFactory.class);
 
     /**

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,11 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -44,7 +46,6 @@ import java.util.StringTokenizer;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -52,17 +53,15 @@ import de.softwareforge.eyewiki.WikiException;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.auth.UserProfile;
 
-
 /**
  * Provides a handler for bug reports.  Still under construction.
- *
+ * 
  * <ul>
  * <li>
- * "title" = title of the bug.  This is required.  If it is empty (as in "") it is a signal to the
- * handler to return quietly.
+ * "title" = title of the bug.  This is required.  If it is empty (as in "") it is a signal to the handler to return quietly.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  */
@@ -93,6 +92,11 @@ public class BugReportHandler
     /** DOCUMENT ME! */
     protected final WikiEngine engine;
 
+    /**
+     * Creates a new BugReportHandler object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public BugReportHandler(final WikiEngine engine)
     {
         this.engine = engine;
@@ -179,9 +183,7 @@ public class BugReportHandler
             {
                 Map.Entry entry = (Map.Entry) i.next();
 
-                if (
-                    entry.getKey().equals(TITLE) || entry.getKey().equals(DESCRIPTION)
-                                || entry.getKey().equals(VERSION)
+                if (entry.getKey().equals(TITLE) || entry.getKey().equals(DESCRIPTION) || entry.getKey().equals(VERSION)
                                 || entry.getKey().equals(MAPPINGS) || entry.getKey().equals(PAGE)
                                 || entry.getKey().equals(PluginManager.PARAM_BODY))
                 {
@@ -192,8 +194,7 @@ public class BugReportHandler
                 //  If no mapping has been defined, just ignore
                 //  it.
                 //
-                String head =
-                        mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
+                String head = mappings.getProperty((String) entry.getKey(), (String) entry.getKey());
 
                 if (head.length() > 0)
                 {
@@ -217,8 +218,7 @@ public class BugReportHandler
 
             engine.saveText(newContext, str.toString());
 
-            return "A new bug report has been created: <a href=\"" + context.getViewURL(pageName)
-            + "\">" + pageName + "</a>";
+            return "A new bug report has been created: <a href=\"" + context.getViewURL(pageName) + "\">" + pageName + "</a>";
         }
         catch (WikiException e)
         {
@@ -229,10 +229,9 @@ public class BugReportHandler
     }
 
     /**
-     * Finds a free page name for adding the bug report.  Tries to construct a page, and if it's
-     * found, adds a number to it and tries again.
+     * Finds a free page name for adding the bug report.  Tries to construct a page, and if it's found, adds a number to it and
+     * tries again.
      *
-     * @param context DOCUMENT ME!
      * @param title DOCUMENT ME!
      * @param baseName DOCUMENT ME!
      *
@@ -240,10 +239,7 @@ public class BugReportHandler
      */
     private synchronized String findNextPage(String title, String baseName)
     {
-        String basicPageName =
-            ((baseName != null)
-            ? baseName
-            : "Bug") + TranslatorReader.cleanLink(title);
+        String basicPageName = ((baseName != null) ? baseName : "Bug") + TranslatorReader.cleanLink(title);
 
         String pageName = basicPageName;
         long lastbug = 2;
@@ -258,7 +254,7 @@ public class BugReportHandler
 
     /**
      * Just parses a mappings list in the form of "a=b;b=c;c=d".
-     *
+     * 
      * <p>
      * FIXME: Should probably be in TextUtil or somewhere.
      * </p>

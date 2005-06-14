@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.util.Map;
 
 import de.softwareforge.eyewiki.WikiContext;
@@ -40,10 +40,9 @@ import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
 
-
 /**
  * Implements a simple plugin that just returns a piece of Javascript
- *
+ * 
  * <P>
  * Parameters: text - text to return.
  * </p>

@@ -1,5 +1,12 @@
 package de.softwareforge.eyewiki.auth.modules;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.auth.AuthorizationManager;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
+
 /*
  * ========================================================================
  *
@@ -32,20 +39,9 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.auth.AuthorizationManager;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
-
-
 
 /**
  * DOCUMENT ME!
@@ -81,8 +77,7 @@ public class PageAuthorizerTest
 
         m_engine = new TestEngine(conf);
 
-        String text1 =
-            "Foobar.\n\n[{SET defaultpermissions='ALLOW EDIT Charlie;DENY VIEW Bob'}]\n\nBlood.";
+        String text1 = "Foobar.\n\n[{SET defaultpermissions='ALLOW EDIT Charlie;DENY VIEW Bob'}]\n\nBlood.";
         String text2 = "Foo";
 
         m_engine.saveText("DefaultPermissions", text1);
@@ -106,10 +101,7 @@ public class PageAuthorizerTest
         wup.setName("Charlie");
         wup.setLoginStatus(UserProfile.PASSWORD);
 
-        assertTrue(
-            "Charlie",
-            mgr.checkPermission(
-                m_engine.getPage("TestPage"), wup, WikiPermission.newInstance("edit")));
+        assertTrue("Charlie", mgr.checkPermission(m_engine.getPage("TestPage"), wup, WikiPermission.newInstance("edit")));
 
         /*
         wup.setName( "Bob" );

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,11 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 
 import javax.servlet.jsp.PageContext;
-
 
 /**
  * Includes the body content, if there are any search results.
@@ -59,8 +59,7 @@ public class SearchResultsTag
     public final int doWikiStartTag()
             throws IOException
     {
-        Collection list =
-            (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
+        Collection list = (Collection) pageContext.getAttribute("searchresults", PageContext.REQUEST_SCOPE);
 
         if (list != null)
         {

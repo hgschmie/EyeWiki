@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,15 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.util.AbstractList;
 import java.util.ArrayList;
 
-
 /**
- * Builds a simple, priority-based List implementation.  The list will be sorted according to the
- * priority.  If two items are inserted with the same priority, their order is the insertion order
- * - i.e. the new one is appended last in the insertion list.
- *
+ * Builds a simple, priority-based List implementation.  The list will be sorted according to the priority.  If two items are
+ * inserted with the same priority, their order is the insertion order - i.e. the new one is appended last in the insertion list.
+ * 
  * <p>
- * Priority is an integer, and the list is sorted in descending order (that is, 100 is before 10 is
- * before 0 is before -40).
+ * Priority is an integer, and the list is sorted in descending order (that is, 100 is before 10 is before 0 is before -40).
  * </p>
  *
  * @author Janne Jalkanen
@@ -52,10 +49,7 @@ import java.util.ArrayList;
 public class PriorityList
         extends AbstractList
 {
-    /**
-     * This is the default priority, which is used if no priority is defined.  It's current value
-     * is zero.
-     */
+    /** This is the default priority, which is used if no priority is defined.  It's current value is zero. */
     public static final int DEFAULT_PRIORITY = 0;
 
     /** DOCUMENT ME! */
@@ -136,27 +130,38 @@ public class PriorityList
         private Object object;
 
         /**
+         * DOCUMENT ME!
+         *
          * @return Returns the object.
          */
         public Object getObject()
         {
             return object;
         }
+
         /**
+         * DOCUMENT ME!
+         *
          * @param object The object to set.
          */
         public void setObject(final Object object)
         {
             this.object = object;
         }
+
         /**
+         * DOCUMENT ME!
+         *
          * @return Returns the priority.
          */
         public int getPriority()
         {
             return priority;
         }
+
         /**
+         * DOCUMENT ME!
+         *
          * @param priority The priority to set.
          */
         public void setPriority(final int priority)

@@ -1,5 +1,8 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,47 +35,79 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import org.picocontainer.Startable;
 
-
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class ConstantVariables
         implements Startable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new ConstantVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public ConstantVariables(final VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private static class ConstantVariable
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /** DOCUMENT ME! */
         private final String value;
 
+        /**
+         * Creates a new ConstantVariable object.
+         *
+         * @param value DOCUMENT ME!
+         */
         private ConstantVariable(final String value)
         {
             this.value = value;
         }
 
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return value;
         }
     }
 }
-

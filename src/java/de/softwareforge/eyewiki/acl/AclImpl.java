@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.acl;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.AclEntry;
 import java.security.acl.Group;
@@ -42,10 +42,9 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
 
-
 /**
  * eyeWiki implementation of an Access Control List.
- *
+ * 
  * <p>
  * This implementation does not care about owners, and thus all actions are allowed by default.
  * </p>
@@ -134,8 +133,7 @@ public class AclImpl
 
             if ((ep == null) || (entryp == null))
             {
-                throw new IllegalArgumentException(
-                    "Entry is null; check code, please (entry=" + entry + "; e=" + e + ")");
+                throw new IllegalArgumentException("Entry is null; check code, please (entry=" + entry + "; e=" + e + ")");
             }
 
             if (ep.getName().equals(entryp.getName()) && (e.isNegative() == entry.isNegative()))
@@ -250,9 +248,7 @@ public class AclImpl
         {
             AclEntry entry = (AclEntry) e.nextElement();
 
-            if (
-                entry.getPrincipal().getName().equals(principal.getName())
-                            && (entry.isNegative() == isNegative))
+            if (entry.getPrincipal().getName().equals(principal.getName()) && (entry.isNegative() == isNegative))
             {
                 return entry;
             }

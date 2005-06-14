@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,49 +33,51 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.plugin.PluginException;
 import de.softwareforge.eyewiki.plugin.WikiPlugin;
 
-
 /**
  * Opens a WikiForm. Builds the HTML code for opening a FORM.
- *
- * <p>Since we're only providing an opening FORM tag, we can't use
- * the ECS utilities.
- *
- * A Form plugin line that produces one looks like this:
- * <p><pre>
+ * 
+ * <p>
+ * Since we're only providing an opening FORM tag, we can't use the ECS utilities. A Form plugin line that produces one looks like
+ * this:
+ * </p>
+ * 
+ * <p>
+ * <pre>
  *   [{FormOpen name='formname' handler='pluginname'
  *          submit='submitservlet'
  *          show='always'
  *   }]
  * </pre>
- *
- * <p>Mandatory parameters:
- * <br>The <i>name</i> field identifies this particular form to the 
- * Form plugin across pages.
- * <br>The <i>handler</i> field is a WikiPlugin name; it will be 
- * invoked with the form field values.
- *
- * <p>Optional parameters:
- * <p>The submitservlet is the name of a JSP/servlet capable of 
- * handling the input from this form. It is optional; the default
- * value is the current page (which can handle the input by using
- * this Plugin.)
- *
- * <p>The <i>hide</i> parameter affects the visibility of this
- * form. If left out, the form is always shown. If set to
- * 'onsuccess', the form is not shown if it was submitted
- * successfully. (Note that a reload of the page would cause the
- * context to reset, and the form would be shown again. This may
- * be a useless option.)
+ * </p>
+ * 
+ * <p>
+ * Mandatory parameters: <br>
+ * The <i>name</i> field identifies this particular form to the  Form plugin across pages. <br>
+ * The <i>handler</i> field is a WikiPlugin name; it will be  invoked with the form field values.
+ * </p>
+ * 
+ * <p>
+ * Optional parameters:
+ * </p>
+ * 
+ * <p>
+ * The submitservlet is the name of a JSP/servlet capable of  handling the input from this form. It is optional; the default value
+ * is the current page (which can handle the input by using this Plugin.)
+ * </p>
+ * 
+ * <p>
+ * The <i>hide</i> parameter affects the visibility of this form. If left out, the form is always shown. If set to 'onsuccess', the
+ * form is not shown if it was submitted successfully. (Note that a reload of the page would cause the context to reset, and the
+ * form would be shown again. This may be a useless option.)
+ * </p>
  *
  * @author ebu
  */
@@ -89,7 +92,7 @@ public class FormOpen
     public static final String PARAM_METHOD = "method";
 
     /**
-                                                 */
+                                                         */
     public String execute(WikiContext ctx, Map params)
             throws PluginException
     {
@@ -97,7 +100,7 @@ public class FormOpen
 
         if (formName == null)
         {
-            throw new PluginException("The FormOpen element is missing the '" + PARAM_FORM + "' parameter."); 
+            throw new PluginException("The FormOpen element is missing the '" + PARAM_FORM + "' parameter.");
         }
 
         String hide = (String) params.get(PARAM_HIDEFORM);
@@ -162,20 +165,12 @@ public class FormOpen
         info.setName(formName);
         info.setAction(submitServlet);
 
-        StringBuffer tag = new StringBuffer()
-                .append("<div>\n")
-                .append("<form action=\"")
-                .append(submitServlet)
-                .append("\" name=\"")
-                .append(formName)
-                .append("\" method=\"")
-                .append(method)
-                .append("\" enctype=\"application/x-www-form-urlencoded\">\n")
-                .append("  <input type=\"hidden\" name=\"")
-                .append(PARAM_FORMNAMEHIDDEN)
-                .append("\" value=\"")
-                .append(formName)
-                .append("\"/>\n");
+        StringBuffer tag =
+            new StringBuffer().append("<div>\n").append("<form action=\"").append(submitServlet).append("\" name=\"")
+                              .append(formName).append("\" method=\"").append(method)
+                              .append("\" enctype=\"application/x-www-form-urlencoded\">\n")
+                              .append("  <input type=\"hidden\" name=\"").append(PARAM_FORMNAMEHIDDEN).append("\" value=\"")
+                              .append(formName).append("\"/>\n");
 
         return tag.toString();
     }

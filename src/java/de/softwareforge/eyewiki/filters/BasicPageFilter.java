@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,31 +33,40 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import org.apache.commons.configuration.Configuration;
 
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Provides a base implementation of a PageFilter.  None of the methods do anything, so it is a
- * good idea for you to extend from this class and implement only methods that you need.
+ * Provides a base implementation of a PageFilter.  None of the methods do anything, so it is a good idea for you to extend from
+ * this class and implement only methods that you need.
  *
  * @author Janne Jalkanen
  */
 public abstract class BasicPageFilter
         implements PageFilter
 {
-
     /**
      * Force subclasses to implement a c'tor with a properties object
+     *
+     * @param conf DOCUMENT ME!
      */
     public BasicPageFilter(final Configuration conf)
     {
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public abstract boolean isVisible();
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public abstract int getPriority();
 
     /**

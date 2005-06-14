@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.util.StringTokenizer;
 
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Contains user profile information.
@@ -79,9 +78,8 @@ public class UserProfile
     }
 
     /**
-     * The login name may be different from your WikiName.  The WikiName is typically of type
-     * FirstnameLastName (like JanneJalkanen), whereas the login name is typically a shorter one,
-     * such as "jannej" or something similar.
+     * The login name may be different from your WikiName.  The WikiName is typically of type FirstnameLastName (like
+     * JanneJalkanen), whereas the login name is typically a shorter one, such as "jannej" or something similar.
      *
      * @param name DOCUMENT ME!
      */
@@ -183,6 +181,11 @@ public class UserProfile
         return false;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int hashCode()
     {
         return super.hashCode();
@@ -209,9 +212,8 @@ public class UserProfile
     }
 
     /**
-     * Returns the password that the user gave.  We store the password because some authenticators
-     * may need to reissue it at periodical intervals; or possibly use the same password to
-     * multiple services.
+     * Returns the password that the user gave.  We store the password because some authenticators may need to reissue it at
+     * periodical intervals; or possibly use the same password to multiple services.
      *
      * @return DOCUMENT ME!
      */

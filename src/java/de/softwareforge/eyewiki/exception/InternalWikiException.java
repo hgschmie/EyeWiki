@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.exception;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,8 @@ package de.softwareforge.eyewiki.exception;
  */
 
 /**
- * Denotes something really serious going on inside Wiki. It is a runtime exception so that the API
- * does not need to be changed, but it's helluva lot better than NullPointerException =).
+ * Denotes something really serious going on inside Wiki. It is a runtime exception so that the API does not need to be changed,
+ * but it's helluva lot better than NullPointerException =).
  *
  * @author Janne Jalkanen
  *

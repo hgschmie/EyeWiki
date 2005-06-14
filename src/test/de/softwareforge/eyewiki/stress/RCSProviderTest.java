@@ -1,5 +1,10 @@
 package de.softwareforge.eyewiki.stress;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiPage;
+
 /*
  * ========================================================================
  *
@@ -32,17 +37,9 @@ package de.softwareforge.eyewiki.stress;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiPage;
-
 
 /**
  * Does de.softwareforge.eyewiki.stress testing on the RCSProvider.

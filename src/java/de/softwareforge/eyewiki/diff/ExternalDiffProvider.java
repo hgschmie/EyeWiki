@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.diff;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -42,13 +42,11 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * This DiffProvider allows external command line tools to be used to generate the diff.
@@ -93,6 +91,9 @@ public class ExternalDiffProvider
 
     /**
      * Creates a new ExternalDiffProvider object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public ExternalDiffProvider(WikiEngine engine, Configuration conf)
     {
@@ -171,9 +172,8 @@ public class ExternalDiffProvider
     }
 
     /**
-     * Goes through output provided by a diff command and inserts HTML tags to make the result more
-     * legible. Currently colors lines starting with a + green, those starting with - reddish (hm,
-     * got to think of color blindness here...).
+     * Goes through output provided by a diff command and inserts HTML tags to make the result more legible. Currently colors lines
+     * starting with a + green, those starting with - reddish (hm, got to think of color blindness here...).
      *
      * @param diffText DOCUMENT ME!
      *
@@ -196,7 +196,7 @@ public class ExternalDiffProvider
         BufferedReader in = new BufferedReader(new StringReader(diffText));
         StringBuffer out = new StringBuffer();
 
-        out.append("<table class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">\n");
+        out.append("<table class=\"" + WikiConstants.CSS_DIFF_BLOCK + "\">\n");
 
         while ((line = in.readLine()) != null)
         {

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.StringWriter;
+
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -48,7 +49,6 @@ import org.apache.oro.text.regex.PatternCompiler;
 import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Matcher;
 
-
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
@@ -58,18 +58,16 @@ import de.softwareforge.eyewiki.manager.PageManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
  * Builds an index of all pages.
- *
+ * 
  * <P>
  * Parameters
  * </p>
- *
+ * 
  * <UL>
  * <li>
- * itemsPerLine: How many items should be allowed per line before break. If set to zero (the
- * default), will not write breaks.
+ * itemsPerLine: How many items should be allowed per line before break. If set to zero (the default), will not write breaks.
  * </li>
  * <li>
  * include: Include only these pages.
@@ -78,7 +76,7 @@ import de.softwareforge.eyewiki.util.TextUtil;
  * exclude: Exclude with this pattern.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Alain Ravet
  * @author Janne Jalkanen
@@ -127,10 +125,18 @@ public class IndexPlugin
     /** DOCUMENT ME! */
     private Pattern m_excludePattern;
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     private final PageManager pageManager;
 
+    /**
+     * Creates a new IndexPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param pageManager DOCUMENT ME!
+     */
     public IndexPlugin(final WikiEngine engine, final PageManager pageManager)
     {
         this.engine = engine;
@@ -150,7 +156,6 @@ public class IndexPlugin
     public String execute(WikiContext i_context, Map i_params)
             throws PluginException
     {
-
         m_bodyPart = new StringWriter();
         m_headerPart = new StringWriter();
         m_currentNofPagesOnLine = 0;
@@ -191,8 +196,7 @@ public class IndexPlugin
         //  Get pages, then sort.
         //
         final Collection allPages = getAllPagesSortedByName();
-        final TranslatorReader linkProcessor =
-                new TranslatorReader(i_context, new java.io.StringReader(""));
+        final TranslatorReader linkProcessor = new TranslatorReader(i_context, new java.io.StringReader(""));
 
         //
         //  Build the page.
@@ -201,16 +205,12 @@ public class IndexPlugin
 
         StringBuffer res = new StringBuffer();
 
-        return res.append("<h3>\n")
-                .append(m_headerPart.toString())
-                .append("</h3>\n")
-                .append(m_bodyPart.toString())
-                .append("\n")
-                .toString();
+        return res.append("<h3>\n").append(m_headerPart.toString()).append("</h3>\n").append(m_bodyPart.toString()).append("\n")
+                  .toString();
     }
 
-    private void buildIndexPageHeaderAndBody(
-            WikiContext context, final Collection i_allPages, final TranslatorReader i_linkProcessor)
+    private void buildIndexPageHeaderAndBody(WikiContext context, final Collection i_allPages,
+        final TranslatorReader i_linkProcessor)
     {
         PatternMatcher matcher = new Perl5Matcher();
 
@@ -245,8 +245,6 @@ public class IndexPlugin
     /**
      * Gets all pages, then sorts them.
      *
-     * @param i_context DOCUMENT ME!
-     *
      * @return DOCUMENT ME!
      */
     private Collection getAllPagesSortedByName()
@@ -257,22 +255,21 @@ public class IndexPlugin
         }
 
         Collection result =
-                new TreeSet(
-                        new Comparator()
+            new TreeSet(new Comparator()
+                {
+                    public int compare(Object o1, Object o2)
+                    {
+                        if ((o1 == null) || (o2 == null))
                         {
-                            public int compare(Object o1, Object o2)
-                            {
-                                if ((o1 == null) || (o2 == null))
-                                {
-                                    return 0;
-                                }
+                            return 0;
+                        }
 
-                                WikiPage page1 = (WikiPage) o1;
-                                WikiPage page2 = (WikiPage) o2;
+                        WikiPage page1 = (WikiPage) o1;
+                        WikiPage page2 = (WikiPage) o2;
 
-                                return page1.getName().compareTo(page2.getName());
-                            }
-                        });
+                        return page1.getName().compareTo(page2.getName());
+                    }
+                });
 
         try
         {
@@ -296,26 +293,18 @@ public class IndexPlugin
             m_headerPart.write(" - ");
         }
 
-        StringBuffer sb = new StringBuffer("<a class=\"")
-                .append(WikiConstants.CSS_LINK_INDEX)
-                .append("\" href=\"#")
-                .append(i_firstLetter)
-                .append("\">")
-                .append(i_firstLetter)
-                .append("</a>");
+        StringBuffer sb =
+            new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_INDEX).append("\" href=\"#").append(i_firstLetter)
+                                           .append("\">").append(i_firstLetter).append("</a>");
 
         m_headerPart.write(sb.toString());
     }
 
     private void addLetterHeader(final String i_firstLetter)
     {
-        StringBuffer sb = new StringBuffer("<h4><a class=\"")
-                .append(WikiConstants.CSS_ANCHOR)
-                .append("\" name=\"")
-                .append(i_firstLetter)
-                .append("\">")
-                .append(i_firstLetter)
-                .append("</a></h4>\n");
+        StringBuffer sb =
+            new StringBuffer("<h4><a class=\"").append(WikiConstants.CSS_ANCHOR).append("\" name=\"").append(i_firstLetter)
+                                               .append("\">").append(i_firstLetter).append("</a></h4>\n");
 
         m_bodyPart.write(sb.toString());
     }
@@ -327,9 +316,7 @@ public class IndexPlugin
      * @param i_curPage DOCUMENT ME!
      * @param i_linkProcessor DOCUMENT ME!
      */
-    protected void addPageToIndex(final WikiContext context, 
-            final WikiPage i_curPage, 
-            final TranslatorReader i_linkProcessor)
+    protected void addPageToIndex(final WikiContext context, final WikiPage i_curPage, final TranslatorReader i_linkProcessor)
     {
         final boolean notFirstPageOnLine = 2 <= m_currentNofPagesOnLine;
 
@@ -338,9 +325,8 @@ public class IndexPlugin
             m_bodyPart.write(",&nbsp; ");
         }
 
-        m_bodyPart.write(i_linkProcessor.makeLink(
-                                 TranslatorReader.READ, i_curPage.getName(),
-                                 engine.beautifyTitleNoBreak(i_curPage.getName())));
+        m_bodyPart.write(i_linkProcessor.makeLink(TranslatorReader.READ, i_curPage.getName(),
+                engine.beautifyTitleNoBreak(i_curPage.getName())));
     }
 
     /**

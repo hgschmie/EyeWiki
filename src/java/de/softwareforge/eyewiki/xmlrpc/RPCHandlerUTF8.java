@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -42,7 +42,6 @@ import java.util.Vector;
 
 import org.apache.xmlrpc.XmlRpcException;
 
-
 import de.softwareforge.eyewiki.LinkCollector;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -51,7 +50,6 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.auth.AuthorizationManager;
 import de.softwareforge.eyewiki.auth.UserProfile;
 import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
-
 
 /**
  * Provides handlers for all RPC routines.  These routines are used by the UTF-8 interface.
@@ -119,12 +117,8 @@ public class RPCHandlerUTF8
         //
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
-        cal.add(
-            Calendar.MILLISECOND,
-            -(cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(d)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            -(cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(d) ? cal.get(Calendar.DST_OFFSET) : 0)));
 
         ht.put("lastModified", cal.getTime());
         ht.put("version", new Integer(page.getVersion()));
@@ -155,12 +149,8 @@ public class RPCHandlerUTF8
         //
         //  Convert UTC to our time.
         //
-        cal.add(
-            Calendar.MILLISECOND,
-            (cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(since)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            (cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(since) ? cal.get(Calendar.DST_OFFSET) : 0)));
         since = cal.getTime();
 
         for (Iterator i = pages.iterator(); i.hasNext();)
@@ -177,8 +167,7 @@ public class RPCHandlerUTF8
     }
 
     /**
-     * Simple helper method, turns the incoming page name into normal Java string, then checks page
-     * condition.
+     * Simple helper method, turns the incoming page name into normal Java string, then checks page condition.
      *
      * @param pagename Page Name as an RPC string (URL-encoded UTF-8)
      *
@@ -191,8 +180,7 @@ public class RPCHandlerUTF8
     {
         if (!m_engine.pageExists(pagename))
         {
-            throw new XmlRpcException(
-                ERR_NOPAGE, "No such page '" + pagename + "' found, o master.");
+            throw new XmlRpcException(ERR_NOPAGE, "No such page '" + pagename + "' found, o master.");
         }
 
         AuthorizationManager mgr = m_engine.getAuthorizationManager();
@@ -200,8 +188,7 @@ public class RPCHandlerUTF8
 
         if (!mgr.checkPermission(m_engine.getPage(pagename), currentUser, new ViewPermission()))
         {
-            throw new XmlRpcException(
-                ERR_NOPERMISSION, "No permission to view page " + pagename + ", o master");
+            throw new XmlRpcException(ERR_NOPERMISSION, "No permission to view page " + pagename + ", o master");
         }
 
         return pagename;

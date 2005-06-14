@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -46,10 +47,8 @@ import org.apache.xmlrpc.XmlRpcClient;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 
-
 /**
- * A very dumb class that pings weblogs.com on each save.  INTERNAL USE ONLY SO FAR! Look, but
- * don't use as-is.
+ * A very dumb class that pings weblogs.com on each save.  INTERNAL USE ONLY SO FAR! Look, but don't use as-is.
  */
 
 // FIXME: Needs to figure out when only weblogs have been saved.
@@ -66,6 +65,7 @@ public class PingWeblogsComFilter
     /** DOCUMENT ME! */
     public static final String PROP_PINGURL = "pingurl";
 
+    /** DOCUMENT ME! */
     public static final String PROP_PINGURL_DEFAULT = "http://rpc.weblogs.com/RPC2";
 
     /** DOCUMENT ME! */
@@ -74,7 +74,7 @@ public class PingWeblogsComFilter
     /**
      * DOCUMENT ME!
      *
-     * @param props DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public PingWeblogsComFilter(Configuration conf)
     {
@@ -116,19 +116,15 @@ public class PingWeblogsComFilter
 
             if (log.isDebugEnabled())
             {
-                log.debug(
-                    "Pinging weblogs.com with URL: "
-                    + engine.getURL(WikiContext.VIEW, blogName, null, true));
+                log.debug("Pinging weblogs.com with URL: " + engine.getURL(WikiContext.VIEW, blogName, null, true));
             }
 
-            xmlrpc.executeAsync(
-                "weblogUpdates.ping", params,
+            xmlrpc.executeAsync("weblogUpdates.ping", params,
                 new AsyncCallback()
                 {
                     public void handleError(Exception ex, URL url, String method)
                     {
-                        log.error(
-                            "Unable to execute weblogs.com ping to URL: " + url.toString(), ex);
+                        log.error("Unable to execute weblogs.com ping to URL: " + url.toString(), ex);
                     }
 
                     public void handleResult(Object result, URL url, String method)
@@ -153,11 +149,21 @@ public class PingWeblogsComFilter
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isVisible()
     {
         return true;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public int getPriority()
     {
         return PageFilter.NORMAL_PRIORITY;

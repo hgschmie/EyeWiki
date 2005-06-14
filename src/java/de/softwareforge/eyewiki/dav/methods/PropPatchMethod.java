@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.methods;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.dav.methods;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -40,7 +40,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * DOCUMENT ME!

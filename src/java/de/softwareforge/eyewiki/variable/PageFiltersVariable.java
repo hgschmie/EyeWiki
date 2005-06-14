@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,33 +33,59 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
 import java.util.List;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.filters.FilterManager;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class PageFiltersVariable
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final FilterManager filterManager;
+
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new PageFiltersVariable object.
+     *
+     * @param variableManager DOCUMENT ME!
+     * @param filterManager DOCUMENT ME!
+     */
     public PageFiltersVariable(final VariableManager variableManager, final FilterManager filterManager)
     {
         this.filterManager = filterManager;
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         variableManager.registerVariable("pagefilters", this);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String variableName)
             throws Exception
     {

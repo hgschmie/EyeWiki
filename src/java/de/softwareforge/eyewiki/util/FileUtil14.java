@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,10 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.CharacterCodingException;
@@ -43,11 +44,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
 
-
 /**
- * Generic utilities related to file and stream handling, JDK1.4 version. Do not call this directly
- * - go through FileUtil, since it is smart enough to decide which version you want to call.
- *
+ * Generic utilities related to file and stream handling, JDK1.4 version. Do not call this directly - go through FileUtil, since it
+ * is smart enough to decide which version you want to call.
+ * 
  * <p>
  * This class contains only JDK1.4 -specific methods.
  * </p>
@@ -58,14 +58,16 @@ import java.nio.charset.CodingErrorAction;
 // redirection.  For later.
 public final class FileUtil14
 {
+    /**
+     * Creates a new FileUtil14 object.
+     */
     private FileUtil14()
     {
     }
 
-
     /**
-     * JDK 1.4 version of FileUtil.readContents.  This version circumvents all kinds of problems
-     * just by gulping in the entire inputstream to a ByteArray.
+     * JDK 1.4 version of FileUtil.readContents.  This version circumvents all kinds of problems just by gulping in the entire
+     * inputstream to a ByteArray.
      *
      * @param input DOCUMENT ME!
      * @param encoding DOCUMENT ME!
@@ -135,9 +137,7 @@ public final class FileUtil14
         }
         else
         {
-            sb.append(trace[0].isNativeMethod()
-                ? "native method"
-                : "");
+            sb.append(trace[0].isNativeMethod() ? "native method" : "");
             sb.append(trace[0].getClassName());
             sb.append(".");
             sb.append(trace[0].getMethodName() + "(), line " + trace[0].getLineNumber());

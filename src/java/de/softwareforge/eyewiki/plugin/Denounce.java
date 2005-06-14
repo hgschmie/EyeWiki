@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -54,10 +55,8 @@ import org.apache.oro.text.regex.Perl5Matcher;
 
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Denounces a link by removing it from any search engine.  The bots are listed in
- * com/ecyrd/eyewiki/plugin/denounce.properties.
+ * Denounces a link by removing it from any search engine.  The bots are listed in com/ecyrd/eyewiki/plugin/denounce.properties.
  *
  * @author Janne Jalkanen
  *
@@ -103,8 +102,8 @@ public class Denounce
     private static String c_denounceText = "";
 
     /**
-     * Prepares the different patterns for later use.  Compiling is (probably) expensive, so we do
-     * it statically at class load time.
+     * Prepares the different patterns for later use.  Compiling is (probably) expensive, so we do it statically at class load
+     * time.
      */
     static
     {
@@ -117,8 +116,7 @@ public class Denounce
 
             if (in == null)
             {
-                throw new IOException(
-                    "No property file found! (Check the installation, it should be there.)");
+                throw new IOException("No property file found! (Check the installation, it should be there.)");
             }
 
             Properties props = new Properties();
@@ -147,17 +145,14 @@ public class Denounce
                 }
                 catch (MalformedPatternException ex)
                 {
-                    log.error(
-                        "Malformed URL pattern in " + PROPERTYFILE + ": " + props.getProperty(name),
-                        ex);
+                    log.error("Malformed URL pattern in " + PROPERTYFILE + ": " + props.getProperty(name), ex);
                 }
             }
 
             if (log.isDebugEnabled())
             {
-                log.debug(
-                    "Added " + c_refererPatterns.size() + c_agentPatterns.size()
-                    + c_hostPatterns.size() + " crawlers to denounce list.");
+                log.debug("Added " + c_refererPatterns.size() + c_agentPatterns.size() + c_hostPatterns.size()
+                    + " crawlers to denounce list.");
             }
         }
         catch (IOException e)

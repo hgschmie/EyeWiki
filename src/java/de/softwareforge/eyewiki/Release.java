@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -51,9 +52,9 @@ public final class Release
     public static final String APPNAME = "eyeWiki";
 
     /**
-     * This should be empty when doing a release - otherwise keep it as "cvs" so that whenever
-     * someone checks out the code, they know it is a bleeding-edge version.  Other possible
-     * values are "-alpha" and "-beta" for alpha and beta versions, respectively.
+     * This should be empty when doing a release - otherwise keep it as "cvs" so that whenever someone checks out the code, they
+     * know it is a bleeding-edge version.  Other possible values are "-alpha" and "-beta" for alpha and beta versions,
+     * respectively.
      */
     private static final String POSTFIX = "";
 
@@ -69,15 +70,12 @@ public final class Release
     /** DOCUMENT ME! */
     public static final int MINORREVISION = 0;
 
-    /**
-     * This is the generic version string you should use when printing out the version.  It is of
-     * the form "x.y.z-ttt".
-     */
+    /** This is the generic version string you should use when printing out the version.  It is of the form "x.y.z-ttt". */
     public static final String VERSTR = VERSION + "." + REVISION + "." + MINORREVISION + POSTFIX;
 
     /**
-     * This method is useful for templates, because hopefully it will not be inlined, and thus any
-     * change to version number does not need recompiling the pages.
+     * This method is useful for templates, because hopefully it will not be inlined, and thus any change to version number does
+     * not need recompiling the pages.
      *
      * @return DOCUMENT ME!
      *
@@ -89,9 +87,9 @@ public final class Release
     }
 
     /**
-     * Executing this class directly from command line prints out the current version.  It is very
-     * useful for things like different command line tools.
-     *
+     * Executing this class directly from command line prints out the current version.  It is very useful for things like different
+     * command line tools.
+     * 
      * <P>
      * Example:
      * <PRE>

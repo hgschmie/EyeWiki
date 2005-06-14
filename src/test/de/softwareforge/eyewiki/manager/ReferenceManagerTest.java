@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.manager;
 
+
 /*
  * ========================================================================
  *
@@ -32,24 +33,22 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import java.io.File;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.Util;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.manager.ReferenceManager;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -129,9 +128,7 @@ public class ReferenceManagerTest
             throws Exception
     {
         Collection c = mgr.findUnreferenced();
-        assertTrue(
-            "Unreferenced page not found by ReferenceManager",
-            Util.collectionContains(c, "TestPage"));
+        assertTrue("Unreferenced page not found by ReferenceManager", Util.collectionContains(c, "TestPage"));
     }
 
     /**
@@ -181,17 +178,13 @@ public class ReferenceManagerTest
         assertNull("TestPage referrers", c);
 
         c = mgr.findReferrers("Foobar");
-        assertTrue(
-            "Foobar referrers", (c.size() == 1)
-            && ((String) c.iterator().next()).equals("TestPage"));
+        assertTrue("Foobar referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("TestPage"));
 
         c = mgr.findReferrers("Foobar2");
-        assertTrue(
-            "Foobar2 referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
+        assertTrue("Foobar2 referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
 
         c = mgr.findReferrers("Foobars");
-        assertTrue(
-            "Foobars referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
+        assertTrue("Foobars referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
     }
 
     /**
@@ -209,25 +202,19 @@ public class ReferenceManagerTest
         engine.saveText("TestPage", "Reference to [Foobars].");
 
         Collection c = mgr.findUnreferenced();
-        assertTrue(
-            "Foobar unreferenced",
-            (c.size() == 1) && ((String) c.iterator().next()).equals("TestPage"));
+        assertTrue("Foobar unreferenced", (c.size() == 1) && ((String) c.iterator().next()).equals("TestPage"));
 
         c = mgr.findReferrers("Foobar");
 
         Iterator it = c.iterator();
         String s1 = (String) it.next();
         String s2 = (String) it.next();
-        assertTrue(
-            "Foobar referrers",
-            (c.size() == 2)
-            && ((s1.equals("TestPage") && s2.equals("Foobar"))
-            || (s1.equals("Foobar") && s2.equals("TestPage"))));
+        assertTrue("Foobar referrers",
+            (c.size() == 2) && ((s1.equals("TestPage") && s2.equals("Foobar")) || (s1.equals("Foobar") && s2.equals("TestPage"))));
     }
 
     /**
-     * Opposite to testUpdatePluralOnlyRef(). Is a page with plural form recognized as the page
-     * referenced by a singular link.
+     * Opposite to testUpdatePluralOnlyRef(). Is a page with plural form recognized as the page referenced by a singular link.
      *
      * @throws Exception DOCUMENT ME!
      */
@@ -238,9 +225,7 @@ public class ReferenceManagerTest
         assertTrue("no uncreated", mgr.findUncreated().size() == 0);
 
         Collection c = mgr.findReferrers("Foobar2s");
-        assertTrue(
-            "referrers",
-            (c != null) && (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
+        assertTrue("referrers", (c != null) && (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
     }
 
     /**
@@ -254,8 +239,7 @@ public class ReferenceManagerTest
         engine.saveText("Foobars", "qwertz");
 
         Collection c = mgr.findReferrers("Foobars");
-        assertTrue(
-            "Foobars referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
+        assertTrue("Foobars referrers", (c.size() == 1) && ((String) c.iterator().next()).equals("Foobar"));
     }
 
     /**
@@ -275,10 +259,8 @@ public class ReferenceManagerTest
         Iterator i = c.iterator();
         String first = (String) i.next();
         String second = (String) i.next();
-        assertTrue(
-            "Foobars referrers",
-            (first.equals("Foobar") && second.equals("TestPage"))
-            || (first.equals("TestPage") && second.equals("Foobar")));
+        assertTrue("Foobars referrers",
+            (first.equals("Foobar") && second.equals("TestPage")) || (first.equals("TestPage") && second.equals("Foobar")));
     }
 
     /**
@@ -312,15 +294,12 @@ public class ReferenceManagerTest
      */
     public static void main(String [] args)
     {
-        junit.textui.TestRunner.main(new String []
-            {
-                ReferenceManagerTest.class.getName()
-            });
+        junit.textui.TestRunner.main(new String [] { ReferenceManagerTest.class.getName() });
     }
 
     /**
-     * Test method: dumps the contents of  ReferenceManager link lists to stdout. This method is
-     * NOT synchronized, and should be used in testing with one user, one WikiEngine only.
+     * Test method: dumps the contents of  ReferenceManager link lists to stdout. This method is NOT synchronized, and should be
+     * used in testing with one user, one WikiEngine only.
      *
      * @param rm DOCUMENT ME!
      *

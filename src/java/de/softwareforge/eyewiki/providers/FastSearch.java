@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -34,8 +35,8 @@ package de.softwareforge.eyewiki.providers;
  */
 
 /**
- * If a provider implements this interface, then CachingProvider will never attempt to search on
- * its own; it will always pass any searches through to the actual provider.
+ * If a provider implements this interface, then CachingProvider will never attempt to search on its own; it will always pass any
+ * searches through to the actual provider.
  *
  * @author Janne Jalkanen
  *

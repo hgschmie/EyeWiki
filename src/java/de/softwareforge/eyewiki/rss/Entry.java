@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.rss;
 
+
 /*
  * ========================================================================
  *
@@ -32,67 +33,127 @@ package de.softwareforge.eyewiki.rss;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiPage;
 
 /**
- *  @author jalkanen
+ * DOCUMENT ME!
  *
- *  @since 
+ * @author jalkanen
+ *
+ * @since
  */
 public class Entry
 {
+    /** DOCUMENT ME! */
     private String m_content;
+
+    /** DOCUMENT ME! */
     private String m_URL;
+
+    /** DOCUMENT ME! */
     private String m_title;
+
+    /** DOCUMENT ME! */
     private WikiPage m_page;
+
+    /** DOCUMENT ME! */
     private String m_author;
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param author DOCUMENT ME!
+     */
     public void setAuthor(String author)
     {
         m_author = author;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getAuthor()
     {
         return m_author;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public WikiPage getPage()
     {
         return m_page;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param p DOCUMENT ME!
+     */
     public void setPage(WikiPage p)
     {
         m_page = p;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param title DOCUMENT ME!
+     */
     public void setTitle(String title)
     {
         m_title = title;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getTitle()
     {
         return m_title;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param url DOCUMENT ME!
+     */
     public void setURL(String url)
     {
         m_URL = url;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getURL()
     {
         return m_URL;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param content DOCUMENT ME!
+     */
     public void setContent(String content)
     {
         m_content = content;
     }
-    
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getContent()
     {
         return m_content;

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.url;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.url;
  *
  * ========================================================================
  */
-
 import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +40,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * DOCUMENT ME!
@@ -63,14 +61,18 @@ public class DefaultURLConstructor
     /** Are URL styles relative or absolute? */
     protected boolean m_useRelativeURLStyle = true;
 
+    /**
+     * Creates a new DefaultURLConstructor object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     */
     public DefaultURLConstructor(final WikiEngine engine, final Configuration conf)
     {
         this.engine = engine;
 
         m_useRelativeURLStyle =
-                "relative".equals(conf.getString(
-                                          WikiProperties.PROP_REFSTYLE,
-                                          WikiProperties.PROP_REFSTYLE_DEFAULT));
+            "relative".equals(conf.getString(WikiProperties.PROP_REFSTYLE, WikiProperties.PROP_REFSTYLE_DEFAULT));
     }
 
     /**
@@ -99,11 +101,14 @@ public class DefaultURLConstructor
     }
 
     /**
-     *   Returns the pattern used for each URL style.
-     * 
+     * Returns the pattern used for each URL style.
+     *
      * @param context
      * @param name
+     *
      * @return A pattern for replacement.
+     *
+     * @throws InternalWikiException DOCUMENT ME!
      */
     public static String getURLPattern(String context, String name)
     {
@@ -153,18 +158,24 @@ public class DefaultURLConstructor
     }
 
     /**
-     *  Constructs the actual URL based on the context.
+     * Constructs the actual URL based on the context.
+     *
+     * @param context DOCUMENT ME!
+     * @param name DOCUMENT ME!
+     * @param absolute DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
     private String makeURL(String context, String name, boolean absolute)
     {
-        if( context.equals(WikiContext.VIEW))
+        if (context.equals(WikiContext.VIEW))
         {
-            if(name == null)
+            if (name == null)
             {
                 return makeURL("%uWiki.jsp", "", absolute); // FIXME
             }
         }
-        
+
         return doReplacement(getURLPattern(context, name), name, absolute);
     }
 
@@ -224,8 +235,7 @@ public class DefaultURLConstructor
     }
 
     /**
-     * Takes the name of the page from the request URI. The initial slash is also removed.  If
-     * there is no page, returns null.
+     * Takes the name of the page from the request URI. The initial slash is also removed.  If there is no page, returns null.
      *
      * @param request DOCUMENT ME!
      * @param encoding DOCUMENT ME!
@@ -252,17 +262,17 @@ public class DefaultURLConstructor
         //  This is required, because by default all URLs are handled
         //  as Latin1, even if they are really UTF-8.
         //
-
         return TextUtil.urlDecode(name, encoding);
     }
 
-    
     /**
-     *  This method is not needed for the DefaultURLConstructor.
-     *  
-     *  @author jalkanen
+     * This method is not needed for the DefaultURLConstructor.
      *
-     *  @since
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @since
      */
     public String getForwardPage(HttpServletRequest request)
     {

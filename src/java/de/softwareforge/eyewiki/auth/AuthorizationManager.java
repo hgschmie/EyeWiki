@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
 import java.security.acl.NotOwnerException;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,7 +55,6 @@ import de.softwareforge.eyewiki.auth.permissions.EditPermission;
 import de.softwareforge.eyewiki.auth.permissions.ViewPermission;
 import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
-
 
 /**
  * Manages all access control and authorization.
@@ -83,12 +83,12 @@ public class AuthorizationManager
     private final WikiEngine m_engine;
 
     /**
-     * Creates a new AuthorizationManager, owned by engine and initialized according to the
-     * settings in properties. Expects to find property 'eyewiki.authorizer' with a valid
-     * WikiAuthorizer implementation name to take care of authorization.
+     * Creates a new AuthorizationManager, owned by engine and initialized according to the settings in properties. Expects to find
+     * property 'eyewiki.authorizer' with a valid WikiAuthorizer implementation name to take care of authorization.
      *
      * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
+     * @param authorizer DOCUMENT ME!
      *
      * @throws WikiException DOCUMENT ME!
      * @throws InternalWikiException DOCUMENT ME!
@@ -187,8 +187,7 @@ public class AuthorizationManager
     }
 
     /**
-     * Returns true or false, depending on whether this action is allowed.  This method returns
-     * true for 2.2.
+     * Returns true or false, depending on whether this action is allowed.  This method returns true for 2.2.
      *
      * @param page DOCUMENT ME!
      * @param wup DOCUMENT ME!
@@ -336,11 +335,11 @@ public class AuthorizationManager
             {
                 UserManager userManager = m_engine.getUserManager();
                 List list = userManager.getGroupsForPrincipal(wup);
-                
+
                 for (Iterator i = list.iterator(); i.hasNext();)
                 {
                     res = acl.findPermission((Principal) i.next(), permission);
-                    
+
                     if (res != AccessControlList.NONE)
                     {
                         break;

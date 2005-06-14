@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,25 +33,21 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Provides a definition for a page filter.  A page filter is a class that can be used to transform
- * the WikiPage content being saved or being loaded at any given time.
- *
+ * Provides a definition for a page filter.  A page filter is a class that can be used to transform the WikiPage content being
+ * saved or being loaded at any given time.
+ * 
  * <p>
- * Note that the WikiContext.getPage() method always returns the context in which text is rendered,
- * i.e. the original request.  Thus the content may actually be different content than what what
- * the wikiContext.getPage() implies!  This happens often if you are for example including
- * multiple pages on the same page.
+ * Note that the WikiContext.getPage() method always returns the context in which text is rendered, i.e. the original request. Thus
+ * the content may actually be different content than what what the wikiContext.getPage() implies!  This happens often if you are
+ * for example including multiple pages on the same page.
  * </p>
- *
+ * 
  * <p>
- * PageFilters must be thread-safe!  There is only one instance of each PageFilter per each
- * WikiEngine invocation.  If you need to store data persistently, use VariableManager, or
- * WikiContext.
+ * PageFilters must be thread-safe!  There is only one instance of each PageFilter per each WikiEngine invocation.  If you need to
+ * store data persistently, use VariableManager, or WikiContext.
  * </p>
  *
  * @author Janne Jalkanen
@@ -68,18 +65,21 @@ public interface PageFilter
 
     /**
      * Returns the Filter priority. This is used to order the filters
+     *
+     * @return DOCUMENT ME!
      */
     int getPriority();
 
     /**
      * Should the filter be visible in overview lists?
+     *
+     * @return DOCUMENT ME!
      */
     boolean isVisible();
 
     /**
-     * This method is called whenever a page has been loaded from the provider, but not yet been
-     * sent through the TranslatorReader.  Note that you cannot do HTML translation here, because
-     * TranslatorReader is likely to escape it.
+     * This method is called whenever a page has been loaded from the provider, but not yet been sent through the TranslatorReader.
+     * Note that you cannot do HTML translation here, because TranslatorReader is likely to escape it.
      *
      * @param wikiContext The current wikicontext.
      * @param content WikiMarkup.
@@ -92,9 +92,8 @@ public interface PageFilter
             throws FilterException;
 
     /**
-     * This method is called after a page has been fed through the TranslatorReader, so anything
-     * you are seeing here is translated content.  If you want to do any of your own
-     * WikiMarkup2HTML translation, do it here.
+     * This method is called after a page has been fed through the TranslatorReader, so anything you are seeing here is translated
+     * content.  If you want to do any of your own WikiMarkup2HTML translation, do it here.
      *
      * @param wikiContext DOCUMENT ME!
      * @param htmlContent DOCUMENT ME!
@@ -120,12 +119,11 @@ public interface PageFilter
             throws FilterException;
 
     /**
-     * This method is called after the page has been successfully saved. If the saving fails for
-     * any reason, then this method will not be called.
-     *
+     * This method is called after the page has been successfully saved. If the saving fails for any reason, then this method will
+     * not be called.
+     * 
      * <p>
-     * Since the result is discarded from this method, this is only useful for things like
-     * counters, etc.
+     * Since the result is discarded from this method, this is only useful for things like counters, etc.
      * </p>
      *
      * @param wikiContext DOCUMENT ME!

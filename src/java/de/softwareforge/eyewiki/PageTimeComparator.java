@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,16 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.Comparator;
 
 import org.apache.log4j.Logger;
-
 
 // FIXME: Does not implement equals().
 public class PageTimeComparator
         implements Comparator
 {
     /** DOCUMENT ME! */
-    private static final Logger log =
-            Logger.getLogger(PageTimeComparator.class);
+    private static final Logger log = Logger.getLogger(PageTimeComparator.class);
 
     /**
      * DOCUMENT ME!

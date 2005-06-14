@@ -1,5 +1,11 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.Release;
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,18 +38,9 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-
-import de.softwareforge.eyewiki.Release;
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
 
 /**
  * DOCUMENT ME!
@@ -57,18 +54,21 @@ public class VersionVariableTest
     /** The internally used engine */
     private TestEngine testEngine = null;
 
+    /** DOCUMENT ME! */
     VariableManager variableManager = null;
 
     /** DOCUMENT ME! */
     WikiContext context = null;
-    
+
     /**
      * Creates a new VersionVariableTest object.
      *
      * @param s DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
      */
     public VersionVariableTest(String s)
-    	throws Exception
+            throws Exception
     {
         super(s);
     }
@@ -104,15 +104,22 @@ public class VersionVariableTest
         return new TestSuite(VersionVariableTest.class);
     }
 
-
+    /**
+     * DOCUMENT ME!
+     */
     public void testManager()
     {
         assertNotNull("No Variable Manager!", variableManager);
         assertNotNull("No Context!", context);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testVersion()
-    	throws Exception
+            throws Exception
     {
         String res = variableManager.parseAndGetValue(context, "{$eyewikiversion}");
 

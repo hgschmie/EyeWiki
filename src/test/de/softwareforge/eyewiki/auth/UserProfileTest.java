@@ -1,5 +1,13 @@
 package de.softwareforge.eyewiki.auth;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.util.TextUtil;
+
 /*
  * ========================================================================
  *
@@ -32,20 +40,9 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.log4j.PropertyConfigurator;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Tests the UserProfile class.
@@ -130,8 +127,7 @@ public class UserProfileTest
     }
 
     /**
-     * Sometimes not all servlet containers offer you correctly decoded cookies.  Reported by
-     * KalleKivimaa.
+     * Sometimes not all servlet containers offer you correctly decoded cookies.  Reported by KalleKivimaa.
      *
      * @throws Exception DOCUMENT ME!
      */
@@ -169,8 +165,7 @@ public class UserProfileTest
     public void testUTFURLStringRepresentation()
             throws Exception
     {
-        UserProfile p =
-            UserProfile.parseStringRepresentation("username=" + TextUtil.urlEncodeUTF8("M��m��"));
+        UserProfile p = UserProfile.parseStringRepresentation("username=" + TextUtil.urlEncodeUTF8("M��m��"));
 
         assertEquals("name", "M��m��", p.getName());
     }

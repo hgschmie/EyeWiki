@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.diff;
 
+
 /*
  * ========================================================================
  *
@@ -32,11 +33,9 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
-
 import org.apache.commons.configuration.Configuration;
 
 import de.softwareforge.eyewiki.WikiEngine;
-
 
 /**
  * This is a diff provider for the RSS Feed using the Traditional Provider as its base.
@@ -51,6 +50,9 @@ public class RssTraditionalDiffProvider
 {
     /**
      * Creates a new RssTraditionalDiffProvider object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public RssTraditionalDiffProvider(WikiEngine engine, Configuration conf)
     {

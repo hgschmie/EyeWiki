@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.diff;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,13 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
-
 import org.apache.log4j.Logger;
-
-import org.picocontainer.PicoContainer;
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 
+import org.picocontainer.PicoContainer;
 
 /**
  * Load, initialize and delegate to the DiffProvider that will actually do the work.
@@ -63,7 +62,6 @@ public class DifferenceManager
      * Creates a new DifferenceManager object.
      *
      * @param engine DOCUMENT ME!
-     * @param conf DOCUMENT ME!
      */
     public DifferenceManager(WikiEngine engine)
     {
@@ -109,9 +107,7 @@ public class DifferenceManager
     public String makeDiff(String firstWikiText, String secondWikiText, boolean isRss)
     {
         String diff =
-            isRss
-            ? m_provider.makeDiff(firstWikiText, secondWikiText)
-            : m_rssProvider.makeDiff(firstWikiText, secondWikiText);
+            isRss ? m_provider.makeDiff(firstWikiText, secondWikiText) : m_rssProvider.makeDiff(firstWikiText, secondWikiText);
 
         return (diff != null) ? diff : "";
     }
@@ -148,5 +144,4 @@ public class DifferenceManager
             return "NullDiffProvider";
         }
     }
-
 }

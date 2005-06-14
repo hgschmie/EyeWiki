@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,15 +33,13 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
- * Writes the version of the current page.  If this is marked as the current version, then includes
- * body as text instead of version number.
+ * Writes the version of the current page.  If this is marked as the current version, then includes body as text instead of version
+ * number.
  *
  * @author Janne Jalkanen
  *

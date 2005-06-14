@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -41,10 +42,8 @@ import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * Just displays the current date and time. The time format is exactly like in the
- * java.util.SimpleDateFormat class.
+ * Just displays the current date and time. The time format is exactly like in the java.util.SimpleDateFormat class.
  *
  * @author Janne Jalkanen
  *

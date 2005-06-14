@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.dav.methods;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,9 @@ package de.softwareforge.eyewiki.dav.methods;
  *
  * ========================================================================
  */
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -45,6 +46,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.dav.DavContext;
+import de.softwareforge.eyewiki.dav.WebdavServlet;
+import de.softwareforge.eyewiki.dav.items.DavItem;
+import de.softwareforge.eyewiki.dav.items.DavItemFactory;
+import de.softwareforge.eyewiki.providers.ProviderException;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -53,15 +61,6 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.jdom.xpath.XPath;
-
-
-import de.softwareforge.eyewiki.WikiEngine;
-import de.softwareforge.eyewiki.dav.DavContext;
-import de.softwareforge.eyewiki.dav.WebdavServlet;
-import de.softwareforge.eyewiki.dav.items.DavItem;
-import de.softwareforge.eyewiki.dav.items.DavItemFactory;
-import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * DOCUMENT ME!
@@ -73,19 +72,15 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 public class PropFindMethod
         extends DavMethod
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private static Logger log = Logger.getLogger(PropFindMethod.class);
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private DavItemFactory m_difactory;
 
     /**
-         *
-         */
+                 *
+                 */
     public PropFindMethod(WikiEngine engine)
     {
         super(engine);
@@ -211,8 +206,7 @@ public class PropFindMethod
                     {
                         Element el = (Element) j.next();
 
-                        if (
-                            askedElement.getNamespaceURI().equals(el.getNamespaceURI())
+                        if (askedElement.getNamespaceURI().equals(el.getNamespaceURI())
                                         && askedElement.getName().equals(el.getName()))
                         {
                             props.addContent(el);

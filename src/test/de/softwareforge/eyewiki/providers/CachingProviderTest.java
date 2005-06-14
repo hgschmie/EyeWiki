@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,20 +33,14 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.log4j.PropertyConfigurator;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -53,6 +48,9 @@ import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.providers.CachingProvider;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!
@@ -109,9 +107,7 @@ public class CachingProviderTest
 
         TestEngine engine = new TestEngine(conf2);
 
-        CounterProvider p =
-            (CounterProvider) ((CachingProvider) engine.getPageManager().getProvider())
-            .getRealProvider();
+        CounterProvider p = (CounterProvider) ((CachingProvider) engine.getPageManager().getProvider()).getRealProvider();
 
         assertEquals("init", 1, p.m_initCalls);
         assertEquals("getAllPages", 1, p.m_getAllPagesCalls);
@@ -123,7 +119,7 @@ public class CachingProviderTest
 
         assertEquals("pageExists2", 0, p.m_pageExistsCalls);
         assertEquals("getPage2", 2, p.m_getPageCalls);
-        
+
         engine.cleanup();
     }
 
@@ -158,7 +154,6 @@ public class CachingProviderTest
         assertEquals("text", "[fuufaa]", text);
 
         // TODO: ReferenceManager check as well
-        
         engine.cleanup();
     }
 

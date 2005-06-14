@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,7 +53,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
 
 import de.softwareforge.eyewiki.QueryItem;
 import de.softwareforge.eyewiki.SearchMatcher;
@@ -67,15 +67,14 @@ import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
  * Provides a simple directory based repository for Wiki pages.
- *
+ * 
  * <P>
- * All files have ".txt" appended to make life easier for those who insist on using Windows or
- * other software which makes assumptions on the files contents based on its name.
+ * All files have ".txt" appended to make life easier for those who insist on using Windows or other software which makes
+ * assumptions on the files contents based on its name.
  * </p>
- *
+ * 
  * <p>
  * This class functions as a superclass to all file based providers.
  * </p>
@@ -91,8 +90,8 @@ public abstract class AbstractFileProvider
     private static final Logger log = Logger.getLogger(AbstractFileProvider.class);
 
     /**
-     * All files should have this extension to be recognized as eyeWiki files. We default to .txt,
-     * because that is probably easiest for Windows users, and guarantees correct handling.
+     * All files should have this extension to be recognized as eyeWiki files. We default to .txt, because that is probably easiest
+     * for Windows users, and guarantees correct handling.
      */
     public static final String FILE_EXT = ".txt";
 
@@ -119,13 +118,11 @@ public abstract class AbstractFileProvider
 
         if (m_pageDirectory == null)
         {
-            throw new NoRequiredPropertyException(
-                "File based providers need a " + "page directory but none was found. Aborting!",
+            throw new NoRequiredPropertyException("File based providers need a " + "page directory but none was found. Aborting!",
                 WikiProperties.PROP_PAGEDIR);
         }
 
-        m_encoding =
-            conf.getString(WikiProperties.PROP_ENCODING, WikiProperties.PROP_ENCODING_DEFAULT);
+        m_encoding = conf.getString(WikiProperties.PROP_ENCODING, WikiProperties.PROP_ENCODING_DEFAULT);
 
         if (log.isInfoEnabled())
         {
@@ -208,8 +205,7 @@ public abstract class AbstractFileProvider
     }
 
     /**
-     * This implementation just returns the current version, as filesystem does not provide
-     * versioning information for now.
+     * This implementation just returns the current version, as filesystem does not provide versioning information for now.
      *
      * @param page DOCUMENT ME!
      * @param version DOCUMENT ME!
@@ -258,8 +254,7 @@ public abstract class AbstractFileProvider
             }
             else
             {
-                log.warn(
-                    "Failed to read page '" + page + "' from '" + pagedata.getAbsolutePath()
+                log.warn("Failed to read page '" + page + "' from '" + pagedata.getAbsolutePath()
                     + "', possibly a permissions problem");
             }
         }
@@ -334,17 +329,13 @@ public abstract class AbstractFileProvider
             String wikiname = wikipages[i].getName();
             int cutpoint = wikiname.lastIndexOf(FILE_EXT);
 
-            WikiPage page =
-                getPageInfo(
-                    unmangleName(wikiname.substring(0, cutpoint)), WikiPageProvider.LATEST_VERSION);
+            WikiPage page = getPageInfo(unmangleName(wikiname.substring(0, cutpoint)), WikiPageProvider.LATEST_VERSION);
 
             if (page == null)
             {
                 // This should not really happen.
                 // FIXME: Should we throw an exception here?
-                log.error(
-                    "Page " + wikiname
-                    + " was found in directory listing, but could not be located individually.");
+                log.error("Page " + wikiname + " was found in directory listing, but could not be located individually.");
 
                 continue;
             }
@@ -382,8 +373,7 @@ public abstract class AbstractFileProvider
     }
 
     /**
-     * Iterates through all WikiPages, matches them against the given query, and returns a
-     * Collection of SearchResult objects.
+     * Iterates through all WikiPages, matches them against the given query, and returns a Collection of SearchResult objects.
      *
      * @param query DOCUMENT ME!
      *

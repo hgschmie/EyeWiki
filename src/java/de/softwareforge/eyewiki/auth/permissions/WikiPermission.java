@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.permissions;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.auth.permissions;
  *
  * ========================================================================
  */
-
 import java.security.acl.Permission;
-
 
 /**
  * Superclass for all eyeWiki permissions.
@@ -63,9 +62,9 @@ public abstract class WikiPermission
     private static WikiPermission c_uploadPermission = new UploadPermission();
 
     /**
-     * This method should return true, if the this permission implies also the given permission.
-     * For example "Edit" should always imply "Comment" as well, but not vice versa.  "Edit"
-     * should also imply itself, since this method is used to test for permissions.
+     * This method should return true, if the this permission implies also the given permission. For example "Edit" should always
+     * imply "Comment" as well, but not vice versa.  "Edit" should also imply itself, since this method is used to test for
+     * permissions.
      *
      * @param permission DOCUMENT ME!
      *

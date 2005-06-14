@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.forms;
 
+
 /*
  * ========================================================================
  *
@@ -32,26 +33,22 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
-
 
 /**
  */
 public abstract class FormElement
 {
     /**
-     * In order to make the form-to-handler parameter transfer easier, we prefix all user-specified
-     * FORM element names with HANDLERPARAM_PREFIX the HTML output. This lets us differentiate
-     * user-defined FormHandler parameters from Form parameters. The submit handler must then use
-     * MapUtil.requestToMap() to strip them before executing the handler itself.
+     * In order to make the form-to-handler parameter transfer easier, we prefix all user-specified FORM element names with
+     * HANDLERPARAM_PREFIX the HTML output. This lets us differentiate user-defined FormHandler parameters from Form parameters.
+     * The submit handler must then use MapUtil.requestToMap() to strip them before executing the handler itself.
      */
     public static final String HANDLERPARAM_PREFIX = "nbf_";
 
     /**
-     * The submit servlet may decide to store a FormInfo with user-entered form values in the
-     * Session. It should use this name, and this class checks for it to pre-fill fields from a
-     * previous form submit.
+     * The submit servlet may decide to store a FormInfo with user-entered form values in the Session. It should use this name, and
+     * this class checks for it to pre-fill fields from a previous form submit.
      */
     public static final String FORM_VALUES_CARRIER = "nbpf_values";
 
@@ -68,10 +65,7 @@ public abstract class FormElement
     /** Plugin parameter, mandatory, indicates what form element to insert. */
     public static final String PARAM_ELEMENT = "element";
 
-    /**
-     * Plugin parameter, mandatory in output element, indicates WikiPlugin to use to handle form
-     * submitted data.
-     */
+    /** Plugin parameter, mandatory in output element, indicates WikiPlugin to use to handle form submitted data. */
     public static final String PARAM_HANDLER = "handler";
 
     /** Plugin parameter, mandatory in open/output: name of the form. */
@@ -87,10 +81,9 @@ public abstract class FormElement
     public static final String PARAM_HIDEFORM = "hide";
 
     /**
-     * If set to 'handler' in output element, the handler plugin is called even on first invocation
-     * (no submit). The plugin can then place values into its parameter map, and these are seen by
-     * subsequent Form elements. (Store a value in the plugin with the same key as an input
-     * element, and the value will be visible in the initial form.)
+     * If set to 'handler' in output element, the handler plugin is called even on first invocation (no submit). The plugin can
+     * then place values into its parameter map, and these are seen by subsequent Form elements. (Store a value in the plugin with
+     * the same key as an input element, and the value will be visible in the initial form.)
      */
     public static final String PARAM_POPULATE = "populate";
 

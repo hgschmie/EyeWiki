@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * Defines an interface for WikiAuthenticators that are able to set passwords.

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.xhtml.br;
@@ -42,14 +42,12 @@ import org.apache.ecs.xhtml.noscript;
 import org.apache.ecs.xhtml.script;
 import org.apache.ecs.xhtml.textarea;
 
-
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
-
 
 /**
  * DOCUMENT ME!
@@ -61,19 +59,13 @@ import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 public class EditorAreaTag
         extends WikiTagBase
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final String PROP_EDITORTYPE = "eyewiki.editor";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final String EDITOR_PLAIN = "Plain";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     public static final String EDITOR_FCK = "FCK";
 
     /**
@@ -99,8 +91,7 @@ public class EditorAreaTag
         context.setVariable(WikiProperties.PROP_RUNFILTERS, "false");
         context.setVariable(TranslatorReader.PROP_RUNPLUGINS, "false");
 
-        String pageAsHtml =
-            StringEscapeUtils.escapeJavaScript(engine.textToHTML(context, getText(context)));
+        String pageAsHtml = StringEscapeUtils.escapeJavaScript(engine.textToHTML(context, getText(context)));
 
         div container = new div();
         script area = new script();
@@ -113,19 +104,15 @@ public class EditorAreaTag
         area.addElement("oFCKeditor.Width  = '100%';");
         area.addElement("oFCKeditor.Height = '500';");
         area.addElement("oFCKeditor.ToolbarSet = 'eyeWiki';");
-        area.addElement(
-            "oFCKeditor.Config['CustomConfigurationsPath'] = '"
-            + context.getEngine().getURL(WikiContext.NONE, "scripts/fckconfig.js", null, true)
-            + "';");
+        area.addElement("oFCKeditor.Config['CustomConfigurationsPath'] = '"
+            + context.getEngine().getURL(WikiContext.NONE, "scripts/fckconfig.js", null, true) + "';");
         area.addElement("oFCKeditor.Create() ;");
 
         noscript noscriptarea = new noscript();
 
         noscriptarea.addElement(new br());
-        noscriptarea.addElement(
-            new h3().addElement(
-                "You need to enable Javascript in your browser to use the WYSIWYG editor").setStyle(
-                WikiConstants.CSS_PREVIEW));
+        noscriptarea.addElement(new h3().addElement("You need to enable Javascript in your browser to use the WYSIWYG editor")
+                                        .setStyle(WikiConstants.CSS_PREVIEW));
         noscriptarea.addElement(new br());
 
         container.addElement(area);
@@ -169,8 +156,7 @@ public class EditorAreaTag
     {
         try
         {
-            String editor =
-                context.getEngine().getVariableManager().getValue(context, PROP_EDITORTYPE);
+            String editor = context.getEngine().getVariableManager().getValue(context, PROP_EDITORTYPE);
 
             if (EDITOR_FCK.equals(editor))
             {

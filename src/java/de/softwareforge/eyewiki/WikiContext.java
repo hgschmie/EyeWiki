@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,18 +40,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import de.softwareforge.eyewiki.auth.UserProfile;
 
-
 /**
- * Provides state information throughout the processing of a page.  A WikiContext is born when the
- * JSP pages that are the main entry points, are invoked.  The eyeWiki engine creates the new
- * WikiContext, which basically holds information about the page, the handling engine, and in
- * which context (view, edit, etc) the call was done.
- *
+ * Provides state information throughout the processing of a page.  A WikiContext is born when the JSP pages that are the main
+ * entry points, are invoked.  The eyeWiki engine creates the new WikiContext, which basically holds information about the page,
+ * the handling engine, and in which context (view, edit, etc) the call was done.
+ * 
  * <P>
- * A WikiContext also provides request-specific variables, which can be used to communicate between
- * plugins on the same page, or between different instances of the same plugin.  A WikiContext
- * variable is valid until the processing of the page has ended.  For an example, please see the
- * Counter plugin.
+ * A WikiContext also provides request-specific variables, which can be used to communicate between plugins on the same page, or
+ * between different instances of the same plugin.  A WikiContext variable is valid until the processing of the page has ended.
+ * For an example, please see the Counter plugin.
  * </p>
  *
  * @author Janne Jalkanen
@@ -79,10 +76,7 @@ public class WikiContext
     /** User is previewing the changes he just made. */
     public static final String PREVIEW = "preview";
 
-    /**
-     * User has an internal conflict, and does quite not know what to do. Please provide some
-     * counseling.
-     */
+    /** User has an internal conflict, and does quite not know what to do. Please provide some counseling. */
     public static final String CONFLICT = "conflict";
 
     /** An error has been encountered and the user needs to be informed. */
@@ -137,8 +131,8 @@ public class WikiContext
      * Create a new WikiContext for the given WikiPage.
      *
      * @param engine The WikiEngine that is handling the request.
-     * @param page The WikiPage.  If you want to create a WikiContext for an older version of a
-     *        page, you must use this constructor.
+     * @param page The WikiPage.  If you want to create a WikiContext for an older version of a page, you must use this
+     *        constructor.
      */
     public WikiContext(WikiEngine engine, WikiPage page)
     {
@@ -155,6 +149,8 @@ public class WikiContext
 
     /**
      * Needed for clone
+     *
+     * @param engine DOCUMENT ME!
      */
     private void setEngine(final WikiEngine engine)
     {
@@ -226,8 +222,8 @@ public class WikiContext
     }
 
     /**
-     * Sets a variable.  The variable is valid while the WikiContext is valid, i.e. while page
-     * processing continues.  The variable data is discarded once the page processing is finished.
+     * Sets a variable.  The variable is valid while the WikiContext is valid, i.e. while page processing continues.  The variable
+     * data is discarded once the page processing is finished.
      *
      * @param key The variable name.
      * @param data The variable value.
@@ -238,10 +234,9 @@ public class WikiContext
     }
 
     /**
-     * This method will safely return any HTTP parameters that might have been defined.  You should
-     * use this method instead of peeking directly into the result of getHttpRequest(), since this
-     * method is smart enough to do all of the right things, figure out UTF-8 encoded parameters,
-     * etc.
+     * This method will safely return any HTTP parameters that might have been defined.  You should use this method instead of
+     * peeking directly into the result of getHttpRequest(), since this method is smart enough to do all of the right things,
+     * figure out UTF-8 encoded parameters, etc.
      *
      * @param paramName Parameter name to look for.
      *
@@ -274,9 +269,8 @@ public class WikiContext
     }
 
     /**
-     * If the request did originate from a HTTP request, then the HTTP request can be fetched here.
-     * However, it the request did NOT originate from a HTTP request, then this method will return
-     * null, and YOU SHOULD CHECK FOR IT!
+     * If the request did originate from a HTTP request, then the HTTP request can be fetched here. However, it the request did NOT
+     * originate from a HTTP request, then this method will return null, and YOU SHOULD CHECK FOR IT!
      *
      * @return Null, if no HTTP request was done.
      *
@@ -322,8 +316,8 @@ public class WikiContext
     }
 
     /**
-     * Gets the current user.  May return null, in case the current user has not yet been
-     * determined; or this is an internal system.
+     * Gets the current user.  May return null, in case the current user has not yet been determined; or this is an internal
+     * system.
      *
      * @return DOCUMENT ME!
      */
@@ -369,15 +363,15 @@ public class WikiContext
     public String getURL(String context, String page, String params)
     {
         // FIXME: is rather slow
-        return m_engine.getURL(
-            context, page, params,
-            "absolute".equals(m_engine.getVariable(this, WikiEngine.PROP_REFSTYLE)));
+        return m_engine.getURL(context, page, params, "absolute".equals(m_engine.getVariable(this, WikiEngine.PROP_REFSTYLE)));
     }
 
     /**
      * Returns a shallow clone of the WikiContext.
      *
      * @return DOCUMENT ME!
+     *
+     * @throws RuntimeException DOCUMENT ME!
      *
      * @since 2.1.37.
      */

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -41,12 +41,7 @@ import java.io.StringWriter;
 
 import javax.servlet.ServletException;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.TranslatorReader;
@@ -55,6 +50,9 @@ import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.plugin.PluginManager;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!

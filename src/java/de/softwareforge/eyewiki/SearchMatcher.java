@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,17 +33,14 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
-
 /**
- * SearchMatcher performs the task of matching a search query to a page's contents. This utility
- * class is isolated to simplify WikiPageProvider implementations and to offer an easy target for
- * upgrades. The upcoming(?) TranslatorReader rewrite will presumably invalidate this, among other
- * things.
+ * SearchMatcher performs the task of matching a search query to a page's contents. This utility class is isolated to simplify
+ * WikiPageProvider implementations and to offer an easy target for upgrades. The upcoming(?) TranslatorReader rewrite will
+ * presumably invalidate this, among other things.
  *
  * @author ebu at ecyrd dot com
  *
@@ -64,9 +62,9 @@ public class SearchMatcher
     }
 
     /**
-     * Compares the page content, available through the given stream, to the query items of this
-     * matcher. Returns a search result object describing the quality of the match.
-     *
+     * Compares the page content, available through the given stream, to the query items of this matcher. Returns a search result
+     * object describing the quality of the match.
+     * 
      * <p>
      * This method would benefit of regexps (1.4) and streaming. FIXME!
      * </p>
@@ -122,9 +120,7 @@ public class SearchMatcher
         {
             // Give five points for each occurrence
             // of the word in the wiki name.
-            if (
-                (wikiname.toLowerCase().indexOf(m_queries[j].getWord()) != -1)
-                            && (m_queries[j].getType() != QueryItem.FORBIDDEN))
+            if ((wikiname.toLowerCase().indexOf(m_queries[j].getWord()) != -1) && (m_queries[j].getType() != QueryItem.FORBIDDEN))
             {
                 scores[j] += 5;
             }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -41,6 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,7 +53,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.WikiProvider;
@@ -60,10 +60,8 @@ import de.softwareforge.eyewiki.exception.InternalWikiException;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.FileUtil;
 
-
 /**
- * Provides a simple directory based repository for Wiki pages. Pages are held in a directory
- * structure:
+ * Provides a simple directory based repository for Wiki pages. Pages are held in a directory structure:
  * <PRE>
  *    Main.txt
  *    Foobar.txt
@@ -76,15 +74,14 @@ import de.softwareforge.eyewiki.util.FileUtil;
  *          page.properties
  *  </PRE>
  * In this case, "Main" has three versions, and "Foobar" just one version.
- *
+ * 
  * <P>
- * The properties file contains the necessary metainformation (such as author) information of the
- * page.  DO NOT MESS WITH IT!
+ * The properties file contains the necessary metainformation (such as author) information of the page.  DO NOT MESS WITH IT!
  * </p>
- *
+ * 
  * <P>
- * All files have ".txt" appended to make life easier for those who insist on using Windows or
- * other software which makes assumptions on the files contents based on its name.
+ * All files have ".txt" appended to make life easier for those who insist on using Windows or other software which makes
+ * assumptions on the files contents based on its name.
  * </p>
  *
  * @author Janne Jalkanen
@@ -142,8 +139,7 @@ public class VersioningFileProvider
      *
      * @param page DOCUMENT ME!
      *
-     * @return Latest version number in the repository, or -1, if there is no page in the
-     *         repository.
+     * @return Latest version number in the repository, or -1, if there is no page in the repository.
      *
      * @throws ProviderException DOCUMENT ME!
      */
@@ -262,8 +258,7 @@ public class VersioningFileProvider
     }
 
     /**
-     * Writes the page properties back to the file system. Note that it WILL overwrite any previous
-     * properties.
+     * Writes the page properties back to the file system. Note that it WILL overwrite any previous properties.
      *
      * @param page DOCUMENT ME!
      * @param properties DOCUMENT ME!
@@ -290,8 +285,8 @@ public class VersioningFileProvider
      *
      * @return DOCUMENT ME!
      *
-     * @throws NoSuchVersionException if there is no such version.
      * @throws ProviderException DOCUMENT ME!
+     * @throws NoSuchVersionException if there is no such version.
      */
     private int realVersion(String page, int requestedVersion)
             throws ProviderException
@@ -312,8 +307,7 @@ public class VersioningFileProvider
         }
         else if ((requestedVersion <= 0) || (requestedVersion > latest))
         {
-            throw new NoSuchVersionException(
-                "Requested version " + requestedVersion + ", but latest is " + latest);
+            throw new NoSuchVersionException("Requested version " + requestedVersion + ", but latest is " + latest);
         }
 
         return requestedVersion;
@@ -382,9 +376,7 @@ public class VersioningFileProvider
             }
             else
             {
-                log.warn(
-                    "Failed to read page from '" + pagedata.getAbsolutePath()
-                    + "', possibly a permissions problem");
+                log.warn("Failed to read page from '" + pagedata.getAbsolutePath() + "', possibly a permissions problem");
                 throw new ProviderException("I cannot read the requested page.");
             }
         }
@@ -436,9 +428,7 @@ public class VersioningFileProvider
             // Numbers should always start at 1.
             // "most recent" = -1 ==> 1
             // "first"       = 1  ==> 2
-            int versionNumber = (latest > 0)
-                ? latest
-                : 1;
+            int versionNumber = (latest > 0) ? latest : 1;
 
             if ((oldFile != null) && oldFile.exists())
             {
@@ -481,10 +471,7 @@ public class VersioningFileProvider
             // FIXME: No rollback available.
             Properties props = getPageProperties(page.getName());
 
-            props.setProperty(
-                versionNumber + ".author", (page.getAuthor() != null)
-                ? page.getAuthor()
-                : "unknown");
+            props.setProperty(versionNumber + ".author", (page.getAuthor() != null) ? page.getAuthor() : "unknown");
 
             putPageProperties(page.getName(), props);
         }
@@ -512,9 +499,7 @@ public class VersioningFileProvider
 
         WikiPage p = null;
 
-        if (
-            (version == WikiPageProvider.LATEST_VERSION) || (version == latest)
-                        || ((version == 1) && (latest == -1)))
+        if ((version == WikiPageProvider.LATEST_VERSION) || (version == latest) || ((version == 1) && (latest == -1)))
         {
             //
             // Yes, we need to talk to the top level directory
@@ -524,9 +509,7 @@ public class VersioningFileProvider
             // the good old C64 "Wizardry" -tune at this moment.
             // Oh, the memories...
             //
-            realVersion = (latest >= 0)
-                ? latest
-                : 1;
+            realVersion = (latest >= 0) ? latest : 1;
 
             p = super.getPageInfo(page, WikiPageProvider.LATEST_VERSION);
 
@@ -618,9 +601,8 @@ public class VersioningFileProvider
     }
 
     /**
-     * Removes the relevant page directory under "OLD" -directory as well, but does not remove any
-     * extra subdirectories from it.  It will only touch those files that it thinks to be
-     * WikiPages.
+     * Removes the relevant page directory under "OLD" -directory as well, but does not remove any extra subdirectories from it. It
+     * will only touch those files that it thinks to be WikiPages.
      *
      * @param page DOCUMENT ME!
      *
@@ -671,9 +653,7 @@ public class VersioningFileProvider
 
         int latest = findLatestVersion(page);
 
-        if (
-            (version == WikiPageProvider.LATEST_VERSION) || (version == latest)
-                        || ((version == 1) && (latest == -1)))
+        if ((version == WikiPageProvider.LATEST_VERSION) || (version == latest) || ((version == 1) && (latest == -1)))
         {
             //
             //  Delete the properties
@@ -681,9 +661,7 @@ public class VersioningFileProvider
             try
             {
                 Properties props = getPageProperties(page);
-                props.remove(((latest > 0)
-                    ? latest
-                    : 1) + ".author");
+                props.remove(((latest > 0) ? latest : 1) + ".author");
                 putPageProperties(page, props);
             }
             catch (IOException e)
@@ -733,8 +711,7 @@ public class VersioningFileProvider
             }
             catch (IOException e)
             {
-                log.fatal(
-                    "Something wrong with the page directory - you may have just lost data!", e);
+                log.fatal("Something wrong with the page directory - you may have just lost data!", e);
             }
 
             return;

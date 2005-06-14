@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 
 import javax.servlet.jsp.JspException;
@@ -43,10 +43,8 @@ import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.WikiContext;
 
-
 /**
- * This is a class that provides the same services as the WikiTagBase, but this time it works for
- * the BodyTagSupport base class.
+ * This is a class that provides the same services as the WikiTagBase, but this time it works for the BodyTagSupport base class.
  *
  * @author jalkanen
  */
@@ -71,9 +69,7 @@ public abstract class WikiBodyTag
     {
         try
         {
-            m_wikiContext =
-                (WikiContext) pageContext.getAttribute(
-                    WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+            m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
             if (m_wikiContext == null)
             {

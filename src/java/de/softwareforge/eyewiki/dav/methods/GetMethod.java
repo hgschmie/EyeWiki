@@ -1,5 +1,12 @@
 package de.softwareforge.eyewiki.dav.methods;
 
+import java.io.IOException;
+
+import java.util.Collection;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /*
  * ========================================================================
  *
@@ -32,16 +39,8 @@ package de.softwareforge.eyewiki.dav.methods;
  *
  * ========================================================================
  */
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import java.io.IOException;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -49,7 +48,6 @@ import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.dav.DavContext;
 import de.softwareforge.eyewiki.dav.DavUtil;
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * DOCUMENT ME!
@@ -61,14 +59,12 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 public class GetMethod
         extends DavMethod
 {
-    /**
-     * Logger for this class
-     */
+    /** Logger for this class */
     private static final Log log = LogFactory.getLog(GetMethod.class);
 
     /**
-         *
-         */
+                 *
+                 */
     public GetMethod(WikiEngine engine)
     {
         super(engine);
@@ -171,6 +167,7 @@ public class GetMethod
                             {
                                 log.debug("RESULT=" + result);
                             }
+
                             res.setContentLength(result.length());
                             res.setContentType("text/html; charset=\"UTF-8\"");
                             res.getWriter().print(result);
@@ -183,8 +180,7 @@ public class GetMethod
                 }
                 else
                 {
-                    res.sendError(
-                        HttpServletResponse.SC_NOT_FOUND, "Could not find " + dc.m_davcontext);
+                    res.sendError(HttpServletResponse.SC_NOT_FOUND, "Could not find " + dc.m_davcontext);
                 }
             }
         }

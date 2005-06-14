@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
-
 
 /**
  * A generic Wiki provider for all sorts of things that the Wiki can store.

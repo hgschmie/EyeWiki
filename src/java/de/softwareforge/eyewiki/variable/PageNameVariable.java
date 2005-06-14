@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,27 +33,50 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class PageNameVariable
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new PageNameVariable object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public PageNameVariable(final VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         variableManager.registerVariable("pagename", this);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param variableName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String variableName)
             throws Exception
     {

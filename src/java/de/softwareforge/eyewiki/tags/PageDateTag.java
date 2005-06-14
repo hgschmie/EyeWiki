@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,24 +33,23 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Writes the modification date of the page, formatted as specified in the attribute "format".
- *
+ * 
  * <UL>
  * <li>
- * format = A string describing which format you want to use. This is exactly like in
- * "java.text.SimpleDateFormat".
+ * format = A string describing which format you want to use. This is exactly like in "java.text.SimpleDateFormat".
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *

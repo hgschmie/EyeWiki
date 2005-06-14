@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,19 +33,17 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Is used as a "super include" tag, which can include the proper context based on the wikicontext.
@@ -60,8 +59,8 @@ public class ContentTag
     private static Map c_defaultMappings;
 
     /**
-     * Lists the default pages for each JSP page.  It first contains the name of the context and
-     * then the page which should be included:
+     * Lists the default pages for each JSP page.  It first contains the name of the context and then the page which should be
+     * included:
      * <pre>
      *  public static final String[] DEFAULT_JSP_PAGES = {
      *     WikiContext.VIEW,     "PageContent.jsp",
@@ -71,18 +70,8 @@ public class ContentTag
      *
      * @see TextUtil.createProperties()
      */
-    private static final String [] DEFAULT_JSP_PAGES = {
-        WikiContext.VIEW,     "PageContent.jsp",
-        WikiContext.DIFF,     "DiffContent.jsp",
-        WikiContext.INFO,     "InfoContent.jsp",
-        WikiContext.PREVIEW,  "PreviewContent.jsp",
-        WikiContext.CONFLICT, "ConflictContent.jsp",
-        WikiContext.FIND,     "FindContent.jsp",
-        WikiContext.PREFS,    "PreferencesContent.jsp",
-        WikiContext.ERROR,    "DisplayMessage.jsp",
-        WikiContext.EDIT,     "EditContent.jsp",
-        WikiContext.COMMENT,  "CommentContent.jsp"
-    };
+    private static final String [] DEFAULT_JSP_PAGES =
+        { WikiContext.VIEW, "PageContent.jsp", WikiContext.DIFF, "DiffContent.jsp", WikiContext.INFO, "InfoContent.jsp", WikiContext.PREVIEW, "PreviewContent.jsp", WikiContext.CONFLICT, "ConflictContent.jsp", WikiContext.FIND, "FindContent.jsp", WikiContext.PREFS, "PreferencesContent.jsp", WikiContext.ERROR, "DisplayMessage.jsp", WikiContext.EDIT, "EditContent.jsp", WikiContext.COMMENT, "CommentContent.jsp" };
 
     static
     {
@@ -222,28 +211,21 @@ public class ContentTag
 
             if (jspPage == null)
             {
-                throw new JspException(
-                    "This template uses <wiki:Content/> in an unsupported context: "
+                throw new JspException("This template uses <wiki:Content/> in an unsupported context: "
                     + m_wikiContext.getRequestContext());
             }
 
-            String page =
-                m_wikiContext.getEngine().getTemplateManager().findJSP(
-                    pageContext, m_wikiContext.getTemplate(), jspPage);
+            String page = m_wikiContext.getEngine().getTemplateManager().findJSP(pageContext, m_wikiContext.getTemplate(), jspPage);
             pageContext.include(page);
         }
         catch (ServletException e)
         {
-            log.warn(
-                "Including failed, got a servlet exception from sub-page. "
-                + "Rethrowing the exception to the JSP engine.", e);
+            log.warn("Including failed, got a servlet exception from sub-page. " + "Rethrowing the exception to the JSP engine.", e);
             throw new JspException(e.getMessage());
         }
         catch (IOException e)
         {
-            log.warn(
-                "I/O exception - probably the connection was broken. "
-                + "Rethrowing the exception to the JSP engine.", e);
+            log.warn("I/O exception - probably the connection was broken. " + "Rethrowing the exception to the JSP engine.", e);
             throw new JspException(e.getMessage());
         }
 

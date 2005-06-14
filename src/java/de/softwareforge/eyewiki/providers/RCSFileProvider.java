@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,14 +33,15 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -57,7 +59,6 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.WikiProperties;
@@ -67,20 +68,19 @@ import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
- * This class implements a simple RCS file provider.  NOTE: You MUST have the RCS package installed
- * for this to work.  They must also be in your path...
- *
+ * This class implements a simple RCS file provider.  NOTE: You MUST have the RCS package installed for this to work.  They must
+ * also be in your path...
+ * 
  * <P>
- * The RCS file provider extends from the FileSystemProvider, which means that it provides the
- * pages in the same way.  The only difference is that it implements the version history commands,
- * and also in each checkin it writes the page to the RCS repository as well.
+ * The RCS file provider extends from the FileSystemProvider, which means that it provides the pages in the same way.  The only
+ * difference is that it implements the version history commands, and also in each checkin it writes the page to the RCS
+ * repository as well.
  * </p>
- *
+ * 
  * <p>
- * If you decide to dabble with the default commands, please make sure that you do not check the
- * default archive suffix ",v".  File deletion depends on it.
+ * If you decide to dabble with the default commands, please make sure that you do not check the default archive suffix ",v".  File
+ * deletion depends on it.
  * </p>
  *
  * @author Janne Jalkanen
@@ -154,10 +154,8 @@ public class RCSFileProvider
         m_checkoutCommand = conf.getString(PROP_RCS_CHECKOUT, PROP_RCS_CHECKOUT_DEFAULT);
         m_logCommand = conf.getString(PROP_RCS_LOG, PROP_RCS_LOG_DEFAULT);
         m_fullLogCommand = conf.getString(PROP_RCS_FULLLOG, PROP_RCS_FULLLOG_DEFAULT);
-        m_checkoutVersionCommand =
-            conf.getString(PROP_RCS_CHECKOUTVERSION, PROP_RCS_CHECKOUTVERSION_DEFAULT);
-        m_deleteVersionCommand =
-            conf.getString(PROP_RCS_DELETEVERSION, PROP_RCS_DELETEVERSION_DEFAULT);
+        m_checkoutVersionCommand = conf.getString(PROP_RCS_CHECKOUTVERSION, PROP_RCS_CHECKOUTVERSION_DEFAULT);
+        m_deleteVersionCommand = conf.getString(PROP_RCS_DELETEVERSION, PROP_RCS_DELETEVERSION_DEFAULT);
 
         File rcsdir = new File(getPageDirectory(), "RCS");
 
@@ -239,9 +237,7 @@ public class RCSFileProvider
                     {
                         if (log.isInfoEnabled())
                         {
-                            log.info(
-                                "WikiPage " + info.getName()
-                                + " has null modification date for version " + version);
+                            log.info("WikiPage " + info.getName() + " has null modification date for version " + version);
                         }
                     }
                 }
@@ -262,10 +258,12 @@ public class RCSFileProvider
             //  process.waitFor() hangs unless you read all of the
             //  standard output.  So we make sure it's all emptied.
             //
-            while ((line = stdout.readLine()) != null);
+            while ((line = stdout.readLine()) != null)
+            {
+                ;
+            }
 
             process.waitFor();
-
         }
         catch (Exception e)
         {
@@ -277,6 +275,7 @@ public class RCSFileProvider
             if (process != null)
             {
                 IOUtils.closeQuietly(stdout);
+
                 // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
                 IOUtils.closeQuietly(process.getInputStream());
                 IOUtils.closeQuietly(process.getOutputStream());
@@ -375,6 +374,7 @@ public class RCSFileProvider
                     {
                         log.debug("Migrating, fetching super.");
                     }
+
                     result = super.getPageText(page, WikiProvider.LATEST_VERSION);
                 }
                 else
@@ -412,6 +412,7 @@ public class RCSFileProvider
             {
                 IOUtils.closeQuietly(stdout);
                 IOUtils.closeQuietly(stderr);
+
                 // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
                 IOUtils.closeQuietly(process.getInputStream());
                 IOUtils.closeQuietly(process.getOutputStream());
@@ -498,6 +499,7 @@ public class RCSFileProvider
 
         Process process = null;
         BufferedReader stdout = null;
+
         try
         {
             Pattern revpattern = compiler.compile(PATTERN_REVISION);
@@ -572,6 +574,7 @@ public class RCSFileProvider
             if (process != null)
             {
                 IOUtils.closeQuietly(stdout);
+
                 // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
                 IOUtils.closeQuietly(process.getInputStream());
                 IOUtils.closeQuietly(process.getOutputStream());
@@ -583,8 +586,7 @@ public class RCSFileProvider
     }
 
     /**
-     * Removes the page file and the RCS archive from the repository. This method assumes that the
-     * page archive ends with ",v".
+     * Removes the page file and the RCS archive from the repository. This method assumes that the page archive ends with ",v".
      *
      * @param page DOCUMENT ME!
      *
@@ -690,13 +692,13 @@ public class RCSFileProvider
             if (process != null)
             {
                 IOUtils.closeQuietly(stderr);
+
                 // we must close all by exec(..) opened streams: http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4784692
                 IOUtils.closeQuietly(process.getInputStream());
                 IOUtils.closeQuietly(process.getOutputStream());
                 IOUtils.closeQuietly(process.getErrorStream());
             }
         }
-
 
         if (!success)
         {
@@ -718,6 +720,7 @@ public class RCSFileProvider
         try
         {
             d = m_rcsdatefmt.parse(str);
+
             return d;
         }
         catch (ParseException pe)

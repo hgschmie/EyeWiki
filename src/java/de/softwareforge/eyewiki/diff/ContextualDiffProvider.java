@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.diff;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -50,15 +50,12 @@ import org.apache.commons.jrcs.diff.RevisionVisitor;
 import org.apache.commons.jrcs.diff.myers.MyersDiff;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
- * A seriously better diff provider, which highlights changes word-by-word using CSS. Suggested by
- * John Volkar.
+ * A seriously better diff provider, which highlights changes word-by-word using CSS. Suggested by John Volkar.
  *
  * @author John Volkar
  * @author Janne Jalkanen
@@ -85,7 +82,7 @@ public class ContextualDiffProvider
     protected String m_changeEndHtml = ""; //and an image for an end '<' marker
 
     /** DOCUMENT ME! */
-    protected String m_diffStart = "<div class=\""+ WikiConstants.CSS_DIFF_BLOCK + "\">";
+    protected String m_diffStart = "<div class=\"" + WikiConstants.CSS_DIFF_BLOCK + "\">";
 
     /** DOCUMENT ME! */
     protected String m_diffEnd = "</div>";
@@ -122,6 +119,9 @@ public class ContextualDiffProvider
 
     /**
      * Creates a new ContextualDiffProvider object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
      */
     public ContextualDiffProvider(WikiEngine engine, Configuration conf)
     {
@@ -179,10 +179,9 @@ public class ContextualDiffProvider
     }
 
     /**
-     * Take the string and create an array from it, split it first on newlines, making sure to
-     * preserve the newlines in the elements, split each resulting element on spaces, preserving
-     * the spaces. All this preseving of newlines and spaces is so the wikitext when diffed will
-     * have fidelity to it's original form.  As a side affect we see edits of purely whilespace.
+     * Take the string and create an array from it, split it first on newlines, making sure to preserve the newlines in the
+     * elements, split each resulting element on spaces, preserving the spaces. All this preseving of newlines and spaces is so
+     * the wikitext when diffed will have fidelity to it's original form.  As a side affect we see edits of purely whilespace.
      *
      * @param wikiText DOCUMENT ME!
      *
@@ -216,8 +215,8 @@ public class ContextualDiffProvider
     }
 
     /**
-     * This helper class does the housekeeping for merging our various changes down and also makes
-     * sure that the whole change process is threadsafe by encapsulating all necessary variables.
+     * This helper class does the housekeeping for merging our various changes down and also makes sure that the whole change
+     * process is threadsafe by encapsulating all necessary variables.
      */
     private final class ChangeMerger
             implements RevisionVisitor

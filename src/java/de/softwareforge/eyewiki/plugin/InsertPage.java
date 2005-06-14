@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,16 +33,13 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.util.Map;
-
 
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.util.TextUtil;
-
 
 /**
  * Inserts page contents.  Muchos thanks to Scott Hurlbert for the initial code.
@@ -75,8 +73,14 @@ public class InsertPage
     /** DOCUMENT ME! */
     private static final String DEFAULT_STYLE = "";
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /**
+     * Creates a new InsertPage object.
+     *
+     * @param engine DOCUMENT ME!
+     */
     public InsertPage(final WikiEngine engine)
     {
         this.engine = engine;
@@ -135,10 +139,7 @@ public class InsertPage
                 }
                 */
 
-                /**
-                 * We want inclusion to occur within the context of its own page, because we need
-                 * the links to be correct.
-                 */
+                /** We want inclusion to occur within the context of its own page, because we need the links to be correct. */
                 WikiContext includedContext = (WikiContext) context.clone();
                 includedContext.setPage(page);
 
@@ -160,9 +161,7 @@ public class InsertPage
                 if (pageData.length() > maxlen)
                 {
                     pageData = pageData.substring(0, maxlen) + " ...";
-                    moreLink =
-                        "<p><a href=\"" + context.getURL(WikiContext.VIEW, includedPage)
-                        + "\">More...</a></p>";
+                    moreLink = "<p><a href=\"" + context.getURL(WikiContext.VIEW, includedPage) + "\">More...</a></p>";
                 }
 
                 res.append("<div ");
@@ -177,10 +176,7 @@ public class InsertPage
                     res.append(" class=\"").append(clazz).append("\"");
                 }
 
-                res.append(">")
-                        .append(engine.textToHTML(includedContext, pageData))
-                        .append(moreLink)
-                        .append("</div>");
+                res.append(">").append(engine.textToHTML(includedContext, pageData)).append(moreLink).append("</div>");
             }
             else
             {
@@ -190,11 +186,8 @@ public class InsertPage
                 }
                 else
                 {
-                    res.append(
-                        "There is no page called '" + includedPage + "'.  Would you like to ");
-                    res.append(
-                        "<a href=\"" + context.getURL(WikiContext.EDIT, includedPage)
-                        + "\">create it?</a>");
+                    res.append("There is no page called '" + includedPage + "'.  Would you like to ");
+                    res.append("<a href=\"" + context.getURL(WikiContext.EDIT, includedPage) + "\">create it?</a>");
                 }
             }
         }

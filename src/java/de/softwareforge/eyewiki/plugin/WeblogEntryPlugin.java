@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.text.SimpleDateFormat;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -41,14 +42,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.PageLock;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.manager.PageManager;
 import de.softwareforge.eyewiki.providers.ProviderException;
-
 
 /**
  * Builds a simple weblog.
@@ -67,10 +66,18 @@ public class WeblogEntryPlugin
     /** DOCUMENT ME! */
     public static final String PARAM_ENTRYTEXT = "entrytext";
 
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
 
+    /** DOCUMENT ME! */
     private final PageManager pageManager;
 
+    /**
+     * Creates a new WeblogEntryPlugin object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param pageManager DOCUMENT ME!
+     */
     public WeblogEntryPlugin(final WikiEngine engine, final PageManager pageManager)
     {
         this.engine = engine;
@@ -80,7 +87,6 @@ public class WeblogEntryPlugin
     /**
      * DOCUMENT ME!
      *
-     * @param engine DOCUMENT ME!
      * @param blogName DOCUMENT ME!
      *
      * @return DOCUMENT ME!
@@ -125,10 +131,8 @@ public class WeblogEntryPlugin
         // FIXME: Generate somehow else.
         // String blogPage = getNewEntryPage(engine, weblogName);
         //sb.append("<a href=\""+engine.getEditURL(blogPage)+"\">New entry</a>");
-
-        sb.append(
-            "<a href=\"" + engine.getBaseURL() + "NewBlogEntry.jsp?page="
-            + engine.encodeName(weblogName) + "\">" + entryText + "</a>");
+        sb.append("<a href=\"" + engine.getBaseURL() + "NewBlogEntry.jsp?page=" + engine.encodeName(weblogName) + "\">" + entryText
+            + "</a>");
 
         return sb.toString();
     }
@@ -175,8 +179,7 @@ public class WeblogEntryPlugin
 
         while (idx < MAX_BLOG_ENTRIES)
         {
-            WikiPage page =
-                new WikiPage(WeblogPlugin.makeEntryPage(baseName, date, Integer.toString(idx)));
+            WikiPage page = new WikiPage(WeblogPlugin.makeEntryPage(baseName, date, Integer.toString(idx)));
             PageLock lock = mgr.getCurrentLock(page);
 
             if (lock == null)

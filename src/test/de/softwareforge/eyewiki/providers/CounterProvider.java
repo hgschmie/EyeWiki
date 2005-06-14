@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +46,6 @@ import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.providers.WikiPageProvider;
-
 
 /**
  * A provider who counts the hits to different parts.
@@ -73,13 +72,7 @@ public class CounterProvider
     public int m_initCalls = 0;
 
     /** DOCUMENT ME! */
-    WikiPage [] m_pages =
-        {
-            new WikiPage("Foo"),
-            new WikiPage("Bar"),
-            new WikiPage("Blat"),
-            new WikiPage("Blaa")
-        };
+    WikiPage [] m_pages = { new WikiPage("Foo"), new WikiPage("Bar"), new WikiPage("Blat"), new WikiPage("Blaa") };
 
     /** DOCUMENT ME! */
     String defaultText = "[Foo], [Bar], [Blat], [Blah]";

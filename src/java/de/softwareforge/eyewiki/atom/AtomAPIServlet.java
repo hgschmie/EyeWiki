@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.atom;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.atom;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -47,18 +48,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import org.intabulas.sandler.Sandler;
-import org.intabulas.sandler.SyndicationFactory;
-import org.intabulas.sandler.builders.XPPBuilder;
-import org.intabulas.sandler.elements.Content;
-import org.intabulas.sandler.elements.Entry;
-import org.intabulas.sandler.elements.Feed;
-import org.intabulas.sandler.elements.Link;
-import org.intabulas.sandler.elements.Person;
-import org.intabulas.sandler.elements.impl.LinkImpl;
-import org.intabulas.sandler.exceptions.MarshallException;
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiException;
@@ -70,10 +59,19 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.BlogUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
 
+import org.intabulas.sandler.Sandler;
+import org.intabulas.sandler.SyndicationFactory;
+import org.intabulas.sandler.builders.XPPBuilder;
+import org.intabulas.sandler.elements.Content;
+import org.intabulas.sandler.elements.Entry;
+import org.intabulas.sandler.elements.Feed;
+import org.intabulas.sandler.elements.Link;
+import org.intabulas.sandler.elements.Person;
+import org.intabulas.sandler.elements.impl.LinkImpl;
+import org.intabulas.sandler.exceptions.MarshallException;
 
 /**
- * Handles incoming requests for the Atom API.  This class uses the "sandler" Atom API
- * implementation.
+ * Handles incoming requests for the Atom API.  This class uses the "sandler" Atom API implementation.
  *
  * @author Janne Jalkanen
  *
@@ -102,8 +100,7 @@ public class AtomAPIServlet
     }
 
     /**
-     * Takes the name of the page from the request URI. The initial slash is also removed.  If
-     * there is no page, returns null.
+     * Takes the name of the page from the request URI. The initial slash is also removed.  If there is no page, returns null.
      *
      * @param request DOCUMENT ME!
      *
@@ -129,10 +126,10 @@ public class AtomAPIServlet
 
     /**
      * Implements the PostURI of the Atom spec.
-     *
+     * 
      * <p>
      * Implementation notes:
-     *
+     * 
      * <ul>
      * <li>
      * Only fetches the first content.  All other contents are ignored.
@@ -161,8 +158,7 @@ public class AtomAPIServlet
 
             if (page == null)
             {
-                throw new ServletException(
-                    "Page " + blogid + " does not exist, cannot add blog post.");
+                throw new ServletException("Page " + blogid + " does not exist, cannot add blog post.");
             }
 
             //FIXME: Do authentication here
@@ -180,7 +176,6 @@ public class AtomAPIServlet
             //
             //  Generate new blog entry.
             //
-
             PluginManager pluginManager = m_engine.getPluginManager();
 
             if (pluginManager != null)
@@ -226,8 +221,7 @@ public class AtomAPIServlet
     }
 
     /**
-     * Handles HTTP GET.  However, we do not respond to GET requests, other than to show an
-     * explanatory text.
+     * Handles HTTP GET.  However, we do not respond to GET requests, other than to show an explanatory text.
      *
      * @param request DOCUMENT ME!
      * @param response DOCUMENT ME!
@@ -270,8 +264,7 @@ public class AtomAPIServlet
         catch (Exception e)
         {
             log.error("Unable to generate response", e);
-            throw new ServletException(
-                "Internal problem - whack Janne on the head to get a better error report", e);
+            throw new ServletException("Internal problem - whack Janne on the head to get a better error report", e);
         }
     }
 
@@ -356,15 +349,11 @@ public class AtomAPIServlet
 
             String title = TextUtil.replaceEntities(BlogUtil.getSiteName(context));
 
-            Link postlink =
-                createLink("service.post", m_engine.getBaseURL() + "atom/" + encodedName, title);
+            Link postlink = createLink("service.post", m_engine.getBaseURL() + "atom/" + encodedName, title);
 
-            Link editlink =
-                createLink("service.edit", m_engine.getBaseURL() + "atom/" + encodedName, title);
+            Link editlink = createLink("service.edit", m_engine.getBaseURL() + "atom/" + encodedName, title);
 
-            Link feedlink =
-                createLink(
-                    "service.feed", m_engine.getBaseURL() + "atom.jsp?page=" + encodedName, title);
+            Link feedlink = createLink("service.feed", m_engine.getBaseURL() + "atom.jsp?page=" + encodedName, title);
 
             feed.addLink(postlink);
             feed.addLink(feedlink);
@@ -387,8 +376,8 @@ public class AtomAPIServlet
     }
 
     /**
-                                             *
-                                             */
+                                                     *
+                                                     */
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException
     {
@@ -396,8 +385,8 @@ public class AtomAPIServlet
     }
 
     /**
-                                             *
-                                             */
+                                                     *
+                                                     */
     public void doPut(HttpServletRequest request, HttpServletResponse response)
             throws ServletException
     {

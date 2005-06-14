@@ -1,5 +1,11 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.exception.NoSuchVariableException;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,18 +38,9 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.exception.NoSuchVariableException;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
 
 /**
  * DOCUMENT ME!
@@ -57,11 +54,12 @@ public class ConfigurationVariablesTest
     /** The internally used engine */
     private TestEngine testEngine = null;
 
+    /** DOCUMENT ME! */
     VariableManager variableManager = null;
 
     /** DOCUMENT ME! */
     WikiContext context = null;
-    
+
     /**
      * Creates a new ConfigurationVariablesTest object.
      *
@@ -103,13 +101,18 @@ public class ConfigurationVariablesTest
         return new TestSuite(ConfigurationVariablesTest.class);
     }
 
-
+    /**
+     * DOCUMENT ME!
+     */
     public void testManager()
     {
         assertNotNull("No Variable Manager!", variableManager);
         assertNotNull("No Context!", context);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void testConfigurationValue()
     {
         try
@@ -123,6 +126,9 @@ public class ConfigurationVariablesTest
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public void testLowerCase()
     {
         try

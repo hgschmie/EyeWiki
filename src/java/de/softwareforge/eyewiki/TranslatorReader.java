@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PushbackReader;
@@ -62,7 +62,6 @@ import org.apache.oro.text.regex.PatternMatcherInput;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
-
 import de.softwareforge.eyewiki.acl.AccessControlList;
 import de.softwareforge.eyewiki.attachment.Attachment;
 import de.softwareforge.eyewiki.attachment.AttachmentManager;
@@ -78,14 +77,12 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 import de.softwareforge.eyewiki.util.FileUtil;
 import de.softwareforge.eyewiki.util.TextUtil;
 
-
 /**
- * Handles conversion from Wiki format into fully featured HTML. This is where all the magic
- * happens.  It is CRITICAL that this class is tested, or all Wikis might die horribly.
+ * Handles conversion from Wiki format into fully featured HTML. This is where all the magic happens.  It is CRITICAL that this
+ * class is tested, or all Wikis might die horribly.
  * 
  * <P>
- * The output of the HTML has not yet been validated against the HTML DTD.  However, it is very
- * simple.
+ * The output of the HTML has not yet been validated against the HTML DTD.  However, it is very simple.
  * </p>
  *
  * @author Janne Jalkanen
@@ -133,10 +130,7 @@ public class TranslatorReader
     /** Lists all punctuation characters allowed in WikiMarkup. These will not be cleaned away. */
     private static final String PUNCTUATION_CHARS_ALLOWED = "._";
 
-    /**
-     * Allow this many characters to be pushed back in the stream.  In effect, this limits the size
-     * of a single heading line.
-     */
+    /** Allow this many characters to be pushed back in the stream.  In effect, this limits the size of a single heading line. */
     private static final int PUSHBACK_BUFFER_SIZE = 10 * 1024;
 
     /** DOCUMENT ME! */
@@ -155,55 +149,11 @@ public class TranslatorReader
     protected static final int TYPED = 2;
 
     /**
-     * This list contains all IANA registered URI protocol types as of September 2004 + a few
-     * well-known extra types. eyeWiki recognises all of them as external links.
+     * This list contains all IANA registered URI protocol types as of September 2004 + a few well-known extra types. eyeWiki
+     * recognises all of them as external links.
      */
     private static final String [] EXTERNAL_LINKS =
-    {
-        "http:",
-        "ftp:",
-        "https:",
-        "mailto:",
-        "news:",
-        "file:",
-        "rtsp:",
-        "mms:",
-        "ldap:",
-        "gopher:",
-        "nntp:",
-        "telnet:",
-        "wais:",
-        "prospero:",
-        "z39.50s",
-        "z39.50r",
-        "vemmi:",
-        "imap:",
-        "nfs:",
-        "acap:",
-        "tip:",
-        "pop:",
-        "dav:",
-        "opaquelocktoken:",
-        "sip:",
-        "sips:",
-        "tel:",
-        "fax:",
-        "modem:",
-        "soap.beep:",
-        "soap.beeps",
-        "xmlrpc.beep",
-        "xmlrpc.beeps",
-        "urn:",
-        "go:",
-        "h323:",
-        "ipp:",
-        "tftp:",
-        "mupdate:",
-        "pres:",
-        "im:",
-        "mtqp",
-        "smb:"
-    };
+        { "http:", "ftp:", "https:", "mailto:", "news:", "file:", "rtsp:", "mms:", "ldap:", "gopher:", "nntp:", "telnet:", "wais:", "prospero:", "z39.50s", "z39.50r", "vemmi:", "imap:", "nfs:", "acap:", "tip:", "pop:", "dav:", "opaquelocktoken:", "sip:", "sips:", "tel:", "fax:", "modem:", "soap.beep:", "soap.beeps", "xmlrpc.beep", "xmlrpc.beeps", "urn:", "go:", "h323:", "ipp:", "tftp:", "mupdate:", "pres:", "im:", "mtqp", "smb:" };
 
     /** DOCUMENT ME! */
     private PushbackReader m_in;
@@ -301,9 +251,7 @@ public class TranslatorReader
     /** DOCUMENT ME! */
     private boolean m_useRelNofollow = false;
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private boolean m_inlineImages = true;
 
     /** DOCUMENT ME! */
@@ -366,8 +314,7 @@ public class TranslatorReader
     /**
      * DOCUMENT ME!
      *
-     * @param context The WikiEngine this reader is attached to.  Is used to figure out of a page
-     *        exits.
+     * @param context The WikiEngine this reader is attached to.  Is used to figure out of a page exits.
      * @param in DOCUMENT ME!
      * @param renderer DOCUMENT ME!
      *
@@ -409,8 +356,8 @@ public class TranslatorReader
 
         try
         {
-            m_camelCasePtrn = m_compiler.compile(
-                    "^([[:^alnum:]]*|\\~)([[:upper:]]+[[:lower:]]+[[:upper:]]+[[:alnum:]]*)[[:^alnum:]]*$");
+            m_camelCasePtrn =
+                m_compiler.compile("^([[:^alnum:]]*|\\~)([[:upper:]]+[[:lower:]]+[[:upper:]]+[[:alnum:]]*)[[:^alnum:]]*$");
         }
         catch (MalformedPatternException e)
         {
@@ -439,17 +386,15 @@ public class TranslatorReader
             enablePlugins(BooleanUtils.toBoolean(runplugins));
         }
 
-        if ((m_engine.getUserManager() == null)
-                || (m_engine.getUserManager().getAuthenticator() == null))
+        if ((m_engine.getUserManager() == null) || (m_engine.getUserManager().getAuthenticator() == null))
         {
             disableAccessRules();
         }
     }
 
     /**
-     * Sets the currently used renderer.  This method is protected because we only want to use it
-     * internally for now.  The renderer interface is not yet set to stone, so it's not expected
-     * that third parties would use this.
+     * Sets the currently used renderer.  This method is protected because we only want to use it internally for now.  The renderer
+     * interface is not yet set to stone, so it's not expected that third parties would use this.
      *
      * @param renderer DOCUMENT ME!
      */
@@ -459,9 +404,8 @@ public class TranslatorReader
     }
 
     /**
-     * Adds a hook for processing link texts.  This hook is called when the link text is written
-     * into the output stream, and you may use it to modify the text.  It does not affect the
-     * actual link, only the user-visible text.
+     * Adds a hook for processing link texts.  This hook is called when the link text is written into the output stream, and you
+     * may use it to modify the text.  It does not affect the actual link, only the user-visible text.
      *
      * @param mutator The hook to call.  Null is safe.
      */
@@ -474,8 +418,7 @@ public class TranslatorReader
     }
 
     /**
-     * Adds a hook for processing local links.  The engine transforms both non-existing and
-     * existing page links.
+     * Adds a hook for processing local links.  The engine transforms both non-existing and existing page links.
      *
      * @param mutator The hook to call.  Null is safe.
      */
@@ -488,8 +431,7 @@ public class TranslatorReader
     }
 
     /**
-     * Adds a hook for processing external links.  This includes all http:// ftp://, etc. links,
-     * including inlined images.
+     * Adds a hook for processing external links.  This includes all http:// ftp://, etc. links, including inlined images.
      *
      * @param mutator The hook to call.  Null is safe.
      */
@@ -548,8 +490,8 @@ public class TranslatorReader
     /**
      * Use this to turn on or off image inlining.
      *
-     * @param toggle If true, images are inlined (as per set in eyewiki.properties) If false, then
-     *        images won't be inlined; instead, they will be treated as standard hyperlinks.
+     * @param toggle If true, images are inlined (as per set in eyewiki.properties) If false, then images won't be inlined;
+     *        instead, they will be treated as standard hyperlinks.
      *
      * @since 2.2.9
      */
@@ -617,8 +559,7 @@ public class TranslatorReader
      * Calls a transmutator chain.
      *
      * @param list Chain to call
-     * @param text Text that should be passed to the mutate() method of each of the mutators in the
-     *        chain.
+     * @param text Text that should be passed to the mutate() method of each of the mutators in the chain.
      *
      * @return The result of the mutation.
      */
@@ -757,8 +698,7 @@ public class TranslatorReader
     }
 
     /**
-     * Figures out if a link is an off-site link.  This recognizes the most common protocols by
-     * checking how it starts.
+     * Figures out if a link is an off-site link.  This recognizes the most common protocols by checking how it starts.
      *
      * @param link DOCUMENT ME!
      *
@@ -793,8 +733,8 @@ public class TranslatorReader
     }
 
     /**
-     * Matches the given link to the list of image name patterns to determine whether it should be
-     * treated as an inline image or not.
+     * Matches the given link to the list of image name patterns to determine whether it should be treated as an inline image or
+     * not.
      *
      * @param link DOCUMENT ME!
      *
@@ -822,9 +762,8 @@ public class TranslatorReader
     }
 
     /**
-     * Returns true, if the argument contains a number, otherwise false. In a quick test this is
-     * roughly the same speed as Integer.parseInt() if the argument is a number, and roughly ten
-     * times the speed, if the argument is NOT a number.
+     * Returns true, if the argument contains a number, otherwise false. In a quick test this is roughly the same speed as
+     * Integer.parseInt() if the argument is a number, and roughly ten times the speed, if the argument is NOT a number.
      *
      * @param s DOCUMENT ME!
      *
@@ -857,15 +796,13 @@ public class TranslatorReader
      * Checks for the existence of a traditional style CamelCase link.
      * 
      * <P>
-     * We separate all white-space -separated words, and feed it to this routine to find if there
-     * are any possible camelcase links. For example, if "word" is "__HyperLink__" we return
-     * "HyperLink".
+     * We separate all white-space -separated words, and feed it to this routine to find if there are any possible camelcase links.
+     * For example, if "word" is "__HyperLink__" we return "HyperLink".
      * </p>
      *
      * @param word A phrase to search in.
      *
-     * @return The match within the phrase.  Returns null, if no CamelCase hyperlink exists within
-     *         this phrase.
+     * @return The match within the phrase.  Returns null, if no CamelCase hyperlink exists within this phrase.
      */
     private String checkForCamelCaseLink(String word)
     {
@@ -897,8 +834,7 @@ public class TranslatorReader
     }
 
     /**
-     * When given a link to a WikiName, we just return a proper HTML link for it.  The local link
-     * mutator chain is also called.
+     * When given a link to a WikiName, we just return a proper HTML link for it.  The local link mutator chain is also called.
      *
      * @param wikiname DOCUMENT ME!
      *
@@ -952,14 +888,13 @@ public class TranslatorReader
     }
 
     /**
-     * Image links are handled differently: 1. If the text is a WikiName of an existing page, it
-     * gets linked. 2. If the text is an external link, then it is inlined. 3. Otherwise it
-     * becomes an ALT text.
+     * Image links are handled differently: 1. If the text is a WikiName of an existing page, it gets linked. 2. If the text is an
+     * external link, then it is inlined. 3. Otherwise it becomes an ALT text.
      *
      * @param reallink The link to the image.
      * @param link Link text portion, may be a link to somewhere else.
-     * @param hasLinkText If true, then the defined link had a link text available. This means that
-     *        the link text may be a link to a wiki page, or an external resource.
+     * @param hasLinkText If true, then the defined link had a link text available. This means that the link text may be a link to
+     *        a wiki page, or an external resource.
      *
      * @return DOCUMENT ME!
      */
@@ -973,7 +908,7 @@ public class TranslatorReader
         {
             res = makeLink(IMAGELINK, reallink, link);
         }
-        else if (matchedLink != null && hasLinkText)
+        else if ((matchedLink != null) && hasLinkText)
         {
             callMutatorChain(m_localLinkMutatorChain, possiblePage);
 
@@ -1209,11 +1144,8 @@ public class TranslatorReader
             }
             else
             {
-                sb.append(link)
-                        .append(" ")
-                        .append(m_renderer.makeError(
-                                        "No InterWiki reference defined in properties for Wiki called '" + extWiki
-                                        + "'!)"));
+                sb.append(link).append(" ").append(m_renderer.makeError(
+                        "No InterWiki reference defined in properties for Wiki called '" + extWiki + "'!)"));
             }
         }
         else if (reallink.startsWith("#"))
@@ -1264,10 +1196,7 @@ public class TranslatorReader
                 if ((matchedLink = linkExists(reallink)) != null)
                 {
                     StringBuffer sectref = new StringBuffer();
-                    sectref.append("section-")
-                            .append(m_engine.encodeName(matchedLink))
-                            .append("-")
-                            .append(namedSection);
+                    sectref.append("section-").append(m_engine.encodeName(matchedLink)).append("-").append(namedSection);
 
                     sb.append(makeLink(READ, matchedLink, link, sectref.toString()));
                 }
@@ -1418,8 +1347,7 @@ public class TranslatorReader
     }
 
     /**
-     * Pushes back any string that has been read.  It will obviously be pushed back in a reverse
-     * order.
+     * Pushes back any string that has been read.  It will obviously be pushed back in a reverse order.
      *
      * @param s DOCUMENT ME!
      *
@@ -1468,9 +1396,7 @@ public class TranslatorReader
 
         if (ch == '_')
         {
-            res = m_isbold
-                    ? m_renderer.closeTextEffect(BOLD)
-                    : m_renderer.openTextEffect(BOLD);
+            res = m_isbold ? m_renderer.closeTextEffect(BOLD) : m_renderer.openTextEffect(BOLD);
             m_isbold = !m_isbold;
         }
         else
@@ -1496,9 +1422,7 @@ public class TranslatorReader
 
         if (ch == '\'')
         {
-            res = m_isitalic
-                    ? m_renderer.closeTextEffect(ITALIC)
-                    : m_renderer.openTextEffect(ITALIC);
+            res = m_isitalic ? m_renderer.closeTextEffect(ITALIC) : m_renderer.openTextEffect(ITALIC);
             m_isitalic = !m_isitalic;
         }
         else
@@ -1634,8 +1558,7 @@ public class TranslatorReader
     }
 
     /**
-     * This method peeks ahead in the stream until EOL and returns the result. It will keep the
-     * buffers untouched.
+     * This method peeks ahead in the stream until EOL and returns the result. It will keep the buffers untouched.
      *
      * @return The string from the current position to the end of line.
      *
@@ -1693,8 +1616,7 @@ public class TranslatorReader
     }
 
     /**
-     * Reads the stream until the next EOL or EOF.  Note that it will also read the EOL from the
-     * stream.
+     * Reads the stream until the next EOL or EOF.  Note that it will also read the EOL from the stream.
      *
      * @return DOCUMENT ME!
      *
@@ -1744,8 +1666,8 @@ public class TranslatorReader
     }
 
     /**
-     * Like original handleOrderedList() and handleUnorderedList() however handles both ordered
-     * ('#') and unordered ('') mixed together.
+     * Like original handleOrderedList() and handleUnorderedList() however handles both ordered ('#') and unordered ('') mixed
+     * together.
      *
      * @return DOCUMENT ME!
      *
@@ -1769,21 +1691,19 @@ public class TranslatorReader
         if (m_allowPHPWikiStyleLists)
         {
             // only substitute if different
-            if (!(strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(
-                          m_genlistBulletBuffer.substring(0, Math.min(numBullets, m_genlistlevel)))))
+            if (!(strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(m_genlistBulletBuffer.substring(0,
+                                    Math.min(numBullets, m_genlistlevel)))))
             {
                 if (numBullets <= m_genlistlevel)
                 {
                     // Substitute all but the last character (keep the expressed bullet preference)
                     strBullets =
-                            ((numBullets > 1)
-                                    ? m_genlistBulletBuffer.substring(0, numBullets - 1)
-                                    : "") + strBullets.substring(numBullets - 1, numBullets);
+                        ((numBullets > 1) ? m_genlistBulletBuffer.substring(0, numBullets - 1) : "")
+                        + strBullets.substring(numBullets - 1, numBullets);
                 }
                 else
                 {
-                    strBullets =
-                            m_genlistBulletBuffer + strBullets.substring(m_genlistlevel, numBullets);
+                    strBullets = m_genlistBulletBuffer + strBullets.substring(m_genlistlevel, numBullets);
                 }
             }
         }
@@ -1791,8 +1711,8 @@ public class TranslatorReader
         //
         //  Check if this is still of the same type
         //
-        if (strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(
-                    m_genlistBulletBuffer.substring(0, Math.min(numBullets, m_genlistlevel))))
+        if (strBullets.substring(0, Math.min(numBullets, m_genlistlevel)).equals(m_genlistBulletBuffer.substring(0,
+                                Math.min(numBullets, m_genlistlevel))))
         {
             if (numBullets > m_genlistlevel)
             {
@@ -1913,8 +1833,7 @@ public class TranslatorReader
 
             m_closeTag = m_renderer.closeDefinitionItem() + m_renderer.closeDefinitionList();
 
-            return startBlockLevel() + m_renderer.openDefinitionList()
-                    + m_renderer.openDefinitionTitle();
+            return startBlockLevel() + m_renderer.openDefinitionList() + m_renderer.openDefinitionTitle();
         }
 
         return ";";
@@ -2015,8 +1934,8 @@ public class TranslatorReader
     }
 
     /**
-     * Reads the stream until it meets one of the specified ending characters, or stream end.  The
-     * ending character will be left in the stream.
+     * Reads the stream until it meets one of the specified ending characters, or stream end.  The ending character will be left in
+     * the stream.
      *
      * @param endChars DOCUMENT ME!
      *
@@ -2059,8 +1978,7 @@ public class TranslatorReader
     }
 
     /**
-     * Reads the stream while the characters that have been specified are in the stream, returning
-     * then the result as a String.
+     * Reads the stream while the characters that have been specified are in the stream, returning then the result as a String.
      *
      * @param endChars DOCUMENT ME!
      *
@@ -2154,9 +2072,7 @@ public class TranslatorReader
                 {
                     if (log.isDebugEnabled())
                     {
-                        log.debug("Page '" 
-                                + m_context.getPage().getName()
-                                + "' closes a %%-block that has not been opened.");
+                        log.debug("Page '" + m_context.getPage().getName() + "' closes a %%-block that has not been opened.");
                     }
                 }
 
@@ -2251,9 +2167,8 @@ public class TranslatorReader
     {
         int ch = nextToken();
 
-        if ((ch == '|') || (ch == '~') || (ch == '\\') || (ch == '*') || (ch == '#') || (ch == '-')
-                || (ch == '!') || (ch == '\'') || (ch == '_') || (ch == '[') || (ch == '{')
-                || (ch == ']') || (ch == '}'))
+        if ((ch == '|') || (ch == '~') || (ch == '\\') || (ch == '*') || (ch == '#') || (ch == '-') || (ch == '!') || (ch == '\'')
+                        || (ch == '_') || (ch == '[') || (ch == '{') || (ch == ']') || (ch == '}'))
         {
             StringBuffer sb = new StringBuffer();
             sb.append((char) ch);
@@ -2322,9 +2237,8 @@ public class TranslatorReader
             {
                 // Quick parse of start of a word boundary.
                 if ((word == null)
-                        && (Character.isWhitespace((char) previousCh)
-                                || (WORD_SEPARATORS.indexOf((char) previousCh) != -1) || newLine)
-                        && !Character.isWhitespace((char) ch))
+                                && (Character.isWhitespace((char) previousCh) || (WORD_SEPARATORS.indexOf((char) previousCh) != -1)
+                                || newLine) && !Character.isWhitespace((char) ch))
                 {
                     word = new StringBuffer();
                 }
@@ -2335,8 +2249,7 @@ public class TranslatorReader
                     //
                     //  Check for the end of the word.
                     //
-                    if (Character.isWhitespace((char) ch) || (ch == -1)
-                            || (WORD_SEPARATORS.indexOf((char) ch) != -1))
+                    if (Character.isWhitespace((char) ch) || (ch == -1) || (WORD_SEPARATORS.indexOf((char) ch) != -1))
                     {
                         String potentialLink = word.toString();
 
@@ -2359,8 +2272,7 @@ public class TranslatorReader
 
                                     link = potentialLink + (char) ch + link; // Do not forget the start.
 
-                                    buf.replace(start, start + potentialLink.length(),
-                                            makeDirectURILink(link));
+                                    buf.replace(start, start + potentialLink.length(), makeDirectURILink(link));
 
                                     ch = nextToken();
                                 }
@@ -2433,9 +2345,8 @@ public class TranslatorReader
                     String nextLine = peekAheadLine();
 
                     if ((nextLine.length() == 0)
-                            || ((nextLine.length() > 0) && !nextLine.startsWith("{{{")
-                                    && !nextLine.startsWith("----") && !nextLine.startsWith("%%")
-                                    && ("*#!;".indexOf(nextLine.charAt(0)) == -1)))
+                                    || ((nextLine.length() > 0) && !nextLine.startsWith("{{{") && !nextLine.startsWith("----")
+                                    && !nextLine.startsWith("%%") && ("*#!;".indexOf(nextLine.charAt(0)) == -1)))
                     {
                         buf.append(m_renderer.openParagraph());
                         m_isOpenParagraph = true;
@@ -2558,31 +2469,25 @@ public class TranslatorReader
                 break;
 
             case '<':
-                s = m_allowHTML
-                        ? "<"
-                        : "&lt;";
+                s = m_allowHTML ? "<" : "&lt;";
 
                 break;
 
             case '>':
-                s = m_allowHTML
-                        ? ">"
-                        : "&gt;";
+                s = m_allowHTML ? ">" : "&gt;";
 
                 break;
 
             case '\"':
-                s = m_allowHTML
-                        ? "\""
-                        : "&quot;";
+                s = m_allowHTML ? "\"" : "&quot;";
 
                 break;
 
-                /*
-                  case '&':
-                  s = "&amp;";
-                  break;
-                */
+            /*
+              case '&':
+              s = "&amp;";
+              break;
+            */
             case '~':
                 s = handleTilde();
 
@@ -2698,8 +2603,8 @@ public class TranslatorReader
     }
 
     /**
-     * All HTML output stuff is here.  This class is a helper class, and will be spawned later on
-     * with a proper API of its own so that we can have different kinds of renderers.
+     * All HTML output stuff is here.  This class is a helper class, and will be spawned later on with a proper API of its own so
+     * that we can have different kinds of renderers.
      */
 
     // FIXME: Not everything is yet, and in the future this class will be spawned
@@ -2721,8 +2626,8 @@ public class TranslatorReader
         }
 
         /**
-         * Does a lazy init.  Otherwise, we would get into a situation where HTMLRenderer would try
-         * and boot a TranslatorReader before the TranslatorReader it is contained by is up.
+         * Does a lazy init.  Otherwise, we would get into a situation where HTMLRenderer would try and boot a TranslatorReader
+         * before the TranslatorReader it is contained by is up.
          *
          * @return DOCUMENT ME!
          */
@@ -2780,17 +2685,13 @@ public class TranslatorReader
 
             if (style != null)
             {
-                sb.append(" style=\"")
-                        .append(style)
-                        .append("\"");
+                sb.append(" style=\"").append(style).append("\"");
             }
             else
             {
                 if (clazz != null)
                 {
-                    sb.append(" class=\"")
-                            .append(clazz)
-                            .append("\"");
+                    sb.append(" class=\"").append(clazz).append("\"");
                 }
             }
 
@@ -2815,17 +2716,13 @@ public class TranslatorReader
 
             if (style != null)
             {
-                sb.append(" style=\"")
-                        .append(style)
-                        .append("\"");
+                sb.append(" style=\"").append(style).append("\"");
             }
             else
             {
                 if (clazz != null)
                 {
-                    sb.append(" class=\"")
-                            .append(clazz)
-                            .append("\"");
+                    sb.append(" class=\"").append(clazz).append("\"");
                 }
             }
 
@@ -3013,8 +2910,8 @@ public class TranslatorReader
          * @param type Type of the link.
          * @param link The actual link.
          * @param text The user-visible text for the link.
-         * @param section Which named anchor to point to.  This may not have any effect on certain
-         *        link types.  If null, will ignore it.
+         * @param section Which named anchor to point to.  This may not have any effect on certain link types.  If null, will
+         *        ignore it.
          *
          * @return DOCUMENT ME!
          */
@@ -3027,9 +2924,7 @@ public class TranslatorReader
                 text = link;
             }
 
-            section = (section != null)
-                    ? ("#" + section)
-                    : "";
+            section = (section != null) ? ("#" + section) : "";
 
             // Make sure we make a link name that can be accepted
             // as a valid URL.
@@ -3044,105 +2939,64 @@ public class TranslatorReader
             {
             case READ:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\" href=\"")
-                        .append(getURL(WikiContext.VIEW, link))
-                        .append(section)
-                        .append("\">")
-                        .append(text)
-                        .append("</a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"")
+                                                   .append(getURL(WikiContext.VIEW, link)).append(section).append("\">").append(text)
+                                                   .append("</a>").toString();
 
                 break;
 
             case EDIT:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\" title=\"")
-                        .append("Create '")
-                        .append(link)
-                        .append("'\" href=\"")
-                        .append(getURL(WikiContext.EDIT, link))
-                        .append("\">")
-                        .append(text)
-                        .append("</a>")
-                        .toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" title=\"").append("Create '")
+                                                   .append(link).append("'\" href=\"").append(getURL(WikiContext.EDIT, link))
+                                                   .append("\">").append(text).append("</a>").toString();
 
                 break;
 
             case EMPTY:
-                result =
-                        new StringBuffer("<u>")
-                        .append(text)
-                        .append("</u>")
-                        .toString();
+                result = new StringBuffer("<u>").append(text).append("</u>").toString();
 
                 break;
 
-                //
-                //  These two are for local references - footnotes and
-                //  references to footnotes.
-                //  We embed the page name (or whatever WikiContext gives us)
-                //  to make sure the links are unique across Wiki.
-                //
+            //
+            //  These two are for local references - footnotes and
+            //  references to footnotes.
+            //  We embed the page name (or whatever WikiContext gives us)
+            //  to make sure the links are unique across Wiki.
+            //
             case LOCALREF:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_FOOTNOTE_REF)
-                        .append("\" href=\"#ref-")
-                        .append(m_context.getPage().getName())
-                        .append("-")
-                        .append(link)
-                        .append("\">[")
-                        .append(text)
-                        .append("]</a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_FOOTNOTE_REF).append("\" href=\"#ref-")
+                                                   .append(m_context.getPage().getName()).append("-").append(link).append("\">[")
+                                                   .append(text).append("]</a>").toString();
 
                 break;
 
             case LOCAL:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_FOOTNOTE_ANCHOR)
-                        .append("\" name=\"ref-")
-                        .append(m_context.getPage().getName())
-                        .append("-")
-                        .append(link.substring(1))
-                        .append("\">[")
-                        .append(text)
-                        .append("]</a>")
-                        .toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_FOOTNOTE_ANCHOR).append("\" name=\"ref-")
+                                                   .append(m_context.getPage().getName()).append("-").append(link.substring(1))
+                                                   .append("\">[").append(text).append("]</a>").toString();
 
                 break;
 
-                //
-                //  With the image, external and interwiki types we need to
-                //  make sure nobody can put in Javascript or something else
-                //  annoying into the links themselves.  We do this by preventing
-                //  a haxor from stopping the link name short with quotes in
-                //  fillBuffer().
-                //
+            //
+            //  With the image, external and interwiki types we need to
+            //  make sure nobody can put in Javascript or something else
+            //  annoying into the links themselves.  We do this by preventing
+            //  a haxor from stopping the link name short with quotes in
+            //  fillBuffer().
+            //
             case IMAGE:
-                result =
-                        new StringBuffer("<img src=\"")
-                        .append(link)
-                        .append("\" alt=\"")
-                        .append(text)
-                        .append("\" />").toString();
+                result = new StringBuffer("<img src=\"").append(link).append("\" alt=\"").append(text).append("\" />").toString();
 
                 break;
 
             case IMAGELINK:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\" href=\"")
-                        .append(text)
-                        .append("\"><img src=\"")
-                        .append(link)
-                        .append("\" alt=\"")
-                        .append(text)
-                        .append("\"/></a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(text)
+                                                   .append("\"><img src=\"").append(link).append("\" alt=\"").append(text)
+                                                   .append("\"/></a>").toString();
 
                 break;
 
@@ -3150,45 +3004,24 @@ public class TranslatorReader
 
                 String pagelink = getURL(WikiContext.VIEW, text);
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\" href=\"")
-                        .append(pagelink)
-                        .append("\"><img src=\"")
-                        .append(link)
-                        .append("\" alt=\"")
-                        .append(text)
-                        .append("\" /></a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(pagelink)
+                                                   .append("\"><img src=\"").append(link).append("\" alt=\"").append(text)
+                                                   .append("\" /></a>").toString();
 
                 break;
 
             case EXTERNAL:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_EXTERNAL)
-                        .append("\" ")
-                        .append((m_useRelNofollow
-                                        ? "rel=\"nofollow\" "
-                                        : ""))
-                        .append("href=\"")
-                        .append(link)
-                        .append(section)
-                        .append("\">")
-                        .append(text)
-                        .append("</a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_EXTERNAL).append("\" ")
+                                                   .append((m_useRelNofollow ? "rel=\"nofollow\" " : "")).append("href=\"")
+                                                   .append(link).append(section).append("\">").append(text).append("</a>").toString();
 
                 break;
 
             case INTERWIKI:
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_INTERWIKI)
-                        .append("\" href=\"")
-                        .append(link)
-                        .append(section)
-                        .append("\">")
-                        .append(text)
-                        .append("</a>").toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_INTERWIKI).append("\" href=\"").append(link)
+                                                   .append(section).append("\">").append(text).append("</a>").toString();
 
                 break;
 
@@ -3199,21 +3032,11 @@ public class TranslatorReader
                 String imglink = getURL(WikiContext.NONE, "images/attachment_small.png");
 
                 result =
-                        new StringBuffer("<a class=\"")
-                        .append(WikiConstants.CSS_LINK_ATTACHMENT)
-                        .append("\" href=\"")
-                        .append(attlink)
-                        .append("\">")
-                        .append(text)
-                        .append("</a>")
-                        .append("<a class=\"")
-                        .append(WikiConstants.CSS_WIKICONTENT)
-                        .append("\" href=\"")
-                        .append(infolink)
-                        .append("\"><img src=\"")
-                        .append(imglink)
-                        .append("\" border=\"0\" alt=\"(info)\"/></a>")
-                        .toString();
+                    new StringBuffer("<a class=\"").append(WikiConstants.CSS_LINK_ATTACHMENT).append("\" href=\"").append(attlink)
+                                                   .append("\">").append(text).append("</a>").append("<a class=\"")
+                                                   .append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(infolink)
+                                                   .append("\"><img src=\"").append(imglink)
+                                                   .append("\" border=\"0\" alt=\"(info)\"/></a>").toString();
 
                 break;
 
@@ -3235,12 +3058,8 @@ public class TranslatorReader
          */
         public String makeError(String error)
         {
-            return new StringBuffer("<span class=\"")
-                    .append(WikiConstants.CSS_CLASS_ERROR)
-                    .append("\">")
-                    .append(error)
-                    .append("</span>")
-                    .toString();
+            return new StringBuffer("<span class=\"").append(WikiConstants.CSS_CLASS_ERROR).append("\">").append(error)
+                                                     .append("</span>").toString();
         }
 
         /**
@@ -3269,19 +3088,12 @@ public class TranslatorReader
             hd.setTitleSection(m_engine.encodeName(title));
 
             StringBuffer anchor =
-                    new StringBuffer("section-")
-                    .append(m_engine.encodeName(baseName))
-                    .append("-")
-                    .append(hd.getTitleSection());
+                new StringBuffer("section-").append(m_engine.encodeName(baseName)).append("-").append(hd.getTitleSection());
 
             hd.setTitleAnchor(anchor.toString());
 
-            return new StringBuffer("<a class=\"")
-                    .append(WikiConstants.CSS_ANCHOR)
-                    .append("\" name=\"")
-                    .append(hd.getTitleAnchor())
-                    .append("\" />")
-                    .toString();
+            return new StringBuffer("<a class=\"").append(WikiConstants.CSS_ANCHOR).append("\" name=\"").append(hd.getTitleAnchor())
+                                                  .append("\" />").toString();
         }
 
         /**
@@ -3314,8 +3126,7 @@ public class TranslatorReader
             catch (IOException e)
             {
                 log.fatal("CleanTranslator not working", e);
-                throw new InternalWikiException(
-                        "CleanTranslator not working as expected, when cleaning title" + e.getMessage());
+                throw new InternalWikiException("CleanTranslator not working as expected, when cleaning title" + e.getMessage());
             }
 
             hd.setLevel(level);
@@ -3323,22 +3134,19 @@ public class TranslatorReader
             switch (level)
             {
             case Heading.HEADING_SMALL:
-                res = new StringBuffer("<h4>")
-                        .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
+                res = new StringBuffer("<h4>").append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h4>";
 
                 break;
 
             case Heading.HEADING_MEDIUM:
-                res = new StringBuffer("<h3>")
-                        .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
+                res = new StringBuffer("<h3>").append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h3>";
 
                 break;
 
             case Heading.HEADING_LARGE:
-                res = new StringBuffer("<h2>")
-                        .append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
+                res = new StringBuffer("<h2>").append(makeHeadingAnchor(pageName, outTitle.toString(), hd)).toString();
                 m_closeTag = "</h2>";
 
                 break;
@@ -3353,8 +3161,7 @@ public class TranslatorReader
         /**
          * DOCUMENT ME!
          *
-         * @param bullet A character detailing which kind of a list we are dealing with here.
-         *        Options are '#' and ''.
+         * @param bullet A character detailing which kind of a list we are dealing with here. Options are '#' and ''.
          *
          * @return DOCUMENT ME!
          */
@@ -3404,8 +3211,7 @@ public class TranslatorReader
         /**
          * DOCUMENT ME!
          *
-         * @param bullet A character detailing which kind of a list we are dealing with here.
-         *        Options are '#' and ''.
+         * @param bullet A character detailing which kind of a list we are dealing with here. Options are '#' and ''.
          *
          * @return DOCUMENT ME!
          */
@@ -3556,9 +3362,8 @@ public class TranslatorReader
         {
             if (m_useOutlinkImage)
             {
-                return new StringBuffer("<img src=\"")
-                        .append(getURL(WikiContext.NONE, "images/out.png"))
-                        .append("\" alt=\"\" />").toString();
+                return new StringBuffer("<img src=\"").append(getURL(WikiContext.NONE, "images/out.png")).append("\" alt=\"\" />")
+                                                      .toString();
             }
 
             return "";
@@ -3832,19 +3637,13 @@ public class TranslatorReader
 
             case Heading.HEADING_MEDIUM:
                 res = title;
-                m_closeTag =
-                        new StringBuffer("\n")
-                        .append(StringUtils.repeat("-", title.length()))
-                        .append("\n\n").toString();
+                m_closeTag = new StringBuffer("\n").append(StringUtils.repeat("-", title.length())).append("\n\n").toString();
 
                 break;
 
             case Heading.HEADING_LARGE:
                 res = title.toUpperCase();
-                m_closeTag =
-                        new StringBuffer("\n")
-                        .append(StringUtils.repeat("=", title.length()))
-                        .append("\n\n").toString();
+                m_closeTag = new StringBuffer("\n").append(StringUtils.repeat("=", title.length())).append("\n\n").toString();
 
                 break;
 
@@ -3858,8 +3657,7 @@ public class TranslatorReader
         /**
          * DOCUMENT ME!
          *
-         * @param bullet A character detailing which kind of a list we are dealing with here.
-         *        Options are '#' and ''.
+         * @param bullet A character detailing which kind of a list we are dealing with here. Options are '#' and ''.
          *
          * @return DOCUMENT ME!
          */
@@ -3894,8 +3692,7 @@ public class TranslatorReader
         /**
          * DOCUMENT ME!
          *
-         * @param bullet A character detailing which kind of a list we are dealing with here.
-         *        Options are '#' and ''.
+         * @param bullet A character detailing which kind of a list we are dealing with here. Options are '#' and ''.
          *
          * @return DOCUMENT ME!
          */
@@ -4030,8 +3827,7 @@ public class TranslatorReader
     } // TextRenderer
 
     /**
-     * This class is used to store the headings in a manner which allow the building of a Table Of
-     * Contents.
+     * This class is used to store the headings in a manner which allow the building of a Table Of Contents.
      */
     public static class Heading
     {

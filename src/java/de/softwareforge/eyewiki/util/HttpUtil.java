@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.util;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +46,6 @@ import org.apache.log4j.Logger;
 
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Contains useful utilities for some common HTTP tasks.
  *
@@ -59,14 +58,16 @@ public final class HttpUtil
     /** DOCUMENT ME! */
     private static final Logger log = Logger.getLogger(HttpUtil.class);
 
+    /**
+     * Creates a new HttpUtil object.
+     */
     private HttpUtil()
     {
     }
 
     /**
-     * Attempts to retrieve the given cookie value from the request. Returns the string value
-     * (which may or may not be decoded correctly, depending on browser!), or null if the cookie
-     * is not found.
+     * Attempts to retrieve the given cookie value from the request. Returns the string value (which may or may not be decoded
+     * correctly, depending on browser!), or null if the cookie is not found.
      *
      * @param request The current request
      * @param cookieName The name of the cookie to fetch.
@@ -111,8 +112,7 @@ public final class HttpUtil
         //    pragma: no-cache
         //    cache-control: no-cache
         //
-        if ("no-cache".equalsIgnoreCase(req.getHeader("Pragma"))
-                || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
+        if ("no-cache".equalsIgnoreCase(req.getHeader("Pragma")) || "no-cache".equalsIgnoreCase(req.getHeader("cache-control")))
         {
             return false;
         }
@@ -157,30 +157,30 @@ public final class HttpUtil
     }
 
     /**
-     *  Attempts to form a valid URI based on the string given.  Currently
-     *  it can guess email addresses (mailto:).  If nothing else is given,
-     *  it assumes it to be a http:// url.
-     * 
-     *  @param uri  URI to take a poke at
-     *  @return Possibly a valid URI
-     *  @since 2.2.8
+     * Attempts to form a valid URI based on the string given.  Currently it can guess email addresses (mailto:).  If nothing else
+     * is given, it assumes it to be a http:// url.
+     *
+     * @param uri URI to take a poke at
+     *
+     * @return Possibly a valid URI
+     *
+     * @since 2.2.8
      */
-    public static String guessValidURI( String uri )
+    public static String guessValidURI(String uri)
     {
-        if( uri.indexOf('@') != -1 )
+        if (uri.indexOf('@') != -1)
         {
-            if( !uri.startsWith("mailto:") )
+            if (!uri.startsWith("mailto:"))
             {
                 // Assume this is an email address
-            
-                uri = "mailto:"+uri;
+                uri = "mailto:" + uri;
             }
         }
-        else if( uri.length() > 0 && !((uri.startsWith("http://") || uri.startsWith("https://")) ))
+        else if ((uri.length() > 0) && !((uri.startsWith("http://") || uri.startsWith("https://"))))
         {
-            uri = "http://"+uri;
+            uri = "http://" + uri;
         }
-        
+
         return uri;
     }
 }

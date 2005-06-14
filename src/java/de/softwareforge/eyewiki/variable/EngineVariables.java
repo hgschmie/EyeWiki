@@ -1,5 +1,9 @@
 package de.softwareforge.eyewiki.variable;
 
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 /*
  * ========================================================================
  *
@@ -32,26 +36,38 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import org.picocontainer.Startable;
 
-
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiEngine;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class EngineVariables
         implements Startable
 {
+    /** DOCUMENT ME! */
     private final WikiEngine engine;
+
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new EngineVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     * @param engine DOCUMENT ME!
+     */
     public EngineVariables(final VariableManager variableManager, final WikiEngine engine)
     {
         this.engine = engine;
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // Now is this cool or what?
@@ -63,70 +79,155 @@ public class EngineVariables
         variableManager.registerVariable("baseurl", new BaseURL());
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class ApplicationName
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return engine.getApplicationName();
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class ContentEncoding
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return engine.getContentEncoding();
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class TotalPages
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return Integer.toString(engine.getPageCount());
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class PageProvider
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return engine.getCurrentProvider();
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class PageProviderDescription
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return engine.getCurrentProviderInfo();
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @author $author$
+     * @version $Id$
+     */
     private class BaseURL
             extends AbstractSimpleVariable
             implements WikiVariable
     {
+        /**
+         * DOCUMENT ME!
+         *
+         * @param context DOCUMENT ME!
+         * @param variableName DOCUMENT ME!
+         *
+         * @return DOCUMENT ME!
+         */
         public String getValue(WikiContext context, String variableName)
         {
             return engine.getBaseURL();
         }
     }
-
 }
-

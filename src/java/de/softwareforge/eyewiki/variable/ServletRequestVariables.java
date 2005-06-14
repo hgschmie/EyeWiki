@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,39 +33,62 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class ServletRequestVariables
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new ServletRequestVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public ServletRequestVariables(VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // Hardcoded sequence of the evaluators
         variableManager.registerEvaluator(this, MIN_PRIORITY - 3);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param varName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     * @throws NoSuchVariableException DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String varName)
             throws Exception
     {
         //  Well, I guess it wasn't a final straw.  We also allow
         //  variables from the session.
         //
-
         HttpServletRequest req = context.getHttpRequest();
 
         if (req != null)

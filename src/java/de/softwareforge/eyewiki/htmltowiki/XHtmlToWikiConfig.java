@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
+
 /*
  * ========================================================================
  *
@@ -32,9 +33,7 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiContext;
-
 
 /**
  * Config class for XHtmlToWikiTranslator
@@ -43,29 +42,19 @@ import de.softwareforge.eyewiki.WikiContext;
  */
 public class XHtmlToWikiConfig
 {
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String outlink = "outlink";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String pageInfoJsp = "PageInfo.jsp";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String wikiJspPage = "Wiki.jsp?page=";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String attachPage = "attach?page=";
 
-    /**
-     * DOCUMENT ME!
-     */
+    /** DOCUMENT ME! */
     private String pageName;
 
     /**

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import java.io.ByteArrayInputStream;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
@@ -43,7 +44,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
-
 
 import de.softwareforge.eyewiki.PageTimeComparator;
 import de.softwareforge.eyewiki.WikiContext;
@@ -56,15 +56,13 @@ import de.softwareforge.eyewiki.plugin.WeblogEntryPlugin;
 import de.softwareforge.eyewiki.plugin.WeblogPlugin;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
-
 /**
  * Provides handlers for all RPC routines of the MetaWeblog API.
- *
+ * 
  * <P>
- * eyeWiki does not support categories, and therefore we always return an empty list for
- * getCategories().  Note also that this API is not suitable for general Wiki editing, since
- * eyeWiki formats the entries in a wiki-compatible manner.  And you cannot choose your page names
- * either.  Since 2.1.94 the entire MetaWeblog API is supported.
+ * eyeWiki does not support categories, and therefore we always return an empty list for getCategories().  Note also that this API
+ * is not suitable for general Wiki editing, since eyeWiki formats the entries in a wiki-compatible manner.  And you cannot choose
+ * your page names either.  Since 2.1.94 the entire MetaWeblog API is supported.
  * </p>
  *
  * @author Janne Jalkanen
@@ -91,9 +89,8 @@ public class MetaWeblogHandler
     }
 
     /**
-     * Does a quick check against the current user and does he have permissions to do the stuff
-     * that he really wants to.
-     *
+     * Does a quick check against the current user and does he have permissions to do the stuff that he really wants to.
+     * 
      * <p>
      * If there is no authentication enabled, returns normally.
      * </p>
@@ -105,8 +102,7 @@ public class MetaWeblogHandler
      *
      * @throws XmlRpcException with the correct error message, if auth fails.
      */
-    private void checkPermissions(
-        WikiPage page, String username, String password, String permission)
+    private void checkPermissions(WikiPage page, String username, String password, String permission)
             throws XmlRpcException
     {
         /*
@@ -145,8 +141,7 @@ public class MetaWeblogHandler
     }
 
     /**
-     * eyeWiki does not support categories, therefore eyeWiki always returns an empty list for
-     * categories.
+     * eyeWiki does not support categories, therefore eyeWiki always returns an empty list for categories.
      *
      * @param blogid DOCUMENT ME!
      * @param username DOCUMENT ME!
@@ -233,8 +228,7 @@ public class MetaWeblogHandler
 
     // FIXME: The implementation is suboptimal, as it
     //        goes through all of the blog entries.
-    public Hashtable getRecentPosts(
-        String blogid, String username, String password, int numberOfPosts)
+    public Hashtable getRecentPosts(String blogid, String username, String password, int numberOfPosts)
             throws XmlRpcException
     {
         Hashtable result = new Hashtable();
@@ -253,15 +247,13 @@ public class MetaWeblogHandler
             {
                 WeblogPlugin plugin = (WeblogPlugin) pluginManager.findPlugin("WeblogPlugin");
 
-                List changed =
-                        plugin.findBlogEntries(blogid, new Date(0L), new Date());
+                List changed = plugin.findBlogEntries(blogid, new Date(0L), new Date());
 
                 Collections.sort(changed, new PageTimeComparator());
 
                 int items = 0;
 
-                for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts);
-                     items++)
+                for (Iterator i = changed.iterator(); i.hasNext() && (items < numberOfPosts); items++)
                 {
                     WikiPage p = (WikiPage) i.next();
 
@@ -292,8 +284,7 @@ public class MetaWeblogHandler
      *
      * @throws XmlRpcException DOCUMENT ME!
      */
-    public String newPost(
-        String blogid, String username, String password, Hashtable content, boolean publish)
+    public String newPost(String blogid, String username, String password, Hashtable content, boolean publish)
             throws XmlRpcException
     {
         log.info("metaWeblog.newPost() called");
@@ -339,8 +330,8 @@ public class MetaWeblogHandler
     }
 
     /**
-     * Creates an attachment and adds it to the blog.  The attachment is created into the main blog
-     * page, not the actual post page, because we do not know it at this point.
+     * Creates an attachment and adds it to the blog.  The attachment is created into the main blog page, not the actual post page,
+     * because we do not know it at this point.
      *
      * @param blogid DOCUMENT ME!
      * @param username DOCUMENT ME!
@@ -351,8 +342,7 @@ public class MetaWeblogHandler
      *
      * @throws XmlRpcException DOCUMENT ME!
      */
-    public Hashtable newMediaObject(
-        String blogid, String username, String password, Hashtable content)
+    public Hashtable newMediaObject(String blogid, String username, String password, Hashtable content)
             throws XmlRpcException
     {
         String url = "";
@@ -388,8 +378,8 @@ public class MetaWeblogHandler
     }
 
     /**
-     * Allows the user to edit a post.  It does not allow general editability of wiki pages,
-     * because of the limitations of the metaWeblog API.
+     * Allows the user to edit a post.  It does not allow general editability of wiki pages, because of the limitations of the
+     * metaWeblog API.
      *
      * @param postid DOCUMENT ME!
      * @param username DOCUMENT ME!
@@ -401,8 +391,7 @@ public class MetaWeblogHandler
      *
      * @throws XmlRpcException DOCUMENT ME!
      */
-    boolean editPost(
-        String postid, String username, String password, Hashtable content, boolean publish)
+    boolean editPost(String postid, String username, String password, Hashtable content, boolean publish)
             throws XmlRpcException
     {
         if (log.isInfoEnabled())

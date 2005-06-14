@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.providers;
 
+
 /*
  * ========================================================================
  *
@@ -32,13 +33,13 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import java.util.Properties;
 
 import org.apache.commons.configuration.Configuration;
@@ -48,13 +49,12 @@ import org.apache.log4j.Logger;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Provides a simple directory based repository for Wiki pages.
- *
+ * 
  * <P>
- * All files have ".txt" appended to make life easier for those who insist on using Windows or
- * other software which makes assumptions on the files contents based on its name.
+ * All files have ".txt" appended to make life easier for those who insist on using Windows or other software which makes
+ * assumptions on the files contents based on its name.
  * </p>
  *
  * @author Janne Jalkanen
@@ -68,6 +68,14 @@ public class FileSystemProvider
     /** All metadata is stored in a file with this extension. */
     public static final String EXTENSION_PROPS = ".properties";
 
+    /**
+     * Creates a new FileSystemProvider object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public FileSystemProvider(WikiEngine engine, Configuration conf)
             throws Exception
     {
@@ -117,8 +125,7 @@ public class FileSystemProvider
             {
                 props.setProperty("author", author);
 
-                File file =
-                    new File(getPageDirectory(), mangleName(page.getName()) + EXTENSION_PROPS);
+                File file = new File(getPageDirectory(), mangleName(page.getName()) + EXTENSION_PROPS);
 
                 out = new FileOutputStream(file);
 

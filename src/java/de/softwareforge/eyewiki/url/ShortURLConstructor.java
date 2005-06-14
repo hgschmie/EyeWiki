@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.url;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.url;
  *
  * ========================================================================
  */
-
 import java.io.UnsupportedEncodingException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -43,12 +44,10 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
-
 
 /**
  * Provides a way to do short URLs of the form /wiki/PageName.
@@ -66,6 +65,12 @@ public class ShortURLConstructor
     /** DOCUMENT ME! */
     protected String m_urlPrefix = "";
 
+    /**
+     * Creates a new ShortURLConstructor object.
+     *
+     * @param engine DOCUMENT ME!
+     * @param conf DOCUMENT ME!
+     */
     public ShortURLConstructor(final WikiEngine engine, final Configuration conf)
     {
         super(engine, conf);
@@ -86,9 +91,8 @@ public class ShortURLConstructor
 
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                        "Short URL prefix path=" + m_urlPrefix + " (You can use "
-                        + WikiProperties.PROP_SHORTURL_PREFIX + " to override this)");
+                    log.info("Short URL prefix path=" + m_urlPrefix + " (You can use " + WikiProperties.PROP_SHORTURL_PREFIX
+                        + " to override this)");
                 }
             }
             catch (MalformedURLException e)
@@ -218,10 +222,17 @@ public class ShortURLConstructor
         return pagereq;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param req DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getForwardPage(HttpServletRequest req)
     {
         String jspPage = req.getParameter("do");
 
-        return (jspPage == null) ? "Wiki.jsp" : jspPage + ".jsp";
+        return (jspPage == null) ? "Wiki.jsp" : (jspPage + ".jsp");
     }
 }

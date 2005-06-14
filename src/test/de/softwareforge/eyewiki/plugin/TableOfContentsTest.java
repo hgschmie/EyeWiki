@@ -1,5 +1,9 @@
 package de.softwareforge.eyewiki.plugin;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+
 /*
  * ========================================================================
  *
@@ -32,19 +36,16 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.commons.configuration.Configuration;
-
-import de.softwareforge.eyewiki.TestEngine;
-
 /**
- *  @author jalkanen
+ * DOCUMENT ME!
  *
- *  @since 
+ * @author jalkanen
+ *
+ * @since
  */
 public class TableOfContentsTest
         extends TestCase
@@ -52,14 +53,19 @@ public class TableOfContentsTest
     /** DOCUMENT ME! */
     Configuration conf = null;
 
+    /** DOCUMENT ME! */
     TestEngine testEngine;
 
+    /**
+     * Creates a new TableOfContentsTest object.
+     *
+     * @param s DOCUMENT ME!
+     */
     public TableOfContentsTest(String s)
     {
         super(s);
     }
 
-    
     /*
      * @see TestCase#setUp()
      */
@@ -73,34 +79,40 @@ public class TableOfContentsTest
     /*
      * @see TestCase#tearDown()
      */
-    protected void tearDown() throws Exception
+    protected void tearDown()
+            throws Exception
     {
         testEngine.cleanup();
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     */
     public void testHeadingVariables()
             throws Exception
     {
-        String src="[{SET foo=bar}]\n\n[{TableOfContents}]\n\n!!!Heading [{$foo}]";
-        
-        testEngine.saveText( "Test", src );
-        
-        String res = testEngine.getHTML( "Test" );
-        
+        String src = "[{SET foo=bar}]\n\n[{TableOfContents}]\n\n!!!Heading [{$foo}]";
+
+        testEngine.saveText("Test", src);
+
+        String res = testEngine.getHTML("Test");
+
         // FIXME: There's an extra space before the <a>...  Where does it come from?
         // FIXME: The <p> should not be here.
-        assertEquals( "\n<p><div class=\"toc\">\n"+
-                "<h1 class=\"toc\">Table of Contents</h1>\n"+
-                "<ul>\n"+
-                "<li> <a class=\"wikicontent\" href=\"Wiki.jsp?page=Test#section-Test-HeadingBar\">Heading bar</a>\n</li>\n"+
-                "</ul>\n</div>\n\n</p>"+
-                "\n<h2><a class=\"wikianchor\" name=\"section-Test-HeadingBar\" />Heading bar</h2>\n",
-                res );
+        assertEquals("\n<p><div class=\"toc\">\n" + "<h1 class=\"toc\">Table of Contents</h1>\n" + "<ul>\n"
+            + "<li> <a class=\"wikicontent\" href=\"Wiki.jsp?page=Test#section-Test-HeadingBar\">Heading bar</a>\n</li>\n"
+            + "</ul>\n</div>\n\n</p>" + "\n<h2><a class=\"wikianchor\" name=\"section-Test-HeadingBar\" />Heading bar</h2>\n", res);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public static Test suite()
     {
-        return new TestSuite( TableOfContentsTest.class );
+        return new TestSuite(TableOfContentsTest.class);
     }
-    
 }

@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.plugin;
 
+
 /*
  * ========================================================================
  *
@@ -32,12 +33,12 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.io.StringWriter;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -61,12 +62,6 @@ import org.apache.oro.text.regex.PatternMatcher;
 import org.apache.oro.text.regex.Perl5Compiler;
 import org.apache.oro.text.regex.Perl5Matcher;
 
-import org.picocontainer.PicoContainer;
-import org.picocontainer.Startable;
-import org.picocontainer.defaults.ObjectReference;
-import org.picocontainer.defaults.SimpleReference;
-
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -75,14 +70,18 @@ import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.InternalWikiException;
 import de.softwareforge.eyewiki.util.FileUtil;
 
+import org.picocontainer.PicoContainer;
+import org.picocontainer.Startable;
+import org.picocontainer.defaults.ObjectReference;
+import org.picocontainer.defaults.SimpleReference;
 
 /**
- * Manages plugin classes.  There exists a single instance of PluginManager per each instance of
- * WikiEngine, that is, each eyeWiki instance.
- *
+ * Manages plugin classes.  There exists a single instance of PluginManager per each instance of WikiEngine, that is, each eyeWiki
+ * instance.
+ * 
  * <P>
  * A plugin is defined to have three parts:
- *
+ * 
  * <OL>
  * <li>
  * The plugin class
@@ -94,7 +93,7 @@ import de.softwareforge.eyewiki.util.FileUtil;
  * The plugin body
  * </li>
  * </ol>
- *
+ * 
  * For example, in the following line of code:
  * <pre>
  *  [{INSERT de.softwareforge.eyewiki.plugin.FunnyPlugin  foo='bar'
@@ -102,31 +101,29 @@ import de.softwareforge.eyewiki.util.FileUtil;
  *   abcdefghijklmnopqrstuvw
  *  01234567890}]
  *  </pre>
- * The plugin class is "de.softwareforge.eyewiki.plugin.FunnyPlugin", the parameters are "foo" and "blob"
- * (having values "bar" and "goo", respectively), and the plugin body is then
- * "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is accessible via a special parameter
- * called "_body".
+ * The plugin class is "de.softwareforge.eyewiki.plugin.FunnyPlugin", the parameters are "foo" and "blob" (having values "bar" and
+ * "goo", respectively), and the plugin body is then "abcdefghijklmnopqrstuvw\n01234567890".   The plugin body is accessible via a
+ * special parameter called "_body".
  * </p>
- *
+ * 
  * <p>
- * If the parameter "debug" is set to "true" for the plugin, eyeWiki will output debugging
- * information directly to the page if there is an exception.
+ * If the parameter "debug" is set to "true" for the plugin, eyeWiki will output debugging information directly to the page if
+ * there is an exception.
  * </p>
- *
+ * 
  * <P>
- * The class name can be shortened, and marked without the package. For example, "FunnyPlugin"
- * would be expanded to "de.softwareforge.eyewiki.plugin.FunnyPlugin" automatically.  It is also possible
- * to defined other packages, by setting the "eyewiki.plugin.searchPath" property.  See the
- * included eyewiki.properties file for examples.
+ * The class name can be shortened, and marked without the package. For example, "FunnyPlugin" would be expanded to
+ * "de.softwareforge.eyewiki.plugin.FunnyPlugin" automatically.  It is also possible to defined other packages, by setting the
+ * "eyewiki.plugin.searchPath" property.  See the included eyewiki.properties file for examples.
  * </p>
- *
+ * 
  * <P>
  * Even though the nominal way of writing the plugin is
  * <pre>
  *  [{INSERT pluginclass WHERE param1=value1...}],
  *  </pre>
- * it is possible to shorten this quite a lot, by skipping the INSERT, and WHERE words, and
- * dropping the package name.  For example:
+ * it is possible to shorten this quite a lot, by skipping the INSERT, and WHERE words, and dropping the package name.  For
+ * example:
  * <pre>
  *  [{INSERT de.softwareforge.eyewiki.plugin.Counter WHERE name='foo'}]
  *  </pre>
@@ -173,12 +170,14 @@ public class PluginManager
     /**
      * Create a new PluginManager.
      *
+     * @param engine DOCUMENT ME!
      * @param conf Contents of a "eyewiki.properties" file.
      *
+     * @throws Exception DOCUMENT ME!
      * @throws InternalWikiException DOCUMENT ME!
      */
     public PluginManager(WikiEngine engine, Configuration conf)
-    	throws Exception
+            throws Exception
     {
         this.engine = engine;
 
@@ -186,8 +185,7 @@ public class PluginManager
 
         try
         {
-            m_pluginPattern =
-                    compiler.compile("\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*");
+            m_pluginPattern = compiler.compile("\\{?(INSERT)?\\s*([\\w\\._]+)[ \\t]*(WHERE)?[ \\t]*");
         }
         catch (MalformedPatternException e)
         {
@@ -211,11 +209,15 @@ public class PluginManager
         pluginContainer = (PicoContainer) pluginContainerRef.get();
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         if (pluginContainer == null)
         {
             setStarted(true);
+
             return;
         }
 
@@ -231,6 +233,7 @@ public class PluginManager
             for (Iterator it = pages.iterator(); it.hasNext();)
             {
                 WikiPage page = (WikiPage) it.next();
+
                 // content evaluation runs the plugins
                 engine.getHTML(page);
             }
@@ -247,23 +250,37 @@ public class PluginManager
         setStarted(true);
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         if (pluginContainer == null)
         {
             setStarted(false);
+
             return;
         }
 
         pluginContainer.stop();
         setStarted(false);
-}
+    }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param started DOCUMENT ME!
+     */
     protected void setStarted(final boolean started)
     {
         this.started = started;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public boolean isStarted()
     {
         return started;
@@ -289,14 +306,19 @@ public class PluginManager
         m_initStage = value;
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     protected boolean isInitStage()
     {
         return m_initStage;
     }
 
     /**
-     * Returns plugin execution status. If false, plugins are not executed when they are
-     * encountered on a WikiPage, and an empty string is returned in their place.
+     * Returns plugin execution status. If false, plugins are not executed when they are encountered on a WikiPage, and an empty
+     * string is returned in their place.
      *
      * @return DOCUMENT ME!
      */
@@ -307,7 +329,7 @@ public class PluginManager
 
     /**
      * Returns true if the link is really command to insert a plugin.
-     *
+     * 
      * <P>
      * Currently we just check if the link starts with "{INSERT", or just plain "{" but not "{$".
      * </p>
@@ -338,6 +360,7 @@ public class PluginManager
         StringWriter out = new StringWriter();
         pre pre = new pre(out.toString());
         pre.setClass(WikiConstants.CSS_CLASS_ERROR);
+
         b b = new b("Parameters to the plugin");
         b.setClass(WikiConstants.CSS_CLASS_ERROR);
 
@@ -364,14 +387,14 @@ public class PluginManager
 
     /**
      * Executes a plugin class in the given context.
-     *
+     * 
      * <P>
      * Used to be private, but is public since 1.9.21.
      * </p>
      *
      * @param context The current WikiContext.
-     * @param classname The name of the class.  Can also be a shortened version without the package
-     *        name, since the class name is searched from the package search path.
+     * @param classname The name of the class.  Can also be a shortened version without the package name, since the class name is
+     *        searched from the package search path.
      * @param params A parsed map of key-value pairs.
      *
      * @return Whatever the plugin returns.
@@ -383,7 +406,7 @@ public class PluginManager
     public String execute(WikiContext context, String classname, Map params)
             throws PluginException
     {
-        if (!m_pluginsEnabled || pluginContainer == null)
+        if (!m_pluginsEnabled || (pluginContainer == null))
         {
             return ("");
         }
@@ -402,7 +425,6 @@ public class PluginManager
 
         try
         {
-
             if (isInitStage())
             {
                 if (plugin instanceof InitializablePlugin)
@@ -441,6 +463,13 @@ public class PluginManager
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param pluginName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public WikiPlugin findPlugin(String pluginName)
     {
         return (WikiPlugin) pluginContainer.getComponentInstance(pluginName);
@@ -449,12 +478,11 @@ public class PluginManager
     /**
      * Parses plugin arguments.  Handles quotes and all other kewl stuff.
      *
-     * @param argstring The argument string to the plugin.  This is typically a list of key-value
-     *        pairs, using "'" to escape spaces in strings, followed by an empty line and then the
-     *        plugin body.  In case the parameter is null, will return an empty parameter list.
+     * @param argstring The argument string to the plugin.  This is typically a list of key-value pairs, using "'" to escape spaces
+     *        in strings, followed by an empty line and then the plugin body.  In case the parameter is null, will return an empty
+     *        parameter list.
      *
-     * @return A parsed list of parameters.  The plugin body is put into a special parameter
-     *         defined by PluginManager.PARAM_BODY.
+     * @return A parsed list of parameters.  The plugin body is put into a special parameter defined by PluginManager.PARAM_BODY.
      *
      * @throws IOException If the parsing fails.
      */
@@ -566,9 +594,9 @@ public class PluginManager
     }
 
     /**
-     * Parses a plugin.  Plugin commands are of the form: [{INSERT myplugin WHERE param1=value1,
-     * param2=value2}] myplugin may either be a class name or a plugin alias.
-     *
+     * Parses a plugin.  Plugin commands are of the form: [{INSERT myplugin WHERE param1=value1, param2=value2}] myplugin may
+     * either be a class name or a plugin alias.
+     * 
      * <P>
      * This is the main entry point that is used.
      * </p>
@@ -598,12 +626,8 @@ public class PluginManager
 
                 String plugin = res.group(2);
                 String args =
-                        commandline.substring(
-                                res.endOffset(0),
-                                commandline.length()
-                                - ((commandline.charAt(commandline.length() - 1) == '}')
-                                        ? 1
-                                        : 0));
+                    commandline.substring(res.endOffset(0),
+                        commandline.length() - ((commandline.charAt(commandline.length() - 1) == '}') ? 1 : 0));
                 Map arglist = parseArgs(args);
 
                 return execute(context, plugin, arglist);

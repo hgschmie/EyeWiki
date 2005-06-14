@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
-
 import java.security.Principal;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -48,7 +49,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.TranslatorReader;
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiEngine;
@@ -56,7 +56,6 @@ import de.softwareforge.eyewiki.WikiException;
 import de.softwareforge.eyewiki.WikiProperties;
 import de.softwareforge.eyewiki.exception.NoRequiredPropertyException;
 import de.softwareforge.eyewiki.util.HttpUtil;
-
 
 /**
  * Manages user accounts, logins/logouts, passwords, etc.
@@ -104,25 +103,25 @@ public class UserManager
     private boolean m_useOldAuth = false;
 
     /**
-     * Creates an UserManager instance for the given WikiEngine and the specified set of
-     * properties.  All initialization for the modules is done here.
+     * Creates an UserManager instance for the given WikiEngine and the specified set of properties.  All initialization for the
+     * modules is done here.
      *
-     * @param engine DOCUMENT ME!
      * @param conf DOCUMENT ME!
+     * @param authorizationManager DOCUMENT ME!
+     * @param authenticator DOCUMENT ME!
+     * @param userDatabase DOCUMENT ME!
      *
      * @throws WikiException DOCUMENT ME!
+     * @throws NoRequiredPropertyException DOCUMENT ME!
      */
-    public UserManager(final Configuration conf,
-            final AuthorizationManager authorizationManager,
-            final WikiAuthenticator authenticator,
-            final UserDatabase userDatabase)
+    public UserManager(final Configuration conf, final AuthorizationManager authorizationManager,
+        final WikiAuthenticator authenticator, final UserDatabase userDatabase)
             throws WikiException
     {
         m_authenticator = authenticator;
         m_database = userDatabase;
 
-        m_storeIPAddress =
-            conf.getBoolean(PROP_AUTH_STOREIPADDRESS, PROP_AUTH_STOREIPADDRESS_DEFAULT);
+        m_storeIPAddress = conf.getBoolean(PROP_AUTH_STOREIPADDRESS, PROP_AUTH_STOREIPADDRESS_DEFAULT);
         m_administrator = conf.getString(PROP_AUTH_ADMINISTRATOR, PROP_AUTH_ADMINISTRATOR_DEFAULT);
         m_useOldAuth = authorizationManager.isOldAuth();
 
@@ -141,12 +140,14 @@ public class UserManager
 
         if (m_authenticator == null)
         {
-            throw new NoRequiredPropertyException("Unable to find an Authenticator entry in the component configuration!", WikiConstants.AUTHENTICATOR);
+            throw new NoRequiredPropertyException("Unable to find an Authenticator entry in the component configuration!",
+                WikiConstants.AUTHENTICATOR);
         }
 
         if (m_database == null)
         {
-            throw new NoRequiredPropertyException("Unable to find an Database entry in the component configuration!", WikiConstants.USER_DATABASE);
+            throw new NoRequiredPropertyException("Unable to find an Database entry in the component configuration!",
+                WikiConstants.USER_DATABASE);
         }
 
         if (log.isInfoEnabled())
@@ -156,6 +157,9 @@ public class UserManager
         }
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void stop()
     {
         // GNDN
@@ -217,8 +221,7 @@ public class UserManager
     }
 
     /**
-     * Returns true, if the user or the group represents a super user, which should be allowed
-     * access to everything.
+     * Returns true, if the user or the group represents a super user, which should be allowed access to everything.
      *
      * @param p Principal to check for administrator access.
      *
@@ -250,10 +253,9 @@ public class UserManager
     }
 
     /**
-     * Returns a WikiGroup instance for a given name.  WikiGroups are cached, so there is basically
-     * a singleton across the Wiki for a group. The reason why this class caches them instead of
-     * the WikiGroup class itself is that it is the business of the User Manager to handle such
-     * issues.
+     * Returns a WikiGroup instance for a given name.  WikiGroups are cached, so there is basically a singleton across the Wiki for
+     * a group. The reason why this class caches them instead of the WikiGroup class itself is that it is the business of the User
+     * Manager to handle such issues.
      *
      * @param name Name of the group.  This is case-sensitive.
      *
@@ -382,12 +384,12 @@ public class UserManager
     }
 
     /**
-     * Attempts to perform a login for the given username/password combination.  Also sets the
-     * attribute UserManager.WIKIUSER in the current session, which can then be used to fetch the
-     * current UserProfile.  Or you can be lazy and just call getUserProfile()...
+     * Attempts to perform a login for the given username/password combination.  Also sets the attribute UserManager.WIKIUSER in
+     * the current session, which can then be used to fetch the current UserProfile.  Or you can be lazy and just call
+     * getUserProfile()...
      *
-     * @param username The user name.  This is an user name, not a WikiName.  In most cases they
-     *        are the same, but in some cases, they might not be.
+     * @param username The user name.  This is an user name, not a WikiName.  In most cases they are the same, but in some cases,
+     *        they might not be.
      * @param password The password.
      * @param session DOCUMENT ME!
      *
@@ -449,8 +451,7 @@ public class UserManager
             {
                 if (log.isInfoEnabled())
                 {
-                    log.info(
-                        "Username " + username + " attempted to log in with the wrong password.");
+                    log.info("Username " + username + " attempted to log in with the wrong password.");
                 }
             }
 
@@ -486,13 +487,12 @@ public class UserManager
     }
 
     /**
-     * Gets a UserProfile, either from the request (presumably authenticated and with auth
-     * information) or a new one (with default permissions).
+     * Gets a UserProfile, either from the request (presumably authenticated and with auth information) or a new one (with default
+     * permissions).
      *
      * @param request The servlet request for this user.
      *
-     * @return A valid UserProfile.  Can also return null in case it is not possible to get an
-     *         UserProfile.
+     * @return A valid UserProfile.  Can also return null in case it is not possible to get an UserProfile.
      *
      * @since 2.1.10.
      */
@@ -521,8 +521,8 @@ public class UserManager
     }
 
     /**
-     * Performs a "limited" login: sniffs for a user name from a cookie or the client, and creates
-     * a limited user profile based on it.
+     * Performs a "limited" login: sniffs for a user name from a cookie or the client, and creates a limited user profile based on
+     * it.
      *
      * @param request DOCUMENT ME!
      *
@@ -636,8 +636,7 @@ public class UserManager
         // Set cookie only if we actually have a user database configured
         if (profile != null)
         {
-            Cookie prefs =
-                new Cookie(WikiEngine.PREFS_COOKIE_NAME, profile.getStringRepresentation());
+            Cookie prefs = new Cookie(WikiEngine.PREFS_COOKIE_NAME, profile.getStringRepresentation());
 
             prefs.setMaxAge(1001 * 24 * 60 * 60); // 1001 days is default.
 

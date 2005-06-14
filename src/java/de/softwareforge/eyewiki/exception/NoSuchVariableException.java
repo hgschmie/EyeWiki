@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.exception;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.exception;
  *
  * ========================================================================
  */
-
 import de.softwareforge.eyewiki.WikiException;
 
 /**

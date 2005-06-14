@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,10 +33,11 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,29 +46,26 @@ import javax.servlet.jsp.JspWriter;
 
 import org.apache.commons.lang.StringUtils;
 
-
 import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.providers.ProviderException;
 
-
 /**
  * Provides a nice calendar.  Responds to the following HTTP parameters:
- *
+ * 
  * <ul>
  * <li>
- * calendar.date - If this parameter exists, then the calendar date is taken from the month and
- * year.  The date must be in ddMMyy format.
+ * calendar.date - If this parameter exists, then the calendar date is taken from the month and year.  The date must be in ddMMyy
+ * format.
  * </li>
  * <li>
  * weblog.startDate - If calendar.date parameter does not exist, we then check this date.
  * </li>
  * </ul>
- *
- * If neither calendar.date nor weblog.startDate parameters exist, then the calendar will default
- * to the current month.
+ * 
+ * If neither calendar.date nor weblog.startDate parameters exist, then the calendar will default to the current month.
  *
  * @author Janne Jalkanen
  *
@@ -159,15 +158,11 @@ public class CalendarTag
                 {
                     String url = m_urlFormat.format(day.getTime());
 
-                    result =
-                        "<td><a href=\"" + url + "\">" + day.get(Calendar.DATE)
-                        + "</a></td>";
+                    result = "<td><a href=\"" + url + "\">" + day.get(Calendar.DATE) + "</a></td>";
                 }
                 else
                 {
-                    result =
-                        "<td><a href=\"" + m_wikiContext.getViewURL(pagename)
-                        + "\">" + day.get(Calendar.DATE) + "</a></td>";
+                    result = "<td><a href=\"" + m_wikiContext.getViewURL(pagename) + "\">" + day.get(Calendar.DATE) + "</a></td>";
                 }
             }
             else
@@ -230,8 +225,7 @@ public class CalendarTag
             String pageName = thePage.getName();
 
             String calendarDate = m_dateFormat.format(day.getTime());
-            String url =
-                m_wikiContext.getURL(WikiContext.VIEW, pageName, "calendar.date=" + calendarDate);
+            String url = m_wikiContext.getURL(WikiContext.VIEW, pageName, "calendar.date=" + calendarDate);
 
             if ((queryString != null) && (queryString.length() > 0))
             {
@@ -329,19 +323,18 @@ public class CalendarTag
 
         HttpServletRequest httpServletRequest = m_wikiContext.getHttpRequest();
         String queryString = engine.safeGetQueryString(httpServletRequest);
-        out.write(
-            "<tr>" + getMonthNaviLink(prevCal, "&lt;&lt;", queryString)
-            + "<td colspan=5 class=\"" + WikiConstants.CSS_CALENDAR + "\">" + getMonthLink(cal) + "</td>"
-            + getMonthNaviLink(nextCal, "&gt;&gt;", queryString) + "</tr>\n");
+        out.write("<tr>" + getMonthNaviLink(prevCal, "&lt;&lt;", queryString) + "<td colspan=5 class=\""
+            + WikiConstants.CSS_CALENDAR + "\">" + getMonthLink(cal) + "</td>" + getMonthNaviLink(nextCal, "&gt;&gt;", queryString)
+            + "</tr>\n");
 
         int month = cal.get(Calendar.MONTH);
         cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY); // Then, find the first day of the week.
 
-        out.write(
-            "<tr><td class=\"" + WikiConstants.CSS_CALENDAR + "\">Mon</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Tue</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Wed</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Thu</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Fri</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Sat</td>"
-            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Sun</td></tr>\n");
+        out.write("<tr><td class=\"" + WikiConstants.CSS_CALENDAR + "\">Mon</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR
+            + "\">Tue</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Wed</td>" + "<td class=\""
+            + WikiConstants.CSS_CALENDAR + "\">Thu</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Fri</td>"
+            + "<td class=\"" + WikiConstants.CSS_CALENDAR + "\">Sat</td>" + "<td class=\"" + WikiConstants.CSS_CALENDAR
+            + "\">Sun</td></tr>\n");
 
         boolean noMoreDates = false;
 

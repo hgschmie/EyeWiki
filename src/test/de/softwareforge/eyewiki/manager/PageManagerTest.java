@@ -1,5 +1,15 @@
 package de.softwareforge.eyewiki.manager;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.WikiProperties;
+import de.softwareforge.eyewiki.manager.PageManager;
+import de.softwareforge.eyewiki.providers.CachingProvider;
+
 /*
  * ========================================================================
  *
@@ -32,22 +42,9 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.log4j.PropertyConfigurator;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiEngine;
-import de.softwareforge.eyewiki.WikiProperties;
-import de.softwareforge.eyewiki.manager.PageManager;
-import de.softwareforge.eyewiki.providers.CachingProvider;
-
 
 /**
  * DOCUMENT ME!
@@ -117,6 +114,7 @@ public class PageManagerTest
             throws Exception
     {
         conf.setProperty(WikiProperties.PROP_COMPONENTS_FILE, "src/test/etc/versComponents.xml");
+
         WikiEngine engine2 = new TestEngine(conf);
 
         PageManager m = new PageManager(engine2, conf);

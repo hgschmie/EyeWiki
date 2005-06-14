@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.variable;
 
+
 /*
  * ========================================================================
  *
@@ -32,29 +33,53 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
-
-
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.manager.VariableManager;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Id$
+ */
 public class HttpParameterVariables
         extends AbstractVariable
         implements WikiVariable
 {
+    /** DOCUMENT ME! */
     private final VariableManager variableManager;
 
+    /**
+     * Creates a new HttpParameterVariables object.
+     *
+     * @param variableManager DOCUMENT ME!
+     */
     public HttpParameterVariables(VariableManager variableManager)
     {
         this.variableManager = variableManager;
     }
 
+    /**
+     * DOCUMENT ME!
+     */
     public synchronized void start()
     {
         // Hardcoded sequence of the evaluators
         variableManager.registerEvaluator(this, MIN_PRIORITY - 4);
     }
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @param context DOCUMENT ME!
+     * @param varName DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws Exception DOCUMENT ME!
+     * @throws NoSuchVariableException DOCUMENT ME!
+     */
     public String getValue(WikiContext context, String varName)
             throws Exception
     {
@@ -62,6 +87,7 @@ public class HttpParameterVariables
         //  variables from the request.
         //
         String res = context.getHttpParameter(varName);
+
         if (res != null)
         {
             return res;

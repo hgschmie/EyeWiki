@@ -1,5 +1,12 @@
 package de.softwareforge.eyewiki.plugin;
 
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.plugin.PluginManager;
+
 /*
  * ========================================================================
  *
@@ -32,19 +39,9 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
-
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.apache.commons.configuration.Configuration;
-
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.plugin.PluginManager;
-
 
 /**
  * DOCUMENT ME!
@@ -113,8 +110,8 @@ public class UndefinedPagesPluginTest
     }
 
     /**
-     * Tests that only correct undefined links are found. We also check against plural forms here,
-     * which should not be listed as non-existant.
+     * Tests that only correct undefined links are found. We also check against plural forms here, which should not be listed as
+     * non-existant.
      *
      * @throws Exception DOCUMENT ME!
      */
@@ -123,8 +120,7 @@ public class UndefinedPagesPluginTest
     {
         WikiContext context2 = new WikiContext(engine, new WikiPage("Foobar"));
 
-        String res =
-            manager.execute(context2, "{INSERT UndefinedPagesPlugin");
+        String res = manager.execute(context2, "{INSERT UndefinedPagesPlugin");
 
         String exp = "[Foobar 2]\\\\";
 

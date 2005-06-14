@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.tags;
 
+
 /*
  * ========================================================================
  *
@@ -32,8 +33,8 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
-
 import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -46,20 +47,19 @@ import org.apache.log4j.Logger;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 
-
 /**
  * Iterates through tags.
- *
+ * 
  * <P>
  * <B>Attributes</B>
  * </p>
- *
+ * 
  * <UL>
  * <li>
  * list - a collection.
  * </li>
  * </ul>
- *
+ * 
  *
  * @author Janne Jalkanen
  *
@@ -112,9 +112,7 @@ public abstract class IteratorTag
      */
     public int doStartTag()
     {
-        m_wikiContext =
-            (WikiContext) pageContext.getAttribute(
-                WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
+        m_wikiContext = (WikiContext) pageContext.getAttribute(WikiTagBase.ATTR_CONTEXT, PageContext.REQUEST_SCOPE);
 
         if (m_iterator == null)
         {
@@ -155,8 +153,7 @@ public abstract class IteratorTag
     public int doEndTag()
     {
         // Return back to the original.
-        pageContext.setAttribute(
-            WikiTagBase.ATTR_CONTEXT, m_wikiContext, PageContext.REQUEST_SCOPE);
+        pageContext.setAttribute(WikiTagBase.ATTR_CONTEXT, m_wikiContext, PageContext.REQUEST_SCOPE);
 
         return EVAL_PAGE;
     }

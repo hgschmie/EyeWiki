@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.auth.modules;
 
+
 /*
  * ========================================================================
  *
@@ -32,22 +33,19 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.configuration.Configuration;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.auth.UserManager;
 import de.softwareforge.eyewiki.auth.UserProfile;
 import de.softwareforge.eyewiki.auth.WikiGroup;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!

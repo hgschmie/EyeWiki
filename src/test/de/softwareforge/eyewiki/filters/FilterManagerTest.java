@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.filters;
 
+
 /*
  * ========================================================================
  *
@@ -32,24 +33,21 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
-
 import java.util.Iterator;
 import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationConverter;
 import org.apache.log4j.PropertyConfigurator;
-
 
 import de.softwareforge.eyewiki.TestEngine;
 import de.softwareforge.eyewiki.filters.FilterManager;
 import de.softwareforge.eyewiki.filters.PageFilter;
 import de.softwareforge.eyewiki.filters.ProfanityFilter;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * DOCUMENT ME!

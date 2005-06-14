@@ -1,5 +1,6 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
+
 /*
  * ========================================================================
  *
@@ -32,7 +33,6 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
-
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -42,7 +42,6 @@ import java.util.Vector;
 
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
-
 
 /**
  * Provides definitions for RPC handler routines.
@@ -109,12 +108,8 @@ public abstract class AbstractRPCHandler
         // Transform UTC into local time.
         Calendar cal = Calendar.getInstance();
         cal.setTime(since);
-        cal.add(
-            Calendar.MILLISECOND,
-            (cal.get(Calendar.ZONE_OFFSET)
-            + (cal.getTimeZone().inDaylightTime(since)
-            ? cal.get(Calendar.DST_OFFSET)
-            : 0)));
+        cal.add(Calendar.MILLISECOND,
+            (cal.get(Calendar.ZONE_OFFSET) + (cal.getTimeZone().inDaylightTime(since) ? cal.get(Calendar.DST_OFFSET) : 0)));
 
         for (Iterator i = pages.iterator(); i.hasNext();)
         {
