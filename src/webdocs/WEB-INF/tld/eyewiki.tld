@@ -371,6 +371,19 @@
   </tag>  
 
   <tag>
+    <name>LoginLink</name>
+    <tagclass>de.softwareforge.eyewiki.tags.LoginLinkTag</tagclass>
+    <bodycontent>JSP</bodycontent>
+    <attribute>
+       <name>page</name>
+       <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+       <name>format</name>
+    </attribute>
+  </tag>
+
+  <tag>
     <name>NextVersion</name>
     <tagclass>de.softwareforge.eyewiki.tags.NextVersionTag</tagclass>
     <bodycontent>empty</bodycontent>
