@@ -46,11 +46,11 @@
 </head>
 
 <wiki:CheckRequestContext context="edit">
-  <body class="wiki" onload="document.editForm.text.focus()">
+  <body onload="document.editForm.text.focus()">
 </wiki:CheckRequestContext>
 
 <wiki:CheckRequestContext context="comment">
-  <body class="wiki" onload="document.commentForm.text.focus()">
+  <body onload="document.commentForm.text.focus()">
 </wiki:CheckRequestContext>
 
 <table class="wiki">

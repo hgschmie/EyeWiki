@@ -46,36 +46,36 @@ function confirmDelete() {
 
    <table class="pageinfo">
      <tr>
-       <td class="pageinfomsg">Page name</td>
-       <td class="pageinfo"><wiki:LinkTo><wiki:PageName /></wiki:LinkTo></td>
+       <td class="msg">Page name</td>
+       <td><wiki:LinkTo><wiki:PageName /></wiki:LinkTo></td>
      </tr>
 
      <wiki:PageType type="attachment">
        <tr>
-         <td class="pageinfomsg">Parent page</td>
-         <td class="pageinfo"><wiki:LinkToParent><wiki:ParentPageName /></wiki:LinkToParent></td>
+         <td class="msg">Parent page</td>
+         <td><wiki:LinkToParent><wiki:ParentPageName /></wiki:LinkToParent></td>
        </tr>
      </wiki:PageType>
 
      <tr>
-       <td class="pageinfomsg">Page last modified</td>
-       <td class="pageinfo"><wiki:PageDate /></td>
+       <td class="msg">Page last modified</td>
+       <td><wiki:PageDate /></td>
      </tr>
 
      <tr>
-       <td class="pageinfomsg">Current page version</td>
-       <td class="pageinfo"><wiki:PageVersion>No versions.</wiki:PageVersion></td>
+       <td class="msg">Current page version</td>
+       <td><wiki:PageVersion>No versions.</wiki:PageVersion></td>
      </tr>
 
      <tr>
-           <td class="pageinfomsg">Page feed</td>
-           <td><a class="pageinfo" href="<wiki:BaseURL/>rss.jsp?page=<wiki:Variable var="pagename" />&amp;mode=wiki"><img src="<wiki:BaseURL/>images/xml.png" border="0" alt="[RSS]"></a></td>
+           <td class="msg">Page feed</td>
+           <td><a href="<wiki:BaseURL/>rss.jsp?page=<wiki:Variable var="pagename" />&amp;mode=wiki"><img src="<wiki:BaseURL/>images/xml.png" border="0" alt="[RSS]"></a></td>
        </tr>
 
        <tr>
-       <td class="pageinfomsg">Page revision history</td>
+       <td class="msg">Page revision history</td>
        <td><div class="zebra-table">
-         <table class="pagerev">
+         <table> 
          <tr>
            <th>Version</th>                        
            <th>Date <wiki:PageType type="page">(and differences to current)</wiki:PageType></th>
@@ -116,7 +116,7 @@ function confirmDelete() {
      </tr>
      <wiki:Permission permission="delete">
        <tr>
-         <td class="pageinfo">
+         <td>
            <input type="submit" name="delete" value="Delete marked versions only"/>
          </td>
          <td>

@@ -82,7 +82,7 @@
 
 <table class="pageaction">
   <tr>
-    <td><a class="wikicontent" href="#Top">Go to top</a></td>
+    <td><a href="#Top">Go to top</a></td>
     <td>
       <wiki:CheckVersion mode="latest">
         <wiki:Permission permission="edit">

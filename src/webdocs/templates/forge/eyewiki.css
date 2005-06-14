@@ -37,7 +37,6 @@
 /* Universal Selector to make all fonts look better */
 body {
 	font-family: arial, helvetica, sans-serif;
-	font-size: 12px;
 	background-color: white;
 }
 
@@ -45,10 +44,25 @@ A {
 	text-decoration: none;
 }
 
-h1 { font-size: 18px; }
-h2 { font-size: 16px; }
-h3 { font-size: 14px; }
-h4,h5,h6 { font-size: 12px; }
+h1 { 
+	font-size: 20px;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+h4,h5,h6 {
+	font-size: 14px;
+}
+
+table, td, th, div, span {
+	font-size: 12px;
+}
 
 /*
  * wikicontent - Everything from the translator is rendered with this tag
@@ -64,34 +78,17 @@ h4,h5,h6 { font-size: 12px; }
 
 A.wikicontent  {
 	text-decoration: none;
-        color:black;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+	color: #4488ff;
 }
 
 A.wikicontent :visited {
 	text-decoration: none;
-        color:black;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.wikicontent :hover {
-	text-decoration: none;
-        color:black;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+	color: #4488ff;
 }
 
 A.wikicontent :active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 .wikicontent table {
@@ -161,7 +158,7 @@ A.wikicontent :active {
 /*
  * general
  *
- * wiki:	body, table, td
+ * wiki:	table, td
  */
 
 table.wiki {
@@ -173,7 +170,6 @@ table.wiki {
 
 td.wiki {
 	width: 85%;
-        line-height: 1.5;
         padding: 8px;
         vertical-align: top;
 }
@@ -185,7 +181,6 @@ td.wiki {
 td.wikimenu {
 	vertical-align: top;
         width: 10%;
-        line-height: 1.5;
         padding-right: 5px;
         border-right: solid black 1px;
 }
@@ -242,11 +237,6 @@ A.breadcrumbs:visited {
 	text-decoration: none;
 }
 
-A.breadcrumbs:hover {
-	text-decoration: none;
-        color:red;
-}
-
 A.breadcrumbs:active {
 	text-decoration: none;
         color: red;
@@ -266,36 +256,19 @@ table.attachment {
   width: 75%;
 }
 
-A.attachment {
+.attachment A {
 	text-decoration: none;
         color:#000077;
-  	border-bottom: dashed #000077;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
-A.attachment:visited {
+.attachment A:visited {
 	text-decoration: none;
         color:#000077;
-  	border-bottom: dashed #000077;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
-A.attachment:hover {
-	text-decoration: none;
-        color:#000077;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.attachment:active {
+.attachment A:active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 /*
@@ -315,7 +288,6 @@ table.upload {
 
 td.upload {
   text-align: left;
-  font-size: 12px;
   text-decoration: none;
 }
 
@@ -411,6 +383,29 @@ table.pageaction {
   border: none;
 }
   
+.pageaction A {
+	text-decoration: none;
+        color:#007700;
+  	border-bottom: dashed #007700;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+.pageaction A:visited {
+	text-decoration: none;
+        color:#007700;
+  	border-bottom: dashed #007700;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
+
+.pageaction A:active {
+	text-decoration: none;
+        color: red;
+  	border-bottom: dashed red;
+  	border-width: 1px;
+  	padding-bottom: 2px;
+}
 
 /*
  * pageprops:	td
@@ -445,58 +440,33 @@ div.username {
  */
 
 div.release {
-   font-size: 10px;
+   font-size: 9px;
    color: #aabbaa;
    text-align: center;
    margin-top: 50px;
 }
 
 /*
- * pageinfo:	a, table, td
+ * pageinfo:	table
  */
 
-A.pageinfo {
+.pageinfo A {
 	text-decoration: none;
-        color:#007700;
-  	border-bottom: dashed #007700;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+	color: #4488ff;
 }
 
-A.pageinfo:visited {
+.pageinfo A:visited {
 	text-decoration: none;
-        color:#007700;
-  	border-bottom: dashed #007700;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+	color: #4488ff;
 }
 
-A.pageinfo:hover {
-	text-decoration: none;
-        color:#007700;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.pageinfo:active {
+.pageinfo A:active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 /*
- * pageinfomsg:	td
  * pagerev	table
- */
-
-.pagerev td {
-        line-height: 1.5;
-}
-
-/*
  * pagefind:    h1, h2, div, table, th, td, pre, a
  */
 
@@ -562,7 +532,6 @@ td.loginmsg {
 }
 
 .loginbox input {
-  font-size: 10px;
 }
 
 /*
@@ -571,7 +540,6 @@ td.loginmsg {
 
 td.loginboxmsg {
   text-align: left;
-  font-size: 10px;
 }
 
 /*
@@ -595,34 +563,17 @@ td.loginboxmsg {
 
 A.external {
 	text-decoration: none;
-        color: #002255;
-  	border-bottom: dashed #002255;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+        color: #8844ff;
 }
 
 A.external:visited {
 	text-decoration: none;
-        color:#002255;
-  	border-bottom: dashed #002255;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.external:hover {
-	text-decoration: none;
-        color:#002255;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+        color: #8844ff;
 }
 
 A.external:active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 
@@ -632,34 +583,17 @@ A.external:active {
 
 A.interwiki {
 	text-decoration: none;
-        color: #005522;
-  	border-bottom: dashed #005522;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+        color: #dd00aa;
 }
 
 A.interwiki:visited {
 	text-decoration: none;
-        color:#005522;
-  	border-bottom: dashed #005522;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.interwiki:hover {
-	text-decoration: none;
-        color:#005522;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
+        color:#dd00aa;
 }
 
 A.interwiki:active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 
@@ -719,13 +653,6 @@ A.diff:visited {
         vertical-align: super;
 }
 
-A.diff:hover {
-	text-decoration: none;
-        color:red;
-        font-size: 60%;
-        vertical-align: super;
-}
-
 A.diff:active {
 	text-decoration: none;
         color: red;
@@ -770,33 +697,16 @@ A.diff:active {
 A.index {
 	text-decoration: none;
         color:red;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 A.index:visited {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed black;
-  	border-width: 1px;
-  	padding-bottom: 2px;
-}
-
-A.index:hover {
-	text-decoration: none;
-        color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 A.index:active {
 	text-decoration: none;
         color: red;
-  	border-bottom: dashed red;
-  	border-width: 1px;
-  	padding-bottom: 2px;
 }
 
 /*

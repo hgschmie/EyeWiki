@@ -47,7 +47,7 @@
   </wiki:CheckVersion>
 </head>
 
-<body class="wiki">
+<body>
 
 <table class="wiki">
   <tr>
