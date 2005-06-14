@@ -64,8 +64,10 @@ public class ConstantVariables
      */
     public synchronized void start()
     {
+        variableManager.registerVariable(VariableManager.VAR_ERROR, new ConstantVariable(""));
+        variableManager.registerVariable(VariableManager.VAR_MSG, new ConstantVariable(""));
     }
-
+    
     /**
      * DOCUMENT ME!
      */
