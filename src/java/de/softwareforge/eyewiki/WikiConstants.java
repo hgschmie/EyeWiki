@@ -144,9 +144,6 @@ public interface WikiConstants
     /** Class for an attachment. Used with A HREF tags. */
     String CSS_LINK_ATTACHMENT = "attachment";
 
-    /** Class for a page info link. Used with A HREF tags */
-    String CSS_LINK_PAGEINFO = "pageinfo";
-
     /** Class for a diff internal link (next/prev). Used with A HREF tags */
     String CSS_LINK_DIFF = "diff";
 

@@ -98,7 +98,7 @@ public class LoginLinkTag
         case ANCHOR:
 
             StringBuffer sb =
-                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" target=\"_new\" href=\"")
+                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"")
                                                .append(url).append("\">");
             out.print(sb.toString());
 

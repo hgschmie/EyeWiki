@@ -37,7 +37,6 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
-import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -101,7 +100,7 @@ public class PageInfoLinkTag
             switch (m_format)
             {
             case ANCHOR:
-                out.print("<a class=\"" + WikiConstants.CSS_LINK_PAGEINFO + "\" href=\"" + url + "\">");
+                out.print("<a href=\"" + url + "\">");
 
                 break;
 

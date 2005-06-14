@@ -37,7 +37,6 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
-import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.attachment.Attachment;
@@ -124,12 +123,10 @@ public class LinkToTag
 
         JspWriter out = pageContext.getOut();
         String url;
-        String linkclass;
 
         if (isattachment)
         {
             url = m_wikiContext.getURL(WikiContext.ATTACH, pageName, (getVersion() != null) ? ("version=" + getVersion()) : null);
-            linkclass = WikiConstants.CSS_LINK_ATTACHMENT;
         }
         else
         {
@@ -146,21 +143,15 @@ public class LinkToTag
             }
 
             url = m_wikiContext.getURL(WikiContext.VIEW, pageName, params.toString());
-            linkclass = WikiConstants.CSS_WIKICONTENT;
         }
 
         switch (m_format)
         {
         case ANCHOR:
 
-            StringBuffer sb = new StringBuffer("<a ");
-
-            if (linkclass != null)
-            {
-                sb.append("class=\"" + linkclass + "\"");
-            }
-
-            sb.append("href=\"" + url + "\">");
+            StringBuffer sb = new StringBuffer("<a href=\"")
+                    .append(url)
+                    .append("\">");
 
             out.print(sb.toString());
 

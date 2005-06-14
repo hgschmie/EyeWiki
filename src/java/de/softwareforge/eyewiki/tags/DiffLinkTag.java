@@ -37,7 +37,6 @@ import java.io.IOException;
 
 import javax.servlet.jsp.JspWriter;
 
-import de.softwareforge.eyewiki.WikiConstants;
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiPage;
@@ -213,7 +212,7 @@ public class DiffLinkTag
         case ANCHOR:
 
             StringBuffer sb =
-                new StringBuffer("<a class=\"").append(WikiConstants.CSS_WIKICONTENT).append("\" href=\"").append(url).append("\">");
+                new StringBuffer("<a href=\"").append(url).append("\">");
             out.print(sb.toString());
 
             break;
