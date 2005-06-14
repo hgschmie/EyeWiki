@@ -489,7 +489,14 @@ A.pageinfo:active {
 
 /*
  * pageinfomsg:	td
- * pagerev	table, th, td
+ * pagerev	table
+ */
+
+.pagerev td {
+        line-height: 1.5;
+}
+
+/*
  * pagefind:    h1, h2, div, table, th, td, pre, a
  */
 

@@ -77,29 +77,29 @@ function confirmDelete() {
        <td><div class="zebra-table">
          <table class="pagerev">
          <tr>
-           <th class="pagerev">Version</th>                        
-           <th class="pagerev">Date <wiki:PageType type="page">(and differences to current)</wiki:PageType></th>
-           <th class="pagerev">Author</th>
-           <th class="pagerev">Size</th>
+           <th>Version</th>                        
+           <th>Date <wiki:PageType type="page">(and differences to current)</wiki:PageType></th>
+           <th>Author</th>
+           <th>Size</th>
            <wiki:PageType type="page">                        
-             <th class="pagerev">Changes from previous</th>
+             <th>Changes from previous</th>
            </wiki:PageType>
            <wiki:Permission permission="delete">
-             <th class="pagerev">Delete</th>
+             <th>Delete</th>
            </wiki:Permission>
          </tr>
          <wiki:HistoryIterator id="currentPage">
            <tr>
-             <td class="pagerev"><wiki:LinkTo version="<%=Integer.toString(currentPage.getVersion())%>"><wiki:PageVersion/></wiki:LinkTo></td>
-             <td class="pagerev">
+             <td><wiki:LinkTo version="<%=Integer.toString(currentPage.getVersion())%>"><wiki:PageVersion/></wiki:LinkTo></td>
+             <td>
                <wiki:PageType type="page"><wiki:DiffLink version="latest" newVersion="current"><wiki:PageDate/></wiki:DiffLink></wiki:PageType>
                <wiki:PageType type="attachment"><wiki:PageDate/></wiki:PageType>
              </td>
-             <td class="pagerev"><wiki:Author /></td>
-             <td class="pagerev"><wiki:PageSize /></td>
+             <td><wiki:Author /></td>
+             <td><wiki:PageSize /></td>
   
              <wiki:PageType type="page">
-               <td class="pagerev">
+               <td>
                   <wiki:CheckVersion mode="notfirst">
                        <wiki:DiffLink version="current" newVersion="previous">from version <wiki:PreviousVersion/> to <wiki:PageVersion/></wiki:DiffLink>
                   </wiki:CheckVersion>
@@ -107,7 +107,7 @@ function confirmDelete() {
              </wiki:PageType>
   
              <wiki:Permission permission="delete">
-               <td class="pagerev"><input type="checkbox" name="delver-<%=currentPage.getVersion()%>" /></td>
+               <td><input type="checkbox" name="delver-<%=currentPage.getVersion()%>" /></td>
              </wiki:Permission>
            </tr>
          </wiki:HistoryIterator>
