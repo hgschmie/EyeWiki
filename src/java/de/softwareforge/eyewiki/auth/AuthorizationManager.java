@@ -41,7 +41,6 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.log4j.Logger;
 
-
 import de.softwareforge.eyewiki.WikiEngine;
 import de.softwareforge.eyewiki.WikiException;
 import de.softwareforge.eyewiki.WikiPage;
@@ -119,12 +118,12 @@ public class AuthorizationManager
         allGroup.setName("All");
         ae.setPrincipal(allGroup);
         ae.addPermission(new ViewPermission());
-        ae.addPermission(new EditPermission());
 
         AclEntryImpl aeneg = new AclEntryImpl();
         aeneg.setPrincipal(allGroup);
         aeneg.setNegativePermissions();
         aeneg.addPermission(new DeletePermission());
+        aeneg.addPermission(new EditPermission());
 
         try
         {
@@ -228,6 +227,12 @@ public class AuthorizationManager
             return true;
         }
 
+        if (log.isDebugEnabled())
+        {
+            log.debug("Checking for wup: " + wup);
+            log.debug("Permission: " + permission);
+        }
+
         AccessControlList acl = getAcl(page);
 
         //
@@ -238,41 +243,9 @@ public class AuthorizationManager
             if (log.isDebugEnabled())
             {
                 log.debug("ACL for this page is: " + acl);
-                log.debug("Checking for wup: " + wup);
-                log.debug("Permission: " + permission);
             }
 
-            if (wup.isAuthenticated())
-            {
-                res = acl.findPermission(wup, permission);
-            }
-
-            //
-            //  If there as no entry for the user, then try all of his groups
-            //
-            if (res == AccessControlList.NONE)
-            {
-                log.debug("Checking groups...");
-
-                try
-                {
-                    List list = userManager.getGroupsForPrincipal(wup);
-
-                    for (Iterator i = list.iterator(); i.hasNext();)
-                    {
-                        res = acl.findPermission((Principal) i.next(), permission);
-
-                        if (res != AccessControlList.NONE)
-                        {
-                            break;
-                        }
-                    }
-                }
-                catch (NoSuchPrincipalException e)
-                {
-                    log.warn("Internal trouble: No principal defined for requested user.", e);
-                }
-            }
+            res = checkAuthentication(wup, acl, permission);
         }
 
         //
@@ -281,17 +254,17 @@ public class AuthorizationManager
         //
         if (res == AccessControlList.NONE)
         {
-            if (log.isDebugEnabled())
-            {
-                log.debug(
-                    "Page defines no permissions for " + wup.getName() + ", checking defaults.");
-            }
-
             acl = m_authorizer.getDefaultPermissions();
 
             if (acl != null)
             {
-                res = acl.findPermission(wup, permission);
+                if (log.isDebugEnabled())
+                {
+                    log.debug("Page defines no permissions for " + wup.getName() + ", checking defaults.");
+                    log.debug("Default ACL is: " + acl);
+                }
+
+                res = checkAuthentication(wup, acl, permission);
             }
         }
 
@@ -306,6 +279,7 @@ public class AuthorizationManager
                 log.debug("No defaults exist, falling back to hardcoded permissions.");
             }
 
+            // Hard coded default: Only View is allowed
             res = m_defaultPermissions.findPermission(wup, permission);
         }
 
@@ -340,5 +314,45 @@ public class AuthorizationManager
     public boolean isStrictLogins()
     {
         return m_strictLogins;
+    }
+
+    private int checkAuthentication(final UserProfile wup, final AccessControlList acl, final WikiPermission permission)
+    {
+        int res = AccessControlList.NONE;
+
+        if (wup.isAuthenticated())
+        {
+            res = acl.findPermission(wup, permission);
+        }
+
+        //
+        //  If there as no entry for the user, then try all of his groups
+        //
+        if (res == AccessControlList.NONE)
+        {
+            log.debug("Checking groups...");
+
+            try
+            {
+                UserManager userManager = m_engine.getUserManager();
+                List list = userManager.getGroupsForPrincipal(wup);
+                
+                for (Iterator i = list.iterator(); i.hasNext();)
+                {
+                    res = acl.findPermission((Principal) i.next(), permission);
+                    
+                    if (res != AccessControlList.NONE)
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (NoSuchPrincipalException e)
+            {
+                log.warn("Internal trouble: No principal defined for requested user.", e);
+            }
+        }
+
+        return res;
     }
 }
