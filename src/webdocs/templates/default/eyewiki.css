@@ -62,6 +62,11 @@ h4,h5,h6 { font-size: 12px; }
  * wikicontent
  */
 
+td.wikicontent {
+	line-height: 1.5;
+	font-size: 12px;
+}
+
 A.wikicontent  {
 	text-decoration: none;
         color:black;

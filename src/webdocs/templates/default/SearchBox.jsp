@@ -1,4 +1,4 @@
-<!--
+<%--
   ========================================================================
 
   eyeWiki - a WikiWiki clone written in Java
@@ -29,7 +29,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
   ========================================================================
--->
+--%>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <%-- Provides a simple searchbox that can be easily included anywhere
      on the page --%>
