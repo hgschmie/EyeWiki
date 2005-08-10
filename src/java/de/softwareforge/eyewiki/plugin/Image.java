@@ -166,28 +166,27 @@ public class Image
             throw new PluginException("Attachment info failed: " + e.getMessage());
         }
 
-        StringBuffer result = new StringBuffer();
-
-        result.append("<table border=\"0\" class=\"" + cssclass + "\"");
+        StringBuffer result = new StringBuffer()
+                .append("<span class=\"")
+                .append(cssclass)
+                .append("\"");
 
         if (align != null)
         {
-            result.append(" align=\"" + align + "\"");
+            result.append(" align=\"").append(align).append("\"");
         }
 
         if (style != null)
         {
-            result.append(" style=\"" + style + "\"");
+            result.append(" style=\"").append(style).append("\"");
         }
 
-        result.append(">\n");
+        result.append(">");
 
         if (caption != null)
         {
-            result.append("<caption align=bottom>" + TextUtil.replaceEntities(caption) + "</caption>\n");
+            result.append("<caption align=bottom>").append(TextUtil.replaceEntities(caption)).append("</caption>\n");
         }
-
-        result.append("<tr><td>");
 
         if (link != null)
         {
@@ -224,9 +223,7 @@ public class Image
             result.append("</a>");
         }
 
-        result.append("</td></tr>\n");
-
-        result.append("</table>\n");
+        result.append("</span>\n");
 
         return result.toString();
     }
