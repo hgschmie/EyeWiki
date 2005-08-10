@@ -1,4 +1,4 @@
-<!--
+<%--
   ========================================================================
 
   eyeWiki - a WikiWiki clone written in Java
@@ -29,7 +29,7 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
   ========================================================================
--->
+--%>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <meta http-equiv="Content-Type" content="text/html; charset=<wiki:ContentEncoding />" />
 
@@ -40,7 +40,7 @@
 <link rel="alternate stylesheet" type="text/css" href="<wiki:BaseURL/>templates/<wiki:TemplateDir/>/eyewiki_print.css" title="Print friendly" />
 
 <link rel="help"   href="<wiki:LinkTo format="url" page="TextFormattingRules"/>" title="Help" />
-<link rel="icon" type="image/png" href="<wiki:BaseURL/>images/favicon.png" />
+<link rel="icon" href="<wiki:BaseURL/>images/eyewiki-logo.ico" />
 <link rel="search" href="<wiki:LinkTo format="url" page="FindPage"/>"            title="Search <wiki:Variable var="ApplicationName" />" />
 <link rel="start"  href="<wiki:LinkTo format="url" page="Main"/>"                title="Front page" />
 

@@ -1,4 +1,4 @@
-<!--
+<%--
   ========================================================================
 
   eyeWiki - a WikiWiki clone written in Java
@@ -29,13 +29,11 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
   ========================================================================
--->
+--%>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 <div class="logo">
     <a href="<wiki:LinkTo page="SystemInfo" format="url"/>"
-       onmouseover="document.eyewiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo.png'"
-       onmouseout="document.eyewiki_logo.src='<wiki:BaseURL/>images/jspwiki_logo_s.png'">
-      <img src="<wiki:BaseURL/>images/jspwiki_logo_s.png" name="jspwiki_logo" alt="JSPWiki logo"/>
+      <img src="<wiki:BaseURL/>images/eyewiki-logo.png" name="eyewiki_logo" alt="eyeWiki logo"/>
     </a>
 </div>
 
