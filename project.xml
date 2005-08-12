@@ -37,8 +37,8 @@
   <name>eyeWiki</name>
   <currentVersion>1.0-dev</currentVersion>
   <organization>
-    <name>softwareforge.de</name>
-    <url>http://www.softwareforge.de</url>
+    <name>software forge</name>
+    <url>http://www.softwareforge.de/</url>
   </organization>
   <logo>/images/eyewiki-logo.png</logo>
   <inceptionYear>2005</inceptionYear>
@@ -49,10 +49,15 @@
   </description>
 
   <shortDescription>A Wiki engine written in Java</shortDescription>
+  <url>http://www.softwareforge.de/projects/eyewiki/</url>
+  <issueTrackingUrl>https://svn.softwareforge.de/trac/newticket</issueTrackingUrl>
+  <siteAddress>www.softwareforge.de</siteAddress>
+  <siteDirectory>/webserver/www.softwareforge.de/html/projects/eyewiki</siteDirectory>
 
   <repository>
-    <connection>scm:svn:http:svn.intermeta.de/svn/opensource/eyewiki/trunk</connection>
-    <developerConnection>scm:svn:https:svn.intermeta.de/svn/opensource/eyewiki/trunk</developerConnection>
+    <connection>scm:svn:http://svn.softwareforge.de/svn/opensource/eyewiki/trunk</connection>
+    <developerConnection>scm:svn:https://svn.softwareforge.de/svn/opensource/eyewiki/trunk</developerConnection>
+    <url>https://svn.softwareforge.de/trac/browser/eyewiki/trunk/</url>
   </repository>
 
   <versions/>
@@ -61,7 +66,18 @@
 
   <mailingLists/>
 
-  <developers/>
+  <developers>
+    <developer>
+      <name>Henning P. Schmiedehausen</name>
+      <id>henning@schmiedehausen.org</id>
+      <email>henning@schmiedehausen.org</email>
+      <organization>software forge</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+      <timezone>+2</timezone>
+    </developer>
+  </developers>
 
   <contributors/>
 
@@ -405,12 +421,12 @@
   </build>
 
   <reports>    
-    <report>maven-jdepend-plugin</report>
-    <report>maven-checkstyle-plugin</report>
     <report>maven-changes-plugin</report>
     <report>maven-changelog-plugin</report>
     <report>maven-developer-activity-plugin</report>
     <report>maven-file-activity-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-checkstyle-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-junit-report-plugin</report>
