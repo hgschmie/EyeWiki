@@ -1,0 +1,13 @@
+target/.*$
+jcoverage.ser$
+velocity.log$
+LICENSE.txt$
+jspwiki/.*
+doc/LICENSE.JSPWiki$
+doc/LICENSE$
+doc/README.FIRST$
+doc/COPYRIGHT$
+etc/checkstyle-license.txt$
+etc/CodeWrestler.excludes$
+src/webdocs/WEB-INF/targets.xml$
+src/webdocs/WEB-INF/build.properties$
