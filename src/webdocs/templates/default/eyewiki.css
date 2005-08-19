@@ -415,7 +415,7 @@ table.pageaction {
   font-size: 9px;
   border: none;
 }
-  
+
 
 /*
  * pageprops:	td
@@ -689,7 +689,7 @@ img.rss {
  * diffadd:	td, span
  */
 
-.diffadd { 
+.diffadd {
   background: #ddffdd;
   text-decoration:  none;
   color: #8000ff;
@@ -700,7 +700,7 @@ img.rss {
  * diffrem	td, span
  */
 
-.diffrem { 
+.diffrem {
   background: #ffdddd;
   text-decoration: line-through;
   color: red;
@@ -768,7 +768,7 @@ A.diff:active {
 
 /*
  * Index
- * 
+ *
  * index		a
  */
 
@@ -820,7 +820,7 @@ A.index:active {
 .zebra-table TH {
 	background:  #e0e0e0;
 }
-    
+
 .zebra-table TR.odd TD {
 	background:  #f0f0f0;
 }

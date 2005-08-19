@@ -53,14 +53,14 @@
     <attribute>
        <name>id</name>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>Author</name>
     <tagclass>de.softwareforge.eyewiki.tags.AuthorTag</tagclass>
     <bodycontent>empty</bodycontent>
-  </tag>  
-  
+  </tag>
+
   <tag>
     <name>BaseURL</name>
     <tagclass>de.softwareforge.eyewiki.tags.BaseURLTag</tagclass>
@@ -97,7 +97,7 @@
        <name>monthurlformat</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>CheckLock</name>
@@ -110,7 +110,7 @@
     <attribute>
        <name>id</name>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>CheckRequestContext</name>
@@ -120,7 +120,7 @@
        <name>context</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>CheckVersion</name>
@@ -129,7 +129,7 @@
     <attribute>
        <name>mode</name>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>CommentLink</name>
@@ -142,7 +142,7 @@
     <attribute>
        <name>format</name>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>Content</name>
@@ -219,7 +219,7 @@
        <name>newVersion</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>EditLink</name>
@@ -236,7 +236,7 @@
        <name>version</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>Editor</name>
@@ -269,7 +269,7 @@
      <tagclass>de.softwareforge.eyewiki.tags.EditorAreaTag</tagclass>
      <bodycontent>empty</bodycontent>
   </tag>
-  
+
   <tag>
     <name>FeedDiscovery</name>
     <tagclass>de.softwareforge.eyewiki.tags.FeedDiscoveryTag</tagclass>
@@ -280,7 +280,7 @@
     <name>HasAttachments</name>
     <tagclass>de.softwareforge.eyewiki.tags.HasAttachmentsTag</tagclass>
     <bodycontent>JSP</bodycontent>
-  </tag>  
+  </tag>
 
   <tag>
     <name>HistoryIterator</name>
@@ -290,13 +290,13 @@
     <attribute>
        <name>id</name>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>IfNoSearchResults</name>
     <tagclass>de.softwareforge.eyewiki.tags.IfNoSearchResultsTag</tagclass>
     <bodycontent>JSP</bodycontent>
-  </tag>  
+  </tag>
 
   <tag>
     <name>Include</name>
@@ -306,7 +306,7 @@
        <name>page</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>InsertDiff</name>
@@ -316,7 +316,7 @@
        <name>page</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>InsertPage</name>
@@ -330,7 +330,7 @@
        <name>mode</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>LinkTo</name>
@@ -350,8 +350,8 @@
     <attribute>
        <name>template</name>
        <rtexprvalue>true</rtexprvalue>
-    </attribute>    
-  </tag>  
+    </attribute>
+  </tag>
 
   <tag>
     <name>LinkToParent</name>
@@ -368,7 +368,7 @@
        <name>version</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>LoginLink</name>
@@ -397,7 +397,7 @@
        <name>page</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>PageExists</name>
@@ -407,7 +407,7 @@
        <name>page</name>
        <rtexprvalue>true</rtexprvalue>
     </attribute>
-  </tag>  
+  </tag>
 
   <tag>
     <name>PageInfoLink</name>
@@ -422,7 +422,7 @@
     </attribute>
   </tag>
 
-  
+
   <tag>
     <name>PageDate</name>
     <tagclass>de.softwareforge.eyewiki.tags.PageDateTag</tagclass>
@@ -432,7 +432,7 @@
         <rtexprvalue>true</rtexprvalue>
     </attribute>
   </tag>
-  
+
   <tag>
     <name>PageName</name>
     <tagclass>de.softwareforge.eyewiki.tags.PageNameTag</tagclass>
@@ -537,19 +537,19 @@
        <rtexprvalue>true</rtexprvalue>
     </attribute>
 
-  </tag>  
+  </tag>
 
   <tag>
     <name>SearchResults</name>
     <tagclass>de.softwareforge.eyewiki.tags.SearchResultsTag</tagclass>
     <bodycontent>JSP</bodycontent>
-  </tag>  
+  </tag>
 
   <tag>
     <name>SearchResultsSize</name>
     <tagclass>de.softwareforge.eyewiki.tags.SearchResultsSizeTag</tagclass>
     <bodycontent>empty</bodycontent>
-  </tag>  
+  </tag>
 
   <tag>
     <name>TemplateDir</name>
@@ -603,7 +603,7 @@
     <attribute>
        <name>var</name>
        <required>true</required>
-       <rtexprvalue>true</rtexprvalue> 
+       <rtexprvalue>true</rtexprvalue>
     </attribute>
     <attribute>
        <name>default</name>

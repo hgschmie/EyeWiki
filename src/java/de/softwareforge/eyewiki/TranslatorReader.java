@@ -80,7 +80,7 @@ import de.softwareforge.eyewiki.util.TextUtil;
 /**
  * Handles conversion from Wiki format into fully featured HTML. This is where all the magic happens.  It is CRITICAL that this
  * class is tested, or all Wikis might die horribly.
- * 
+ *
  * <P>
  * The output of the HTML has not yet been validated against the HTML DTD.  However, it is very simple.
  * </p>
@@ -637,7 +637,7 @@ public class TranslatorReader
 
     /**
      * Cleans a Wiki name.
-     * 
+     *
      * <P>
      * [ This is a link ] -&gt; ThisIsALink
      * </p>
@@ -794,7 +794,7 @@ public class TranslatorReader
 
     /**
      * Checks for the existence of a traditional style CamelCase link.
-     * 
+     *
      * <P>
      * We separate all white-space -separated words, and feed it to this routine to find if there are any possible camelcase links.
      * For example, if "word" is "__HyperLink__" we return "HyperLink".
@@ -2883,7 +2883,7 @@ public class TranslatorReader
 
         /**
          * Write a HTMLized link depending on its type.
-         * 
+         *
          * <p>
          * This jsut calls makeLink() with "section" set to null.
          * </p>
@@ -3555,7 +3555,7 @@ public class TranslatorReader
 
         /**
          * Write a HTMLized link depending on its type.
-         * 
+         *
          * <p>
          * This jsut calls makeLink() with "section" set to null.
          * </p>

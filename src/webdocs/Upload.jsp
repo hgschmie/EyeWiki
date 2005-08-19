@@ -37,7 +37,7 @@
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -46,7 +46,7 @@
 %>
 
 
-<% 
+<%
     WikiContext wikiContext = wiki.createContext( request, WikiContext.UPLOAD );
     String pagereq = wikiContext.getPage().getName();
 

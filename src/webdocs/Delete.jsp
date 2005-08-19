@@ -40,7 +40,7 @@
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -52,11 +52,11 @@
 
 
 <%
-    WikiContext wikiContext = wiki.createContext( request, 
+    WikiContext wikiContext = wiki.createContext( request,
                                                   WikiContext.DELETE );
     String pagereq = wikiContext.getPage().getName();
 
-    NDC.push( wiki.getApplicationName()+":"+pagereq );    
+    NDC.push( wiki.getApplicationName()+":"+pagereq );
 
     WikiPage wikipage      = wikiContext.getPage();
     WikiPage latestversion = wiki.getPage( pagereq );
@@ -109,26 +109,26 @@
         if (log.isInfoEnabled()) {
             log.info("Deleting a range of pages from "+pagereq);
         }
-        
+
         for( Enumeration params = request.getParameterNames(); params.hasMoreElements(); )
         {
             String paramName = (String)params.nextElement();
-            
+
             if( paramName.startsWith("delver") )
             {
                 int version = Integer.parseInt( paramName.substring(7) );
-                
+
                 WikiPage p = wiki.getPage( pagereq, version );
-                
+
                 if (log.isDebugEnabled()) {
                     log.debug("Deleting version "+version);
                 }
                 wiki.deleteVersion( p );
             }
         }
-        
+
         response.sendRedirect(wiki.getURL( WikiContext.INFO, pagereq, null, false ));
-        return; 
+        return;
     }
 
     // FIXME: not so.

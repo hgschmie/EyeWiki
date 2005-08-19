@@ -32,7 +32,7 @@
 --%>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<!DOCTYPE html 
+<!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -68,7 +68,7 @@
          </tr>
          <tr><td colspan="2"><hr /></td></tr>
          <tr><td colspan="2" class="wikicontent"><wiki:Content/></td></tr>
-      </table> 
+      </table>
     </td>
   </tr>
 </table>

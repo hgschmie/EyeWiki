@@ -60,11 +60,11 @@ import de.softwareforge.eyewiki.util.TextUtil;
 
 /**
  * Builds an index of all pages.
- * 
+ *
  * <P>
  * Parameters
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * itemsPerLine: How many items should be allowed per line before break. If set to zero (the default), will not write breaks.
@@ -76,7 +76,7 @@ import de.softwareforge.eyewiki.util.TextUtil;
  * exclude: Exclude with this pattern.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Alain Ravet
  * @author Janne Jalkanen

@@ -69,12 +69,12 @@ import de.softwareforge.eyewiki.util.TextUtil;
 
 /**
  * Provides a simple directory based repository for Wiki pages.
- * 
+ *
  * <P>
  * All files have ".txt" appended to make life easier for those who insist on using Windows or other software which makes
  * assumptions on the files contents based on its name.
  * </p>
- * 
+ *
  * <p>
  * This class functions as a superclass to all file based providers.
  * </p>

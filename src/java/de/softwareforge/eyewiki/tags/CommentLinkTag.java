@@ -43,11 +43,11 @@ import de.softwareforge.eyewiki.WikiPage;
 
 /**
  * Writes a comment link.  Body of the link becomes the link text.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -56,7 +56,7 @@ import de.softwareforge.eyewiki.WikiPage;
  * format - Format, either "anchor" or "url".
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

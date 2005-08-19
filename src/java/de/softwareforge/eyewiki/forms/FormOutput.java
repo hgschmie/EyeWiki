@@ -66,7 +66,7 @@ public class FormOutput
     /**
      * Executes the FormHandler specified in a Form 'output' plugin, using entries provided in the HttpRequest as FormHandler
      * parameters.
-     * 
+     *
      * <p>
      * If the parameter 'populate' was given, the WikiPlugin it names is used to get default values. (It probably makes a lot of
      * sense for this to be the same plugin as the handler.) Information for the populator can be given with the FormSet plugin.

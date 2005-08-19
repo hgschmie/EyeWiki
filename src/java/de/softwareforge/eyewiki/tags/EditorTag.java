@@ -56,7 +56,7 @@ import de.softwareforge.eyewiki.WikiPage;
 
 /**
  * Creates an editor component with all the necessary parts to get it working.
- * 
+ *
  * <p>
  * In the future, this component should be expanded to provide a customized version of the editor according to user preferences.
  * </p>

@@ -52,7 +52,7 @@
      -->
    <servlet>
        <servlet-name>XMLRPC</servlet-name>
-       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>
        <init-param>
            <param-name>handler</param-name>
            <param-value>de.softwareforge.eyewiki.xmlrpc.RPCHandler</param-value>
@@ -70,7 +70,7 @@
 
    <servlet>
        <servlet-name>XMLRPC-UTF8</servlet-name>
-       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.xmlrpc.RPCServlet</servlet-class>
        <init-param>
            <param-name>handler</param-name>
            <param-value>de.softwareforge.eyewiki.xmlrpc.RPCHandlerUTF8</param-value>
@@ -84,19 +84,19 @@
 
    <servlet>
        <servlet-name>ATOM</servlet-name>
-       <servlet-class>de.softwareforge.eyewiki.atom.AtomAPIServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.atom.AtomAPIServlet</servlet-class>
    </servlet>
 
    <servlet>
        <servlet-name>WikiServlet</servlet-name>
-       <servlet-class>de.softwareforge.eyewiki.WikiServlet</servlet-class>       
+       <servlet-class>de.softwareforge.eyewiki.WikiServlet</servlet-class>
    </servlet>
 
    <servlet>
        <servlet-name>DAVServlet</servlet-name>
        <servlet-class>de.softwareforge.eyewiki.dav.WikiDavServlet</servlet-class>
    </servlet>
- 
+
 
    <!--
        Attachment exchange handler.
@@ -159,7 +159,7 @@
    </welcome-file-list>
 
    <!-- make sure that only admins are allowed to access the
-        wiki pages inside the webapp 
+        wiki pages inside the webapp
    -->
 
    <security-constraint>
@@ -172,7 +172,7 @@
            <role-name>admin</role-name>
        </auth-constraint>
    </security-constraint>
-      
+
    <!--
        By default we just limit access to the Delete.jsp, as it
        is actually dangerous.
@@ -188,7 +188,7 @@
        </auth-constraint>
    </security-constraint>
    -->
-      
+
    <!--
        Here we define the users which are allowed to access eyeWiki
        editor.

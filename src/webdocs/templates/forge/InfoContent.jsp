@@ -40,7 +40,7 @@ function confirmDelete() {
 
 <wiki:PageExists>
   <form name="deleteForm" method="post"
-        action="<wiki:BaseURL/>Delete.jsp?page=<wiki:Variable var="pagename" />" 
+        action="<wiki:BaseURL/>Delete.jsp?page=<wiki:Variable var="pagename" />"
         accept-charset="<wiki:ContentEncoding />"
         onsubmit="return confirmDelete()">
 
@@ -75,13 +75,13 @@ function confirmDelete() {
        <tr>
        <td class="msg">Page revision history</td>
        <td><div class="zebra-table">
-         <table> 
+         <table>
          <tr>
-           <th>Version</th>                        
+           <th>Version</th>
            <th>Date <wiki:PageType type="page">(and differences to current)</wiki:PageType></th>
            <th>Author</th>
            <th>Size</th>
-           <wiki:PageType type="page">                        
+           <wiki:PageType type="page">
              <th>Changes from previous</th>
            </wiki:PageType>
            <wiki:Permission permission="delete">
@@ -97,7 +97,7 @@ function confirmDelete() {
              </td>
              <td><wiki:Author /></td>
              <td><wiki:PageSize /></td>
-  
+
              <wiki:PageType type="page">
                <td>
                   <wiki:CheckVersion mode="notfirst">
@@ -105,7 +105,7 @@ function confirmDelete() {
                   </wiki:CheckVersion>
                </td>
              </wiki:PageType>
-  
+
              <wiki:Permission permission="delete">
                <td><input type="checkbox" name="delver-<%=currentPage.getVersion()%>" /></td>
              </wiki:Permission>
@@ -127,7 +127,7 @@ function confirmDelete() {
    </table>
 
   </form>
-             
+
   <hr />
 
   <wiki:PageType type="page">
@@ -143,7 +143,7 @@ function confirmDelete() {
     <tr>
       <td>
         <form action="<wiki:BaseURL/>attach" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-          <%-- Do NOT change the order of wikiname and content, otherwise the 
+          <%-- Do NOT change the order of wikiname and content, otherwise the
                servlet won't find its parts. --%>
           <input type="hidden" name="page" value="<wiki:Variable var="pagename"/>">
 

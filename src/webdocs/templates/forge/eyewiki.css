@@ -44,7 +44,7 @@ A {
 	text-decoration: none;
 }
 
-h1 { 
+h1 {
 	font-size: 20px;
 }
 
@@ -382,7 +382,7 @@ table.pageaction {
   font-size: 9px;
   border: none;
 }
-  
+
 .pageaction A {
 	text-decoration: none;
         color:#007700;
@@ -618,7 +618,7 @@ img.rss {
  * diffadd:	td, span
  */
 
-.diffadd { 
+.diffadd {
   background: #ddffdd;
   text-decoration:  none;
   color: #8000ff;
@@ -629,7 +629,7 @@ img.rss {
  * diffrem	td, span
  */
 
-.diffrem { 
+.diffrem {
   background: #ffdddd;
   text-decoration: line-through;
   color: red;
@@ -690,7 +690,7 @@ A.diff:active {
 
 /*
  * Index
- * 
+ *
  * index		a
  */
 
@@ -725,7 +725,7 @@ A.index:active {
 .zebra-table TH {
 	background:  #e0e0e0;
 }
-    
+
 .zebra-table TR.odd TD {
 	background:  #f0f0f0;
 }

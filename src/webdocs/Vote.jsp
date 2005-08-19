@@ -41,13 +41,13 @@
 
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
 
-    Logger log = Logger.getLogger("eyeWiki"); 
+    Logger log = Logger.getLogger("eyeWiki");
     WikiEngine wiki;
 %><%
 
@@ -56,7 +56,7 @@
     String vote    = request.getParameter("vote");
 
     NDC.push( wiki.getApplicationName()+":"+pagereq );
-    
+
     if (log.isInfoEnabled()) {
         log.info("Vote '"+pagereq+"' from "+request.getRemoteAddr()+" by "+request.getRemoteUser() );
     }

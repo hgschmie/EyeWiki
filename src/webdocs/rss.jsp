@@ -53,9 +53,9 @@
 
 <%
     String mode = request.getParameter("mode");
-   
+
     if( mode == null || !(mode.equals("blog") || mode.equals("wiki")) ) mode = "blog";
-   
+
     WikiContext wikiContext = wiki.createContext( request, "rss" );
     WikiPage    wikipage    = wikiContext.getPage();
 
@@ -65,7 +65,7 @@
         return;
     }
 
-    NDC.push( wiki.getApplicationName()+":"+wikipage.getName() );    
+    NDC.push( wiki.getApplicationName()+":"+wikipage.getName() );
 
     //
     //  Force the TranslatorReader to output absolute URLs
@@ -125,7 +125,7 @@
         for( Iterator i = changed.iterator(); i.hasNext(); )
         {
             WikiPage p = (WikiPage) i.next();
-            
+
             if( !HttpUtil.checkFor304( request, p ) ) hasChanged = true;
             if( p.getLastModified().after( latest ) ) latest = p.getLastModified();
         }
@@ -136,7 +136,7 @@
         response.sendError( HttpServletResponse.SC_NOT_MODIFIED );
         return;
     }
-        
+
     response.addDateHeader("Last-Modified",latest.getTime());
 %>
 <%-- <oscache:cache time="300"> --%>

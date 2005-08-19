@@ -37,12 +37,12 @@
 <%@ page import="de.softwareforge.eyewiki.auth.*" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Logger log = Logger.getLogger("eyeWiki"); 
+    Logger log = Logger.getLogger("eyeWiki");
     WikiEngine wiki;
 
 %><%
@@ -97,7 +97,7 @@
             //
             //  Do a bit of sanity check here.  FIXME: Should this be somewhere else?
             //
-            if( pagereq.equals("LoginError") ) 
+            if( pagereq.equals("LoginError") )
             {
                 throw new WikiSecurityException("Looped config detected - you must not prevent view access to page LoginError AND have strictLogins set to true!");
             }

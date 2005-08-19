@@ -67,7 +67,7 @@ public class ConstantVariables
         variableManager.registerVariable(VariableManager.VAR_ERROR, new ConstantVariable(""));
         variableManager.registerVariable(VariableManager.VAR_MSG, new ConstantVariable(""));
     }
-    
+
     /**
      * DOCUMENT ME!
      */

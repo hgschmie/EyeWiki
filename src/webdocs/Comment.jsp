@@ -42,7 +42,7 @@
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -63,12 +63,12 @@
     String link    = wiki.safeGetParameter( request, "link" );
     String remember = request.getParameter("remember");
 
-    WikiContext wikiContext = wiki.createContext( request, 
+    WikiContext wikiContext = wiki.createContext( request,
                                                   WikiContext.COMMENT );
 
     String pagereq = wikiContext.getPage().getName();
 
-    NDC.push( wiki.getApplicationName()+":"+pagereq );    
+    NDC.push( wiki.getApplicationName()+":"+pagereq );
 
     WikiPage wikipage = wikiContext.getPage();
     WikiPage latestversion = wiki.getPage( pagereq );
@@ -99,7 +99,7 @@
 
     String storedlink = HttpUtil.retrieveCookieValue( request, "link" );
     if( storedlink == null ) storedlink = "";
-    
+
     pageContext.setAttribute( "link", storedlink, PageContext.REQUEST_SCOPE );
 
     //
@@ -124,7 +124,7 @@
         //  FIXME: I am not entirely sure if the JSP page is the
         //  best place to check for concurrent changes.  It certainly
         //  is the best place to show errors, though.
-       
+
         long pagedate   = Long.parseLong(request.getParameter("edittime"));
 
         Date change = latestversion.getLastModified();
@@ -167,7 +167,7 @@
         if( pageText.length() > 0 )
         {
             pageText.append( "\n\n----\n\n" );
-        }        
+        }
 
         pageText.append( wiki.safeGetParameter( request, "text" ) );
 
@@ -178,14 +178,14 @@
         if( author != null && author.length() > 0 )
         {
             String signature = author;
-            
+
             if( link != null )
             {
                 link = HttpUtil.guessValidURI( link );
-                
+
                 signature = "["+author+"|"+link+"]";
             }
-            
+
             Calendar cal = Calendar.getInstance();
             SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
 
@@ -196,7 +196,7 @@
 
         if( remember != null )
         {
-            wiki.getUserManager().setUserCookie( response, author );            
+            wiki.getUserManager().setUserCookie( response, author );
             if( link != null )
             {
                 Cookie linkcookie = new Cookie("link", link);
@@ -244,7 +244,7 @@
     //  that instead of the edited version.
     //
     long lastchange = 0;
-    
+
     Date d = latestversion.getLastModified();
     if( d != null ) lastchange = d.getTime();
 
@@ -254,11 +254,11 @@
 
 	//  This is a hack to get the preview to work.
 	pageContext.setAttribute( "comment", Boolean.TRUE, PageContext.REQUEST_SCOPE );
-	
+
     //
     //  Attempt to lock the page.
     //
-    PageLock lock = wiki.getPageManager().lockPage( wikipage, 
+    PageLock lock = wiki.getPageManager().lockPage( wikipage,
                                                     currentUser.getName() );
 
     if( lock != null )

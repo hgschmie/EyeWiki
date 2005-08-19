@@ -39,16 +39,16 @@ import de.softwareforge.eyewiki.WikiContext;
 
 /**
  * Provides a page-specific counter.
- * 
+ *
  * <P>
  * Parameters
- * 
+ *
  * <UL>
  * <li>
  * name - Name of the counter.  Optional.
  * </li>
  * </ul>
- * 
+ *
  * Stores a variable in the WikiContext called "counter", with the name of the optionally attached. For example:<BR> If name is
  * "thispage", then the variable name is called "counter-thispage".
  * </p>

@@ -43,11 +43,11 @@ import de.softwareforge.eyewiki.WikiPage;
 
 /**
  * Writes an edit link.  Body of the link becomes the link text.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -60,7 +60,7 @@ import de.softwareforge.eyewiki.WikiPage;
  * version number.  Default is always to point at the latest version of the page.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

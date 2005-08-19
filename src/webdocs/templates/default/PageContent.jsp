@@ -39,7 +39,7 @@
 
 <wiki:CheckVersion mode="notlatest">
    <div class="notlatest">
-     This is version <wiki:PageVersion/>.  
+     This is version <wiki:PageVersion/>.
      It is not the current version, and thus it cannot be edited.<br />
      <wiki:LinkTo>[Back to current version]</wiki:LinkTo>&nbsp;&nbsp;
      <wiki:Permission permission="edit">

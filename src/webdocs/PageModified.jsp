@@ -39,7 +39,7 @@
 
 <%@ page errorPage="/Error.jsp" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -72,7 +72,7 @@
     pageContext.setAttribute( "usertext",
                               usertext,
                               PageContext.REQUEST_SCOPE );
-    
+
     String conflicttext = wiki.getText(pagereq);
 
     conflicttext = StringUtils.replace( conflicttext, "<", "&lt;" );

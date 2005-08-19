@@ -44,7 +44,7 @@ import java.util.Vector;
 
 /**
  * eyeWiki implementation of an Access Control List.
- * 
+ *
  * <p>
  * This implementation does not care about owners, and thus all actions are allowed by default.
  * </p>
@@ -300,7 +300,7 @@ public class AclImpl
         {
             return ALLOW;
         }
-        
+
         if (principal instanceof Group)
         {
             return NONE;

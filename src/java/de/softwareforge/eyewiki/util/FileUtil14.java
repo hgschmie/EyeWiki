@@ -47,7 +47,7 @@ import java.nio.charset.CodingErrorAction;
 /**
  * Generic utilities related to file and stream handling, JDK1.4 version. Do not call this directly - go through FileUtil, since it
  * is smart enough to decide which version you want to call.
- * 
+ *
  * <p>
  * This class contains only JDK1.4 -specific methods.
  * </p>

@@ -91,20 +91,20 @@ import org.picocontainer.Startable;
 /**
  * Provides a caching page provider.  This class rests on top of a real provider class and provides a cache to speed things up.
  * Only if the cache copy of the page text has expired, we fetch it from the provider.
- * 
+ *
  * <p>
  * This class also detects if someone has modified the page externally, not through eyeWiki routines, and throws the proper
  * RepositoryModifiedException.
  * </p>
- * 
+ *
  * <p>
  * Heavily based on ideas by Chris Brooking.
  * </p>
- * 
+ *
  * <p>
  * Since 2.1.52 uses the OSCache library from OpenSymphony.
  * </p>
- * 
+ *
  * <p>
  * Since 2.1.100 uses the Apache Lucene library to help in searching.
  * </p>

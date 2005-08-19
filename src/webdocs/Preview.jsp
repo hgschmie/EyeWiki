@@ -36,7 +36,7 @@
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );

@@ -54,7 +54,7 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 
 /**
  * Provides a nice calendar.  Responds to the following HTTP parameters:
- * 
+ *
  * <ul>
  * <li>
  * calendar.date - If this parameter exists, then the calendar date is taken from the month and year.  The date must be in ddMMyy
@@ -64,7 +64,7 @@ import de.softwareforge.eyewiki.providers.ProviderException;
  * weblog.startDate - If calendar.date parameter does not exist, we then check this date.
  * </li>
  * </ul>
- * 
+ *
  * If neither calendar.date nor weblog.startDate parameters exist, then the calendar will default to the current month.
  *
  * @author Janne Jalkanen

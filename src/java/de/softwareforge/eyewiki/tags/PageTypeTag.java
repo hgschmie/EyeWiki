@@ -40,13 +40,13 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 
 /**
  * Includes the body, if the current page is of proper type. <B>Attributes</B>
- * 
+ *
  * <UL>
  * <li>
  * type - either "page", "attachment" or "weblogentry"
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

@@ -43,11 +43,11 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 
 /**
  * Writes page content in HTML.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -56,7 +56,7 @@ import de.softwareforge.eyewiki.providers.ProviderException;
  * mode - In which format to insert the page.  Can be either "plain" or "html".
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

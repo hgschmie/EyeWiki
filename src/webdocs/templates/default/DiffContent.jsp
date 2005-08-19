@@ -40,9 +40,9 @@
 %>
 
 <wiki:PageExists>
-  <h2 class="diff">Difference between 
-  <%=getVersionText((Integer)pageContext.getAttribute(InsertDiffTag.ATTR_OLDVERSION, PageContext.REQUEST_SCOPE))%> 
-  and 
+  <h2 class="diff">Difference between
+  <%=getVersionText((Integer)pageContext.getAttribute(InsertDiffTag.ATTR_OLDVERSION, PageContext.REQUEST_SCOPE))%>
+  and
   <%=getVersionText((Integer)pageContext.getAttribute(InsertDiffTag.ATTR_NEWVERSION, PageContext.REQUEST_SCOPE))%>:
   </h2>
   <wiki:InsertDiff>

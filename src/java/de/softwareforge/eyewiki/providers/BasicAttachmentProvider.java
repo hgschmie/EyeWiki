@@ -86,10 +86,10 @@ import de.softwareforge.eyewiki.util.TextUtil;
  *               1.png
  *   </PRE>
  * The names of the directories will be URLencoded.
- * 
+ *
  * <p>
  * "attachment.properties" consists of the following items:
- * 
+ *
  * <UL>
  * <li>
  * 1.author = author name for version 1 (etc)
@@ -265,7 +265,7 @@ public class BasicAttachmentProvider
 
     /**
      * Returns the file extension.  For example "test.png" returns "png".
-     * 
+     *
      * <p>
      * If file has no extension, will return "bin"
      * </p>

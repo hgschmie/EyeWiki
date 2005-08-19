@@ -43,11 +43,11 @@ import de.softwareforge.eyewiki.WikiContext;
 /**
  * Writes a link to the login page.  Body of the link becomes the actual text. The link is written regardless to whether the page
  * exists or not.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -56,7 +56,7 @@ import de.softwareforge.eyewiki.WikiContext;
  * format - either "anchor" or "url" to output either an &lt;A&gt;... or just the HREF part of one.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

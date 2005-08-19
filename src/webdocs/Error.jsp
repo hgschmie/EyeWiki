@@ -36,23 +36,23 @@
 <%@ page import="de.softwareforge.eyewiki.util.*" %>
 <%@ page import="de.softwareforge.eyewiki.tags.WikiTagBase" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
     }
-    Logger log = Logger.getLogger("eyeWiki"); 
+    Logger log = Logger.getLogger("eyeWiki");
     WikiEngine wiki;
 %>
 <%
-    WikiContext wikiContext = wiki.createContext( request, 
+    WikiContext wikiContext = wiki.createContext( request,
                                                   WikiContext.ERROR );
     String pagereq = wikiContext.getPage().getName();
 
     NDC.push( wiki.getApplicationName() + ":" + pagereq );
 
-    pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT, 
-                              wikiContext, 
+    pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT,
+                              wikiContext,
                               PageContext.REQUEST_SCOPE );
 
     response.setContentType("text/html; charset="+wiki.getContentEncoding() );
@@ -61,8 +61,8 @@
 
     Throwable realcause = null;
 
-    if( exception != null )        
-    {   
+    if( exception != null )
+    {
         msg = exception.getMessage();
         if( msg == null || msg.length() == 0 )
         {
@@ -85,7 +85,7 @@
             }
         }
 
-        if( realcause == null ) realcause = exception;    
+        if( realcause == null ) realcause = exception;
     }
     else
     {
@@ -104,7 +104,7 @@
 
    <dl>
       <dt class="errorpage">Error Message</dt>
-      <dd class="errorpage"><%=pageContext.getAttribute("message",PageContext.REQUEST_SCOPE)%></dd>      
+      <dd class="errorpage"><%=pageContext.getAttribute("message",PageContext.REQUEST_SCOPE)%></dd>
       <dt class="errorpage">Exception</dt>
       <dd class="errorpage"><%=realcause.getClass().getName()%></dd>
       <dt class="errorpage">Place where detected</dt>

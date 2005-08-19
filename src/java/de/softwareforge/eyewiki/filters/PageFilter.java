@@ -38,13 +38,13 @@ import de.softwareforge.eyewiki.WikiContext;
 /**
  * Provides a definition for a page filter.  A page filter is a class that can be used to transform the WikiPage content being
  * saved or being loaded at any given time.
- * 
+ *
  * <p>
  * Note that the WikiContext.getPage() method always returns the context in which text is rendered, i.e. the original request. Thus
  * the content may actually be different content than what what the wikiContext.getPage() implies!  This happens often if you are
  * for example including multiple pages on the same page.
  * </p>
- * 
+ *
  * <p>
  * PageFilters must be thread-safe!  There is only one instance of each PageFilter per each WikiEngine invocation.  If you need to
  * store data persistently, use VariableManager, or WikiContext.
@@ -121,7 +121,7 @@ public interface PageFilter
     /**
      * This method is called after the page has been successfully saved. If the saving fails for any reason, then this method will
      * not be called.
-     * 
+     *
      * <p>
      * Since the result is discarded from this method, this is only useful for things like counters, etc.
      * </p>

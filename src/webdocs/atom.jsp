@@ -56,8 +56,8 @@
         SimpleDateFormat iso8601fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
         cal.setTime( d );
-        cal.add( Calendar.MILLISECOND, 
-                 - (cal.get( Calendar.ZONE_OFFSET ) + 
+        cal.add( Calendar.MILLISECOND,
+                 - (cal.get( Calendar.ZONE_OFFSET ) +
                     (cal.getTimeZone().inDaylightTime( d ) ? cal.get( Calendar.DST_OFFSET ) : 0 )) );
         return iso8601fmt.format( cal.getTime() );
     }
@@ -66,14 +66,14 @@
 <%
     WikiContext wikiContext = wiki.createContext( request, "rss" );
     WikiPage    wikipage    = wikiContext.getPage();
-    
+
     if( wiki.getBaseURL().length() == 0 )
     {
         response.sendError( 500, "The eyewiki.baseURL property has not been defined for this wiki - cannot generate Atom feed" );
         return;
     }
 
-    NDC.push( wiki.getApplicationName()+":"+wikipage.getName() );    
+    NDC.push( wiki.getApplicationName()+":"+wikipage.getName() );
 
     //
     //  Force the TranslatorReader to output absolute URLs
@@ -126,7 +126,7 @@
         for( Iterator i = changed.iterator(); i.hasNext(); )
         {
             WikiPage p = (WikiPage) i.next();
-            
+
             if( !HttpUtil.checkFor304( request, p ) ) hasChanged = true;
             if( p.getLastModified().after( latest ) ) latest = p.getLastModified();
         }
@@ -152,7 +152,7 @@
     String  blogauthor   = "";
 
     if( changed.size() > 0 )
-    { 
+    {
         blogmodified = ((WikiPage)changed.get(0)).getLastModified();
         blogauthor   = ((WikiPage)changed.get(0)).getAuthor();
     }
@@ -190,7 +190,7 @@
             {
                 title = pageText.substring( 0, firstLine );
             }
-            
+
             if( title.trim().length() == 0 ) title = p.getName();
 
             // Remove wiki formatting
@@ -218,7 +218,7 @@
 
                 if( maxlen > 0 )
                 {
-                    pageText = wiki.textToHTML( wikiContext, 
+                    pageText = wiki.textToHTML( wikiContext,
                                                 pageText.substring( firstLine+1,
                                                                     maxlen ).trim() );
                     out.print( pageText );

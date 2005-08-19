@@ -43,11 +43,11 @@ import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 
 /**
  * Returns the value of an Wiki variable.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * var - Name of the variable.  Required.
@@ -57,7 +57,7 @@ import de.softwareforge.eyewiki.exception.NoSuchVariableException;
  * named variable is not found. Set to empty (default="") to hide the message.
  * </li>
  * </ul>
- * 
+ *
  * <P>
  * A default value implies <I>failmode='quiet'</I>.
  * </p>

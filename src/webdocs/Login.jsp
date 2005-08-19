@@ -41,12 +41,12 @@
     This is a sample login page, in case you prefer a clear
     front page instead of the default sign-in type login box
     at the side of the normal entry page. Set this page in
-    the welcome-file-list tag in web.xml to default here 
+    the welcome-file-list tag in web.xml to default here
     when entering the site.
 -->
 
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -103,7 +103,7 @@
         }
         catch( WikiSecurityException e )
         {
-            session.setAttribute("msg", e.getMessage());            
+            session.setAttribute("msg", e.getMessage());
         }
     }
     else if( "logout".equals(action) )

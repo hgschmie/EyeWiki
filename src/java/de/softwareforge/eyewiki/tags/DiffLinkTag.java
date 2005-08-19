@@ -44,11 +44,11 @@ import de.softwareforge.eyewiki.WikiProvider;
 
 /**
  * Writes a diff link.  Body of the link becomes the link text.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -62,7 +62,7 @@ import de.softwareforge.eyewiki.WikiProvider;
  * newVersion - The newer of these versions.  Can also be "latest", or "previous".  Defaults to "latest".
  * </li>
  * </ul>
- * 
+ *
  * If the page does not exist, this tag will fail silently, and not evaluate its body contents.
  *
  * @author Janne Jalkanen

@@ -37,7 +37,7 @@
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -49,9 +49,9 @@
     WikiContext wikiContext = wiki.createContext( request, WikiContext.PREFS );
     String pagereq = wikiContext.getPage().getName();
     UserManager mgr = wiki.getUserManager();
-    
+
     NDC.push( wiki.getApplicationName()+":"+pagereq );
-    
+
     pageContext.setAttribute( WikiTagBase.ATTR_CONTEXT,
                               wikiContext,
                               PageContext.REQUEST_SCOPE );
@@ -79,7 +79,7 @@
         response.addCookie( prefs );
 
         response.sendRedirect( wiki.getBaseURL()+"UserPreferences.jsp" );
-    }       
+    }
     else
     {
         response.setContentType("text/html; charset="+wiki.getContentEncoding() );

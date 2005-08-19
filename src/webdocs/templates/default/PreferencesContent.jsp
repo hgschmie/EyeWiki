@@ -39,7 +39,7 @@
   You need to have cookies enabled for this to work, though.
 </div>
 
-<form action="<wiki:Variable var="baseURL"/>UserPreferences.jsp" 
+<form action="<wiki:Variable var="baseURL"/>UserPreferences.jsp"
       method="post"
       accept-charset="UTF-8">
 

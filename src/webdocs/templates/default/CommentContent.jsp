@@ -43,7 +43,7 @@
     <table class="comment">
       <tr>
         <td class="commentmsg"><label for="authorname">Your name</label></td>
-        <td class="comment"><input type="text" name="author" id="authorname" value="<wiki:UserName/>" /></td> 
+        <td class="comment"><input type="text" name="author" id="authorname" value="<wiki:UserName/>" /></td>
       </tr>
       <tr>
         <td class="commentmsg"><label for="rememberme">Remember me?</label></td>

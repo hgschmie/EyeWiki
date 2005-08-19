@@ -42,31 +42,31 @@ function validateZebraTable()
 
   // find a <div class="zebra-table"> element
   var divArr = document.getElementsByTagName("div");
-  if (! divArr) return; 
+  if (! divArr) return;
 
-  for (var i=0; i<divArr.length; i++) 
+  for (var i=0; i<divArr.length; i++)
   {
     if ( divArr[i].className == "zebra-table" )
     {
       zebraCnt = 0;
-      validateZebraTableNode(divArr[i]);   
-    } 
-  }  
+      validateZebraTableNode(divArr[i]);
+    }
+  }
 
 }
 
 function validateZebraTableNode(node)
 {
-  if ( node.nodeName == "TR") 
+  if ( node.nodeName == "TR")
   {
      zebraCnt++;
      if (zebraCnt % 2 == 1) node.className = "odd";
   }
-  
-  if (node.hasChildNodes) 
+
+  if (node.hasChildNodes)
   {
-    for (var i=0; i<node.childNodes.length; i++) 
-    { 
+    for (var i=0; i<node.childNodes.length; i++)
+    {
       validateZebraTableNode(node.childNodes[i]);
     }
   }
@@ -77,7 +77,7 @@ function validateZebraTableNode(node)
 function skinSelect(skin)
 {
   //var skin = document.forms["skinForm"].skinSelector;
-  if (! skin) return; 
+  if (! skin) return;
 
   for (var i=0; i<skin.length; i++)
   {
@@ -90,7 +90,7 @@ function skinSelect(skin)
 }
 
 function runOnLoad()
-{ 
+{
   validateZebraTable();
   googleSearchHighlight();
 }

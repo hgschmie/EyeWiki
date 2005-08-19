@@ -89,7 +89,7 @@
 
   <component-implementation key="DiffProvider"      class="de.softwareforge.eyewiki.diff.ContextualDiffProvider" />
 
-  
+
 <!-- For the RSS feeds, a different provider can be used because inside -->
 <!-- the xml files you might need a diffent kind of formatting. -->
 

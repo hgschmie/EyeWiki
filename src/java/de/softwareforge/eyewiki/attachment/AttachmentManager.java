@@ -62,7 +62,7 @@ import org.picocontainer.PicoContainer;
 
 /**
  * Provides facilities for handling attachments.  All attachment handling goes through this class.
- * 
+ *
  * <p>
  * The AttachmentManager provides a facade towards the current WikiAttachmentProvider that is in use.  It is created by the
  * WikiEngine as a singleton object, and can be requested through the WikiEngine.
@@ -90,7 +90,7 @@ public class AttachmentManager
     /**
      * Creates a new AttachmentManager.  Note that creation will never fail, but it's quite likely that attachments do not
      * function.
-     * 
+     *
      * <p>
      * <b>DO NOT CREATE</b> an AttachmentManager on your own, unless you really know what you're doing.  Just use
      * WikiEngine.getAttachmentManager() if you're making a module for eyeWiki.

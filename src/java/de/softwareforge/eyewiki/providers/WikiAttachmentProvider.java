@@ -47,7 +47,7 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 
 /**
  * Defines an attachment provider - a class which is capable of saving binary data as attachments.
- * 
+ *
  * <P>
  * The difference between this class and WikiPageProvider is that there PageProviders handle Unicode text, whereas we handle binary
  * data. While there are quite a lot of similarities in how we handle things, many providers can really use just one.  In
@@ -108,13 +108,13 @@ public interface WikiAttachmentProvider
 
     /**
      * Lists changed attachments since given date.  Can also be used to fetch a list of all pages.
-     * 
+     *
      * <P>
      * This is different from WikiPageProvider, where you basically get a list of all pages, then sort them locally.  However,
      * since some providers can be more efficient in locating recently changed files (like any database) than our non-optimized
      * Java code, it makes more sense to fetch the whole list this way.
      * </p>
-     * 
+     *
      * <P>
      * To get all files, call this with Date(0L);
      * </p>

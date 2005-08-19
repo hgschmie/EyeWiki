@@ -62,17 +62,17 @@ import org.picocontainer.Startable;
 
 /**
  * This default UserDatabase implementation provides user profiles and groups to eyeWiki.
- * 
+ *
  * <p>
  * UserProfiles are simply created upon request, and cached locally. More intricate providers might look up profiles in a remote
  * DB, provide an unauthenticatable object for unknown users, etc.
  * </p>
- * 
+ *
  * <p>
  * The authentication of a user is done elsewhere (see WikiAuthenticator); newly created profiles should have login status
  * UserProfile.NONE.
  * </p>
- * 
+ *
  * <p>
  * Groups are  based on WikiPages. The name of the page determines the group name (as a convention, we suggest the name of the page
  * ends in Group, e.g. EditorGroup). By setting attribute 'members' on the page, the named members are added to the group:
@@ -80,11 +80,11 @@ import org.picocontainer.Startable;
  * [{SET members fee fie foe foo}]
  * </pre>
  * </p>
- * 
+ *
  * <p>
  * The list of members can be separated by commas or spaces.
  * </p>
- * 
+ *
  * <p>
  * TODO: are 'named members' supposed to be usernames, or are group names allowed? (Suggestion: both)
  * </p>

@@ -70,7 +70,7 @@
     <tr>
       <td>
         <form action="<wiki:BaseURL/>attach" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
-          <%-- Do NOT change the order of wikiname and content, otherwise the 
+          <%-- Do NOT change the order of wikiname and content, otherwise the
                servlet won't find its parts. --%>
           <input type="hidden" name="page" value="<wiki:Variable var="pagename"/>">
 

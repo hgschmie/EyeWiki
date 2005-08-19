@@ -64,7 +64,7 @@ public class SearchMatcher
     /**
      * Compares the page content, available through the given stream, to the query items of this matcher. Returns a search result
      * object describing the quality of the match.
-     * 
+     *
      * <p>
      * This method would benefit of regexps (1.4) and streaming. FIXME!
      * </p>

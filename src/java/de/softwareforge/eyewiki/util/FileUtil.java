@@ -265,7 +265,7 @@ public final class FileUtil
 
     /**
      * Reads in file contents.
-     * 
+     *
      * <P>
      * This method is smart and falls back to ISO-8859-1 if the input stream does not seem to be in the specified encoding.
      * </p>

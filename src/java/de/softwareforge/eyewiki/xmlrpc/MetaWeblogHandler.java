@@ -58,7 +58,7 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 
 /**
  * Provides handlers for all RPC routines of the MetaWeblog API.
- * 
+ *
  * <P>
  * eyeWiki does not support categories, and therefore we always return an empty list for getCategories().  Note also that this API
  * is not suitable for general Wiki editing, since eyeWiki formats the entries in a wiki-compatible manner.  And you cannot choose
@@ -90,7 +90,7 @@ public class MetaWeblogHandler
 
     /**
      * Does a quick check against the current user and does he have permissions to do the stuff that he really wants to.
-     * 
+     *
      * <p>
      * If there is no authentication enabled, returns normally.
      * </p>

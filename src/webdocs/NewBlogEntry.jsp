@@ -35,7 +35,7 @@
 <%@ page import="de.softwareforge.eyewiki.plugin.*" %>
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -47,7 +47,7 @@
     String pagereq = wikiContext.getPage().getName();
 
     NDC.push( wiki.getApplicationName()+":"+pagereq );
-    
+
     String specialpage = wiki.getSpecialPageReference( pagereq );
     String newEntry = "PluginUnconfigured";
 
@@ -63,7 +63,7 @@
         if (pluginManager != null)
         {
             WeblogEntryPlugin p = (WeblogEntryPlugin) pluginManager.findPlugin("WeblogEntryPlugin");
-    
+
             if (p != null)
             {
                 newEntry = wikiContext.getURL(WikiContext.EDIT, p.getNewEntryPage(pagereq ));

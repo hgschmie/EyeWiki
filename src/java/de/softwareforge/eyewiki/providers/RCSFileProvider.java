@@ -71,13 +71,13 @@ import de.softwareforge.eyewiki.util.TextUtil;
 /**
  * This class implements a simple RCS file provider.  NOTE: You MUST have the RCS package installed for this to work.  They must
  * also be in your path...
- * 
+ *
  * <P>
  * The RCS file provider extends from the FileSystemProvider, which means that it provides the pages in the same way.  The only
  * difference is that it implements the version history commands, and also in each checkin it writes the page to the RCS
  * repository as well.
  * </p>
- * 
+ *
  * <p>
  * If you decide to dabble with the default commands, please make sure that you do not check the default archive suffix ",v".  File
  * deletion depends on it.

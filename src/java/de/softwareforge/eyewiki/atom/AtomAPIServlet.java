@@ -126,10 +126,10 @@ public class AtomAPIServlet
 
     /**
      * Implements the PostURI of the Atom spec.
-     * 
+     *
      * <p>
      * Implementation notes:
-     * 
+     *
      * <ul>
      * <li>
      * Only fetches the first content.  All other contents are ignored.

@@ -48,7 +48,7 @@ public interface WikiPlugin
      * This is the main entry point for any plugin.  The parameters are parsed, and a special parameter called "_body" signifies
      * the name of the plugin body, i.e. the part of the plugin that is not a parameter of the form "key=value".  This has been
      * separated using an empty line.
-     * 
+     *
      * <P>
      * Note that it is preferred that the plugin returns XHTML-compliant HTML (i.e. close all tags, use &lt;br /&gt; instead of
      * &lt;br&gt;, etc.

@@ -44,7 +44,7 @@
 <%@ page errorPage="/Error.jsp" %>
 <%@ taglib uri="/WEB-INF/tld/eyewiki.tld" prefix="wiki" %>
 
-<%! 
+<%!
     public void jspInit()
     {
         wiki = WikiEngine.getInstance( getServletConfig() );
@@ -68,17 +68,17 @@
     //
     //  Create context and continue
     //
-    WikiContext wikiContext = wiki.createContext( request, 
+    WikiContext wikiContext = wiki.createContext( request,
                                                   WikiContext.EDIT );
     String pagereq = wikiContext.getPage().getName();
 
-    NDC.push( wiki.getApplicationName()+":"+pagereq );    
+    NDC.push( wiki.getApplicationName()+":"+pagereq );
 
     //
     //  WYSIWYG editor sends us its greetings
     //
     String htmlText = wiki.safeGetParameter( request, "htmlPageText" );
-    if( htmlText != null && cancel == null ) 
+    if( htmlText != null && cancel == null )
     {
         text = new HtmlStringToWikiTranslator().translate(htmlText,wikiContext);
     }
@@ -98,7 +98,7 @@
     else
     {
         requiredPermission = new CreatePermission();
-    }   
+    }
 
     AuthorizationManager mgr = wiki.getAuthorizationManager();
     UserProfile currentUser  = wikiContext.getCurrentUser();
@@ -145,7 +145,7 @@
         //  FIXME: I am not entirely sure if the JSP page is the
         //  best place to check for concurrent changes.  It certainly
         //  is the best place to show errors, though.
-       
+
         long pagedate   = Long.parseLong(request.getParameter("edittime"));
 
         Date change = latestversion.getLastModified();
@@ -174,7 +174,7 @@
         //  Set author information
         //
 
-        wikiContext.getPage().setAuthor( currentUser.getName() );        
+        wikiContext.getPage().setAuthor( currentUser.getName() );
 
         //
         //  Figure out the actual page text
@@ -249,7 +249,7 @@
     //  that instead of the edited version.
     //
     long lastchange = 0;
-    
+
     Date d = latestversion.getLastModified();
     if( d != null ) lastchange = d.getTime();
 
@@ -260,7 +260,7 @@
     //
     //  Attempt to lock the page.
     //
-    PageLock lock = wiki.getPageManager().lockPage( wikipage, 
+    PageLock lock = wiki.getPageManager().lockPage( wikipage,
                                                     currentUser.getName() );
 
     if( lock != null )

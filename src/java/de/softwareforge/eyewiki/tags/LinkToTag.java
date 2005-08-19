@@ -44,11 +44,11 @@ import de.softwareforge.eyewiki.attachment.Attachment;
 /**
  * Writes a link to a Wiki page.  Body of the link becomes the actual text. The link is written regardless to whether the page
  * exists or not.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
@@ -60,7 +60,7 @@ import de.softwareforge.eyewiki.attachment.Attachment;
  * template - Which template should we link to.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *

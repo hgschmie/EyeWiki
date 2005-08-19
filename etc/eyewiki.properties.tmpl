@@ -66,7 +66,7 @@ eyewiki.variableFile   = /WEB-INF/wikiVariables.xml
 #
 #  If you're using Windows, then you must duplicate the backslashes.
 #  For example, use:
-#  
+#
 #  eyewiki.pageDir = C:\\Data\\eyewiki
 #
 eyewiki.pageDir = @pagedir@
@@ -78,7 +78,7 @@ eyewiki.pageDir = @pagedir@
 #
 #  If you're using Windows, then you must duplicate the backslashes.
 #  For example, use:
-#  
+#
 #  eyewiki.storageDir = C:\\Data\\eyewiki
 #
 eyewiki.storageDir = @pagedir@
@@ -120,9 +120,9 @@ eyewiki.usePageCache = true
 #
 #  Use the following property to define which attachment provider
 #  you want to use.  You have basically two choices:
-#    * Set the value to BasicAttachmentProvider  
+#    * Set the value to BasicAttachmentProvider
 #      a simple, flat file versioning provider
-#    * Leave the value empty (or just comment the line out) 
+#    * Leave the value empty (or just comment the line out)
 #      the attachment functionality is disabled
 #
 eyewiki.attachmentProvider = BasicAttachmentProvider
@@ -136,7 +136,7 @@ eyewiki.attachmentProvider = BasicAttachmentProvider
 #eyewiki.attachment.maxsize=100000
 
 #
-# For building user profiles you need an authenticator which keeps 
+# For building user profiles you need an authenticator which keeps
 # the user profiles somewhere.
 #
 eyewiki.auth.useOldAuth = true
@@ -154,7 +154,7 @@ eyewiki.fileAuthenticator.fileName = @passwdfile@
 #  where it's actually located.
 #
 #  Leave undefined if you want to rely on what your servlet container
-#  thinks of where your application lives. 
+#  thinks of where your application lives.
 #
 #  You MUST, however, define this one if you want to enable RSS (see below).  In
 #  general, this is a good idea to define it anyway.  Do not forget the
@@ -177,12 +177,12 @@ eyewiki.baseURL = http://localhost:8080/eyewiki/
 #  Determines which character encoding eyeWiki should use.  If you want
 #  to support all languages in your Wiki, you probably want to enable
 #  this.  From eyeWiki 2.2, it is strongly suggested that you use UTF-8.
-#  
+#
 #  Note that you can't switch these in the mean time, since the way the
 #  files are encoded on disk is incompatible between ISO-Latin1 and UTF-8.
 #  Don't try.  You'll get all sorts of interesting problems, if you do.
 #
-#  Possible values are 'ISO-8859-1' (default, if none has been specified) 
+#  Possible values are 'ISO-8859-1' (default, if none has been specified)
 #  and 'UTF-8'.
 
 eyewiki.encoding = UTF-8
@@ -310,7 +310,7 @@ eyewiki.specialPage.UserPreferences = UserPreferences.jsp
 #
 #  Plugin search paths.
 #
-#  Define here the packages you want to use for searching plugins, 
+#  Define here the packages you want to use for searching plugins,
 #  separated with commas.
 #  For example, use the following command to add "org.myorganisation.eyewiki.myplugins"
 #  and "com.foobar.myplugins" to the search path.
@@ -322,7 +322,7 @@ eyewiki.specialPage.UserPreferences = UserPreferences.jsp
 #
 #  eyewiki.plugin.searchPath = org.myorganisation.eyewiki.myplugins,com.foobar.myplugins
 #
-eyewiki.plugin.searchPath = 
+eyewiki.plugin.searchPath =
 
 #############################################################################
 #
@@ -337,18 +337,18 @@ eyewiki.plugin.searchPath =
 
 #############################################################################
 #
-# InterWiki links 
+# InterWiki links
 #
 # The %s is replaced with the page reference (specify
 # multiple times to get multiple references).  Page references should
-# appear in format : [wiki:wikipage].  
+# appear in format : [wiki:wikipage].
 #
 # This is the eyeWiki home.  In future, eyeWiki will probably rely on this
 # for error messages, so I don't recommend that you change it.
 eyewiki.interWikiRef.eyeWiki = http://www.eyewiki.org/Wiki.jsp?page=%s
 
 # Here's how you can have directly links to the eyeWiki editor.
-# Now you can put a hyperlink for editing "MainPage" by making 
+# Now you can put a hyperlink for editing "MainPage" by making
 # a link [Edit:MainPage].
 eyewiki.interWikiRef.Edit = Edit.jsp?page=%s
 
@@ -377,7 +377,7 @@ eyewiki.interWikiRef.Doc = http://doc.eyewiki.org/2.2/Wiki.jsp?page=%s
 # Windows or UNIX shells).  Default pattern is to include all PNG
 # images.  If you specify something here, you will override the default.
 #
-# Don't forget to increase the number after the dot - duplicate entries 
+# Don't forget to increase the number after the dot - duplicate entries
 # cause problems!
 #
 # For example:

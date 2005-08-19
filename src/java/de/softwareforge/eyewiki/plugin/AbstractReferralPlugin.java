@@ -52,7 +52,7 @@ import de.softwareforge.eyewiki.util.TextUtil;
 
 /**
  * This is a base class for all plugins using referral things.
- * 
+ *
  * <p>
  * Parameters:<br> maxwidth: maximum width of generated links<br>
  * separator: separator between generated links (wikitext)<br>

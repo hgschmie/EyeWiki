@@ -51,17 +51,17 @@ import de.softwareforge.eyewiki.providers.ProviderException;
 
 /**
  * Iterates through the list of attachments one has.
- * 
+ *
  * <P>
  * <B>Attributes</B>
  * </p>
- * 
+ *
  * <UL>
  * <li>
  * page - Page name to refer to.  Default is the current page.
  * </li>
  * </ul>
- * 
+ *
  *
  * @author Janne Jalkanen
  *
