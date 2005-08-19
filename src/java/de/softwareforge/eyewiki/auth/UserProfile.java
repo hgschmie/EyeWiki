@@ -109,11 +109,11 @@ public class UserProfile
     }
 
     /*
-    public UserProfile( String representation )
-    {
-        parseStringRepresentation( representation );
-    }
-    */
+     *    public UserProfile( String representation )
+     *    {
+     *        parseStringRepresentation( representation );
+     *    }
+     */
     public String getStringRepresentation()
     {
         String res = "username=" + TextUtil.urlEncodeUTF8(getName());

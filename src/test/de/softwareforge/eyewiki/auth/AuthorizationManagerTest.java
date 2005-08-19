@@ -240,36 +240,36 @@ public class AuthorizationManagerTest
 
     /*
      * TODO: Fix this test
-
-    public void testNamedPermissions3()
-        throws Exception
-    {
-        String src = "[{ALLOW edit FooGroup}] [{DENY edit Guest}] ";
-
-        m_engine.saveText( "Test", src );
-
-        m_engine.saveText( "FooGroup", "[{SET members=FooBar}]" );
-
-        WikiPage p = m_engine.getPage("Test");
-
-        UserProfile wup = new UserProfile();
-        wup.setName( "FooBar" );
-
-        assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
-
-        wup.setLoginStatus( UserProfile.COOKIE );
-
-        assertFalse( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
-
-        wup.setLoginStatus( UserProfile.CONTAINER );
-
-        assertTrue( "edit 3", m_manager.checkPermission( p, wup, new EditPermission() ) );
-
-        wup.setLoginStatus( UserProfile.PASSWORD );
-
-        assertTrue( "edit 4", m_manager.checkPermission( p, wup, new EditPermission() ) );
-    }
-    */
+     *
+     *    public void testNamedPermissions3()
+     *        throws Exception
+     *    {
+     *        String src = "[{ALLOW edit FooGroup}] [{DENY edit Guest}] ";
+     *
+     *        m_engine.saveText( "Test", src );
+     *
+     *        m_engine.saveText( "FooGroup", "[{SET members=FooBar}]" );
+     *
+     *        WikiPage p = m_engine.getPage("Test");
+     *
+     *        UserProfile wup = new UserProfile();
+     *        wup.setName( "FooBar" );
+     *
+     *        assertFalse( "edit 1", m_manager.checkPermission( p, wup, new EditPermission() ) );
+     *
+     *        wup.setLoginStatus( UserProfile.COOKIE );
+     *
+     *        assertFalse( "edit 2", m_manager.checkPermission( p, wup, new EditPermission() ) );
+     *
+     *        wup.setLoginStatus( UserProfile.CONTAINER );
+     *
+     *        assertTrue( "edit 3", m_manager.checkPermission( p, wup, new EditPermission() ) );
+     *
+     *        wup.setLoginStatus( UserProfile.PASSWORD );
+     *
+     *        assertTrue( "edit 4", m_manager.checkPermission( p, wup, new EditPermission() ) );
+     *    }
+     */
 
     /**
      * A superuser should be allowed permissions.

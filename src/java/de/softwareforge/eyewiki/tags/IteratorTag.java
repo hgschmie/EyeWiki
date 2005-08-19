@@ -95,11 +95,11 @@ public abstract class IteratorTag
      */
 
     /*
-    public void setList( Iterator arg )
-    {
-        m_iterator = arg;
-    }
-    */
+     *    public void setList( Iterator arg )
+     *    {
+     *        m_iterator = arg;
+     *    }
+     */
     public void clearList()
     {
         m_iterator = null;

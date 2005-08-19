@@ -1284,16 +1284,16 @@ public class TranslatorReader
         }
 
         /*
-          for (; m_listlevel > 0; m_listlevel--)
-          {
-          buf.append("</ul>\n");
-          }
-
-          for (; m_numlistlevel > 0; m_numlistlevel--)
-          {
-          buf.append("</ol>\n");
-          }
-        */
+         *          for (; m_listlevel > 0; m_listlevel--)
+         *          {
+         *          buf.append("</ul>\n");
+         *          }
+         *
+         *          for (; m_numlistlevel > 0; m_numlistlevel--)
+         *          {
+         *          buf.append("</ol>\n");
+         *          }
+         */
         // cleanup OL and UL lists
         buf.append(unwindGeneralList());
 
@@ -2484,10 +2484,10 @@ public class TranslatorReader
                 break;
 
             /*
-              case '&':
-              s = "&amp;";
-              break;
-            */
+             *              case '&':
+             *              s = "&amp;";
+             *              break;
+             */
             case '~':
                 s = handleTilde();
 
@@ -2619,8 +2619,8 @@ public class TranslatorReader
         private TranslatorReader m_cleanTranslator;
 
         /*
-          FIXME: It's relatively slow to create two TranslatorReaders each time.
-        */
+         *          FIXME: It's relatively slow to create two TranslatorReaders each time.
+         */
         public HTMLRenderer()
         {
         }

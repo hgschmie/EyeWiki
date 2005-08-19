@@ -1259,8 +1259,8 @@ public class WikiEngine
         //  get replaced as well with &quot; etc.
         //
         /*
-          result = TextUtil.replaceString( result, "&", "&amp;");
-        */
+         *          result = TextUtil.replaceString( result, "&", "&amp;");
+         */
         result = TextUtil.replaceEntities(result);
 
         return result;

@@ -523,42 +523,42 @@ public class AttachmentServlet
      */
 
     /*
-      private void debugContentList( MultipartRequest  multi )
-      {
-      StringBuffer sb = new StringBuffer();
-
-      sb.append( "Upload information: parameters: [" );
-
-      Enumeration params = multi.getParameterNames();
-      while( params.hasMoreElements() )
-      {
-      String name = (String)params.nextElement();
-      String value = multi.getURLParameter( name );
-      sb.append( "[" + name + " = " + value + "]" );
-      }
-
-      sb.append( " files: [" );
-      Enumeration files = multi.getFileParameterNames();
-      while( files.hasMoreElements() )
-      {
-      String name = (String)files.nextElement();
-      String filename = multi.getFileSystemName( name );
-      String type = multi.getContentType( name );
-      File f = multi.getFile( name );
-      sb.append( "[name: " + name );
-      sb.append( " temp_file: " + filename );
-      sb.append( " type: " + type );
-      if (f != null)
-      {
-      sb.append( " abs: " + f.getPath() );
-      sb.append( " size: " + f.length() );
-      }
-      sb.append( "]" );
-      }
-      sb.append( "]" );
-
-
-      log.debug( sb.toString() );
-      }
-    */
+     *      private void debugContentList( MultipartRequest  multi )
+     *      {
+     *      StringBuffer sb = new StringBuffer();
+     *
+     *      sb.append( "Upload information: parameters: [" );
+     *
+     *      Enumeration params = multi.getParameterNames();
+     *      while( params.hasMoreElements() )
+     *      {
+     *      String name = (String)params.nextElement();
+     *      String value = multi.getURLParameter( name );
+     *      sb.append( "[" + name + " = " + value + "]" );
+     *      }
+     *
+     *      sb.append( " files: [" );
+     *      Enumeration files = multi.getFileParameterNames();
+     *      while( files.hasMoreElements() )
+     *      {
+     *      String name = (String)files.nextElement();
+     *      String filename = multi.getFileSystemName( name );
+     *      String type = multi.getContentType( name );
+     *      File f = multi.getFile( name );
+     *      sb.append( "[name: " + name );
+     *      sb.append( " temp_file: " + filename );
+     *      sb.append( " type: " + type );
+     *      if (f != null)
+     *      {
+     *      sb.append( " abs: " + f.getPath() );
+     *      sb.append( " size: " + f.length() );
+     *      }
+     *      sb.append( "]" );
+     *      }
+     *      sb.append( "]" );
+     *
+     *
+     *      log.debug( sb.toString() );
+     *      }
+     */
 }

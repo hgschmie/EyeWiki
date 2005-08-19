@@ -147,42 +147,42 @@ public class VersioningFileProvider
     // FIXME: This is relatively slow.
 
     /*
-      private int findLatestVersion( String page )
-      {
-      File pageDir = findOldPageDir( page );
-
-      String[] pages = pageDir.list( new WikiFileFilter() );
-
-      if( pages == null )
-      {
-      return -1; // No such thing found.
-      }
-
-      int version = -1;
-
-      for( int i = 0; i < pages.length; i++ )
-      {
-      int cutpoint = pages[i].indexOf( '.' );
-      if( cutpoint > 0 )
-      {
-      String pageNum = pages[i].substring( 0, cutpoint );
-
-      try
-      {
-      int res = Integer.parseInt( pageNum );
-
-      if( res > version )
-      {
-      version = res;
-      }
-      }
-      catch( NumberFormatException e ) {} // It's okay to skip these.
-      }
-      }
-
-      return version;
-      }
-    */
+     *      private int findLatestVersion( String page )
+     *      {
+     *      File pageDir = findOldPageDir( page );
+     *
+     *      String[] pages = pageDir.list( new WikiFileFilter() );
+     *
+     *      if( pages == null )
+     *      {
+     *      return -1; // No such thing found.
+     *      }
+     *
+     *      int version = -1;
+     *
+     *      for( int i = 0; i < pages.length; i++ )
+     *      {
+     *      int cutpoint = pages[i].indexOf( '.' );
+     *      if( cutpoint > 0 )
+     *      {
+     *      String pageNum = pages[i].substring( 0, cutpoint );
+     *
+     *      try
+     *      {
+     *      int res = Integer.parseInt( pageNum );
+     *
+     *      if( res > version )
+     *      {
+     *      version = res;
+     *      }
+     *      }
+     *      catch( NumberFormatException e ) {} // It's okay to skip these.
+     *      }
+     *      }
+     *
+     *      return version;
+     *      }
+     */
     private int findLatestVersion(String page)
             throws ProviderException
     {
@@ -393,14 +393,14 @@ public class VersioningFileProvider
     // FIXME: This method has no rollback whatsoever.
 
     /*
-      This is how the page directory should look like:
-
-      version    pagedir       olddir
-      none       empty         empty
-      1         Main.txt (1)  empty
-      2         Main.txt (2)  1.txt
-      3         Main.txt (3)  1.txt, 2.txt
-    */
+     *      This is how the page directory should look like:
+     *
+     *      version    pagedir       olddir
+     *      none       empty         empty
+     *      1         Main.txt (1)  empty
+     *      2         Main.txt (2)  1.txt
+     *      3         Main.txt (3)  1.txt, 2.txt
+     */
     public synchronized void putPageText(WikiPage page, String text)
             throws ProviderException
     {

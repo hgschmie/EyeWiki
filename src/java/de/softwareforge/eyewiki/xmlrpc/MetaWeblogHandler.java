@@ -106,38 +106,38 @@ public class MetaWeblogHandler
             throws XmlRpcException
     {
         /*
-          AuthorizationManager mgr = m_engine.getAuthorizationManager();
-          UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );
-          currentUser.setPassword( password );
-
-          WikiAuthenticator auth = m_engine.getUserManager().getAuthenticator();
-
-          if( auth != null )
-          {
-          boolean isValid = auth.authenticate( currentUser );
-
-          if( isValid )
-          {
-          if( !mgr.checkPermission( page,
-          currentUser,
-          permission ) )
-          {
-          return;
-          }
-          else
-          {
-          String msg = "Insufficient permissions to do "+permission+" on "+page.getName();
-          log.error( msg );
-          throw new XmlRpcException(0, msg );
-          }
-          }
-          else
-          {
-          log.error( "Username '"+username+"' or password not valid." );
-          throw new XmlRpcException(0, "Password or username not valid.");
-          }
-          }
-        */
+         *          AuthorizationManager mgr = m_engine.getAuthorizationManager();
+         *          UserProfile currentUser  = m_engine.getUserManager().getUserProfile( username );
+         *          currentUser.setPassword( password );
+         *
+         *          WikiAuthenticator auth = m_engine.getUserManager().getAuthenticator();
+         *
+         *          if( auth != null )
+         *          {
+         *          boolean isValid = auth.authenticate( currentUser );
+         *
+         *          if( isValid )
+         *          {
+         *          if( !mgr.checkPermission( page,
+         *          currentUser,
+         *          permission ) )
+         *          {
+         *          return;
+         *          }
+         *          else
+         *          {
+         *          String msg = "Insufficient permissions to do "+permission+" on "+page.getName();
+         *          log.error( msg );
+         *          throw new XmlRpcException(0, msg );
+         *          }
+         *          }
+         *          else
+         *          {
+         *          log.error( "Username '"+username+"' or password not valid." );
+         *          throw new XmlRpcException(0, "Password or username not valid.");
+         *          }
+         *          }
+         */
     }
 
     /**

@@ -2213,58 +2213,58 @@ public class TranslatorReaderTest
     }
 
     /*
-    public void testSimpleACL1()
-        throws Exception
-    {
-        String src = "Foobar.[{ALLOW view JanneJalkanen}]";
-
-        WikiPage p = new WikiPage(PAGE_NAME);
-
-        String res = translate(p, src);
-
-        assertEquals("Page text", "Foobar.", res);
-
-        AccessControlList acl = p.getAcl();
-
-        UserProfile prof = new UserProfile();
-        prof.setName("JanneJalkanen");
-
-        assertTrue( "no read", acl.checkPermission(prof, new ViewPermission()));
-        assertFalse("has edit", acl.checkPermission(prof, new EditPermission()));
-    }
-
-    public void testSimpleACL2()
-        throws Exception
-    {
-        String src = "Foobar.[{ALLOW view JanneJalkanen}]\n"+
-                     "[{DENY view ErikBunn, SuloVilen}]\n"+
-                     "[{ALLOW edit JanneJalkanen, SuloVilen}]";
-
-        WikiPage p = new WikiPage(PAGE_NAME);
-
-        String res = translate(p, src);
-
-        assertEquals("Page text", "Foobar.\n\n", res);
-
-        AccessControlList acl = p.getAcl();
-
-        UserProfile prof = new UserProfile();
-        prof.setName("JanneJalkanen");
-
-        assertTrue("no read for JJ", acl.checkPermission(prof, new ViewPermission()));
-        assertTrue("no edit for JJ", acl.checkPermission(prof, new EditPermission()));
-
-        prof.setName("ErikBunn");
-
-        assertFalse( "read for EB", acl.checkPermission(prof, new ViewPermission()));
-        assertFalse("has edit for EB", acl.checkPermission(prof, new EditPermission()));
-
-        prof.setName("SuloVilen");
-
-        assertFalse("read for SV", acl.checkPermission(prof, new ViewPermission()));
-        assertTrue("no edit for SV", acl.checkPermission(prof, new EditPermission()));
-    }
-    */
+     *    public void testSimpleACL1()
+     *        throws Exception
+     *    {
+     *        String src = "Foobar.[{ALLOW view JanneJalkanen}]";
+     *
+     *        WikiPage p = new WikiPage(PAGE_NAME);
+     *
+     *        String res = translate(p, src);
+     *
+     *        assertEquals("Page text", "Foobar.", res);
+     *
+     *        AccessControlList acl = p.getAcl();
+     *
+     *        UserProfile prof = new UserProfile();
+     *        prof.setName("JanneJalkanen");
+     *
+     *        assertTrue( "no read", acl.checkPermission(prof, new ViewPermission()));
+     *        assertFalse("has edit", acl.checkPermission(prof, new EditPermission()));
+     *    }
+     *
+     *    public void testSimpleACL2()
+     *        throws Exception
+     *    {
+     *        String src = "Foobar.[{ALLOW view JanneJalkanen}]\n"+
+     *                     "[{DENY view ErikBunn, SuloVilen}]\n"+
+     *                     "[{ALLOW edit JanneJalkanen, SuloVilen}]";
+     *
+     *        WikiPage p = new WikiPage(PAGE_NAME);
+     *
+     *        String res = translate(p, src);
+     *
+     *        assertEquals("Page text", "Foobar.\n\n", res);
+     *
+     *        AccessControlList acl = p.getAcl();
+     *
+     *        UserProfile prof = new UserProfile();
+     *        prof.setName("JanneJalkanen");
+     *
+     *        assertTrue("no read for JJ", acl.checkPermission(prof, new ViewPermission()));
+     *        assertTrue("no edit for JJ", acl.checkPermission(prof, new EditPermission()));
+     *
+     *        prof.setName("ErikBunn");
+     *
+     *        assertFalse( "read for EB", acl.checkPermission(prof, new ViewPermission()));
+     *        assertFalse("has edit for EB", acl.checkPermission(prof, new EditPermission()));
+     *
+     *        prof.setName("SuloVilen");
+     *
+     *        assertFalse("read for SV", acl.checkPermission(prof, new ViewPermission()));
+     *        assertTrue("no edit for SV", acl.checkPermission(prof, new EditPermission()));
+     *    }
+     */
 
     /**
      * ACL tests.

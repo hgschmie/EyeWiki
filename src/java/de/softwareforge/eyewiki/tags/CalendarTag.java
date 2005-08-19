@@ -89,16 +89,16 @@ public class CalendarTag
     private SimpleDateFormat m_dateFormat = new SimpleDateFormat("ddMMyy");
 
     /*
-      public void setYear( String year )
-      {
-      m_year = year;
-      }
-
-      public void setMonth( String month )
-      {
-      m_month = month;
-      }
-    */
+     *      public void setYear( String year )
+     *      {
+     *      m_year = year;
+     *      }
+     *
+     *      public void setMonth( String month )
+     *      {
+     *      m_month = month;
+     *      }
+     */
     public void setPageformat(String format)
     {
         m_pageFormat = new SimpleDateFormat(format);

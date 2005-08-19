@@ -125,19 +125,19 @@ public class InsertPage
             if (page != null)
             {
                 /*
-                  // Disabled, because this seems to fail when used
-                  // to insert something from a weblog entry.
-                AuthorizationManager mgr = engine.getAuthorizationManager();
-                UserProfile currentUser = context.getCurrentUser();
-
-                if( !mgr.checkPermission( page,
-                                          currentUser,
-                                          new ViewPermission() ) )
-                {
-                    res.append("<span class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">You do not have permission to view this included page.</span>");
-                    return res.toString();
-                }
-                */
+                 *                  // Disabled, because this seems to fail when used
+                 *                  // to insert something from a weblog entry.
+                 *                AuthorizationManager mgr = engine.getAuthorizationManager();
+                 *                UserProfile currentUser = context.getCurrentUser();
+                 *
+                 *                if( !mgr.checkPermission( page,
+                 *                                          currentUser,
+                 *                                          new ViewPermission() ) )
+                 *                {
+                 *                    res.append("<span class=\"" + WikiConstants.CSS_CLASS_ERROR + "\">You do not have permission to view this included page.</span>");
+                 *                    return res.toString();
+                 *                }
+                 */
 
                 /** We want inclusion to occur within the context of its own page, because we need the links to be correct. */
                 WikiContext includedContext = (WikiContext) context.clone();

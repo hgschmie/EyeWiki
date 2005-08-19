@@ -443,13 +443,13 @@ public class WikiEngineTest
      */
 
     /*
-    public void testBeautifyTitleArticle2()
-    {
-        String src = "ThisIsAJSPWikiPage";
-
-        assertEquals("This Is A JSP Wiki Page", m_engine.beautifyTitle( src ) );
-    }
-    */
+     *    public void testBeautifyTitleArticle2()
+     *    {
+     *        String src = "ThisIsAJSPWikiPage";
+     *
+     *        assertEquals("This Is A JSP Wiki Page", m_engine.beautifyTitle( src ) );
+     *    }
+     */
     public void testLatestGet()
             throws Exception
     {
@@ -579,19 +579,19 @@ public class WikiEngineTest
      */
 
     /*
-      FIXME: This is a deep problem.  The real problem is that the reference
-      manager cannot know when it encounters a link like "testatt.txt" that it
-      is really a link to an attachment IF the link is created before
-      the attachment.  This means that when the attachment is created,
-      the link will stay in the "uncreated" list.
-
-      There are two issues here: first of all, TranslatorReader should
-      able to return the proper attachment references (which I think
-      it does), and second, the ReferenceManager should be able to
-      remove any links that are not referred to, nor they are created.
-
-      However, doing this in a relatively sane timeframe can be a problem.
-    */
+     *      FIXME: This is a deep problem.  The real problem is that the reference
+     *      manager cannot know when it encounters a link like "testatt.txt" that it
+     *      is really a link to an attachment IF the link is created before
+     *      the attachment.  This means that when the attachment is created,
+     *      the link will stay in the "uncreated" list.
+     *
+     *      There are two issues here: first of all, TranslatorReader should
+     *      able to return the proper attachment references (which I think
+     *      it does), and second, the ReferenceManager should be able to
+     *      remove any links that are not referred to, nor they are created.
+     *
+     *      However, doing this in a relatively sane timeframe can be a problem.
+     */
     public void testAttachmentRefs2()
             throws Exception
     {

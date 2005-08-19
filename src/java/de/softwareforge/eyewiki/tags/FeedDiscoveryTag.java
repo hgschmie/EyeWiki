@@ -83,9 +83,9 @@ public class FeedDiscoveryTag
             // TODO: Enable this
 
             /*
-            pageContext.getOut().print("<link rel=\"service.post\" type=\"application/atom+xml\" title=\""+
-                                       siteName+"\" href=\""+atomPostURL+"\" />\n");
-            */
+             *            pageContext.getOut().print("<link rel=\"service.post\" type=\"application/atom+xml\" title=\""+
+             *                                       siteName+"\" href=\""+atomPostURL+"\" />\n");
+             */
 
             // FIXME: This does not work always, as plugins are not initialized until the first fetch
             if ("true".equals(page.getAttribute(WeblogPlugin.ATTR_ISWEBLOG)))

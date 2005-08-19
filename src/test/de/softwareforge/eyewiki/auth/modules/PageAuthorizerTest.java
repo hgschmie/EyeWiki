@@ -104,10 +104,10 @@ public class PageAuthorizerTest
         assertTrue("Charlie", mgr.checkPermission(m_engine.getPage("TestPage"), wup, WikiPermission.newInstance("edit")));
 
         /*
-        wup.setName( "Bob" );
-        assertTrue( "Bob", mgr.checkPermission( m_engine.getPage( "TestPage" ),
-                                                wup,
-                                                WikiPermission.newInstance( "view" ) ) );
+         *        wup.setName( "Bob" );
+         *        assertTrue( "Bob", mgr.checkPermission( m_engine.getPage( "TestPage" ),
+         *                                                wup,
+         *                                                WikiPermission.newInstance( "view" ) ) );
          */
     }
 

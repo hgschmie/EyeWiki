@@ -83,18 +83,18 @@ public class HTMLPageDavItem
         //  Rendering the page for every single time is not really a very good idea.
         //
         /*
-        WikiContext ctx = new WikiContext(m_engine,m_page);
-        ctx.setVariable( TranslatorReader.PROP_RUNPLUGINS, "false" );
-        ctx.setVariable( WikiEngine.PROP_RUNFILTERS, "false" );
-
-        String txt = m_engine.getHTML( ctx, m_page );
-        try
-        {
-            byte[] txtBytes = txt.getBytes("UTF-8");
-            set.add( new Element("getcontentlength").setText( Long.toString(txt.length())) );
-        }
-        catch( UnsupportedEncodingException e ) {} // Never happens
-        */
+         *        WikiContext ctx = new WikiContext(m_engine,m_page);
+         *        ctx.setVariable( TranslatorReader.PROP_RUNPLUGINS, "false" );
+         *        ctx.setVariable( WikiEngine.PROP_RUNFILTERS, "false" );
+         *
+         *        String txt = m_engine.getHTML( ctx, m_page );
+         *        try
+         *        {
+         *            byte[] txtBytes = txt.getBytes("UTF-8");
+         *            set.add( new Element("getcontentlength").setText( Long.toString(txt.length())) );
+         *        }
+         *        catch( UnsupportedEncodingException e ) {} // Never happens
+         */
         set.add(new Element("getcontenttype", m_davns).setText("text/html; charset=\"UTF-8\""));
 
         return set;

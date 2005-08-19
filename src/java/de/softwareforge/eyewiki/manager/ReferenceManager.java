@@ -67,40 +67,40 @@ import de.softwareforge.eyewiki.providers.WikiPageProvider;
 import org.picocontainer.Startable;
 
 /*
-  BUGS
-
-  - if a wikilink is added to a page, then removed, RefMan still thinks that
-  the page refers to the wikilink page. Hm.
-
-  - if a page is deleted, gets very confused.
-
-  - Serialization causes page attributes to be missing, when InitializablePlugins
-  are not executed properly.  Thus, serialization should really also mark whether
-  a page is serializable or not...
-*/
+ *  BUGS
+ *
+ *  - if a wikilink is added to a page, then removed, RefMan still thinks that
+ *  the page refers to the wikilink page. Hm.
+ *
+ *  - if a page is deleted, gets very confused.
+ *
+ *  - Serialization causes page attributes to be missing, when InitializablePlugins
+ *  are not executed properly.  Thus, serialization should really also mark whether
+ *  a page is serializable or not...
+ */
 /*
-   A word about synchronizing:
-
-   I expect this object to be accessed in three situations:
-   - when a WikiEngine is created and it scans its wikipages
-   - when the WE saves a page
-   - when a JSP page accesses one of the WE's ReferenceManagers
-   to display a list of (un)referenced pages.
-
-   So, access to this class is fairly rare, and usually triggered by
-   user interaction. OTOH, the methods in this class use their storage
-   objects intensively (and, sorry to say, in an unoptimized manner =).
-   My deduction: using unsynchronized HashMaps etc and syncing methods
-   or code blocks is preferrable to using slow, synced storage objects.
-   We don't have iterative code here, so I'm going to use synced methods
-   for now.
-
-   Please contact me if you notice problems with ReferenceManager, and
-   especially with synchronization, or if you have suggestions about
-   syncing.
-
-   ebu@memecry.net
-*/
+ *   A word about synchronizing:
+ *
+ *   I expect this object to be accessed in three situations:
+ *   - when a WikiEngine is created and it scans its wikipages
+ *   - when the WE saves a page
+ *   - when a JSP page accesses one of the WE's ReferenceManagers
+ *   to display a list of (un)referenced pages.
+ *
+ *   So, access to this class is fairly rare, and usually triggered by
+ *   user interaction. OTOH, the methods in this class use their storage
+ *   objects intensively (and, sorry to say, in an unoptimized manner =).
+ *   My deduction: using unsynchronized HashMaps etc and syncing methods
+ *   or code blocks is preferrable to using slow, synced storage objects.
+ *   We don't have iterative code here, so I'm going to use synced methods
+ *   for now.
+ *
+ *   Please contact me if you notice problems with ReferenceManager, and
+ *   especially with synchronization, or if you have suggestions about
+ *   syncing.
+ *
+ *   ebu@memecry.net
+ */
 
 /**
  * Keeps track of wikipage references:
