@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.filters;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
+
 import java.net.MalformedURLException;
 import java.net.URL;
 

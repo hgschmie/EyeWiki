@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
+
 import java.util.Comparator;
 
 import org.apache.log4j.Logger;

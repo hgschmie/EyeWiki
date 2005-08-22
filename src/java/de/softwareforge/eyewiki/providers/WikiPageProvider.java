@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.providers;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;

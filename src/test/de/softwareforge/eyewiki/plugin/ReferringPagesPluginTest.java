@@ -1,13 +1,5 @@
 package de.softwareforge.eyewiki.plugin;
 
-import org.apache.commons.configuration.Configuration;
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.WikiProperties;
-import de.softwareforge.eyewiki.plugin.PluginManager;
-
 /*
  * ========================================================================
  *
@@ -40,6 +32,15 @@ import de.softwareforge.eyewiki.plugin.PluginManager;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.WikiProperties;
+import de.softwareforge.eyewiki.plugin.PluginManager;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

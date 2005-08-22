@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.auth;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.auth;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiPage;
 import de.softwareforge.eyewiki.acl.AccessControlList;
 

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.variable;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

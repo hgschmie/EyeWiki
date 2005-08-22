@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.diff;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.diff;
  *
  * ========================================================================
  */
+
 import org.apache.commons.configuration.Configuration;
 
 import de.softwareforge.eyewiki.WikiEngine;

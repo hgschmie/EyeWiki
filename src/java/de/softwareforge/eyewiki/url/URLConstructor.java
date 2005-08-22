@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.url;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.url;
  *
  * ========================================================================
  */
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;

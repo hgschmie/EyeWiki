@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.acl;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.acl;
  *
  * ========================================================================
  */
+
 import java.security.acl.AclEntry;
 
 import de.softwareforge.eyewiki.acl.AccessControlList;

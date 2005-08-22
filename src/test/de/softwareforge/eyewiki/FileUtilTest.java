@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.plugin;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

@@ -1,7 +1,5 @@
 package de.softwareforge.eyewiki.variable;
 
-import de.softwareforge.eyewiki.WikiContext;
-
 /*
  * ========================================================================
  *
@@ -34,6 +32,9 @@ import de.softwareforge.eyewiki.WikiContext;
  *
  * ========================================================================
  */
+
+import de.softwareforge.eyewiki.WikiContext;
+
 import org.picocontainer.Startable;
 
 /**

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.filters.FilterManagerTest;
 import de.softwareforge.eyewiki.htmltowiki.HtmlStringToWikiTranslator;
 import de.softwareforge.eyewiki.htmltowiki.PropertiesUtils;

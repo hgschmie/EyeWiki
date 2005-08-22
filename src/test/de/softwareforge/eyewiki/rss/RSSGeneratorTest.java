@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.rss;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.rss;
  *
  * ========================================================================
  */
+
 import java.util.Date;
 import java.util.List;
 

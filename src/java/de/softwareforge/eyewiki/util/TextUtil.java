@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.util;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
+
 import java.io.UnsupportedEncodingException;
 
 import java.net.URLDecoder;

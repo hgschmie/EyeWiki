@@ -1,10 +1,5 @@
 package de.softwareforge.eyewiki.stress;
 
-import org.apache.commons.configuration.Configuration;
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiPage;
-
 /*
  * ========================================================================
  *
@@ -37,6 +32,12 @@ import de.softwareforge.eyewiki.WikiPage;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiPage;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.dav.items;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;

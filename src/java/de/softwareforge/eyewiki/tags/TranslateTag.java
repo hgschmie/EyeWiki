@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.tags;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
+
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.BodyContent;

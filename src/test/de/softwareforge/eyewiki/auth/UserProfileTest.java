@@ -1,13 +1,5 @@
 package de.softwareforge.eyewiki.auth;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationConverter;
-import org.apache.log4j.PropertyConfigurator;
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.util.TextUtil;
-
 /*
  * ========================================================================
  *
@@ -40,6 +32,15 @@ import de.softwareforge.eyewiki.util.TextUtil;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationConverter;
+import org.apache.log4j.PropertyConfigurator;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.util.TextUtil;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

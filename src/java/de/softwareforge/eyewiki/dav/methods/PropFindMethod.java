@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.dav.methods;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.dav.methods;
  *
  * ========================================================================
  */
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.dav;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
+
 import javax.servlet.http.HttpServletRequest;
 
 /**

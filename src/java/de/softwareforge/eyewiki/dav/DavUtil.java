@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.dav;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.dav;
  *
  * ========================================================================
  */
+
 import java.io.IOException;
 
 import java.util.Collection;

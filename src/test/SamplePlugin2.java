@@ -30,6 +30,7 @@
  *
  * ========================================================================
  */
+
 import java.util.Map;
 
 import de.softwareforge.eyewiki.WikiContext;

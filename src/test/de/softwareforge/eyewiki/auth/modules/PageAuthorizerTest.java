@@ -1,12 +1,5 @@
 package de.softwareforge.eyewiki.auth.modules;
 
-import org.apache.commons.configuration.Configuration;
-
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.auth.AuthorizationManager;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
-
 /*
  * ========================================================================
  *
@@ -39,6 +32,14 @@ import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.auth.AuthorizationManager;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.auth.permissions.WikiPermission;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

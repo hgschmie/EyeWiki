@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.providers;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.providers;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiException;
 
 /**

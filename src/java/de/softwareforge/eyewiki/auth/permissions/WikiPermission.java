@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.auth.permissions;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.auth.permissions;
  *
  * ========================================================================
  */
+
 import java.security.acl.Permission;
 
 /**

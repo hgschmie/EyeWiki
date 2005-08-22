@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.StringReader;

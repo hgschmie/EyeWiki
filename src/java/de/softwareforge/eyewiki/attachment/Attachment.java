@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.attachment;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.attachment;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiPage;
 
 /**

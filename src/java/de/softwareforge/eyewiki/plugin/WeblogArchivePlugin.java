@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.plugin;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.plugin;
  *
  * ========================================================================
  */
+
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;

@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.util;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.util;
  *
  * ========================================================================
  */
+
 import java.util.Map;
 
 import de.softwareforge.eyewiki.util.FormUtil;

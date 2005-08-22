@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.filters;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.filters;
  *
  * ========================================================================
  */
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

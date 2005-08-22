@@ -1,9 +1,5 @@
 package de.softwareforge.eyewiki.plugin;
 
-import org.apache.commons.configuration.Configuration;
-
-import de.softwareforge.eyewiki.TestEngine;
-
 /*
  * ========================================================================
  *
@@ -36,6 +32,11 @@ import de.softwareforge.eyewiki.TestEngine;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+
+import de.softwareforge.eyewiki.TestEngine;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

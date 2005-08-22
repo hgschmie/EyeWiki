@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.tags;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.tags;
  *
  * ========================================================================
  */
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.ecs.ConcreteElement;
 import org.apache.ecs.xhtml.br;

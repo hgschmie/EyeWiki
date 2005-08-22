@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
+
 import java.io.IOException;
 import java.io.Writer;
 

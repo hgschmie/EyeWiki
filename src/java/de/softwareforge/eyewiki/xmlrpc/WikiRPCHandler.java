@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.xmlrpc;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.xmlrpc;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiEngine;
 
 /**

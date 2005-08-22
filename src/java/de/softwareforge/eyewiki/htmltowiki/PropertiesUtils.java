@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.htmltowiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.htmltowiki;
  *
  * ========================================================================
  */
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;

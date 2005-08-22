@@ -1,34 +1,5 @@
 package de.softwareforge.eyewiki.attachment;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.util.Enumeration;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiEngine;
-import de.softwareforge.eyewiki.WikiProperties;
-import de.softwareforge.eyewiki.WikiProvider;
-import de.softwareforge.eyewiki.auth.AuthorizationManager;
-import de.softwareforge.eyewiki.auth.UserProfile;
-import de.softwareforge.eyewiki.filters.RedirectException;
-import de.softwareforge.eyewiki.providers.ProviderException;
-import de.softwareforge.eyewiki.util.HttpUtil;
-
 /*
  * ========================================================================
  *
@@ -61,6 +32,36 @@ import de.softwareforge.eyewiki.util.HttpUtil;
  *
  * ========================================================================
  */
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import java.util.Enumeration;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiEngine;
+import de.softwareforge.eyewiki.WikiProperties;
+import de.softwareforge.eyewiki.WikiProvider;
+import de.softwareforge.eyewiki.auth.AuthorizationManager;
+import de.softwareforge.eyewiki.auth.UserProfile;
+import de.softwareforge.eyewiki.filters.RedirectException;
+import de.softwareforge.eyewiki.providers.ProviderException;
+import de.softwareforge.eyewiki.util.HttpUtil;
+
 import http.utils.multipartrequest.MultipartRequest;
 
 /**

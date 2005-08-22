@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.forms;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
+
 import java.util.Map;
 
 import org.apache.log4j.Logger;

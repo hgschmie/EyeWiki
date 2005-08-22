@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.forms;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.forms;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiContext;
 
 /**

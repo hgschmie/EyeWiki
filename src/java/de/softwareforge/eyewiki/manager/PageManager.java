@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.manager;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;

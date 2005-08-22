@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.variable;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.variable;
  *
  * ========================================================================
  */
+
 import de.softwareforge.eyewiki.WikiContext;
 import de.softwareforge.eyewiki.exception.NoSuchVariableException;
 import de.softwareforge.eyewiki.manager.VariableManager;

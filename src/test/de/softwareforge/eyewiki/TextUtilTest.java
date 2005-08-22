@@ -1,12 +1,5 @@
 package de.softwareforge.eyewiki;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConversionException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.lang.StringUtils;
-
-import de.softwareforge.eyewiki.util.TextUtil;
-
 /*
  * ========================================================================
  *
@@ -39,6 +32,14 @@ import de.softwareforge.eyewiki.util.TextUtil;
  *
  * ========================================================================
  */
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConversionException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
+
+import de.softwareforge.eyewiki.util.TextUtil;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

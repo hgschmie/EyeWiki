@@ -1,11 +1,5 @@
 package de.softwareforge.eyewiki.variable;
 
-import de.softwareforge.eyewiki.TestEngine;
-import de.softwareforge.eyewiki.WikiContext;
-import de.softwareforge.eyewiki.WikiPage;
-import de.softwareforge.eyewiki.exception.NoSuchVariableException;
-import de.softwareforge.eyewiki.manager.VariableManager;
-
 /*
  * ========================================================================
  *
@@ -38,6 +32,13 @@ import de.softwareforge.eyewiki.manager.VariableManager;
  *
  * ========================================================================
  */
+
+import de.softwareforge.eyewiki.TestEngine;
+import de.softwareforge.eyewiki.WikiContext;
+import de.softwareforge.eyewiki.WikiPage;
+import de.softwareforge.eyewiki.exception.NoSuchVariableException;
+import de.softwareforge.eyewiki.manager.VariableManager;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

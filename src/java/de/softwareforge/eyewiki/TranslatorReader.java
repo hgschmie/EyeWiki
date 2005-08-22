@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki;
  *
  * ========================================================================
  */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PushbackReader;

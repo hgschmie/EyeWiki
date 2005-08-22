@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.dav.items;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.dav.items;
  *
  * ========================================================================
  */
+
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;

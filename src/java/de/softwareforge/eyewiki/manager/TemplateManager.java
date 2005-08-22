@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.manager;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.manager;
  *
  * ========================================================================
  */
+
 import java.io.IOException;
 import java.io.InputStream;
 

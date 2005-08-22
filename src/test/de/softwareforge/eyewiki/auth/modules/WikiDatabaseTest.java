@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.auth.modules;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.auth.modules;
  *
  * ========================================================================
  */
+
 import java.util.Iterator;
 import java.util.List;
 

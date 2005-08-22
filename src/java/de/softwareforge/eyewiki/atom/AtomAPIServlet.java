@@ -1,6 +1,5 @@
 package de.softwareforge.eyewiki.atom;
 
-
 /*
  * ========================================================================
  *
@@ -33,6 +32,7 @@ package de.softwareforge.eyewiki.atom;
  *
  * ========================================================================
  */
+
 import java.io.IOException;
 
 import java.util.Collection;
